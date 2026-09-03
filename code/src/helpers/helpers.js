@@ -134,15 +134,6 @@ export async function RemoveData(queryClient, preserveUsername = true) {
  * Handling URLs and query strings
  ******************************************************************* **/
 /**
- * Decode a URL-encoded string
- * @param str
- * @returns {string}
- */
-export function urldecode(str) {
-     return decodeURIComponent(str.replace(/\+/g, ' '));
-}
-
-/**
  * Check if a string is a valid URL
  * @param {string} string - The string to validate
  * @returns {boolean} - True if valid URL, false otherwise
@@ -202,7 +193,7 @@ export function decodeHTML(string) {
 }
 
 /** *******************************************************************
- * Manipulate arrays, objects, strings, and numbers (replacing lodash)
+ * Manipulate arrays, objects, strings, and numbers
  ******************************************************************* **/
 /**
  * Convert input values to an array format, handling both array and object structures,
@@ -224,8 +215,18 @@ export function isPlainObject(value) {
 }
 
 /**
+ * Remove duplicate values from an array of primitive types (strings or numbers)
+ * by converting to a Set and back to an array
+ * @param arr
+ * @returns {any[]}
+ */
+export function uniquePrimitiveArray(arr) {
+     return [...new Set(arr)];
+}
+
+/**
  * Truncate a string to a maximum length, appending an omission suffix if truncated.
- * Mirrors lodash _.truncate behaviour: the omission counts toward maxLength.
+ * The omission suffix counts toward maxLength.
  * @param {string|null|undefined} str
  * @param {number} maxLength
  * @param {string} omission
@@ -235,16 +236,6 @@ export function truncate(str, maxLength, omission = '...') {
      if (str == null) return '';
      if (str.length <= maxLength) return str;
      return str.slice(0, maxLength - omission.length) + omission;
-}
-
-/**
- * Remove duplicate values from an array of primitive types (strings or numbers)
- * by converting to a Set and back to an array
- * @param arr
- * @returns {any[]}
- */
-export function uniquePrimitiveArray(arr) {
-     return [...new Set(arr)];
 }
 
 /**
@@ -268,6 +259,44 @@ function normalizeForSort(value) {
      if (typeof value === 'number') return value;
      if (typeof value === 'boolean') return value ? 1 : 0;
      return String(value).toLowerCase();
+}
+
+function escapeRegExp(string) {
+     return String(string).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function createPropertyMatcher(property, value) {
+     return (item) => item?.[property] === value;
+}
+
+function createTruthyPropertyMatcher(property) {
+     return (item) => Boolean(item?.[property]);
+}
+
+function matchesObjectProperties(item, predicate) {
+     return Object.entries(predicate).every(([key, value]) => item?.[key] === value);
+}
+
+function resolveCollectionPredicate(predicate, options = {}) {
+     const { allowStringProperty = false } = options;
+
+     if (Array.isArray(predicate) && predicate.length >= 2) {
+          return createPropertyMatcher(predicate[0], predicate[1]);
+     }
+
+     if (typeof predicate === 'string' && allowStringProperty) {
+          return createTruthyPropertyMatcher(predicate);
+     }
+
+     if (isPlainObject(predicate)) {
+          return (item) => matchesObjectProperties(item, predicate);
+     }
+
+     if (typeof predicate === 'function') {
+          return predicate;
+     }
+
+     return null;
 }
 
 /**
@@ -298,6 +327,359 @@ export function orderByFields(items, iteratees = [], orders = []) {
           return 0;
      });
 }
+
+/**
+ * Returns true when a value is object-like, including arrays.
+ * @param value
+ * @returns {boolean}
+ */
+function isObjectLike(value) {
+     return value !== null && typeof value === 'object';
+}
+
+/**
+ * Returns true when a value is a non-null object and not an array.
+ * @param value
+ * @returns {boolean}
+ */
+export const isObject = isPlainObject;
+
+/**
+ * Returns true when a value is a finite number.
+ * @param value
+ * @returns {boolean}
+ */
+export function isNumber(value) {
+     return typeof value === 'number' && Number.isFinite(value);
+}
+
+/**
+ * Returns true when a value is empty: null/undefined, an empty string, an empty
+ * array, or a plain object with no own enumerable keys.
+ * @param value
+ * @returns {boolean}
+ */
+export function isEmpty(value) {
+     if (value == null) return true;
+     if (typeof value === 'string' || Array.isArray(value)) return value.length === 0;
+     if (typeof value === 'object') return Object.keys(value).length === 0;
+     return false;
+}
+
+/**
+ * Returns the size of an array, string, array-like object, or plain object.
+ * @param value
+ * @returns {number}
+ */
+export function size(value) {
+     if (value == null) return 0;
+     if (typeof value === 'string' || Array.isArray(value)) return value.length;
+     if (isObjectLike(value) && typeof value.length === 'number' && Number.isInteger(value.length) && value.length >= 0) return value.length;
+     if (isObjectLike(value)) return Object.keys(value).length;
+     return 0;
+}
+
+/**
+ * Recursively merge own enumerable properties of the source objects into the target,
+ * mutating and returning the target. Nested plain objects are merged recursively,
+ * undefined source values never overwrite existing target values, and all other
+ * values (including arrays) are assigned directly rather than merged by index.
+ * @param target
+ * @param sources
+ * @returns {*}
+ */
+export function mergeDeep(target, ...sources) {
+     for (const source of sources) {
+          if (!isPlainObject(source)) continue;
+          for (const key of Object.keys(source)) {
+               const sourceValue = source[key];
+               if (sourceValue === undefined) continue;
+               if (isPlainObject(sourceValue) && isPlainObject(target[key])) {
+                    mergeDeep(target[key], sourceValue);
+               } else {
+                    target[key] = sourceValue;
+               }
+          }
+     }
+     return target;
+}
+
+/**
+ * Deep-merge source objects into a new object and return the clone.
+ * @param sources
+ * @returns {{}|*}
+ */
+export function mergeIntoNew(...sources) {
+     return mergeDeep({}, ...sources);
+}
+
+/**
+ * Deep-equality check for plain objects, arrays, and primitives.
+ * @param a
+ * @param b
+ * @returns {boolean}
+ */
+export function isEqual(a, b) {
+     if (a === b) return true;
+     if (Array.isArray(a) || Array.isArray(b)) {
+          if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+          return a.every((value, index) => isEqual(value, b[index]));
+     }
+     if (isPlainObject(a) && isPlainObject(b)) {
+          const aKeys = Object.keys(a);
+          const bKeys = Object.keys(b);
+          if (aKeys.length !== bKeys.length) return false;
+          return aKeys.every((key) => isEqual(a[key], b[key]));
+     }
+     return false;
+ }
+
+/**
+ * Maps arrays or object values with a shared iteratee.
+ * For objects, the iteratee receives (value, key, collection).
+ * @param collection
+ * @param iteratee
+ * @returns {Array}
+ */
+function mapCollection(collection, iteratee) {
+     if (Array.isArray(collection)) {
+          return collection.map((item, index, array) => iteratee(item, index, array));
+     }
+
+     if (isObjectLike(collection)) {
+          return Object.entries(collection).map(([key, value]) => iteratee(value, key, collection));
+     }
+
+     return [];
+}
+
+/**
+ * Iterates arrays or object values with a shared iteratee.
+ * For objects, the iteratee receives (value, key, collection).
+ * @param collection
+ * @param iteratee
+ */
+function forEachCollection(collection, iteratee) {
+     if (Array.isArray(collection)) {
+          collection.forEach((item, index, array) => iteratee(item, index, array));
+          return;
+     }
+
+     if (isObjectLike(collection)) {
+          Object.entries(collection).forEach(([key, value]) => iteratee(value, key, collection));
+     }
+}
+
+/**
+ * Find the first item in an array-like collection whose given property strictly
+ * equals value.
+ * @param arr
+ * @param property
+ * @param value
+ * @returns {*}
+ */
+export function findByProperty(arr, property, value) {
+     return toArray(arr).find(createPropertyMatcher(property, value));
+}
+
+/**
+ * Return an item from an array-like collection by index.
+ * @param arr
+ * @param index
+ * @returns {*}
+ */
+export function getItemAtIndex(arr, index) {
+     return toArray(arr)[index];
+}
+
+/**
+ * Safely read a nested property path from an object.
+ * @param value
+ * @param path
+ * @param defaultValue
+ * @returns {*}
+ */
+export function getProperty(value, path, defaultValue = undefined) {
+     const keys = Array.isArray(path) ? path : String(path ?? '').split('.').filter(Boolean);
+     let current = value;
+
+     for (const key of keys) {
+          if (current == null) {
+               return defaultValue;
+          }
+          current = current[key];
+     }
+
+     return current === undefined ? defaultValue : current;
+}
+
+/**
+ * Return a shallow-cloned object or array with the provided property path set.
+ * @param value
+ * @param path
+ * @param nextValue
+ * @returns {*}
+ */
+export function setProperty(value, path, nextValue) {
+     const keys = Array.isArray(path) ? path : String(path ?? '').split('.').filter(Boolean);
+     if (keys.length === 0) return value;
+
+     const root = Array.isArray(value) ? [...value] : { ...(value ?? {}) };
+     let target = root;
+     let source = value ?? {};
+
+     for (let index = 0; index < keys.length - 1; index++) {
+          const key = keys[index];
+          const sourceValue = source?.[key];
+          const clonedValue = Array.isArray(sourceValue) ? [...sourceValue] : { ...(sourceValue ?? {}) };
+          target[key] = clonedValue;
+          target = clonedValue;
+          source = sourceValue ?? {};
+     }
+
+     target[keys[keys.length - 1]] = nextValue;
+     return root;
+}
+
+/**
+ * Concatenate values into a new array.
+ * @param firstValue
+ * @param values
+ * @returns {Array}
+ */
+export function concatValues(firstValue, ...values) {
+     const result = Array.isArray(firstValue) ? [...firstValue] : [firstValue];
+
+     values.forEach((value) => {
+          if (Array.isArray(value)) {
+               result.push(...value);
+          } else {
+               result.push(value);
+          }
+     });
+
+     return result;
+}
+
+/**
+ * Remove falsey values from a collection.
+ * @param values
+ * @returns {Array}
+ */
+export function compactValues(values) {
+     return toArray(values).filter(Boolean);
+}
+
+/**
+ * Returns the keys of an object, or an empty array.
+ * @param value
+ * @returns {string[]}
+ */
+export function objectKeys(value) {
+     return isObjectLike(value) ? Object.keys(value) : [];
+}
+
+/**
+ * Lower-case text with camelCase, snake_case, and kebab-case spacing normalized.
+ * @param value
+ * @returns {string}
+ */
+export function lowerCaseText(value) {
+     return String(value ?? '')
+          .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+          .replace(/[_-]+/g, ' ')
+          .toLowerCase()
+          .trim()
+          .replace(/\s+/g, ' ');
+}
+
+/**
+ * Returns a random item from a collection.
+ * @param values
+ * @returns {*}
+ */
+export function sampleValue(values) {
+     const arr = toArray(values);
+     if (arr.length === 0) return undefined;
+     return arr[Math.floor(Math.random() * arr.length)];
+}
+
+/**
+ * Trims the provided characters from both sides of a string.
+ * @param value
+ * @param characters
+ * @returns {string}
+ */
+export function trimCharacters(value, characters = ' ') {
+     const pattern = new RegExp(`^[${escapeRegExp(characters)}]+|[${escapeRegExp(characters)}]+$`, 'g');
+     return String(value ?? '').replace(pattern, '');
+}
+
+/**
+ * Trims the provided characters from the start of a string.
+ * @param value
+ * @param characters
+ * @returns {string}
+ */
+export function trimStartCharacters(value, characters = ' ') {
+     const pattern = new RegExp(`^[${escapeRegExp(characters)}]+`, 'g');
+     return String(value ?? '').replace(pattern, '');
+}
+
+/**
+ * Trims the provided characters from the end of a string.
+ * @param value
+ * @param characters
+ * @returns {string}
+ */
+export function trimEndCharacters(value, characters = ' ') {
+     const pattern = new RegExp(`[${escapeRegExp(characters)}]+$`, 'g');
+     return String(value ?? '').replace(pattern, '');
+}
+
+/**
+ * Split a string value into parts.
+ * @param value
+ * @param separator
+ * @returns {string[]}
+ */
+export function splitString(value, separator) {
+     return String(value ?? '').split(separator);
+}
+
+export const isArray = Array.isArray;
+export const merge = mergeDeep;
+export const map = mapCollection;
+export const forEach = forEachCollection;
+export const find = (collection, predicate) => {
+     const matcher = resolveCollectionPredicate(predicate, { allowStringProperty: true });
+     return matcher ? toArray(collection).find(matcher) : undefined;
+};
+export const filter = (collection, predicate) => {
+     const matcher = resolveCollectionPredicate(predicate, { allowStringProperty: true });
+     return matcher ? toArray(collection).filter(matcher) : [];
+};
+export const matchesProperty = createPropertyMatcher;
+export const sortBy = (collection, iteratees) => {
+     const keys = Array.isArray(iteratees) ? iteratees : [iteratees];
+     return orderByFields(collection, keys, keys.map(() => 'asc'));
+};
+export const concat = concatValues;
+export const findIndex = (collection, predicate) => {
+     const matcher = resolveCollectionPredicate(predicate);
+     return matcher ? toArray(collection).findIndex(matcher) : -1;
+};
+export const nth = getItemAtIndex;
+export const get = getProperty;
+export const set = setProperty;
+export const lowerCase = lowerCaseText;
+export const sample = sampleValue;
+export const trim = trimCharacters;
+export const trimStart = trimStartCharacters;
+export const trimEnd = trimEndCharacters;
+export const split = splitString;
+export const compact = compactValues;
+export const keys = objectKeys;
 
 /** *******************************************************************
  * Manipulate and format dates (replacing moment.js)
@@ -363,7 +745,6 @@ export function parseToDate(value) {
 export function generateSwatches(swatch) {
      const LIGHTNESS_MAP = [0.95, 0.85, 0.75, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15, 0.05];
      const SATURATION_MAP = [0.32, 0.16, 0.08, 0.04, 0, 0, 0.04, 0.08, 0.16, 0.32];
-     const HUE_MAP = [0, 4, 8, 12, 16, 20, 24, 28, 32, 36];
 
      let primaryColor = swatch.replace('#', '');
      if (!chroma.valid(primaryColor)) {
@@ -442,9 +823,9 @@ export function buildSwatchFromThemeTokens(colorGroup = {}) {
      return swatch;
 }
 
-export const getColorNumber = (index) => (index === 0 ? 50 : index * 100);
+const getColorNumber = (index) => (index === 0 ? 50 : index * 100);
 
-export const getContrastText = (color) => {
+const getContrastText = (color) => {
      const WCAG_AA_THRESHOLD = 4.5; // WCAG AA minimum for normal text
      let ratioOnWhite = chroma.contrast(color, '#ffffff');
      let ratioOnBlack = chroma.contrast(color, '#000000');
