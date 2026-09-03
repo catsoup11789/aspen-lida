@@ -333,7 +333,7 @@ export function orderByFields(items, iteratees = [], orders = []) {
  * @param value
  * @returns {boolean}
  */
-function isObjectLike(value) {
+export function isObjectLike(value) {
      return value !== null && typeof value === 'object';
 }
 
