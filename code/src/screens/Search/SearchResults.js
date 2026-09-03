@@ -22,7 +22,6 @@ import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
 
 import {ScanBarcode, SearchIcon, SlidersHorizontalIcon, XIcon} from 'lucide-react-native';
-import moment from 'moment';
 
 import React from 'react';
 import { ScrollView } from 'react-native';
@@ -37,7 +36,7 @@ import { useLibraryScope, useLibraryLocation } from '../../hooks/useLibraryBranc
 import {navigate, navigateStack} from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { GLOBALS, SearchGlobal } from '../../util/globals';
-import { decodeHTML, isValidUrl, compact, filter, find, forEach, isEmpty, isEqual, map, size, truncate } from '../../helpers/helpers';
+import { decodeHTML, getEventDateDisplayData, isValidUrl, compact, filter, find, forEach, isEmpty, isEqual, map, size, truncate } from '../../helpers/helpers';
 import { getAppliedFilters, getAvailableFacetsKeys, getSortList } from '../../util/api/search';
 import { setDefaultFacets } from '../../util/api/searchHelper';
 
@@ -364,21 +363,7 @@ const DisplayResult = (data) => {
 
           const startTime = item.start_date.date;
           const endTime = item.end_date.date;
-
-          let time1 = startTime.split(' ');
-          let day = time1[0];
-          let time2 = endTime.split(' ');
-
-          let time1arr = time1[1].split(':');
-          let time2arr = time2[1].split(':');
-
-          let displayDay = moment(day);
-          let displayStartTime = moment().set({ hour: time1arr[0], minute: time1arr[1] });
-          let displayEndTime = moment().set({ hour: time2arr[0], minute: time2arr[1] });
-
-          displayDay = moment(displayDay).format('dddd, MMMM D, YYYY');
-          displayStartTime = moment(displayStartTime).format('h:mm A');
-          displayEndTime = moment(displayEndTime).format('h:mm A');
+          const { displayDay, displayStartTime, displayEndTime } = getEventDateDisplayData(startTime, endTime);
 
           let locationData = item?.location ?? [];
           let roomData = item?.room ?? null;

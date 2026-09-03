@@ -5,7 +5,6 @@ import { Image } from 'expo-image';
 import * as Calendar from 'expo-calendar';
 import * as SecureStore from 'expo-secure-store';
 import * as WebBrowser from 'expo-web-browser';
-import moment from 'moment';
 import {
      Box,
      Divider,
@@ -42,7 +41,7 @@ import { navigateStack } from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { getEventDetails, saveEvent } from '../../util/api/event';
 import { refreshProfile } from '../../util/api/user';
-import { decodeHTML, findByProperty, isEmpty, isObject, stripHTML } from '../../helpers/helpers';
+import { decodeHTML, findByProperty, getEventDateDisplayData, isEmpty, isObject, stripHTML } from '../../helpers/helpers';
 import AddToList from '../Search/AddToList';
 import { logDebugMessage, logErrorMessage, logInfoMessage, getErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
@@ -320,29 +319,26 @@ const AddToCalendar = ({ start, end, location, event }) => {
      let displayDay = false;
      let displayStartTime = false;
      let displayEndTime = false;
-     let day = '';
-     let time1arr = '';
-     let time2arr = '';
      let startTime = null;
      let endTime = null;
+     let startDate = null;
+     let endDate = null;
 
      if (start) {
           startTime = start.date;
-          let time1 = startTime.split(' ');
-          day = time1[0];
-          time1arr = time1[1].split(':');
-          displayDay = moment(day);
-          displayStartTime = moment().set({ hour: time1arr[0], minute: time1arr[1] });
-          displayDay = moment(displayDay).format('dddd, MMMM D, YYYY');
-          displayStartTime = moment(displayStartTime).format('h:mm A');
+          const displayData = getEventDateDisplayData(startTime, end?.date);
+          startDate = displayData.startDate;
+          endDate = displayData.endDate;
+          displayDay = displayData.displayDay;
+          displayStartTime = displayData.displayStartTime;
+          displayEndTime = displayData.displayEndTime;
      }
 
-     if (end) {
+     if (end && !displayEndTime) {
           endTime = end.date;
-          let time2 = endTime.split(' ');
-          time2arr = time2[1].split(':');
-          displayEndTime = moment().set({ hour: time2arr[0], minute: time2arr[1] });
-          displayEndTime = moment(displayEndTime).format('h:mm A');
+          const displayData = getEventDateDisplayData(start?.date, endTime);
+          endDate = displayData.endDate;
+          displayEndTime = displayData.displayEndTime;
      }
 
      const handleAddToCalendar = async () => {
@@ -387,18 +383,16 @@ const AddToCalendar = ({ start, end, location, event }) => {
      };
 
      const createCalendarEvent = async () => {
-          const starts = moment(day).set({ hour: time1arr[0], minute: time1arr[1] });
-          const ends = moment(day).set({ hour: time2arr[0], minute: time2arr[1] });
           let eventLocation = location.name;
           if (location.address) {
                eventLocation = eventLocation + ' ' + location.address;
           }
-          if (calendarId) {
+          if (calendarId && startDate && endDate) {
                try {
                     await Calendar.createEventAsync(calendarId, {
                          title: event.title,
-                         startDate: moment(starts, "YYYY-MM-DD'T'HH:mm:ss.sssZ").toDate(),
-                         endDate: moment(ends, "YYYY-MM-DD'T'HH:mm:ss.sssZ").toDate(),
+                         startDate,
+                         endDate,
                          id: event.id,
                          location: eventLocation,
                          allDay: event.isAllDay ?? false,

@@ -1,6 +1,5 @@
 import { translationsLibrary as helperLibrary, getTermFromDictionary as helperGetTermFromDictionary } from './TranslationHelper';
 import { MaterialIcons } from '@expo/vector-icons';
-import moment from 'moment';
 import { Box, Button, ButtonText, ButtonIcon, Menu, MenuItem, MenuItemLabel, Spinner, Text } from '@gluestack-ui/themed';
 import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
@@ -15,7 +14,7 @@ import {
      useUpdateLanguageDisplayName,
      useUpdateDictionary } from '../hooks/useLanguageData';
 
-import { decodeHTML, findByProperty, isObject, mergeDeep, mergeIntoNew } from '../helpers/helpers';
+import { decodeHTML, findByProperty, getCurrentDate, isObject, mergeDeep, mergeIntoNew } from '../helpers/helpers';
 import { GLOBALS } from '../util/globals';
 
 import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage, getErrorMessage } from '../util/logging.js';
@@ -261,7 +260,7 @@ export async function getTranslationsWithValues(key, values, language, url, addT
                const translation = Object.values(response.data?.result?.translation);
                if (Object.values(response.data?.result?.translation) && addToDictionary) {
                     const lastUpdated = {
-                         lastUpdated: moment() };
+                         lastUpdated: getCurrentDate() };
                     translationsLibrary = mergeDeep(translationsLibrary, lastUpdated);
 
                     const resolvedTranslation = formatTranslationWithValues(translation[0], normalizedValues);
@@ -418,7 +417,7 @@ export async function loadTranslationsFromDiscovery(language, url) {
                if (response.ok) {
                     const translation = response?.data?.result?.[language] ?? defaults;
                     const lastUpdated = {
-                         lastUpdated: moment() };
+                         lastUpdated: getCurrentDate() };
                     translationsLibrary = mergeDeep(translationsLibrary, lastUpdated);
 
                     if (isObject(translation)) {

@@ -1,7 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
-import { filter, find, isArray, matchesProperty, size } from '../../helpers/helpers';
-import moment from 'moment';
+import { formatTime, getTodaysHoursStatus, isArray, size } from '../../helpers/helpers';
 import { Badge, BadgeText, Box, Button, ButtonText, Divider, Heading, HStack, ScrollView, Text, VStack } from '@gluestack-ui/themed';
 import { colorMode, useTheme } from '../../themes/theme';
 import React from 'react';
@@ -57,44 +56,15 @@ export const MyLibrary = () => {
      let hoursLabel = '';
      let hasHours = false;
      if (location.hours) {
-          if (size(location.hours) > 0) {
-               hasHours = true;
-          }
-          const day = moment().day();
-          if (find(location.hours, matchesProperty('day', day))) {
-               let todaysHours = filter(location.hours, { day: day });
-               if (todaysHours[0]) {
-                    todaysHours = todaysHours[0];
-                    if (todaysHours.isClosed) {
-                         isClosedToday = true;
-                         hoursLabel = getTermFromDictionary(language, 'location_closed');
-                    } else {
-                         const closingText = todaysHours.close;
-                         const time1 = closingText.split(':');
-                         const openingText = todaysHours.open;
-                         const time2 = openingText.split(':');
-                         const closeTime = moment().set({ hour: time1[0], minute: time1[1] });
-                         const openTime = moment().set({ hour: time2[0], minute: time2[1] });
-                         const nowTime = moment();
-                         const stillOpen = moment(nowTime).isBefore(closeTime);
-                         const stillClosed = moment(openTime).isBefore(nowTime);
-                         if (!stillOpen) {
-                              isClosedToday = true;
-                              hoursLabel = getTermFromDictionary(language, 'location_closed');
-                         }
-                         if (!stillClosed) {
-                              isClosedToday = true;
-                              let openingTime = moment(openTime).format('h:mm A');
-                              hoursLabel = getTermFromDictionary(language, 'closed_until') + ' ' + openingTime;
-                         } else {
-                              isClosedToday = false;
-                              let closingTime = moment(closeTime).format('h:mm A');
-                              hoursLabel = getTermFromDictionary(language, 'open_until') + ' ' + closingTime;
-                         }
-                    }
-               }
+          const hoursStatus = getTodaysHoursStatus(location.hours);
+          hasHours = hoursStatus.hasHours;
+          isClosedToday = hoursStatus.isClosedToday;
+
+          if (hoursStatus.status === 'closed_until' && hoursStatus.openingTime) {
+               hoursLabel = getTermFromDictionary(language, 'closed_until') + ' ' + formatTime(hoursStatus.openingTime);
+          } else if (hoursStatus.status === 'open_until' && hoursStatus.closingTime) {
+               hoursLabel = getTermFromDictionary(language, 'open_until') + ' ' + formatTime(hoursStatus.closingTime);
           } else {
-               isClosedToday = true;
                hoursLabel = getTermFromDictionary(language, 'location_closed');
           }
      }

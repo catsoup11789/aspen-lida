@@ -1,8 +1,7 @@
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { filter, find, map, matchesProperty, sample, size, trim, trimEnd, trimStart } from '../../helpers/helpers';
-import moment from 'moment';
+import { formatTime, getTodaysHoursStatus, map, sample, size, trim, trimEnd, trimStart } from '../../helpers/helpers';
 import {
      Accordion,
      AccordionItem,
@@ -206,41 +205,15 @@ const MyLibrary = () => {
 
      const { textColor, theme, colorMode } = useTheme();
 
-     let isClosedToday = false;
      let hoursLabel = '';
      if (location?.hours) {
-          const day = moment().day();
-          if (find(location.hours, matchesProperty('day', day))) {
-               let todaysHours = filter(location.hours, { day: day });
-               if (todaysHours[0]) {
-                    todaysHours = todaysHours[0];
-                    if (todaysHours.isClosed) {
-                         isClosedToday = true;
-                         hoursLabel = getTermFromDictionary(language, 'location_closed');
-                    } else {
-                         const closingText = todaysHours.close;
-                         const time1 = closingText.split(':');
-                         const openingText = todaysHours.open;
-                         const time2 = openingText.split(':');
-                         const closeTime = moment().set({ hour: time1[0], minute: time1[1] });
-                         const openTime = moment().set({ hour: time2[0], minute: time2[1] });
-                         const nowTime = moment();
-                         const stillOpen = moment(nowTime).isBefore(closeTime);
-                         const stillClosed = moment(openTime).isBefore(nowTime);
-                         if (!stillOpen) {
-                              isClosedToday = true;
-                              hoursLabel = getTermFromDictionary(language, 'location_closed');
-                         }
-                         if (!stillClosed) {
-                              isClosedToday = true;
-                              let openingTime = moment(openTime).format('h:mm A');
-                              hoursLabel = 'Closed until ' + openingTime;
-                         } else {
-                              let closingTime = moment(closeTime).format('h:mm A');
-                              hoursLabel = 'Open until ' + closingTime;
-                         }
-                    }
-               }
+          const hoursStatus = getTodaysHoursStatus(location.hours);
+          if (hoursStatus.status === 'closed_until' && hoursStatus.openingTime) {
+               hoursLabel = 'Closed until ' + formatTime(hoursStatus.openingTime);
+          } else if (hoursStatus.status === 'open_until' && hoursStatus.closingTime) {
+               hoursLabel = 'Open until ' + formatTime(hoursStatus.closingTime);
+          } else {
+               hoursLabel = getTermFromDictionary(language, 'location_closed');
           }
      }
 

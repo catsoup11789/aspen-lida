@@ -1,7 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
-import { find, split, trimEnd, trimStart } from '../../../helpers/helpers';
-import moment from 'moment/moment';
-import { Box, Button, ButtonText, FormControl, HStack, Text, useColorMode } from '@gluestack-ui/themed';
+import { find, formatDateUs, formatFacetDateTime, parseToDate, split, trimEnd, trimStart } from '../../../helpers/helpers';
+import { Box, Button, ButtonText, FormControl, HStack, Text } from '@gluestack-ui/themed';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -17,9 +16,7 @@ export const Facet_Date = (props) => {
      const { data, category, updater } = props;
      const language = useActiveLanguage();
 
-     const [loading, setLoading] = React.useState(false);
-
-     const {theme, textColor, colorMode } = useTheme();;
+     const {theme, textColor, colorMode } = useTheme();
 
      const today = new Date();
      const [fromValue, setFrom] = React.useState(today);
@@ -38,15 +35,19 @@ export const Facet_Date = (props) => {
                     value = trimEnd(value, ']');
                     const arr = split(value, ' TO ');
                     if (arr[0] !== '*') {
-                         const tmp = moment(arr[0]);
-                         setFrom(tmp);
-                         setFromFacet(tmp);
+                         const tmp = parseToDate(arr[0]);
+                         if (tmp) {
+                              setFrom(tmp);
+                              setFromFacet(arr[0]);
+                         }
                     }
 
                     if (arr[1] !== '*') {
-                         const tmp = moment(arr[1]);
-                         setTo(tmp);
-                         setToFacet(tmp);
+                         const tmp = parseToDate(arr[1]);
+                         if (tmp) {
+                              setTo(tmp);
+                              setToFacet(arr[1]);
+                         }
                     }
                }
           }, [data])
@@ -58,9 +59,8 @@ export const Facet_Date = (props) => {
 
      const onSelectFromDate = (date) => {
           toggleFromDatePicker();
-          setLoading(true);
           setFrom(date);
-          let tmp = moment(date).format('YYYY-MM-DDTHH:mm:ss');
+          let tmp = formatFacetDateTime(date);
           tmp = String(tmp) + 'Z';
           setFromFacet(tmp);
           const facet = '[' + tmp + '+TO+' + toFacet + ']';
@@ -75,9 +75,8 @@ export const Facet_Date = (props) => {
 
      const onSelectToDate = (date) => {
           toggleToDatePicker();
-          setLoading(true);
           setTo(date);
-          let tmp = moment(date).format('YYYY-MM-DDTHH:mm:ss');
+          let tmp = formatFacetDateTime(date);
           tmp = String(tmp) + 'Z';
           setToFacet(tmp);
           const facet = '[' + fromFacet + '+TO+' + tmp + ']';
@@ -92,11 +91,11 @@ export const Facet_Date = (props) => {
                     <FormControl mb="$2">
                          <HStack space="sm" alignItems="center" justifyContent="center">
                               <Button variant="outline" onPress={() => toggleFromDatePicker()} borderColor={theme.tokens.colors.primary['500']}>
-                                   <ButtonText color={theme.tokens.colors.primary['500']}>{moment(fromValue).format('MM/DD/YYYY')}</ButtonText>
+                                   <ButtonText color={theme.tokens.colors.primary['500']}>{formatDateUs(fromValue)}</ButtonText>
                               </Button>
                               <Text color={textColor}>to</Text>
                               <Button variant="outline" onPress={() => toggleToDatePicker()} borderColor={theme.tokens.colors.primary['500']}>
-                                   <ButtonText color={theme.tokens.colors.primary['500']}>{toFacet === '*' ? 'MM/DD/YYYY' : moment(toValue).format('MM/DD/YYYY')}</ButtonText>
+                                   <ButtonText color={theme.tokens.colors.primary['500']}>{toFacet === '*' ? 'MM/DD/YYYY' : formatDateUs(toValue)}</ButtonText>
                               </Button>
                          </HStack>
                     </FormControl>
