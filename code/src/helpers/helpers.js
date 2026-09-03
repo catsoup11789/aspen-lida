@@ -684,6 +684,34 @@ export const keys = objectKeys;
 /** *******************************************************************
  * Manipulate and format dates (replacing moment.js)
  ******************************************************************* **/
+const MONTH_NAMES_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTH_NAMES_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const DAY_NAMES_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+function isValidDateInstance(value) {
+     return value instanceof Date && !Number.isNaN(value.getTime());
+}
+
+function coerceToDate(value) {
+     if (isValidDateInstance(value)) {
+          return value;
+     }
+
+     if (typeof value === 'string') {
+          const localDate = parseLocalDateString(value);
+          if (localDate) {
+               return localDate;
+          }
+     }
+
+     const parsed = new Date(value);
+     return isValidDateInstance(parsed) ? parsed : null;
+}
+
+function padDateValue(value) {
+     return String(value).padStart(2, '0');
+}
+
 /**
  * Format a Unix timestamp (seconds) to a "MMM D, YYYY" string, e.g. "Jan 4, 2024".
  * Returns an empty string for falsy or invalid input.
@@ -694,8 +722,318 @@ export function formatUnixDate(unixTimestamp) {
      if (!unixTimestamp) return '';
      const date = new Date(Number(unixTimestamp) * 1000);
      if (isNaN(date.getTime())) return '';
-     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-     return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+     return formatDateShort(date);
+}
+
+/**
+ * Format a date as "MMM D, YYYY".
+ * @param date
+ * @returns {string}
+ */
+export function formatDateShort(date) {
+     const resolvedDate = coerceToDate(date);
+     if (!resolvedDate) return '';
+     return `${MONTH_NAMES_SHORT[resolvedDate.getMonth()]} ${resolvedDate.getDate()}, ${resolvedDate.getFullYear()}`;
+}
+
+/**
+ * Format a date as "dddd, MMMM D, YYYY".
+ * @param date
+ * @returns {string}
+ */
+export function formatDateFull(date) {
+     const resolvedDate = coerceToDate(date);
+     if (!resolvedDate) return '';
+     return `${DAY_NAMES_LONG[resolvedDate.getDay()]}, ${MONTH_NAMES_LONG[resolvedDate.getMonth()]} ${resolvedDate.getDate()}, ${resolvedDate.getFullYear()}`;
+}
+
+/**
+ * Format a date as "h:mm A".
+ * @param date
+ * @returns {string}
+ */
+export function formatTime(date) {
+     const resolvedDate = coerceToDate(date);
+     if (!resolvedDate) return '';
+     const hours = resolvedDate.getHours();
+     const displayHour = hours % 12 || 12;
+     const minutes = padDateValue(resolvedDate.getMinutes());
+     const period = hours >= 12 ? 'PM' : 'AM';
+     return `${displayHour}:${minutes} ${period}`;
+}
+
+/**
+ * Format a date as "MM/DD/YYYY".
+ * @param date
+ * @returns {string}
+ */
+export function formatDateUs(date) {
+     const resolvedDate = coerceToDate(date);
+     if (!resolvedDate) return '';
+     return `${padDateValue(resolvedDate.getMonth() + 1)}/${padDateValue(resolvedDate.getDate())}/${resolvedDate.getFullYear()}`;
+}
+
+/**
+ * Format a date as a local "YYYY-MM-DDTHH:mm:ss" string.
+ * @param date
+ * @returns {string}
+ */
+export function formatFacetDateTime(date) {
+     const resolvedDate = coerceToDate(date);
+     if (!resolvedDate) return '';
+     return `${resolvedDate.getFullYear()}-${padDateValue(resolvedDate.getMonth() + 1)}-${padDateValue(resolvedDate.getDate())}T${padDateValue(resolvedDate.getHours())}:${padDateValue(resolvedDate.getMinutes())}:${padDateValue(resolvedDate.getSeconds())}`;
+}
+
+/**
+ * Return a new Date set to the provided time on the provided base date.
+ * @param hours
+ * @param minutes
+ * @param baseDate
+ * @param seconds
+ * @returns {Date|null}
+ */
+export function createTimeOnDate(hours, minutes, baseDate = new Date(), seconds = 0) {
+     const resolvedBaseDate = coerceToDate(baseDate);
+     if (!resolvedBaseDate) return null;
+     const next = new Date(resolvedBaseDate.getTime());
+     next.setHours(Number(hours) || 0, Number(minutes) || 0, Number(seconds) || 0, 0);
+     return next;
+}
+
+/**
+ * Parse a local YYYY-MM-DD string without timezone conversion.
+ * @param value
+ * @returns {Date|null}
+ */
+export function parseLocalDateString(value) {
+     if (isValidDateInstance(value)) {
+          return new Date(value.getTime());
+     }
+
+     if (typeof value !== 'string') return null;
+
+     const match = value.trim().match(/^(\d{4})-(\d{2})-(\d{2})$/);
+     if (!match) return null;
+
+     const year = Number(match[1]);
+     const monthIndex = Number(match[2]) - 1;
+     const day = Number(match[3]);
+     const parsed = new Date(year, monthIndex, day);
+
+     if (parsed.getFullYear() !== year || parsed.getMonth() !== monthIndex || parsed.getDate() !== day) {
+          return null;
+     }
+
+     return parsed;
+}
+
+/**
+ * Parse an HH:mm or HH:mm:ss time string onto a base date.
+ * @param value
+ * @param baseDate
+ * @returns {Date|null}
+ */
+export function parseTimeOnDate(value, baseDate = new Date()) {
+     if (typeof value !== 'string') return null;
+
+     const match = value.trim().match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+     if (!match) return null;
+
+     return createTimeOnDate(match[1], match[2], baseDate, match[3] ?? 0);
+}
+
+/**
+ * Parse an event API date-time string such as "YYYY-MM-DD HH:mm:ss" as a local Date.
+ * @param value
+ * @returns {Date|null}
+ */
+export function parseEventDateTime(value) {
+     if (isValidDateInstance(value)) {
+          return new Date(value.getTime());
+     }
+
+     if (typeof value !== 'string') return null;
+
+     const normalized = value.trim().replace('T', ' ');
+     const match = normalized.match(/^(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2})(?::(\d{2}))?$/);
+     if (match) {
+          const baseDate = parseLocalDateString(match[1]);
+          if (!baseDate) return null;
+          return parseTimeOnDate(`${match[2]}:${match[3] ?? '00'}`, baseDate);
+     }
+
+     return parseToDate(value);
+}
+
+/**
+ * Build shared display values for event start/end date-time strings.
+ * @param startValue
+ * @param endValue
+ * @returns {{startDate: Date|null, endDate: Date|null, displayDay: string, displayStartTime: string, displayEndTime: string}}
+ */
+export function getEventDateDisplayData(startValue, endValue = null) {
+     const startDate = parseEventDateTime(startValue);
+     const endDate = parseEventDateTime(endValue);
+
+     return {
+          startDate,
+          endDate,
+          displayDay: startDate ? formatDateFull(startDate) : '',
+          displayStartTime: startDate ? formatTime(startDate) : '',
+          displayEndTime: endDate ? formatTime(endDate) : '',
+     };
+}
+
+/**
+ * Get the full English day name for a date.
+ * @param date
+ * @returns {string}
+ */
+export function getDayName(date) {
+     const resolvedDate = coerceToDate(date);
+     if (!resolvedDate) return '';
+     return DAY_NAMES_LONG[resolvedDate.getDay()];
+}
+
+/**
+ * Get the numeric day of week (0-6).
+ * @param date
+ * @returns {number}
+ */
+export function getNumericDayOfWeek(date = new Date()) {
+     const resolvedDate = coerceToDate(date);
+     return resolvedDate ? resolvedDate.getDay() : NaN;
+}
+
+/**
+ * Compare whether dateA is before dateB.
+ * @param dateA
+ * @param dateB
+ * @returns {boolean}
+ */
+export function isDateBefore(dateA, dateB) {
+     const resolvedDateA = coerceToDate(dateA);
+     const resolvedDateB = coerceToDate(dateB);
+     if (!resolvedDateA || !resolvedDateB) return false;
+     return resolvedDateA.getTime() < resolvedDateB.getTime();
+}
+
+/**
+ * Compare whether dateA is after dateB.
+ * @param dateA
+ * @param dateB
+ * @returns {boolean}
+ */
+export function isDateAfter(dateA, dateB) {
+     const resolvedDateA = coerceToDate(dateA);
+     const resolvedDateB = coerceToDate(dateB);
+     if (!resolvedDateA || !resolvedDateB) return false;
+     return resolvedDateA.getTime() > resolvedDateB.getTime();
+}
+
+/**
+ * Subtract years from a date and return a new Date.
+ * @param date
+ * @param years
+ * @returns {Date|null}
+ */
+export function subtractYears(date, years) {
+     const resolvedDate = coerceToDate(date);
+     if (!resolvedDate) return null;
+     const next = new Date(resolvedDate.getTime());
+     next.setFullYear(next.getFullYear() - Number(years || 0));
+     return next;
+}
+
+/**
+ * Get the current date.
+ * @returns {Date}
+ */
+export function getCurrentDate() {
+     return new Date();
+}
+
+/**
+ * Get today's open/closed status for a weekly hours collection.
+ * @param hours
+ * @param now
+ * @returns {{hasHours: boolean, isClosedToday: boolean, status: string, openingTime: Date|null, closingTime: Date|null, todaysHours: object|null}}
+ */
+export function getTodaysHoursStatus(hours, now = new Date()) {
+     const hasHours = Array.isArray(hours) && hours.length > 0;
+     if (!hasHours) {
+          return {
+               hasHours: false,
+               isClosedToday: true,
+               status: 'closed',
+               openingTime: null,
+               closingTime: null,
+               todaysHours: null,
+          };
+     }
+
+     const currentDate = coerceToDate(now) ?? new Date();
+     const day = getNumericDayOfWeek(currentDate);
+     const todaysHours = hours.find((item) => Number(item?.day) === day) ?? null;
+
+     if (!todaysHours || todaysHours.isClosed) {
+          return {
+               hasHours: true,
+               isClosedToday: true,
+               status: 'closed',
+               openingTime: null,
+               closingTime: null,
+               todaysHours,
+          };
+     }
+
+     const openingTime = parseTimeOnDate(todaysHours.open, currentDate);
+     const closingTime = parseTimeOnDate(todaysHours.close, currentDate);
+
+     if (!openingTime || !closingTime) {
+          return {
+               hasHours: true,
+               isClosedToday: true,
+               status: 'closed',
+               openingTime,
+               closingTime,
+               todaysHours,
+          };
+     }
+
+     const stillOpen = isDateBefore(currentDate, closingTime);
+     const stillClosed = isDateBefore(openingTime, currentDate);
+
+     if (!stillOpen) {
+          return {
+               hasHours: true,
+               isClosedToday: true,
+               status: 'closed',
+               openingTime,
+               closingTime,
+               todaysHours,
+          };
+     }
+
+     if (!stillClosed) {
+          return {
+               hasHours: true,
+               isClosedToday: true,
+               status: 'closed_until',
+               openingTime,
+               closingTime,
+               todaysHours,
+          };
+     }
+
+     return {
+          hasHours: true,
+          isClosedToday: false,
+          status: 'open_until',
+          openingTime,
+          closingTime,
+          todaysHours,
+     };
 }
 
 /**
