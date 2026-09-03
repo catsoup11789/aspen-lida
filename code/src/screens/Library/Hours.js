@@ -1,4 +1,4 @@
-import { formatTime as formatDisplayTime, isArrayLikeObject, parseTimeOnDate } from '../../helpers/helpers';
+import { formatTime as formatDisplayTime, isArray, parseTimeOnDate } from '../../helpers/helpers';
 import { Box, FlatList, Heading, HStack, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
 
@@ -16,7 +16,7 @@ const Hours = (data) => {
      /* location.hours */
 
      if (location.showInLocationsAndHoursList === '1' || location.showInLocationsAndHoursList === 1) {
-          if (isArrayLikeObject(location.hours)) {
+          if (isArray(location.hours)) {
                return (
                     <Box>
                          <Heading color={textColor} mb="$2" mx="$2">{getTermFromDictionary(language, 'library_hours')}</Heading>
