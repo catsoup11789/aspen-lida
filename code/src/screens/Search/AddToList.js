@@ -10,7 +10,7 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import { addTitlesToList, createListFromTitle } from '../../util/api/list';
 import { saveLastListUsed } from '../../util/db';
 import { LoadingSpinner } from '../../components/loadingSpinner';
-import { getListDetails, getListGroupDetails, getListGroups, getLists, getListTitles } from '../../util/api/list';
+import { getListGroups } from '../../util/api/list';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { useTheme } from '../../themes/theme';

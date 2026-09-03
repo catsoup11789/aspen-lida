@@ -6,7 +6,7 @@ import React from 'react';
 
 // custom components and helper files
 import { loadError } from '../../components/loadError';
-import { LoadingSpinner, loadingSpinner } from '../../components/loadingSpinner';
+import { loadingSpinner } from '../../components/loadingSpinner';
 import { DisplaySystemMessage } from '../../components/Notifications';
 import { SystemMessagesContext } from '../../context/initialContext';
 import { useLibrary } from '../../hooks/useLibrarySystemData';

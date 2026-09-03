@@ -26,7 +26,7 @@ import {ScanBarcode, SearchIcon, SlidersHorizontalIcon, XIcon} from 'lucide-reac
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { loadError } from '../../components/loadError';
-import { popToast } from '../../components/feedback/toastService';
+import { popToast } from '../../components/feedback';
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import { DisplaySystemMessage } from '../../components/Notifications';
 

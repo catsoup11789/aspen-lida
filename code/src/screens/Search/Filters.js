@@ -1,4 +1,3 @@
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation, useNavigationState, StackActions } from '@react-navigation/native';
 import { filter, forEach, isEmpty, isObjectLike } from '../../helpers/helpers';
 import React from 'react';
@@ -26,7 +25,6 @@ import { LoadingSpinner } from '../../components/loadingSpinner';
 
 import { SearchContext } from '../../context/initialContext';
 import { useLibraryLocation } from '../../hooks/useLibraryBranchData';
-import { useUserState } from '../../hooks/useUserData';
 import { navigateStack } from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 

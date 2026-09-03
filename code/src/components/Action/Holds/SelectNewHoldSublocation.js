@@ -5,7 +5,7 @@ import { Select, SelectTrigger, SelectInput, SelectIcon, SelectPortal, SelectBac
 import { isObject } from '../../../helpers/helpers';
 import { getTermFromDictionary } from '../../../translations/TranslationService';
 
-import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage } from '../../../util/logging.js';
+import { logDebugMessage, logErrorMessage } from '../../../util/logging.js';
 
 export const SelectNewHoldSublocation = (props) => {
      const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor, theme, colorMode} = props;
