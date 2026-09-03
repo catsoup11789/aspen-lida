@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { isArrayLikeObject } from '../../helpers/helpers';
 import moment from 'moment';
 import { Box, FlatList, Heading, HStack, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
@@ -17,7 +17,7 @@ const Hours = (data) => {
      /* location.hours */
 
      if (location.showInLocationsAndHoursList === '1' || location.showInLocationsAndHoursList === 1) {
-          if (_.isArrayLikeObject(location.hours)) {
+          if (isArrayLikeObject(location.hours)) {
                return (
                     <Box>
                          <Heading color={textColor} mb="$2" mx="$2">{getTermFromDictionary(language, 'library_hours')}</Heading>

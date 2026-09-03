@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
-import _ from 'lodash';
 import moment from 'moment';
 import { Badge, BadgeText, Box, Button, ButtonText, ButtonGroup, ButtonIcon, Center, FlatList, HStack, Pressable, ScrollView, Text, useToken, VStack } from '@gluestack-ui/themed';
 import { useColorModeValue, useTheme } from '../../../themes/theme';
@@ -52,7 +51,7 @@ export const MyEvents = () => {
      }, [navigation]);
 
      React.useEffect(() => {
-          if (_.isArray(systemMessages)) {
+          if (Array.isArray(systemMessages)) {
                systemMessages.map((obj) => {
                     if (obj.showOn === '0' || obj.showOn === '1') {
                          systemMessagesForScreen.push(obj);
@@ -194,7 +193,7 @@ export const MyEvents = () => {
      };
 
      const showSystemMessage = () => {
-          if (_.isArray(systemMessages)) {
+          if (Array.isArray(systemMessages)) {
                return systemMessages.map((obj, index) => {
                     if (obj.showOn === '0' || obj.showOn === '1') {
                          return <DisplaySystemMessage key={obj.id || index} style={obj.style} message={obj.message} dismissable={obj.dismissable} id={obj.id} all={systemMessages} url={library.baseUrl} updateSystemMessages={updateSystemMessages} queryClient={queryClient} />;
@@ -208,7 +207,7 @@ export const MyEvents = () => {
 
      return (
           <Box style={{ flex: 1 }}>
-               {_.size(systemMessagesForScreen) > 0 ? <Box safeArea={2}>{showSystemMessage()}</Box> : null}
+               {systemMessagesForScreen.length > 0 ? <Box safeArea={2}>{showSystemMessage()}</Box> : null}
                {getActionButtons()}
                {events.length === 0 || status === 'loading' || isFetching ? (
                     loadingSpinner()
@@ -246,12 +245,12 @@ const Item = (data) => {
      }, [library.baseUrl, updateUserProfile]);
 
      let coverUrl = event.cover;
-     if (_.isNull(event.cover)) {
+     if (event.cover === null) {
           coverUrl = library.baseUrl + '/bookcover.php?size=medium&id=' + event.sourceId;
      }
 
      let registrationRequired = false;
-     if (!_.isUndefined(event.registrationRequired)) {
+     if (event.registrationRequired !== undefined) {
           registrationRequired = event.registrationRequired;
      }
 

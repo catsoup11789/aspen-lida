@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import _ from 'lodash';
+import { find, split, trimEnd, trimStart } from '../../../helpers/helpers';
 import moment from 'moment/moment';
 import { Box, Button, ButtonText, FormControl, HStack, Text, useColorMode } from '@gluestack-ui/themed';
 import React from 'react';
@@ -31,12 +31,12 @@ export const Facet_Date = (props) => {
 
      useFocusEffect(
           React.useCallback(() => {
-               if (_.find(data, ['isApplied', true])) {
-                    const appliedFilterObj = _.find(data, ['isApplied', true]);
+               if (find(data, ['isApplied', true])) {
+                    const appliedFilterObj = find(data, ['isApplied', true]);
                     let value = appliedFilterObj['value'];
-                    value = _.trimStart(value, '[');
-                    value = _.trimEnd(value, ']');
-                    const arr = _.split(value, ' TO ');
+                    value = trimStart(value, '[');
+                    value = trimEnd(value, ']');
+                    const arr = split(value, ' TO ');
                     if (arr[0] !== '*') {
                          const tmp = moment(arr[0]);
                          setFrom(tmp);
@@ -61,7 +61,7 @@ export const Facet_Date = (props) => {
           setLoading(true);
           setFrom(date);
           let tmp = moment(date).format('YYYY-MM-DDTHH:mm:ss');
-          tmp = _.toString(tmp) + 'Z';
+          tmp = String(tmp) + 'Z';
           setFromFacet(tmp);
           const facet = '[' + tmp + '+TO+' + toFacet + ']';
           addAppliedFilter(category, facet, false);
@@ -78,7 +78,7 @@ export const Facet_Date = (props) => {
           setLoading(true);
           setTo(date);
           let tmp = moment(date).format('YYYY-MM-DDTHH:mm:ss');
-          tmp = _.toString(tmp) + 'Z';
+          tmp = String(tmp) + 'Z';
           setToFacet(tmp);
           const facet = '[' + fromFacet + '+TO+' + tmp + ']';
           addAppliedFilter(category, facet, false);

@@ -20,7 +20,7 @@ import { CommonActions, useNavigation, useRoute, useFocusEffect } from '@react-n
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
-import _ from 'lodash';
+
 import {ScanBarcode, SearchIcon, SlidersHorizontalIcon, XIcon} from 'lucide-react-native';
 import moment from 'moment';
 
@@ -37,7 +37,7 @@ import { useLibraryScope, useLibraryLocation } from '../../hooks/useLibraryBranc
 import {navigate, navigateStack} from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { GLOBALS, SearchGlobal } from '../../util/globals';
-import { decodeHTML, isValidUrl } from '../../helpers/helpers';
+import { decodeHTML, isValidUrl, compact, filter, find, forEach, isEmpty, isEqual, map, size, truncate } from '../../helpers/helpers';
 import { getAppliedFilters, getAvailableFacetsKeys, getSortList } from '../../util/api/search';
 import { setDefaultFacets } from '../../util/api/searchHelper';
 
@@ -97,7 +97,7 @@ export const SearchResults = () => {
      }
 
      React.useEffect(() => {
-          if (_.isArray(systemMessages)) {
+          if (Array.isArray(systemMessages)) {
                systemMessages.map((obj, index, collection) => {
                     if (obj.showOn === '0') {
                          systemMessagesForScreen.push(obj);
@@ -139,7 +139,7 @@ export const SearchResults = () => {
       useFocusEffect(
            React.useCallback(() => {
                 // Check if SearchGlobal has pending params that differ from current route params
-                if (SearchGlobal.pendingParams && !_.isEqual(SearchGlobal.pendingParams, params)) {
+                if (SearchGlobal.pendingParams && !isEqual(SearchGlobal.pendingParams, params)) {
                      logDebugMessage('Filters were updated in modal, invalidating query to refetch');
                      // Invalidate the query to force a refetch
                      queryClient.invalidateQueries({
@@ -153,7 +153,7 @@ export const SearchResults = () => {
       );
 
       const Header = () => {
-          const num = _.toInteger(data?.totalResults);
+          const num = Math.trunc(Number(data?.totalResults ?? 0) || 0);
           if (num > 0) {
                let label = num + ' ' + getTermFromDictionary(language, 'results');
                if (num === 1) {
@@ -204,7 +204,7 @@ export const SearchResults = () => {
      };
 
      const showSystemMessage = () => {
-          if (_.isArray(systemMessages)) {
+          if (Array.isArray(systemMessages)) {
                return systemMessages.map((obj, index, collection) => {
                     if (obj.showOn === '0') {
                          return <DisplaySystemMessage key={obj.id || index} style={obj.style} message={obj.message} dismissable={obj.dismissable} id={obj.id} all={systemMessages} url={library.baseUrl} updateSystemMessages={updateSystemMessages} queryClient={queryClient} />;
@@ -217,7 +217,7 @@ export const SearchResults = () => {
      const NoResults = () => {
           return (
                <>
-                    {_.size(systemMessagesForScreen) > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
+                    {systemMessagesForScreen.length > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
                     <Center flex={1}>
                          <Heading pt="$5" color={textColor}>
                               {getTermFromDictionary(language, 'no_results')}
@@ -232,7 +232,7 @@ export const SearchResults = () => {
 
      return (
           <SafeAreaView style={{ flex: 1 }}>
-               {_.size(systemMessagesForScreen) > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
+               {systemMessagesForScreen.length > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
                {status === 'loading' || isFetching ? (
                     <LoadingSpinner />
                ) : status === 'error' ? (
@@ -358,7 +358,7 @@ const DisplayResult = (data) => {
           }
 
           let registrationRequired = false;
-          if (!_.isUndefined(item.registration_required)) {
+           if (item.registration_required !== undefined) {
                registrationRequired = item.registration_required;
           }
 
@@ -481,7 +481,7 @@ const DisplayResult = (data) => {
                               </Text>
                          ) : null}
                          <HStack mt="$4" direction="row" space="xs" flexWrap="wrap">
-                              {_.compact(_.map(formats, getFormat))}
+                              {compact(map(formats, getFormat))}
                          </HStack>
                     </VStack>
                </HStack>
@@ -584,27 +584,27 @@ const CreateFilterButtonDefaults = ({navigation}) => {
      }
 
      if (defaultAvailabilityToggleValue === 'global') {
-          if (locationGroupedWorkDisplaySettings.superScopeLabel || _.isEmpty(locationGroupedWorkDisplaySettings.superScopeLabel)) {
+          if (locationGroupedWorkDisplaySettings.superScopeLabel || isEmpty(locationGroupedWorkDisplaySettings.superScopeLabel)) {
                defaultAvailabilityToggleLabel = locationGroupedWorkDisplaySettings.superScopeLabel;
-          } else if (libraryGroupedWorkDisplaySettings.superScopeLabel || _.isEmpty(libraryGroupedWorkDisplaySettings.superScopeLabel)) {
+          } else if (libraryGroupedWorkDisplaySettings.superScopeLabel || isEmpty(libraryGroupedWorkDisplaySettings.superScopeLabel)) {
                defaultAvailabilityToggleLabel = libraryGroupedWorkDisplaySettings.superScopeLabel;
           }
      } else if (defaultAvailabilityToggleValue === 'local') {
-          if (locationGroupedWorkDisplaySettings.localLabel || _.isEmpty(locationGroupedWorkDisplaySettings.localLabel)) {
+          if (locationGroupedWorkDisplaySettings.localLabel || isEmpty(locationGroupedWorkDisplaySettings.localLabel)) {
                defaultAvailabilityToggleLabel = locationGroupedWorkDisplaySettings.localLabel;
-          } else if (libraryGroupedWorkDisplaySettings.localLabel || _.isEmpty(libraryGroupedWorkDisplaySettings.localLabel)) {
+          } else if (libraryGroupedWorkDisplaySettings.localLabel || isEmpty(libraryGroupedWorkDisplaySettings.localLabel)) {
                defaultAvailabilityToggleLabel = libraryGroupedWorkDisplaySettings.localLabel;
           }
      } else if (defaultAvailabilityToggleValue === 'available') {
-          if (locationGroupedWorkDisplaySettings.availableLabel || _.isEmpty(locationGroupedWorkDisplaySettings.availableLabel)) {
+          if (locationGroupedWorkDisplaySettings.availableLabel || isEmpty(locationGroupedWorkDisplaySettings.availableLabel)) {
                defaultAvailabilityToggleLabel = locationGroupedWorkDisplaySettings.availableLabel;
-          } else if (libraryGroupedWorkDisplaySettings.availableLabel || _.isEmpty(libraryGroupedWorkDisplaySettings.availableLabel)) {
+          } else if (libraryGroupedWorkDisplaySettings.availableLabel || isEmpty(libraryGroupedWorkDisplaySettings.availableLabel)) {
                defaultAvailabilityToggleLabel = libraryGroupedWorkDisplaySettings.availableLabel;
           }
      } else if (defaultAvailabilityToggleValue === 'available_online') {
-          if (locationGroupedWorkDisplaySettings.availableOnlineLabel || _.isEmpty(locationGroupedWorkDisplaySettings.availableOnlineLabel)) {
+          if (locationGroupedWorkDisplaySettings.availableOnlineLabel || isEmpty(locationGroupedWorkDisplaySettings.availableOnlineLabel)) {
                defaultAvailabilityToggleLabel = locationGroupedWorkDisplaySettings.availableOnlineLabel;
-          } else if (libraryGroupedWorkDisplaySettings.availableOnlineLabel || _.isEmpty(libraryGroupedWorkDisplaySettings.availableOnlineLabel)) {
+          } else if (libraryGroupedWorkDisplaySettings.availableOnlineLabel || isEmpty(libraryGroupedWorkDisplaySettings.availableOnlineLabel)) {
                defaultAvailabilityToggleLabel = libraryGroupedWorkDisplaySettings.availableOnlineLabel;
           }
      }
@@ -669,29 +669,29 @@ const CreateFilterButton = ({navigation}) => {
      const { currentSource } = React.useContext(SearchContext);
      const { theme, colorMode, textColor } = useTheme();
      const appliedFacets = SearchGlobal.appliedFilters;
-     const sort = _.find(appliedFacets['Sort By'], {
+     const sort = find(appliedFacets['Sort By'], {
           field: 'sort_by',
           value: 'relevance' });
 
-     if ((_.size(appliedFacets) > 0 && _.size(sort) === 0) || (_.size(appliedFacets) >= 1 && _.size(sort) > 1) || (_.size(appliedFacets) >= 1 && currentSource === 'events')) {
+     if ((size(appliedFacets) > 0 && size(sort) === 0) || (size(appliedFacets) >= 1 && size(sort) > 1) || (size(appliedFacets) >= 1 && currentSource === 'events')) {
           console.log("using applied filters bar")
           return (
                <ButtonGroup space="sm" vertical>
-                    {_.map(appliedFacets, function (item, index, collection) {
-                         const cluster = _.filter(SearchGlobal.availableFacets, ['field', item[0]['field']]);
+                    {map(appliedFacets, function (item, index, collection) {
+                         const cluster = filter(SearchGlobal.availableFacets, ['field', item[0]['field']]);
                          let labels = '';
-                         _.forEach(item, function (value, key) {
+                         forEach(item, function (value, key) {
                               let label = value['display'];
                               if (item[0].field === 'sort_by') {
                                    label = getSortLabel(label);
                               }
                               if (labels.length === 0) {
-                                   labels = labels.concat(_.toString(label));
+                                   labels = labels.concat(String(label ?? ''));
                               } else {
-                                   labels = labels.concat(', ', _.toString(label));
+                                   labels = labels.concat(', ', String(label ?? ''));
                               }
                          });
-                         const label = _.truncate(index + ': ' + labels);
+                         const label = truncate(index + ': ' + labels);
                          return (
                               <Button
                                    variant="outline"

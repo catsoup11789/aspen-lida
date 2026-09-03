@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { isEmpty, size } from '../../../helpers/helpers';
 import moment from 'moment';
 import { Box, Button, ButtonGroup, ButtonText, FormControl, HStack, Input, InputField, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
@@ -40,7 +40,7 @@ export const Facet_Year = ({ data, category, updater, language }) => {
                setYearTo(newValue);
           }
 
-          if (_.size(newValue) === 4) {
+          if (size(newValue) === 4) {
                updateFacet(type === 'yearFrom' ? newValue : yearFrom, type === 'yearTo' ? newValue : yearTo);
           }
      };
@@ -48,10 +48,10 @@ export const Facet_Year = ({ data, category, updater, language }) => {
      const updateFacet = (from = yearFrom, to = yearTo) => {
           let fromValue = from;
           let toValue = to;
-          if (_.isEmpty(from)) {
+          if (isEmpty(from)) {
                fromValue = '*';
           }
-          if (_.isEmpty(to)) {
+          if (isEmpty(to)) {
                toValue = '*';
           }
           const years = '[' + fromValue + '+TO+' + toValue + ']';

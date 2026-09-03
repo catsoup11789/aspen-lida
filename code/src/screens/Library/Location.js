@@ -2,7 +2,7 @@ import { useRoute } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import _ from 'lodash';
+import { filter, find, isArray, matchesProperty, size } from '../../helpers/helpers';
 import moment from 'moment';
 import { Badge, BadgeText, Box, Button, ButtonText, Divider, Heading, ScrollView, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
@@ -35,7 +35,7 @@ export const Location = () => {
 
      const bgColor = (colorMode === 'light' ? "$warmGray50" : "$coolGray800");
      const showSystemMessage = () => {
-          if (_.isArray(systemMessages)) {
+          if (isArray(systemMessages)) {
                return systemMessages.map((obj, index) => {
                     if (obj.showOn === '0') {
                          return <DisplaySystemMessage key={obj.id || index} style={obj.style} message={obj.message} dismissable={obj.dismissable} id={obj.id} all={systemMessages} url={library.baseUrl} updateSystemMessages={updateSystemMessages} queryClient={queryClient} />;
@@ -49,12 +49,12 @@ export const Location = () => {
      let hoursLabel = '';
      let hasHours = false;
      if (location.hours) {
-          if (_.size(location.hours) > 0) {
+          if (size(location.hours) > 0) {
                hasHours = true;
           }
           const day = moment().day();
-          if (_.find(location.hours, _.matchesProperty('day', day))) {
-               let todaysHours = _.filter(location.hours, { day: day });
+          if (find(location.hours, matchesProperty('day', day))) {
+               let todaysHours = filter(location.hours, { day: day });
                if (todaysHours[0]) {
                     todaysHours = todaysHours[0];
                     if (todaysHours.isClosed) {
@@ -144,7 +144,7 @@ export const Location = () => {
                               <ContactButtons data={location} />
                               {hasHours ? <Hours data={location} /> : null}
                               <AdditionalInformation data={location} />
-                              {_.size(locations) > 1 ? (
+                              {size(locations) > 1 ? (
                                    <>
                                         <Divider mt={5} mb={2} />
                                         <Button variant="ghost" size="sm" onPress={selectLocations} bgColor={theme.tokens.colors.primary['500']}>

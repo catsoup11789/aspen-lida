@@ -1,7 +1,7 @@
 import { Badge, BadgeText, Box, HStack, Pressable, Text, VStack } from '@gluestack-ui/themed';
 import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
-import _ from 'lodash';
+
 import moment from 'moment';
 import React from 'react';
 import { popToast } from '../../components/feedback';
@@ -34,7 +34,7 @@ export const DisplayEventResult = (props) => {
      let url = item.image ?? library.baseUrl + '/bookcover.php?id=' + item.key + '&size=medium&type=' + keyParts[0] + '_event';
 
      let registrationRequired = false;
-     if (!_.isUndefined(item.registration_required)) {
+     if (item.registration_required !== undefined) {
           registrationRequired = item.registration_required;
      }
 

@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import * as Location from 'expo-location';
 import * as SecureStore from 'expo-secure-store';
-import _ from 'lodash';
+import { filter, find, isArray, matchesProperty, size, sortBy } from '../../helpers/helpers';
 import moment from 'moment';
 import { Box, ButtonGroup, Button, ButtonText, Divider, FlatList, HStack, Icon, Pressable, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
@@ -103,12 +103,12 @@ export const AllLocations = () => {
      const sortedLocations = React.useMemo(() => {
           if (!locations) return [];
           return sort === 'distance'
-               ? _.sortBy(locations, ['distance', 'displayName'])
-               : _.sortBy(locations, ['displayName']);
+               ? sortBy(locations, ['distance', 'displayName'])
+               : sortBy(locations, ['displayName']);
      }, [locations, sort]);
 
      const showSystemMessage = () => {
-          if (_.isArray(systemMessages)) {
+          if (isArray(systemMessages)) {
                return systemMessages.map((obj, index) => {
                     if (obj.showOn === '0' || obj.showOn === '1') {
                          return <DisplaySystemMessage key={obj.id || index} style={obj.style} message={obj.message} dismissable={obj.dismissable} id={obj.id} all={systemMessages} url={library.baseUrl} updateSystemMessages={updateSystemMessages} queryClient={queryClient} />;
@@ -150,7 +150,7 @@ export const AllLocations = () => {
                     <FlatList
                          ListHeaderComponent={
                               <>
-                                   {_.size(systemMessages) > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
+                                   {size(systemMessages) > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
                                    {getActionButtons()}
                               </>
                          }
@@ -186,12 +186,12 @@ const DisplayLocation = (data) => {
      let hoursLabel = '';
      let hasHours = false;
      if (location.hours) {
-          if (_.size(location.hours) > 0) {
+          if (size(location.hours) > 0) {
                hasHours = true;
           }
           const day = moment().day();
-          if (_.find(location.hours, _.matchesProperty('day', day))) {
-               let todaysHours = _.filter(location.hours, { day: day });
+          if (find(location.hours, matchesProperty('day', day))) {
+               let todaysHours = filter(location.hours, { day: day });
                if (todaysHours[0]) {
                     todaysHours = todaysHours[0];
                     if (todaysHours.isClosed) {

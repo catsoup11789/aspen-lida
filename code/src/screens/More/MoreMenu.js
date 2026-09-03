@@ -1,7 +1,7 @@
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import _ from 'lodash';
+import { filter, find, map, matchesProperty, sample, size, trim, trimEnd, trimStart } from '../../helpers/helpers';
 import moment from 'moment';
 import {
      Accordion,
@@ -49,7 +49,7 @@ export const MoreMenu = () => {
      const { textColor, theme, colorMode } = useTheme();
 
      const { signOut } = React.useContext(AuthContext);
-     const hasMenuItems = _.size(menu);
+     const hasMenuItems = size(menu);
      const navigation = useNavigation();
      const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = React.useState(false);
      const [showDeleteResultsModal, setShowDeleteResultsModal] = React.useState(false);
@@ -210,8 +210,8 @@ const MyLibrary = () => {
      let hoursLabel = '';
      if (location?.hours) {
           const day = moment().day();
-          if (_.find(location.hours, _.matchesProperty('day', day))) {
-               let todaysHours = _.filter(location.hours, { day: day });
+          if (find(location.hours, matchesProperty('day', day))) {
+               let todaysHours = filter(location.hours, { day: day });
                if (todaysHours[0]) {
                     todaysHours = todaysHours[0];
                     if (todaysHours.isClosed) {
@@ -269,7 +269,7 @@ const ViewAllLocations = () => {
      const locations = useAvailableLocations();
      const { textColor, theme, colorMode } = useTheme();
 
-     if (_.size(locations) > 1) {
+     if (size(locations) > 1) {
           return (
                <Pressable px="$2" py="$3" onPress={() => navigate('AllLocations')}>
                     <HStack space="sm" alignItems="center">
@@ -379,10 +379,10 @@ const MenuLink = (payload) => {
      const library = useLibrary();
      const categories = payload.links;
      let hasMultiple = false;
-     if (_.size(categories) > 1) {
+     if (size(categories) > 1) {
           hasMultiple = true;
      }
-     let categoryLabel = _.sample(categories);
+     let categoryLabel = sample(categories);
      categoryLabel = categoryLabel.category;
 
      const { textColor, theme, colorMode } = useTheme();
@@ -418,7 +418,7 @@ const MenuLink = (payload) => {
           if (!isValidHttpUrl(url)) {
                /* Assume the URL is a relative one to Aspen Discovery */
                logDebugMessage('URL not valid!');
-               formattedUrl = _.trimEnd(library.baseUrl, '/') + '/' + _.trimStart(url, '/');
+               formattedUrl = trimEnd(library.baseUrl, '/') + '/' + trimStart(url, '/');
           }
           if (formattedUrl.includes(library.baseUrl)) {
                /* If Aspen Discovery, append minimalInterface to clean up the UI */
@@ -497,7 +497,7 @@ const MenuLink = (payload) => {
                               </AccordionHeader>
 
                               <AccordionContent p="$0" pt="$1">
-                                   {_.map(categories, function (item, index) {
+                                   {map(categories, function (item, index) {
                                         return (
                                              <Pressable
                                                   key={index}
@@ -532,7 +532,7 @@ const MenuLink = (payload) => {
 
      return (
           <>
-               {_.map(categories, function (item, index) {
+               {map(categories, function (item, index) {
                     return (
                          <Pressable key={index} px="$2" py="$3" borderRadius="$md" onPress={() => openURL(item.url)}>
                               <HStack space="sm" alignItems="center">
@@ -549,7 +549,7 @@ const MenuLink = (payload) => {
 };
 
 function appendQuery(url, query) {
-     let newQuery = _.trim(query, '?&');
+     let newQuery = trim(query, '?&');
 
      if (newQuery) {
           let glue = url.includes('?') === false ? '?' : '&';

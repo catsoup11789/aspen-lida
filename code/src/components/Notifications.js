@@ -1,7 +1,6 @@
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import _ from 'lodash';
 import { Alert, AlertIcon, AlertText, CloseIcon, HStack, Button, ButtonIcon, VStack, Pressable, Text } from '@gluestack-ui/themed';
 import React, {useContext} from 'react';
 import { Platform } from 'react-native';
@@ -178,7 +177,7 @@ export const DisplayMessage = (props) => {
 async function hideSystemMessage(allSystemMessages, currentMessageId, isDismissible, url) {
      let messages = allSystemMessages;
      // remove it from the array to hide it for the session
-     messages = _.reject(messages, { id: currentMessageId });
+     messages = messages.filter((item) => item.id !== currentMessageId);
 
      if (isDismissible === 1 || isDismissible === '1') {
           // send request to dismiss it with Discovery
