@@ -1,7 +1,7 @@
 import React from 'react';
-import { Toast, ToastTitle, ToastDescription } from '@/components/ui/toast';
 import { VStack } from '@/components/ui/vstack';
 import { logDebugMessage } from '../../util/logging.js';
+import { ThemedToast, ThemedToastTitle, ThemedToastDescription } from '../themed/ThemedToast';
 
 let globalToastInstance = null;
 
@@ -17,12 +17,12 @@ function buildToastRenderer(prefix, actionType, title, description) {
      return ({ id }) => {
           const uniqueToastId = `${prefix}-${id}`;
           return (
-               <Toast nativeID={uniqueToastId} action={actionType} variant="solid" zIndex={9999} elevation={9999}>
+               <ThemedToast nativeID={uniqueToastId} action={actionType} variant="accent" zIndex={9999} elevation={9999}>
                     <VStack space="xs">
-                         <ToastTitle>{title}</ToastTitle>
-                         {description && <ToastDescription>{description}</ToastDescription>}
+                         <ThemedToastTitle action={actionType}>{title}</ThemedToastTitle>
+                         {description && <ThemedToastDescription>{description}</ThemedToastDescription>}
                     </VStack>
-               </Toast>
+               </ThemedToast>
           );
      };
 }

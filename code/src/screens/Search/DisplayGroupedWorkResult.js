@@ -10,7 +10,7 @@ import AddToList from './AddToList';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedBadge, ThemedBadgeText, buildBrandOutlineBadgeStyle, buildBrandOutlineBadgeTextStyle } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
@@ -70,8 +70,8 @@ export const DisplayGroupedWorkResult = (props) => {
      function getFormat(n) {
           if (_.isArray(n) || _.isObject(n)) {
                return (
-                    <ThemedBadge key={n.key} variant="outline" style={{ borderRadius: 8, borderColor: runtimeColors.secondary[400], backgroundColor: 'transparent' }}>
-                         <ThemedBadgeText textTransform="none" style={{ color: runtimeColors.secondary[400], fontSize: 12 }}>
+                    <ThemedBadge key={n.key} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[400])}>
+                         <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[400], { fontSize: 12 })}>
                               {n.name}
                          </ThemedBadgeText>
                     </ThemedBadge>
@@ -79,8 +79,8 @@ export const DisplayGroupedWorkResult = (props) => {
           }
 
           return (
-               <ThemedBadge key={n} variant="outline" style={{ borderRadius: 8, borderColor: runtimeColors.secondary[400], backgroundColor: 'transparent' }}>
-                    <ThemedBadgeText textTransform="none" style={{ color: runtimeColors.secondary[400], fontSize: 12 }}>
+               <ThemedBadge key={n} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[400])}>
+                    <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[400], { fontSize: 12 })}>
                          {n}
                     </ThemedBadgeText>
                </ThemedBadge>

@@ -43,7 +43,8 @@ export const Facet_Rating = ({ data, category, updater }) => {
                label: 'Unrated',
                value: '0' },
      ]);
-     const { theme, textColor, runtimeColors } = useTheme();
+     const { textColor, runtimeColors } = useTheme();
+     const starColor = '#eab308';
 
      React.useEffect(() => {
           setIsLoading(false);
@@ -94,8 +95,8 @@ export const Facet_Rating = ({ data, category, updater }) => {
                                         count={5}
                                         starSize={50}
                                         disabled
-                                       fullStar={<MaterialIcons name="star" size={20} color={theme.tokens.colors.yellow['500']} />}
-                                       emptyStar={<MaterialIcons name="star-border" size={20} color={theme.tokens.colors.yellow['500']} />}
+                                       fullStar={<MaterialIcons name="star" size={20} color={starColor} />}
+                                       emptyStar={<MaterialIcons name="star-border" size={20} color={starColor} />}
                                    />
                                    <Text
                                        style={{ color: textColor, marginLeft: 8 }}

@@ -18,7 +18,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedBadge, ThemedBadgeText, buildBrandOutlineBadgeStyle, buildBrandOutlineBadgeTextStyle } from '../../components/themed/ThemedBadge';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -32,7 +32,7 @@ export const DisplayEventResult = (props) => {
      const item = props.data;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, uiColors, textColor, colorMode } = useTheme();
+     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
 
      const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
 
@@ -177,8 +177,8 @@ export const DisplayEventResult = (props) => {
                          ) : null}
                          {registrationRequired ? (
                               <HStack space="xs" style={{ marginTop: 16, flexWrap: 'wrap' }}>
-                                   <ThemedBadge key={0} action="secondary" variant="outline" style={{ borderRadius: 8, borderColor: theme['tokens']['colors']['secondary']['400'], backgroundColor: 'transparent' }}>
-                                        <ThemedBadgeText action="secondary" style={{ textTransform: 'none', color: theme['tokens']['colors']['secondary']['400'], fontSize: 10, lineHeight: 14 }}>
+                                   <ThemedBadge key={0} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[400])}>
+                                        <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[400], { fontSize: 10, lineHeight: 14 })}>
                                              {getTermFromDictionary(language, 'registration_required')}
                                         </ThemedBadgeText>
                                    </ThemedBadge>

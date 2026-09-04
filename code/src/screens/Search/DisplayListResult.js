@@ -10,7 +10,7 @@ import AddToList from './AddToList';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedBadge, ThemedBadgeText, buildBrandOutlineBadgeStyle, buildBrandOutlineBadgeTextStyle } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
@@ -120,8 +120,8 @@ export const DisplayListResult = (props) => {
                               <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
                                    {item.format.map((format, i) => {
                                         return (
-                                             <ThemedBadge key={i} variant="outline" style={{ borderRadius: 8, borderColor: runtimeColors.secondary[400], backgroundColor: 'transparent' }}>
-                                                  <ThemedBadgeText textTransform="none" style={{ color: runtimeColors.secondary[400], fontSize: 10, lineHeight: 14 }}>
+                                             <ThemedBadge key={i} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[400])}>
+                                                  <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[400], { fontSize: 10, lineHeight: 14 })}>
                                                        {format}
                                                   </ThemedBadgeText>
                                              </ThemedBadge>

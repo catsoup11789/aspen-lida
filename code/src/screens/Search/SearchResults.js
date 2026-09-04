@@ -26,7 +26,7 @@ import { createApiClient } from '../../util/api/apiFactory';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedBadge, ThemedBadgeText, buildBrandOutlineBadgeStyle, buildBrandOutlineBadgeTextStyle } from '../../components/themed/ThemedBadge';
 import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
@@ -291,8 +291,8 @@ const DisplayResult = (data) => {
           }
 
           return (
-               <ThemedBadge key={n.key} variant="outline" style={{ borderRadius: 8, borderColor: runtimeColors.primary[400], backgroundColor: 'transparent' }}>
-                    <ThemedBadgeText textTransform="none" style={{ color: runtimeColors.primary[400], fontSize: 12 }}>
+               <ThemedBadge key={n.key} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.primary[400])}>
+                    <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.primary[400], { fontSize: 12 })}>
                          {n.name}
                     </ThemedBadgeText>
                </ThemedBadge>
@@ -421,8 +421,8 @@ const DisplayResult = (data) => {
                               ) : null}
                               {registrationRequired ? (
                                    <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
-                                        <ThemedBadge key={0} variant="outline" style={{ borderRadius: 8, borderColor: runtimeColors.secondary[400], backgroundColor: 'transparent' }}>
-                                             <ThemedBadgeText textTransform="none" style={{ color: runtimeColors.secondary[400], fontSize: 12 }}>
+                                        <ThemedBadge key={0} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[400])}>
+                                             <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[400], { fontSize: 12 })}>
                                                   {getTermFromDictionary(language, 'registration_required')}
                                              </ThemedBadgeText>
                                         </ThemedBadge>
