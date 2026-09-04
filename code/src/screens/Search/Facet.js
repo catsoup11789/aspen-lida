@@ -6,7 +6,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { CheckboxGroup } from '@/components/ui/checkbox';
+import { ThemedCheckboxGroup as CheckboxGroup } from '../../components/themed/ThemedCheckbox';
 import { Pressable } from '@/components/ui/pressable';
 import { VStack } from '@/components/ui/vstack';
 import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';

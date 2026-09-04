@@ -20,6 +20,7 @@ import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from
 import { useTheme } from '@/src/themes/theme';
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
+import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../themed/ThemedCheckbox';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { CheckIcon } from '@/components/ui/icon';

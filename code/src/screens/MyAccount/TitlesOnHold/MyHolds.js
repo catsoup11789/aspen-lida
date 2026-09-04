@@ -8,7 +8,7 @@ import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from '@/src/components/
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { CheckboxGroup } from '@/components/ui/checkbox';
+import { ThemedCheckboxGroup as CheckboxGroup } from '../../../components/themed/ThemedCheckbox';
 import { FormControl } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';

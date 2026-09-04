@@ -3,7 +3,7 @@ import { ButtonGroup } from '@/components/ui/button';
 import React from 'react';
 import { updateOverDriveEmail } from '../../util/api/user';
 import { getTermFromDictionary } from '../../translations/TranslationService';
-import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
+import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../components/themed/ThemedCheckbox';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { CheckIcon } from '@/components/ui/icon';
