@@ -20,10 +20,10 @@ import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedBut
 import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
-import { CheckIcon, ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { CheckIcon } from '@/components/ui/icon';
 import { Input, InputField } from '@/components/ui/input';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 import { Textarea, TextareaInput } from '@/components/ui/textarea';
 
@@ -274,7 +274,6 @@ const Request = (payload) => {
                                    ) : (
                                         <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select a pickup location" />
                                    )}
-                                   <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                               </SelectTrigger>
                               <SelectPortal>
                                    <SelectBackdrop />

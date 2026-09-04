@@ -8,9 +8,9 @@ import { loadError } from '../../loadError';
 import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ChevronDownIcon, CircleIcon, Icon } from '@/components/ui/icon';
+import { CircleIcon } from '@/components/ui/icon';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
 
 /**
  * SelectVolume component for selecting a volume for a library hold request.
@@ -79,7 +79,6 @@ export const SelectVolume = (props) => {
                                                        return <SelectInput style={{ paddingVertical: 0, color: textColor }} value={item.label} />;
                                                   }
                                              })}
-                                             <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                         </SelectTrigger>
                                         <SelectPortal useRNModal={true}>
                                              <SelectBackdrop />

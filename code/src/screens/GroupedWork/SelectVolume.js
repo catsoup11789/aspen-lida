@@ -7,9 +7,9 @@ import { loadError } from '../../components/loadError';
 import _ from 'lodash';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ChevronDownIcon, CircleIcon, Icon } from '@/components/ui/icon';
+import { CircleIcon } from '@/components/ui/icon';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 
 /**
  * SelectVolume component that allows users to select a volume for a specific item. It fetches available volumes from the API and provides options for selecting either the first available item or a specific volume.
@@ -67,7 +67,6 @@ export const SelectVolume = (props) => {
                                         onValueChange={(itemValue) => setVolume(itemValue)}>
                                         <SelectTrigger variant="outline" size="md">
                                              <SelectInput style={{ paddingVertical: 0 }} placeholder={getTermFromDictionary(language, 'select_volume')} />
-                                             <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />

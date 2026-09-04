@@ -17,9 +17,8 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 
 /**
  * EditListGroupParent component that allows users to edit the parent group of a list group. It provides a modal interface for selecting a new parent group from existing list groups and updates the backend accordingly.
@@ -45,7 +44,6 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
 
       const insets = useSafeAreaInsets();
       const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-      const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
       React.useEffect(() => {
            if (listGroups && listGroups.groups && parentId != null) {
@@ -105,9 +103,6 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
                                                         <SelectInput style={{ color: textColor }} value={selectedGroup.title} />
                                                    ))
                                               }
-                                            <SelectIcon style={{ marginRight: 12 }}>
-                                                 <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                                            </SelectIcon>
                                          </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
@@ -122,7 +117,7 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
                                                              if(item.id === id || item.id === parentId || item.parentGroupId === id) {
                                                                   return null;
                                                              }
-                                                             return <SelectItem key={index} value={item.id} label={item.title} style={{ backgroundColor: newListGroupParentId === item.id ? tertiaryBg : 'transparent' }} />;
+                                                             return <SelectItem key={index} value={item.id} label={item.title} selectedValue={newListGroupParentId} />;
                                                         })}
                                                    </SelectScrollView>
                                              </SelectContent>

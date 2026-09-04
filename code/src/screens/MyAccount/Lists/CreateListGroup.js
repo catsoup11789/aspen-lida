@@ -17,9 +17,8 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 
 /**
  * CreateListGroup component that allows users to create a new list group. It displays a button that opens a modal where users can input the title of the new list group and optionally nest it within an existing group. The component handles API calls to create the list group and provides feedback on the creation process, including refreshing the user's profile and updating the list groups in the local state.
@@ -46,7 +45,6 @@ const CreateListGroup = (props) => {
      const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      let hasListGroups = false;
      if(user.numListGroups) {
@@ -99,9 +97,6 @@ const CreateListGroup = (props) => {
                                                    ) : (
                                                         <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'nest_within_group_no')} />
                                                    )}
-                                                   <SelectIcon style={{ marginRight: 12 }}>
-                                                        <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                                                   </SelectIcon>
                                               </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
@@ -110,9 +105,9 @@ const CreateListGroup = (props) => {
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
                                                    <SelectScrollView>
-                                                        <SelectItem label={getTermFromDictionary(language, 'nest_within_group_no')} value="no" key={1} style={{ backgroundColor: nestedGroupId === 'no' ? tertiaryBg : 'transparent' }} />
+                                                        <SelectItem label={getTermFromDictionary(language, 'nest_within_group_no')} value="no" key={1} selectedValue={nestedGroupId} />
                                                         {toArray(listGroups?.groups ?? []).map((item, index) => {
-                                                             return <SelectItem key={index} value={item.id} label={item.title} style={{ backgroundColor: nestedGroupId === item.id ? tertiaryBg : 'transparent' }} />;
+                                                             return <SelectItem key={index} value={item.id} label={item.title} selectedValue={nestedGroupId} />;
                                                         })}
                                                    </SelectScrollView>
                                                   </SelectContent>

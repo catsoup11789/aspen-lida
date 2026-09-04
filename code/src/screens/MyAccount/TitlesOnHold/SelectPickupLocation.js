@@ -11,10 +11,9 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ButtonGroup } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { Icon, ChevronDownIcon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 
 /**
  * SelectPickupLocation component that renders a modal for selecting a new pickup location for a hold. It displays a list of available locations and sublocations, allows the user to select one, and updates the hold's pickup location when confirmed.
@@ -49,7 +48,6 @@ export const SelectPickupLocation = (props) => {
      let [location, setLocation] = React.useState(pickupLocation);
      let [activeSublocation, setActiveSublocation] = React.useState(null);
      const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const tertiaryBg = runtimeColors?.tertiary?.[300] ?? runtimeColors?.tertiary?.[500];
 
      return (
           <>
@@ -99,7 +97,6 @@ export const SelectPickupLocation = (props) => {
                                                        }
                                                        return null;
                                                   })}
-                                                  <SelectIcon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
@@ -117,7 +114,7 @@ export const SelectPickupLocation = (props) => {
                                                                           value={id}
                                                                           label={item.name}
                                                                           key={index}
-                                                                          style={{ backgroundColor: location === id ? tertiaryBg : 'transparent' }}
+                                                                          selectedValue={location}
                                                                       />
                                                                  );
                                                             })}

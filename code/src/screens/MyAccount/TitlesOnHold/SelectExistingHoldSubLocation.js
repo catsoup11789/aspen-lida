@@ -2,8 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Box } from '@/components/ui/box';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ChevronDownIcon } from '@/components/ui/icon';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 
 /**
@@ -54,7 +53,6 @@ export const SelectExistingHoldSubLocation = (props) => {
                                              onValueChange={(itemValue) => setActiveSublocation(itemValue)}>
                                              <SelectTrigger variant="outline" size="md">
                                                   <SelectInput placeholder={getTermFromDictionary(language, 'select_new_pickup_area')} style={{ color: textColor, paddingVertical: 0 }} />
-                                                  <SelectIcon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />

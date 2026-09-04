@@ -7,14 +7,14 @@ import { FlatList, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
+import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { loadingSpinner } from '@/src/components/loadingSpinner';
@@ -66,7 +66,6 @@ export const MyCheckouts = () => {
      const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      const [checkoutsBy, setCheckoutBy] = React.useState({
           ils: 'Checked Out Titles for Physical Materials',
@@ -445,9 +444,6 @@ export const MyCheckouts = () => {
                                         onValueChange={(itemValue) => toggleCheckoutSource(itemValue)}>
                                         <SelectTrigger variant="outline" size="sm">
                                              <SelectInput style={{ paddingVertical: 0, color: textColor }} value={checkoutSourceSelectLabel()} />
-                                             <SelectIcon style={{ marginRight: 12 }}>
-                                                  <Icon style={{ color: textColor }} as={ChevronDownIcon} />
-                                             </SelectIcon>
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
@@ -458,13 +454,13 @@ export const MyCheckouts = () => {
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
                                                   <SelectScrollView>
-                                                       <SelectItem label={getTermFromDictionary(language, 'filter_by_all') + ' (' + (user.numCheckedOut ?? 0) + ')'} value="all" key={0} style={{ backgroundColor: checkoutSource === "all" ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={getTermFromDictionary(language, 'filter_by_ils') + ' (' + (user.numCheckedOutIls ?? 0) + ')'} value="ils" key={1} style={{ backgroundColor: checkoutSource === "ils" ? tertiaryBg : 'transparent' }} />
-                                                       {user.isValidForOverdrive ? <SelectItem label={filterByLibby + ' (' + (user.numCheckedOutOverDrive ?? 0) + ')'} value="overdrive" key={2} style={{ backgroundColor: checkoutSource === "overdrive" ? tertiaryBg : 'transparent' }} /> : null}
-                                                       {user.isValidForHoopla ? <SelectItem label={getTermFromDictionary(language, 'filter_by_hoopla') + ' (' + (user.numCheckedOut_Hoopla ?? 0) + ')'} value="hoopla" key={3} style={{ backgroundColor: checkoutSource === "hoopla" ? tertiaryBg : 'transparent' }} /> : null}
-                                                       {user.isValidForCloudLibrary ? <SelectItem label={getTermFromDictionary(language, 'filter_by_cloud_library') + ' (' + (user.numCheckedOut_cloudLibrary ?? 0) + ')'} value="cloud_library" key={4} style={{ backgroundColor: checkoutSource === "cloud_library" ? tertiaryBg : 'transparent' }} /> : null}
-                                                       {user.isValidForAxis360 ? <SelectItem label={getTermFromDictionary(language, 'filter_by_boundless') + ' (' + (user.numCheckedOut_axis360 ?? 0) + ')'} value="axis360" key={5} style={{ backgroundColor: checkoutSource === "axis360" ? tertiaryBg : 'transparent' }} /> : null}
-                                                       {user.isValidForPalaceProject ? <SelectItem label={getTermFromDictionary(language, 'filter_by_palace_project') + ' (' + (user.numCheckedOut_PalaceProject ?? 0) + ')'} value="palace_project" key={6} style={{ backgroundColor: checkoutSource === "palace_project" ? tertiaryBg : 'transparent' }} /> : null}
+                                                       <SelectItem label={getTermFromDictionary(language, 'filter_by_all') + ' (' + (user.numCheckedOut ?? 0) + ')'} value="all" key={0} selectedValue={checkoutSource} />
+                                                       <SelectItem label={getTermFromDictionary(language, 'filter_by_ils') + ' (' + (user.numCheckedOutIls ?? 0) + ')'} value="ils" key={1} selectedValue={checkoutSource} />
+                                                       {user.isValidForOverdrive ? <SelectItem label={filterByLibby + ' (' + (user.numCheckedOutOverDrive ?? 0) + ')'} value="overdrive" key={2} selectedValue={checkoutSource} /> : null}
+                                                       {user.isValidForHoopla ? <SelectItem label={getTermFromDictionary(language, 'filter_by_hoopla') + ' (' + (user.numCheckedOut_Hoopla ?? 0) + ')'} value="hoopla" key={3} selectedValue={checkoutSource} /> : null}
+                                                       {user.isValidForCloudLibrary ? <SelectItem label={getTermFromDictionary(language, 'filter_by_cloud_library') + ' (' + (user.numCheckedOut_cloudLibrary ?? 0) + ')'} value="cloud_library" key={4} selectedValue={checkoutSource} /> : null}
+                                                       {user.isValidForAxis360 ? <SelectItem label={getTermFromDictionary(language, 'filter_by_boundless') + ' (' + (user.numCheckedOut_axis360 ?? 0) + ')'} value="axis360" key={5} selectedValue={checkoutSource} /> : null}
+                                                       {user.isValidForPalaceProject ? <SelectItem label={getTermFromDictionary(language, 'filter_by_palace_project') + ' (' + (user.numCheckedOut_PalaceProject ?? 0) + ')'} value="palace_project" key={6} selectedValue={checkoutSource} /> : null}
                                                   </SelectScrollView>
                                              </SelectContent>
                                         </SelectPortal>
@@ -481,9 +477,6 @@ export const MyCheckouts = () => {
                                         onValueChange={(itemValue) => toggleSort(itemValue)}>
                                         <SelectTrigger variant="outline" size="sm">
                                              <SelectInput style={{ paddingVertical: 0, color: textColor }} value={checkoutSortLabel()} />
-                                             <SelectIcon style={{ marginRight: 12 }}>
-                                                  <Icon style={{ color: textColor }} as={ChevronDownIcon} />
-                                             </SelectIcon>
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
@@ -494,13 +487,13 @@ export const MyCheckouts = () => {
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
                                                   <SelectScrollView>
-                                                       <SelectItem label={sortBy.title} value="sortTitle" key={0} style={{ backgroundColor: userCheckoutSortMethod === "sortTitle" ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={sortBy.author} value="author" key={1} style={{ backgroundColor: userCheckoutSortMethod === "author" ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={sortBy.due_asc} value="dueAsc" key={2} style={{ backgroundColor: userCheckoutSortMethod === "dueAsc" ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={sortBy.due_desc} value="dueDesc" key={3} style={{ backgroundColor: userCheckoutSortMethod === "dueDesc" ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={sortBy.format} value="format" key={4} style={{ backgroundColor: userCheckoutSortMethod === "format" ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={sortBy.library_account} value="libraryAccount" key={5} style={{ backgroundColor: userCheckoutSortMethod === "libraryAccount" ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={sortBy.times_renewed} value="timesRenewed" key={6} style={{ backgroundColor: userCheckoutSortMethod === "timesRenewed" ? tertiaryBg : 'transparent' }} />
+                                                       <SelectItem label={sortBy.title} value="sortTitle" key={0} selectedValue={userCheckoutSortMethod} />
+                                                       <SelectItem label={sortBy.author} value="author" key={1} selectedValue={userCheckoutSortMethod} />
+                                                       <SelectItem label={sortBy.due_asc} value="dueAsc" key={2} selectedValue={userCheckoutSortMethod} />
+                                                       <SelectItem label={sortBy.due_desc} value="dueDesc" key={3} selectedValue={userCheckoutSortMethod} />
+                                                       <SelectItem label={sortBy.format} value="format" key={4} selectedValue={userCheckoutSortMethod} />
+                                                       <SelectItem label={sortBy.library_account} value="libraryAccount" key={5} selectedValue={userCheckoutSortMethod} />
+                                                       <SelectItem label={sortBy.times_renewed} value="timesRenewed" key={6} selectedValue={userCheckoutSortMethod} />
                                                   </SelectScrollView>
                                              </SelectContent>
                                         </SelectPortal>

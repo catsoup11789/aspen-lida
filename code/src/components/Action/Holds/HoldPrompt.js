@@ -22,9 +22,9 @@ import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedBut
 import { ButtonGroup } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { CheckIcon, ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { CheckIcon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 
 /**
@@ -494,7 +494,6 @@ export const HoldPrompt = (props) => {
                                                             return <SelectInput style={{ paddingVertical: 0, color: textColor }} value={selectedLocation.name} key={index} />;
                                                        }
                                                   })}
-                                                  <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />
@@ -550,7 +549,6 @@ export const HoldPrompt = (props) => {
                                                        })()}
                                                        placeholder={getTermFromDictionary(language, 'select_an_account')}
                                                   />
-                                                  <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />

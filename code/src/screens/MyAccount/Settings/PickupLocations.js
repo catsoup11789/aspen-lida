@@ -14,8 +14,8 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ChevronDownIcon, CheckIcon, Icon } from '@/components/ui/icon';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { CheckIcon } from '@/components/ui/icon';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 
 /**
  * Settings_PickupLocations component that allows users to manage their preferred pickup locations and sublocations. It fetches available pickup locations and sublocations from the API, displays them in dropdown selects, and allows users to update their preferences. The component also handles state management for user selections and updates the user profile accordingly.
@@ -72,7 +72,6 @@ export const Settings_PickupLocations = () => {
 	const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
     const locationsRef = React.useRef(locations);
 	const sublocationsRef = React.useRef(sublocations);
 
@@ -260,9 +259,6 @@ export const Settings_PickupLocations = () => {
                          }}>
                          <SelectTrigger variant="outline" size="md">
                               {selectedLocationObj ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getLocationLabel(selectedLocationObj)} /> : <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'select_pickup_location')} />}
-                              <SelectIcon style={{ marginRight: 12 }}>
-                                   <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                              </SelectIcon>
                          </SelectTrigger>
                          <SelectPortal>
                               <SelectBackdrop />
@@ -273,10 +269,7 @@ export const Settings_PickupLocations = () => {
                                    <SelectScrollView>
                                         {locations.map((availableLocations, index) => {
                                              const locationLabel = getLocationLabel(availableLocations);
-                                             if (availableLocations.code === location) {
-                                                  return <SelectItem label={locationLabel} value={availableLocations.code} key={index} style={{ backgroundColor: tertiaryBg }} />;
-                                             }
-                                             return <SelectItem label={locationLabel} value={availableLocations.code} key={index} />;
+                                             return <SelectItem label={locationLabel} value={availableLocations.code} key={index} selectedValue={location} />;
                                         })}
                                    </SelectScrollView>
                               </SelectContent>
@@ -299,9 +292,6 @@ export const Settings_PickupLocations = () => {
                                    }}>
                                    <SelectTrigger variant="outline" size="md">
                                         {selectedLocation1Obj ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getLocationLabel(selectedLocation1Obj)} /> : <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'select_pickup_location')} />}
-                                        <SelectIcon style={{ marginRight: 12 }}>
-                                             <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                                        </SelectIcon>
                                    </SelectTrigger>
                                    <SelectPortal>
                                         <SelectBackdrop />
@@ -312,10 +302,7 @@ export const Settings_PickupLocations = () => {
                                              <SelectScrollView>
                                                   {locations.map((availableLocations, index) => {
                                                        const locationLabel = getLocationLabel(availableLocations);
-                                                       if (availableLocations.code === location1Id) {
-                                                            return <SelectItem label={locationLabel} value={availableLocations.code} key={index} style={{ backgroundColor: tertiaryBg }} />;
-                                                       }
-                                                       return <SelectItem label={locationLabel} value={availableLocations.code} key={index} />;
+                                                       return <SelectItem label={locationLabel} value={availableLocations.code} key={index} selectedValue={location1Id} />;
                                                   })}
                                              </SelectScrollView>
                                         </SelectContent>
@@ -336,9 +323,6 @@ export const Settings_PickupLocations = () => {
                                    }}>
                                    <SelectTrigger variant="outline" size="md">
                                         {selectedLocation2Obj ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getLocationLabel(selectedLocation2Obj)} /> : <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'select_pickup_location')} />}
-                                        <SelectIcon style={{ marginRight: 12 }}>
-                                             <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                                        </SelectIcon>
                                    </SelectTrigger>
                                    <SelectPortal>
                                         <SelectBackdrop />
@@ -349,10 +333,7 @@ export const Settings_PickupLocations = () => {
                                              <SelectScrollView>
                                                   {locations.map((availableLocations, index) => {
                                                        const locationLabel = getLocationLabel(availableLocations);
-                                                       if (availableLocations.code === location2Id) {
-                                                            return <SelectItem label={locationLabel} value={availableLocations.code} key={index} style={{ backgroundColor: tertiaryBg }} />;
-                                                       }
-                                                       return <SelectItem label={locationLabel} value={availableLocations.code} key={index} />;
+                                                       return <SelectItem label={locationLabel} value={availableLocations.code} key={index} selectedValue={location2Id} />;
                                                   })}
                                              </SelectScrollView>
                                         </SelectContent>

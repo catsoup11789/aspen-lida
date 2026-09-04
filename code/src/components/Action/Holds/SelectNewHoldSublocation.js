@@ -5,8 +5,7 @@ import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { logDebugMessage, logErrorMessage } from '@/src/util/logging';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 
 /**
@@ -16,10 +15,9 @@ import { Text } from '@/components/ui/text';
  * @constructor
  */
 export const SelectNewHoldSublocation = (props) => {
-     const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor, uiColors, colorMode, runtimeColors} = props;
+     const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor, uiColors, colorMode} = props;
      const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      if (sublocations !== undefined) {
           try {
@@ -69,9 +67,6 @@ export const SelectNewHoldSublocation = (props) => {
                                                        }
                                                        return null;
                                                   })}
-                                                  <SelectIcon style={{ marginRight: 12 }}>
-                                                       <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                                                  </SelectIcon>
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />
@@ -81,10 +76,7 @@ export const SelectNewHoldSublocation = (props) => {
                                                       </SelectDragIndicatorWrapper>
                                                       <SelectScrollView>
                                                             {validSublocations.map((sublocation, index) => {
-                                                                 if (sublocation.id === activeSublocation) {
-                                                                      return <SelectItem label={sublocation.displayName} value={sublocation.id} key={index} style={{ backgroundColor: tertiaryBg }} />;
-                                                                 }
-                                                                 return <SelectItem label={sublocation.displayName} value={sublocation.id} key={index} />;
+                                                                 return <SelectItem label={sublocation.displayName} value={sublocation.id} key={index} selectedValue={activeSublocation} />;
                                                             })}
                                                       </SelectScrollView>
                                                   </SelectContent>

@@ -29,10 +29,9 @@ import { ThemedButton as Button, ThemedButtonIcon as ButtonIcon, ThemedButtonTex
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 
@@ -277,7 +276,6 @@ export const Editions = () => {
                                         <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setSelectedItem(itemValue)}>
                                              <SelectTrigger>
                                                   <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select option" />
-                                                  <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />

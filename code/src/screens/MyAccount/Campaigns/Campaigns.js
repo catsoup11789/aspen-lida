@@ -13,10 +13,9 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import PlaceholderImg from '../../../assets/digital-reward-placeholder.png';
@@ -565,9 +564,6 @@ export const MyCampaigns = () => {
 							placeholder="Select Filter"
 							value={getFilterLabel(filterBy)}
 						/>
-						<SelectIcon style={{ marginRight: 12 }}>
-							<Icon as={ChevronDownIcon} style={{ color: textColor }} />
-						</SelectIcon>
 					</SelectTrigger>
 					<SelectPortal>
 						<SelectBackdrop />

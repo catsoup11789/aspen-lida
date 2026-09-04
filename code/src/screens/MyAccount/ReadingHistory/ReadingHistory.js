@@ -15,10 +15,10 @@ import { Center } from '@/components/ui/center';
 import { FormControl } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronDownIcon, ChevronUpIcon, Icon, InfoIcon } from '@/components/ui/icon';
+import { ChevronDownIcon, ChevronUpIcon, InfoIcon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { loadError } from '@/src/components/loadError';
@@ -71,7 +71,6 @@ export const MyReadingHistory = () => {
      const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
      const dangerColor = uiColors.danger;
      const pageHistory = React.useMemo(() => {
           if (!Array.isArray(readingHistory?.history)) return [];
@@ -298,9 +297,6 @@ export const MyReadingHistory = () => {
                                             onValueChange={(itemValue) => updateSort(itemValue)}>
                                              <SelectTrigger variant="outline" size="sm">
                                                   <SelectInput style={{ paddingVertical: 0, color: textColor }} value={sortLabel()} />
-                                                  <SelectIcon style={{ marginRight: 12 }}>
-                                                       <Icon style={{ color: textColor }} as={ChevronDownIcon} />
-                                                  </SelectIcon>
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
@@ -311,10 +307,10 @@ export const MyReadingHistory = () => {
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
                                                        <SelectScrollView>
-                                                            <SelectItem label={sortBy.title} value="title" key={0} style={{ backgroundColor: sort === "title" ? tertiaryBg : 'transparent' }} />
-                                                            <SelectItem label={sortBy.author} value="author" key={1} style={{ backgroundColor: sort === "author" ? tertiaryBg : 'transparent' }} />
-                                                            <SelectItem label={sortBy.last_used} value="checkedOut" key={2} style={{ backgroundColor: sort === "checkedOut" ? tertiaryBg : 'transparent' }} />
-                                                            <SelectItem label={sortBy.format} value="format" key={3} style={{ backgroundColor: sort === "format" ? tertiaryBg : 'transparent' }} />
+                                                            <SelectItem label={sortBy.title} value="title" key={0} selectedValue={sort} />
+                                                            <SelectItem label={sortBy.author} value="author" key={1} selectedValue={sort} />
+                                                            <SelectItem label={sortBy.last_used} value="checkedOut" key={2} selectedValue={sort} />
+                                                            <SelectItem label={sortBy.format} value="format" key={3} selectedValue={sort} />
                                                        </SelectScrollView>
                                                   </SelectContent>
                                              </SelectPortal>

@@ -14,7 +14,7 @@ import { ButtonGroup } from '@/components/ui/button';
 import { FormControl, FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 
@@ -28,7 +28,6 @@ export const SelfRegistration = () => {
 	const {uiColors, runtimeColors, textColor, colorMode} = useTheme();
 	const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 	const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-	const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 	const route = useRoute();
 	const navigation = useNavigation();
 	const libraryUrl = route?.params?.libraryUrl ?? '';
@@ -155,12 +154,13 @@ export const SelfRegistration = () => {
 									</FormControl>
 								)
 							} else if (type === 'enum') {
-								const values = field.values ?? {};
+								const enumOptions = field.values ?? {};
 								return (
 									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
 										<FormControlLabel><FormControlLabelText style={{ color: textColor }}>{fieldLabel}</FormControlLabelText></FormControlLabel>
 										<Select
 											name={property}
+											selectedValue={values[property]}
 											accessibilityLabel={description}
 											onValueChange={(value) => {
 												handleInputChange(property, value);
@@ -168,21 +168,16 @@ export const SelfRegistration = () => {
 										>
 											<SelectTrigger variant="outline" size="md">
 												<SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select option"/>
-												<SelectIcon style={{ marginRight: 12 }}>
-													<Icon as={ChevronDownIcon} style={{ color: textColor }}/>
-												</SelectIcon>
 											</SelectTrigger>
 											<SelectPortal>
 												<SelectBackdrop />
-												<SelectContent
-													style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-												>
+												<SelectContent>
 													<SelectDragIndicatorWrapper>
 														<SelectDragIndicator />
 													</SelectDragIndicatorWrapper>
 													<SelectScrollView>
-														{_.map(values, function (item, index) {
-															return <SelectItem key={index} value={index} label={item} style={{ backgroundColor: property === index ? tertiaryBg : 'transparent' }} />;
+														{_.map(enumOptions, function (item, index) {
+															return <SelectItem key={index} value={index} label={item} selectedValue={values[property]} />;
 														})}
 													</SelectScrollView>
 												</SelectContent>

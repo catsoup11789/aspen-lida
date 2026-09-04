@@ -19,10 +19,10 @@ import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronDownIcon, CircleIcon, Icon } from '@/components/ui/icon';
+import { CircleIcon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { Textarea, TextareaInput } from '@/components/ui/textarea';
 
 /**
@@ -56,7 +56,6 @@ const CreateList = (props) => {
      const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      let hasListGroups = false;
      if(user.numListGroups) {
@@ -143,9 +142,6 @@ const CreateList = (props) => {
                                    <Select name="should_add_to_list_group" selectedValue={addToGroup} accessibilityLabel={getTermFromDictionary(language, 'should_add_to_list_group')} onValueChange={(itemValue) => setAddToGroup(itemValue)}>
                                         <SelectTrigger variant="outline" size="md">
                                              {addToGroup !== '' ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={addToGroup === 'new' ? getTermFromDictionary(language, 'add_to_list_group_new') : addToGroup === 'existing' ? getTermFromDictionary(language, 'add_to_list_group_existing') : getTermFromDictionary(language, 'add_to_list_group_no')} /> : <SelectInput value={getTermFromDictionary(language, 'add_to_list_group_no')} style={{ color: textColor }} />}
-                                             <SelectIcon style={{ marginRight: 12 }}>
-                                                  <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                                             </SelectIcon>
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
@@ -154,9 +150,9 @@ const CreateList = (props) => {
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
                                                   <SelectScrollView>
-                                                       <SelectItem label={getTermFromDictionary(language, 'add_to_list_group_no')} value="no" key={1} style={{ backgroundColor: addToGroup === 'no' ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={getTermFromDictionary(language, 'add_to_list_group_new')} value="new" key={2} style={{ backgroundColor: addToGroup === 'new' ? tertiaryBg : 'transparent' }} />
-                                                       {hasListGroups && <SelectItem label={getTermFromDictionary(language, 'add_to_list_group_existing')} value="existing" key={3} style={{ backgroundColor: addToGroup === 'existing' ? tertiaryBg : 'transparent' }} />}
+                                                       <SelectItem label={getTermFromDictionary(language, 'add_to_list_group_no')} value="no" key={1} selectedValue={addToGroup} />
+                                                       <SelectItem label={getTermFromDictionary(language, 'add_to_list_group_new')} value="new" key={2} selectedValue={addToGroup} />
+                                                       {hasListGroups && <SelectItem label={getTermFromDictionary(language, 'add_to_list_group_existing')} value="existing" key={3} selectedValue={addToGroup} />}
                                                   </SelectScrollView>
                                              </SelectContent>
                                         </SelectPortal>
@@ -188,9 +184,6 @@ const CreateList = (props) => {
                                                    ) : (
                                                         <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'nest_within_group_no')} />
                                                    )}
-                                                            <SelectIcon style={{ marginRight: 12 }}>
-                                                                 <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                                                            </SelectIcon>
                                                        </SelectTrigger>
                                                        <SelectPortal>
                                                             <SelectBackdrop />
@@ -199,9 +192,9 @@ const CreateList = (props) => {
                                                                       <SelectDragIndicator />
                                                                  </SelectDragIndicatorWrapper>
                                                                   <SelectScrollView>
-                                                                       <SelectItem label={getTermFromDictionary(language, 'nest_within_group_no')} value="no" key={1} style={{ backgroundColor: nestedGroup === 'no' ? tertiaryBg : 'transparent' }} />
+                                                                       <SelectItem label={getTermFromDictionary(language, 'nest_within_group_no')} value="no" key={1} selectedValue={nestedGroup} />
                                                                        {toArray(listGroups.groups).map((item, index) => {
-                                                                            return <SelectItem key={index} value={item.id} label={item.title} style={{ backgroundColor: nestedGroup === item.id ? tertiaryBg : 'transparent' }} />;
+                                                                            return <SelectItem key={index} value={item.id} label={item.title} selectedValue={nestedGroup} />;
                                                                        })}
                                                                   </SelectScrollView>
                                                             </SelectContent>
@@ -234,9 +227,6 @@ const CreateList = (props) => {
                                                    ) : (
                                                         <SelectInput style={{ paddingVertical: 0, color: textColor }} value={listGroups.groups[0].id} />
                                                    )}
-                                                  <SelectIcon style={{ marginRight: 12 }}>
-                                                       <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                                                  </SelectIcon>
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
@@ -246,7 +236,7 @@ const CreateList = (props) => {
                                                         </SelectDragIndicatorWrapper>
                                                          <SelectScrollView>
                                                               {toArray(listGroups.groups).map((item, index) => {
-                                                                   return <SelectItem key={index} value={item.id} label={item.title} style={{ backgroundColor: existingGroupId === item.id ? tertiaryBg : 'transparent' }} />;
+                                                                   return <SelectItem key={index} value={item.id} label={item.title} selectedValue={existingGroupId} />;
                                                               })}
                                                          </SelectScrollView>
                                                    </SelectContent>

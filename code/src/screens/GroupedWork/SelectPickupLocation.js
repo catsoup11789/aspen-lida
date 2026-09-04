@@ -11,9 +11,8 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 
 /**
  * SelectPickupLocation component that renders a button to select a pickup location for placing holds or checking out items. It displays a modal with options for selecting volumes, accounts, and pickup locations, and handles the completion of the action based on user selections.
@@ -114,7 +113,6 @@ const SelectPickupLocation = (props) => {
                                              onValueChange={(itemValue) => setActiveAccount(itemValue)}>
                                              <SelectTrigger variant="outline" size="md">
                                                   <SelectInput style={{ paddingVertical: 0 }} placeholder={isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')} />
-                                                  <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
@@ -140,7 +138,6 @@ const SelectPickupLocation = (props) => {
                                         onValueChange={(itemValue) => setLocation(itemValue)}>
                                         <SelectTrigger variant="outline" size="md">
                                              <SelectInput style={{ paddingVertical: 0 }} placeholder={getTermFromDictionary(language, 'select_pickup_location')} />
-                                             <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />

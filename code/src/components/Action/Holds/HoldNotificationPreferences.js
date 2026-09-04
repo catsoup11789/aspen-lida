@@ -5,10 +5,10 @@ import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { useTranslationWithValues } from '@/src/hooks/useTranslationWithValues';
 import { ThemedInput, ThemedInputField } from '../../themed/ThemedFormControls';
-import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
+import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../themed/ThemedCheckbox';
 import { FormControl, FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ChevronDownIcon, CheckIcon, Icon } from '@/components/ui/icon';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { CheckIcon } from '@/components/ui/icon';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 
 /**
@@ -115,7 +115,6 @@ export const HoldNotificationPreferences = (props) => {
                                                   ) : (
                                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select a Carrier" />
                                                   )}
-                                                  <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />

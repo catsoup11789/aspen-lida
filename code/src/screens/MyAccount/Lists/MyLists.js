@@ -10,10 +10,9 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { loadingSpinner } from '@/src/components/loadingSpinner';
@@ -63,7 +62,6 @@ export const MyLists = () => {
      const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      const [currentListGroup, setCurrentListGroup] = React.useState(-1);
      const [currentListGroupData, setCurrentListGroupData] = React.useState({
@@ -400,9 +398,6 @@ export const MyLists = () => {
                                    ) : defaultListGroup ? (
                                         <SelectInput style={{ paddingVertical: 0, color: textColor }} value={defaultListGroup} />
                                    ) : null}
-                                   <SelectIcon style={{ marginRight: 12 }}>
-                                        <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                                   </SelectIcon>
                               </SelectTrigger>
                               <SelectPortal>
                                    <SelectBackdrop />
@@ -416,7 +411,7 @@ export const MyLists = () => {
                                                        key={index}
                                                        value={item.id}
                                                        label={item.title}
-                                                       style={{ backgroundColor: currentListGroup === item.id ? tertiaryBg : 'transparent' }}
+                                                       selectedValue={currentListGroup}
                                                   />
                                              ))}
                                              {listGroups.unassigned > 0 ? (
@@ -424,7 +419,7 @@ export const MyLists = () => {
                                                        key={-1}
                                                        value="-1"
                                                        label={getTermFromDictionary(language, 'unassigned_lists')}
-                                                       style={{ backgroundColor: currentListGroup == '-1' ? tertiaryBg : 'transparent' }}
+                                                       selectedValue={currentListGroup}
                                                   />
                                              ) : null}
                                         </SelectScrollView>

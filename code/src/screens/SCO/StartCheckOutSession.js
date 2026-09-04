@@ -16,8 +16,7 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 
 /**
  * StartCheckOutSession component that displays an alert dialog for starting a new checkout session. It allows the user to select an account and either start a new session or cancel and go back home.
@@ -125,7 +124,6 @@ export const StartCheckOutSession = () => {
                                                   }
                                                   placeholder={getTermFromDictionary(language, 'select_an_account')}
                                              />
-                                             <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />

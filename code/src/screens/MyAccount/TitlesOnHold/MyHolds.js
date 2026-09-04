@@ -12,9 +12,9 @@ import { CheckboxGroup } from '@/components/ui/checkbox';
 import { FormControl } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { Icon, ChevronDownIcon, InfoIcon } from '@/components/ui/icon';
+import { InfoIcon } from '@/components/ui/icon';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { DisplaySystemMessage } from '@/src/components/Notifications';
@@ -58,12 +58,11 @@ export const MyHolds = () => {
      const [date, setNewDate] = React.useState();
      const [pickupLocations] = React.useState([]);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const insets = useSafeAreaInsets();
      const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      const [sortBy, setSortBy] = React.useState({
           title: 'Sort by Title',
@@ -350,9 +349,6 @@ export const MyHolds = () => {
                                                  onValueChange={(itemValue) => togglePendingSort(itemValue)}>
                                                  <SelectTrigger variant="outline" size="sm">
                                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} value={pendingSortLabel()} />
-                                                       <SelectIcon style={{ marginRight: 0 }}>
-                                                            <Icon style={{ color: textColor }} as={ChevronDownIcon} />
-                                                       </SelectIcon>
                                                   </SelectTrigger>
                                                   <SelectPortal>
                                                        <SelectBackdrop />
@@ -363,14 +359,14 @@ export const MyHolds = () => {
                                                                  <SelectDragIndicator />
                                                             </SelectDragIndicatorWrapper>
                                                             <SelectScrollView>
-                                                                 <SelectItem label={sortBy.title} value="sortTitle" key="pending-manage-sortTitle" style={{ backgroundColor: userHoldPendingSortMethod === "sortTitle" ? tertiaryBg : 'transparent' }} />
-                                                                 <SelectItem label={sortBy.author} value="author" key="pending-manage-author" style={{ backgroundColor: userHoldPendingSortMethod === "author" ? tertiaryBg : 'transparent' }} />
-                                                                 <SelectItem label={sortBy.format} value="format" key="pending-manage-format" style={{ backgroundColor: userHoldPendingSortMethod === "format" ? tertiaryBg : 'transparent' }} />
-                                                                 <SelectItem label={sortBy.status} value="status" key="pending-manage-status" style={{ backgroundColor: userHoldPendingSortMethod === "status" ? tertiaryBg : 'transparent' }} />
-                                                                 <SelectItem label={sortBy.date_placed} value="placed" key="pending-manage-placed" style={{ backgroundColor: userHoldPendingSortMethod === "placed" ? tertiaryBg : 'transparent' }} />
-                                                                 <SelectItem label={sortBy.position} value="position" key="pending-manage-position" style={{ backgroundColor: userHoldPendingSortMethod === "position" ? tertiaryBg : 'transparent' }} />
-                                                                 <SelectItem label={sortBy.pickup_location} value="location" key="pending-manage-location" style={{ backgroundColor: userHoldPendingSortMethod === "location" ? tertiaryBg : 'transparent' }} />
-                                                                 <SelectItem label={sortBy.library_account} value="libraryAccount" key="pending-manage-libraryAccount" style={{ backgroundColor: userHoldPendingSortMethod === "libraryAccount" ? tertiaryBg : 'transparent' }} />
+                                                                 <SelectItem label={sortBy.title} value="sortTitle" key="pending-manage-sortTitle" selectedValue={userHoldPendingSortMethod} />
+                                                                 <SelectItem label={sortBy.author} value="author" key="pending-manage-author" selectedValue={userHoldPendingSortMethod} />
+                                                                 <SelectItem label={sortBy.format} value="format" key="pending-manage-format" selectedValue={userHoldPendingSortMethod} />
+                                                                 <SelectItem label={sortBy.status} value="status" key="pending-manage-status" selectedValue={userHoldPendingSortMethod} />
+                                                                 <SelectItem label={sortBy.date_placed} value="placed" key="pending-manage-placed" selectedValue={userHoldPendingSortMethod} />
+                                                                 <SelectItem label={sortBy.position} value="position" key="pending-manage-position" selectedValue={userHoldPendingSortMethod} />
+                                                                 <SelectItem label={sortBy.pickup_location} value="location" key="pending-manage-location" selectedValue={userHoldPendingSortMethod} />
+                                                                 <SelectItem label={sortBy.library_account} value="libraryAccount" key="pending-manage-libraryAccount" selectedValue={userHoldPendingSortMethod} />
                                                             </SelectScrollView>
                                                        </SelectContent>
                                                   </SelectPortal>
@@ -399,9 +395,6 @@ export const MyHolds = () => {
                                              onValueChange={(itemValue) => togglePendingSort(itemValue)}>
                                              <SelectTrigger variant="outline" size="sm">
                                                   <SelectInput style={{ paddingVertical: 0, color: textColor }} value={pendingSortLabel()} />
-                                                  <SelectIcon style={{ marginRight: 12 }}>
-                                                       <Icon style={{ color: textColor }} as={ChevronDownIcon} />
-                                                  </SelectIcon>
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
@@ -412,14 +405,14 @@ export const MyHolds = () => {
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
                                                        <SelectScrollView>
-                                                            <SelectItem label={sortBy.title} value="sortTitle" key="pending-select-sortTitle" style={{ backgroundColor: userHoldPendingSortMethod === "sortTitle" ? tertiaryBg : 'transparent' }} />
-                                                            <SelectItem label={sortBy.author} value="author" key="pending-select-author" style={{ backgroundColor: userHoldPendingSortMethod === "author" ? tertiaryBg : 'transparent' }} />
-                                                            <SelectItem label={sortBy.format} value="format" key="pending-select-format" style={{ backgroundColor: userHoldPendingSortMethod === "format" ? tertiaryBg : 'transparent' }} />
-                                                            <SelectItem label={sortBy.status} value="status" key="pending-select-status" style={{ backgroundColor: userHoldPendingSortMethod === "status" ? tertiaryBg : 'transparent' }} />
-                                                            <SelectItem label={sortBy.date_placed} value="placed" key="pending-select-placed" style={{ backgroundColor: userHoldPendingSortMethod === "placed" ? tertiaryBg : 'transparent' }} />
-                                                            <SelectItem label={sortBy.position} value="position" key="pending-select-position" style={{ backgroundColor: userHoldPendingSortMethod === "position" ? tertiaryBg : 'transparent' }} />
-                                                            <SelectItem label={sortBy.pickup_location} value="location" key="pending-select-location" style={{ backgroundColor: userHoldPendingSortMethod === "location" ? tertiaryBg : 'transparent' }} />
-                                                            <SelectItem label={sortBy.library_account} value="libraryAccount" key="pending-select-libraryAccount" style={{ backgroundColor: userHoldPendingSortMethod === "libraryAccount" ? tertiaryBg : 'transparent' }} />
+                                                            <SelectItem label={sortBy.title} value="sortTitle" key="pending-select-sortTitle" selectedValue={userHoldPendingSortMethod} />
+                                                            <SelectItem label={sortBy.author} value="author" key="pending-select-author" selectedValue={userHoldPendingSortMethod} />
+                                                            <SelectItem label={sortBy.format} value="format" key="pending-select-format" selectedValue={userHoldPendingSortMethod} />
+                                                            <SelectItem label={sortBy.status} value="status" key="pending-select-status" selectedValue={userHoldPendingSortMethod} />
+                                                            <SelectItem label={sortBy.date_placed} value="placed" key="pending-select-placed" selectedValue={userHoldPendingSortMethod} />
+                                                            <SelectItem label={sortBy.position} value="position" key="pending-select-position" selectedValue={userHoldPendingSortMethod} />
+                                                            <SelectItem label={sortBy.pickup_location} value="location" key="pending-select-location" selectedValue={userHoldPendingSortMethod} />
+                                                            <SelectItem label={sortBy.library_account} value="libraryAccount" key="pending-select-libraryAccount" selectedValue={userHoldPendingSortMethod} />
                                                        </SelectScrollView>
                                                   </SelectContent>
                                              </SelectPortal>
@@ -492,9 +485,6 @@ export const MyHolds = () => {
                                              onValueChange={(itemValue) => toggleReadySort(itemValue)}>
                                              <SelectTrigger variant="outline" size="sm">
                                                   <SelectInput style={{ paddingVertical: 0, color: textColor }} value={readySortLabel()} />
-                                                  <SelectIcon style={{ marginRight: 12 }}>
-                                                       <Icon style={{ color: textColor }} as={ChevronDownIcon} />
-                                                  </SelectIcon>
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
@@ -504,13 +494,13 @@ export const MyHolds = () => {
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
-                                                 <SelectItem label={sortBy.title} value="sortTitle" key="ready-sortTitle" style={{ backgroundColor: userHoldReadySortMethod === "sortTitle" ? tertiaryBg : 'transparent' }} />
-                                                 <SelectItem label={sortBy.author} value="author" key="ready-author" style={{ backgroundColor: userHoldReadySortMethod === "author" ? tertiaryBg : 'transparent' }} />
-                                                 <SelectItem label={sortBy.format} value="format" key="ready-format" style={{ backgroundColor: userHoldReadySortMethod === "format" ? tertiaryBg : 'transparent' }} />
-                                                 <SelectItem label={sortBy.expiration} value="expire" key="ready-expire" style={{ backgroundColor: userHoldReadySortMethod === "expire" ? tertiaryBg : 'transparent' }} />
-                                                 <SelectItem label={sortBy.date_placed} value="placed" key="ready-placed" style={{ backgroundColor: userHoldReadySortMethod === "placed" ? tertiaryBg : 'transparent' }} />
-                                                 <SelectItem label={sortBy.pickup_location} value="location" key="ready-location" style={{ backgroundColor: userHoldReadySortMethod === "location" ? tertiaryBg : 'transparent' }} />
-                                                 <SelectItem label={sortBy.library_account} value="libraryAccount" key="ready-libraryAccount" style={{ backgroundColor: userHoldReadySortMethod === "libraryAccount" ? tertiaryBg : 'transparent' }} />
+                                                 <SelectItem label={sortBy.title} value="sortTitle" key="ready-sortTitle" selectedValue={userHoldReadySortMethod} />
+                                                 <SelectItem label={sortBy.author} value="author" key="ready-author" selectedValue={userHoldReadySortMethod} />
+                                                 <SelectItem label={sortBy.format} value="format" key="ready-format" selectedValue={userHoldReadySortMethod} />
+                                                 <SelectItem label={sortBy.expiration} value="expire" key="ready-expire" selectedValue={userHoldReadySortMethod} />
+                                                 <SelectItem label={sortBy.date_placed} value="placed" key="ready-placed" selectedValue={userHoldReadySortMethod} />
+                                                 <SelectItem label={sortBy.pickup_location} value="location" key="ready-location" selectedValue={userHoldReadySortMethod} />
+                                                 <SelectItem label={sortBy.library_account} value="libraryAccount" key="ready-libraryAccount" selectedValue={userHoldReadySortMethod} />
                                                   </SelectContent>
                                              </SelectPortal>
                                         </Select>
@@ -558,9 +548,6 @@ export const MyHolds = () => {
                                    <Select name="holdSource" selectedValue={holdSource} defaultValue={holdSource} initialLabel="Test" accessibilityLabel="Filter By Source" onValueChange={(itemValue) => toggleHoldSource(itemValue)}>
                                         <SelectTrigger variant="outline" size="sm">
                                              <SelectInput style={{ paddingVertical: 0, color: textColor }} value={holdSourceLabel()}/>
-                                             <SelectIcon style={{ marginRight: 12 }}>
-                                                  <Icon style={{ color: textColor }} as={ChevronDownIcon} />
-                                             </SelectIcon>
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
@@ -568,13 +555,13 @@ export const MyHolds = () => {
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
-                                                  <SelectItem label={getTermFromDictionary(language, 'filter_by_all') + ' (' + (user.numHolds ?? 0) + ')'} value="all" key="source-all" style={{ backgroundColor: holdSource === 'all' ? tertiaryBg : 'transparent' }} />
-                                                  <SelectItem label={getTermFromDictionary(language, 'filter_by_ils') + ' (' + (user.numHoldsRequestedIls ?? 0) + ')'} value="ils" key="source-ils" style={{ backgroundColor: holdSource === 'ils' ? tertiaryBg : 'transparent' }} />
-                                                  {user.isValidForOverdrive ? <SelectItem label={filterByLibby + ' (' + (user.numHoldsOverDrive ?? 0) + ')'} value="overdrive" key="source-overdrive" style={{ backgroundColor: holdSource === 'overdrive' ? tertiaryBg : 'transparent' }} /> : null}
-                                                  {user.isValidForHoopla ? <SelectItem label={getTermFromDictionary(language, 'filter_by_hoopla') + ' (' + (user.numHolds_Hoopla ?? 0) + ')'} value="hoopla" key="source-hoopla" style={{ backgroundColor: holdSource === 'hoopla' ? tertiaryBg : 'transparent' }} /> : null}
-                                                  {user.isValidForCloudLibrary ? <SelectItem label={getTermFromDictionary(language, 'filter_by_cloud_library') + ' (' + (user.numHolds_cloudLibrary ?? 0) + ')'} value="cloud_library" key="source-cloud_library" style={{ backgroundColor: holdSource === 'cloud_library' ? tertiaryBg : 'transparent' }} /> : null}
-                                                  {user.isValidForAxis360 ? <SelectItem label={getTermFromDictionary(language, 'filter_by_boundless') + ' (' + (user.numHolds_axis360 ?? 0) + ')'} value="axis360" key="source-axis360" style={{ backgroundColor: holdSource === 'axis360' ? tertiaryBg : 'transparent' }} /> : null}
-                                                  {user.isValidForPalaceProject ? <SelectItem label={getTermFromDictionary(language, 'filter_by_palace_project') + ' (' + (user.numHolds_PalaceProject ?? 0) + ')'} value="palace_project" key="source-palace_project" style={{ backgroundColor: holdSource === 'palace_project' ? tertiaryBg : 'transparent' }} /> : null}
+                                                  <SelectItem label={getTermFromDictionary(language, 'filter_by_all') + ' (' + (user.numHolds ?? 0) + ')'} value="all" key="source-all" selectedValue={holdSource} />
+                                                  <SelectItem label={getTermFromDictionary(language, 'filter_by_ils') + ' (' + (user.numHoldsRequestedIls ?? 0) + ')'} value="ils" key="source-ils" selectedValue={holdSource} />
+                                                  {user.isValidForOverdrive ? <SelectItem label={filterByLibby + ' (' + (user.numHoldsOverDrive ?? 0) + ')'} value="overdrive" key="source-overdrive" selectedValue={holdSource} /> : null}
+                                                  {user.isValidForHoopla ? <SelectItem label={getTermFromDictionary(language, 'filter_by_hoopla') + ' (' + (user.numHolds_Hoopla ?? 0) + ')'} value="hoopla" key="source-hoopla" selectedValue={holdSource} /> : null}
+                                                  {user.isValidForCloudLibrary ? <SelectItem label={getTermFromDictionary(language, 'filter_by_cloud_library') + ' (' + (user.numHolds_cloudLibrary ?? 0) + ')'} value="cloud_library" key="source-cloud_library" selectedValue={holdSource} /> : null}
+                                                  {user.isValidForAxis360 ? <SelectItem label={getTermFromDictionary(language, 'filter_by_boundless') + ' (' + (user.numHolds_axis360 ?? 0) + ')'} value="axis360" key="source-axis360" selectedValue={holdSource} /> : null}
+                                                  {user.isValidForPalaceProject ? <SelectItem label={getTermFromDictionary(language, 'filter_by_palace_project') + ' (' + (user.numHolds_PalaceProject ?? 0) + ')'} value="palace_project" key="source-palace_project" selectedValue={holdSource} /> : null}
                                              </SelectContent>
                                         </SelectPortal>
                                    </Select>

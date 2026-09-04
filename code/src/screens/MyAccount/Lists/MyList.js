@@ -10,10 +10,9 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ButtonGroup } from '@/components/ui/button';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
-import { Icon, ChevronDownIcon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { loadError } from '@/src/components/loadError';
@@ -75,7 +74,6 @@ export const MyList = ({ route }) => {
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const dangerColor = uiColors.danger;
-     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
      const t = React.useCallback((key, ellipsis = false, forcedLanguage) => {
           const lang = forcedLanguage || language;
           return getTermFromDictionaryHelper(lang, key, ellipsis, dictionary);
@@ -407,9 +405,6 @@ export const MyList = ({ route }) => {
                                         onValueChange={(itemValue) => setSort(itemValue)}>
                                         <SelectTrigger variant="outline" size="sm">
                                              <SelectInput style={{ paddingVertical: 0, color: textColor }} value={sortLabel()} />
-                                             <SelectIcon style={{ marginRight: 12 }}>
-                                                  <Icon style={{ color: textColor }} as={ChevronDownIcon} />
-                                             </SelectIcon>
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
@@ -420,10 +415,10 @@ export const MyList = ({ route }) => {
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
                                                   <SelectScrollView>
-                                                       <SelectItem label={sortBy.title} value="title" key={0} style={{ backgroundColor: sort === "title" ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={sortBy.dateAdded} value="dateAdded" key={1} style={{ backgroundColor: sort === "dateAdded" ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={sortBy.recentlyAdded} value="recentlyAdded" key={2} style={{ backgroundColor: sort === "recentlyAdded" ? tertiaryBg : 'transparent' }} />
-                                                       <SelectItem label={sortBy.custom} value="custom" key={3} style={{ backgroundColor: sort === "custom" ? tertiaryBg : 'transparent' }} />
+                                                       <SelectItem label={sortBy.title} value="title" key={0} selectedValue={sort} />
+                                                       <SelectItem label={sortBy.dateAdded} value="dateAdded" key={1} selectedValue={sort} />
+                                                       <SelectItem label={sortBy.recentlyAdded} value="recentlyAdded" key={2} selectedValue={sort} />
+                                                       <SelectItem label={sortBy.custom} value="custom" key={3} selectedValue={sort} />
                                                   </SelectScrollView>
                                              </SelectContent>
                                         </SelectPortal>

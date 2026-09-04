@@ -25,7 +25,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
-import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { Text } from '@/components/ui/text';
 import { Textarea, TextareaInput } from '@/components/ui/textarea';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
@@ -57,7 +57,6 @@ const EditList = (props) => {
       const user = userState?.user ?? {};
       const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
       const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-      const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      React.useLayoutEffect(() => {
           navigation.setOptions({
@@ -146,9 +145,6 @@ const EditList = (props) => {
                                                    ) :
                                                    <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder={getTermFromDictionary(language, 'no_list_group')} value={-1} />
                                              }
-                                             <SelectIcon style={{ marginRight: 12 }}>
-                                                  <Icon as={ChevronDownIcon} style={{ color: textColor }} />
-                                             </SelectIcon>
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
@@ -159,9 +155,9 @@ const EditList = (props) => {
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
                                                    <SelectScrollView>
-                                                        <SelectItem label={getTermFromDictionary(language, 'no_list_group')} value="-1" key={-1} style={{ backgroundColor: listGroupId === -1 ? tertiaryBg : 'transparent' }} />
+                                                        <SelectItem label={getTermFromDictionary(language, 'no_list_group')} value="-1" key={-1} selectedValue={listGroupId} />
                                                         {toArray(listGroups.groups).map((item, index) => {
-                                                             return <SelectItem key={index} value={item.id} label={item.title} style={{ backgroundColor: listGroupId === item.id ? tertiaryBg : 'transparent' }} />;
+                                                             return <SelectItem key={index} value={item.id} label={item.title} selectedValue={listGroupId} />;
                                                         })}
                                                    </SelectScrollView>
                                              </SelectContent>
