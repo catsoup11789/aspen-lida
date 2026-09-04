@@ -13,7 +13,7 @@ module.exports = function (api) {
                     moduleName: '@env',
                     path: '.env',
                },
-          ], 'transform-inline-environment-variables', '@babel/plugin-transform-class-static-block', 'react-native-reanimated/plugin', ["module-resolver", {
+          ], 'transform-inline-environment-variables', '@babel/plugin-transform-class-static-block', ["module-resolver", {
                root: ["./"],
 
                alias: {
