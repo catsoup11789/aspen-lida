@@ -1,9 +1,5 @@
-import {
-     Button,
-     ButtonSpinner,
-     ButtonGroup,
-     ButtonText,
-} from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
+import { ButtonGroup } from '@/components/ui/button';
 import React from 'react';
 import _ from 'lodash';
 import { useQueryClient } from '@tanstack/react-query';

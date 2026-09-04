@@ -5,7 +5,7 @@ import moment from 'moment';
 import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../components/themed/ThemedButton';
 import { Menu, MenuItem, MenuItemLabel } from '@/components/ui/menu';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';

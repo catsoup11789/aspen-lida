@@ -9,8 +9,8 @@ import { getSelfRegistrationForm, submitSelfRegistration } from '../../util/api/
 import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
+import { ButtonGroup } from '@/components/ui/button';
 import { FormControl, FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';

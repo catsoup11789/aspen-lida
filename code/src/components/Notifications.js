@@ -5,7 +5,7 @@ import _ from 'lodash';
 import React, {useContext} from 'react';
 import { Platform } from 'react-native';
 import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from './themed/ThemedAlert';
-import { Button, ButtonIcon } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonIcon as ButtonIcon } from './themed/ThemedButton';
 import { CloseIcon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
 import { VStack } from '@/components/ui/vstack';

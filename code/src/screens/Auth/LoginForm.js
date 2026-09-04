@@ -21,7 +21,7 @@ import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from
 import { createApiClient } from '../../util/api/apiFactory';
 import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
 import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { InputSlot } from '@/components/ui/input';

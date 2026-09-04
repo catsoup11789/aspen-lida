@@ -8,10 +8,7 @@ import { LoadOverDriveSample } from './LoadOverDriveSample';
 import { MoreInfo } from './MoreInfo';
 import { OnHoldForYou } from './OnHoldForYou';
 import { OpenSideLoad } from './OpenSideLoad';
-import {
-     Button,
-     ButtonText,
-} from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
 import React, { useState } from 'react';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { useUserState } from '../../hooks/useUserData';

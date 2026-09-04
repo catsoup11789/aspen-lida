@@ -1,5 +1,5 @@
 import { useColorModeValue, useTheme } from '../../themes/theme';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
 import { useUserState } from '../../hooks/useUserData';
 import React from 'react';
 import { useLibrary } from '../../hooks/useLibrarySystemData';

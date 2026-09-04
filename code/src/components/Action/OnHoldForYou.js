@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
 import { navigate, navigateStack } from '../../helpers/RootNavigator';
 import { useTheme } from '../../themes/theme';
 

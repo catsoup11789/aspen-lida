@@ -1,8 +1,5 @@
-import {
-     Button,
-     ButtonText,
-     ButtonGroup,
-} from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
+import { ButtonGroup } from '@/components/ui/button';
 import React from 'react';
 import { updateOverDriveEmail } from '../../util/api/user';
 import { getTermFromDictionary } from '../../translations/TranslationService';

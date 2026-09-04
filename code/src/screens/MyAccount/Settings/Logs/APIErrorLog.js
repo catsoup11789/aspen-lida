@@ -6,7 +6,7 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { useTheme } from '@/src/themes/theme';
 import { Accordion, AccordionContent, AccordionContentText, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../../components/themed/ThemedButton';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { ChevronDownIcon, ChevronUpIcon } from '@/components/ui/icon';

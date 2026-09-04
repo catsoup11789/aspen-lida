@@ -9,7 +9,7 @@ import { LoadingSpinner } from '../../components/loadingSpinner';
 import { useSelfCheckSettings } from '../../hooks/useLibraryBranchData';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { View } from '@/components/ui/view';
 
 /**

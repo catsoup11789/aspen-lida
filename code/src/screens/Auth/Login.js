@@ -25,7 +25,8 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { logDebugMessage, logInfoMessage, getErrorMessage } from '../../util/logging';
 import { popAlert } from '../../components/feedback';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
+import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Image } from '@/components/ui/image';
 import { Modal, ModalBackdrop, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';

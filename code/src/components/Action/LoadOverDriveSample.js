@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonSpinner, Button, ButtonText } from '@/components/ui/button';
+import { ThemedButtonSpinner as ButtonSpinner, ThemedButton as Button, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
 import { useUserState } from '../../hooks/useUserData';
 import { completeAction } from '../../util/api/userHelper';
 import {logDebugMessage} from "../../util/logging";

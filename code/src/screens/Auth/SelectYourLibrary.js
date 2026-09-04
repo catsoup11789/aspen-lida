@@ -8,7 +8,7 @@ import { useKeyboard } from '../../hooks/hooks';
 import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
 import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
@@ -100,7 +100,7 @@ export const SelectYourLibrary = (payload) => {
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
-                         <ModalBody>
+                         <ModalBody style={{ flex: 1 }} scrollEnabled={true}>
                               <Box style={{ backgroundColor: surfaceBg, padding: 8, paddingBottom: query ? 0 : 5 }}>
                                    <ThemedInput style={{ borderColor }}>
                                         <ThemedInputField

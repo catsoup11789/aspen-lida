@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
 import { openSideLoad } from '../../util/api/userHelper';
 import { useTheme } from '../../themes/theme';
 

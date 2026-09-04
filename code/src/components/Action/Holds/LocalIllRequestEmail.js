@@ -1,4 +1,4 @@
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
 import React from 'react';
 import {navigate} from '@/src/helpers/RootNavigator';
 import { useTheme } from '@/src/themes/theme';

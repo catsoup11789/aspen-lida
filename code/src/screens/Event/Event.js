@@ -27,7 +27,8 @@ import { logDebugMessage, logErrorMessage, logInfoMessage, getErrorMessage } fro
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
+import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Divider } from '@/components/ui/divider';
 import { Heading } from '@/components/ui/heading';

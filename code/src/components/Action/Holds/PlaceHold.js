@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import React from 'react';
-import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
 import { HoldsContext } from '@/src/context/initialContext';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { useUserState, useAccounts, useLocations, useUpdateUserProfile } from '@/src/hooks/useUserData';

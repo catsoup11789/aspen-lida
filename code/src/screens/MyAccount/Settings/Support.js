@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 import { checkVersion } from 'react-native-check-version';
 import { ThemedAlert, ThemedAlertText } from '@/src/components/themed/ThemedAlert';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { Divider } from '@/components/ui/divider';
 import { HStack } from '@/components/ui/hstack';

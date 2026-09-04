@@ -3,7 +3,7 @@ import { useCameraPermissions, CameraView } from 'expo-camera';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from './themed/ThemedButton';
 import { useNavigation } from '@react-navigation/native';
 import { navigateStack } from '../helpers/RootNavigator';
 import { getTermFromDictionary } from '../translations/TranslationService';

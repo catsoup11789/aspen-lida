@@ -1,7 +1,8 @@
 import * as Linking from 'expo-linking';
 import React from 'react';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
-import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from './themed/ThemedButton';
+import { ButtonGroup } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { getTermFromDictionary } from '../translations/TranslationService';

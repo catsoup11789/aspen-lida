@@ -1,7 +1,8 @@
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
+import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { ChevronDownIcon, Icon } from '@/components/ui/icon';

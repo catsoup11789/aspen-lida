@@ -9,7 +9,8 @@ import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetIcon, 
 import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from '@/src/components/themed/ThemedAlert';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
+import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';

@@ -20,7 +20,7 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Divider } from '@/components/ui/divider';
 import { Heading } from '@/components/ui/heading';
 import { ScrollView } from '@/components/ui/scroll-view';

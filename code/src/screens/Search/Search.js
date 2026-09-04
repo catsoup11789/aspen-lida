@@ -9,7 +9,7 @@ import { formatDiscoveryVersion } from '../../helpers/helpers';
 import { getDefaultFacets } from '../../util/api/search';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { FormControl } from '@/components/ui/form-control';

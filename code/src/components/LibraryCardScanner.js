@@ -6,7 +6,7 @@ import BarcodeMask from 'react-native-barcode-mask';
 import { navigate } from '../helpers/RootNavigator';
 import { LoadError } from './loadError';
 import { LoadingSpinner } from './loadingSpinner';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from './themed/ThemedButton';
 import { View } from '@/components/ui/view';
 
 /**

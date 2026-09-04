@@ -8,7 +8,7 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import {getTermFromDictionary} from '../../translations/TranslationService';
 import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { DisplayErrorAlertDialog } from '../../components/loadError';
-import { Button, ButtonText } from '@/components/ui/button';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
