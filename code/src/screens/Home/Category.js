@@ -17,7 +17,7 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { Badge, BadgeText } from '@/components/ui/badge';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
@@ -121,30 +121,34 @@ const DisplayBrowseCategory = ({category}) => {
 
      return (
           <SafeAreaView>
-               <View style={{ paddingBottom: 12 }}>
+               <View>
                     <HStack space="md" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 8 }}>
                          <DisplayBrowseCategoryTitle category={category.label} key={category.id} textId={id} source={category.source ?? 'GroupedWork'} />
                          {subCategories.length > 0 ? (
-                              <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
-                                   <ButtonIcon as={MaterialIcons} name="close" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, marginRight: 4 }} />
-                                   <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
+                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
+                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
+                                  <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
                               </Button>
                          ) : (
-                              <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHide(category.textId)}>
-                                   <ButtonIcon as={MaterialIcons} name="close" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, marginRight: 4 }} />
-                                   <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }}>{getTermFromDictionary(language, 'hide')}</ButtonText>
+                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHide(category.textId)}>
+                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
+                                  <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'hide')}</ButtonText>
                               </Button>
                          )}
                     </HStack>
                     {subCategories.length > 0 ? (
                          <>
-                              <ScrollView horizontal>
+                              <ScrollView
+                                   horizontal
+                                   showsHorizontalScrollIndicator={false}
+                                   contentContainerStyle={{ flexDirection: 'row', alignItems: 'center' }}
+                              >
                                    <DisplaySubCategoryBar data={subCategoryRecords} subCategories={subCategories} selectedIndex={selectedSubCategoryIndex} onSelect={handleSelectSubCategory} isSystemBrowseCategory={isSystemBrowseCategory} />
                               </ScrollView>
-                              {showSubCategoryRecords && <FlatList contentContainerStyle={{ paddingBottom: 32 }} data={subCategoryRecords} keyExtractor={(item, index) => item.key?.toString() ?? item.id?.toString() ?? `subcategory-${index}`} horizontal renderItem={({ item }) => <DisplayBrowseCategoryRecord record={item} />} ListFooterComponent={subCategoryHasMore ? <DisplayMoreResultsButton category={subCategories[selectedSubCategoryIndex]} /> : null} />}
+                              {showSubCategoryRecords && <FlatList data={subCategoryRecords} keyExtractor={(item, index) => item.key?.toString() ?? item.id?.toString() ?? `subcategory-${index}`} horizontal renderItem={({ item }) => <DisplayBrowseCategoryRecord record={item} />} ListFooterComponent={subCategoryHasMore ? <DisplayMoreResultsButton category={subCategories[selectedSubCategoryIndex]} /> : null} />}
                          </>
                     ) : records.length > 0 ? (
-                         <FlatList contentContainerStyle={{ paddingBottom: 32 }} data={displayedData} keyExtractor={(item, index) => item.id?.toString() ?? item.key?.toString() ?? `record-${index}`} horizontal renderItem={({ item }) => <DisplayBrowseCategoryRecord record={item} />} ListFooterComponent={hasMore ? <DisplayMoreResultsButton category={category} /> : null} />
+                         <FlatList contentContainerStyle={{ paddingBottom: 5 }} data={displayedData} keyExtractor={(item, index) => item.id?.toString() ?? item.key?.toString() ?? `record-${index}`} horizontal renderItem={({ item }) => <DisplayBrowseCategoryRecord record={item} />} ListFooterComponent={hasMore ? <DisplayMoreResultsButton category={category} /> : null} />
                     ) : null}
                </View>
           </SafeAreaView>
@@ -296,7 +300,7 @@ const DisplayBrowseCategoryRecord = ({record}) => {
                {isNew ? (
                     <Box style={{ zIndex: 1, alignItems: 'center' }}>
                          <Badge style={{ backgroundColor: '#f59e0b', marginHorizontal: 20, marginTop: -8 }}>
-                              <BadgeText bold style={{ color: theme.tokens.colors.ui.white.light, textTransform: 'none' }}>
+                              <BadgeText bold style={{ color: theme.tokens.colors.ui.white, textTransform: 'none' }}>
                                    {getTermFromDictionary(language, 'flag_new')}
                               </BadgeText>
                          </Badge>
@@ -339,13 +343,13 @@ const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, isSyste
      }
 
      return (
-          <ButtonGroup vertical space="sm" style={{ paddingBottom: 8 }}>
+          <ButtonGroup space="sm" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 8 }}>
                {subCategories.map((subCategory, index) => (
                     <Button key={(subCategory?.id ?? subCategory?.textId ?? subCategory?.label ?? `subcategory-${index}`).toString()} style={{ backgroundColor: selectedIndex === index ? theme['tokens']['colors']['primary']['600'] : theme['tokens']['colors']['primary']['400'], paddingHorizontal: 12, height: 34 }} variant="solid" onPress={() => onSelect(index)}>
                          <ButtonText style={{ fontWeight: '500', color: theme['tokens']['colors']['primary']['500-text'] }}>
                               {subCategory.label}
                          </ButtonText>
-                         {!isSystemBrowseCategory && <ButtonIcon as={MaterialIcons} name="close" onPress={() => onPressHideSubCategory(index)} size="sm" style={{ color: theme['tokens']['colors']['primary']['500-text'], marginLeft: 16 }} />}
+                         {!isSystemBrowseCategory && <MaterialIcons name="close" size={14} color={theme['tokens']['colors']['primary']['500-text']} style={{ marginLeft: 16 }} onPress={() => onPressHideSubCategory(index)} />}
                     </Button>
                ))}
           </ButtonGroup>

@@ -50,7 +50,7 @@ export const SelectPickupLocation = (props) => {
                          setShowModal(true);
                     }}>
                     <ActionsheetIcon>
-                        <Icon as={Ionicons} name="location" size="md" style={{ marginRight: 4, color: textColor }} />
+                        <Ionicons name="location" size={18} color={textColor} style={{ marginRight: 4 }} />
                     </ActionsheetIcon>
                    <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'change_location')}</ActionsheetItemText>
                </ActionsheetItem>

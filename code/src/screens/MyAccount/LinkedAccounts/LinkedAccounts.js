@@ -163,7 +163,7 @@ const Account = ({ account, type }) => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor } = useTheme();
+     const { textColor, theme } = useTheme();
 
      const refreshLinkedAccounts = async () => {
           const linkedResponse = await getLinkedAccounts(library.baseUrl, language);

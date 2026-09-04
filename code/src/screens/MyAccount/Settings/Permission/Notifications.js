@@ -1,3 +1,4 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import * as Notifications from 'expo-notifications';
 import * as Linking from 'expo-linking';
@@ -11,7 +12,7 @@ import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/but
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { Icon, ChevronLeftIcon } from '@/components/ui/icon';
+import { ChevronLeftIcon, Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Switch } from '@/components/ui/switch';
@@ -21,7 +22,6 @@ import { VStack } from '@/components/ui/vstack';
 import { useUserState, useNotificationSettings, useUpdateExpoToken, useAddDebugMessage } from '../../../../hooks/useUserData';
 import { navigate } from '../../../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../../../translations/TranslationService';
-import { ChevronRight, ChevronUp, ChevronDown } from 'lucide-react-native';
 import Constants from 'expo-constants';
 import { useNotificationPermissions, useNotificationPreferences } from '../../../../hooks/useNotifications';
 import {logDebugMessage, logErrorMessage} from '../../../../util/logging';
@@ -73,7 +73,7 @@ export const NotificationPermissionStatus = () => {
                     <Text style={{ color: textColor }}>
                         {permissionStatus ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                     </Text>
-                    <Icon as={ChevronRight} style={{ marginLeft: 4, color: textColor }} />
+                    <MaterialIcons name="chevron-right" size={20} color={textColor} style={{ marginLeft: 4 }} />
                 </HStack>
             </HStack>
         </Pressable>
@@ -286,8 +286,8 @@ const NotificationPermissionUsage = () => {
                                     {getTermFromDictionary(language, 'how_we_use_notification_title')}
                                 </AccordionTitleText>
                                 {isExpanded ?
-                                    <AccordionIcon as={ChevronUp} style={{ marginLeft: 12, color: textColor }} /> :
-                                    <AccordionIcon as={ChevronDown} style={{ marginLeft: 12, color: textColor }} />
+                                    <AccordionIcon as={MaterialIcons} name="keyboard-arrow-up" style={{ marginLeft: 12, color: textColor }} /> :
+                                    <AccordionIcon as={MaterialIcons} name="keyboard-arrow-down" style={{ marginLeft: 12, color: textColor }} />
                                 }
                             </>
                         )}

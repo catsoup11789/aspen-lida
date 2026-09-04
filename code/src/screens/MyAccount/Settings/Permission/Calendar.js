@@ -1,4 +1,5 @@
 import { Camera } from 'expo-camera';
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import * as Calendar from 'expo-calendar';
 import { useRoute } from '@react-navigation/native';
@@ -11,7 +12,6 @@ import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Text } from '@/components/ui/text';
@@ -20,7 +20,6 @@ import { VStack } from '@/components/ui/vstack';
 
 import { navigate } from '../../../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../../../translations/TranslationService';
-import { ChevronRight, ChevronUp, ChevronDown } from 'lucide-react-native';
 import Constants from 'expo-constants';
 import { useActiveLanguage } from '../../../../hooks/useLanguageData';
 import { useTheme } from '../../../../themes/theme';
@@ -62,7 +61,7 @@ export const CalendarPermissionStatus = () => {
                     </Text>
                     <HStack alignItems="center">
                          <Text style={{ color: textColor }}>{permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}</Text>
-                         <Icon as={ChevronRight} style={{ marginLeft: 4, color: textColor }} />
+                         <MaterialIcons name="chevron-right" size={20} color={textColor} style={{ marginLeft: 4 }} />
                     </HStack>
                </HStack>
           </Pressable>
@@ -111,7 +110,7 @@ const CalendarPermissionUsage = () => {
                                    return (
                                         <>
                                              <AccordionTitleText style={{ color: textColor }}>{getTermFromDictionary(language, 'how_we_use_calendar_title')}</AccordionTitleText>
-                                             {isExpanded ? <AccordionIcon as={ChevronUp} style={{ marginLeft: 12, color: textColor }} /> : <AccordionIcon as={ChevronDown} style={{ marginLeft: 12, color: textColor }} />}
+                                             {isExpanded ? <AccordionIcon as={MaterialIcons} name="keyboard-arrow-up" style={{ marginLeft: 12, color: textColor }} /> : <AccordionIcon as={MaterialIcons} name="keyboard-arrow-down" style={{ marginLeft: 12, color: textColor }} />}
                                         </>
                                    );
                               }}

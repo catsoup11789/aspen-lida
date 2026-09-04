@@ -35,7 +35,7 @@ export const MoreMenu = () => {
      const library = useLibrary();
      const menu = useLibraryMenu();
      const updateMenu = useUpdateMenu();
-     const { theme } = useTheme();
+     const { theme, textColor, colorMode } = useTheme();
 
      const { signOut } = React.useContext(AuthContext);
      const hasMenuItems = _.size(menu);
@@ -113,7 +113,7 @@ export const MoreMenu = () => {
                                    {library.catalogRegistrationCapabilities?.enableSelfRegistration === '1' && library.catalogRegistrationCapabilities.enableSelfRegistrationInApp === '1' ? (
                                         <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={toggleDeleteConfirmationModal}>
                                              <HStack space="sm" style={{ alignItems: 'center' }}>
-                                                  <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }} onPress={() => setShowDeleteConfirmationModal(true)} />
+                                                  <MaterialIcons name="chevron-right" size={20} color={textColor} />
                                                   <Text style={{ color: textColor, fontWeight: '500' }}>
                                                        {getTermFromDictionary(language, 'delete_account')}
                                                   </Text>
@@ -243,7 +243,7 @@ const MyLibrary = () => {
                          ) : null}
                          {hoursLabel ? <Text style={{ color: theme['tokens']['colors']['primary']['400-text'] }}>{hoursLabel}</Text> : null}
                     </VStack>
-                    <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: theme['tokens']['colors']['primary']['400-text'] }} />
+                    <MaterialIcons name="chevron-right" size={20} color={theme['tokens']['colors']['primary']['400-text']} />
                </Pressable>
           </Box>
      );
@@ -258,7 +258,7 @@ const ViewAllLocations = () => {
           return (
                <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => navigate('AllLocations')}>
                     <HStack space="sm" style={{ alignItems: 'center' }}>
-                         <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }}/>
+                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
                          <Text style={{ fontWeight: '500', color: textColor }}>{getTermFromDictionary(language, 'view_all_locations')}</Text>
                     </HStack>
                </Pressable>
@@ -275,7 +275,7 @@ const Settings = () => {
      return (
           <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => navigate('MyPreferences')}>
                <HStack space="sm" style={{ alignItems: 'center' }}>
-                    <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }} />
+                    <MaterialIcons name="chevron-right" size={20} color={textColor} />
                     <Text style={{ fontWeight: '500', color: textColor }}>{getTermFromDictionary(language, 'preferences')}</Text>
                </HStack>
           </Pressable>
@@ -339,7 +339,7 @@ const PrivacyPolicy = () => {
      return (
           <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => openURL()}>
                <HStack space="sm" style={{ alignItems: 'center' }}>
-                    <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }} />
+                    <MaterialIcons name="chevron-right" size={20} color={textColor} />
                     <Text style={{ fontWeight: '500', color: textColor }}>{getTermFromDictionary(language, 'privacy_policy')}</Text>
                </HStack>
           </Pressable>
@@ -493,7 +493,7 @@ const MenuLink = (payload) => {
                     return (
                          <Pressable key={index} style={{ paddingHorizontal: 8, paddingVertical: 12, borderRadius: 8 }} onPress={() => openURL(item.url)}>
                              <HStack space="sm" style={{ alignItems: 'center' }}>
-                                  <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }} />
+                                  <MaterialIcons name="chevron-right" size={20} color={textColor} />
                                   <VStack style={{ width: '100%' }}>
                                        <Text style={{ fontWeight: '500', color: textColor }}>{item.linkText}</Text>
                                    </VStack>

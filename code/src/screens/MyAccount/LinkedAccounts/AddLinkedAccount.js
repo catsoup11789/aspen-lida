@@ -108,7 +108,7 @@ const AddLinkedAccount = () => {
                                                     textContentType="password" required type={showPassword ? 'text' : 'password'} ref={passwordRef}
                                         />
                                         <InputSlot onPress={() => setShowPassword(!showPassword)}>
-                                             <InputIcon as={MaterialCommunityIcons} name={showPassword ? 'eye' : 'eye-off'} style={{ marginRight: 8, color: textColor }} />
+                                             <MaterialCommunityIcons name={showPassword ? 'eye' : 'eye-off'} size={20} color={textColor} style={{ marginRight: 8 }} />
                                         </InputSlot>
                                    </Input>
                               </FormControl>

@@ -1,4 +1,4 @@
-import { SearchIcon } from 'lucide-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { useRoute } from '@react-navigation/native';
 import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -29,7 +29,7 @@ import { logDebugMessage, getErrorMessage } from '../../util/logging.js';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
@@ -126,7 +126,7 @@ export const GroupedWorkScreen = () => {
                     loadError(error, '')
                ) : (
                     <ScrollView>
-                         <Box style={{ height: 150, width: '100%', backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.background.dark, zIndex: -1, position: 'absolute', left: 0, top: 0 }} />
+                         <Box style={{ height: 150, width: '100%', backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark, zIndex: -1, position: 'absolute', left: 0, top: 0 }} />
                          {_.size(systemMessages) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                          <DisplayGroupedWork data={data.results} initialFormat={data.format} updateFormat={data.format} />
                     </ScrollView>
@@ -200,8 +200,8 @@ const Author = ({ author }) => {
      if (author) {
           return (
                <Button size="sm" variant="link" onPress={() => startSearch(author, 'SearchResults', library.baseUrl)}>
-                    <ButtonIcon as={SearchIcon} size="xs" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, marginRight: 4 }} />
-                    <ButtonText style={{ fontWeight: '400', color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }}>
+                    <MaterialIcons name="search" size={16} color={colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
+                    <ButtonText style={{ fontWeight: '400', color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white }}>
                          {author}
                     </ButtonText>
                </Button>
@@ -219,8 +219,8 @@ const Format = (data) => {
      const { theme, colorMode } = useTheme();
 
      return (
-          <Button size="sm" variant={btnStyle} onPress={() => updateFormat(key)} style={{ backgroundColor: btnStyle === 'outline' ? 'transparent' : theme.tokens.colors.secondary['400'], borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, marginBottom: 4, marginRight: 4 }}>
-               <ButtonText style={{ color: btnStyle === 'outline' ? (colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark) : theme.tokens.colors.secondary['400-text'] }}>{format.label}</ButtonText>
+          <Button size="sm" variant={btnStyle} onPress={() => updateFormat(key)} style={{ backgroundColor: btnStyle === 'outline' ? 'transparent' : theme.tokens.colors.secondary['400'], borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white, marginBottom: 4, marginRight: 4 }}>
+               <ButtonText style={{ color: btnStyle === 'outline' ? (colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white) : theme.tokens.colors.secondary['400-text'] }}>{format.label}</ButtonText>
           </Button>
      );
 };
@@ -290,8 +290,8 @@ const BibliographicInformationLink = ({ groupedWorkId }) => {
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const library = useLibrary();
-     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.background.dark;
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.gray200;
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.text.dark;
 
      let showMoreInfoBtn = false;
      if(library?.showMoreInfoBtn) {

@@ -118,7 +118,18 @@ export const MyLibrary = () => {
           <ScrollView>
                {location.locationImage ? (
                     <>
-                         <LinearGradient height={200} width="100%" locations={[.25, .90]} colors={['transparent', bgColor]} zIndex={0} position="absolute" left={0} top={0} />
+                         <LinearGradient
+                              locations={[0.25, 0.9]}
+                              colors={['transparent', bgColor]}
+                              style={{
+                                   width: '100%',
+                                   height: 200,
+                                   zIndex: 0,
+                                   position: 'absolute',
+                                   left: 0,
+                                   top: 0,
+                              }}
+                         />
                          <Image
                               alt={location.displayName}
                               source={location.locationImage}

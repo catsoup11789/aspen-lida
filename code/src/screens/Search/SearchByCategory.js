@@ -71,7 +71,7 @@ export const SearchResultsForBrowseCategory = () => {
      const Paging = () => {
           if (data.totalPages > 1) {
                return (
-                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray100 : theme.tokens.colors.ui.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>

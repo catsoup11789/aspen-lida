@@ -408,7 +408,7 @@ const Edition = (props) => {
                                    {records.publicationDate}
                               </Text>
                               <Text size="xs" style={{ color: textColor }}>
-                                   {records.publisher}. {records.edition} {records.physical} {closedCaptioned === '1' ? <Icon as={MaterialIcons} name="closed-caption" size="sm" style={{ color: textColor }} /> : null}
+                                   {records.publisher}. {records.edition} {records.physical} {closedCaptioned === '1' ? <MaterialIcons name="closed-caption" size={16} color={textColor} /> : null}
                               </Text>
                          </HStack>
                          <VStack space="sm">
@@ -419,8 +419,8 @@ const Edition = (props) => {
                               </Center>
                               {records.source === 'ils' || status.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
-                                        <ButtonIcon as={MaterialIcons} name="location-pin" size="xs" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }} />
-                                        <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
+                                        <MaterialIcons name="location-pin" size={14} color={colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
+                                        <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                                    </Button>
                               ) : null}
                          </VStack>

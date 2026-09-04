@@ -1,5 +1,5 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
-import { EyeOff, Eye } from 'lucide-react-native';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
@@ -8,7 +8,7 @@ import { useRoute, useNavigation, CommonActions, StackActions } from '@react-nav
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { LoadingSpinner } from '../../../components/loadingSpinner';
 import { SystemMessagesContext } from '../../../context/initialContext';
@@ -159,7 +159,7 @@ export const MyAlternateLibraryCard = () => {
                                         <Input style={{ borderColor: inputBorderColor }}>
                                              <InputField textContentType="none" type={showPassword ? 'text' : 'password'} style={{ color: textColor }} name="password" value={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
                                              <InputSlot onPress={toggleShowPassword}>
-                                                  <InputIcon as={showPassword ? Eye : EyeOff} style={{ marginRight: 8, color: textColor }} />
+                                                  <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} color={textColor} style={{ marginRight: 8 }} />
                                              </InputSlot>
                                         </Input>
                                    </FormControl>

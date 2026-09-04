@@ -74,7 +74,7 @@ const CreateList = (props) => {
      return (
           <Center>
                <Button onPress={toggle} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                   <ButtonIcon as={MaterialIcons} name="add" style={{ color: theme.tokens.colors.primary['500-text'], marginRight: 4 }} />
+                   <MaterialIcons name="add" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />
                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>

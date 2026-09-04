@@ -1,4 +1,4 @@
-import { ScanBarcode, SearchIcon, XIcon, Settings, RotateCwIcon, ClockIcon } from 'lucide-react-native';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import * as Device from 'expo-device';
@@ -24,12 +24,11 @@ import HomeScreenLinkGrid from './Link';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonIcon, ButtonSpinner, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonSpinner, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { FormControl } from '@/components/ui/form-control';
-import { Input, InputField, InputSlot } from '@/components/ui/input';
-import { InputIcon } from '@/components/ui/icon';
+import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -312,16 +311,16 @@ export const DiscoverHomeScreen = () => {
                               <FormControl style={{ paddingBottom: 20 }}>
                                    <Input>
                                         <InputSlot>
-                                             <InputIcon as={SearchIcon} style={{ marginLeft: 8, color: textColor }} />
+                                             <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />
                                         </InputSlot>
                                         <InputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} style={{ color: textColor }} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
-                                                  <InputIcon as={XIcon} style={{ marginRight: 8, color: textColor }} />
+                                                  <MaterialIcons name="close" size={20} color={textColor} style={{ marginRight: 8 }} />
                                              </InputSlot>
                                         ) : null}
                                         <InputSlot onPress={() => openScanner()}>
-                                             <InputIcon as={ScanBarcode} style={{ marginRight: 8, color: textColor }} />
+                                             <MaterialCommunityIcons name="barcode-scan" size={20} color={textColor} style={{ marginRight: 8 }} />
                                         </InputSlot>
                                    </Input>
                               </FormControl>
@@ -335,7 +334,7 @@ export const DiscoverHomeScreen = () => {
                          return `${item?.id ?? item?.textId ?? item?.sourceListId ?? item?.label ?? `${item?.source ?? 'browse'}-${item?.sourceListId ?? 'category'}`}-${index}`;
                     }}
                     renderItem={({ item }) => (
-                         <Box style={{ paddingHorizontal: 20 }}>
+                         <Box style={{ paddingHorizontal: 15 }}>
                               <DisplayBrowseCategory category={item} />
                          </Box>
                     )}
@@ -377,11 +376,12 @@ const ButtonOptions = (props) => {
                          {loading ? (
                           <ButtonSpinner key="spinner" style={{ color: theme.tokens.colors.primary['500-text'], marginRight: 4 }} />
                          ) : (
-                             <ButtonIcon
+                             <MaterialIcons
                                   key="icon"
-                                  as={ClockIcon}
-                                  style={{ color: theme.tokens.colors.primary['500-text'], marginRight: 4 }}
-                                  size="sm"
+                                  name="schedule"
+                                  size={16}
+                                  color={theme.tokens.colors.primary['500-text']}
+                                  style={{ marginRight: 4 }}
                              />
                          )}
                          <ButtonText
@@ -397,10 +397,11 @@ const ButtonOptions = (props) => {
                          onPress={() => {
                              showManageCategories();
                          }}>
-                         <ButtonIcon
-                             as={Settings}
-                             style={{ color: theme.tokens.colors.primary['500-text'], marginRight: 4 }}
-                             size="sm"
+                         <MaterialIcons
+                             name="settings"
+                             size={16}
+                             color={theme.tokens.colors.primary['500-text']}
+                             style={{ marginRight: 4 }}
                          />
                          <ButtonText
                              style={{ color: theme.tokens.colors.primary['500-text'], fontWeight: '500' }}
@@ -421,7 +422,7 @@ const ButtonOptions = (props) => {
                                    setRefreshing(false);
                               }
                          }}>
-                         {refreshing ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500-text'] }} /> : <ButtonIcon as={RotateCwIcon} style={{ color: theme.tokens.colors.primary['500-text'], marginRight: 4 }} size="sm" />}
+                         {refreshing ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500-text'] }} /> : <MaterialIcons name="refresh" size={16} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />}
 
                          <ButtonText size="sm" style={{ fontWeight: '500', color: theme.tokens.colors.primary['500-text'] }}>
                               {getTermFromDictionary(language, 'browse_categories_refresh')}

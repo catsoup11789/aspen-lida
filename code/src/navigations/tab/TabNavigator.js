@@ -83,10 +83,11 @@ export default function TabNavigator() {
 
 export const TabItem = ({ state, descriptors, navigation }) => {
      const language = useActiveLanguage();
-     const { colorMode } = useTheme();
-     const activeIconColor = colorMode === 'light' ? LIGHT_ICON_COLOR : DARK_ICON_COLOR;
-     const inactiveIconColor = colorMode === 'light' ? LIGHT_ICON_MUTED_COLOR : DARK_ICON_MUTED_COLOR;
-     const tabBarBackgroundColor = colorMode === 'light' ? LIGHT_TAB_BACKGROUND : DARK_TAB_BACKGROUND;
+     const { theme, colorMode } = useTheme();
+     const activeIconColor = colorMode === 'light' ? theme.tokens.colors.ui.surface.dark : theme.tokens.colors.ui.textStrong.dark;
+     const inactiveIconColor = colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark;
+     const tabBarBackgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.card.light : theme.tokens.colors.ui.card.dark;
+     const tabBorderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
      const insets = useSafeAreaInsets();
 
      const [browseTabLabel, setBrowseTabLabel] = React.useState(getTermFromDictionary(language, 'nav_discover'));
@@ -114,7 +115,7 @@ export const TabItem = ({ state, descriptors, navigation }) => {
                style={{
                     paddingBottom: insets.bottom,
                     backgroundColor: tabBarBackgroundColor,
-                    borderColor: TAB_BORDER_COLOR,
+                    borderColor: tabBorderColor,
                }}>
                {state.routes.map((route, index) => {
                     const { options } = descriptors[route.key];

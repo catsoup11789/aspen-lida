@@ -9,7 +9,6 @@ import { popToast } from '../../components/feedback';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Icon } from '@/components/ui/icon';
 
 import { getTermFromDictionary } from '../../translations/TranslationService';
 
@@ -141,25 +140,25 @@ const ContactButtons = (data) => {
 
      if (location.phone || location.email || location.homeLink || location.latitude !== 0) {
           return (
-               <Box mb="$4">
-                    <ButtonGroup flexWrap="wrap" size="sm" justifyContent="space-between">
+               <Box style={{ marginBottom: 16 }}>
+                    <ButtonGroup size="sm" style={{ flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between' }}>
                          {location.phone ? (
                               <Button
                                    variant="outline"
-                                   width="23%"
-                                   onPress={() => callLibrary()}
                                    style={{
-                                       borderColor: iconBorderColor,
+                                        width: '23%',
+                                        borderColor: iconBorderColor,
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         paddingVertical: 10,
                                         paddingHorizontal: 2,
                                         height: 'auto',
-                                   }}>
+                                   }}
+                                   onPress={() => callLibrary()}>
                                    <Center>
-                                        <Icon as={MaterialIcons} name="call" size="md" color={colorMode === 'light' ? '$coolGray600' : '$warmGray200'} />
+                                        <MaterialIcons name="call" size={18} color={textColor} />
                                    </Center>
-                                   <ButtonText color={themeTextColor} style={{ textAlign: 'center', fontSize: 10 }}>
+                                   <ButtonText style={{ color: themeTextColor, textAlign: 'center', fontSize: 10 }}>
                                         {getTermFromDictionary(language, 'call_the_library')}
                                    </ButtonText>
                               </Button>
@@ -167,20 +166,20 @@ const ContactButtons = (data) => {
                          {location.email ? (
                               <Button
                                    variant="outline"
-                                   width="23%"
-                                   onPress={() => emailLibrary()}
                                    style={{
-                                       borderColor: iconBorderColor,
+                                        width: '23%',
+                                        borderColor: iconBorderColor,
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         paddingVertical: 10,
                                         paddingHorizontal: 2,
                                         height: 'auto',
-                                   }}>
+                                   }}
+                                   onPress={() => emailLibrary()}>
                                    <Center>
-                                        <Icon as={MaterialIcons} name="email" size="md" color={colorMode === 'light' ? '$coolGray600' : '$warmGray200'} />
+                                        <MaterialIcons name="email" size={18} color={textColor} />
                                    </Center>
-                                   <ButtonText color={themeTextColor} style={{ textAlign: 'center', fontSize: 10 }}>
+                                   <ButtonText style={{ color: themeTextColor, textAlign: 'center', fontSize: 10 }}>
                                         {getTermFromDictionary(language, 'email_a_librarian')}
                                    </ButtonText>
                               </Button>
@@ -188,20 +187,20 @@ const ContactButtons = (data) => {
                          {location.latitude !== 0 ? (
                               <Button
                                    variant="outline"
-                                   width="23%"
-                                   onPress={() => getDirections()}
                                    style={{
-                                       borderColor: iconBorderColor,
+                                        width: '23%',
+                                        borderColor: iconBorderColor,
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         paddingVertical: 10,
                                         paddingHorizontal: 2,
                                         height: 'auto',
-                                   }}>
+                                   }}
+                                   onPress={() => getDirections()}>
                                    <Center>
-                                        <Icon as={MaterialIcons} name="map" size="md" color={colorMode === 'light' ? '$coolGray600' : '$warmGray200'} />
+                                        <MaterialIcons name="map" size={18} color={textColor} />
                                    </Center>
-                                   <ButtonText color={themeTextColor} style={{ textAlign: 'center', fontSize: 10 }}>
+                                   <ButtonText style={{ color: themeTextColor, textAlign: 'center', fontSize: 10 }}>
                                         {getTermFromDictionary(language, 'get_directions')}
                                    </ButtonText>
                               </Button>
@@ -209,20 +208,20 @@ const ContactButtons = (data) => {
                          {location.homeLink ? (
                               <Button
                                    variant="outline"
-                                   width="23%"
-                                   onPress={() => visitWebsite()}
                                    style={{
-                                       borderColor: iconBorderColor,
+                                        width: '23%',
+                                        borderColor: iconBorderColor,
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         paddingVertical: 10,
                                         paddingHorizontal: 2,
                                         height: 'auto',
-                                   }}>
+                                   }}
+                                   onPress={() => visitWebsite()}>
                                    <Center>
-                                        <Icon as={MaterialIcons} name="home" size="md" color={colorMode === 'light' ? '$coolGray600' : '$warmGray200'} />
+                                        <MaterialIcons name="home" size={18} color={textColor} />
                                    </Center>
-                                   <ButtonText color={themeTextColor} style={{ textAlign: 'center', fontSize: 10 }}>
+                                   <ButtonText style={{ color: themeTextColor, textAlign: 'center', fontSize: 10 }}>
                                         {getTermFromDictionary(language, 'visit_our_website')}
                                    </ButtonText>
                               </Button>

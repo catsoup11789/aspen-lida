@@ -86,7 +86,7 @@ export const SelectThawDate = (props) => {
                <ActionsheetItem onPress={showDatePicker}>
                     {data ? null : (
                          <ActionsheetIcon>
-                              <Icon as={MaterialIcons} name="pause" size="md" style={{ marginRight: 4, color: textColor }} />
+                              <MaterialIcons name="pause" size={18} color={textColor} style={{ marginRight: 4 }} />
                          </ActionsheetIcon>
                     )}
                     <ActionsheetItemText style={{ color: textColor }}>{actionLabel}</ActionsheetItemText>

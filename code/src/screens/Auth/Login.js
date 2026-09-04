@@ -67,7 +67,10 @@ export const LoginScreen = () => {
      const logoTapCountRef = React.useRef(0);
      const logoTapTimerRef = React.useRef(null);
      const { theme, colorMode, textColor } = useTheme();
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const surfaceBg =
+          colorMode === 'light'
+               ? theme?.tokens?.colors?.ui?.surface?.light ?? '#FFFFFF'
+               : theme?.tokens?.colors?.ui?.surface?.dark ?? '#1F1F1F';
 
      let isCommunity = true;
      if (!GLOBALS.slug.startsWith('aspen-lida') || GLOBALS.slug === 'aspen-lida-bws') {
@@ -77,7 +80,7 @@ export const LoginScreen = () => {
      const logoImage = Constants.expoConfig.extra.loginLogo;
 
       const handleThemeInitialized = React.useCallback(() => {
-           setIsThemeInitialized(true);
+           setIsThemeInitialized((prev) => (prev ? prev : true));
       }, []);
 
       // Show migration error message if session expired due to SQLite migration failure
@@ -268,7 +271,7 @@ export const LoginScreen = () => {
                          ) : null}
                          {isCommunity && Platform.OS !== 'android' ? (
                               <Button style={{ marginTop: 20 }} size="xs" variant="link">
-                                   <ButtonIcon as={Ionicons} name="navigate-circle-outline" style={{ marginRight: 4, color: theme.tokens.colors.tertiary['500'] }} />
+                                   <Ionicons name="navigate-circle-outline" size={18} color={theme.tokens.colors.tertiary['500']} style={{ marginRight: 4 }} />
                                    <ButtonText style={{ color: theme.tokens.colors.tertiary['500'] }}>{getTermFromDictionary('en', 'reset_geolocation')}</ButtonText>
                               </Button>
                          ) : null}

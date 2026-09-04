@@ -617,8 +617,8 @@ function MillenniumResetPassword(props) {
 export const ResetPassword = (props) => {
      const library = useLibrary();
      const { theme, textColor, colorMode } = useTheme();
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const surfaceBg = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.surface?.light ?? '#FFFFFF') : (theme?.tokens?.colors?.ui?.surface?.dark ?? '#1F1F1F');
+     const borderColor = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.border?.light ?? '#6b7280') : (theme?.tokens?.colors?.ui?.border?.dark ?? '#d6d3d1');
      const { ils, forgotPasswordType, usernameLabel, passwordLabel, showForgotPasswordModal, setShowForgotPasswordModal } = props;
      const [isProcessing, setIsProcessing] = React.useState(false);
      const [isLoading, setIsLoading] = React.useState(false);

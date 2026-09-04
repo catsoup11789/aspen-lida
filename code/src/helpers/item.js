@@ -156,8 +156,8 @@ export const getFormat = (format, source = null) => {
                }
           }
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text style={{ fontSize: 12, color: textColor }}>
+                    <Text bold style={{ fontSize: 12, color: textColor }}>
                          {getTermFromDictionary(language, 'format')}:
                     </Text>
                     {' '}{format}
@@ -311,8 +311,8 @@ export const getDateLastUsed = (date, checkedOut) => {
                itemLastUsedOn = getTermFromDictionary(language, 'in_use');
           }
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text style={{ fontSize: 12, color: textColor }}>
+                    <Text bold style={{ fontSize: 12, color: textColor }}>
                          {getTermFromDictionary(language, 'last_used')}:
                     </Text>
                     {' '}{itemLastUsedOn}
@@ -444,8 +444,8 @@ export const getCollectionName = (source, collectionName = null) => {
      const {textColor} = useTheme();
 	if (source === 'overdrive' && collectionName) {
 		return (
-		     <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+		     <Text style={{ fontSize: 12, color: textColor }}>
+                    <Text bold style={{ fontSize: 12, color: textColor }}>
                          {getTermFromDictionary(language, 'collection')}:
                     </Text>
                     {' '}{collectionName}
@@ -499,5 +499,5 @@ export const CheckoutAccessLabel = ({ checkout, language, baseUrl, libbyReaderNa
           };
      }, [checkout, language, baseUrl, libbyReaderName]);
 
-     return <ActionsheetItemText color={color} >{label}</ActionsheetItemText>;
+     return <ActionsheetItemText style={{ color }}>{label}</ActionsheetItemText>;
 };

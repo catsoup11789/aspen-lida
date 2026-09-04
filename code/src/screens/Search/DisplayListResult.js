@@ -1,7 +1,7 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 
 import { useUserState } from '../../hooks/useUserData';
-import { TrashIcon } from 'lucide-react-native';
 import { useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import { getCleanTitle } from '../../helpers/item';
@@ -14,7 +14,7 @@ import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { Badge, BadgeText } from '@/components/ui/badge';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
@@ -59,7 +59,7 @@ export const DisplayListResult = (props) => {
      };
 
      return (
-          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray400 : theme.tokens.colors.ui.gray600, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
                     <VStack style={{ width: 100 }}>
                          <Box style={{ height: 150 }}>
@@ -79,8 +79,8 @@ export const DisplayListResult = (props) => {
                               <Center>
                                    <Badge
                                         size="sm"
-                                        style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.background.dark }}>
-                                        <BadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textMuted.light : theme.tokens.colors.ui.gray400, fontSize: 10, textAlign: 'center' }}>
+                                        style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark }}>
+                                        <BadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
                                             {item.language}
                                        </BadgeText>
                                    </Badge>
@@ -97,7 +97,7 @@ export const DisplayListResult = (props) => {
                                    colorScheme="danger"
                                    size="sm"
                                    variant="ghost">
-                                   <ButtonIcon as={TrashIcon} />
+                                   <MaterialIcons name="delete" size={18} color={theme.tokens.colors.ui.danger} style={{ marginRight: 4 }} />
                                    <ButtonText>{getTermFromDictionary(language, 'delete')}</ButtonText>
                               </Button>
                          ) : (

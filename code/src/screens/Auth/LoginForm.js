@@ -31,7 +31,7 @@ import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
 
 export const GetLoginForm = (props) => {
      const {theme, textColor, colorMode, forceRefreshTheme} = useTheme();
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const borderColor = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.border?.light ?? '#6b7280') : (theme?.tokens?.colors?.ui?.border?.dark ?? '#d6d3d1');
      const navigation = useNavigation();
      const barcode = useRoute().params?.barcode ?? null;
      const [loading, setLoading] = React.useState(false);
@@ -367,7 +367,7 @@ export const GetLoginForm = (props) => {
                          />
                          {allowBarcodeScanner ?
                               <InputSlot onPress={() => openScanner()}>
-                             <InputIcon as={Ionicons} name="barcode-outline" style={{ marginRight: 8, color: textColor }} />
+                             <Ionicons name="barcode-outline" size={20} color={textColor} style={{ marginRight: 8 }} />
                          </InputSlot> : null}
                     </Input>
                </FormControl>
@@ -390,7 +390,7 @@ export const GetLoginForm = (props) => {
                              style={{ color: textColor }} autoComplete="password"
                         />
                         <InputSlot onPress={toggleShowPassword}>
-                             <InputIcon as={Ionicons} name={showPassword ? 'eye-outline' : 'eye-off-outline'} style={{ marginRight: 8, color: textColor }} />
+                             <Ionicons name={showPassword ? 'eye-outline' : 'eye-off-outline'} size={20} color={textColor} style={{ marginRight: 8 }} />
                         </InputSlot>
                    </Input>
                </FormControl>

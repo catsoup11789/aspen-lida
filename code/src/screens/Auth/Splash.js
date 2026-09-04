@@ -258,8 +258,18 @@ export async function evaluateStartupCache() {
 
 export const SplashScreen = ({ shouldInitializeTheme = false, forceRefreshTheme = false, onThemeInitialized }) => {
      const { updateTheme, updateColorMode } = useTheme();
+     const hasRunInitRef = React.useRef(false);
+     const initializedCallbackRef = React.useRef(false);
 
      React.useEffect(() => {
+          if (hasRunInitRef.current) {
+               if (!initializedCallbackRef.current && typeof onThemeInitialized === 'function') {
+                    initializedCallbackRef.current = true;
+                    onThemeInitialized();
+               }
+               return;
+          }
+          hasRunInitRef.current = true;
           let active = true;
 
           const initializeTheme = async () => {
@@ -286,7 +296,8 @@ export const SplashScreen = ({ shouldInitializeTheme = false, forceRefreshTheme 
                     // the stored theme only counts as "matching" if it was fetched for the SAME location
                     // that's currently active, so switching locations (e.g. at login) always refetches.
                     const hasMatchingThemeId = isBrandedApp()
-                         ? currentThemeState?.themeId != null && currentThemeState?.locationId === currentLocationId
+                         ? currentThemeState?.themeId != null &&
+                           (currentLocationId == null || currentThemeState?.locationId === currentLocationId)
                          : await isStoredThemeIdMatch(Constants.expoConfig.extra.themeId ?? 1);
                     const themeAgeMs = currentThemeState?.updatedAt ? Date.now() - currentThemeState.updatedAt : Number.POSITIVE_INFINITY;
                     const isThemeStale = themeAgeMs > THEME_STALE_MS;
@@ -329,9 +340,10 @@ export const SplashScreen = ({ shouldInitializeTheme = false, forceRefreshTheme 
                     logErrorMessage(error);
                } finally {
                     logDebugMessage('Splash theme init: finalize callback');
-                    if (typeof onThemeInitialized === 'function' && active) {
-                         onThemeInitialized();
-                    }
+                   if (!initializedCallbackRef.current && typeof onThemeInitialized === 'function' && active) {
+                        initializedCallbackRef.current = true;
+                        onThemeInitialized();
+                   }
                }
           };
 

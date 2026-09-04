@@ -42,14 +42,14 @@ export const SearchIndexScreen = () => {
                                    <Pressable key={index} style={{ padding: 2, paddingVertical: 8 }} onPress={() => updateIndex(index)}>
                                         {currentIndex === index ? (
                                             <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
-                                                 <Icon as={MaterialIcons} name="radio-button-checked" size="lg" style={{ color: theme.tokens.colors.primary['600'] }} />
+                                                 <MaterialIcons name="radio-button-checked" size={20} color={theme.tokens.colors.primary['600']} />
                                                  <Text style={{ color: textColor, marginLeft: 8 }}>
                                                        {obj}
                                                   </Text>
                                              </HStack>
                                         ) : (
                                             <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
-                                                 <Icon as={MaterialIcons} name="radio-button-unchecked" size="lg" style={{ color: theme.tokens.colors.primary['200'] }}  />
+                                                 <MaterialIcons name="radio-button-unchecked" size={20} color={theme.tokens.colors.primary['200']} />
                                                  <Text style={{ color: textColor, marginLeft: 8 }}>
                                                        {obj}
                                                   </Text>

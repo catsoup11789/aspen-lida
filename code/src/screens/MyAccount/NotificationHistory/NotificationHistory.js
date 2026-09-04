@@ -1,5 +1,5 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-import { ChevronRight, Dot } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { loadError } from '../../../components/loadError';
 import { loadingSpinner } from '../../../components/loadingSpinner';
@@ -21,7 +21,6 @@ import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Text } from '@/components/ui/text';
@@ -159,7 +158,7 @@ export const MyNotificationHistory = () => {
 };
 
 const Item = (data) => {
-     const { colorMode, textColor } = useTheme();
+     const { colorMode, textColor, theme } = useTheme();
      const message = data.data;
      const handleOpenMyMessage = data.handleOpenMyMessage;
      let content = stripHTML(message.content);
@@ -169,7 +168,7 @@ const Item = (data) => {
                <HStack style={{ alignItems: 'flex-start' }}>
                     {message.isRead === '0' ? (
                          <Box style={{ width: '7%' }}>
-                              <Icon as={Dot} style={{ color: textColor }} />
+                              <MaterialIcons name="fiber-manual-record" size={12} color={textColor} />
                          </Box>
                     ) : (
                          <Box style={{ width: '7%' }} />
@@ -189,7 +188,7 @@ const Item = (data) => {
                          </Text>
                     </VStack>
                     <Box style={{ width: '7%' }}>
-                         <Icon as={ChevronRight} style={{ color: textColor }} />
+                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
                     </Box>
                </HStack>
           </Pressable>

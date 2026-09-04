@@ -15,11 +15,11 @@ import { UnsavedChangesExit } from './UnsavedChanges';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { ScanBarcode, SearchIcon, XIcon } from 'lucide-react-native';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { ChevronRightIcon, InputIcon } from '@/components/ui/icon';
+import { ChevronRightIcon } from '@/components/ui/icon';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { Input, InputField, InputSlot } from '@/components/ui/input';
@@ -55,7 +55,7 @@ export const FiltersScreen = () => {
 
      const renderFilter = (label, index) => {
           return (
-               <Pressable key={index} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, paddingVertical: 20 }} onPress={() => openCluster(label)}>
+               <Pressable key={index} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingVertical: 20 }} onPress={() => openCluster(label)}>
                     <VStack style={{ alignContent: 'center' }}>
                          <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                               <VStack>
@@ -156,7 +156,7 @@ export const FiltersScreen = () => {
 
      const actionButtons = () => {
           return (
-               <Box style={{ padding: 12, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray50 : theme.tokens.colors.ui.surface.dark, shadowOpacity: 0.2, shadowRadius: 1 }}>
+               <Box style={{ padding: 12, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceSoft.light : theme.tokens.colors.ui.surface.dark, shadowOpacity: 0.2, shadowRadius: 1 }}>
                     <Center>
                          <ButtonGroup size="lg">
                               <Button variant="link" onPress={() => clearSelections()}>
@@ -289,18 +289,18 @@ export const FiltersScreen = () => {
                     <Box style={{ padding: 20 }}>
                          <VStack space="md">
                               <FormControl>
-                                   <Input variant="outline" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}>
+                                   <Input variant="outline" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
                                         <InputSlot>
-                                             <InputIcon as={SearchIcon} name="search" style={{ color: textColor, marginLeft: 8 }} />
+                                             <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />
                                         </InputSlot>
                                         <InputField returnKeyType="search" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} style={{ color: textColor }} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
-                                                  <InputIcon as={XIcon} style={{ marginRight: 8, color: textColor }} />
+                                                  <MaterialIcons name="close" size={20} color={textColor} style={{ marginRight: 8 }} />
                                              </InputSlot>
                                         ) : null}
                                         <InputSlot onPress={() => openScanner()}>
-                                             <InputIcon as={ScanBarcode} style={{ marginRight: 8, color: textColor }} />
+                                             <MaterialCommunityIcons name="barcode-scan" size={20} color={textColor} style={{ marginRight: 8 }} />
                                         </InputSlot>
                                    </Input>
                               </FormControl>
@@ -308,7 +308,7 @@ export const FiltersScreen = () => {
 
                          {!isLoading ? (
                               <>
-                                   <Pressable key={0} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, paddingVertical: 20 }} onPress={() => openSearchIndexes()}>
+                                   <Pressable key={0} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingVertical: 20 }} onPress={() => openSearchIndexes()}>
                                         <VStack style={{ alignContent: 'center' }}>
                                              <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                                                   <VStack>
@@ -323,7 +323,7 @@ export const FiltersScreen = () => {
                                              </HStack>
                                         </VStack>
                                    </Pressable>
-                                   <Pressable key={1} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, paddingVertical: 20 }} onPress={() => openSearchSources()}>
+                                   <Pressable key={1} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingVertical: 20 }} onPress={() => openSearchSources()}>
                                         <VStack style={{ alignContent: 'center' }}>
                                              <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                                                   <VStack>

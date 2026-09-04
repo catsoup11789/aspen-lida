@@ -196,7 +196,7 @@ export const SupportScreen = () => {
                          await saveThemeState({
                               themeId: themeResponse.themeId,
                               colorMode: colorMode === 'dark' ? 'dark' : 'light',
-                              textColor: colorMode === 'dark' ? '$coolGray200' : '$warmGray600',
+                             textColor: colorMode === 'dark' ? '#e5e7eb' : '#57534e',
                               themeColors: themeResponse.themeColors,
                          });
                     }
@@ -282,7 +282,7 @@ export const SupportScreen = () => {
      const enableDebugPanel = false;
 
      return (
-          <Box style={{ flex: 1, padding: 20 }}>
+          <Box style={{ flex: 1 }}>
                <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
                     <VStack space="sm" style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
                          <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>

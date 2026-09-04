@@ -145,13 +145,14 @@ export const MyHold = (props) => {
                          <Image
                               alt={hold.title}
                               source={url}
-                              style={{
-                                   width: 100,
-                                   height: 150 }}
-                              borderRadius={8}
-                              placeholder={blurhash}
-                              transition={1000}
-                              contentFit="cover"
+                             placeholder={blurhash}
+                             transition={1000}
+                             contentFit="cover"
+                             style={{
+                                  width: 100,
+                                  height: 150,
+                                  borderRadius: 8,
+                             }}
                          />
                          {(hold.allowFreezeHolds || canCancel) && allowLinkedAccountAction && section === 'Pending' ? (
                               <Center>
@@ -190,7 +191,7 @@ export const MyHold = (props) => {
                               handleClose();
                          }}>
                          <ActionsheetIcon>
-                             <Icon as={MaterialIcons} name="search" size="md" style={{ marginRight: 4, color: textColor }} />
+                             <MaterialIcons name="search" size={18} color={textColor} style={{ marginRight: 4 }} />
                          </ActionsheetIcon>
                          <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                     </ActionsheetItem>
@@ -216,7 +217,7 @@ export const MyHold = (props) => {
                               });
                          }}>
                          <ActionsheetIcon>
-                             <Icon as={MaterialIcons} name="book" size="md" style={{ marginRight: 4, color: textColor }} />
+                             <MaterialIcons name="book" size={18} color={textColor} style={{ marginRight: 4 }} />
                          </ActionsheetIcon>
                          <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'checkout_title')}</ActionsheetItemText>
                     </ActionsheetItem>
@@ -251,7 +252,7 @@ export const MyHold = (props) => {
                               });
                          }}>
                          <ActionsheetIcon>
-                             <Icon as={MaterialIcons} name="cancel" size="md" style={{ marginRight: 4, color: textColor }}/>
+                             <MaterialIcons name="cancel" size={18} color={textColor} style={{ marginRight: 4 }} />
                          </ActionsheetIcon>
                          <ActionsheetItemText style={{ color: textColor }}>{label}</ActionsheetItemText>
                     </ActionsheetItem>
@@ -283,7 +284,7 @@ export const MyHold = (props) => {
                                    });
                               }}>
                               <ActionsheetIcon>
-                                   <Icon as={MaterialCommunityIcons} name={icon} size="md" style={{ marginRight: 4, color: textColor }} />
+                                   <MaterialCommunityIcons name={icon} size={18} color={textColor} style={{ marginRight: 4 }} />
                               </ActionsheetIcon>
                               <ActionsheetItemText style={{ color: textColor }}>{label}</ActionsheetItemText>
                          </ActionsheetItem>
@@ -305,7 +306,7 @@ export const MyHold = (props) => {
                                         });
                                    }}>
                                    <ActionsheetIcon>
-                                       <Icon as={MaterialCommunityIcons} name={icon} size="md" style={{ marginRight: 4, color: textColor }}/>
+                                       <MaterialCommunityIcons name={icon} size={18} color={textColor} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText style={{ color: textColor }}>{label}</ActionsheetItemText>
                               </ActionsheetItem>
@@ -328,7 +329,7 @@ export const MyHold = (props) => {
      return (
           <>
                <Pressable onPress={handleOpen} style={{ borderBottomWidth: 1, borderColor: separatorColor, paddingLeft: 16, paddingRight: 80, paddingVertical: 8 }}>
-                    <HStack space="sm" maxW="95%">
+                    <HStack space="sm" style={{ maxWidth: '95%' }}>
                          {initializeLeftColumn()}
                          <VStack>
                               {getTitle(hold.title)}
@@ -373,6 +374,7 @@ export const ManageSelectedHolds = (props) => {
      const { updateHolds } = React.useContext(HoldsContext);
      const { theme, colorMode, textColor } = useTheme();
      const insets = useSafeAreaInsets();
+     const actionSheetBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
 
      const [showActionsheet, setShowActionsheet] = React.useState(false)
      const handleOpen = () => setShowActionsheet(true);
@@ -536,6 +538,7 @@ export const ManageAllHolds = (props) => {
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const insets = useSafeAreaInsets();
+     const actionSheetBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
 
      const [showActionsheet, setShowActionsheet] = React.useState(false)
      const handleOpen = () => setShowActionsheet(true);

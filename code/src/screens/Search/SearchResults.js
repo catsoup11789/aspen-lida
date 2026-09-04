@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
 import _ from 'lodash';
-import {ScanBarcode, SearchIcon, SlidersHorizontalIcon, XIcon} from 'lucide-react-native';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
 
 import React from 'react';
@@ -31,13 +31,12 @@ import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { Badge, BadgeText } from '@/components/ui/badge';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { FormControl } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { Input, InputField, InputSlot } from '@/components/ui/input';
-import { InputIcon } from '@/components/ui/icon';
+import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
@@ -154,7 +153,7 @@ export const SearchResults = () => {
                     label = num + ' ' + getTermFromDictionary(language, 'result');
                }
                return (
-                    <Box style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray100 : theme.tokens.colors.ui.surface.dark, borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600 }}>
+                    <Box style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
                          <Box style={{ margin: 8 }}>
                               <Text style={{ color: textColor }}>{label}</Text>
                          </Box>
@@ -168,7 +167,7 @@ export const SearchResults = () => {
      const Paging = () => {
           if (data.totalPages > 1) {
                return (
-                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray100 : theme.tokens.colors.ui.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
@@ -249,7 +248,7 @@ const DisplayResult = (data) => {
      const language = useActiveLanguage();
      const { theme, textColor, colorMode } = useTheme();
      const { currentSource } = React.useContext(SearchContext);
-     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.background.dark;
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
 
      const handlePressItem = () => {
           if (currentSource === 'events') {
@@ -379,7 +378,7 @@ const DisplayResult = (data) => {
           let roomData = item?.room ?? null;
 
           return (
-               <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray400 : theme.tokens.colors.ui.gray600, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+               <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                     <HStack space="md">
                          <VStack style={{ width: 100 }}>
                               <Box style={{ height: 150 }}>
@@ -433,7 +432,7 @@ const DisplayResult = (data) => {
      }
 
      return (
-          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray400 : theme.tokens.colors.ui.gray600, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
                     <VStack style={{ width: 100 }}>
                          <Box style={{ height: 150 }}>
@@ -453,8 +452,8 @@ const DisplayResult = (data) => {
                               <Center style={{ marginTop: 4 }}>
                                    <Badge
                                         size="sm"
-                                        style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.background.dark }}>
-                                        <BadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textMuted.light : theme.tokens.colors.ui.gray400, fontSize: 10, textAlign: 'center' }}>
+                                        style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark }}>
+                                        <BadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
                                              {item.language}
                                         </BadgeText>
                                    </Badge>
@@ -491,7 +490,7 @@ const FilterBar = ({ navigation }) => {
      }
      if (type === 'catalog') {
           return (
-               <Box style={{ padding: 8, paddingBottom: 0, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray100 : theme.tokens.colors.ui.surface.dark, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, flexWrap: 'nowrap' }}>
+               <Box style={{ padding: 8, paddingBottom: 0, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, flexWrap: 'nowrap' }}>
                     <ScrollView horizontal>
                          <Button
                               size="sm"
@@ -505,7 +504,7 @@ const FilterBar = ({ navigation }) => {
                                         },
                                    });
                               }}>
-                              <ButtonIcon as={SlidersHorizontalIcon} style={{ color: theme.tokens.colors.primary['600-text'], marginRight: 4 }} />
+                              <MaterialCommunityIcons name="tune" size={18} color={theme.tokens.colors.primary['600-text']} style={{ marginRight: 4 }} />
                               <ButtonText style={{ color: theme.tokens.colors.primary['600-text'] }}>{getTermFromDictionary(language, 'filters')}</ButtonText>
                          </Button>
                          <CreateFilterButton navigation={navigation} />
@@ -534,20 +533,20 @@ const SearchBox = ({term, navigation}) => {
      };
 
      return (
-          <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray100 : theme.tokens.colors.ui.surface.dark, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, borderBottomWidth: 1 }}>
+          <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, borderBottomWidth: 1 }}>
                <FormControl style={{ paddingBottom: 20 }}>
-                    <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}>
+                    <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
                          <InputSlot>
-                              <InputIcon as={SearchIcon} style={{ marginLeft: 8, color: textColor }} />
+                              <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />
                          </InputSlot>
                          <InputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={updateSearch} value={searchTerm} style={{ color: textColor }} />
                          {searchTerm ? (
                               <InputSlot onPress={() => clearSearch()}>
-                                   <InputIcon as={XIcon} style={{ marginRight: 8, color: textColor }} />
+                                   <MaterialIcons name="close" size={20} color={textColor} style={{ marginRight: 8 }} />
                               </InputSlot>
                          ) : null}
                          <InputSlot onPress={() => openScanner()}>
-                              <InputIcon as={ScanBarcode} style={{ marginRight: 8, color: textColor }} />
+                              <MaterialCommunityIcons name="barcode-scan" size={20} color={textColor} style={{ marginRight: 8 }} />
                          </InputSlot>
                     </Input>
                </FormControl>
@@ -608,7 +607,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                                    key={index}
                                    size="sm"
                                    variant="outline"
-                                   style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.trueGray300 : theme.tokens.colors.ui.gray400 }}
+                                   style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
                                    onPress={() => {
                                         navigation.push('modal', {
                                              screen: 'Facet',
@@ -632,7 +631,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                               key={index}
                               size="sm"
                               variant="outline"
-                              style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.primary['400'] : theme.tokens.colors.ui.gray400 }}
+                              style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.primary['400'] : theme.tokens.colors.ui.border.dark }}
                               onPress={() => {
                                    navigation.push('modal', {
                                         screen: 'Facet',
@@ -686,7 +685,7 @@ const CreateFilterButton = ({navigation}) => {
                                    variant="outline"
                                    size="sm"
                                    key={index}
-                                   style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.trueGray300 : theme.tokens.colors.ui.gray400 }}
+                                   style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
                                    onPress={() => {
                                         navigation.push('modal', {
                                              screen: 'Facet',

@@ -108,7 +108,7 @@ const AddToList = (props) => {
      const RenderLargeButton = () => (
           <Center>
                <Button style={{ marginTop: 12, backgroundColor: theme.tokens.colors.tertiary['500'] }} onPress={toggleModal}>
-                    <ButtonIcon as={MaterialIcons} name="bookmark" style={{ color: theme.tokens.colors.tertiary['500-text'], marginRight: 4 }} />
+                    <MaterialIcons name="bookmark" size={18} color={theme.tokens.colors.tertiary['500-text']} style={{ marginRight: 4 }} />
                     <ButtonText style={{ color: theme.tokens.colors.tertiary['500-text'] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
                </Button>
           </Center>
@@ -116,7 +116,7 @@ const AddToList = (props) => {
 
      const RenderSmallButton = () => (
           <Button size="xs" variant="link" style={{ marginTop: 4 }} onPress={toggleModal}>
-               <ButtonIcon as={MaterialIcons} name="bookmark" style={{ color: theme.tokens.colors.tertiary['500'], marginRight: 4 }} />
+               <MaterialIcons name="bookmark" size={18} color={theme.tokens.colors.tertiary['500']} style={{ marginRight: 4 }} />
                <ButtonText style={{ color: theme.tokens.colors.tertiary['500'] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
           </Button>
      );

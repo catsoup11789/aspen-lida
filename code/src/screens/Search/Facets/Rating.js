@@ -81,16 +81,16 @@ export const Facet_Rating = ({ data, category, updater }) => {
                         <Pressable key={index} onPress={() => updateSearch(star.label)} style={{ padding: 2, paddingVertical: 8 }}>
                              <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
                                    {value === star.label ?
-                                       <Icon as={MaterialIcons} name="radio-button-checked" size="lg" style={{ color: theme.tokens.colors.primary['600'] }} /> :
-                                       <Icon as={MaterialIcons} name="radio-button-unchecked" size="lg" style={{ color: theme.tokens.colors.primary['200'] }} />
+                                       <MaterialIcons name="radio-button-checked" size={20} color={theme.tokens.colors.primary['600']} /> :
+                                       <MaterialIcons name="radio-button-unchecked" size={20} color={theme.tokens.colors.primary['200']} />
                                    }
                                    <Stars
                                         default={star.value}
                                         count={5}
                                         starSize={50}
                                         disabled
-                                       fullStar={<Icon as={MaterialIcons} name="star" size="lg" style={{ color: theme.tokens.colors.yellow['500'] }} />}
-                                       emptyStar={<Icon as={MaterialIcons} name="star-border" size="lg" style={{ color: theme.tokens.colors.yellow['500'] }} />}
+                                       fullStar={<MaterialIcons name="star" size={20} color={theme.tokens.colors.yellow['500']} />}
+                                       emptyStar={<MaterialIcons name="star-border" size={20} color={theme.tokens.colors.yellow['500']} />}
                                    />
                                    <Text
                                        style={{ color: textColor, marginLeft: 8 }}

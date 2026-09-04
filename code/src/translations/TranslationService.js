@@ -89,7 +89,7 @@ export const LanguageSwitcher = () => {
                <>
                     <Box>
                          <Menu
-                         bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
+                         style={{ backgroundColor: colorMode === 'light' ? '#fafaf9' : '#374151' }}
                          isOpen={isLanguageMenuOpen}
                          onClose={() => setIsLanguageMenuOpen(false)}
                          onOpen={() => setIsLanguageMenuOpen(true)}
@@ -109,7 +109,7 @@ export const LanguageSwitcher = () => {
                                         }}
                                         style={{ backgroundColor: 'transparent', borderRadius: 9999 }}
                                    >
-                                        <ButtonIcon as={MaterialIcons} name="language" color={theme.tokens.colors.primary['500']} />
+                                        <MaterialIcons name="language" size={18} color={theme.tokens.colors.primary['500']} />
                                         <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}> {languageDisplayName}</ButtonText>
                                    </Button>
                               );

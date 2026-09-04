@@ -14,9 +14,9 @@ import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { CloseIcon, Icon, InputIcon } from '@/components/ui/icon';
+import { CloseIcon, Icon } from '@/components/ui/icon';
 import { Image } from '@/components/ui/image';
-import { Input, InputField, InputSlot } from '@/components/ui/input';
+import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
@@ -25,8 +25,8 @@ import { VStack } from '@/components/ui/vstack';
 export const SelectYourLibrary = (payload) => {
      const isKeyboardOpen = useKeyboard();
      const { theme, textColor, colorMode } = useTheme();
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const surfaceBg = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.surface?.light ?? '#FFFFFF') : (theme?.tokens?.colors?.ui?.surface?.dark ?? '#1F1F1F');
+     const borderColor = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.border?.light ?? '#6b7280') : (theme?.tokens?.colors?.ui?.border?.dark ?? '#d6d3d1');
      const { isCommunity, showModal, setShowModal, updateSelectedLibrary, selectedLibrary, shouldRequestPermissions, libraries, allLibraries, setShouldRequestPermissions } = payload;
      const [query, setQuery] = React.useState('');
      const insets = useSafeAreaInsets();
@@ -78,7 +78,7 @@ export const SelectYourLibrary = (payload) => {
      return (
           <Center>
                <Button onPress={() => setShowModal(true)} size="md" style={{ margin: 20, backgroundColor: theme.tokens.colors.primary['500'] }}>
-                    <ButtonIcon as={MaterialIcons} name="place" style={{ marginRight: 4, color: theme.tokens.colors.primary['500-text'] }} />
+                    <MaterialIcons name="place" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />
                     <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{selectedLibrary?.name ? selectedLibrary.name : getTermFromDictionary('en', 'select_your_library')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} size="lg" avoidKeyboard onClose={() => setShowModal(false)}>
@@ -109,7 +109,7 @@ export const SelectYourLibrary = (payload) => {
                                              style={{ color: textColor }}
                                         />
                                         {query ? <InputSlot onPress={() => clearSearch()}>
-                                            <InputIcon as={MaterialCommunityIcons} name="close-circle" style={{ marginRight: 8, color: textColor }} />
+                                            <MaterialCommunityIcons name="close-circle" size={20} color={textColor} style={{ marginRight: 8 }} />
                                         </InputSlot> : null}
                                    </Input>
                               </Box>
@@ -145,7 +145,7 @@ const Item = (data) => {
      };
 
      return (
-          <Pressable style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handleSelect}>
+          <Pressable style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? (theme?.tokens?.colors?.ui?.border?.light ?? '#6b7280') : (theme?.tokens?.colors?.ui?.border?.dark ?? '#d6d3d1'), paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handleSelect}>
                <HStack space="lg" style={{ alignItems: 'center' }}>
                     {libraryIcon ? (
                          <Image

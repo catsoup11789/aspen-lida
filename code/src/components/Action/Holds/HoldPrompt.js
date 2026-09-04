@@ -1,7 +1,7 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import React from 'react';
-import { EyeOff, Eye } from 'lucide-react-native';
 import { Platform, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import RenderHtml from 'react-native-render-html';
@@ -25,7 +25,7 @@ import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/comp
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { CheckIcon, ChevronDownIcon, CloseIcon, Icon } from '@/components/ui/icon';
-import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
@@ -357,7 +357,7 @@ export const HoldPrompt = (props) => {
                                         <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
                                              <InputField textContentType="none" type={showPassword ? 'text' : 'password'} style={{ color: textColor }} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
                                              <InputSlot onPress={toggleShowPassword}>
-                                                  <InputIcon as={showPassword ? Eye : EyeOff} style={{ marginRight: 8, color: textColor }} />
+                                                  <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} color={textColor} style={{ marginRight: 8 }} />
                                              </InputSlot>
                                         </Input>
                                    </FormControl>

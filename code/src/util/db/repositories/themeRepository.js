@@ -70,7 +70,7 @@ export async function loadThemeState() {
           themeId: row.theme_id ?? null,
           locationId: row.location_id ?? null,
           colorMode,
-          textColor: colorMode === 'dark' ? '$coolGray200' : '$warmGray600',
+          textColor: colorMode === 'dark' ? '#e5e7eb' : '#57534e',
           themeColors: safeParse(row.theme_colors_json),
           header: safeParse(row.header_json),
           updatedAt: row.updated_at ?? 0,
@@ -93,7 +93,7 @@ export async function saveThemeColors(themeColors, themeId, locationId, header) 
 
 export async function saveThemeColorMode(colorMode) {
      const current = await loadThemeState();
-     const nextTextColor = colorMode === 'light' ? '$warmGray600' : '$coolGray200';
+     const nextTextColor = colorMode === 'light' ? '#57534e' : '#e5e7eb';
      await saveThemeState({
           ...current,
           colorMode,

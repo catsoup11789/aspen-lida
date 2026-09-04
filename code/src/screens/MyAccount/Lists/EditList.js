@@ -71,7 +71,7 @@ const EditList = (props) => {
           <>
                <ButtonGroup size="sm" style={{ justifyContent: 'center' }} >
                     <Button onPress={() => setShowModal(true)} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                         <ButtonIcon as={MaterialIcons} name="edit" style={{ color: theme.tokens.colors.primary['500-text'], marginRight: 4 }} />
+                         <MaterialIcons name="edit" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />
                          <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'edit')}</ButtonText>
                     </Button>
                     <DeleteList listId={listId} />
@@ -211,11 +211,13 @@ const DeleteList = (props) => {
       const onClose = () => setIsOpen(false);
       const cancelRef = React.useRef(null);
       const user = userState?.user ?? {};
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
 
      return (
           <Center>
                <Button style={{ backgroundColor: theme.tokens.colors.ui.danger }} onPress={() => setIsOpen(!isOpen)} size="sm">
-                    <ButtonIcon as={MaterialIcons} name="delete" style={{ color: theme.tokens.colors.ui.white, marginRight: 4 }} />
+                    <MaterialIcons name="delete" size={18} color={theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
                     <ButtonText style={{ color: theme.tokens.colors.ui.white }}>Delete List</ButtonText>
                </Button>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>

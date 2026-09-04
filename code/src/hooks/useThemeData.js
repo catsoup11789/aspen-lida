@@ -146,7 +146,7 @@ export function useThemeState(options) {
           themeId: data?.themeId ?? null,
           locationId: data?.locationId ?? null,
           colorMode,
-          textColor: colorMode === 'dark' ? '$coolGray200' : '$warmGray600',
+          textColor: colorMode === 'dark' ? '#e5e7eb' : '#57534e',
           themeColors: data?.themeColors ?? null,
           header: data?.header ?? null,
           updatedAt: data?.updatedAt ?? 0,

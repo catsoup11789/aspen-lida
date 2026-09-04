@@ -1,3 +1,4 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import {
      Button,
      ButtonSpinner,
@@ -7,7 +8,6 @@ import {
 import React from 'react';
 import _ from 'lodash';
 import { useQueryClient } from '@tanstack/react-query';
-import { EyeOff, Eye } from 'lucide-react-native';
 import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 
@@ -26,7 +26,7 @@ import { useTheme } from '../../../themes/theme';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { CloseIcon, Icon } from '@/components/ui/icon';
-import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Text } from '@/components/ui/text';
 
@@ -176,7 +176,7 @@ export const CheckOut = (props) => {
                                              <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
                                                   <InputField textContentType="none" type={showPassword ? 'text' : 'password'} style={{ color: textColor }} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
                                                   <InputSlot onPress={toggleShowPassword}>
-                                                       <InputIcon as={showPassword ? Eye : EyeOff} style={{ marginRight: 8, color: textColor }} />
+                                                       <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} color={textColor} style={{ marginRight: 8 }} />
                                                   </InputSlot>
                                              </Input>
                                         </FormControl>

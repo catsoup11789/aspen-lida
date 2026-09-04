@@ -1,7 +1,7 @@
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { Badge, BadgeText } from '@/components/ui/badge';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { ChevronDownIcon, Icon } from '@/components/ui/icon';
@@ -9,7 +9,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-import { MapPinIcon } from 'lucide-react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
@@ -398,7 +398,7 @@ const Variation = (props) => {
 
      return (
           <Box style={{ marginTop: 20, marginBottom: 0 }}>
-               <Center style={{ margin: 4, padding: 12, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.white.light : theme.tokens.colors.ui.background.dark, borderRadius: 8, alignSelf: 'center', width: '100%' }}>
+               <Center style={{ margin: 4, padding: 12, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceSoft.light : theme.tokens.colors.ui.surfaceSoft.dark, borderRadius: 8, alignSelf: 'center', width: '100%' }}>
                     <VStack space="md" style={{ marginBottom: 12, width: '100%' }}>
                          <HStack space="sm" style={{ width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
                               <Badge variant="solid" action={status.indicator} style={{ borderRadius: 8, padding: 4 }}>
@@ -408,8 +408,8 @@ const Variation = (props) => {
                               </Badge>
                               {source === 'ils' || statusIndicator.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
-                                        <ButtonIcon as={MapPinIcon} size="xs" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, marginRight: 4 }} />
-                                        <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
+                                        <MaterialCommunityIcons name="map-marker" size={16} color={colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
+                                        <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                                    </Button>
                               ) : null}
                          </HStack>
@@ -461,8 +461,8 @@ const Variation = (props) => {
                               />
                          ))}
                     </ButtonGroup>
-                    <Button size="xs" variant="solid" onPress={handleOpenEditions} style={{ width: '100%', marginTop: 8, backgroundColor: theme.tokens.colors.ui.gray200 }}>
-                         <ButtonText style={{ color: theme.tokens.colors.ui.gray900 }}>{getTermFromDictionary(language, 'show_editions')}</ButtonText>
+                    <Button size="xs" variant="solid" onPress={handleOpenEditions} style={{ width: '100%', marginTop: 8, backgroundColor: theme.tokens.colors.ui.surfaceMuted.light }}>
+                         <ButtonText style={{ color: theme.tokens.colors.ui.textStrong.light }}>{getTermFromDictionary(language, 'show_editions')}</ButtonText>
                     </Button>
                </Center>
           </Box>

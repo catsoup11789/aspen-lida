@@ -394,7 +394,7 @@ const Item = (data) => {
                               />
 
                               <Button size="sm" variant="ghost" action="negative" onPress={() => removeEvent()}>
-                                   <ButtonIcon as={MaterialIcons} name="delete" size="xs" style={{ marginRight: 4 }} />
+                                   <MaterialIcons name="delete" size={14} color={textColor} style={{ marginRight: 4 }} />
                                    <ButtonText>{getTermFromDictionary(language, 'remove')}</ButtonText>
                               </Button>
                          </VStack>
@@ -429,7 +429,7 @@ const Item = (data) => {
                          {!event.cover ? (
                               <Box style={{ alignItems: 'flex-start', paddingTop: 8 }}>
                                    <Button size="sm" variant="ghost" action="negative" style={{ padding: 0 }} onPress={() => removeEvent()}>
-                                        <ButtonIcon as={MaterialIcons} name="delete" size="xs" style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="delete" size={14} color={textColor} style={{ marginRight: 4 }} />
                                         <ButtonText>{getTermFromDictionary(language, 'remove')}</ButtonText>
                                    </Button>
                               </Box>

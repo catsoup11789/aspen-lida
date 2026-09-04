@@ -587,7 +587,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                                              toggle();
                                         }}>
                                         <ActionsheetIcon>
-                                            <Icon as={MaterialIcons} name="search" size="md" style={{ marginRight: 4, color: textColor }} />
+                                            <MaterialIcons name="search" size={18} color={textColor} style={{ marginRight: 4 }} />
                                         </ActionsheetIcon>
                                        <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                                    </ActionsheetItem>
@@ -603,7 +603,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                                         toggle();
                                    }}>
                                    <ActionsheetIcon>
-                                       <Icon as={MaterialIcons} name="delete" size="md" style={{ marginRight: 4, color: textColor }} />
+                                       <MaterialIcons name="delete" size={18} color={textColor} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText style={{ color: textColor }}>
                                         {getTermFromDictionary(language, 'reading_history_delete')}

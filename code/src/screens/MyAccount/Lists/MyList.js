@@ -251,7 +251,7 @@ export const MyList = ({ route }) => {
                                         }}
                                         size="sm"
                                         variant="link">
-                                        <ButtonIcon as={MaterialIcons} name="delete" style={{ color: dangerColor }} />
+                                        <MaterialIcons name="delete" size={18} color={dangerColor} />
                                         <ButtonText style={{ color: dangerColor }}>{t('delete')}</ButtonText>
                                    </Button>
                               </VStack>
@@ -308,7 +308,7 @@ export const MyList = ({ route }) => {
                                    }}
                                    size="sm"
                                    variant="link">
-                                   <ButtonIcon as={MaterialIcons} name="delete" style={{ color: dangerColor, marginRight: 4 }} />
+                                   <MaterialIcons name="delete" size={18} color={dangerColor} style={{ marginRight: 4 }} />
                                    <ButtonText style={{ color: dangerColor }}>{t('delete')}</ButtonText>
                               </Button>
                          </VStack>

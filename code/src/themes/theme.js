@@ -98,8 +98,10 @@ function buildThemeCompatibility(themeColors) {
           : buildFallbackPalette();
      return {
           tokens: {
-               colors: palette,
-               ui: UI_NEUTRAL_COLORS,
+               colors: {
+                    ...palette,
+                    ui: UI_NEUTRAL_COLORS,
+               },
           },
      };
 }
@@ -170,6 +172,10 @@ function buildConfigFromColors(colors) {
                     primary: colors?.primary ?? defaultConfig.tokens.colors.primary,
                     secondary: colors?.secondary ?? defaultConfig.tokens.colors.secondary,
                     tertiary: colors?.tertiary ?? defaultConfig.tokens.colors.tertiary,
+                    ui: {
+                         ...(defaultConfig.tokens.colors?.ui ?? {}),
+                         ...UI_NEUTRAL_COLORS,
+                    },
                },
           },
           components: {
@@ -364,7 +370,7 @@ export function UseColorMode(props) {
      const currentMode = colorMode === 'dark' ? 'wb-sunny' : 'nightlight-round';
      const currentColorMode = colorMode === 'dark' ? 'Dark' : 'Light';
      const currentModeB = colorMode === 'dark' ? 'nightlight-round' : 'wb-sunny';
-     const iconColor = colorMode === 'dark' ? "$warmGray50" : "$coolGray700";
+     const iconColor = colorMode === 'dark' ? theme.tokens.colors.ui.text.dark : theme.tokens.colors.ui.icon.light;
      const updateColorMode = useUpdateThemeColorMode();
 
      // If Aspen LiDA Themes are present and 2 or more exist, then display ThemeSwitcher
@@ -393,9 +399,9 @@ export function UseColorMode(props) {
      if (showText) {
           return (
                <HStack alignItems="center">
-                    <Button onPress={switchColorMode} borderRadius="$full" size="sm" bg="transparent">
-                         <ButtonIcon as={MaterialIcons} name={currentModeB} size="sm" color={theme.tokens.colors.primary['500']} />
-                         <ButtonText fontSize="$sm" color={iconColor}> {currentColorMode}</ButtonText>
+                    <Button onPress={switchColorMode} size="sm" style={{ backgroundColor: 'transparent', borderRadius: 9999 }}>
+                         <MaterialIcons name={currentModeB} size={18} color={theme.tokens.colors.primary['500']} />
+                         <ButtonText style={{ fontSize: 14, color: iconColor }}> {currentColorMode}</ButtonText>
                     </Button>
                </HStack>
           );
@@ -403,8 +409,8 @@ export function UseColorMode(props) {
 
      return (
           <Box alignItems="center">
-               <Button onPress={switchColorMode} borderRadius="$full" size="sm" bg="transparent">
-                    <ButtonIcon as={MaterialIcons} name={currentMode} size="sm" color={theme.tokens.colors.primary['500']} />
+               <Button onPress={switchColorMode} size="sm" style={{ backgroundColor: 'transparent', borderRadius: 9999 }}>
+                   <MaterialIcons name={currentMode} size={18} color={theme.tokens.colors.primary['500']} />
                </Button>
           </Box>
      );
@@ -482,7 +488,7 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                                                             }}>
                                                             <HStack space="md" alignItems="center">
                                                                  <Text style={{ color: textColor }}>{themeEntry.name}</Text>
-                                                                 {isActive ? <Icon as={MaterialIcons} name="check" size="md" color={textColor} /> : null}
+                                                                 {isActive ? <MaterialIcons name="check" size={18} color={textColor} /> : null}
                                                             </HStack>
                                                        </Box>
                                                   );
@@ -496,13 +502,12 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                <Box alignItems="center">
                     <Button
                          size="sm"
-                         borderRadius="$full"
                          isDisabled={isSwitchingTheme}
                          onPress={() => {
                               setIsThemeMenuOpen(true);
                          }}
                          style={{ backgroundColor: 'transparent', borderRadius: 9999 }}>
-                         <ButtonIcon as={MaterialIcons} name="palette" color={theme.tokens.colors.primary['500']} />
+                         <MaterialIcons name="palette" size={18} color={theme.tokens.colors.primary['500']} />
                          {showText ? <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}> {activeThemeName}</ButtonText> : null}
                     </Button>
                </Box>

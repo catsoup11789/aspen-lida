@@ -103,14 +103,14 @@ export const EventScreen = () => {
      return (
           <ScrollView>
                {(eventData.length === 0 || status === 'loading' || isFetching) && errorMessage === ''? (
-                    <Box pt={50}><LoadingSpinner message="Fetching data..." /></Box>
+                    <Box style={{ paddingTop: 50 }}><LoadingSpinner message="Fetching data..." /></Box>
                ) : status === 'error' ? (
-                    <Box pt={50}>{loadError(error, '')}</Box>
+                    <Box style={{ paddingTop: 50 }}>{loadError(error, '')}</Box>
                ) : errorMessage !== '' ? (
-                    <Box pt={50}>{loadError(errorMessage, '')}</Box>
+                    <Box style={{ paddingTop: 50 }}>{loadError(errorMessage, '')}</Box>
                ) : (
                     <>
-                         {_.size(systemMessages) > 0 ? <Box safeArea={2}>{showSystemMessage()}</Box> : null}
+                         {_.size(systemMessages) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                          <DisplayEvent data={eventData} source={source} hasValidImage={hasValidImage} />
                     </>
                )}
@@ -413,7 +413,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
                <Pressable style={{ paddingVertical: 12 }} onPress={() => handleAddToCalendar()}>
                     <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
                          <HStack space="sm" style={{ alignItems: 'center' }}>
-                              <Icon as={MaterialIcons} name="calendar-today" size="md" style={{ color: textColor }}/>
+                              <MaterialIcons name="calendar-today" size={18} color={textColor} />
                               <VStack>
                                    <Text bold style={{ color: textColor }}>{displayDay}</Text>
                                    <Text style={{ color: textColor }}>
@@ -421,7 +421,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
                                    </Text>
                               </VStack>
                          </HStack>
-                         <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }}/>
+                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
                     </HStack>
                </Pressable>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} closeOnOverlayClick={false} size="md">
@@ -505,14 +505,14 @@ const Directions = ({ location, room }) => {
                <Pressable style={{ paddingVertical: 12, marginBottom: 20 }} onPress={() => handleGetDirections()}>
                     <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
                          <HStack space="sm" style={{ alignItems: 'center' }}>
-                              <Icon as={MaterialIcons} name="location-pin" size="md" style={{ color: textColor }}/>
+                              <MaterialIcons name="location-pin" size={18} color={textColor} />
                               <VStack>
                                    {location.name ? <Text bold style={{ color: textColor }}>{location.name}</Text> : null}
                                    {room ? <Text style={{ color: textColor }}>{room}</Text> : null}
                                    {location.address ? <Text style={{ color: textColor }}>{location.address}</Text> : null}
                               </VStack>
                          </HStack>
-                         {hasCoordinates ? <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }} /> : null}
+                         {hasCoordinates ? <MaterialIcons name="chevron-right" size={20} color={textColor} /> : null}
                     </HStack>
                </Pressable>
           );

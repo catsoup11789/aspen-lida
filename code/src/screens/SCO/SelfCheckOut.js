@@ -280,7 +280,7 @@ export const SelfCheckOut = () => {
                     ) : null}
                     {keyboardType === 0 ? (
                          <Button onPress={() => openScanner()} style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}>
-                              <ButtonIcon as={Ionicons} name="barcode-outline" style={{ color: theme.tokens.colors.secondary['500-text'] }} />
+                              <Ionicons name="barcode-outline" size={18} color={theme.tokens.colors.secondary['500-text']} />
                               <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>{getTermFromDictionary(language, 'add_new_item')}</ButtonText>
                          </Button>
                     ) : (
@@ -292,11 +292,11 @@ export const SelfCheckOut = () => {
                                         </FormControlLabel>
                                        <ButtonGroup space="md">
                                             <Button onPress={() => openScanner()} style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}>
-                                                 <ButtonIcon as={Ionicons} name="barcode-outline" style={{ color: theme.tokens.colors.secondary['500-text'] }} />
+                                                 <Ionicons name="barcode-outline" size={18} color={theme.tokens.colors.secondary['500-text']} />
                                                  <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>{getTermFromDictionary(language, 'scan')}</ButtonText>
                                              </Button>
                                             <Button onPress={toggle} style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}>
-                                                 <ButtonIcon as={Ionicons} name="keypad-outline" style={{ color: theme.tokens.colors.secondary['500-text'] }} />
+                                                 <Ionicons name="keypad-outline" size={18} color={theme.tokens.colors.secondary['500-text']} />
                                                  <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>{getTermFromDictionary(language, 'type')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
@@ -315,7 +315,7 @@ export const SelfCheckOut = () => {
                                         </ModalHeader>
                                         <ModalBody>
                                             <FormControl style={{ paddingBottom: 20 }}>
-                                                 <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}>
+                                                 <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
                                                       <InputField style={{ color: textColor }} keyboardType={keyboardType === 1 ? 'number-pad' : 'default'} variant="outline" autoCapitalize="none" placeholder={getTermFromDictionary(language, 'enter_barcode')} size="$lg" defaultValue={newBarcode} onChangeText={(text) => setNewBarcode(text)} />
                                                   </Input>
                                              </FormControl>
@@ -400,7 +400,7 @@ export const SelfCheckOut = () => {
                                                   <FormControlLabel>
                                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'does_barcode_match_item')}</FormControlLabelText>
                                                   </FormControlLabel>
-                                                  <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}>
+                                                  <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
                                                        <InputField id="barcode" autoCapitalize="none" autoCorrect={false} onChangeText={(text) => setTempBarcode(text)} defaultValue={tempBarcode} style={{ color: textColor }} />
                                                   </Input>
                                              </FormControl>

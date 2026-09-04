@@ -35,7 +35,7 @@ export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
      return (
           <Center>
                <Button onPress={toggle} size="xs" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                   <ButtonIcon as={MaterialIcons} name="edit" style={{ color: theme.tokens.colors.primary['500-text'], marginRight: 4 }} />
+                   <MaterialIcons name="edit" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />
                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'rename_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>

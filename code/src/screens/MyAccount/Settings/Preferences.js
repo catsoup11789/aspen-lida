@@ -98,14 +98,14 @@ export const PreferencesScreen = () => {
                     </VStack>
                     <Divider/>
                     <VStack>
-                         <HStack justifyContent="space-between" alignItems="center">
-                              <Text style={{ color: textColor }} bold>
+                         <HStack style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                              <Text bold style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'language')}
                               </Text>
                               <LanguageSwitcher />
                          </HStack>
-                         <HStack justifyContent="space-between" alignItems="center">
-                              <Text style={{ color: textColor }} bold>
+                         <HStack style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                              <Text bold style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'appearance')}
                               </Text>
                               <UseColorMode showText={true} />

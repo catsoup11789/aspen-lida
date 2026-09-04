@@ -76,7 +76,7 @@ export const Facet_Year = ({ data, category, updater, language }) => {
                          <HStack space="sm" style={{ justifyContent: 'center' }}>
                               <Input
                                    size="lg"
-                                   style={{ flex: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}
+                                   style={{ flex: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
                               >
                                    <InputField
                                         style={{ color: textColor }}
@@ -90,7 +90,7 @@ export const Facet_Year = ({ data, category, updater, language }) => {
                               </Input>
                               <Input
                                    size="lg"
-                                   style={{ flex: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}
+                                   style={{ flex: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
                               >
                                    <InputField
                                         style={{ color: textColor }}

@@ -37,7 +37,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
      return (
           <Center>
                <Button onPress={toggle} size="xs" style={{ backgroundColor: theme.tokens.colors.ui.danger }}>
-                   <ButtonIcon as={MaterialIcons} name="delete" style={{ color: theme.tokens.colors.ui.white, marginRight: 4 }} />
+                   <MaterialIcons name="delete" size={18} color={theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
                    <ButtonText style={{ color: theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'delete_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>

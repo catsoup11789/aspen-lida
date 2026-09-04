@@ -30,7 +30,7 @@ export const LoadError = (props) => {
      return (
           <Center style={{ flex: 1 }}>
                <HStack>
-                    <Icon as={MaterialIcons} name="error" size="md" style={{ marginRight: 4, color: theme.tokens.colors.ui.danger }} />
+                    <MaterialIcons name="error" size={18} color={theme.tokens.colors.ui.danger} style={{ marginRight: 4 }} />
                     <Heading style={{ color: theme.tokens.colors.ui.danger, marginBottom: 8 }}>
                          {getTermFromDictionary('en', 'error')}
                     </Heading>
@@ -41,7 +41,7 @@ export const LoadError = (props) => {
                {reloadAction ? (
                    <Button onPress={reloadAction} style={{ marginTop: 20, backgroundColor: theme.tokens.colors.primary['500'] }}>
                          <ButtonIcon>
-                              <Icon as={MaterialIcons} name="refresh" size="sm" style={{ color: theme.tokens.colors.primary['500-text'] }} />
+                              <MaterialIcons name="refresh" size={16} color={theme.tokens.colors.primary['500-text']} />
                          </ButtonIcon>
                          <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary('en', 'button_reload')}</ButtonText>
                     </Button>

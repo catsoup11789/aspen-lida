@@ -25,7 +25,7 @@ import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalH
 import { Text } from '@/components/ui/text';
 
 export const ActionButton = (data) => {
-     const {theme, textColor, backgroundColor, colorMode} = useTheme();
+     const { theme, textColor, colorMode } = useTheme();
      const library = useLibrary();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};

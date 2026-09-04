@@ -209,7 +209,7 @@ export const ResetExpiredPin = (props) => {
                                                       blurOnSubmit={false}
                                                   />
                                                  <InputSlot onPress={toggleShowPin}>
-                                                      <InputIcon as={Ionicons} name={showPin ? 'eye-outline' : 'eye-off-outline'} style={{ marginRight: 12, color: textColor }} />
+                                                      <Ionicons name={showPin ? 'eye-outline' : 'eye-off-outline'} size={20} color={textColor} style={{ marginRight: 12 }} />
                                                  </InputSlot>
                                             </Input>
                                              {'pin' in errors ? (
@@ -240,7 +240,7 @@ export const ResetExpiredPin = (props) => {
                                                        ref={pinConfirmedRef}
                                                   />
                                                   <InputSlot onPress={toggleShowPinConfirmed}>
-                                                       <InputIcon as={Ionicons} name={showPinConfirmed ? 'eye-outline' : 'eye-off-outline'} style={{ marginRight: 12, color: textColor }} />
+                                                       <Ionicons name={showPinConfirmed ? 'eye-outline' : 'eye-off-outline'} size={20} color={textColor} style={{ marginRight: 12 }} />
                                                   </InputSlot>
                                              </Input>
                                              {'pinConfirmed' in errors ? (

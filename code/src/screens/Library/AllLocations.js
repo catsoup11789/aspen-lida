@@ -249,18 +249,18 @@ const DisplayLocation = (data) => {
                               </Text>
                               {hasHours ? (
                                    <HStack alignItems="center" space="xs">
-                                        <Icon as={MaterialIcons} name="access-time" size="sm"  style={{ color: textColor }}/>
+                                        <MaterialIcons name="access-time" size={16} color={textColor} />
                                         <Text size="xs" style={{ color: textColor }}>{hoursLabel}</Text>
                                    </HStack>
                               ) : null}
                               {distanceText ? (
                                    <HStack alignItems="center" space="xs">
-                                        <Icon as={MaterialIcons} name="pin-drop" size="sm" style={{ color: textColor }} />
+                                        <MaterialIcons name="pin-drop" size={16} color={textColor} />
                                         <Text size="xs" style={{ color: textColor }}>{distanceText}</Text>
                                    </HStack>
                               ) : null}
                          </VStack>
-                         <Icon as={MaterialIcons} name="chevron-right" size="xl" style={{ color: textColor }} />
+                         <MaterialIcons name="chevron-right" size={24} color={textColor} />
                     </HStack>
                </Pressable>
                <Divider style={{ marginTop: 12, marginBottom: 12 }} />

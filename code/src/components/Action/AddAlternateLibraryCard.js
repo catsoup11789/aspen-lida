@@ -1,3 +1,4 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import _ from 'lodash';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
@@ -8,7 +9,6 @@ import { decodeHTML } from '../../helpers/helpers';
 import { completeAction } from '../../util/api/userHelper';
 import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
-import { EyeOff, Eye } from 'lucide-react-native';
 import { useQueryClient } from '@tanstack/react-query';
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
@@ -17,7 +17,7 @@ import { Button, ButtonGroup, ButtonSpinner, ButtonText } from '@/components/ui/
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { Icon, CloseIcon } from '@/components/ui/icon';
-import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 
 export const AddAlternateLibraryCard = (props) => {
@@ -163,7 +163,7 @@ export const AddAlternateLibraryCard = (props) => {
                                    <Input style={{ borderColor: inputBorderColor }}>
                                         <InputField textContentType="none" type={showPassword ? 'text' : 'password'} style={{ color: textColor }} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
                                         <InputSlot onPress={toggleShowPassword}>
-                                             <InputIcon as={showPassword ? Eye : EyeOff} style={{ marginRight: 8, color: textColor }} />
+                                             <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} color={textColor} style={{ marginRight: 8 }} />
                                         </InputSlot>
                                    </Input>
                               </FormControl>

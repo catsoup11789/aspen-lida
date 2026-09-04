@@ -214,7 +214,7 @@ export const MyLibraryCard = () => {
                     {isLandscape && cards.length > 1 && (
                         <Box style={{ position: 'absolute', bottom: 0, left: 0, right: 0, alignItems: 'center', paddingBottom: 8 }}>
                               <Button variant="link" onPress={() => setShowDrawer(true)} size="sm">
-                                  <ButtonIcon as={MaterialCommunityIcons} name="chevron-up" size="xl" style={{ color: textColor }} />
+                                  <MaterialCommunityIcons name="chevron-up" size={24} color={textColor} />
                               </Button>
                          </Box>
                     )}
@@ -420,7 +420,7 @@ const CreateLibraryCard = (data) => {
                     {showExpirationDate && expirationDate && !neverExpires && numCards > 1 ? <Text style={{ color: textColor }}>{expirationText}</Text> : null}
                     {numCards > 1 ? (
                          <Button variant="link" onPress={() => openBarcodeModal && openBarcodeModal(card)}>
-                              <ButtonIcon as={MaterialCommunityIcons} name="barcode-scan" size="lg" style={{ color: theme.tokens.colors.primary['500'], marginRight: 4 }} />
+                              <MaterialCommunityIcons name="barcode-scan" size={20} color={theme.tokens.colors.primary['500']} style={{ marginRight: 4 }} />
                               <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'open_barcode')}</ButtonText>
                          </Button>
                     ) : (
@@ -673,7 +673,7 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                                              style={{ backgroundColor: theme.tokens.colors.primary['500'], marginTop: 8 }}
                                              onPress={rotateToLandscape}
                                         >
-                                             <ButtonIcon as={MaterialCommunityIcons} name="phone-rotate-landscape" size="sm" style={{ marginRight: 8, color: theme.tokens.colors.primary['500-text'] }} />
+                                             <MaterialCommunityIcons name="phone-rotate-landscape" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 8 }} />
                                              <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
                                                   {getTermFromDictionary(language, 'rotate_to_landscape') || 'Rotate to Landscape'}
                                              </ButtonText>
@@ -687,7 +687,7 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                                              size="md"
                                              style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                              onPress={rotateToPortrait}>
-                                             <ButtonIcon as={MaterialCommunityIcons} name="phone-rotate-portrait" size="sm" style={{ marginRight: 8, color: theme.tokens.colors.primary['500-text'] }} />
+                                             <MaterialCommunityIcons name="phone-rotate-portrait" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 8 }} />
                                              <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
                                                   {getTermFromDictionary(language, 'rotate_to_portrait') || 'Rotate to Portrait'}
                                              </ButtonText>
