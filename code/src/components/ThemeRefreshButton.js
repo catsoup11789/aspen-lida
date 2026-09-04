@@ -22,7 +22,7 @@ export const ThemeRefreshButton = ({
      onRefreshed,
      ...buttonProps
 }) => {
-     const { forceRefreshTheme, runtimeColors } = useTheme();
+     const { forceRefreshTheme } = useTheme();
      const [isRefreshing, setIsRefreshing] = React.useState(false);
 
      const onPress = React.useCallback(async () => {
@@ -52,9 +52,9 @@ export const ThemeRefreshButton = ({
                <Button
                     onPress={onPress}
                     isDisabled={isRefreshing}
-                    style={{ backgroundColor: runtimeColors.primary[500] }}
+                    colorScheme="primary"
                     {...buttonProps}>
-                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
+                    <ButtonText>
                          {isRefreshing ? refreshingLabel : label}
                     </ButtonText>
                </Button>

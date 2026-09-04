@@ -23,7 +23,7 @@ import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
 const DisableAccountLinking = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
+     const { textColor, uiColors, colorMode } = useTheme();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
@@ -59,8 +59,8 @@ const DisableAccountLinking = () => {
 
      return (
           <Center>
-               <Button onPress={toggle} style={{ backgroundColor: runtimeColors.primary[500] }}>
-                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'disable_linked_accounts')}</ButtonText>
+               <Button onPress={toggle} colorScheme="primary">
+                    <ButtonText>{getTermFromDictionary(language, 'disable_linked_accounts')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="lg">
                     <ModalBackdrop />
@@ -76,11 +76,11 @@ const DisableAccountLinking = () => {
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>
-                                   <Button variant="link" onPress={toggle}>
-                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                   <Button colorScheme="primary" variant="link" onPress={toggle}>
+                                       <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button
-                                       style={{ backgroundColor: runtimeColors.primary[500] }}
+                                       colorScheme="primary"
                                         isLoading={loading}
                                         isLoadingText={getTermFromDictionary(language, 'updating', true)}
                                         onPress={async () => {
@@ -90,7 +90,7 @@ const DisableAccountLinking = () => {
                                                   toggle();
                                              });
                                         }}>
-                                      <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'accept')}</ButtonText>
+                                      <ButtonText>{getTermFromDictionary(language, 'accept')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>

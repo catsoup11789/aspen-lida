@@ -36,6 +36,7 @@ import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/lo
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -67,7 +68,7 @@ export const MyReadingHistory = () => {
           return systemMessages.filter((obj) => obj.showOn === '0');
      }, [systemMessages]);
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
-     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
@@ -397,17 +398,17 @@ export const MyReadingHistory = () => {
                          <ScrollView horizontal>
                               <ButtonGroup size="sm">
                                    <Button
-                                       style={{ backgroundColor: runtimeColors.primary[500] }}
+                                       colorScheme="primary"
                                        onPress={async () => {
                                            if (page > 1) {
                                                 await updatePage(page - 1)
                                             }
                                         }}
                                         isDisabled={page === 1}>
-                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                       <ButtonText>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                       style={{ backgroundColor: runtimeColors.primary[500] }}
+                                       colorScheme="primary"
                                         onPress={async () => {
                                              if (readingHistory?.hasMore) {
                                                   logDebugMessage('Adding to page');
@@ -416,7 +417,7 @@ export const MyReadingHistory = () => {
                                              }
                                         }}
                                          isDisabled={!readingHistory?.hasMore || isLoading}>
-                                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                         <ButtonText>{getTermFromDictionary(language, 'next')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
@@ -461,8 +462,8 @@ export const MyReadingHistory = () => {
                {systemMessagesForScreen.length > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                {user.trackReadingHistory !== '1' ? (
                    <Box style={{ padding: 20 }}>
-                        <Button style={{ backgroundColor: runtimeColors.primary[700] }} onPress={optIn} isLoading={optingIn} isLoadingText={getTermFromDictionary(language, 'updating', true)}>
-                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'reading_history_opt_in')}</ButtonText>
+                        <Button colorScheme="primary" onPress={optIn} isLoading={optingIn} isLoadingText={getTermFromDictionary(language, 'updating', true)}>
+                             <ButtonText>{getTermFromDictionary(language, 'reading_history_opt_in')}</ButtonText>
                          </Button>
                          {getDisclaimer()}
                     </Box>

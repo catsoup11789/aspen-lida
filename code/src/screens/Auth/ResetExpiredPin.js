@@ -257,11 +257,11 @@ export const ResetExpiredPin = (props) => {
 
                                    <AlertDialogFooter>
                                        <ButtonGroup space="md">
-                                            <Button variant="outline" onPress={onClose} style={{ borderColor: runtimeColors.primary[500] }}>
-                                                 <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                            <Button colorScheme="primary" variant="outline" onPress={onClose}>
+                                                 <ButtonText>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                              </Button>
-                                            <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={() => updatePIN()}>
-                                                 <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'update')}</ButtonText>
+                                            <Button colorScheme="primary" onPress={() => updatePIN()}>
+                                                 <ButtonText>{getTermFromDictionary(language, 'update')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
                                    </AlertDialogFooter>

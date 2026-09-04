@@ -96,7 +96,7 @@ export default function SelfCheckScanner() {
                          <CameraView onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]} barcodeScannerSettings={{ barcodeTypes: allowedBarcodes }}>
                               <BarcodeMask edgeColor="#62B1F6" showAnimatedLine={false} />
                               <View style={styles.buttonContainer}>
-                                   <Button variant="outline" action="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: '#ffffff' }}>
+                                   <Button variant="outline" colorScheme="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: '#ffffff' }}>
                                        <ButtonText style={{ color: '#ffffff' }}>Cancel</ButtonText>
                                    </Button>
                                    {scanned && (

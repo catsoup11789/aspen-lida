@@ -30,7 +30,7 @@ export const Facet_Year = ({ data, category, updater, language }) => {
      const [yearFrom, setYearFrom] = React.useState('');
      const [yearTo, setYearTo] = React.useState('');
      const [value, setValue] = React.useState('');
-     const { runtimeColors, textColor } = useTheme();
+     const { textColor } = useTheme();
 
      React.useEffect(() => {
           setIsLoading(false);
@@ -115,14 +115,14 @@ export const Facet_Year = ({ data, category, updater, language }) => {
                                    {getTermFromDictionary(language, 'published_in_the_last')}
                               </Text>
                               <ButtonGroup>
-                                   <Button variant="outline" onPress={() => _updateYearTo(1)} style={{ borderColor: runtimeColors.primary[500] }}>
-                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'year')}</ButtonText>
+                                   <Button colorScheme="primary" variant="outline" onPress={() => _updateYearTo(1)}>
+                                       <ButtonText>{getTermFromDictionary(language, 'year')}</ButtonText>
                                    </Button>
-                                   <Button variant="outline" onPress={() => _updateYearTo(5)} style={{ borderColor: runtimeColors.primary[500] }}>
-                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>5 {getTermFromDictionary(language, 'years')}</ButtonText>
+                                   <Button colorScheme="primary" variant="outline" onPress={() => _updateYearTo(5)}>
+                                       <ButtonText>5 {getTermFromDictionary(language, 'years')}</ButtonText>
                                    </Button>
-                                   <Button variant="outline" onPress={() => _updateYearTo(10)} style={{ borderColor: runtimeColors.primary[500] }}>
-                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>10 {getTermFromDictionary(language, 'years')}</ButtonText>
+                                   <Button colorScheme="primary" variant="outline" onPress={() => _updateYearTo(10)}>
+                                       <ButtonText>10 {getTermFromDictionary(language, 'years')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </VStack>

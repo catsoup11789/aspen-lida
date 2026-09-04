@@ -41,7 +41,7 @@ export const FiltersScreen = () => {
      const location = useLibraryLocation();
      const language = useActiveLanguage();
      const { currentIndex, currentSource } = React.useContext(SearchContext);
-     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const pendingFiltersFromParams = useNavigationState((state) => state.routes[0]['params']['pendingFilters']);
      const [searchTerm, setSearchTerm] = React.useState(SearchGlobal.term ?? '');
 
@@ -163,17 +163,17 @@ export const FiltersScreen = () => {
                <Box style={{ padding: 12, backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surface.dark, shadowOpacity: 0.2, shadowRadius: 1 }}>
                     <Center>
                          <ButtonGroup size="lg">
-                              <Button variant="link" onPress={() => clearSelections()}>
-                                   <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'reset_all')}</ButtonText>
+                              <Button colorScheme="primary" variant="link" onPress={() => clearSelections()}>
+                                   <ButtonText>{getTermFromDictionary(language, 'reset_all')}</ButtonText>
                               </Button>
                               <Button
-                                   style={{ backgroundColor: runtimeColors.primary[500] }}
+                                   colorScheme="primary"
                                    isDisabled={loading}
                                    onPress={() => {
                                         setLoading(true);
                                         updateSearch();
                                    }}>
-                                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{loading ? getTermFromDictionary(language, 'updating', true) : getTermFromDictionary(language, 'update')}</ButtonText>
+                                   <ButtonText>{loading ? getTermFromDictionary(language, 'updating', true) : getTermFromDictionary(language, 'update')}</ButtonText>
                               </Button>
                          </ButtonGroup>
                     </Center>

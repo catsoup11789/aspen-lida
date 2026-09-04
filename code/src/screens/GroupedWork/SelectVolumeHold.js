@@ -90,7 +90,7 @@ const SelectVolumeHold = (props) => {
           <>
                <Button
                     onPress={() => setShowModal(true)}
-                    action="primary"
+                    colorScheme="primary"
                     size="md">
                     <ButtonText>{title}</ButtonText>
                </Button>
@@ -218,7 +218,7 @@ const SelectVolumeHold = (props) => {
                          <ModalFooter style={{ borderTopWidth: 0 }}>
                               <ButtonGroup space="md" size="md">
                                    <Button
-                                        action="secondary"
+                                        colorScheme="secondary"
                                         variant="outline"
                                         onPress={() => {
                                              setShowModal(false);

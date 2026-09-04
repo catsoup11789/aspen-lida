@@ -42,11 +42,11 @@ export const GetOverDriveSettings = (props) => {
                     </ModalBody>
                     <ModalFooter style={{ borderTopWidth: 0 }}>
                          <ButtonGroup space="md" size="md">
-                              <Button action="secondary" variant="ghost" onPress={() => handleOverDriveSettings(false)}>
+                              <Button colorScheme="secondary" variant="ghost" onPress={() => handleOverDriveSettings(false)}>
                                    <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                               </Button>
                               <Button
-                                   action="primary"
+                                   colorScheme="primary"
                                    onPress={async () => {
                                         await updateOverDriveEmail(promptItemId, promptSource, promptPatronId, overdriveEmail, promptForOverdriveEmail, libraryUrl, language).then((response) => {
                                              showAlert(response);

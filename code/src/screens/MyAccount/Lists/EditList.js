@@ -75,9 +75,9 @@ const EditList = (props) => {
      return (
           <>
                <ButtonGroup size="sm" style={{ justifyContent: 'center' }} >
-                    <Button onPress={() => setShowModal(true)} style={{ backgroundColor: runtimeColors.primary[500] }}>
+                    <Button onPress={() => setShowModal(true)} colorScheme="primary">
                          <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
-                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'edit')}</ButtonText>
+                         <ButtonText>{getTermFromDictionary(language, 'edit')}</ButtonText>
                     </Button>
                     <DeleteList listId={listId} />
                </ButtonGroup>
@@ -167,11 +167,11 @@ const EditList = (props) => {
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>
-                                   <Button variant="outline" onPress={() => setShowModal(false)} style={{ borderColor: runtimeColors.primary[500] }}>
-                                        <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                   <Button colorScheme="primary" variant="outline" onPress={() => setShowModal(false)}>
+                                        <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                     <Button
-                                         style={{ backgroundColor: runtimeColors.primary[500] }}
+                                         colorScheme="primary"
                                          isLoading={loading}
                                          isLoadingText={getTermFromDictionary(language, 'saving', true)}
                                          onPress={() => {
@@ -189,7 +189,7 @@ const EditList = (props) => {
                                                    }
                                               });
                                          }}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'save')}</ButtonText>
+                                        <ButtonText>{getTermFromDictionary(language, 'save')}</ButtonText>
                                     </Button>
                               </ButtonGroup>
                          </ModalFooter>

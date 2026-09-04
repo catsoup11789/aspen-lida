@@ -106,23 +106,23 @@ const AddToList = (props) => {
 
      const RenderLargeButton = () => (
           <Center>
-               <Button style={{ marginTop: 12, backgroundColor: runtimeColors.tertiary[500] }} onPress={toggleModal}>
+               <Button colorScheme="tertiary" style={{ marginTop: 12 }} onPress={toggleModal}>
                     <MaterialIcons name="bookmark" size={18} color={runtimeColors.tertiary['500-text']} style={{ marginRight: 4 }} />
-                    <ButtonText style={{ color: runtimeColors.tertiary['500-text'] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
+                    <ButtonText>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
                </Button>
           </Center>
      );
 
      const RenderSmallButton = () => (
-          <Button size="xs" variant="link" style={{ marginTop: 4 }} onPress={toggleModal}>
+          <Button colorScheme="tertiary" size="xs" variant="link" style={{ marginTop: 4 }} onPress={toggleModal}>
                <MaterialIcons name="bookmark" size={18} color={runtimeColors.tertiary[500]} style={{ marginRight: 4 }} />
-               <ButtonText style={{ color: runtimeColors.tertiary[500] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
+               <ButtonText>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
           </Button>
      );
 
      const RenderRegularButton = () => (
-          <Button style={{ width: btnWidth, backgroundColor: runtimeColors.primary[500] }} onPress={toggleModal}>
-               <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
+          <Button colorScheme="primary" style={{ width: btnWidth }} onPress={toggleModal}>
+               <ButtonText>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
           </Button>
      );
 
@@ -184,11 +184,11 @@ const AddToList = (props) => {
                                                        <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'or')}</Text>
                                                        <Button
                                                             size="sm"
-                                                            style={{ backgroundColor: runtimeColors.primary[500] }}
+                                                            colorScheme="primary"
                                                             onPress={() => {
                                                                  setScreen('create-new');
                                                             }}>
-                                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
+                                                            <ButtonText>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
                                                        </Button>
                                                   </HStack>
                                              </VStack>
@@ -204,7 +204,7 @@ const AddToList = (props) => {
                                              </Button>
                                              {!_.isEmpty(lists) ? (
                                                   <Button
-                                                       style={{ backgroundColor: runtimeColors.primary[500] }}
+                                                       colorScheme="primary"
                                                        isLoading={loading}
                                                        onPress={() => {
                                                             setLoading(true);
@@ -214,11 +214,11 @@ const AddToList = (props) => {
                                                                  closeModal();
                                                             });
                                                        }}>
-                                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'save_to_list')}</ButtonText>
+                                                       <ButtonText>{getTermFromDictionary(language, 'save_to_list')}</ButtonText>
                                                   </Button>
                                              ) : (
-                                                  <Button style={{ backgroundColor: runtimeColors.primary[500] }}>
-                                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
+                                                  <Button colorScheme="primary">
+                                                       <ButtonText>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
                                                   </Button>
                                              )}
                                         </ButtonGroup>
@@ -406,7 +406,7 @@ const AddToList = (props) => {
                                                   <ButtonText style={{ color: cancelColor }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                              </Button>
                                              <Button
-                                                  style={{ backgroundColor: runtimeColors.primary[500] }}
+                                                  colorScheme="primary"
                                                   isLoading={loading}
                                                   isLoadingText={getTermFromDictionary(language, 'saving', true)}
                                                   onPress={() => {
@@ -418,7 +418,7 @@ const AddToList = (props) => {
                                                             closeModal();
                                                        });
                                                   }}>
-                                                  <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_list')}</ButtonText>
+                                                  <ButtonText>{getTermFromDictionary(language, 'create_list')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
                                    </ModalFooter>

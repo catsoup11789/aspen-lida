@@ -132,7 +132,7 @@ const ScreenBrightnessPermissionUsage = () => {
 };
 
 const ScreenBrightnessPermissionUpdate = (payload) => {
-     const { colorMode, uiColors, runtimeColors, textColor } = useTheme();
+     const { colorMode, uiColors, textColor } = useTheme();
      const language = useActiveLanguage();
      const [showAlertDialog, setShowAlertDialog] = React.useState(false);
      const [manuallyPromptPermission, setManuallyPromptPermission] = React.useState(false);
@@ -169,8 +169,8 @@ const ScreenBrightnessPermissionUpdate = (payload) => {
                               setShowAlertDialog(true);
                          }
                     }}
-                    style={{ backgroundColor: runtimeColors.primary[500] }}>
-                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'update_device_settings')}</ButtonText>
+                    colorScheme="primary">
+                    <ButtonText>{getTermFromDictionary(language, 'update_device_settings')}</ButtonText>
                </Button>
                <AlertDialog
                     isOpen={showAlertDialog}
@@ -192,8 +192,8 @@ const ScreenBrightnessPermissionUpdate = (payload) => {
                                              Linking.openSettings();
                                              setShowAlertDialog(false);
                                         }}
-                                        style={{ backgroundColor: runtimeColors.primary[500] }}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'open_device_settings')}</ButtonText>
+                                        colorScheme="primary">
+                                        <ButtonText>{getTermFromDictionary(language, 'open_device_settings')}</ButtonText>
                                    </Button>
                                    <Button variant="link" onPress={() => setShowAlertDialog(false)}>
                                         <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'not_now')}</ButtonText>

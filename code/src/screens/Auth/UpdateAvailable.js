@@ -43,10 +43,10 @@ export const UpdateAvailable = (props) => {
 					</AlertDialogBody>
 					<AlertDialogFooter>
 						<ButtonGroup space="md">
-							<Button variant="outline" action="secondary" onPress={onClose} ref={cancelRef}>
+							<Button variant="outline" colorScheme="secondary" onPress={onClose} ref={cancelRef}>
 								<ButtonText>{getTermFromDictionary(language, 'cancel')}</ButtonText>
 							</Button>
-							<Button action="primary" onPress={() => openAppStore()}>
+							<Button colorScheme="primary" onPress={() => openAppStore()}>
 								<ButtonText>{getTermFromDictionary(language, 'update_now')}</ButtonText>
 							</Button>
 						</ButtonGroup>

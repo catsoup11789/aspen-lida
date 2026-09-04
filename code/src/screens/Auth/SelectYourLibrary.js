@@ -80,9 +80,9 @@ export const SelectYourLibrary = (payload) => {
 
      return (
           <Center>
-               <Button onPress={() => setShowModal(true)} size="md" style={{ margin: 20, backgroundColor: runtimeColors.primary[500] }}>
+               <Button onPress={() => setShowModal(true)} size="md" colorScheme="primary" style={{ margin: 20 }}>
                     <MaterialIcons name="place" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
-                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{selectedLibrary?.name ? selectedLibrary.name : getTermFromDictionary('en', 'select_your_library')}</ButtonText>
+                    <ButtonText>{selectedLibrary?.name ? selectedLibrary.name : getTermFromDictionary('en', 'select_your_library')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} size="lg" avoidKeyboard onClose={() => setShowModal(false)}>
                     <ModalBackdrop />

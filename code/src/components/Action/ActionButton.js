@@ -27,7 +27,7 @@ import { ThemedCloseIcon } from '../themed/ThemedFormControls';
  * @constructor
  */
 export const ActionButton = (data) => {
-     const { runtimeColors, uiColors, textColor, colorMode } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const library = useLibrary();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
@@ -149,12 +149,12 @@ export const ActionButton = (data) => {
                     <Button
                          size="md"
                          variant="solid"
-                         style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
+                         colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
                          onPress={async () =>
                            await passUserToDiscovery(library?.baseUrl ?? '', 'NewMaterialRequest', user.id, backgroundColor, textColor, null, action.redirectParams)
                          }
                     >
-                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{action.title}</ButtonText>
+                        <ButtonText>{action.title}</ButtonText>
                     </Button>
                );
           } else if (action.type === 'local_ill_request_material_request_ils') {
@@ -163,12 +163,12 @@ export const ActionButton = (data) => {
                     <Button
                          size="md"
                          variant="solid"
-                         style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
+                         colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
                          onPress={async () =>
                            await passUserToDiscovery(library?.baseUrl ?? '', 'NewMaterialRequestIls', user.id, backgroundColor, textColor, null, action.redirectParams)
                          }
                     >
-                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{action.title}</ButtonText>
+                        <ButtonText>{action.title}</ButtonText>
                     </Button>
                );
           } else if (action.type === 'local_ill_request_external_request') {
@@ -178,7 +178,7 @@ export const ActionButton = (data) => {
                     <Button
                          size="md"
                          variant="solid"
-                         style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
+                         colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
                          onPress={async () =>
                               {
                                    const browserParams = {
@@ -192,7 +192,7 @@ export const ActionButton = (data) => {
                               }
                          }
                     >
-                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{action.title}</ButtonText>
+                        <ButtonText>{action.title}</ButtonText>
                     </Button>
                );
           } else if (action.type === 'local_ill_request_email') {
@@ -216,10 +216,10 @@ export const ActionButton = (data) => {
                          <Button
                               size="md"
                               variant="solid"
-                              style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
+                              colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
                               onPress={async () => {setShowIllUnavailableModal(true)}}
                          >
-                              <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{action.title}</ButtonText>
+                              <ButtonText>{action.title}</ButtonText>
                          </Button>
                          <Modal isOpen={showIllUnavailableModal} size="lg" avoidKeyboard={true} onClose={() => setShowIllUnavailableModal(false)}>
                               <ModalBackdrop />

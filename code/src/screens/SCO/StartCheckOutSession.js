@@ -144,11 +144,11 @@ export const StartCheckOutSession = () => {
                          </AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">
-                                   <Button ref={cancelRef} onPress={() => GoBackHome()} style={{ backgroundColor: runtimeColors.primary[500] }}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                   <Button ref={cancelRef} onPress={() => GoBackHome()} colorScheme="primary">
+                                        <ButtonText>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
-                                   <Button onPress={() => StartNewSession()} style={{ backgroundColor: runtimeColors.primary[500] }}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_start')}</ButtonText>
+                                   <Button onPress={() => StartNewSession()} colorScheme="primary">
+                                        <ButtonText>{getTermFromDictionary(language, 'button_start')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

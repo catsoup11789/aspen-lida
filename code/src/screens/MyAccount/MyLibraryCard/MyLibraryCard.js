@@ -223,13 +223,13 @@ export const MyLibraryCard = () => {
                               <Center>
                                    <Button
                                         size="md"
-                                        style={{ backgroundColor: runtimeColors.secondary[500] }}
+                                        colorScheme="secondary"
                                         onPress={() => {
                                              navigateStack('LibraryCardTab', 'MyAlternateLibraryCard', {
                                                   prevRoute: 'MyLibraryCard',
                                                   hasPendingChanges: false });
                                         }}>
-                                        <ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>{getTermFromDictionary(language, 'manage_alternate_library_card')}</ButtonText>
+                                        <ButtonText>{getTermFromDictionary(language, 'manage_alternate_library_card')}</ButtonText>
                                    </Button>
                               </Center>
                          </Box>
@@ -250,20 +250,15 @@ export const MyLibraryCard = () => {
                                                   <Button
                                                        key={index}
                                                        size="sm"
-                                                       style={{
-                                                            marginRight: 4,
-                                                            marginBottom: 4,
-                                                            backgroundColor: index === currentCardIndex ? runtimeColors.tertiary[500] : 'transparent',
-                                                            borderColor: index === currentCardIndex ? 'transparent' : runtimeColors.tertiary[500],
-                                                            borderWidth: index === currentCardIndex ? 0 : 1,
-                                                       }}
+                                                       style={{ marginRight: 4, marginBottom: 4 }}
                                                        variant={index === currentCardIndex ? 'solid' : 'outline'}
+                                                       colorScheme="tertiary"
                                                        onPress={() => {
                                                             carouselRef.current?.scrollTo({ index: index, animated: false });
                                                             setCurrentCardIndex(index);
                                                             setShowDrawer(false);
                                                        }}>
-                                                       <ButtonText style={{ color: index === currentCardIndex ? runtimeColors.tertiary['500-text'] : textColor }}>
+                                                       <ButtonText>
                                                             {card.displayName}
                                                        </ButtonText>
                                                   </Button>
@@ -274,14 +269,14 @@ export const MyLibraryCard = () => {
                                         <Box style={{ marginTop: 8 }}>
                                             <Button
                                                  size="md"
-                                                 style={{ backgroundColor: runtimeColors.secondary[500] }}
+                                                 colorScheme="secondary"
                                                  onPress={() => {
                                                       setShowDrawer(false);
                                                       navigateStack('LibraryCardTab', 'MyAlternateLibraryCard', {
                                                            prevRoute: 'MyLibraryCard',
                                                            hasPendingChanges: false });
                                                  }}>
-                                                 <ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>
+                                                 <ButtonText>
                                                       {getTermFromDictionary(language, 'manage_alternate_library_card')}
                                                  </ButtonText>
                                             </Button>
@@ -424,9 +419,9 @@ const CreateLibraryCard = (data) => {
                <Center>
                     {showExpirationDate && expirationDate && !neverExpires && numCards > 1 ? <Text style={{ color: textColor }}>{expirationText}</Text> : null}
                     {numCards > 1 ? (
-                         <Button variant="link" onPress={() => openBarcodeModal && openBarcodeModal(card)}>
+                         <Button colorScheme="primary" variant="link" onPress={() => openBarcodeModal && openBarcodeModal(card)}>
                               <MaterialCommunityIcons name="barcode-scan" size={20} color={runtimeColors.primary[500]} style={{ marginRight: 4 }} />
-                              <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'open_barcode')}</ButtonText>
+                              <ButtonText>{getTermFromDictionary(language, 'open_barcode')}</ButtonText>
                          </Button>
                     ) : (
                          <VStack alignItems="center" space="sm">
@@ -492,21 +487,16 @@ const CardCarousel = (data) => {
           return (
                <Button
                     size="sm"
-                    style={{
-                         marginRight: 4,
-                         marginBottom: 4,
-                         backgroundColor: index === currentIndex ? runtimeColors.tertiary[500] : 'transparent',
-                         borderColor: index === currentIndex ? 'transparent' : runtimeColors.tertiary[500],
-                         borderWidth: index === currentIndex ? 0 : 1,
-                    }}
+                    style={{ marginRight: 4, marginBottom: 4 }}
                     variant={index === currentIndex ? 'solid' : 'outline'}
+                    colorScheme="tertiary"
                     onPress={() => {
                          setCurrentIndex(index);
                          ref.current?.scrollTo({
                               index: index,
                               animated: false });
                     }}>
-                    <ButtonText style={{ color: index === currentIndex ? runtimeColors.tertiary['500-text'] : textColor }}>{card.displayName}</ButtonText>
+                    <ButtonText>{card.displayName}</ButtonText>
                </Button>
           );
      };
@@ -691,11 +681,11 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                                         </Text>
                                         <Button
                                              size="md"
-                                             style={{ backgroundColor: runtimeColors.primary[500], marginTop: 8 }}
+                                             colorScheme="primary" style={{ marginTop: 8 }}
                                              onPress={rotateToLandscape}
                                         >
                                              <MaterialCommunityIcons name="phone-rotate-landscape" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 8 }} />
-                                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
+                                             <ButtonText>
                                                   {getTermFromDictionary(language, 'rotate_to_landscape') || 'Rotate to Landscape'}
                                              </ButtonText>
                                         </Button>
@@ -706,10 +696,10 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                                    <Center style={{ marginTop: 8, marginBottom: 8 }}>
                                         <Button
                                              size="md"
-                                             style={{ backgroundColor: runtimeColors.primary[500] }}
+                                             colorScheme="primary"
                                              onPress={rotateToPortrait}>
                                              <MaterialCommunityIcons name="phone-rotate-portrait" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 8 }} />
-                                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
+                                             <ButtonText>
                                                   {getTermFromDictionary(language, 'rotate_to_portrait') || 'Rotate to Portrait'}
                                              </ButtonText>
                                         </Button>

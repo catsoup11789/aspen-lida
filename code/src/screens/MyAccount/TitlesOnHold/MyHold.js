@@ -518,8 +518,8 @@ export const ManageSelectedHolds = (props) => {
 
      return (
           <Center>
-               <Button onPress={handleOpen} size="sm" variant="solid" style={{ backgroundColor: runtimeColors.primary[500], marginRight: 4 }}>
-                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{numSelectedLabel}</ButtonText>
+               <Button onPress={handleOpen} size="sm" variant="solid" colorScheme="primary" style={{ marginRight: 4 }}>
+                    <ButtonText>{numSelectedLabel}</ButtonText>
                </Button>
                <Actionsheet isOpen={showActionsheet} onClose={handleClose} zIndex={999}>
                     <ActionsheetBackdrop />
@@ -644,8 +644,8 @@ export const ManageAllHolds = (props) => {
      if (numToManage >= 1) {
           return (
                <Center>
-                    <Button size="sm" variant="solid" style={{ backgroundColor: runtimeColors.primary[500], marginRight: 1 }} onPress={handleOpen}>
-                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'hold_manage_all')}</ButtonText>
+                    <Button size="sm" variant="solid" colorScheme="primary" style={{ marginRight: 1 }} onPress={handleOpen}>
+                         <ButtonText>{getTermFromDictionary(language, 'hold_manage_all')}</ButtonText>
                     </Button>
                     <Actionsheet isOpen={showActionsheet} onClose={handleClose} zIndex={999}>
                          <ActionsheetBackdrop />

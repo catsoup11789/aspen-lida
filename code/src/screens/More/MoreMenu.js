@@ -144,11 +144,11 @@ export const MoreMenu = () => {
                               </ModalBody>
                               <ModalFooter>
                                    <ButtonGroup>
-                                        <Button variant="outline" style={{ borderColor: runtimeColors.primary[500] }} onPress={toggleDeleteConfirmationModal}>
-                                             <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                        <Button colorScheme="primary" variant="outline" onPress={toggleDeleteConfirmationModal}>
+                                             <ButtonText>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                         </Button>
                                         <Button
-                                             style={{ backgroundColor: runtimeColors.primary[500] }}
+                                             colorScheme="primary"
                                              isLoading={deleting}
                                              isLoadingText={getTermFromDictionary(language, 'deleting', true)}
                                              onPress={async () => {
@@ -157,7 +157,7 @@ export const MoreMenu = () => {
                                                        setShowDeleteResultsModal(true);
                                                   });
                                              }}>
-                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'confirm_delete_account')}</ButtonText>
+                                            <ButtonText>{getTermFromDictionary(language, 'confirm_delete_account')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </ModalFooter>
@@ -177,12 +177,12 @@ export const MoreMenu = () => {
                               <ModalBody>{deleteResults?.message ? <Text style={{ color: textColor }}>{deleteResults.message}</Text> : <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'error_deleting_account')}</Text>}</ModalBody>
                               <ModalFooter>
                                    {deleteResults.success === true ? (
-                                       <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={signOut}>
-                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                       <Button colorScheme="primary" onPress={signOut}>
+                                            <ButtonText>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    ) : (
-                                       <Button style={{ backgroundColor: runtimeColors.primary[500] }} variant="primary" onPress={toggleDeleteResultsModal}>
-                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                       <Button colorScheme="primary" variant="primary" onPress={toggleDeleteResultsModal}>
+                                            <ButtonText>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    )}
                               </ModalFooter>

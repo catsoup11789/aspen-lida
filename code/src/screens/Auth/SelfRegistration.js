@@ -25,7 +25,7 @@ import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFor
  */
 export const SelfRegistration = () => {
 	const insets = useSafeAreaInsets();
-	const {uiColors, runtimeColors, textColor, colorMode} = useTheme();
+	const {uiColors, textColor, colorMode} = useTheme();
 	const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 	const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 	const route = useRoute();
@@ -275,24 +275,24 @@ export const SelfRegistration = () => {
 									<Text style={{ marginBottom: 12, color: textColor }}>To login to the catalog, you must reset your PIN.</Text>
 								) : null}
 
-								<Button style={{ borderColor: runtimeColors.secondary[500] }} variant="outline" onPress={() => {
+								<Button colorScheme="secondary" variant="outline" onPress={() => {
 									navigation.goBack();
 									setShowResults(false);
 									setResults('');
 								}}>
-									<ButtonText style={{ color: runtimeColors.secondary[500] }}>{getTermFromDictionary('en', 'close_window')}</ButtonText>
+									<ButtonText>{getTermFromDictionary('en', 'close_window')}</ButtonText>
 								</Button>
 							</>
 						) : showResults && hasError ? (
                                    <>
                                         <Text style={{ marginBottom: 12, color: textColor }}>{results}</Text>
-                                        <Button style={{ borderColor: runtimeColors.secondary[500] }} variant="outline" onPress={() => {
+                                        <Button colorScheme="secondary" variant="outline" onPress={() => {
                                              navigation.goBack();
                                              setShowResults(false);
                                              setResults('');
                                              setHasError(false);
                                         }}>
-                                             <ButtonText style={{ color: runtimeColors.secondary[500] }}>{getTermFromDictionary('en', 'close_window')}</ButtonText>
+                                             <ButtonText>{getTermFromDictionary('en', 'close_window')}</ButtonText>
                                         </Button>
                                    </>
                               ) :  (
@@ -300,17 +300,17 @@ export const SelfRegistration = () => {
 								{getFields()}
 								<ButtonGroup style={{ paddingTop: 12, paddingBottom: 20 }}>
 									<Button
-										style={{ backgroundColor: runtimeColors.secondary[500] }}
+										colorScheme="secondary"
 										isLoading={isSubmitting}
 										isLoadingText="Registering..."
 										onPress={() => {
 											setIsSubmitting(true);
 											handleSubmission();
 										}}>
-										<ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>{getTermFromDictionary('en', 'register')}</ButtonText>
+										<ButtonText>{getTermFromDictionary('en', 'register')}</ButtonText>
 									</Button>
-									<Button style={{ borderColor: runtimeColors.secondary[500] }} variant="outline" onPress={() => navigation.goBack()}>
-										<ButtonText style={{ color: runtimeColors.secondary[500] }}>{getTermFromDictionary('en', 'cancel')}</ButtonText>
+									<Button colorScheme="secondary" variant="outline" onPress={() => navigation.goBack()}>
+										<ButtonText>{getTermFromDictionary('en', 'cancel')}</ButtonText>
 									</Button>
 								</ButtonGroup>
 							</>

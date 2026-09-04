@@ -52,7 +52,7 @@ export const MyEvents = () => {
      const { data: savedEvents } = useSavedEvents();
      const updateSavedEvents = useUpdateSavedEvents();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, colorMode, textColor } = useTheme();
      const pageSize = 25;
      const systemMessagesForScreen = [];
      const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
@@ -129,24 +129,24 @@ export const MyEvents = () => {
                    <ButtonGroup alignItems="center" space="md" isAttached size="sm" style={{ paddingBottom: 4 }}>
                         <Button
                              variant={filterBy === 'all' ? 'solid' : 'outline'}
+                             colorScheme="primary"
                              onPress={() => setFilterBy('all')}
-                             style={{ backgroundColor: filterBy === 'all' ? runtimeColors.primary[500] : surfaceBg, borderColor: runtimeColors.primary[500] }}
-                             action="primary">
-                             <ButtonText style={{ color: filterBy === 'all' ? runtimeColors.primary['500-text'] : runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'all_events')}</ButtonText>
+                             style={{ backgroundColor: filterBy === 'all' ? undefined : surfaceBg }}>
+                             <ButtonText>{getTermFromDictionary(language, 'all_events')}</ButtonText>
                         </Button>
                         <Button
                              variant={filterBy === 'upcoming' ? 'solid' : 'outline'}
-                             action="primary"
-                             style={{ backgroundColor: filterBy === 'upcoming' ? runtimeColors.primary[500] : surfaceBg, borderColor: runtimeColors.primary[500] }}
-                             onPress={() => setFilterBy('upcoming')}>
-                             <ButtonText style={{ color: filterBy === 'upcoming' ? runtimeColors.primary['500-text'] : runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'upcoming_events')}</ButtonText>
+                             colorScheme="primary"
+                             onPress={() => setFilterBy('upcoming')}
+                             style={{ backgroundColor: filterBy === 'upcoming' ? undefined : surfaceBg }}>
+                             <ButtonText>{getTermFromDictionary(language, 'upcoming_events')}</ButtonText>
                         </Button>
                         <Button
-                             action="primary"
                              variant={filterBy === 'past' ? 'solid' : 'outline'}
-                             style={{ backgroundColor: filterBy === 'past' ? runtimeColors.primary[500] : surfaceBg, borderColor: runtimeColors.primary[500] }}
-                             onPress={() => setFilterBy('past')}>
-                             <ButtonText style={{ color: filterBy === 'past' ? runtimeColors.primary['500-text'] : runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'past_events')}</ButtonText>
+                             colorScheme="primary"
+                             onPress={() => setFilterBy('past')}
+                             style={{ backgroundColor: filterBy === 'past' ? undefined : surfaceBg }}>
+                             <ButtonText>{getTermFromDictionary(language, 'past_events')}</ButtonText>
                         </Button>
                    </ButtonGroup>
                </Box>
@@ -170,11 +170,11 @@ export const MyEvents = () => {
                          style={{ padding: 8, backgroundColor: panelBg, borderTopWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup size="sm" space="md">
-                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} action="primary">
+                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} colorScheme="primary">
                                         <ButtonText>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                        action="primary"
+                                        colorScheme="primary"
                                         onPress={() => {
                                              if (!isPreviousData && data?.hasMore) {
                                                   logDebugMessage('Adding to page');

@@ -96,8 +96,8 @@ export const ResetPassword = (props) => {
 
      return (
           <Center>
-               <Button variant="link" onPress={() => setShowForgotPasswordModal(true)}>
-                    <ButtonText size={buttonLabel.length > 80 ? 'sm' : undefined} style={{ color: runtimeColors.primary[500] }}>{buttonLabel}</ButtonText>
+               <Button colorScheme="primary" variant="link" onPress={() => setShowForgotPasswordModal(true)}>
+                    <ButtonText size={buttonLabel.length > 80 ? 'sm' : undefined}>{buttonLabel}</ButtonText>
                </Button>
                <Modal isOpen={showForgotPasswordModal} size="lg" avoidKeyboard onClose={() => setShowForgotPasswordModal(false)}>
                     <ModalBackdrop />
@@ -655,8 +655,8 @@ function MillenniumResetPassword(props) {
                                    <ButtonText style={{ color: textColor }}>{getTermFromDictionary('en', 'button_ok')}</ButtonText>
                               </Button>
                               {!_.isEmpty(results.error) ? (
-                                   <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={resetWindow}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary('en', 'try_again')}</ButtonText>
+                                   <Button colorScheme="primary" onPress={resetWindow}>
+                                        <ButtonText>{getTermFromDictionary('en', 'try_again')}</ButtonText>
                                    </Button>
                               ) : null}
                          </ButtonGroup>

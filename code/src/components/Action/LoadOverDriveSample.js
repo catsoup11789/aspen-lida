@@ -23,7 +23,7 @@ export const LoadOverDriveSample = (props) => {
      logDebugMessage(props);
 
      return (
-          <Button
+          <Button colorScheme="primary"
                size="xs"
                variant="link"
                style={{ width: '100%', marginBottom: 4, borderWidth: 1, borderColor: runtimeColors.primary[500] }}
@@ -33,7 +33,7 @@ export const LoadOverDriveSample = (props) => {
                         setLoading(false);
                    });
                }}>
-               {loading ? <ButtonSpinner style={{ color: runtimeColors.primary[500] }} /> : <ButtonText style={{ color: runtimeColors.primary[500] }}>{props.title}</ButtonText>}
+               {loading ? <ButtonSpinner style={{ color: runtimeColors.primary[500] }} /> : <ButtonText>{props.title}</ButtonText>}
           </Button>
      );
 };

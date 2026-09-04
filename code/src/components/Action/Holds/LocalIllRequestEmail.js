@@ -10,7 +10,7 @@ import { useTheme } from '@/src/themes/theme';
  * @constructor
  */
 export const StartLocalIllRequestEmail = (props) => {
-     const { runtimeColors } = useTheme();
+     const {  } = useTheme();
      //logDebugMessage("Props for StartLocalIllRequest");
      //logDebugMessage(props);
      const openLocalIllRequestEmail = () => {
@@ -30,9 +30,9 @@ export const StartLocalIllRequestEmail = (props) => {
           <Button
                size="md"
                variant="solid"
-               style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
+               colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
                onPress={openLocalIllRequestEmail}>
-               <ButtonText style={{ color: runtimeColors.primary['500-text'], textAlign: 'center' }}>
+               <ButtonText style={{ textAlign: 'center' }}>
                     {props.title}
                </ButtonText>
           </Button>

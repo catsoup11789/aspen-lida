@@ -17,7 +17,7 @@ import { Text } from '@/components/ui/text';
  * @constructor
  */
 export const InvalidCredentials = () => {
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, colorMode, textColor } = useTheme();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const language = useActiveLanguage();
      const { signOut } = React.useContext(AuthContext);
@@ -35,8 +35,8 @@ export const InvalidCredentials = () => {
                          <AlertDialogBody><Text style={{ color: textColor }}>{getTermFromDictionary(language, 'error_invalid_credentials')}</Text></AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">
-                                   <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={signOut} ref={cancelRef}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                   <Button colorScheme="primary" onPress={signOut} ref={cancelRef}>
+                                        <ButtonText>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

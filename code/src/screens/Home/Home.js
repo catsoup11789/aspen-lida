@@ -374,7 +374,7 @@ const ButtonOptions = (props) => {
                     style={{ flexDirection: 'column' }}>
                     <Button
                          isDisabled={loading}
-                         style={{ backgroundColor: runtimeColors.primary[500] }}
+                         colorScheme="primary"
                          size="md"
                          onPress={async () => {
                               setLoading(true);
@@ -396,7 +396,7 @@ const ButtonOptions = (props) => {
                              />
                          )}
                          <ButtonText
-                             style={{ color: runtimeColors.primary['500-text'], fontWeight: '500' }}
+                             style={{ fontWeight: '500' }}
                              size="sm"
                          >
                              {getTermFromDictionary(language, 'browse_categories_load_all')}
@@ -404,7 +404,7 @@ const ButtonOptions = (props) => {
                     </Button>
 
                     <Button
-                         style={{ backgroundColor: runtimeColors.primary[500] }}
+                         colorScheme="primary"
                          onPress={() => {
                              showManageCategories();
                          }}>
@@ -415,7 +415,7 @@ const ButtonOptions = (props) => {
                              style={{ marginRight: 4 }}
                          />
                          <ButtonText
-                             style={{ color: runtimeColors.primary['500-text'], fontWeight: '500' }}
+                             style={{ fontWeight: '500' }}
                              size="sm"
                          >
                              {getTermFromDictionary(language, 'browse_categories_manage')}
@@ -424,7 +424,7 @@ const ButtonOptions = (props) => {
 
                     <Button
                          isDisabled={refreshing}
-                         style={{ backgroundColor: runtimeColors.primary[500] }}
+                         colorScheme="primary"
                          onPress={async () => {
                              setRefreshing(true);
                              try {
@@ -435,7 +435,7 @@ const ButtonOptions = (props) => {
                          }}>
                          {refreshing ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <MaterialIcons name="refresh" size={16} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />}
 
-                         <ButtonText size="sm" style={{ fontWeight: '500', color: runtimeColors.primary['500-text'] }}>
+                         <ButtonText size="sm" style={{ fontWeight: '500' }}>
                               {getTermFromDictionary(language, 'browse_categories_refresh')}
                          </ButtonText>
                     </Button>

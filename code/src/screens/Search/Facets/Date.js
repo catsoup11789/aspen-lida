@@ -26,7 +26,7 @@ export const Facet_Date = (props) => {
 
      const [loading, setLoading] = React.useState(false);
 
-     const { runtimeColors, textColor, colorMode } = useTheme();
+     const { textColor, colorMode } = useTheme();
 
      const today = new Date();
      const [fromValue, setFrom] = React.useState(today);
@@ -98,12 +98,12 @@ export const Facet_Date = (props) => {
                <Box style={{ padding: 20 }}>
                     <FormControl style={{ marginBottom: 8 }}>
                          <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'center' }}>
-                              <Button variant="outline" onPress={() => toggleFromDatePicker()} style={{ borderColor: runtimeColors.primary[500] }}>
-                                   <ButtonText style={{ color: runtimeColors.primary[500] }}>{moment(fromValue).format('MM/DD/YYYY')}</ButtonText>
+                              <Button colorScheme="primary" variant="outline" onPress={() => toggleFromDatePicker()}>
+                                   <ButtonText>{moment(fromValue).format('MM/DD/YYYY')}</ButtonText>
                               </Button>
                               <Text style={{ color: textColor }}>to</Text>
-                              <Button variant="outline" onPress={() => toggleToDatePicker()} style={{ borderColor: runtimeColors.primary[500] }}>
-                                   <ButtonText style={{ color: runtimeColors.primary[500] }}>{toFacet === '*' ? 'MM/DD/YYYY' : moment(toValue).format('MM/DD/YYYY')}</ButtonText>
+                              <Button colorScheme="primary" variant="outline" onPress={() => toggleToDatePicker()}>
+                                   <ButtonText>{toFacet === '*' ? 'MM/DD/YYYY' : moment(toValue).format('MM/DD/YYYY')}</ButtonText>
                               </Button>
                          </HStack>
                     </FormControl>

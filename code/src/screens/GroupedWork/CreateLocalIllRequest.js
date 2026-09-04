@@ -333,13 +333,13 @@ const Request = (payload) => {
           return (
                <HStack space="md" style={{ paddingTop: 12 }}>
                     <Button
-                         style={{ backgroundColor: runtimeColors.secondary[500] }}
+                         colorScheme="secondary"
                          isDisabled={isSubmitting}
                          onPress={() => {
                               setIsSubmitting(true);
                               handleSubmission();
                          }}>
-                        <ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>
+                        <ButtonText>
                               {isSubmitting ? (
                                    <>
                                         <ButtonSpinner style={{ marginRight: 8 }} />

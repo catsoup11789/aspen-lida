@@ -206,12 +206,12 @@ export const Editions = () => {
                               <AlertDialogFooter>
                                    <ButtonGroup space="sm">
                                         {response?.action ? (
-                                             <Button onPress={() => handleNavigation(response.action)} variant="solid" style={{ backgroundColor: runtimeColors.primary[500] }}>
-                                                  <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{response.action}</ButtonText>
+                                             <Button onPress={() => handleNavigation(response.action)} variant="solid" colorScheme="primary">
+                                                  <ButtonText>{response.action}</ButtonText>
                                              </Button>
                                         ) : null}
-                                        <Button variant="outline" style={{ borderColor: runtimeColors.primary[500] }} ref={cancelResponseRef} onPress={() => setResponseIsOpen(false)}>
-                                             <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                        <Button colorScheme="primary" variant="outline" ref={cancelResponseRef} onPress={() => setResponseIsOpen(false)}>
+                                             <ButtonText>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>
@@ -228,14 +228,14 @@ export const Editions = () => {
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">
-                                        <Button variant="link" onPress={() => setHoldConfirmationIsOpen(false)}>
-                                             <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <Button colorScheme="primary" variant="link" onPress={() => setHoldConfirmationIsOpen(false)}>
+                                             <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
                                              isLoading={confirmingHold}
                                              isLoadingText="Placing hold..."
                                              variant="solid"
-                                             style={{ backgroundColor: runtimeColors.primary[500] }}
+                                             colorScheme="primary"
                                              onPress={async () => {
                                                   setConfirmingHold(true);
                                                   await confirmHold(holdConfirmationResponse.recordId, holdConfirmationResponse.confirmationId, language, library.baseUrl).then(async (result) => {
@@ -258,7 +258,7 @@ export const Editions = () => {
                                                        }
                                                   });
                                              }}>
-                                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'confirm_place_hold')}</ButtonText>
+                                             <ButtonText>{getTermFromDictionary(language, 'confirm_place_hold')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>
@@ -303,14 +303,14 @@ export const Editions = () => {
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">
-                                        <Button variant="link" onPress={() => setHoldItemSelectIsOpen(false)}>
-                                             <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <Button colorScheme="primary" variant="link" onPress={() => setHoldItemSelectIsOpen(false)}>
+                                             <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
                                              isLoading={placingItemHold}
                                              isLoadingText="Placing hold..."
                                              variant="solid"
-                                             style={{ backgroundColor: runtimeColors.primary[500] }}
+                                             colorScheme="primary"
                                              onPress={async () => {
                                                   setPlacingItemHold(true);
                                                   await placeHold(library.baseUrl, selectedItem, 'ils', holdSelectItemResponse.patronId, holdSelectItemResponse.pickupLocation, holdSelectItemResponse.sublocation, false, '', 'item', null, null, null, holdSelectItemResponse.bibId, language).then(async (result) => {
@@ -332,7 +332,7 @@ export const Editions = () => {
                                                        }
                                                   });
                                              }}>
-                                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'place_hold')}</ButtonText>
+                                             <ButtonText>{getTermFromDictionary(language, 'place_hold')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>

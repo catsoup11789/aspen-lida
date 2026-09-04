@@ -26,7 +26,7 @@ import { Text } from '@/components/ui/text';
  */
 export const ForgotBarcode = (props) => {
      const isKeyboardOpen = useKeyboard();
-     const { uiColors, runtimeColors, textColor, colorMode }= useTheme();
+     const { uiColors, textColor, colorMode }= useTheme();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const library = useLibrary();
@@ -125,8 +125,8 @@ export const ForgotBarcode = (props) => {
      );
 
      const FooterButtons = (showResults && !results.success) || hasError ? (
-          <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={resetWindow}>
-               <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary('en', 'try_again')}</ButtonText>
+          <Button colorScheme="primary" onPress={resetWindow}>
+               <ButtonText>{getTermFromDictionary('en', 'try_again')}</ButtonText>
           </Button>
      ) : showResults ? (
           <Button variant="link" onPress={closeWindow}>
@@ -140,17 +140,17 @@ export const ForgotBarcode = (props) => {
                <Button
                     isLoading={isProcessing}
                     isLoadingText={getTermFromDictionary('en', 'button_processing', true)}
-                    style={{ backgroundColor: runtimeColors.primary[500] }}
+                    colorScheme="primary"
                     onPress={initiateForgotBarcode}>
-                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{modalButtonLabel}</ButtonText>
+                    <ButtonText>{modalButtonLabel}</ButtonText>
                </Button>
           </>
      );
 
      return (
           <Center>
-               <Button variant="link" onPress={() => setShowForgotBarcodeModal(true)}>
-                   <ButtonText style={{ color: runtimeColors.primary[500] }}>{buttonLabel}</ButtonText>
+               <Button colorScheme="primary" variant="link" onPress={() => setShowForgotBarcodeModal(true)}>
+                   <ButtonText>{buttonLabel}</ButtonText>
                </Button>
                <Modal isOpen={showForgotBarcodeModal} size="lg" avoidKeyboard onClose={() => setShowForgotBarcodeModal(false)} style={Platform.OS === 'android' && isKeyboardOpen ? { paddingBottom: '50%' } : undefined}>
                     <ModalBackdrop />

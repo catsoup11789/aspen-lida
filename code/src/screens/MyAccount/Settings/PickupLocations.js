@@ -374,7 +374,7 @@ export const Settings_PickupLocations = () => {
                ) : null}
                <ButtonGroup>
                     <Button
-                         style={{ backgroundColor: runtimeColors.primary[500] }}
+                         colorScheme="primary"
                          onPress={async () => {
                               if (!hasChanges) {
                                    return;
@@ -396,7 +396,7 @@ export const Settings_PickupLocations = () => {
                               }
                          }}
                          isDisabled={loading || !hasChanges}>
-                        {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'update')}</ButtonText>}
+                        {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText>{getTermFromDictionary(language, 'update')}</ButtonText>}
                     </Button>
                </ButtonGroup>
           </Box>

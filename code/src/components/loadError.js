@@ -35,11 +35,11 @@ export const LoadError = (props) => {
                     {getTermFromDictionary('en', 'error_loading_results')}
                </Text>
                {reloadAction ? (
-                   <Button onPress={reloadAction} style={{ marginTop: 20, backgroundColor: runtimeColors.primary[500] }}>
+                   <Button onPress={reloadAction} colorScheme="primary" style={{ marginTop: 20 }}>
                          <ButtonIcon>
                               <MaterialIcons name="refresh" size={16} color={runtimeColors.primary['500-text']} />
                          </ButtonIcon>
-                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary('en', 'button_reload')}</ButtonText>
+                         <ButtonText>{getTermFromDictionary('en', 'button_reload')}</ButtonText>
                     </Button>
                ) : null}
                <Text size="xs" style={{ width: '75%', marginTop: 20, color: uiColors.iconMuted.dark, textAlign: 'center' }}>
@@ -86,8 +86,8 @@ export const DisplayErrorAlertDialog = (props) => {
                     </AlertDialogBody>
                     <AlertDialogFooter>
                         <ButtonGroup space="md">
-                            <Button onPress={onClose} style={{ backgroundColor: runtimeColors.primary[500] }} ref={cancelRef}>
-                                <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                            <Button onPress={onClose} colorScheme="primary" ref={cancelRef}>
+                                <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                             </Button>
                         </ButtonGroup>
                     </AlertDialogFooter>

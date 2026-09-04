@@ -57,7 +57,7 @@ export const MyLists = () => {
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const [loading, setLoading] = React.useState(false);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const insets = useSafeAreaInsets();
      const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
@@ -340,17 +340,17 @@ export const MyLists = () => {
                     <ScrollView horizontal>
                          <ButtonGroup size="sm">
                               <Button
-                                   style={{ backgroundColor: runtimeColors.primary[500] }}
+                                   colorScheme="primary"
                                    onPress={async () => {
                                         if (page > 1) {
                                              await updatePage(page - 1, type);
                                         }
                                    }}
                                    isDisabled={page === 1}>
-                                  <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                  <ButtonText>{getTermFromDictionary(language, 'previous')}</ButtonText>
                               </Button>
                               <Button
-                                  style={{ backgroundColor: runtimeColors.primary[500] }}
+                                  colorScheme="primary"
                                    onPress={async () => {
                                         if ($type?.page_current !== $type?.page_total) {
                                              logDebugMessage('Adding to page');
@@ -358,7 +358,7 @@ export const MyLists = () => {
                                         }
                                    }}
                                    isDisabled={!($type?.page_current !== $type?.page_total) || loading}>
-                                  <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                  <ButtonText>{getTermFromDictionary(language, 'next')}</ButtonText>
                               </Button>
                          </ButtonGroup>
                     </ScrollView>

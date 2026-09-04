@@ -341,10 +341,10 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
         <Center>
             <Button
                 onPress={handleUpdatePermissions}
-                style={{ backgroundColor: runtimeColors.primary[500] }}
+                colorScheme="primary"
                 isDisabled={isUpdating}
             >
-                <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
+                <ButtonText>
                     {permissionStatus ?
                         getTermFromDictionary(language, 'revoke_device_settings') :
                         getTermFromDictionary(language, 'update_device_settings')}
@@ -378,9 +378,9 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
                                     Linking.openSettings();
                                     setShowAlertDialog(false);
                                 }}
-                                style={{ backgroundColor: runtimeColors.primary[500] }}
+                                colorScheme="primary"
                             >
-                                <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
+                                <ButtonText>
                                     {getTermFromDictionary(language, 'open_device_settings')}
                                 </ButtonText>
                             </Button>

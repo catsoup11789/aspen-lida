@@ -364,7 +364,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
      const [modalBodyHeading, setModalBodyHeading] = React.useState('');
      const [calendarId, setCalendarId] = React.useState();
      const [confirmAdd, setConfirmAdd] = React.useState(false);
-     const { textColor, uiColors, runtimeColors } = useTheme();
+     const { textColor, uiColors } = useTheme();
 
      let displayDay = false;
      let displayStartTime = false;
@@ -492,20 +492,20 @@ const AddToCalendar = ({ start, end, location, event }) => {
                          <ModalBody><Text style={{ color: textColor }}>{modalBodyText}</Text></ModalBody>
                          <ModalFooter>
                               <ButtonGroup space="sm" size="md">
-                                   <Button
+                                   <Button colorScheme="primary"
                                         variant="outline"
-                                        style={{ borderColor: runtimeColors.primary[500] }}
+                                       
                                         onPress={() => {
                                              setShowModal(false);
                                              setConfirmAdd(false);
                                              setModalBodyText('');
                                              setModalBodyHeading('');
                                         }}>
-                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                       <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    {confirmAdd ? (
                                         <Button
-                                            style={{ backgroundColor: runtimeColors.primary[500] }}
+                                            colorScheme="primary"
                                             onPress={() =>
                                                  createCalendarEvent().then((result) => {
                                                       setShowModal(false);
@@ -514,7 +514,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
                                                        setModalBodyHeading('');
                                                   })
                                              }>
-                                           <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'add_event')}</ButtonText>
+                                           <ButtonText>{getTermFromDictionary(language, 'add_event')}</ButtonText>
                                         </Button>
                                    ) : null}
                               </ButtonGroup>
@@ -600,7 +600,7 @@ const AddToYourEvents = ({ id, source }) => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { runtimeColors } = useTheme();
+     const {  } = useTheme();
      const [isLoading, setIsLoading] = React.useState(false);
 
      const addToEvents = async () => {
@@ -624,8 +624,8 @@ const AddToYourEvents = ({ id, source }) => {
      };
 
      return (
-          <Button style={{ backgroundColor: runtimeColors.tertiary[500], marginBottom: 8 }} onPress={() => addToEvents()} isLoading={isLoading} isLoadingText={getTermFromDictionary(language, 'adding', true)}>
-               <ButtonText style={{ color: runtimeColors.tertiary['500-text'] }}>{getTermFromDictionary(language, 'add_to_events')}</ButtonText>
+          <Button colorScheme="tertiary" style={{ marginBottom: 8 }} onPress={() => addToEvents()} isLoading={isLoading} isLoadingText={getTermFromDictionary(language, 'adding', true)}>
+               <ButtonText>{getTermFromDictionary(language, 'add_to_events')}</ButtonText>
           </Button>
      );
 };
@@ -637,10 +637,10 @@ const AddToYourEvents = ({ id, source }) => {
  */
 const InYourEvents = () => {
      const language = useActiveLanguage();
-     const { runtimeColors } = useTheme();
+     const {  } = useTheme();
      return (
-          <Button style={{ marginBottom: 8, backgroundColor: runtimeColors.tertiary[500] }} onPress={() => navigateStack('AccountScreenTab', 'MyEvents')}>
-               <ButtonText style={{ color: runtimeColors.tertiary['500-text'] }}>{getTermFromDictionary(language, 'in_your_events')}</ButtonText>
+          <Button colorScheme="tertiary" style={{ marginBottom: 8 }} onPress={() => navigateStack('AccountScreenTab', 'MyEvents')}>
+               <ButtonText>{getTermFromDictionary(language, 'in_your_events')}</ButtonText>
           </Button>
      );
 };
@@ -656,7 +656,7 @@ const RegistrationModal = ({ event }) => {
      const language = useActiveLanguage();
      const [showRegistrationModal, setShowRegistrationModal] = React.useState(false);
 
-     const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
+     const { textColor, uiColors, colorMode } = useTheme();
      const backgroundColor= colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
 
      const openLink = async () => {
@@ -676,8 +676,8 @@ const RegistrationModal = ({ event }) => {
 
      return (
           <>
-               <Button style={{ backgroundColor: runtimeColors.tertiary[500], marginBottom: 8 }} onPress={() => setShowRegistrationModal(true)}>
-                   <ButtonText style={{ color: runtimeColors.tertiary['500-text'] }}>{getTermFromDictionary(language, 'registration_information')}</ButtonText>
+               <Button colorScheme="tertiary" style={{ marginBottom: 8 }} onPress={() => setShowRegistrationModal(true)}>
+                   <ButtonText>{getTermFromDictionary(language, 'registration_information')}</ButtonText>
                </Button>
                <Modal isOpen={showRegistrationModal} onClose={() => setShowRegistrationModal(false)} closeOnOverlayClick={false} size="lg">
                     <ModalBackdrop />
@@ -699,7 +699,7 @@ const RegistrationModal = ({ event }) => {
                                         }}>
                                         <ButtonText style={{ color: uiColors.textStrong.light }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
-                                   <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={() => openLink()}><ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'go_to_registration')}</ButtonText></Button>
+                                   <Button colorScheme="primary" onPress={() => openLink()}><ButtonText>{getTermFromDictionary(language, 'go_to_registration')}</ButtonText></Button>
                               </ButtonGroup>
                          </ModalFooter>
                     </ModalContent>

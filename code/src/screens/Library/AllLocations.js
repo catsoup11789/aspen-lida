@@ -136,10 +136,10 @@ export const AllLocations = () => {
                <Box
                     style={{ alignItems: 'center', padding: 8, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark, borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.light }}>
                     <ButtonGroup alignItems="center" isAttached>
-                         <Button variant={sort === 'alphabetical' ? 'solid' : 'outline'} action="secondary" onPress={() => setSort('alphabetical')}>
+                         <Button variant={sort === 'alphabetical' ? 'solid' : 'outline'} colorScheme="secondary" onPress={() => setSort('alphabetical')}>
                               <ButtonText>{getTermFromDictionary(language, 'a_to_z')}</ButtonText>
                          </Button>
-                         <Button variant={sort === 'distance' ? 'solid' : 'outline'} action="secondary" onPress={() => setSort('distance')}>
+                         <Button variant={sort === 'distance' ? 'solid' : 'outline'} colorScheme="secondary" onPress={() => setSort('distance')}>
                               <ButtonText>{getTermFromDictionary(language, 'distance')}</ButtonText>
                          </Button>
                     </ButtonGroup>

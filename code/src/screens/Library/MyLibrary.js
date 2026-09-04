@@ -44,7 +44,7 @@ export const MyLibrary = () => {
      const language = useActiveLanguage();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, colorMode, runtimeColors } = useTheme();
+     const { textColor, colorMode } = useTheme();
 
      const bgColor = colorMode === 'light' ? '#f5f5f4' : '#111827';
 
@@ -178,8 +178,8 @@ export const MyLibrary = () => {
                          {_.size(locations) > 1 ? (
                               <>
                                    <Divider style={{ marginTop: 20, marginBottom: 8 }} />
-                                   <Button variant="ghost" size="sm" onPress={selectLocations} style={{ backgroundColor: runtimeColors.primary[500] }}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
+                                   <Button variant="ghost" size="sm" onPress={selectLocations} colorScheme="primary">
+                                        <ButtonText>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
                                    </Button>
                               </>
                          ) : null}

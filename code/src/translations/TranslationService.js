@@ -103,6 +103,8 @@ export const LanguageSwitcher = () => {
                                    <Button
                                         size="sm"
                                         borderRadius="$full"
+                                        variant="ghost"
+                                        colorScheme="primary"
                                         {...triggerProps}
                                         isDisabled={isSwitchingLanguage}
                                         onPress={() => {
@@ -110,10 +112,10 @@ export const LanguageSwitcher = () => {
                                                   setIsLanguageMenuOpen(true);
                                              }
                                         }}
-                                        style={{ backgroundColor: 'transparent', borderRadius: 9999 }}
+                                        style={{ borderRadius: 9999 }}
                                    >
                                         <MaterialIcons name="language" size={18} color={runtimeColors.primary[500]} />
-                                        <ButtonText style={{ color: runtimeColors.primary[500] }}> {languageDisplayName}</ButtonText>
+                                        <ButtonText> {languageDisplayName}</ButtonText>
                                    </Button>
                               );
                          }}>

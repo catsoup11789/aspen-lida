@@ -1246,9 +1246,9 @@ function LogOutButton() {
      const { runtimeColors } = useTheme();
 
      return (
-          <Button size="md" action="secondary" onPress={signOut} style={{ backgroundColor: runtimeColors.primary[500] }}>
+          <Button size="md" onPress={signOut} colorScheme="primary">
                <MaterialIcons name="logout" size={14} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
-               <ButtonText style={{ color: runtimeColors.primary['500-text'] }}> {getTermFromDictionary(language, 'logout')}</ButtonText>
+               <ButtonText> {getTermFromDictionary(language, 'logout')}</ButtonText>
           </Button>
      );
 }

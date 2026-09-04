@@ -66,9 +66,9 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
 
      return (
           <Center>
-               <Button onPress={toggle} size="xs" style={{ backgroundColor: runtimeColors.primary[500] }}>
+               <Button onPress={toggle} size="xs" colorScheme="primary">
                    <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
-                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'move_list_group')}</ButtonText>
+                   <ButtonText>{getTermFromDictionary(language, 'move_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
                     <ModalBackdrop />
@@ -127,10 +127,10 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>
-                                   <Button variant="outline" onPress={toggle} style={{ borderColor: runtimeColors.primary[500] }}>
-                                        <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                   <Button colorScheme="primary" variant="outline" onPress={toggle}>
+                                        <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
-                                     <Button style={{ backgroundColor: runtimeColors.primary[500] }}
+                                     <Button colorScheme="primary"
                                              isLoading={loading}
                                              isDisabled={selectedGroup === null}
                                              isLoadingText={getTermFromDictionary(language, 'saving', true)}
@@ -163,7 +163,7 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
                                                       }
                                                  });
                                             }}>
-                                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'save')}</ButtonText>
+                                         <ButtonText>{getTermFromDictionary(language, 'save')}</ButtonText>
                                     </Button>
                               </ButtonGroup>
                          </ModalFooter>

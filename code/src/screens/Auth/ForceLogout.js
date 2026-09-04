@@ -18,7 +18,7 @@ import { Text } from '@/components/ui/text';
  */
 export const ForceLogout = (props) => {
      const { title, reason } = props;
-	const { uiColors, colorMode, textColor, runtimeColors } = useTheme();
+	const { uiColors, colorMode, textColor } = useTheme();
 	const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 	const language = useActiveLanguage();
 	const { signOut } = React.useContext(AuthContext);
@@ -35,8 +35,8 @@ export const ForceLogout = (props) => {
 					<AlertDialogBody><Text style={{ color: textColor }}>{reason ?? getTermFromDictionary(language, 'error_invalid_session')}</Text></AlertDialogBody>
 					<AlertDialogFooter>
 						<ButtonGroup space="sm">
-							<Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={signOut} ref={cancelRef}>
-								<ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+							<Button colorScheme="primary" onPress={signOut} ref={cancelRef}>
+								<ButtonText>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
 							</Button>
 						</ButtonGroup>
 					</AlertDialogFooter>

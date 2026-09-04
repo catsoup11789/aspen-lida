@@ -35,7 +35,7 @@ export const MyAlternateLibraryCard = () => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const queryClient = useQueryClient();
      const inputBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
@@ -167,14 +167,14 @@ export const MyAlternateLibraryCard = () => {
                               ) : null}
                               <ButtonGroup>
                                    <Button
-                                        style={{ backgroundColor: runtimeColors.primary[500] }}
+                                        colorScheme="primary"
                                         onPress={() => {
                                              setIsLoading(true);
                                              updateCard().then(() => {
                                                   setIsLoading(false);
                                              });
                                         }}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'update')}</ButtonText>
+                                        <ButtonText>{getTermFromDictionary(language, 'update')}</ButtonText>
                                    </Button>
                                    <Button
                                         style={{ backgroundColor: uiColors.danger }}

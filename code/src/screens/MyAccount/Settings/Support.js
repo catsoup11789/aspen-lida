@@ -61,7 +61,7 @@ export const SupportScreen = () => {
      const activeLanguage = useActiveLanguage();
      const updateLanguages = useUpdateAvailableLanguages();
      const updateDictionary = useUpdateDictionary();
-     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const mutedTextColor = colorMode === 'light' ? uiColors.icon.light : uiColors.iconMuted.light;
      const cachePanelBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.iconMuted.light;
      const [refreshingCache, setRefreshingCache] = React.useState({});
@@ -388,8 +388,8 @@ export const SupportScreen = () => {
                     </VStack>
                     <Divider style={{ marginVertical: 8 }} />
                     <Center style={{ paddingTop: 20, paddingHorizontal: 16 }}>
-                         <Button style={{ backgroundColor: runtimeColors.secondary[500] }} onPress={() => navigation.navigate('MyDevice_APIErrorLog')}>
-                             <ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>{getTermFromDictionary(language, 'open_api_error_log')}</ButtonText>
+                         <Button colorScheme="secondary" onPress={() => navigation.navigate('MyDevice_APIErrorLog')}>
+                             <ButtonText>{getTermFromDictionary(language, 'open_api_error_log')}</ButtonText>
                          </Button>
                     </Center>
                     {status.needsUpdate ? (
@@ -401,7 +401,7 @@ export const SupportScreen = () => {
                                         </ThemedAlertText>
                                         <ThemedAlertText action="warning" variant="solid" style={{ marginRight: 8 }}>Please update your app for the latest features and fixes.</ThemedAlertText>
                                         {status.canOpenUrl ? (
-                                             <Button action="secondary" onPress={() => openAppStore()}>
+                                             <Button colorScheme="secondary" onPress={() => openAppStore()}>
                                                   <ButtonText>Update now</ButtonText>
                                              </Button>
                                         ) : null}

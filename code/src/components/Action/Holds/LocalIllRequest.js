@@ -21,15 +21,15 @@ export const StartLocalIllRequest = (props) => {
                volumeName: props.volumeName ?? null
           });
      };
-     const { runtimeColors } = useTheme();
+     const {  } = useTheme();
 
      return (
           <Button
                size="md"
                variant="solid"
-               style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
+               colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
                onPress={openLocalIllRequest}>
-               <ButtonText style={{ color: runtimeColors.primary['500-text'], textAlign: 'center' }}>
+               <ButtonText style={{ textAlign: 'center' }}>
                     {props.title}
                </ButtonText>
           </Button>

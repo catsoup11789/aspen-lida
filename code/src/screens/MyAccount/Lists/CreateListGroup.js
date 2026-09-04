@@ -57,9 +57,9 @@ const CreateListGroup = (props) => {
 
      return (
           <Center>
-               <Button onPress={toggle} size="sm" style={{ backgroundColor: runtimeColors.primary[500] }}>
+               <Button onPress={toggle} size="sm" colorScheme="primary">
                    <MaterialIcons name="add" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
-                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list_group')}</ButtonText>
+                   <ButtonText>{getTermFromDictionary(language, 'create_new_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
                     <ModalBackdrop />
@@ -122,7 +122,7 @@ const CreateListGroup = (props) => {
                                         <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                     <Button
-                                         style={{ backgroundColor: runtimeColors.primary[500] }}
+                                         colorScheme="primary"
                                          isLoading={loading}
                                          isLoadingText={getTermFromDictionary(language, 'creating_list', true)}
                                          onPress={async () => {
@@ -151,7 +151,7 @@ const CreateListGroup = (props) => {
                                                    }
                                               });
                                          }}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_list_group')}</ButtonText>
+                                        <ButtonText>{getTermFromDictionary(language, 'create_list_group')}</ButtonText>
                                     </Button>
                               </ButtonGroup>
                          </ModalFooter>

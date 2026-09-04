@@ -35,7 +35,7 @@ export const SearchResultsForBrowseCategory = () => {
      const [page, setPage] = React.useState(1);
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
 
      const category = useRoute().params.id ?? '';
@@ -78,11 +78,11 @@ export const SearchResultsForBrowseCategory = () => {
                     <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
-                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: runtimeColors.primary[500] }}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" colorScheme="primary">
+                                        <ButtonText>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: runtimeColors.primary[500] }}
+                                        colorScheme="primary"
                                         onPress={() => {
                                              if (!isPreviousData && data.hasMore) {
                                                   setPage(page + 1);
@@ -90,7 +90,7 @@ export const SearchResultsForBrowseCategory = () => {
                                         }}
                                         isDisabled={isPreviousData || !data.hasMore}
                                         size="sm">
-                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                       <ButtonText>{getTermFromDictionary(language, 'next')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>

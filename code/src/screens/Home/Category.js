@@ -375,8 +375,8 @@ const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, isSyste
      return (
           <ButtonGroup space="sm" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 8 }}>
                {subCategories.map((subCategory, index) => (
-                   <Button key={(subCategory?.id ?? subCategory?.textId ?? subCategory?.label ?? `subcategory-${index}`).toString()} style={{ backgroundColor: selectedIndex === index ? runtimeColors.primary[600] : runtimeColors.primary[400], paddingHorizontal: 12, height: 34 }} variant="solid" onPress={() => onSelect(index)}>
-                        <ButtonText style={{ fontWeight: '500', color: runtimeColors.primary['500-text'] }}>
+                   <Button key={(subCategory?.id ?? subCategory?.textId ?? subCategory?.label ?? `subcategory-${index}`).toString()} colorScheme="primary" variant="solid" style={{ paddingHorizontal: 12, height: 34, opacity: selectedIndex === index ? 1 : 0.75 }} onPress={() => onSelect(index)}>
+                        <ButtonText style={{ fontWeight: '500' }}>
                               {subCategory.label}
                          </ButtonText>
                         {!isSystemBrowseCategory && <MaterialIcons name="close" size={14} color={runtimeColors.primary['500-text']} style={{ marginLeft: 16 }} onPress={() => onPressHideSubCategory(index)} />}

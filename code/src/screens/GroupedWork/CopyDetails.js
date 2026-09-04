@@ -94,7 +94,7 @@ const ShowItemDetails = (props) => {
                             }}
                             variant="ghost"
                             size="sm"
-                            action="secondary">
+                            colorScheme="secondary">
                             <HStack space="xs" style={{ alignItems: 'center' }}>
                                  <MaterialIcons name="location-pin" size={14} style={{ marginRight: -4 }} />
                                  <ButtonText>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
@@ -124,7 +124,7 @@ const ShowItemDetails = (props) => {
           return (
               <SafeAreaView>
                    <Center>
-                        <Button onPress={() => setShowModal(true)} variant="ghost" size="sm" action="secondary">
+                        <Button onPress={() => setShowModal(true)} variant="ghost" size="sm" colorScheme="secondary">
                             <HStack space="xs" style={{ alignItems: 'center' }}>
                                  <MaterialIcons name="location-pin" size={14} style={{ marginRight: -4 }} />
                                  <ButtonText>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>

@@ -41,7 +41,7 @@ export const Location = () => {
      const language = useActiveLanguage();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { colorMode, textColor, runtimeColors } = useTheme();
+     const { colorMode, textColor } = useTheme();
      const showSystemMessage = () => {
           if (_.isArray(systemMessages)) {
                return systemMessages.map((obj, index) => {
@@ -155,8 +155,8 @@ export const Location = () => {
                               {_.size(locations) > 1 ? (
                                    <>
                                         <Divider style={{ marginTop: 20, marginBottom: 8 }} />
-                                        <Button size="sm" onPress={selectLocations} style={{ backgroundColor: runtimeColors.primary[500] }}>
-                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
+                                        <Button size="sm" onPress={selectLocations} colorScheme="primary">
+                                            <ButtonText>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
                                         </Button>
                                    </>
                               ) : null}

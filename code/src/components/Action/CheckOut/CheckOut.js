@@ -136,8 +136,8 @@ export const CheckOut = (props) => {
           };
           return (
                <>
-                    <Button style={{ minWidth: '100%', maxWidth: '100%', backgroundColor: runtimeColors.primary[500] }} onPress={() => setShowAddAlternateLibraryCardModal(true)}>
-                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>
+                    <Button colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }} onPress={() => setShowAddAlternateLibraryCardModal(true)}>
+                         <ButtonText>{title}</ButtonText>
                     </Button>
                     <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg">
                          <ModalBackdrop />
@@ -188,7 +188,7 @@ export const CheckOut = (props) => {
                                              <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
-                                             style={{ backgroundColor: runtimeColors.primary[500] }}
+                                             colorScheme="primary"
                                              isDisabled={loading}
                                              onPress={async () => {
                                                   setLoading(true);
@@ -205,7 +205,7 @@ export const CheckOut = (props) => {
                                                        setShowAddAlternateLibraryCardModal(false);
                                                   });
                                              }}>
-                                             {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>}
+                                             {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
                                         </Button>
                                    </ButtonGroup>
                               </ModalFooter>
@@ -218,7 +218,7 @@ export const CheckOut = (props) => {
                <>
                     <Button
                          variant="solid"
-                         style={{ minWidth: '100%', maxWidth: '100%', backgroundColor: runtimeColors.primary[500] }}
+                         colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
                          onPress={async () => {
                               setLoading(true);
                               await completeAction(record, type, user.id, null, null, null, null, null, library.baseUrl).then(async (eContentResponse) => {
@@ -232,7 +232,7 @@ export const CheckOut = (props) => {
                                    setResponseIsOpen(true);
                               });
                          }}>
-                        {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'], paddingRight: 8 }} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>}
+                        {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'], paddingRight: 8 }} /> : <ButtonText>{title}</ButtonText>}
                     </Button>
                </>
           );

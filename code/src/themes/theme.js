@@ -505,13 +505,15 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                <Box alignItems="center">
                     <Button
                          size="sm"
+                         variant="ghost"
+                         colorScheme="primary"
                          isDisabled={isSwitchingTheme}
                          onPress={() => {
                               setIsThemeMenuOpen(true);
                          }}
-                         style={{ backgroundColor: 'transparent', borderRadius: 9999 }}>
+                         style={{ borderRadius: 9999 }}>
                          <MaterialIcons name="palette" size={18} color={runtimeColors.primary[500]} />
-                         {showText ? <ButtonText style={{ color: runtimeColors.primary[500] }}> {activeThemeName}</ButtonText> : null}
+                         {showText ? <ButtonText> {activeThemeName}</ButtonText> : null}
                     </Button>
                </Box>
                <Modal transparent animationType="fade" visible={isSwitchingTheme}>

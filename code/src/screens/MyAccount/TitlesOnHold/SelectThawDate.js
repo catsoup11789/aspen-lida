@@ -146,16 +146,16 @@ export const SelectThawDate = (props) => {
                               {/* Streamlined ButtonGroup for v1 (Removed the conflicting HStack component wrapper) */}
                               <ButtonGroup space="md" style={{ flexDirection: 'row' }}>
                                    <Button
-                                       style={{ backgroundColor: runtimeColors.primary[500] }}
+                                       colorScheme="primary"
                                         onPress={hideDatePicker}
                                    >
-                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
+                                       <ButtonText>
                                              {getTermFromDictionary("en", "cancel")}
                                         </ButtonText>
                                    </Button>
 
                                    <Button
-                                        style={{ backgroundColor: runtimeColors.primary[500] }}
+                                        colorScheme="primary"
                                         onPress={() => {
                                              if (freezeIndefinite) {
                                                   onSelectDate();
@@ -164,7 +164,7 @@ export const SelectThawDate = (props) => {
                                              }
                                         }}
                                    >
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
+                                        <ButtonText>
                                              {freezeIndefinite
                                                   ? getTermFromDictionary("en", "freeze_hold_without_reactivation")
                                                   : getTermFromDictionary("en", "freeze_hold_choose_reactivation")}

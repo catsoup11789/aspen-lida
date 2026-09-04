@@ -46,7 +46,6 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
 
      const themeCtx = useTheme() ?? {};
      const uiColors = uiColorsProp ?? themeCtx.uiColors ?? {};
-     const runtimeColors = themeCtx.runtimeColors ?? {};
      const colorMode = colorModeProp ?? themeCtx.colorMode ?? 'light';
      const textColor = textColorProp ?? themeCtx.textColor ?? '#111827';
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
@@ -178,20 +177,20 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
                )}
 
                <HStack style={{ paddingHorizontal: 12, paddingVertical: 12, justifyContent: 'space-between', alignItems: 'center', borderTopWidth: 1, borderColor }}>
-                    <Button style={{ backgroundColor: runtimeColors.secondary?.[500] }} onPress={() => loadPage(page - 1)} isDisabled={loading || !meta.hasPrevious}>
-                        <ButtonText style={{ color: runtimeColors.secondary?.['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                    <Button colorScheme="secondary" onPress={() => loadPage(page - 1)} isDisabled={loading || !meta.hasPrevious}>
+                        <ButtonText>{getTermFromDictionary(language, 'previous')}</ButtonText>
                     </Button>
 
                     <Text size="xs" style={{ color: textColor }}>{`Page ${page} / ${meta.totalPages}`}</Text>
 
-                    <Button style={{ backgroundColor: runtimeColors.secondary?.[500] }} onPress={() => loadPage(page + 1)} isDisabled={loading || !meta.hasMore}>
-                        <ButtonText style={{ color: runtimeColors.secondary?.['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                    <Button colorScheme="secondary" onPress={() => loadPage(page + 1)} isDisabled={loading || !meta.hasMore}>
+                        <ButtonText>{getTermFromDictionary(language, 'next')}</ButtonText>
                     </Button>
                </HStack>
 
                <Box style={{ paddingHorizontal: 12, paddingBottom: 12 }}>
-                    <Button variant="outline" style={{ borderColor: runtimeColors.tertiary?.[500] }} onPress={onClear} isDisabled={loading}>
-                        <ButtonText style={{ color: runtimeColors.tertiary?.[500] }}>{getTermFromDictionary(language, 'clear_api_error_log')}</ButtonText>
+                    <Button variant="outline" colorScheme="tertiary" onPress={onClear} isDisabled={loading}>
+                        <ButtonText>{getTermFromDictionary(language, 'clear_api_error_log')}</ButtonText>
                     </Button>
                </Box>
           </Box>

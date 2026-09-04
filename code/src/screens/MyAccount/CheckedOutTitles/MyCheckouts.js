@@ -396,7 +396,7 @@ export const MyCheckouts = () => {
                                    isLoadingText={getTermFromDictionary(language, 'renewing_all', true)}
                                    isDisabled={renewAll}
                                    size="sm"
-                                   style={{ backgroundColor: runtimeColors.primary[500] }}
+                                   colorScheme="primary"
                                    onPress={() => {
                                         if (renewAll) return;
                                         setRenewAll(true);
@@ -421,7 +421,7 @@ export const MyCheckouts = () => {
                                         });
                                    }}>
                                    {!renewAll && <MaterialIcons name="autorenew" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />}
-                                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
+                                   <ButtonText>
                                         {renewAll ? getTermFromDictionary(language, 'renewing_all', true) : getTermFromDictionary(language, 'checkout_renew_all')}
                                    </ButtonText>
                               </Button>
@@ -505,15 +505,15 @@ export const MyCheckouts = () => {
           } else {
                return (
                     <HStack space="$2">
-                         <Button
-                              style={{ margin: 8, borderColor: runtimeColors.primary[500] }}
+                         <Button colorScheme="primary"
+                              style={{ margin: 8 }}
                               size="sm"
                               variant="outline"
                               onPress={() => {
                                    setLoading(true);
                                    reloadCheckouts();
                               }}>
-                              <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'checkouts_reload')}</ButtonText>
+                              <ButtonText>{getTermFromDictionary(language, 'checkouts_reload')}</ButtonText>
                          </Button>
                     </HStack>
                );
@@ -558,11 +558,11 @@ export const MyCheckouts = () => {
                               <AlertDialogBody><Text style={{ color: textColor }}>{renewConfirmationResponse?.message ? decodeMessage(renewConfirmationResponse.message) : 'Unable to renew checkout for unknown error. Please contact the library.'}</Text></AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">
-                                        <Button variant="outline" style={{ borderColor: runtimeColors.primary[500] }} onPress={() => setRenewConfirmationIsOpen(false)}>
-                                             <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <Button colorScheme="primary" variant="outline" onPress={() => setRenewConfirmationIsOpen(false)}>
+                                             <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
-                                             style={{ backgroundColor: runtimeColors.primary[500] }}
+                                             colorScheme="primary"
                                              isLoading={confirmingRenewal}
                                              isLoadingText={getTermFromDictionary(language, 'renewing', true)}
                                              onPress={async () => {
@@ -584,7 +584,7 @@ export const MyCheckouts = () => {
                                                        });
                                                   }
                                              }}>
-                                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{renewConfirmationResponse?.action ? renewConfirmationResponse.action : 'Renew Item'}</ButtonText>
+                                             <ButtonText>{renewConfirmationResponse?.action ? renewConfirmationResponse.action : 'Renew Item'}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>

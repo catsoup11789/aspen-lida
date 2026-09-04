@@ -20,7 +20,7 @@ import { useTheme } from '../../themes/theme';
  */
 export const UnsavedChangesExit = (props) => {
      const { updateSearch, discardChanges, language, hasPendingChanges } = props;
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, colorMode, textColor } = useTheme();
      const navigation = useNavigation();
      const [isOpen, setIsOpen] = React.useState(false);
      const onClose = () => setIsOpen(false);
@@ -72,8 +72,8 @@ export const UnsavedChangesExit = (props) => {
                          </AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">
-                                   <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={updateClose} ref={cancelRef}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'save')}</ButtonText>
+                                   <Button colorScheme="primary" onPress={updateClose} ref={cancelRef}>
+                                        <ButtonText>{getTermFromDictionary(language, 'save')}</ButtonText>
                                    </Button>
                                    <Button variant="link" onPress={forceClose}>
                                         <ButtonText style={{ color: uiColors.danger }}>{getTermFromDictionary(language, 'discard')}</ButtonText>

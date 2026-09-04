@@ -17,12 +17,12 @@ export const OpenSideLoad = (props) => {
           <Button
                size="md"
                variant="solid"
-               style={{ width: '100%', backgroundColor: runtimeColors.primary[500] }}
+               colorScheme="primary" style={{ width: '100%' }}
                onPress={async () => {
                    setLoading(true);
                    await openSideLoad(props.url).then((r) => setLoading(false));
                }}>
-               {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{props.title}</ButtonText>}
+               {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText>{props.title}</ButtonText>}
           </Button>
      );
 };

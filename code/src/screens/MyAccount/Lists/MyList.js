@@ -56,7 +56,7 @@ export const MyList = ({ route }) => {
           recentlyAdded: 'Sort By Recently Added',
           custom: 'Sort By User Defined' });
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
+     const { textColor, uiColors, colorMode } = useTheme();
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const [isLoading, setIsLoading] = React.useState(true);
      const [fetchError, setFetchError] = React.useState(null);
@@ -341,11 +341,11 @@ export const MyList = ({ route }) => {
                     style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                     <ScrollView horizontal>
                          <ButtonGroup size="sm">
-                              <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={() => setPage(page - 1)} isDisabled={page === 1}>
-                                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{t('previous')}</ButtonText>
+                              <Button colorScheme="primary" onPress={() => setPage(page - 1)} isDisabled={page === 1}>
+                                   <ButtonText>{t('previous')}</ButtonText>
                               </Button>
                               <Button
-                                   style={{ backgroundColor: runtimeColors.primary[500] }}
+                                   colorScheme="primary"
                                    onPress={() => {
                                         if (listData?.hasMore) {
                                              logDebugMessage('Adding to page');
@@ -353,7 +353,7 @@ export const MyList = ({ route }) => {
                                         }
                                    }}
                                    isDisabled={isLoading || !listData?.hasMore}>
-                                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{t('next')}</ButtonText>
+                                   <ButtonText>{t('next')}</ButtonText>
                               </Button>
                          </ButtonGroup>
                     </ScrollView>

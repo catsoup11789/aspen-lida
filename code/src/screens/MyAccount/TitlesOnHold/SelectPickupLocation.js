@@ -22,7 +22,7 @@ import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedS
  * @constructor
  */
 export const SelectPickupLocation = (props) => {
-     const { locations, sublocations, onClose, currentPickupId, holdId, userId, libraryContext, holdsContext, resetGroup, language, textColor, colorMode, uiColors, runtimeColors } = props;
+     const { locations, sublocations, onClose, currentPickupId, holdId, userId, libraryContext, holdsContext, resetGroup, language, textColor, colorMode, uiColors } = props;
      let pickupLocation = _.findIndex(locations, function (o) {
           return o.locationId === currentPickupId;
      });
@@ -131,17 +131,17 @@ export const SelectPickupLocation = (props) => {
                                    space="md"
                                    style={{ flexDirection: 'row', justifyContent: 'flex-end', flexWrap: 'wrap' }}
                                    >
-                                   <Button
+                                   <Button colorScheme="primary"
                                         variant="outline"
-                                        style={{ borderColor: runtimeColors.primary[500] }}
+                                       
                                         onPress={() => {
                                              setShowModal(false);
                                         }}>
-                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                       <ButtonText>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
                                    <Button
                                         isLoading={loading}
-                                       style={{ backgroundColor: runtimeColors.primary[500] }}
+                                       colorScheme="primary"
                                         isLoadingText={getTermFromDictionary(language, 'updating', true)}
                                         onPress={() => {
                                              setLoading(true);
@@ -152,7 +152,7 @@ export const SelectPickupLocation = (props) => {
                                                   setLoading(false);
                                              });
                                         }}>
-                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'change_location')}</ButtonText>
+                                       <ButtonText>{getTermFromDictionary(language, 'change_location')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>

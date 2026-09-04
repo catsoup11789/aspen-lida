@@ -46,7 +46,7 @@ export const Facet = ({ route, navigation }) => {
      const [values, setValues] = React.useState([]);
      const [valuesDefault, setValuesDefault] = React.useState([]);
      const [language] = React.useState(route.params?.language ?? 'en');
-     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const headerIconColor = colorMode === 'light' ? uiColors.icon.light : uiColors.icon.dark;
      const actionBarBackgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
 
@@ -252,17 +252,17 @@ export const Facet = ({ route, navigation }) => {
           <Box style={{ padding: 12, backgroundColor: actionBarBackgroundColor, shadowOpacity: 0.1, shadowRadius: 1 }}>
                <Center>
                     <ButtonGroup size="lg">
-                         <Button variant="link" onPress={resetCluster}>
-                             <ButtonText style={{ color: runtimeColors.primary[500] }}>
+                         <Button colorScheme="primary" variant="link" onPress={resetCluster}>
+                             <ButtonText>
                                    {getTermFromDictionary(language, 'reset')}
                               </ButtonText>
                          </Button>
                          <Button
-                             style={{ backgroundColor: runtimeColors.primary[500] }}
+                             colorScheme="primary"
                               isDisabled={isUpdating}
                               onPress={() => updateSearch()}
                          >
-                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
+                             <ButtonText>
                                    {isUpdating ? getTermFromDictionary(language, 'updating', true) : getTermFromDictionary(language, 'update')}
                               </ButtonText>
                          </Button>

@@ -90,7 +90,7 @@ const SelectPickupLocation = (props) => {
                <Button
                     variant="solid"
                     onPress={() => setShowModal(true)}
-                    action="primary"
+                    colorScheme="primary"
                     size="md">
                     <ButtonText>{title}</ButtonText>
                </Button>
@@ -155,7 +155,7 @@ const SelectPickupLocation = (props) => {
                          </ModalBody>
                          <ModalFooter style={{ borderTopWidth: 0 }}>
                               <ButtonGroup space="md" size="md">
-                                   <Button variant="outline" action="secondary" onPress={() => setShowModal(false)}>
+                                   <Button variant="outline" colorScheme="secondary" onPress={() => setShowModal(false)}>
                                         <ButtonText>{getTermFromDictionary(language, 'close_button')}</ButtonText>
                                    </Button>
                                    <Button

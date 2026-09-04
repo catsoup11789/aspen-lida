@@ -267,14 +267,14 @@ export const LoginScreen = () => {
                               {enableForgotBarcode === '1' || enableForgotBarcode === 1 ? <ForgotBarcode usernameLabel={usernameLabel} showForgotBarcodeModal={showForgotBarcodeModal} setShowForgotBarcodeModal={setShowForgotBarcodeModal} /> : null}
                          </ButtonGroup>
                          {enableSelfRegistration ? (
-                              <Button style={{ marginTop: 12 }} variant="link" onPress={openSelfRegistration}>
-                                  <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary('en', 'register_for_a_library_card')}</ButtonText>
+                              <Button colorScheme="primary" style={{ marginTop: 12 }} variant="link" onPress={openSelfRegistration}>
+                                  <ButtonText>{getTermFromDictionary('en', 'register_for_a_library_card')}</ButtonText>
                               </Button>
                          ) : null}
                          {isCommunity && Platform.OS !== 'android' ? (
-                              <Button style={{ marginTop: 20 }} size="xs" variant="link">
+                              <Button colorScheme="tertiary" style={{ marginTop: 20 }} size="xs" variant="link">
                                    <Ionicons name="navigate-circle-outline" size={18} color={runtimeColors.tertiary[500]} style={{ marginRight: 4 }} />
-                                   <ButtonText style={{ color: runtimeColors.tertiary[500] }}>{getTermFromDictionary('en', 'reset_geolocation')}</ButtonText>
+                                   <ButtonText>{getTermFromDictionary('en', 'reset_geolocation')}</ButtonText>
                               </Button>
                          ) : null}
                          <Center>

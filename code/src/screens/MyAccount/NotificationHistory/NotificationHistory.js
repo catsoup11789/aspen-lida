@@ -40,7 +40,7 @@ export const MyNotificationHistory = () => {
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, uiColors, runtimeColors, textColor } = useTheme();
+     const { colorMode, uiColors, textColor } = useTheme();
      const { data: notificationHistory } = useNotificationHistory();
      const updateNotificationHistory = useUpdateNotificationHistory();
      const { data: inbox } = useInbox();
@@ -115,11 +115,11 @@ export const MyNotificationHistory = () => {
                     <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.light, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
-                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: runtimeColors.primary[500] }}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" colorScheme="primary">
+                                        <ButtonText>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: runtimeColors.primary[500] }}
+                                        colorScheme="primary"
                                         onPress={() => {
                                              const totalPages = notificationHistory?.totalPages ?? 1;
                                              if (page < totalPages) {
@@ -129,7 +129,7 @@ export const MyNotificationHistory = () => {
                                         }}
                                         isDisabled={isFetching || page >= (notificationHistory?.totalPages ?? 1)}
                                         size="sm">
-                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                       <ButtonText>{getTermFromDictionary(language, 'next')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>

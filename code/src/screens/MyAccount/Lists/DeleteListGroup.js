@@ -32,7 +32,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
       const updateListGroups = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, uiColors, colorMode, runtimeColors } = useTheme();
+      const { textColor, uiColors, colorMode } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
       const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
@@ -61,8 +61,8 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>
-                                   <Button variant="outline" onPress={toggle} style={{ borderColor: runtimeColors.primary[500] }}>
-                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                   <Button colorScheme="primary" variant="outline" onPress={toggle}>
+                                       <ButtonText>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
                                    <Button style={{ backgroundColor: uiColors.danger }}
                                            isLoading={loading}

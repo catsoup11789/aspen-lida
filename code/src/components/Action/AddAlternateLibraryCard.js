@@ -184,7 +184,7 @@ export const AddAlternateLibraryCard = (props) => {
                                    <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                               </Button>
                               <Button
-                                   style={{ backgroundColor: runtimeColors.primary[500] }}
+                                   colorScheme="primary"
                                    isDisabled={loading}
                                    onPress={async () => {
                                         setLoading(true);
@@ -236,7 +236,7 @@ export const AddAlternateLibraryCard = (props) => {
                                              }
                                         });
                                    }}>
-                                  {loading ? <ButtonSpinner color={runtimeColors.primary['500-text']} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>}
+                                  {loading ? <ButtonSpinner color={runtimeColors.primary['500-text']} /> : <ButtonText>{title}</ButtonText>}
                               </Button>
                          </ButtonGroup>
                     </ModalFooter>

@@ -26,7 +26,7 @@ const EnableAccountLinking = () => {
      const updateUserProfile = useUpdateUserProfile();
      const updateAccounts = useUpdateAccounts();
      const updateViewers = useUpdateViewers();
-     const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
+     const { textColor, uiColors, colorMode } = useTheme();
      const [loading, setLoading] = useState(false);
      const [showModal, setShowModal] = useState(false);
      const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
@@ -57,8 +57,8 @@ const EnableAccountLinking = () => {
 
      return (
           <Center>
-               <Button onPress={toggle} style={{ backgroundColor: runtimeColors.primary[500] }}>
-                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'enable_linked_accounts')}</ButtonText>
+               <Button onPress={toggle} colorScheme="primary">
+                    <ButtonText>{getTermFromDictionary(language, 'enable_linked_accounts')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="lg">
                     <ModalBackdrop />
@@ -74,11 +74,11 @@ const EnableAccountLinking = () => {
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>
-                                   <Button variant="link" onPress={toggle}>
-                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                   <Button colorScheme="primary" variant="link" onPress={toggle}>
+                                       <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button
-                                       style={{ backgroundColor: runtimeColors.primary[500] }}
+                                       colorScheme="primary"
                                         isLoading={loading}
                                         isLoadingText={getTermFromDictionary(language, 'updating', true)}
                                         onPress={async () => {
@@ -88,7 +88,7 @@ const EnableAccountLinking = () => {
                                                   toggle();
                                              });
                                         }}>
-                                      <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'accept')}</ButtonText>
+                                      <ButtonText>{getTermFromDictionary(language, 'accept')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>

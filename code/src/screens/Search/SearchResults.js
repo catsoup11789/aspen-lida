@@ -174,11 +174,11 @@ export const SearchResults = () => {
                     <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
-                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: runtimeColors.primary[500] }}>
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" colorScheme="primary">
+                                        <ButtonText>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: runtimeColors.primary[500] }}
+                                        colorScheme="primary"
                                         onPress={() => {
                                              if (!isPreviousData && data.hasMore) {
                                                   setPage(page + 1);
@@ -186,7 +186,7 @@ export const SearchResults = () => {
                                         }}
                                         isDisabled={isPreviousData || !data.hasMore}
                                         size="sm">
-                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                        <ButtonText>{getTermFromDictionary(language, 'next')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
@@ -499,7 +499,8 @@ const FilterBar = ({ navigation }) => {
                          <Button
                               size="sm"
                               variant="solid"
-                              style={{ marginRight: 4, backgroundColor: runtimeColors.primary[600] }}
+                              colorScheme="primary"
+                              style={{ marginRight: 4 }}
                               onPress={() => {
                                    navigation.push('modal', {
                                         screen: 'Filters',
@@ -508,8 +509,8 @@ const FilterBar = ({ navigation }) => {
                                         },
                                    });
                               }}>
-                              <MaterialCommunityIcons name="tune" size={18} color={runtimeColors.primary['600-text']} style={{ marginRight: 4 }} />
-                              <ButtonText style={{ color: runtimeColors.primary['600-text'] }}>{getTermFromDictionary(language, 'filters')}</ButtonText>
+                              <MaterialCommunityIcons name="tune" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+                              <ButtonText>{getTermFromDictionary(language, 'filters')}</ButtonText>
                          </Button>
                          <CreateFilterButton navigation={navigation} />
                     </ScrollView>
@@ -635,7 +636,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                               key={index}
                               size="sm"
                               variant="outline"
-                              style={{ borderColor: colorMode === 'light' ? runtimeColors.primary[400] : uiColors.border.dark }}
+                              colorScheme="primary"
                               onPress={() => {
                                    navigation.push('modal', {
                                         screen: 'Facet',
@@ -649,7 +650,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                                         },
                                    });
                               }}>
-                              <ButtonText style={{ color: textColor }}>{obj['label']}</ButtonText>
+                              <ButtonText>{obj['label']}</ButtonText>
                          </Button>
                     );
                })}

@@ -33,7 +33,7 @@ import { InputSlot } from '@/components/ui/input';
  * @constructor
  */
 export const GetLoginForm = (props) => {
-     const { uiColors, textColor, colorMode, forceRefreshTheme, runtimeColors } = useTheme();
+     const { uiColors, textColor, colorMode, forceRefreshTheme } = useTheme();
      const borderColor = colorMode === 'light' ? (uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light) : (uiColors?.border?.dark ?? UI_COLOR_FALLBACKS.border.dark);
      const navigation = useNavigation();
      const barcode = useRoute().params?.barcode ?? null;
@@ -399,7 +399,7 @@ export const GetLoginForm = (props) => {
 
                <Center>
                     <Button
-                        style={{ marginTop: 12, backgroundColor: runtimeColors.primary[500] }}
+                        colorScheme="primary" style={{ marginTop: 12 }}
                         size="md"
                         isLoading={loading}
                         isLoadingText={getTermFromDictionary('en', 'logging_in', true)}
@@ -407,7 +407,7 @@ export const GetLoginForm = (props) => {
                              setLoading(true);
                              await initialValidation();
                          }}>
-                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary('en', 'login')}</ButtonText>
+                        <ButtonText>{getTermFromDictionary('en', 'login')}</ButtonText>
                     </Button>
                </Center>
           </>

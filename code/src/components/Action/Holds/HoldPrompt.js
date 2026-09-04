@@ -321,8 +321,8 @@ export const HoldPrompt = (props) => {
 
      return (
           <>
-               <Button style={{ minWidth: '100%', maxWidth: '100%', backgroundColor: runtimeColors.primary[500] }} onPress={() => setShowModal(true)}>
-                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>
+               <Button colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }} onPress={() => setShowModal(true)}>
+                    <ButtonText>{title}</ButtonText>
                </Button>
                <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg" useRNModal={true}>
                     <ModalBackdrop />
@@ -377,7 +377,7 @@ export const HoldPrompt = (props) => {
                                         <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: runtimeColors.primary[500] }}
+                                        colorScheme="primary"
                                         isDisabled={loading}
                                         onPress={async () => {
                                              setLoading(true);
@@ -432,7 +432,7 @@ export const HoldPrompt = (props) => {
                                                   }
                                              });
                                         }}>
-                                       {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>}
+                                       {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>
@@ -581,16 +581,16 @@ export const HoldPrompt = (props) => {
                                    </Button>
                                    {promptAlternateLibraryCard && !userHasAlternateLibraryCard ? (
                                         <Button
-                                             style={{ backgroundColor: runtimeColors.primary[500] }}
+                                             colorScheme="primary"
                                              onPress={() => {
                                                   setShowModal(false);
                                                   setShowAddAlternateLibraryCardModal(true);
                                              }}>
-                                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                             <ButtonText>{getTermFromDictionary(language, 'next')}</ButtonText>
                                         </Button>
                                    ) : (
                                         <Button
-                                             style={{ backgroundColor: runtimeColors.primary[500] }}
+                                             colorScheme="primary"
                                              isDisabled={loading}
                                              onPress={async () => {
                                                   setLoading(true);
@@ -668,7 +668,7 @@ export const HoldPrompt = (props) => {
                                                        }
                                                   });
                                              }}>
-                                            {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>}
+                                            {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
                                         </Button>
                                    )}
                               </ButtonGroup>

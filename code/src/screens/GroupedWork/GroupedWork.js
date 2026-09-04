@@ -57,7 +57,7 @@ export const GroupedWorkScreen = () => {
      const library = useLibrary();
      const userLanguage = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { uiColors, runtimeColors, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
 
      const { status, data, error, isFetching } = useQuery(['groupedWork', id, userLanguage, library.baseUrl], () => getGroupedWork(route.params.id, userLanguage, library.baseUrl));
 
@@ -238,12 +238,19 @@ const Format = (data) => {
      const key = data.format;
      const isSelected = data.isSelected;
      const updateFormat = data.updateFormat;
-     const btnStyle = isSelected === key ? 'solid' : 'outline';
-     const { uiColors, runtimeColors, colorMode } = useTheme();
+     const isSelectedFormat = isSelected === key;
+     const btnStyle = isSelectedFormat ? 'solid' : 'outline';
+     const { uiColors, colorMode } = useTheme();
+     const neutralColor = colorMode === 'light' ? uiColors.textStrong.light : uiColors.white;
 
      return (
-          <Button size="sm" variant={btnStyle} onPress={() => updateFormat(key)} style={{ backgroundColor: btnStyle === 'outline' ? 'transparent' : runtimeColors.secondary[400], borderColor: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white, marginBottom: 4, marginRight: 4 }}>
-               <ButtonText style={{ color: btnStyle === 'outline' ? (colorMode === 'light' ? uiColors.textStrong.light : uiColors.white) : runtimeColors.secondary['400-text'] }}>{format.label}</ButtonText>
+          <Button
+               size="sm"
+               variant={btnStyle}
+               colorScheme={isSelectedFormat ? 'secondary' : undefined}
+               onPress={() => updateFormat(key)}
+               style={btnStyle === 'outline' ? { backgroundColor: 'transparent', borderColor: neutralColor, marginBottom: 4, marginRight: 4 } : { marginBottom: 4, marginRight: 4 }}>
+               <ButtonText style={btnStyle === 'outline' ? { color: neutralColor } : null}>{format.label}</ButtonText>
           </Button>
      );
 };
@@ -337,7 +344,7 @@ const Formats = ({ formats }) => {
  */
 const BibliographicInformationLink = ({ groupedWorkId }) => {
      const language = useActiveLanguage();
-     const { uiColors, runtimeColors, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const library = useLibrary();
@@ -351,8 +358,8 @@ const BibliographicInformationLink = ({ groupedWorkId }) => {
 
      if (groupedWorkId && showMoreInfoBtn) {
           return (
-          <Button onPress={async () => await passUserToDiscovery(library.baseUrl, 'GroupedWork', user.id, backgroundColor, textColor, groupedWorkId)} style={{ backgroundColor: runtimeColors.secondary[500] }}>
-              <ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>
+          <Button onPress={async () => await passUserToDiscovery(library.baseUrl, 'GroupedWork', user.id, backgroundColor, textColor, groupedWorkId)} colorScheme="secondary">
+              <ButtonText>
                     {getTermFromDictionary(language, 'more_information')}
                </ButtonText>
           </Button>

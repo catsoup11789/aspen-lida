@@ -94,7 +94,7 @@ const SelectLinkedAccount = (props) => {
           <Center>
                <Button
                     size="md"
-                    action="primary"
+                    colorScheme="primary"
                     variant="solid"
                     onPress={() => setShowPrompt(true)}>
                     <ButtonText>{title}</ButtonText>
@@ -166,7 +166,7 @@ const SelectLinkedAccount = (props) => {
                               <ButtonGroup space="md" size="md">
                                    <Button
                                         variant="outline"
-                                        action="secondary"
+                                        colorScheme="secondary"
                                         onPress={() => {
                                              setShowPrompt(false);
                                              setResponseLoading(false);
