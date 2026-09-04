@@ -4,17 +4,36 @@ import { Icon as UIIcon, CloseIcon } from '@/components/ui/icon';
 import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { useTheme } from '../../themes/theme';
 
-export const ThemedInput = React.forwardRef(({ style, ...props }, ref) => {
+// The v5 Input primitive has no size variant at all (fixed min-h-9/text-sm) and hardcodes
+// context={{}}, so size can't propagate the way it does for Button/Radio. Track it in a local
+// context instead, mirroring ThemedCheckbox's approach.
+const InputSizeContext = React.createContext('md');
+
+const INPUT_SIZE_STYLES = {
+     sm: { height: 36, fontSize: 14 },
+     md: { height: 40, fontSize: 16 },
+     lg: { height: 44, fontSize: 18 },
+     xl: { height: 48, fontSize: 20 },
+};
+
+export const ThemedInput = React.forwardRef(({ size = 'md', style, ...props }, ref) => {
      const { uiColors, colorMode } = useTheme();
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const sizeStyle = INPUT_SIZE_STYLES[size] ?? INPUT_SIZE_STYLES.md;
 
-     return <Input ref={ref} style={[{ borderColor }, style]} {...props} />;
+     return (
+          <InputSizeContext.Provider value={size}>
+               <Input ref={ref} style={[{ borderColor, height: sizeStyle.height }, style]} {...props} />
+          </InputSizeContext.Provider>
+     );
 });
 
 export const ThemedInputField = React.forwardRef(({ style, ...props }, ref) => {
      const { textColor } = useTheme();
+     const size = React.useContext(InputSizeContext);
+     const sizeStyle = INPUT_SIZE_STYLES[size] ?? INPUT_SIZE_STYLES.md;
 
-     return <InputField ref={ref} style={[{ color: textColor }, style]} {...props} />;
+     return <InputField ref={ref} style={[{ color: textColor, fontSize: sizeStyle.fontSize }, style]} {...props} />;
 });
 
 export const PasswordVisibilityToggle = ({ showPassword, onPress, style }) => {
@@ -36,7 +55,12 @@ export const ThemedIcon = React.forwardRef(({ style, ...props }, ref) => {
 export const ThemedCloseIcon = React.forwardRef(({ style, ...props }, ref) => {
      const { textColor } = useTheme();
 
-     return <CloseIcon ref={ref} style={[{ color: textColor }, style]} {...props} />;
+     // CloseIcon is one of the individually-generated gluestack icons (created via createIcon()
+     // without the base Icon component's size-variant handling), so its react-native-svg root
+     // doesn't pick up a real width/height from the `size` prop/variant on its own — it renders
+     // unconstrained (and grows to fill any available flex space) unless given an explicit numeric
+     // width/height here.
+     return <CloseIcon ref={ref} style={[{ color: textColor, width: 18, height: 18 }, style]} {...props} />;
 });
 
 ThemedInput.displayName = 'ThemedInput';

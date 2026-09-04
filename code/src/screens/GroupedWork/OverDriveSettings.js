@@ -7,7 +7,7 @@ import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedC
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { CheckIcon } from '@/components/ui/icon';
-import { Input, InputField } from '@/components/ui/input';
+import { ThemedInput as Input, ThemedInputField as InputField } from '../../components/themed/ThemedFormControls';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { VStack } from '@/components/ui/vstack';
 
@@ -28,7 +28,7 @@ export const GetOverDriveSettings = (props) => {
                                    <FormControlLabel>
                                         <FormControlLabelText>{getTermFromDictionary(language, 'overdrive_email_field')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <Input variant="outline" size="md">
+                                   <Input>
                                         <InputField autoCapitalize="none" autoCorrect={false} onChangeText={(text) => setEmail(text)} />
                                    </Input>
                                    <Checkbox value="yes" size="md" onChange={(isSelected) => setRememberPrompt(isSelected)}>

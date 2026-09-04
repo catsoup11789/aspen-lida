@@ -13,7 +13,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { FormControl } from '@/components/ui/form-control';
-import { Input, InputField } from '@/components/ui/input';
+import { ThemedInput as Input, ThemedInputField as InputField } from '../../components/themed/ThemedFormControls';
 import { Text } from '@/components/ui/text';
 
 /**
@@ -58,7 +58,7 @@ export const SearchHome = () => {
           <SafeAreaView>
                <Box style={{ padding: 20 }}>
                     <FormControl>
-                         <Input variant="filled" size="xl">
+                         <Input size="xl">
                               <InputField autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} clearButtonMode="always" onSubmitEditing={search} value={searchTerm} />
                          </Input>
                     </FormControl>
