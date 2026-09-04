@@ -2,11 +2,7 @@ module.exports = function (api) {
      const envName = api.env ? api.env() : process.env.BABEL_ENV;
      const isTest = envName === 'test';
      api.cache(() => isTest);
-     const presets = isTest
-          ? ['babel-preset-expo']
-          : [["babel-preset-expo", {
-               jsxImportSource: "nativewind"
-          }]];
+     const presets = ['babel-preset-expo'];
 
      return {
           presets,
@@ -17,13 +13,11 @@ module.exports = function (api) {
                     moduleName: '@env',
                     path: '.env',
                },
-    'react-native-worklets/plugin'
-  ], 'transform-inline-environment-variables', '@babel/plugin-transform-class-static-block', 'react-native-reanimated/plugin', ["module-resolver", {
+          ], 'transform-inline-environment-variables', '@babel/plugin-transform-class-static-block', 'react-native-reanimated/plugin', ["module-resolver", {
                root: ["./"],
 
                alias: {
-                    "@": "./",
-                    "tailwind.config": "./tailwind.config.js"
+                    "@": "./"
                }
           }]],
      };

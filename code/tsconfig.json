@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
     "paths": {
+      "@/tailwind.config": [
+        "./tailwind.config"
+      ],
       "@/*": [
         "./*"
       ],
-      "tailwind.config": [
-        "./tailwind.config.js"
+      "tailwindcss/resolveConfig": [
+        "./tailwindcss-resolveConfig"
       ]
     }
   },
