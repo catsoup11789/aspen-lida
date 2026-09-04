@@ -6,7 +6,7 @@ import { FlatList, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
 import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetIcon, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
-import { Alert, AlertIcon, AlertText } from '@/components/ui/alert';
+import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from '@/src/components/themed/ThemedAlert';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
@@ -15,32 +15,34 @@ import { FormControl } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { ChevronDownIcon, ChevronUpIcon, Icon, InfoIcon } from '@/components/ui/icon';
-import { Input, InputField } from '@/components/ui/input';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-import { loadError } from '../../../components/loadError';
-
-import { loadingSpinner } from '../../../components/loadingSpinner';
-import { DisplaySystemMessage } from '../../../components/Notifications';
-import { SystemMessagesContext } from '../../../context/initialContext';
-import { useUserState, useReadingHistory, useUpdateReadingHistory, useUpdateUserProfile } from '../../../hooks/useUserData';
-import { getAuthor, getCleanTitle, getDateLastUsed, getFormat, getTitle } from '../../../helpers/item';
-import { navigateStack } from '../../../helpers/RootNavigator';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { deleteAllReadingHistory, deleteSelectedReadingHistory, fetchReadingHistory, optIntoReadingHistory, optOutOfReadingHistory, refreshProfile } from '../../../util/api/user';
-import { formatReadingHistory } from '../../../util/api/userHelper';
+import { loadError } from '@/src/components/loadError';
+import { loadingSpinner } from '@/src/components/loadingSpinner';
+import { DisplaySystemMessage } from '@/src/components/Notifications';
+import { SystemMessagesContext } from '@/src/context/initialContext';
+import { useUserState, useReadingHistory, useUpdateReadingHistory, useUpdateUserProfile } from '@/src/hooks/useUserData';
+import { getAuthor, getCleanTitle, getDateLastUsed, getFormat, getTitle } from '@/src/helpers/item';
+import { navigateStack } from '@/src/helpers/RootNavigator';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { deleteAllReadingHistory, deleteSelectedReadingHistory, fetchReadingHistory, optIntoReadingHistory, optOutOfReadingHistory, refreshProfile } from '@/src/util/api/user';
+import { formatReadingHistory } from '@/src/util/api/userHelper';
 import AddToList from '../../Search/AddToList';
-
-import { logDebugMessage, logErrorMessage, getErrorMessage } from '../../../util/logging.js';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * MyReadingHistory component that displays the user's reading history. It fetches the reading history from the API and renders it in a FlatList. It also handles system messages, loading states, error states, and user actions such as opting in/out of reading history and deleting all history.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyReadingHistory = () => {
      const navigation = useNavigation();
      const [isLoading, setLoading] = React.useState(false);
@@ -64,11 +66,11 @@ export const MyReadingHistory = () => {
           return systemMessages.filter((obj) => obj.showOn === '0');
      }, [systemMessages]);
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, runtimeColors, textColor, colorMode } = useTheme();
      const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
      const dangerColor = theme.tokens.colors.ui.danger;
      const pageHistory = React.useMemo(() => {
           if (!Array.isArray(readingHistory?.history)) return [];
@@ -229,12 +231,12 @@ export const MyReadingHistory = () => {
                              </AccordionTrigger>
                         </AccordionHeader>
                         <AccordionContent style={{ backgroundColor: 'transparent', padding: 0, paddingTop: 8, paddingHorizontal: 20 }}>
-                              <Alert action="info">
-                                   <AlertIcon as={InfoIcon} style={{ marginRight: 12 }} />
-                                   <AlertText size="xs">
+                              <ThemedAlert action="info">
+                                   <ThemedAlertIcon action="info" as={InfoIcon} style={{ marginRight: 12 }} />
+                                   <ThemedAlertText action="info" size="xs">
                                         {getTermFromDictionary(language, 'reading_history_disclaimer')}
-                                   </AlertText>
-                              </Alert>
+                                   </ThemedAlertText>
+                              </ThemedAlert>
                          </AccordionContent>
                     </AccordionItem>
                </Accordion>
@@ -274,17 +276,16 @@ export const MyReadingHistory = () => {
                <Box
                    style={{ padding: 20, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
                    <VStack space="sm">
-                        <Input style={{ borderColor: colorMode === 'light' ? 'transparent' : borderColor }}>
-                             <InputField
+                        <ThemedInput style={{ borderColor: colorMode === 'light' ? 'transparent' : borderColor }}>
+                             <ThemedInputField
                                    returnKeyType="search"
                                    autoCapitalize="none"
                                    onChangeText={(term) => setFilter(term)}
                                    inputMode="search"
                                    value={filter}
                                    placeholder={getTermFromDictionary(language, 'search')}
-                                   onSubmitEditing={search}
-                                   style={{ color: textColor }} />
-                        </Input>
+                                   onSubmitEditing={search} />
+                        </ThemedInput>
                         <ScrollView horizontal>
                              <HStack space="sm">
                                    <FormControl style={{ width: sortLength }}>
@@ -399,17 +400,17 @@ export const MyReadingHistory = () => {
                          <ScrollView horizontal>
                               <ButtonGroup size="sm">
                                    <Button
-                                       style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                       style={{ backgroundColor: runtimeColors.primary[500] }}
                                        onPress={async () => {
                                            if (page > 1) {
                                                 await updatePage(page - 1)
                                             }
                                         }}
                                         isDisabled={page === 1}>
-                                       <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                       style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                       style={{ backgroundColor: runtimeColors.primary[500] }}
                                         onPress={async () => {
                                              if (readingHistory?.hasMore) {
                                                   logDebugMessage('Adding to page');
@@ -418,7 +419,7 @@ export const MyReadingHistory = () => {
                                              }
                                         }}
                                          isDisabled={!readingHistory?.hasMore || isLoading}>
-                                         <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
@@ -463,8 +464,8 @@ export const MyReadingHistory = () => {
                {systemMessagesForScreen.length > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                {user.trackReadingHistory !== '1' ? (
                    <Box style={{ padding: 20 }}>
-                        <Button style={{ backgroundColor: theme['tokens']['colors']['primary']['700'] }} onPress={optIn} isLoading={optingIn} isLoadingText={getTermFromDictionary(language, 'updating', true)}>
-                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'reading_history_opt_in')}</ButtonText>
+                        <Button style={{ backgroundColor: runtimeColors.primary[700] }} onPress={optIn} isLoading={optingIn} isLoadingText={getTermFromDictionary(language, 'updating', true)}>
+                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'reading_history_opt_in')}</ButtonText>
                          </Button>
                          {getDisclaimer()}
                     </Box>
@@ -498,6 +499,10 @@ export const MyReadingHistory = () => {
      );
 };
 
+/**
+ * Item component that represents a single reading history item. It displays the item's title, author, format, and last used date. It also provides actions to view item details or delete the item from the reading history.
+ * @type {React.NamedExoticComponent<{readonly data?: *, readonly onDelete?: *}>}
+ */
 const Item = React.memo(({ data: item, onDelete }) => {
      const { data: userState2 } = useUserState();
      const user = userState2?.user ?? {};

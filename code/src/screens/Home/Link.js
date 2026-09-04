@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
-
 import { SearchContext } from '../../context/initialContext';
 import { Image } from 'expo-image';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -17,6 +16,13 @@ import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 
+/**
+ * HomeScreenLinkGrid component that renders a grid of links on the home screen. It adjusts the number of columns based on the device width (tablet or phone) and ensures that if there is an odd number of links, the last link takes up the full width of its row.
+ * @param param0
+ * @param param0.links
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const HomeScreenLinkGrid = ({links}) => {
      const { width } = Dimensions.get('window');
      const isTablet = width >= 768; // Consider tablet if width >= 768px
@@ -47,6 +53,13 @@ const HomeScreenLinkGrid = ({links}) => {
      );
 }
 
+/**
+ * Link component that renders an individual link with an icon and title. It handles both external links (opening in a web browser) and internal deep links (navigating to specific screens within the app).
+ * @param param0
+ * @param param0.link
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Link = ({link}) => {
      const { theme, textColor, colorMode } = useTheme();
      const library = useLibrary();

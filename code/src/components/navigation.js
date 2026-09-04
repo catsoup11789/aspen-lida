@@ -9,12 +9,10 @@ import * as Updates from 'expo-updates';
 import React from 'react';
 import { AppState, Platform } from 'react-native';
 import { enableScreens } from 'react-native-screens';
-
 import * as Sentry from '@sentry/react-native';
 import { CheckoutsProvider, GroupedWorkProvider, HoldsProvider, SearchProvider, SystemMessagesProvider } from '../context/initialContext';
 import { navigationRef } from '../helpers/RootNavigator';
 import LaunchStackNavigator from '../navigations/LaunchStackNavigator';
-
 import { LoginScreen } from '../screens/Auth/Login';
 import { SelfRegistration } from '../screens/Auth/SelfRegistration';
 import { evaluateStartupCache, SplashScreen } from '../screens/Auth/Splash';
@@ -25,9 +23,7 @@ import { RemoveData } from '../helpers/helpers';
 import { saveLibraryUrl, isSQLiteMigrationNeeded } from '../util/db';
 import LibraryCardScanner from './LibraryCardScanner';
 import TitleWithLogo from '../components/TitleWithLogo'
-
 import { useQueryClient } from '@tanstack/react-query';
-
 import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage } from '../util/logging.js';
 import { trackAppLaunches, trackAppResume } from '../util/analytics';
 const prefix = Linking.createURL('/');
@@ -93,7 +89,11 @@ try {
      logErrorMessage("Could not initialize sentry " + e);
 }
 
-
+/**
+ * Main App component that manages authentication state and navigation.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export function App() {
      const [state, dispatch] = React.useReducer(
           (prevState, action) => {
@@ -320,6 +320,13 @@ export function App() {
      );
 }
 
+/**
+ * AppContent component that handles navigation and theming based on the authentication state.
+ * @param param0
+ * @param param0.state
+ * @returns {(function(): void)|*|React.JSX.Element|string}
+ * @constructor
+ */
 function AppContent({state}) {
      const queryClient = useQueryClient();
 

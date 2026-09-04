@@ -4,7 +4,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Platform, SectionList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Alert, AlertIcon, AlertText } from '@/components/ui/alert';
+import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from '@/src/components/themed/ThemedAlert';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
@@ -16,23 +16,25 @@ import { Icon, ChevronDownIcon, InfoIcon } from '@/components/ui/icon';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
-
-// custom components and helper files
-import { LoadingSpinner } from '../../../components/loadingSpinner';
-import { DisplaySystemMessage } from '../../../components/Notifications';
-import { HoldsContext, SystemMessagesContext } from '../../../context/initialContext';
-import { useUserState, useLocations, useUpdateLocations, useUpdateSortSettings, useUpdateUserProfile } from '../../../hooks/useUserData';
-import { getTermFromDictionary, getTranslationsWithValues } from '../../../translations/TranslationService';
-import { getPatronHolds, refreshProfile, setSortPreferences } from '../../../util/api/user';
-import { sortHolds, formatHolds, formatPickupLocations } from '../../../util/api/userHelper';
-import { getPickupLocations } from '../../../util/api/user';
+import { LoadingSpinner } from '@/src/components/loadingSpinner';
+import { DisplaySystemMessage } from '@/src/components/Notifications';
+import { HoldsContext, SystemMessagesContext } from '@/src/context/initialContext';
+import { useUserState, useLocations, useUpdateLocations, useUpdateSortSettings, useUpdateUserProfile } from '@/src/hooks/useUserData';
+import { getTermFromDictionary, getTranslationsWithValues } from '@/src/translations/TranslationService';
+import { getPatronHolds, refreshProfile, setSortPreferences } from '@/src/util/api/user';
+import { sortHolds, formatHolds, formatPickupLocations } from '@/src/util/api/userHelper';
+import { getPickupLocations } from '@/src/util/api/user';
 import { ManageAllHolds, ManageSelectedHolds, MyHold } from './MyHold';
+import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
-import { logDebugMessage, logErrorMessage, getErrorMessage } from '../../../util/logging.js';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-
+/**
+ * MyHolds component that displays the user's holds, allowing them to sort, filter, and manage their holds. It fetches the user's holds from the API and provides options for sorting and filtering based on various criteria.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyHolds = () => {
      const isFetchingHolds = useIsFetching({ queryKey: ['holds'] });
      const queryClient = useQueryClient();
@@ -56,12 +58,12 @@ export const MyHolds = () => {
      const [date, setNewDate] = React.useState();
      const [pickupLocations] = React.useState([]);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, textColor, colorMode, runtimeColors } = useTheme();
      const insets = useSafeAreaInsets();
      const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      const [sortBy, setSortBy] = React.useState({
           title: 'Sort by Title',
@@ -590,12 +592,12 @@ export const MyHolds = () => {
                         <Heading style={{ paddingBottom: 4, paddingTop: 12, color: textColor }}>
                               {getTermFromDictionary(language, 'pending_holds')}
                          </Heading>
-                        <Alert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
+                        <ThemedAlert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
                              <HStack style={{ padding: 12 }}>
-                                  <AlertIcon as={InfoIcon} style={{ marginRight: 12 }} />
-                                  <AlertText size="xs">{getTermFromDictionary(language, 'pending_holds_message')}</AlertText>
+                                  <ThemedAlertIcon action="info" as={InfoIcon} style={{ marginRight: 12 }} />
+                                  <ThemedAlertText action="info" size="xs">{getTermFromDictionary(language, 'pending_holds_message')}</ThemedAlertText>
                               </HStack>
-                         </Alert>
+                         </ThemedAlert>
                          {actionButtons('pending')}
                     </Box>
                );
@@ -605,12 +607,12 @@ export const MyHolds = () => {
                         <Heading style={{ paddingBottom: 4, color: textColor }}>
                               {getTermFromDictionary(language, 'holds_ready_for_pickup')}
                          </Heading>
-                        <Alert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
+                        <ThemedAlert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
                              <HStack style={{ padding: 12 }}>
-                             <AlertIcon as={InfoIcon} style={{ marginRight: 12 }} />
-                             <AlertText size="xs">{getTermFromDictionary(language, 'holds_ready_for_pickup_message')}</AlertText>
+                             <ThemedAlertIcon action="info" as={InfoIcon} style={{ marginRight: 12 }} />
+                             <ThemedAlertText action="info" size="xs">{getTermFromDictionary(language, 'holds_ready_for_pickup_message')}</ThemedAlertText>
                               </HStack>
-                         </Alert>
+                         </ThemedAlert>
                          {actionButtons('ready')}
                     </Box>
                );

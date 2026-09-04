@@ -3,28 +3,31 @@ import _ from 'lodash';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PermissionsPrompt } from '../../components/PermissionsPrompt';
-
-// custom components and helper files
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useKeyboard } from '../../hooks/hooks';
-
 import { useTheme } from '../../themes/theme';
+import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { CloseIcon, Icon } from '@/components/ui/icon';
 import { Image } from '@/components/ui/image';
-import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 
+/**
+ * SelectYourLibrary component that displays a button to select a library and a modal with a searchable list of libraries.
+ * @param payload
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const SelectYourLibrary = (payload) => {
      const isKeyboardOpen = useKeyboard();
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, runtimeColors, textColor, colorMode } = useTheme();
      const surfaceBg = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.surface?.light ?? '#FFFFFF') : (theme?.tokens?.colors?.ui?.surface?.dark ?? '#1F1F1F');
      const borderColor = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.border?.light ?? '#6b7280') : (theme?.tokens?.colors?.ui?.border?.dark ?? '#d6d3d1');
      const { isCommunity, showModal, setShowModal, updateSelectedLibrary, selectedLibrary, shouldRequestPermissions, libraries, allLibraries, setShouldRequestPermissions } = payload;
@@ -77,9 +80,9 @@ export const SelectYourLibrary = (payload) => {
 
      return (
           <Center>
-               <Button onPress={() => setShowModal(true)} size="md" style={{ margin: 20, backgroundColor: theme.tokens.colors.primary['500'] }}>
-                    <MaterialIcons name="place" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />
-                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{selectedLibrary?.name ? selectedLibrary.name : getTermFromDictionary('en', 'select_your_library')}</ButtonText>
+               <Button onPress={() => setShowModal(true)} size="md" style={{ margin: 20, backgroundColor: runtimeColors.primary[500] }}>
+                    <MaterialIcons name="place" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{selectedLibrary?.name ? selectedLibrary.name : getTermFromDictionary('en', 'select_your_library')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} size="lg" avoidKeyboard onClose={() => setShowModal(false)}>
                     <ModalBackdrop />
@@ -94,24 +97,23 @@ export const SelectYourLibrary = (payload) => {
                          <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: borderColor }}>
                               <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary('en', 'find_your_library')}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
-                                   <Icon as={CloseIcon} style={{ color: textColor }} />
+                                   <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
                               <Box style={{ backgroundColor: surfaceBg, padding: 8, paddingBottom: query ? 0 : 5 }}>
-                                   <Input style={{ borderColor }}>
-                                        <InputField
+                                   <ThemedInput style={{ borderColor }}>
+                                        <ThemedInputField
                                              size="lg"
                                              autoCorrect={false}
                                              placeholder={getTermFromDictionary('en', 'search')}
                                              value={query}
                                              onChangeText={(text) => setQuery(text)}
-                                             style={{ color: textColor }}
                                         />
                                         {query ? <InputSlot onPress={() => clearSearch()}>
                                             <MaterialCommunityIcons name="close-circle" size={20} color={textColor} style={{ marginRight: 8 }} />
                                         </InputSlot> : null}
-                                   </Input>
+                                   </ThemedInput>
                               </Box>
                               <VStack>
                                    {filteredLibraries.map((item, index) => (

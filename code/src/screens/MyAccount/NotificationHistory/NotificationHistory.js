@@ -1,20 +1,20 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { loadError } from '../../../components/loadError';
-import { loadingSpinner } from '../../../components/loadingSpinner';
-import { DisplaySystemMessage } from '../../../components/Notifications';
-import { SystemMessagesContext } from '../../../context/initialContext';
-import { useNotificationHistory, useUpdateNotificationHistory, useInbox, useUpdateInbox } from '../../../hooks/useUserData';
-import { navigate } from '../../../helpers/RootNavigator';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { stripHTML, truncate } from '../../../helpers/helpers';
-import { fetchNotificationHistory } from '../../../util/api/user';
-import { formatNotificationHistory } from '../../../util/api/userHelper';
-import { logDebugMessage, logErrorMessage, getErrorMessage } from '../../../util/logging';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { loadError } from '@/src/components/loadError';
+import { loadingSpinner } from '@/src/components/loadingSpinner';
+import { DisplaySystemMessage } from '@/src/components/Notifications';
+import { SystemMessagesContext } from '@/src/context/initialContext';
+import { useNotificationHistory, useUpdateNotificationHistory, useInbox, useUpdateInbox } from '@/src/hooks/useUserData';
+import { navigate } from '@/src/helpers/RootNavigator';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { stripHTML, truncate } from '@/src/helpers/helpers';
+import { fetchNotificationHistory } from '@/src/util/api/user';
+import { formatNotificationHistory } from '@/src/util/api/userHelper';
+import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
@@ -26,6 +26,11 @@ import { ScrollView } from '@/components/ui/scroll-view';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 
+/**
+ * MyNotificationHistory component that displays a list of notification history for the user. It fetches the notification history from the API and renders them in a FlatList. It also handles system messages, loading states, and error states.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyNotificationHistory = () => {
      const navigation = useNavigation();
      const [isFetching, setIsFetching] = React.useState(false);
@@ -34,7 +39,7 @@ export const MyNotificationHistory = () => {
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, theme, textColor } = useTheme();
+     const { colorMode, theme, runtimeColors, textColor } = useTheme();
      const { data: notificationHistory } = useNotificationHistory();
      const updateNotificationHistory = useUpdateNotificationHistory();
      const { data: inbox } = useInbox();
@@ -109,11 +114,11 @@ export const MyNotificationHistory = () => {
                     <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.iconMuted.light, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
-                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: runtimeColors.primary[500] }}>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                        style={{ backgroundColor: runtimeColors.primary[500] }}
                                         onPress={() => {
                                              const totalPages = notificationHistory?.totalPages ?? 1;
                                              if (page < totalPages) {
@@ -123,7 +128,7 @@ export const MyNotificationHistory = () => {
                                         }}
                                         isDisabled={isFetching || page >= (notificationHistory?.totalPages ?? 1)}
                                         size="sm">
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
@@ -157,6 +162,12 @@ export const MyNotificationHistory = () => {
      );
 };
 
+/**
+ * Item component that renders a single notification history item. It displays the title, content, and read status of the message. When pressed, it calls the handleOpenMyMessage function to navigate to the message details.
+ * @param data
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Item = (data) => {
      const { colorMode, textColor, theme } = useTheme();
      const message = data.data;

@@ -1,4 +1,3 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
@@ -8,22 +7,25 @@ import { useRoute, useNavigation, CommonActions, StackActions } from '@react-nav
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { LoadingSpinner } from '../../../components/loadingSpinner';
-import { SystemMessagesContext } from '../../../context/initialContext';
+import { LoadingSpinner } from '@/src/components/loadingSpinner';
+import { SystemMessagesContext } from '@/src/context/initialContext';
+import { useUserState, useUpdateUserProfile } from '@/src/hooks/useUserData';
+import { DisplaySystemMessage } from '@/src/components/Notifications';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { refreshProfile, updateAlternateLibraryCard } from '@/src/util/api/user';
+import { decodeHTML } from '@/src/helpers/helpers';
+import { logDebugMessage, logWarnMessage, getErrorMessage } from '@/src/util/logging';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { PasswordVisibilityToggle, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 
-// custom components and helper files
-import { useUserState, useUpdateUserProfile } from '../../../hooks/useUserData';
-import { DisplaySystemMessage } from '../../../components/Notifications';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { refreshProfile, updateAlternateLibraryCard } from '../../../util/api/user';
-import { decodeHTML } from '../../../helpers/helpers';
-import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../../util/logging';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-
+/**
+ * MyAlternateLibraryCard component that allows users to manage their alternate library card information. It provides input fields for the alternate library card number and password, and buttons to update or delete the card information. The component also handles system messages, loading states, and updates the user profile upon changes.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyAlternateLibraryCard = () => {
      const navigation = useNavigation();
      const route = useRoute();
@@ -32,9 +34,9 @@ export const MyAlternateLibraryCard = () => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { theme, textColor, colorMode } = useTheme();
+     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
      const queryClient = useQueryClient();
-     const inputBorderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const inputBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const { width } = useWindowDimensions();
      const [card, setCard] = React.useState(user?.alternateLibraryCard ?? '');
@@ -145,9 +147,9 @@ export const MyAlternateLibraryCard = () => {
                                              {cardLabel}
                                         </FormControlLabelText>
                                    </FormControlLabel>
-                                   <Input style={{ borderColor: inputBorderColor }}>
-                                        <InputField textContentType="none" style={{ color: textColor }} name="card" value={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
-                                   </Input>
+                                   <ThemedInput style={{ borderColor: inputBorderColor }}>
+                                        <ThemedInputField textContentType="none" name="card" value={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
+                                   </ThemedInput>
                               </FormControl>
                               {showAlternateLibraryCardPassword ? (
                                    <FormControl style={{ marginBottom: 8 }}>
@@ -156,34 +158,32 @@ export const MyAlternateLibraryCard = () => {
                                                   {passwordLabel}
                                              </FormControlLabelText>
                                         </FormControlLabel>
-                                        <Input style={{ borderColor: inputBorderColor }}>
-                                             <InputField textContentType="none" type={showPassword ? 'text' : 'password'} style={{ color: textColor }} name="password" value={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
-                                             <InputSlot onPress={toggleShowPassword}>
-                                                  <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} color={textColor} style={{ marginRight: 8 }} />
-                                             </InputSlot>
-                                        </Input>
+                                        <ThemedInput style={{ borderColor: inputBorderColor }}>
+                                             <ThemedInputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" value={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
+                                             <PasswordVisibilityToggle showPassword={showPassword} onPress={toggleShowPassword} />
+                                        </ThemedInput>
                                    </FormControl>
                               ) : null}
                               <ButtonGroup>
                                    <Button
-                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                        style={{ backgroundColor: runtimeColors.primary[500] }}
                                         onPress={() => {
                                              setIsLoading(true);
                                              updateCard().then(() => {
                                                   setIsLoading(false);
                                              });
                                         }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'update')}</ButtonText>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'update')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: theme.tokens.colors.ui.danger }}
+                                        style={{ backgroundColor: uiColors.danger }}
                                         onPress={() => {
                                              setIsLoading(true);
                                              deleteCard().then(() => {
                                                   setIsLoading(false);
                                              });
                                         }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
+                                        <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </Box>

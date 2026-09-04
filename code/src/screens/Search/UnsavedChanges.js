@@ -7,14 +7,19 @@ import { CloseIcon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
-
 import { SearchGlobal } from '../../util/globals';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useTheme } from '../../themes/theme';
 
+/**
+ * UnsavedChangesExit component that displays a confirmation dialog when the user attempts to exit with unsaved changes. It provides options to save changes, discard changes, or cancel the exit action.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const UnsavedChangesExit = (props) => {
      const { updateSearch, discardChanges, language, hasPendingChanges } = props;
-     const { theme, colorMode, textColor } = useTheme();
+     const { theme, runtimeColors, colorMode, textColor } = useTheme();
      const navigation = useNavigation();
      const [isOpen, setIsOpen] = React.useState(false);
      const onClose = () => setIsOpen(false);
@@ -66,8 +71,8 @@ export const UnsavedChangesExit = (props) => {
                          </AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">
-                                   <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={updateClose} ref={cancelRef}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'save')}</ButtonText>
+                                   <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={updateClose} ref={cancelRef}>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'save')}</ButtonText>
                                    </Button>
                                    <Button variant="link" onPress={forceClose}>
                                         <ButtonText style={{ color: theme.tokens.colors.ui.danger }}>{getTermFromDictionary(language, 'discard')}</ButtonText>

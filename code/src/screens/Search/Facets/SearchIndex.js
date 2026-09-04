@@ -3,22 +3,23 @@ import _ from 'lodash';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ScrollView } from 'react-native';
-
-import { SearchContext } from '../../../context/initialContext';
-import {logDebugMessage} from "../../../util/logging";
-import { useTheme } from '../../../themes/theme';
+import { SearchContext } from '@/src/context/initialContext';
+import {logDebugMessage} from '@/src/util/logging';
+import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
-import { Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 
-// custom components and helper files
-
+/**
+ * SearchIndexScreen component that displays a list of search indexes for the user to select from. It manages the current index state and updates the search results when a new index is selected.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const SearchIndexScreen = () => {
      const navigation = useNavigation();
-     const {theme, textColor, colorMode } = useTheme();
+     const { textColor, runtimeColors } = useTheme();
      const { currentIndex, indexes, updateCurrentSource, updateIndexes, updateCurrentIndex } = React.useContext(SearchContext);
 
      logDebugMessage('currentIndex: ' + currentIndex);
@@ -42,14 +43,14 @@ export const SearchIndexScreen = () => {
                                    <Pressable key={index} style={{ padding: 2, paddingVertical: 8 }} onPress={() => updateIndex(index)}>
                                         {currentIndex === index ? (
                                             <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
-                                                 <MaterialIcons name="radio-button-checked" size={20} color={theme.tokens.colors.primary['600']} />
+                                                 <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} />
                                                  <Text style={{ color: textColor, marginLeft: 8 }}>
                                                        {obj}
                                                   </Text>
                                              </HStack>
                                         ) : (
                                             <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
-                                                 <MaterialIcons name="radio-button-unchecked" size={20} color={theme.tokens.colors.primary['200']} />
+                                                 <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
                                                  <Text style={{ color: textColor, marginLeft: 8 }}>
                                                        {obj}
                                                   </Text>

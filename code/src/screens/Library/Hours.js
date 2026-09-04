@@ -7,13 +7,16 @@ import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-
-// custom components and helper files
-
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 
+/**
+ * Hours component that displays the library hours for a given location if available.
+ * @param data
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const Hours = (data) => {
      const language = useActiveLanguage();
      const { textColor } = useTheme();

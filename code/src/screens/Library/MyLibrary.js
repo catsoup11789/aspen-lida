@@ -4,7 +4,6 @@ import _ from 'lodash';
 import moment from 'moment';
 import { useTheme } from '../../themes/theme';
 import React from 'react';
-
 import { DisplaySystemMessage } from '../../components/Notifications';
 import { SystemMessagesContext } from '../../context/initialContext';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
@@ -14,13 +13,12 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import AdditionalInformation from './AdditionalInformation';
 import ContactButtons from './ContactButtons';
 import DisplayMap from './DisplayMap';
-// custom components and helper files
 import Hours from './Hours';
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import {logDebugMessage} from "../../util/logging";
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Divider } from '@/components/ui/divider';
@@ -31,6 +29,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * MyLibrary component that displays detailed information about the user's selected library, including its image, address, phone number, hours of operation, map, contact buttons, and additional information. It also handles system messages and navigation to view all locations if applicable.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyLibrary = () => {
      const library = useLibrary();
      const {
@@ -41,7 +44,7 @@ export const MyLibrary = () => {
      const language = useActiveLanguage();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, theme, colorMode } = useTheme();
+     const { textColor, theme, colorMode, runtimeColors } = useTheme();
 
      const bgColor = colorMode === 'light' ? '#f5f5f4' : '#111827';
 
@@ -159,11 +162,11 @@ export const MyLibrary = () => {
                          ) : null}
                          {hasHours ? (
                               <Text style={{ color: textColor, marginTop: 16, marginBottom: 8 }}>
-                                   <Badge action={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
-                                        <BadgeText>
+                                   <ThemedBadge action={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
+                                        <ThemedBadgeText action={isClosedToday ? 'error' : 'success'}>
                                              {hoursLabel}
-                                        </BadgeText>
-                                   </Badge>
+                                        </ThemedBadgeText>
+                                   </ThemedBadge>
                               </Text>
                          ) : null}
                          <DisplayMap data={location} />
@@ -175,8 +178,8 @@ export const MyLibrary = () => {
                          {_.size(locations) > 1 ? (
                               <>
                                    <Divider style={{ marginTop: 20, marginBottom: 8 }} />
-                                   <Button variant="ghost" size="sm" onPress={selectLocations} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
+                                   <Button variant="ghost" size="sm" onPress={selectLocations} style={{ backgroundColor: runtimeColors.primary[500] }}>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
                                    </Button>
                               </>
                          ) : null}

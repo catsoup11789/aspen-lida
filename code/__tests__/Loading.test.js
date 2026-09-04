@@ -13,6 +13,7 @@ LIBRARY.appSettings = {
      loadingMessage: null
 };
 GLOBALS.logLevel = 1;
+GLOBALS.slug = 'aspen-lida';
 
 import {render, screen, waitFor} from '@testing-library/react-native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
@@ -121,7 +122,10 @@ jest.mock('../src/themes/theme', () => {
           ...basicThemeObject,
           tokens: {
                ...basicThemeObject.tokens,
-               colors: themeColors,
+               colors: {
+                    ...themeColors,
+                    ui: uiColors,
+               },
                ui: uiColors,
           },
      };
@@ -155,13 +159,23 @@ jest.mock('../src/themes/theme', () => {
 });
 
 jest.mock('../src/translations/TranslationService', () => {
-     const originalModule = jest.requireActual('../src/translations/TranslationService');
      const {englishTranslations} = require('../__mocks__/translations');
+     const actualHelper = jest.requireActual('../src/translations/TranslationHelper');
 
      return {
-          ...originalModule, // Keep getTermFromDictionary and everything else intact!
+          ...actualHelper,
+          LanguageSwitcher: () => null,
+          getLanguageDisplayName: jest.fn((code, languages) => {
+               if (!Array.isArray(languages) || !code) {
+                    return '';
+               }
+               const language = languages.find((item) => item?.code === code);
+               return language?.displayName ?? '';
+          }),
           getTranslatedTermsForUserPreferredLanguage: jest.fn(() => Promise.resolve(true)),
           loadTranslationsFromDiscovery: jest.fn(() => Promise.resolve(englishTranslations)),
+          setTranslationsLibrary: jest.fn(),
+          translationsLibrary: englishTranslations,
      };
 });
 
@@ -246,6 +260,7 @@ jest.mock('../src/util/db', () => ({
      saveLibrary: jest.fn(() => Promise.resolve()),
      saveMenu: jest.fn(() => Promise.resolve()),
      saveHomeScreenLinks: jest.fn(() => Promise.resolve()),
+     loadLocation: jest.fn(() => Promise.resolve({ locationId: 2 })),
      loadThemeState: jest.fn(() => Promise.resolve({
           themeId: 1,
           colorMode: 'light',
@@ -296,7 +311,7 @@ jest.mock('@react-native-aria/overlays', () => {
           OverlayContainer: ({children}) => children,
           OverlayProvider: ({children}) => children,
      };
-});
+}, { virtual: true });
 
 jest.mock('react-native-safe-area-context', () => {
      const inset = {top: 0, right: 0, bottom: 0, left: 0};

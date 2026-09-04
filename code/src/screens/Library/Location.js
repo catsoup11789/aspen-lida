@@ -1,11 +1,10 @@
 import { useRoute } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
-import { LinearGradient } from 'expo-linear-gradient';
 import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Divider } from '@/components/ui/divider';
@@ -22,7 +21,6 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import AdditionalInformation from './AdditionalInformation';
 import ContactButtons from './ContactButtons';
 import DisplayMap from './DisplayMap';
-// custom components and helper files
 import Hours from './Hours';
 import {logDebugMessage} from "../../util/logging";
 import { useActiveLanguage } from '../../hooks/useLanguageData';
@@ -30,6 +28,11 @@ import { useTheme } from '../../themes/theme';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * Location component that displays detailed information about a specific library location, including its image, address, phone number, hours of operation, map, contact buttons, and additional information. It also handles system messages and navigation to view all locations if applicable.
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 export const Location = () => {
      const route = useRoute();
      const location = route.params?.data ?? false;
@@ -38,7 +41,7 @@ export const Location = () => {
      const language = useActiveLanguage();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { colorMode, textColor, theme } = useTheme();
+     const { colorMode, textColor, theme, runtimeColors } = useTheme();
      const showSystemMessage = () => {
           if (_.isArray(systemMessages)) {
                return systemMessages.map((obj, index) => {
@@ -137,11 +140,11 @@ export const Location = () => {
                                    </Text>
                               ) : null}
                               {hasHours ? (
-                                   <Badge action={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
-                                        <BadgeText style={{ color: textColor }}>
+                                   <ThemedBadge action={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
+                                        <ThemedBadgeText action={isClosedToday ? 'error' : 'success'} style={{ color: textColor }}>
                                              {hoursLabel}
-                                        </BadgeText>
-                                   </Badge>
+                                        </ThemedBadgeText>
+                                   </ThemedBadge>
                               ) : null}
                          </Box>
                          <DisplayMap data={location} />
@@ -152,8 +155,8 @@ export const Location = () => {
                               {_.size(locations) > 1 ? (
                                    <>
                                         <Divider style={{ marginTop: 20, marginBottom: 8 }} />
-                                        <Button size="sm" onPress={selectLocations} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
+                                        <Button size="sm" onPress={selectLocations} style={{ backgroundColor: runtimeColors.primary[500] }}>
+                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
                                         </Button>
                                    </>
                               ) : null}

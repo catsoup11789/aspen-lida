@@ -12,7 +12,6 @@ import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Divider } from '@/components/ui/divider';
 import { FlatList } from '@/components/ui/flat-list';
 import { HStack } from '@/components/ui/hstack';
-import { Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
@@ -31,6 +30,11 @@ import { useTheme } from '../../themes/theme';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * AllLocations component that displays a list of all available library locations. It fetches location data from the API, handles sorting by distance or alphabetical order, and displays system messages if any are present.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const AllLocations = () => {
      const library = useLibrary();
      const locations = useAvailableLocations();
@@ -170,6 +174,12 @@ export const AllLocations = () => {
      );
 };
 
+/**
+ * DisplayLocation component that renders the details of a specific library location, including its name, address, distance, and hours of operation. It also handles navigation to the location's detail screen when pressed.
+ * @param data
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const DisplayLocation = (data) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();

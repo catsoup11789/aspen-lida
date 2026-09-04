@@ -31,7 +31,6 @@ import {
      refreshProfile
 } from '../../util/api/user';
 import {formatLinkedAccounts, formatNotificationHistory, formatPickupLocations} from '../../util/api/userHelper';
-
 import { GLOBALS, LIBRARY, isBrandedApp } from '../../util/globals';
 import {CatalogOffline} from './CatalogOffline';
 import {ForceLogout} from './ForceLogout';
@@ -71,9 +70,8 @@ import {
      useUpdateAvailableLanguages,
      useUpdateDictionary,
      useUpdateLanguageDisplayName } from '../../hooks/useLanguageData';
-
 import {getErrorMessage, logDebugMessage, logErrorMessage, logWarnMessage} from '../../util/logging.js';
-import {isPlainObject, orderByFields, stripHTML, RemoveData} from '../../helpers/helpers';
+import {isPlainObject, stripHTML, RemoveData} from '../../helpers/helpers';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
@@ -119,6 +117,11 @@ function resolveSelfCheckEnabled(result = {}) {
      return undefined;
 }
 
+/**
+ * LoadingScreen component that handles the initial loading and data fetching for the app, including user data, library branch data, library system metadata, and language data. It also manages error handling and displays a progress indicator during the loading process.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const LoadingScreen = () => {
      const queryClient = useQueryClient();
      const navigation = useNavigation();

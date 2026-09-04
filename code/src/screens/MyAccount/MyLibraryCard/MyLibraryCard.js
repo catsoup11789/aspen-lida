@@ -9,31 +9,30 @@ import { useSharedValue } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
 import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper } from '@/components/ui/actionsheet';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { Icon, CloseIcon } from '@/components/ui/icon';
 import { Image } from '@/components/ui/image';
 import { Modal, ModalBackdrop, ModalBody, ModalContent } from '@/components/ui/modal';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
+import { PermissionsPrompt } from '@/src/components/PermissionsPrompt';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { useUserState, useCards, useUpdateUserProfile } from '@/src/hooks/useUserData';
+import { navigateStack } from '@/src/helpers/RootNavigator';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { refreshProfile, updateScreenBrightnessStatus } from '@/src/util/api/user';
+import { formatDiscoveryVersion, orderByFields, parseToDate } from '@/src/helpers/helpers';
+import { logDebugMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useTranslationWithValues } from '@/src/hooks/useTranslationWithValues';
 
-// custom components and helper files
-import { PermissionsPrompt } from '../../../components/PermissionsPrompt';
-
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-import { useUserState, useCards, useUpdateUserProfile } from '../../../hooks/useUserData';
-import { navigateStack } from '../../../helpers/RootNavigator';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { refreshProfile, updateScreenBrightnessStatus } from '../../../util/api/user';
-
-import { formatDiscoveryVersion, orderByFields, parseToDate } from '../../../helpers/helpers';
-import { logDebugMessage } from '../../../util/logging';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useTranslationWithValues } from '../../../hooks/useTranslationWithValues';
-
+/**
+ * MyLibraryCard component that displays the user's library cards in a carousel format. It manages screen brightness, orientation, and permissions for displaying the cards. It also provides functionality to view barcodes and manage alternate library cards.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyLibraryCard = () => {
      const navigation = useNavigation();
      const [shouldRequestPermissions, setShouldRequestPermissions] = React.useState(false);
@@ -224,13 +223,13 @@ export const MyLibraryCard = () => {
                               <Center>
                                    <Button
                                         size="md"
-                                        style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}
+                                        style={{ backgroundColor: runtimeColors.secondary[500] }}
                                         onPress={() => {
                                              navigateStack('LibraryCardTab', 'MyAlternateLibraryCard', {
                                                   prevRoute: 'MyLibraryCard',
                                                   hasPendingChanges: false });
                                         }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>{getTermFromDictionary(language, 'manage_alternate_library_card')}</ButtonText>
+                                        <ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>{getTermFromDictionary(language, 'manage_alternate_library_card')}</ButtonText>
                                    </Button>
                               </Center>
                          </Box>
@@ -254,8 +253,8 @@ export const MyLibraryCard = () => {
                                                        style={{
                                                             marginRight: 4,
                                                             marginBottom: 4,
-                                                            backgroundColor: index === currentCardIndex ? theme.tokens.colors.tertiary['500'] : 'transparent',
-                                                            borderColor: index === currentCardIndex ? 'transparent' : theme.tokens.colors.tertiary['500'],
+                                                            backgroundColor: index === currentCardIndex ? runtimeColors.tertiary[500] : 'transparent',
+                                                            borderColor: index === currentCardIndex ? 'transparent' : runtimeColors.tertiary[500],
                                                             borderWidth: index === currentCardIndex ? 0 : 1,
                                                        }}
                                                        variant={index === currentCardIndex ? 'solid' : 'outline'}
@@ -264,7 +263,7 @@ export const MyLibraryCard = () => {
                                                             setCurrentCardIndex(index);
                                                             setShowDrawer(false);
                                                        }}>
-                                                       <ButtonText style={{ color: index === currentCardIndex ? theme.tokens.colors.tertiary['500-text'] : textColor }}>
+                                                       <ButtonText style={{ color: index === currentCardIndex ? runtimeColors.tertiary['500-text'] : textColor }}>
                                                             {card.displayName}
                                                        </ButtonText>
                                                   </Button>
@@ -275,14 +274,14 @@ export const MyLibraryCard = () => {
                                         <Box style={{ marginTop: 8 }}>
                                             <Button
                                                  size="md"
-                                                 style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}
+                                                 style={{ backgroundColor: runtimeColors.secondary[500] }}
                                                  onPress={() => {
                                                       setShowDrawer(false);
                                                       navigateStack('LibraryCardTab', 'MyAlternateLibraryCard', {
                                                            prevRoute: 'MyLibraryCard',
                                                            hasPendingChanges: false });
                                                  }}>
-                                                 <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>
+                                                 <ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>
                                                       {getTermFromDictionary(language, 'manage_alternate_library_card')}
                                                  </ButtonText>
                                             </Button>
@@ -297,6 +296,12 @@ export const MyLibraryCard = () => {
      );
 };
 
+/**
+ * CreateLibraryCard component that renders a single library card with its barcode, expiration date, and other relevant information. It handles the display of the card based on the provided data and user preferences.
+ * @param data
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const CreateLibraryCard = (data) => {
      const card = data.card ?? [];
      const { numCards, hasOpenModalRef, openBarcodeModal } = data ?? 0;
@@ -420,8 +425,8 @@ const CreateLibraryCard = (data) => {
                     {showExpirationDate && expirationDate && !neverExpires && numCards > 1 ? <Text style={{ color: textColor }}>{expirationText}</Text> : null}
                     {numCards > 1 ? (
                          <Button variant="link" onPress={() => openBarcodeModal && openBarcodeModal(card)}>
-                              <MaterialCommunityIcons name="barcode-scan" size={20} color={theme.tokens.colors.primary['500']} style={{ marginRight: 4 }} />
-                              <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'open_barcode')}</ButtonText>
+                              <MaterialCommunityIcons name="barcode-scan" size={20} color={runtimeColors.primary[500]} style={{ marginRight: 4 }} />
+                              <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'open_barcode')}</ButtonText>
                          </Button>
                     ) : (
                          <VStack alignItems="center" space="sm">
@@ -446,6 +451,12 @@ const CreateLibraryCard = (data) => {
      );
 };
 
+/**
+ * CardCarousel component that renders a carousel of library cards. It manages the orientation, current index, and progress of the carousel, allowing users to swipe through their cards. It also provides pagination indicators for easy navigation.
+ * @param data
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const CardCarousel = (data) => {
      const { theme, textColor } = useTheme();
      const language = useActiveLanguage();
@@ -484,8 +495,8 @@ const CardCarousel = (data) => {
                     style={{
                          marginRight: 4,
                          marginBottom: 4,
-                         backgroundColor: index === currentIndex ? theme.tokens.colors.tertiary['500'] : 'transparent',
-                         borderColor: index === currentIndex ? 'transparent' : theme.tokens.colors.tertiary['500'],
+                         backgroundColor: index === currentIndex ? runtimeColors.tertiary[500] : 'transparent',
+                         borderColor: index === currentIndex ? 'transparent' : runtimeColors.tertiary[500],
                          borderWidth: index === currentIndex ? 0 : 1,
                     }}
                     variant={index === currentIndex ? 'solid' : 'outline'}
@@ -495,7 +506,7 @@ const CardCarousel = (data) => {
                               index: index,
                               animated: false });
                     }}>
-                    <ButtonText style={{ color: index === currentIndex ? theme.tokens.colors.tertiary['500-text'] : textColor }}>{card.displayName}</ButtonText>
+                    <ButtonText style={{ color: index === currentIndex ? runtimeColors.tertiary['500-text'] : textColor }}>{card.displayName}</ButtonText>
                </Button>
           );
      };
@@ -551,6 +562,16 @@ const CardCarousel = (data) => {
      );
 };
 
+/**
+ * BarcodeModal component that displays a modal with the barcode of a selected library card. It handles orientation changes, barcode rendering, and provides a warning if the barcode is too wide for the current orientation. Users can rotate their device to landscape mode to view the barcode properly.
+ * @param param0
+ * @param param0.card
+ * @param param0.showModal
+ * @param param0.closeModal
+ * @param param0.language
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const BarcodeModal = ({ card, showModal, closeModal, language }) => {
      const { theme, textColor, colorMode } = useTheme();
      const library = useLibrary();
@@ -670,11 +691,11 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                                         </Text>
                                         <Button
                                              size="md"
-                                             style={{ backgroundColor: theme.tokens.colors.primary['500'], marginTop: 8 }}
+                                             style={{ backgroundColor: runtimeColors.primary[500], marginTop: 8 }}
                                              onPress={rotateToLandscape}
                                         >
-                                             <MaterialCommunityIcons name="phone-rotate-landscape" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 8 }} />
-                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
+                                             <MaterialCommunityIcons name="phone-rotate-landscape" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 8 }} />
+                                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
                                                   {getTermFromDictionary(language, 'rotate_to_landscape') || 'Rotate to Landscape'}
                                              </ButtonText>
                                         </Button>
@@ -685,10 +706,10 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                                    <Center style={{ marginTop: 8, marginBottom: 8 }}>
                                         <Button
                                              size="md"
-                                             style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                             style={{ backgroundColor: runtimeColors.primary[500] }}
                                              onPress={rotateToPortrait}>
-                                             <MaterialCommunityIcons name="phone-rotate-portrait" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 8 }} />
-                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
+                                             <MaterialCommunityIcons name="phone-rotate-portrait" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 8 }} />
+                                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
                                                   {getTermFromDictionary(language, 'rotate_to_portrait') || 'Rotate to Portrait'}
                                              </ButtonText>
                                         </Button>

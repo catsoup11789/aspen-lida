@@ -1,31 +1,37 @@
 import React from 'react';
-
-import { useUserState, useListGroups, useUpdateUserProfile, useUpdateListGroups, useUpdateLists } from '../../../hooks/useUserData';
+import { useListGroups, useUpdateUserProfile, useUpdateListGroups, useUpdateLists } from '@/src/hooks/useUserData';
 import { MaterialIcons } from '@expo/vector-icons';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { deleteListGroup, getLists, getListGroups } from '../../../util/api/list';
-import { refreshProfile } from '../../../util/api/user';
-import { popAlert } from '../../../components/feedback';
-import { navigateStack } from '../../../helpers/RootNavigator';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { deleteListGroup, getLists, getListGroups } from '@/src/util/api/list';
+import { refreshProfile } from '@/src/util/api/user';
+import { popAlert } from '@/src/components/feedback';
+import { navigateStack } from '@/src/helpers/RootNavigator';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
-import { CloseIcon, Icon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Text } from '@/components/ui/text';
 
+/**
+ * DeleteListGroup component that allows users to delete a list group. It displays a button that opens a confirmation modal where users can confirm the deletion. The component handles API calls to delete the list group and provides feedback on the deletion process, including refreshing the user's profile and updating the list groups and lists in the local state.
+ * @param param0
+ * @param param0.id
+ * @param param0.handleUpdate
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const DeleteListGroup = ({id, handleUpdate}) => {
-      const { data: userState } = useUserState();
       const updateUserProfile = useUpdateUserProfile();
       const { data: listGroups } = useListGroups();
       const updateLists = useUpdateLists();
       const updateListGroups = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, theme, colorMode } = useTheme();
+      const { textColor, theme, colorMode, runtimeColors } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
       const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
@@ -46,7 +52,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                          <ModalHeader>
                               <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'delete_list_group')}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
-                                   <Icon as={CloseIcon} style={{ color: textColor }} />
+                                   <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
@@ -54,8 +60,8 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>
-                                   <Button variant="outline" onPress={toggle} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                   <Button variant="outline" onPress={toggle} style={{ borderColor: runtimeColors.primary[500] }}>
+                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
                                    <Button style={{ backgroundColor: theme.tokens.colors.ui.danger }}
                                            isLoading={loading}

@@ -44,6 +44,7 @@ function isCacheStale(updatedAt, thresholdMs) {
      return Date.now() - Number(updatedAt) > thresholdMs;
 }
 
+
 function resolveSelfCheckEnabled(result = {}) {
      const candidates = [
           result?.settings?.isEnabled,
@@ -70,6 +71,10 @@ function resolveSelfCheckEnabled(result = {}) {
      return undefined;
 }
 
+/**
+ * Evaluates the startup cache to determine if the app can bypass loading and whether background refreshes are needed for user, library branch, library system, and language data.
+ * @returns {Promise<{canBypassLoading: false|*, hasUsableUserCache: boolean, hasUsableLibraryBranchCache: boolean, hasUsableLibrarySystemCache: boolean, hasUsableLanguageCache: false|*, shouldRefreshUserInBackground: boolean, shouldRefreshLibraryBranchInBackground: boolean, shouldRefreshLibrarySystemInBackground, shouldRefreshLanguageInBackground: *|boolean}>}
+ */
 export async function evaluateStartupCache() {
      const [cachedUserState, cachedLibraryBranchState, cachedLibrarySystemState, cachedLanguageState, loginUserKey] = await Promise.all([
           loadAllUserData(),

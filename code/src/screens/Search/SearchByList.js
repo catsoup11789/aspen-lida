@@ -4,8 +4,6 @@ import _ from 'lodash';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { loadError } from '../../components/loadError';
-
-// custom components and helper files
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import { SystemMessagesContext } from '../../context/initialContext';
 import { DisplayResult } from './DisplayResult';
@@ -23,6 +21,11 @@ import { Heading } from '@/components/ui/heading';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * SearchResultsForList component that displays search results for a specific list. It fetches data from the API based on the provided list ID and page number, and renders a list of results. It also handles system messages and error states.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const SearchResultsForList = () => {
      const id = useRoute().params?.id;
 

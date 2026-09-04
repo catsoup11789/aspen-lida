@@ -2,18 +2,21 @@ import { useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import React from 'react';
 import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
-
-// custom components and helper files
-import { HoldsContext } from '../../../context/initialContext';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-import { useUserState, useAccounts, useLocations, useUpdateUserProfile } from '../../../hooks/useUserData';
-import { refreshProfile } from '../../../util/api/user';
-import { completeAction } from '../../../util/api/userHelper';
+import { HoldsContext } from '@/src/context/initialContext';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { useUserState, useAccounts, useLocations, useUpdateUserProfile } from '@/src/hooks/useUserData';
+import { refreshProfile } from '@/src/util/api/user';
+import { completeAction } from '@/src/util/api/userHelper';
 import { HoldPrompt } from './HoldPrompt';
+import { logDebugMessage } from '@/src/util/logging';
+import { useTheme } from '@/src/themes/theme';
 
-import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage } from '../../../util/logging.js';
-import { useTheme } from '../../../themes/theme';
-
+/**
+ * PlaceHold component for displaying a button that places a hold on an item.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const PlaceHold = (props = {}) => {
      const queryClient = useQueryClient();
      const {

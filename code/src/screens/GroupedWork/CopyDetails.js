@@ -4,33 +4,25 @@ import { FlatList } from 'react-native';
 import {MaterialIcons} from '@expo/vector-icons';
 import {getItemDetails} from '../../util/api/item';
 import _ from 'lodash';
-import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
-import {useQueryClient} from '@tanstack/react-query';
 import {getTermFromDictionary} from '../../translations/TranslationService';
 import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { DisplayErrorAlertDialog } from '../../components/loadError';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
-import { Icon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBody, ModalContent, ModalHeader } from '@/components/ui/modal';
 import { Text } from '@/components/ui/text';
 
-/*const CopyDetails = (props) => {
- const library = useLibrary();
- const [open, setOpen] = React.useState(false);
- const toggleModal = () => {
- setOpen(!open);
- };
- const [loading, setLoading] = React.useState(false);
- };*/
-
+/**
+ * ShowItemDetails component that displays a button to show item details in a modal, including available copies, location, and call number. It fetches item details from the API based on the provided library URL, item ID, and format.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const ShowItemDetails = (props) => {
-     const library = useLibrary();
      const language = useActiveLanguage();
-     const queryClient = useQueryClient();
      const {
           data,
           title,
@@ -158,6 +150,10 @@ const ShowItemDetails = (props) => {
      }
 };
 
+/**
+ * Renders the header for the copy details list, displaying column titles for available copies, location, and call number.
+ * @returns {React.JSX.Element}
+ */
 const renderHeader = () => {
     const language = useActiveLanguage();
      return (
@@ -175,6 +171,11 @@ const renderHeader = () => {
      );
 };
 
+/**
+ * Renders the details of a single copy, displaying the number of available copies, shelf location, and call number in a horizontal stack.
+ * @param item
+ * @returns {React.JSX.Element}
+ */
 const renderCopyDetails = (item) => {
      return (
          <HStack space="md" style={{ justifyContent: 'space-between' }}>

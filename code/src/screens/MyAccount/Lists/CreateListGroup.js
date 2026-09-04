@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { useUserState, useListGroups, useUpdateUserProfile, useUpdateListGroups } from '../../../hooks/useUserData';
+import { useUserState, useListGroups, useUpdateUserProfile, useUpdateListGroups } from '@/src/hooks/useUserData';
 import { MaterialIcons } from '@expo/vector-icons';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { createListGroup, getListGroups } from '../../../util/api/list';
-import { refreshProfile } from '../../../util/api/user';
-import { popAlert } from '../../../components/feedback';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { createListGroup, getListGroups } from '@/src/util/api/list';
+import { refreshProfile } from '@/src/util/api/user';
+import { popAlert } from '@/src/components/feedback';
 import { Platform } from 'react-native';
-import { toArray } from '../../../helpers/helpers';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { toArray } from '@/src/helpers/helpers';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { ChevronDownIcon, CloseIcon, Icon } from '@/components/ui/icon';
-import { Input, InputField } from '@/components/ui/input';
+import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
+/**
+ * CreateListGroup component that allows users to create a new list group. It displays a button that opens a modal where users can input the title of the new list group and optionally nest it within an existing group. The component handles API calls to create the list group and provides feedback on the creation process, including refreshing the user's profile and updating the list groups in the local state.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const CreateListGroup = (props) => {
       const { setLoading, updateSelectedListGroup } = props;
       const { data: userState } = useUserState();
@@ -30,7 +35,7 @@ const CreateListGroup = (props) => {
       const updateListGroupsData = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, theme, colorMode } = useTheme();
+      const { textColor, theme, runtimeColors, colorMode } = useTheme();
       const [loading, setAdding] = React.useState(false);
       const [showModal, setShowModal] = useState(false);
 
@@ -40,7 +45,7 @@ const CreateListGroup = (props) => {
      const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      let hasListGroups = false;
      if(user.numListGroups) {
@@ -53,9 +58,9 @@ const CreateListGroup = (props) => {
 
      return (
           <Center>
-               <Button onPress={toggle} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                   <MaterialIcons name="add" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />
-                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list_group')}</ButtonText>
+               <Button onPress={toggle} size="sm" style={{ backgroundColor: runtimeColors.primary[500] }}>
+                   <MaterialIcons name="add" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
                     <ModalBackdrop />
@@ -65,7 +70,7 @@ const CreateListGroup = (props) => {
                                    {getTermFromDictionary(language, 'create_new_list_group')}
                               </Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
-                                   <Icon as={CloseIcon} style={{ color: textColor }} />
+                                   <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
@@ -73,9 +78,9 @@ const CreateListGroup = (props) => {
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <Input style={{ borderColor }}>
-                                        <InputField id="title" onChangeText={(text) => setTitle(text)} returnKeyType="next" defaultValue={title} style={{ color: textColor }} />
-                                   </Input>
+                                   <ThemedInput style={{ borderColor }}>
+                                        <ThemedInputField id="title" onChangeText={(text) => setTitle(text)} returnKeyType="next" defaultValue={title} />
+                                   </ThemedInput>
                               </FormControl>
                               {hasListGroups && (
                                    <FormControl style={{ paddingBottom: 20 }}>
@@ -121,7 +126,7 @@ const CreateListGroup = (props) => {
                                         <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                     <Button
-                                         style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                         style={{ backgroundColor: runtimeColors.primary[500] }}
                                          isLoading={loading}
                                          isLoadingText={getTermFromDictionary(language, 'creating_list', true)}
                                          onPress={async () => {
@@ -150,7 +155,7 @@ const CreateListGroup = (props) => {
                                                    }
                                               });
                                          }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_list_group')}</ButtonText>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_list_group')}</ButtonText>
                                     </Button>
                               </ButtonGroup>
                          </ModalFooter>

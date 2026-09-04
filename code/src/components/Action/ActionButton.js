@@ -12,20 +12,25 @@ import {
      Button,
      ButtonText,
 } from '@/components/ui/button';
-import React, { useContext, useState } from 'react';
-
+import React, { useState } from 'react';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { useUserState } from '../../hooks/useUserData';
 import * as WebBrowser from 'expo-web-browser';
 import { useTheme } from '../../themes/theme';
 import { passUserToDiscovery } from '../../util/api/user';
 import { Heading } from '@/components/ui/heading';
-import { CloseIcon, Icon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalHeader } from '@/components/ui/modal';
 import { Text } from '@/components/ui/text';
+import { ThemedCloseIcon } from '../themed/ThemedFormControls';
 
+/**
+ * ActionButton component for rendering different types of action buttons based on the provided data.
+ * @param data
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 export const ActionButton = (data) => {
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, runtimeColors, uiColors, textColor, colorMode } = useTheme();
      const library = useLibrary();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
@@ -147,12 +152,12 @@ export const ActionButton = (data) => {
                     <Button
                          size="md"
                          variant="solid"
-                         style={{ backgroundColor: theme.tokens.colors.primary['500'], minWidth: '100%', maxWidth: '100%' }}
+                         style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
                          onPress={async () =>
                            await passUserToDiscovery(library?.baseUrl ?? '', 'NewMaterialRequest', user.id, backgroundColor, textColor, null, action.redirectParams)
                          }
                     >
-                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{action.title}</ButtonText>
+                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{action.title}</ButtonText>
                     </Button>
                );
           } else if (action.type === 'local_ill_request_material_request_ils') {
@@ -161,12 +166,12 @@ export const ActionButton = (data) => {
                     <Button
                          size="md"
                          variant="solid"
-                         style={{ backgroundColor: theme.tokens.colors.primary['500'], minWidth: '100%', maxWidth: '100%' }}
+                         style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
                          onPress={async () =>
                            await passUserToDiscovery(library?.baseUrl ?? '', 'NewMaterialRequestIls', user.id, backgroundColor, textColor, null, action.redirectParams)
                          }
                     >
-                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{action.title}</ButtonText>
+                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{action.title}</ButtonText>
                     </Button>
                );
           } else if (action.type === 'local_ill_request_external_request') {
@@ -176,7 +181,7 @@ export const ActionButton = (data) => {
                     <Button
                          size="md"
                          variant="solid"
-                         style={{ backgroundColor: theme.tokens.colors.primary['500'], minWidth: '100%', maxWidth: '100%' }}
+                         style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
                          onPress={async () =>
                               {
                                    const browserParams = {
@@ -190,7 +195,7 @@ export const ActionButton = (data) => {
                               }
                          }
                     >
-                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{action.title}</ButtonText>
+                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{action.title}</ButtonText>
                     </Button>
                );
           } else if (action.type === 'local_ill_request_email') {
@@ -214,18 +219,18 @@ export const ActionButton = (data) => {
                          <Button
                               size="md"
                               variant="solid"
-                              style={{ backgroundColor: theme.tokens.colors.primary['500'], minWidth: '100%', maxWidth: '100%' }}
+                              style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
                               onPress={async () => {setShowIllUnavailableModal(true)}}
                          >
-                              <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{action.title}</ButtonText>
+                              <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{action.title}</ButtonText>
                          </Button>
                          <Modal isOpen={showIllUnavailableModal} size="lg" avoidKeyboard={true} onClose={() => setShowIllUnavailableModal(false)}>
                               <ModalBackdrop />
-                              <ModalContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
+                              <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                                    <ModalHeader>
                                         <Heading size="md" style={{ color: textColor }}>{action.title}</Heading>
                                         <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowIllUnavailableModal(false); }}>
-                                             <Icon as={CloseIcon} style={{ color: textColor }} />
+                                             <ThemedCloseIcon />
                                         </ModalCloseButton>
                                    </ModalHeader>
 

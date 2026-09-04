@@ -1,31 +1,35 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { popAlert } from '../../../components/feedback';
-
-import { useUserState, useListGroups, useUpdateUserProfile, useUpdateLists, useUpdateListGroups } from '../../../hooks/useUserData';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { createList, getLists, getListGroups } from '../../../util/api/list';
-import { refreshProfile } from '../../../util/api/user';
+import { popAlert } from '@/src/components/feedback';
+import { useUserState, useListGroups, useUpdateUserProfile, useUpdateLists, useUpdateListGroups } from '@/src/hooks/useUserData';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { createList, getLists, getListGroups } from '@/src/util/api/list';
+import { refreshProfile } from '@/src/util/api/user';
 import { Platform } from 'react-native';
-import {logDebugMessage, logErrorMessage} from "../../../util/logging";
-import { toArray } from '../../../helpers/helpers';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import {logDebugMessage, logErrorMessage} from '@/src/util/logging';
+import { toArray } from '@/src/helpers/helpers';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronDownIcon, CircleIcon, CloseIcon, Icon } from '@/components/ui/icon';
-import { Input, InputField } from '@/components/ui/input';
+import { ChevronDownIcon, CircleIcon, Icon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Textarea, TextareaInput } from '@/components/ui/textarea';
 
+/**
+ * CreateList component that allows users to create a new list. It displays a button that opens a modal where users can input the title, description, access level, and optionally add the list to a new or existing list group. The component handles API calls to create the list and provides feedback on the creation process, including refreshing the user's profile and updating the lists and list groups in the local state.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const CreateList = (props) => {
       const { setLoading } = props;
       const { data: userState } = useUserState();
@@ -36,7 +40,7 @@ const CreateList = (props) => {
       const updateListGroups = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, theme, colorMode } = useTheme();
+      const { textColor, theme, runtimeColors, colorMode } = useTheme();
       const [loading, setAdding] = React.useState(false);
       const [showModal, setShowModal] = useState(false);
 
@@ -51,7 +55,7 @@ const CreateList = (props) => {
      const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      let hasListGroups = false;
      if(user.numListGroups) {
@@ -73,9 +77,9 @@ const CreateList = (props) => {
 
      return (
           <Center>
-               <Button onPress={toggle} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                   <MaterialIcons name="add" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />
-                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
+               <Button onPress={toggle} size="sm" style={{ backgroundColor: runtimeColors.primary[500] }}>
+                   <MaterialIcons name="add" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
                     <ModalBackdrop />
@@ -85,7 +89,7 @@ const CreateList = (props) => {
                                    {getTermFromDictionary(language, 'create_new_list')}
                               </Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
-                                   <Icon as={CloseIcon} style={{ color: textColor }} />
+                                   <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
@@ -93,9 +97,9 @@ const CreateList = (props) => {
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <Input style={{ borderColor }}>
-                                        <InputField id="title" onChangeText={(text) => setTitle(text)} returnKeyType="next" defaultValue={title} style={{ color: textColor }} />
-                                   </Input>
+                                   <ThemedInput style={{ borderColor }}>
+                                        <ThemedInputField id="title" onChangeText={(text) => setTitle(text)} returnKeyType="next" defaultValue={title} />
+                                   </ThemedInput>
                               </FormControl>
                               <FormControl style={{ paddingBottom: 20 }}>
                                    <FormControlLabel>
@@ -163,9 +167,9 @@ const CreateList = (props) => {
                                              <FormControlLabel>
                                                   <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
                                              </FormControlLabel>
-                                             <Input style={{ borderColor }}>
-                                                  <InputField id="newGroupName" onChangeText={(text) => setNewGroupName(text)} defaultValue={newGroupName} style={{ color: textColor }} />
-                                             </Input>
+                                             <ThemedInput style={{ borderColor }}>
+                                                  <ThemedInputField id="newGroupName" onChangeText={(text) => setNewGroupName(text)} defaultValue={newGroupName} />
+                                             </ThemedInput>
                                         </FormControl>
                                         {hasListGroups && (
                                              <FormControl style={{ paddingBottom: 8 }}>
@@ -256,7 +260,7 @@ const CreateList = (props) => {
                                         <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                     <Button
-                                         style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                         style={{ backgroundColor: runtimeColors.primary[500] }}
                                          isLoading={loading}
                                          isLoadingText={getTermFromDictionary(language, 'creating_list', true)}
                                          onPress={async () => {
@@ -294,7 +298,7 @@ const CreateList = (props) => {
                                                    setLoading(false);
                                               }
                                          }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_list')}</ButtonText>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_list')}</ButtonText>
                                     </Button>
                               </ButtonGroup>
                          </ModalFooter>

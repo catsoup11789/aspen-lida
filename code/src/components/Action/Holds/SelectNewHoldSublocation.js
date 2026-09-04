@@ -2,19 +2,24 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import _ from 'lodash';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-
-import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage } from '../../../util/logging.js';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { logDebugMessage, logErrorMessage } from '@/src/util/logging';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
 
+/**
+ * SelectNewHoldSublocation component for selecting a new hold sublocation for a library hold request.
+ * @param props
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 export const SelectNewHoldSublocation = (props) => {
-     const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor, theme, colorMode} = props;
+     const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor, theme, colorMode, runtimeColors} = props;
      const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      if (sublocations !== undefined) {
           try {

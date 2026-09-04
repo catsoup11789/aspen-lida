@@ -14,6 +14,12 @@ import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectTrigger } from '@/components/ui/select';
 
+/**
+ * SelectPickupLocation component that renders a button to select a pickup location for placing holds or checking out items. It displays a modal with options for selecting volumes, accounts, and pickup locations, and handles the completion of the action based on user selections.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const SelectPickupLocation = (props) => {
      const { id, action, title, volumeInfo, prevRoute, response, setResponse, responseIsOpen, setResponseIsOpen, onResponseClose, cancelResponseRef, language } = props;
      const [loading, setLoading] = React.useState(false);

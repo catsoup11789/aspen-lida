@@ -1,13 +1,17 @@
 import React from 'react';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import { useTheme } from '../../../themes/theme';
+import { useRoute } from '@react-navigation/native';
+import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
 import { Heading } from '@/components/ui/heading';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 
-
+/**
+ * NotificationHistoryMessageModal component that displays the details of a notification message, including title, content, and date sent. It retrieves the message data from the navigation route parameters and formats the date for display.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const NotificationHistoryMessageModal = () => {
      const { textColor } = useTheme();
      const defaultMessage = {

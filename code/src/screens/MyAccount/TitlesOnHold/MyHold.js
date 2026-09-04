@@ -8,30 +8,35 @@ import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIn
 import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Checkbox, CheckboxIcon, CheckboxIndicator } from '@/components/ui/checkbox';
-import { CheckIcon, Icon } from '@/components/ui/icon';
+import { CheckIcon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { VStack } from '@/components/ui/vstack';
-import { popAlert } from '../../../components/feedback';
-import { HoldsContext } from '../../../context/initialContext';
-import { useUserState, useSublocations } from '../../../hooks/useUserData';
-import { getAuthor, getBadge, getCleanTitle, getExpirationDate, getFormat, getOnHoldFor, getPickupLocation, getPosition, getOutOfHoldGroupMessage, getTitle, getCallNumber, getVolume, getType, getCollectionName } from '../../../helpers/item';
-import { navigateStack } from '../../../helpers/RootNavigator';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { cancelHold, cancelHolds, freezeHold, freezeHolds, thawHold, thawHolds } from '../../../util/api/user';
-import { formatPickupLocations } from '../../../util/api/userHelper';
-import { formatDiscoveryVersion } from '../../../helpers/helpers';
-import { checkoutItem, getPickupLocations } from '../../../util/api/user';
+import { popAlert } from '@/src/components/feedback';
+import { HoldsContext } from '@/src/context/initialContext';
+import { useUserState, useSublocations } from '@/src/hooks/useUserData';
+import { getAuthor, getBadge, getCleanTitle, getExpirationDate, getFormat, getOnHoldFor, getPickupLocation, getPosition, getOutOfHoldGroupMessage, getTitle, getCallNumber, getVolume, getType, getCollectionName } from '@/src/helpers/item';
+import { navigateStack } from '@/src/helpers/RootNavigator';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { cancelHold, cancelHolds, freezeHold, freezeHolds, thawHold, thawHolds } from '@/src/util/api/user';
+import { formatPickupLocations } from '@/src/util/api/userHelper';
+import { formatDiscoveryVersion } from '@/src/helpers/helpers';
+import { checkoutItem, getPickupLocations } from '@/src/util/api/user';
 import { SelectPickupLocation } from './SelectPickupLocation';
 import { SelectThawDate } from './SelectThawDate.js';
-
 import { useQueryClient } from '@tanstack/react-query';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * MyHold component that displays an individual hold with its image, title, author, format, and other details. It handles user interaction to open an action sheet with options to manage the hold, such as checking out, canceling, freezing, thawing, or updating the pickup location. It also manages the state of the action sheet and the loading states for various actions.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyHold = (props) => {
      const hold = props.data;
      const resetGroup = props.resetGroup;
@@ -43,7 +48,7 @@ export const MyHold = (props) => {
      const library = useLibrary();
      const { updateHolds } = React.useContext(HoldsContext);
      const language = useActiveLanguage();
-     const { theme, colorMode, textColor } = useTheme();
+     const { theme, runtimeColors, colorMode, textColor } = useTheme();
      const insets = useSafeAreaInsets();
      const [cancelling, startCancelling] = React.useState(false);
      const [checkingOut, startCheckingOut] = React.useState(false);
@@ -158,7 +163,7 @@ export const MyHold = (props) => {
                               <Center>
                                    <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} size="md" accessibilityLabel="Check item" style={{ marginVertical: 12 }}>
                                         <CheckboxIndicator>
-                                             <CheckboxIcon as={CheckIcon} style={{ color: theme.tokens.colors.primary['500-text'] }} />
+                                             <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }} />
                                         </CheckboxIndicator>
                                    </Checkbox>
                               </Center>
@@ -171,7 +176,7 @@ export const MyHold = (props) => {
                          <Center>
                               <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} size="md" accessibilityLabel="Check item" style={{ marginVertical: 12 }}>
                                    <CheckboxIndicator style={{ borderColor: checkboxBorderColor }}>
-                                        <CheckboxIcon as={CheckIcon} style={{ color: theme.tokens.colors.primary['500-text'] }}/>
+                                        <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }}/>
                                    </CheckboxIndicator>
                               </Checkbox>
                          </Center>
@@ -367,6 +372,12 @@ export const MyHold = (props) => {
      );
 };
 
+/**
+ * ManageSelectedHolds component that displays a button to manage selected holds. When clicked, it opens an action sheet with options to cancel, freeze, or thaw the selected holds. It handles the state of the action sheet and the loading states for various actions.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const ManageSelectedHolds = (props) => {
      const { selectedValues, resetGroup } = props;
      const language = useActiveLanguage();
@@ -507,8 +518,8 @@ export const ManageSelectedHolds = (props) => {
 
      return (
           <Center>
-               <Button onPress={handleOpen} size="sm" variant="solid" style={{ backgroundColor: theme.tokens.colors.primary['500'], marginRight: 4 }}>
-                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{numSelectedLabel}</ButtonText>
+               <Button onPress={handleOpen} size="sm" variant="solid" style={{ backgroundColor: runtimeColors.primary[500], marginRight: 4 }}>
+                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{numSelectedLabel}</ButtonText>
                </Button>
                <Actionsheet isOpen={showActionsheet} onClose={handleClose} zIndex={999}>
                     <ActionsheetBackdrop />
@@ -528,13 +539,19 @@ export const ManageSelectedHolds = (props) => {
      );
 };
 
+/**
+ * ManageAllHolds component that displays a button to manage all holds. When clicked, it opens an action sheet with options to cancel, freeze, or thaw all holds. It handles the state of the action sheet and the loading states for various actions.
+ * @param props
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 export const ManageAllHolds = (props) => {
      const queryClient = useQueryClient();
      const { resetGroup } = props;
      const language = useActiveLanguage();
      const { holds, updateHolds } = React.useContext(HoldsContext);
      const library = useLibrary();
-     const { theme, colorMode, textColor } = useTheme();
+     const { theme, runtimeColors, colorMode, textColor } = useTheme();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const insets = useSafeAreaInsets();
@@ -627,8 +644,8 @@ export const ManageAllHolds = (props) => {
      if (numToManage >= 1) {
           return (
                <Center>
-                    <Button size="sm" variant="solid" style={{ backgroundColor: theme.tokens.colors.primary['500'], marginRight: 1 }} onPress={handleOpen}>
-                         <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'hold_manage_all')}</ButtonText>
+                    <Button size="sm" variant="solid" style={{ backgroundColor: runtimeColors.primary[500], marginRight: 1 }} onPress={handleOpen}>
+                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'hold_manage_all')}</ButtonText>
                     </Button>
                     <Actionsheet isOpen={showActionsheet} onClose={handleClose} zIndex={999}>
                          <ActionsheetBackdrop />

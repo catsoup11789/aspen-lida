@@ -1,10 +1,9 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { clearApiErrorLogs, getApiErrorLogsPage } from '../../../../util/db';
-
-import { useActiveLanguage } from '../../../../hooks/useLanguageData';
-import { getTermFromDictionary } from '../../../../translations/TranslationService';
-import { useTheme } from '../../../../themes/theme';
+import { clearApiErrorLogs, getApiErrorLogsPage } from '@/src/util/db';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { useTheme } from '@/src/themes/theme';
 import { Accordion, AccordionContent, AccordionContentText, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
@@ -24,6 +23,15 @@ function formatDate(ms) {
      }
 }
 
+/**
+ * APIErrorLog component that displays a list of API error logs. It fetches the logs from the database, allows pagination, and provides an option to clear the logs. Each log entry can be expanded to view the response body if available.
+ * @param param0
+ * @param param0.theme
+ * @param param0.colorMode
+ * @param param0.textColor
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const APIErrorLog = ({ theme: themeProp, colorMode: colorModeProp, textColor: textColorProp } = {}) => {
      const [loading, setLoading] = React.useState(false);
      const [page, setPage] = React.useState(1);
@@ -38,6 +46,7 @@ export const APIErrorLog = ({ theme: themeProp, colorMode: colorModeProp, textCo
 
      const themeCtx = useTheme() ?? {};
      const theme = themeProp ?? themeCtx.theme ?? {};
+     const runtimeColors = themeCtx.runtimeColors ?? {};
      const colorMode = colorModeProp ?? themeCtx.colorMode ?? 'light';
      const textColor = textColorProp ?? themeCtx.textColor ?? '#111827';
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
@@ -169,20 +178,20 @@ export const APIErrorLog = ({ theme: themeProp, colorMode: colorModeProp, textCo
                )}
 
                <HStack style={{ paddingHorizontal: 12, paddingVertical: 12, justifyContent: 'space-between', alignItems: 'center', borderTopWidth: 1, borderColor }}>
-                    <Button style={{ backgroundColor: theme['tokens']['colors']['secondary']['500'] }} onPress={() => loadPage(page - 1)} isDisabled={loading || !meta.hasPrevious}>
-                         <ButtonText style={{ color: theme['tokens']['colors']['secondary']['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                    <Button style={{ backgroundColor: runtimeColors.secondary?.[500] }} onPress={() => loadPage(page - 1)} isDisabled={loading || !meta.hasPrevious}>
+                        <ButtonText style={{ color: runtimeColors.secondary?.['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
                     </Button>
 
                     <Text size="xs" style={{ color: textColor }}>{`Page ${page} / ${meta.totalPages}`}</Text>
 
-                    <Button style={{ backgroundColor: theme['tokens']['colors']['secondary']['500'] }} onPress={() => loadPage(page + 1)} isDisabled={loading || !meta.hasMore}>
-                         <ButtonText style={{ color: theme['tokens']['colors']['secondary']['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                    <Button style={{ backgroundColor: runtimeColors.secondary?.[500] }} onPress={() => loadPage(page + 1)} isDisabled={loading || !meta.hasMore}>
+                        <ButtonText style={{ color: runtimeColors.secondary?.['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
                     </Button>
                </HStack>
 
                <Box style={{ paddingHorizontal: 12, paddingBottom: 12 }}>
-                    <Button variant="outline" style={{ borderColor: theme['tokens']['colors']['tertiary']['500'] }} onPress={onClear} isDisabled={loading}>
-                         <ButtonText style={{ color: theme['tokens']['colors']['tertiary']['500'] }}>{getTermFromDictionary(language, 'clear_api_error_log')}</ButtonText>
+                    <Button variant="outline" style={{ borderColor: runtimeColors.tertiary?.[500] }} onPress={onClear} isDisabled={loading}>
+                        <ButtonText style={{ color: runtimeColors.tertiary?.[500] }}>{getTermFromDictionary(language, 'clear_api_error_log')}</ButtonText>
                     </Button>
                </Box>
           </Box>

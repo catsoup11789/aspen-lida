@@ -9,23 +9,26 @@ import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Text } from '@/components/ui/text';
-
-import { DisplayMessage, DisplaySystemMessage } from '../../../components/Notifications';
-import { SystemMessagesContext } from '../../../context/initialContext';
-import { useUserState, useAccounts, useViewers, useCards, useUpdateAccounts, useUpdateViewers, useUpdateCards, useUpdateUserProfile } from '../../../hooks/useUserData';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { toArray } from '../../../helpers/helpers';
-import { getLinkedAccounts, getViewerAccounts, refreshProfile, removeLinkedAccount, removeViewerAccount } from '../../../util/api/user';
-import { formatLinkedAccounts } from '../../../util/api/userHelper';
-
+import { DisplayMessage, DisplaySystemMessage } from '@/src/components/Notifications';
+import { SystemMessagesContext } from '@/src/context/initialContext';
+import { useUserState, useAccounts, useViewers, useUpdateAccounts, useUpdateViewers, useUpdateUserProfile } from '@/src/hooks/useUserData';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { toArray } from '@/src/helpers/helpers';
+import { getLinkedAccounts, getViewerAccounts, refreshProfile, removeLinkedAccount, removeViewerAccount } from '@/src/util/api/user';
+import { formatLinkedAccounts } from '@/src/util/api/userHelper';
 import AddLinkedAccount from './AddLinkedAccount';
 import DisableAccountLinking from './DisableAccountLinking';
 import EnableAccountLinking from './EnableAccountLinking';
-import { logErrorMessage } from '../../../util/logging';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { logErrorMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
+/**
+ * MyLinkedAccounts component that displays the user's linked accounts and viewers. It allows users to add, remove, and manage their linked accounts based on their permissions. The component fetches the user's linked accounts and viewers from the API and displays them in a list format. It also handles system messages and provides feedback on actions taken by the user.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyLinkedAccounts = () => {
      const navigation = useNavigation();
      const { data: userState } = useUserState();
@@ -154,6 +157,14 @@ export const MyLinkedAccounts = () => {
      );
 };
 
+/**
+ * Account component that displays an individual linked or viewer account with the option to remove it. It handles the removal process and updates the account list accordingly.
+ * @param param0
+ * @param param0.account
+ * @param param0.type
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const Account = ({ account, type }) => {
      const [isRemoving, setIsRemoving] = useState(false);
      const { data: userState } = useUserState();

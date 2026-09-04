@@ -4,26 +4,29 @@ import moment from 'moment/moment';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { addAppliedFilter } from '../../../util/api/searchHelper';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { addAppliedFilter } from '@/src/util/api/searchHelper';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { Text } from '@/components/ui/text';
 
-// custom components and helper files
-
+/**
+ * Facet_Date component that displays a date range picker for filtering search results based on a date facet. It allows users to select a "from" and "to" date, updates the applied filters accordingly, and triggers an update to the search results.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const Facet_Date = (props) => {
      const { data, category, updater } = props;
      const language = useActiveLanguage();
 
      const [loading, setLoading] = React.useState(false);
 
-     const { theme, textColor, colorMode } = useTheme();
+     const { runtimeColors, textColor, colorMode } = useTheme();
 
      const today = new Date();
      const [fromValue, setFrom] = React.useState(today);
@@ -95,12 +98,12 @@ export const Facet_Date = (props) => {
                <Box style={{ padding: 20 }}>
                     <FormControl style={{ marginBottom: 8 }}>
                          <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'center' }}>
-                              <Button variant="outline" onPress={() => toggleFromDatePicker()} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
-                                   <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{moment(fromValue).format('MM/DD/YYYY')}</ButtonText>
+                              <Button variant="outline" onPress={() => toggleFromDatePicker()} style={{ borderColor: runtimeColors.primary[500] }}>
+                                   <ButtonText style={{ color: runtimeColors.primary[500] }}>{moment(fromValue).format('MM/DD/YYYY')}</ButtonText>
                               </Button>
                               <Text style={{ color: textColor }}>to</Text>
-                              <Button variant="outline" onPress={() => toggleToDatePicker()} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
-                                   <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{toFacet === '*' ? 'MM/DD/YYYY' : moment(toValue).format('MM/DD/YYYY')}</ButtonText>
+                              <Button variant="outline" onPress={() => toggleToDatePicker()} style={{ borderColor: runtimeColors.primary[500] }}>
+                                   <ButtonText style={{ color: runtimeColors.primary[500] }}>{toFacet === '*' ? 'MM/DD/YYYY' : moment(toValue).format('MM/DD/YYYY')}</ButtonText>
                               </Button>
                          </HStack>
                     </FormControl>

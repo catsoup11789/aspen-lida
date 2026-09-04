@@ -15,14 +15,17 @@ import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-
-
-import { navigate } from '../../../../helpers/RootNavigator';
-import { getTermFromDictionary } from '../../../../translations/TranslationService';
+import { navigate } from '@/src/helpers/RootNavigator';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import Constants from 'expo-constants';
-import { useActiveLanguage } from '../../../../hooks/useLanguageData';
-import { useTheme } from '../../../../themes/theme';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
 
+/**
+ * CalendarPermissionStatus component that displays the current calendar permission status and allows users to navigate to a detailed description of the permission. It checks the calendar permission status on mount and updates it when the app state changes.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const CameraPermissionStatus = () => {
      const language = useActiveLanguage();
      const { textColor } = useTheme();
@@ -126,7 +129,7 @@ const CameraPermissionUsage = () => {
 };
 
 const CameraPermissionUpdate = (payload) => {
-     const { colorMode, theme, textColor } = useTheme();
+     const { colorMode, theme, runtimeColors, textColor } = useTheme();
      const language = useActiveLanguage();
      const [showAlertDialog, setShowAlertDialog] = React.useState(false);
      const [manuallyPromptPermission, setManuallyPromptPermission] = React.useState(false);
@@ -163,8 +166,8 @@ const CameraPermissionUpdate = (payload) => {
                               setShowAlertDialog(true);
                          }
                     }}
-                    style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'update_device_settings')}</ButtonText>
+                    style={{ backgroundColor: runtimeColors.primary[500] }}>
+                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'update_device_settings')}</ButtonText>
                </Button>
                <AlertDialog
                     isOpen={showAlertDialog}
@@ -186,8 +189,8 @@ const CameraPermissionUpdate = (payload) => {
                                              Linking.openSettings();
                                              setShowAlertDialog(false);
                                         }}
-                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'open_device_settings')}</ButtonText>
+                                        style={{ backgroundColor: runtimeColors.primary[500] }}>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'open_device_settings')}</ButtonText>
                                    </Button>
                                    <Button variant="link" onPress={() => setShowAlertDialog(false)}>
                                         <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'not_now')}</ButtonText>

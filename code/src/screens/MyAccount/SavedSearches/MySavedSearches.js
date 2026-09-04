@@ -1,28 +1,31 @@
 import React from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
+import { loadingSpinner } from '@/src/components/loadingSpinner';
+import { SystemMessagesContext } from '@/src/context/initialContext';
+import { useSavedSearches, useUpdateSavedSearches } from '@/src/hooks/useUserData';
+import { fetchSavedSearches } from '@/src/util/api/list';
+import { loadError } from '@/src/components/loadError';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { navigateStack } from '@/src/helpers/RootNavigator';
+import { DisplaySystemMessage } from '@/src/components/Notifications';
+import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
-// custom components and helper files
-import { loadingSpinner } from '../../../components/loadingSpinner';
-import { SystemMessagesContext } from '../../../context/initialContext';
-import { useSavedSearches, useUpdateSavedSearches } from '../../../hooks/useUserData';
-import { fetchSavedSearches } from '../../../util/api/list';
-import { loadError } from '../../../components/loadError';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { navigateStack } from '../../../helpers/RootNavigator';
-import { DisplaySystemMessage } from '../../../components/Notifications';
-import { logDebugMessage, logErrorMessage, getErrorMessage } from '../../../util/logging';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-
+/**
+ * MySavedSearches component that displays a list of saved searches for the user. It fetches the saved searches from the API and renders them in a FlatList. It also handles system messages, loading states, and error states.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MySavedSearches = () => {
      const navigation = useNavigation();
      const [isFetching, setIsFetching] = React.useState(false);
@@ -32,7 +35,6 @@ export const MySavedSearches = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { textColor, theme, colorMode } = useTheme();
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
 
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
 
@@ -110,6 +112,12 @@ export const MySavedSearches = () => {
      );
 };
 
+/**
+ * Item component that renders a single saved search item. It displays the title, creation date, and a badge if there are new results. When pressed, it navigates to the MySavedSearch screen with the item's details.
+ * @param data
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Item = (data) => {
      const language = useActiveLanguage();
      const item = data.data;
@@ -142,9 +150,9 @@ const Item = (data) => {
                               <Text bold size="md" style={{ color: textColor }}>
                                    {item.title}{' '}
                                    {hasNewResults === 1 ? (
-                                        <Badge action="warning" style={{ marginBottom: -2 }}>
-                                             <BadgeText>{getTermFromDictionary(language, 'flag_updated')}</BadgeText>
-                                        </Badge>
+                                        <ThemedBadge action="warning" style={{ marginBottom: -2 }}>
+                                             <ThemedBadgeText action="warning">{getTermFromDictionary(language, 'flag_updated')}</ThemedBadgeText>
+                                        </ThemedBadge>
                                    ) : null}
                               </Text>
                               <Text size="xs" italic style={{ color: textColor }}>

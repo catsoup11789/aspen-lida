@@ -4,7 +4,6 @@ import {
      saveThemeState,
      saveThemeColors,
      saveThemeColorMode,
-     saveThemeTextColor,
      resetThemeState,
      loadThemeCatalog,
 } from '../util/db';
@@ -170,13 +169,6 @@ export function useUpdateThemeColors() {
 export function useUpdateThemeColorMode() {
      return React.useCallback(async (colorMode) => {
           await saveThemeColorMode(colorMode);
-          notifyThemeChanged(THEME_STATE_KEY);
-     }, []);
-}
-
-export function useUpdateThemeTextColor() {
-     return React.useCallback(async (textColor) => {
-          await saveThemeTextColor(textColor);
           notifyThemeChanged(THEME_STATE_KEY);
      }, []);
 }

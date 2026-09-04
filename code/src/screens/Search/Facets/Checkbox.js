@@ -3,12 +3,21 @@ import React from 'react';
 import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
 import { HStack } from '@/components/ui/hstack';
 import { Text } from '@/components/ui/text';
-import { logDebugMessage } from '../../../util/logging.js';
-import { useTheme } from '../../../themes/theme';
+import { logDebugMessage } from '@/src/util/logging';
+import { useTheme } from '@/src/themes/theme';
 
-
+/**
+ * Facet_Checkbox component that renders a checkbox for a given facet option. It handles the checked state and updates the parent component when the checkbox is toggled.
+ * @param param0
+ * @param param0.data
+ * @param param0.category
+ * @param param0.values
+ * @param param0.updateCheckboxFacet
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const Facet_Checkbox = ({ data, category, values = [], updateCheckboxFacet }) => {
-     const {theme, textColor } = useTheme();
+     const { textColor, runtimeColors } = useTheme();
      const isChecked = values.includes(data.value);
      const handleChange = (newValue) => {
           logDebugMessage("Clicked on " + data.value + " isChecked is " + isChecked + " newValue is " + newValue);
@@ -24,8 +33,8 @@ export const Facet_Checkbox = ({ data, category, values = [], updateCheckboxFace
                     onChange={(value) => {
                          handleChange(value);
                     }}>
-                    <CheckboxIndicator style={isChecked ? { borderColor: theme.tokens.colors.primary['500'], backgroundColor: theme.tokens.colors.primary['500'] } : undefined}>
-                         {isChecked ? <CheckboxIcon as={MaterialIcons} style={{ color: theme.tokens.colors.primary['500-text'] }} size="sm" /> : null}
+                    <CheckboxIndicator style={isChecked ? { borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : undefined}>
+                         {isChecked ? <CheckboxIcon as={MaterialIcons} style={{ color: runtimeColors.primary['500-text'] }} size="sm" /> : null}
                     </CheckboxIndicator>
                     <CheckboxLabel style={{ paddingLeft: 8 }}>
                          <Text style={{ color: textColor }}>

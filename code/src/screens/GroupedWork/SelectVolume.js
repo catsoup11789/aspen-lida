@@ -11,6 +11,12 @@ import { ChevronDownIcon, CircleIcon, Icon } from '@/components/ui/icon';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectTrigger } from '@/components/ui/select';
 
+/**
+ * SelectVolume component that allows users to select a volume for a specific item. It fetches available volumes from the API and provides options for selecting either the first available item or a specific volume.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const SelectVolume = (props) => {
      const { language, id, holdType, setHoldType, volume, setVolume, shouldLoad, promptForHoldType } = props;
      const library = useLibrary();

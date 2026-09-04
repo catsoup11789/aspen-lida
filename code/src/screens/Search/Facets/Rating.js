@@ -3,18 +3,23 @@ import _ from 'lodash';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import Stars from 'react-native-stars';
-
-// custom components and helper files
-import { LoadingSpinner } from '../../../components/loadingSpinner';
-import { addAppliedFilter, removeAppliedFilter } from '../../../util/api/searchHelper';
-import { useTheme } from '../../../themes/theme';
+import { LoadingSpinner } from '@/src/components/loadingSpinner';
+import { addAppliedFilter, removeAppliedFilter } from '@/src/util/api/searchHelper';
+import { useTheme } from '@/src/themes/theme';
 import { HStack } from '@/components/ui/hstack';
-import { Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 
-
+/**
+ * Facet_Rating component that renders a list of rating options (from 1 to 5 stars and Unrated) for a given facet category. It manages the selected rating state, updates the applied filters, and triggers an update to the parent component when a rating is selected or deselected.
+ * @param param0
+ * @param param0.data
+ * @param param0.category
+ * @param param0.updater
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const Facet_Rating = ({ data, category, updater }) => {
      const [isLoading, setIsLoading] = React.useState(true);
      const [value, setValue] = React.useState('');
@@ -38,7 +43,7 @@ export const Facet_Rating = ({ data, category, updater }) => {
                label: 'Unrated',
                value: '0' },
      ]);
-     const {theme, textColor, colorMode } = useTheme();
+     const { theme, textColor, runtimeColors } = useTheme();
 
      React.useEffect(() => {
           setIsLoading(false);
@@ -81,8 +86,8 @@ export const Facet_Rating = ({ data, category, updater }) => {
                         <Pressable key={index} onPress={() => updateSearch(star.label)} style={{ padding: 2, paddingVertical: 8 }}>
                              <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
                                    {value === star.label ?
-                                       <MaterialIcons name="radio-button-checked" size={20} color={theme.tokens.colors.primary['600']} /> :
-                                       <MaterialIcons name="radio-button-unchecked" size={20} color={theme.tokens.colors.primary['200']} />
+                                       <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} /> :
+                                       <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
                                    }
                                    <Stars
                                         default={star.value}

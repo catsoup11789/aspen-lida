@@ -6,7 +6,6 @@ import moment from 'moment';
 import React from 'react';
 import { popToast } from '../../components/feedback';
 import { AuthContext } from '../../context/AuthContext';
-
 import { useLibraryLocation, useAvailableLocations } from '../../hooks/useLibraryBranchData';
 import { useAppSettings, useLibrary, useLibraryMenu, useUpdateMenu } from '../../hooks/useLibrarySystemData';
 import { navigate } from '../../helpers/RootNavigator';
@@ -23,19 +22,24 @@ import { Button, ButtonText, ButtonGroup } from '@/components/ui/button';
 import { Divider } from '@/components/ui/divider';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { CloseIcon, Icon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
+import { ThemedCloseIcon } from '../../components/themed/ThemedFormControls';
 
+/**
+ * MoreMenu component that displays a scrollable menu with library information, settings, and additional links. It fetches library menu links from the API and allows users to delete their account if self-registration is enabled. The component also handles modals for delete confirmation and results.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MoreMenu = () => {
      const language = useActiveLanguage();
      const library = useLibrary();
      const menu = useLibraryMenu();
      const updateMenu = useUpdateMenu();
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, runtimeColors, textColor, colorMode } = useTheme();
 
      const { signOut } = React.useContext(AuthContext);
      const hasMenuItems = _.size(menu);
@@ -131,7 +135,7 @@ export const MoreMenu = () => {
                                         {getTermFromDictionary(language, 'delete_account')}
                                    </Heading>
                                    <ModalCloseButton style={{ padding: 12 }} onPress={toggleDeleteConfirmationModal}>
-                                        <Icon as={CloseIcon} style={{ color: textColor }} />
+                                        <ThemedCloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>
                               <ModalBody>
@@ -139,11 +143,11 @@ export const MoreMenu = () => {
                               </ModalBody>
                               <ModalFooter>
                                    <ButtonGroup>
-                                        <Button variant="outline" style={{ borderColor: theme.tokens.colors.primary['500'] }} onPress={toggleDeleteConfirmationModal}>
-                                             <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                        <Button variant="outline" style={{ borderColor: runtimeColors.primary[500] }} onPress={toggleDeleteConfirmationModal}>
+                                             <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                         </Button>
                                         <Button
-                                             style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                             style={{ backgroundColor: runtimeColors.primary[500] }}
                                              isLoading={deleting}
                                              isLoadingText={getTermFromDictionary(language, 'deleting', true)}
                                              onPress={async () => {
@@ -152,7 +156,7 @@ export const MoreMenu = () => {
                                                        setShowDeleteResultsModal(true);
                                                   });
                                              }}>
-                                            <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'confirm_delete_account')}</ButtonText>
+                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'confirm_delete_account')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </ModalFooter>
@@ -166,18 +170,18 @@ export const MoreMenu = () => {
                                         {getTermFromDictionary(language, 'delete_account')}
                                    </Heading>
                                    <ModalCloseButton style={{ padding: 12 }} onPress={signOut}>
-                                        <Icon as={CloseIcon} style={{ color: textColor }} />
+                                        <ThemedCloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>
                               <ModalBody>{deleteResults?.message ? <Text style={{ color: textColor }}>{deleteResults.message}</Text> : <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'error_deleting_account')}</Text>}</ModalBody>
                               <ModalFooter>
                                    {deleteResults.success === true ? (
-                                        <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={signOut}>
-                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                       <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={signOut}>
+                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    ) : (
-                                        <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} variant="primary" onPress={toggleDeleteResultsModal}>
-                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                       <Button style={{ backgroundColor: runtimeColors.primary[500] }} variant="primary" onPress={toggleDeleteResultsModal}>
+                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    )}
                               </ModalFooter>
@@ -188,12 +192,17 @@ export const MoreMenu = () => {
      );
 };
 
+/**
+ * MyLibrary component that displays the user's library information, including the library name, location, and hours of operation. It uses hooks to fetch library data and theme information.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const MyLibrary = () => {
      const library = useLibrary();
      const location = useLibraryLocation();
      const language = useActiveLanguage();
 
-     const { theme } = useTheme();
+     const { runtimeColors } = useTheme();
 
      let hoursLabel = '';
      if (location?.hours) {
@@ -230,25 +239,30 @@ const MyLibrary = () => {
      }
 
      return (
-          <Box style={{ margin: 16, backgroundColor: theme['tokens']['colors']['primary']['400'], padding: 24, borderRadius: 16 }}>
+          <Box style={{ margin: 16, backgroundColor: runtimeColors.primary[400], padding: 24, borderRadius: 16 }}>
                <Pressable style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} onPress={() => navigate('MyLibrary')}>
                     <VStack>
-                         <Text bold size="md" style={{ color: theme['tokens']['colors']['primary']['400-text'] }}>
+                        <Text bold size="md" style={{ color: runtimeColors.primary['400-text'] }}>
                               {library.displayName}
                          </Text>
                          {library.displayName !== location?.displayName ? (
-                              <Text bold style={{ color: theme['tokens']['colors']['primary']['400-text'] }}>
+                             <Text bold style={{ color: runtimeColors.primary['400-text'] }}>
                                    {location?.displayName}
                               </Text>
                          ) : null}
-                         {hoursLabel ? <Text style={{ color: theme['tokens']['colors']['primary']['400-text'] }}>{hoursLabel}</Text> : null}
+                        {hoursLabel ? <Text style={{ color: runtimeColors.primary['400-text'] }}>{hoursLabel}</Text> : null}
                     </VStack>
-                    <MaterialIcons name="chevron-right" size={20} color={theme['tokens']['colors']['primary']['400-text']} />
+                    <MaterialIcons name="chevron-right" size={20} color={runtimeColors.primary['400-text']} />
                </Pressable>
           </Box>
      );
 };
 
+/**
+ *  ViewAllLocations component that displays a button to view all available library locations if there are multiple locations. It uses hooks to fetch available locations and theme information.
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const ViewAllLocations = () => {
      const language = useActiveLanguage();
      const locations = useAvailableLocations();
@@ -268,6 +282,11 @@ const ViewAllLocations = () => {
      return null;
 };
 
+/**
+ * Settings component that displays a button to navigate to the user's preferences/settings page. It uses hooks to fetch the active language and theme information.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Settings = () => {
      const language = useActiveLanguage();
      const { textColor } = useTheme();
@@ -282,6 +301,11 @@ const Settings = () => {
      );
 };
 
+/**
+ * PrivacyPolicy component that displays a button to open the library's privacy policy in a web browser. It uses hooks to fetch the active language, app settings, and theme information. The component handles opening the URL in a web browser and manages potential errors.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const PrivacyPolicy = () => {
      const language = useActiveLanguage();
      const appSettings = useAppSettings();
@@ -346,6 +370,12 @@ const PrivacyPolicy = () => {
      );
 };
 
+/**
+ * MenuLink component that displays a menu link with optional sub-links. It uses hooks to fetch library data and theme information. The component handles opening the URL in a web browser and manages potential errors. If there are multiple links under the same category, it displays them in an accordion-style list.
+ * @param payload
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const MenuLink = (payload) => {
      const library = useLibrary();
      const categories = payload.links;

@@ -2,18 +2,24 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
-import { getVolumes } from '../../../util/api/item';
+import { getVolumes } from '@/src/util/api/item';
 import { loadingSpinner } from '../../loadingSpinner';
 import { loadError } from '../../loadError';
 import _ from 'lodash';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ChevronDownIcon, CircleIcon, Icon } from '@/components/ui/icon';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
+/**
+ * SelectVolume component for selecting a volume for a library hold request.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const SelectVolume = (props) => {
-     const { id, volume, setVolume, showModal, promptForHoldType, holdType, setHoldType, language, url, textColor, theme, colorMode } = props;
+     const { id, volume, setVolume, showModal, promptForHoldType, holdType, setHoldType, language, url, textColor, theme, colorMode, runtimeColors } = props;
      const insets = useSafeAreaInsets();
 
      const { status, data, error, isFetching } = useQuery({
@@ -84,7 +90,7 @@ export const SelectVolume = (props) => {
                                                  <SelectScrollView>
                                                       {_.map(data, function (item, index, array) {
                                                            if (item.volumeId === volume) {
-                                                                return <SelectItem label={item.label} value={item.volumeId} key={index} style={{ backgroundColor: theme.tokens.colors.tertiary['300'] }} textStyle={{ color: theme.tokens.colors.tertiary['500-text'] }} />;
+                                                                return <SelectItem label={item.label} value={item.volumeId} key={index} style={{ backgroundColor: runtimeColors.tertiary[300] }} textStyle={{ color: runtimeColors.tertiary['500-text'] }} />;
                                                             }
                                                             return <SelectItem label={item.label} value={item.volumeId} key={index} textStyle={{ color: textColor }} />;
                                                        })}

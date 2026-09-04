@@ -2,27 +2,34 @@ import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import { ScrollView } from 'react-native';
-
-// custom components and helper files
-import { LoadingSpinner } from '../../../components/loadingSpinner';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { addAppliedFilter } from '../../../util/api/searchHelper';
-import { useTheme } from '../../../themes/theme';
+import { LoadingSpinner } from '@/src/components/loadingSpinner';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { addAppliedFilter } from '@/src/util/api/searchHelper';
+import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
-import { Input, InputField } from '@/components/ui/input';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
+import { ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 
-
+/**
+ * Facet_Slider component that renders a slider input for filtering search results based on a numeric range facet. It manages the start and end values of the range, updates the applied filters, and triggers an update to the parent component when the values change.
+ * @param param0
+ * @param param0.data
+ * @param param0.category
+ * @param param0.updater
+ * @param param0.language
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const Facet_Year = ({ data, category, updater, language }) => {
      const [isLoading, setIsLoading] = React.useState(true);
      const [yearFrom, setYearFrom] = React.useState('');
      const [yearTo, setYearTo] = React.useState('');
      const [value, setValue] = React.useState('');
-     const { theme, textColor, colorMode } = useTheme();
+     const { runtimeColors, textColor } = useTheme();
 
      React.useEffect(() => {
           setIsLoading(false);
@@ -74,12 +81,11 @@ export const Facet_Year = ({ data, category, updater, language }) => {
                <Box style={{ padding: 20 }}>
                     <FormControl style={{ marginBottom: 8 }}>
                          <HStack space="sm" style={{ justifyContent: 'center' }}>
-                              <Input
+                              <ThemedInput
                                    size="lg"
-                                   style={{ flex: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
+                                   style={{ flex: 1 }}
                               >
-                                   <InputField
-                                        style={{ color: textColor }}
+                                   <ThemedInputField
                                         placeholder={getTermFromDictionary(language, 'year_from')}
                                         accessibilityLabel={getTermFromDictionary(language, 'year_from')}
                                         value={yearFrom}
@@ -87,20 +93,19 @@ export const Facet_Year = ({ data, category, updater, language }) => {
                                              updateValue('yearFrom', value);
                                         }}
                                    />
-                              </Input>
-                              <Input
+                              </ThemedInput>
+                              <ThemedInput
                                    size="lg"
-                                   style={{ flex: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
+                                   style={{ flex: 1 }}
                               >
-                                   <InputField
-                                        style={{ color: textColor }}
+                                   <ThemedInputField
                                         placeholder={getTermFromDictionary(language, 'year_to')}
                                         accessibilityLabel={getTermFromDictionary(language, 'year_to')}
                                         onChangeText={(value) => {
                                              updateValue('yearTo', value);
                                         }}
                                    />
-                              </Input>
+                              </ThemedInput>
                          </HStack>
                     </FormControl>
                     {category === 'publishDate' || category === 'publishDateSort' ? (
@@ -109,14 +114,14 @@ export const Facet_Year = ({ data, category, updater, language }) => {
                                    {getTermFromDictionary(language, 'published_in_the_last')}
                               </Text>
                               <ButtonGroup>
-                                   <Button variant="outline" onPress={() => _updateYearTo(1)} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'year')}</ButtonText>
+                                   <Button variant="outline" onPress={() => _updateYearTo(1)} style={{ borderColor: runtimeColors.primary[500] }}>
+                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'year')}</ButtonText>
                                    </Button>
-                                   <Button variant="outline" onPress={() => _updateYearTo(5)} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>5 {getTermFromDictionary(language, 'years')}</ButtonText>
+                                   <Button variant="outline" onPress={() => _updateYearTo(5)} style={{ borderColor: runtimeColors.primary[500] }}>
+                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>5 {getTermFromDictionary(language, 'years')}</ButtonText>
                                    </Button>
-                                   <Button variant="outline" onPress={() => _updateYearTo(10)} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>10 {getTermFromDictionary(language, 'years')}</ButtonText>
+                                   <Button variant="outline" onPress={() => _updateYearTo(10)} style={{ borderColor: runtimeColors.primary[500] }}>
+                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>10 {getTermFromDictionary(language, 'years')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </VStack>

@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
 import { Platform } from 'react-native';
-
 import { getTermFromDictionary, getTranslation, getTranslationWithValuesText } from '../../translations/TranslationService';
 import { stripHTML } from '../../helpers/helpers';
 import { LIBRARY } from '../../util/globals';
@@ -10,18 +9,23 @@ import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { forgotBarcode } from '../../util/api/user';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
+import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { CloseIcon, Icon } from '@/components/ui/icon';
-import { Input, InputField } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Text } from '@/components/ui/text';
 
+/**
+ * ForgotBarcode component that displays a modal for users to request their forgotten barcode by entering their phone number.
+ * @param props
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 export const ForgotBarcode = (props) => {
      const isKeyboardOpen = useKeyboard();
-     const { theme, textColor, colorMode }= useTheme();
+     const { theme, runtimeColors, textColor, colorMode }= useTheme();
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
      const library = useLibrary();
@@ -112,16 +116,16 @@ export const ForgotBarcode = (props) => {
                     <FormControlLabel>
                          <FormControlLabelText size="sm" style={{ color: textColor }}>{fieldLabel}</FormControlLabelText>
                     </FormControlLabel>
-                    <Input style={{ borderColor }}>
-                         <InputField id="phoneNumber" size="xl" returnKeyType="done" enterKeyHint="done" onChangeText={(text) => setPhoneNumber(text)} onSubmitEditing={() => initiateForgotBarcode()} style={{ color: textColor }} textContentType="telephoneNumber"/>
-                    </Input>
+                    <ThemedInput style={{ borderColor }}>
+                         <ThemedInputField id="phoneNumber" size="xl" returnKeyType="done" enterKeyHint="done" onChangeText={(text) => setPhoneNumber(text)} onSubmitEditing={() => initiateForgotBarcode()} textContentType="telephoneNumber"/>
+                    </ThemedInput>
                </FormControl>
           </>
      );
 
      const FooterButtons = (showResults && !results.success) || hasError ? (
-          <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={resetWindow}>
-               <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary('en', 'try_again')}</ButtonText>
+          <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={resetWindow}>
+               <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary('en', 'try_again')}</ButtonText>
           </Button>
      ) : showResults ? (
           <Button variant="link" onPress={closeWindow}>
@@ -135,9 +139,9 @@ export const ForgotBarcode = (props) => {
                <Button
                     isLoading={isProcessing}
                     isLoadingText={getTermFromDictionary('en', 'button_processing', true)}
-                    style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                    style={{ backgroundColor: runtimeColors.primary[500] }}
                     onPress={initiateForgotBarcode}>
-                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{modalButtonLabel}</ButtonText>
+                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{modalButtonLabel}</ButtonText>
                </Button>
           </>
      );
@@ -145,7 +149,7 @@ export const ForgotBarcode = (props) => {
      return (
           <Center>
                <Button variant="link" onPress={() => setShowForgotBarcodeModal(true)}>
-                    <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{buttonLabel}</ButtonText>
+                   <ButtonText style={{ color: runtimeColors.primary[500] }}>{buttonLabel}</ButtonText>
                </Button>
                <Modal isOpen={showForgotBarcodeModal} size="lg" avoidKeyboard onClose={() => setShowForgotBarcodeModal(false)} style={Platform.OS === 'android' && isKeyboardOpen ? { paddingBottom: '50%' } : undefined}>
                     <ModalBackdrop />
@@ -153,7 +157,7 @@ export const ForgotBarcode = (props) => {
                          <ModalHeader>
                               <Heading size="md" style={{ color: textColor }}>{modalTitle}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowForgotBarcodeModal(false); }}>
-                                  <Icon as={CloseIcon} style={{ color: textColor }} />
+                                  <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>

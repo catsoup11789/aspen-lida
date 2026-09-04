@@ -4,7 +4,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Platform } from 'react-native';
 import { checkVersion } from 'react-native-check-version';
-import { Alert, AlertText } from '@/components/ui/alert';
+import { ThemedAlert, ThemedAlertText } from '@/src/components/themed/ThemedAlert';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
@@ -13,25 +13,24 @@ import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-
-import { useAccounts, useDebugMessages, useUserState } from '../../../hooks/useUserData';
-import { formatLinkedAccounts, formatNotificationHistory, formatPickupLocations } from '../../../util/api/userHelper';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { getTranslatedTermsForUserPreferredLanguage, setTranslationsLibrary, translationsLibrary } from '../../../translations/TranslationService';
-import { GLOBALS } from '../../../util/globals';
+import { useAccounts, useDebugMessages, useUserState } from '@/src/hooks/useUserData';
+import { formatLinkedAccounts, formatNotificationHistory, formatPickupLocations } from '@/src/util/api/userHelper';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { getTranslatedTermsForUserPreferredLanguage, setTranslationsLibrary, translationsLibrary } from '@/src/translations/TranslationService';
+import { GLOBALS } from '@/src/util/globals';
 import { useNavigation } from '@react-navigation/native';
-import { logDebugMessage, logErrorMessage } from '../../../util/logging';
-import { useActiveLanguage, useAllLanguageData, useLanguageUserStateQuery, useUpdateAvailableLanguages, useUpdateDictionary } from '../../../hooks/useLanguageData';
-import { buildThemeForLibrary, useTheme } from '../../../themes/theme';
-import { useAllLibrarySystemData, useLibraryQuery } from '../../../hooks/useLibrarySystemData';
-import { useAllLibraryBranchData, useLibraryLocationQuery } from '../../../hooks/useLibraryBranchData';
-import { useThemeStateQuery } from '../../../hooks/useThemeData';
-import { useAllBrowseCategoryData } from '../../../hooks/useBrowseCategoryData';
-import { fetchNotificationHistory, getAppPreferencesForUser, getLinkedAccounts, getPickupLocations, refreshProfile } from '../../../util/api/user';
-import { getCatalogStatus, getLibraryInfo, getLibraryLanguages, getLibraryLinks, getLocationInfo, getSelfCheckSettings, normalizeLibraryLanguagesPayload } from '../../../util/api/system';
-import { getBrowseCategoriesAndHomeLinks } from '../../../util/api/search';
-import { saveAccounts, saveAllLibraryBranchData, saveAllBrowseCategoryData, saveAppPreferences, saveCards, saveCatalogStatus, saveLibrary, saveLocations, saveMenu, saveNotificationHistory, saveUserProfile, saveThemeState } from '../../../util/db';
-import { stripHTML } from '../../../helpers/helpers';
+import { logDebugMessage, logErrorMessage } from '@/src/util/logging';
+import { useActiveLanguage, useAllLanguageData, useLanguageUserStateQuery, useUpdateAvailableLanguages, useUpdateDictionary } from '@/src/hooks/useLanguageData';
+import { buildThemeForLibrary, useTheme } from '@/src/themes/theme';
+import { useAllLibrarySystemData, useLibraryQuery } from '@/src/hooks/useLibrarySystemData';
+import { useAllLibraryBranchData, useLibraryLocationQuery } from '@/src/hooks/useLibraryBranchData';
+import { useThemeStateQuery } from '@/src/hooks/useThemeData';
+import { useAllBrowseCategoryData } from '@/src/hooks/useBrowseCategoryData';
+import { fetchNotificationHistory, getAppPreferencesForUser, getLinkedAccounts, getPickupLocations, refreshProfile } from '@/src/util/api/user';
+import { getCatalogStatus, getLibraryInfo, getLibraryLanguages, getLibraryLinks, getLocationInfo, getSelfCheckSettings, normalizeLibraryLanguagesPayload } from '@/src/util/api/system';
+import { getBrowseCategoriesAndHomeLinks } from '@/src/util/api/search';
+import { saveAccounts, saveAllLibraryBranchData, saveAllBrowseCategoryData, saveAppPreferences, saveCards, saveCatalogStatus, saveLibrary, saveLocations, saveMenu, saveNotificationHistory, saveUserProfile, saveThemeState } from '@/src/util/db';
+import { stripHTML } from '@/src/helpers/helpers';
 
 function formatCachedDateTime(updatedAt) {
      if (!updatedAt) {
@@ -41,6 +40,11 @@ function formatCachedDateTime(updatedAt) {
      return new Date(updatedAt).toLocaleString();
 }
 
+/**
+ * SupportScreen component that displays support information for the app, including app version, library system information, device information, and data cache management. It allows users to refresh various caches and check for app updates. It also provides access to the API error log.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const SupportScreen = () => {
      const navigation = useNavigation();
      const accountsQuery = useAccounts();
@@ -57,7 +61,7 @@ export const SupportScreen = () => {
      const activeLanguage = useActiveLanguage();
      const updateLanguages = useUpdateAvailableLanguages();
      const updateDictionary = useUpdateDictionary();
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, textColor, colorMode, runtimeColors } = useTheme();
      const mutedTextColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.iconMuted.light;
      const cachePanelBorderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.iconMuted.light;
      const [refreshingCache, setRefreshingCache] = React.useState({});
@@ -384,25 +388,25 @@ export const SupportScreen = () => {
                     </VStack>
                     <Divider style={{ marginVertical: 8 }} />
                     <Center style={{ paddingTop: 20, paddingHorizontal: 16 }}>
-                         <Button style={{ backgroundColor: theme.tokens.colors.secondary['500'] }} onPress={() => navigation.navigate('MyDevice_APIErrorLog')}>
-                              <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>{getTermFromDictionary(language, 'open_api_error_log')}</ButtonText>
+                         <Button style={{ backgroundColor: runtimeColors.secondary[500] }} onPress={() => navigation.navigate('MyDevice_APIErrorLog')}>
+                             <ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>{getTermFromDictionary(language, 'open_api_error_log')}</ButtonText>
                          </Button>
                     </Center>
                     {status.needsUpdate ? (
                          <Center style={{ marginTop: 20, paddingHorizontal: 16 }}>
-                              <Alert action="warning" variant="solid" style={{ marginBottom: 8, borderRadius: 4 }}>
+                              <ThemedAlert action="warning" variant="solid" style={{ marginBottom: 8, borderRadius: 4 }}>
                                    <VStack space="sm" style={{ width: '100%', padding: 12 }}>
-                                        <AlertText bold style={{ marginRight: 8 }}>
+                                        <ThemedAlertText action="warning" variant="solid" bold style={{ marginRight: 8 }}>
                                              {status.latest} Is Available
-                                        </AlertText>
-                                        <AlertText style={{ marginRight: 8 }}>Please update your app for the latest features and fixes.</AlertText>
+                                        </ThemedAlertText>
+                                        <ThemedAlertText action="warning" variant="solid" style={{ marginRight: 8 }}>Please update your app for the latest features and fixes.</ThemedAlertText>
                                         {status.canOpenUrl ? (
                                              <Button action="secondary" onPress={() => openAppStore()}>
                                                   <ButtonText>Update now</ButtonText>
                                              </Button>
                                         ) : null}
                                    </VStack>
-                              </Alert>
+                              </ThemedAlert>
                          </Center>
                     ) : null}
                </ScrollView>
@@ -410,6 +414,10 @@ export const SupportScreen = () => {
      );
 };
 
+/**
+ * Checks the app store for the latest version of the app and determines if an update is needed.
+ * @returns {Promise<{needsUpdate: boolean, url: null, latest: string}|{needsUpdate: boolean, url: any, latest: string}>}
+ */
 async function checkStoreVersion() {
      try {
           const version = await checkVersion({

@@ -1,13 +1,16 @@
 import { useColorModeValue, useTheme } from '../../themes/theme';
 import { Button, ButtonText } from '@/components/ui/button';
-
 import { useUserState } from '../../hooks/useUserData';
 import React from 'react';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-
-// custom components and helper files
 import {passUserToDiscovery} from '../../util/api/user';
 
+/**
+ * MoreInfo component for displaying a button that navigates to the Aspen Discovery grouped work page.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MoreInfo = (props) => {
     const { theme } = useTheme();
     const { data: userState } = useUserState();

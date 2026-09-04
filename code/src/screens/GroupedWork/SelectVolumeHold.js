@@ -19,6 +19,12 @@ import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalF
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
+/**
+ * SelectVolumeHold component that allows users to select a volume for a specific item and place a hold or checkout. It fetches available volumes from the API and provides options for selecting either the first available item or a specific volume, along with pickup location and account selection.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const SelectVolumeHold = (props) => {
      const { id, title, action, volumeInfo, prevRoute, response, setResponse, responseIsOpen, setResponseIsOpen, onResponseClose, cancelResponseRef } = props;
      const [loading, setLoading] = React.useState(false);

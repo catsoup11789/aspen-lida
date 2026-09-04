@@ -2,11 +2,16 @@ import _ from 'lodash';
 import React from 'react';
 import { Box } from '@/components/ui/box';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Icon, ChevronDownIcon } from '@/components/ui/icon';
+import { ChevronDownIcon } from '@/components/ui/icon';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
 
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-
+/**
+ * SelectExistingHoldSubLocation component that renders a dropdown select input for choosing an existing hold sublocation based on the provided location. It filters the sublocations to only include those that match the given location code and allows the user to select one of them. If there are no valid sublocations or only one, it returns null.
+ * @param props
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 export const SelectExistingHoldSubLocation = (props) => {
      const { sublocations, language, location, activeSublocation, setActiveSublocation, textColor, colorMode, theme } = props;
      const selectBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;

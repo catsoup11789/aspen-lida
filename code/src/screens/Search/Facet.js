@@ -6,10 +6,9 @@ import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { CheckboxGroup } from '@/components/ui/checkbox';
-import { Input, InputField } from '@/components/ui/input';
 import { Pressable } from '@/components/ui/pressable';
 import { VStack } from '@/components/ui/vstack';
-
+import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import { useTheme } from '../../themes/theme';
 import { getTermFromDictionary } from '../../translations/TranslationService';
@@ -25,6 +24,14 @@ import { Facet_Slider } from './Facets/Slider';
 import { Facet_Year } from './Facets/Year';
 import { UnsavedChangesExit } from './UnsavedChanges';
 
+/**
+ * Facet component that displays a list of facets for filtering search results. It handles user interaction to select facets, update the search results, and manage pending changes.
+ * @param param0
+ * @param param0.route
+ * @param param0.navigation
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const Facet = ({ route, navigation }) => {
      const _isMounted = React.useRef(false);
      const [isLoading, setIsLoading] = React.useState(true);
@@ -38,9 +45,8 @@ export const Facet = ({ route, navigation }) => {
      const [values, setValues] = React.useState([]);
      const [valuesDefault, setValuesDefault] = React.useState([]);
      const [language] = React.useState(route.params?.language ?? 'en');
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, textColor, colorMode, runtimeColors } = useTheme();
      const headerIconColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.icon.dark;
-     const fieldBorderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
      const actionBarBackgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
 
      const preselectValues = () => {
@@ -149,24 +155,22 @@ export const Facet = ({ route, navigation }) => {
 
      const searchBar = numFacets >= 0 ? (
           <Box p="$5">
-               <Input
+               <ThemedInput
                     size="lg"
                     variant="outline"
-                    style={{ borderColor: fieldBorderColor }}
                >
-                    <InputField
+                    <ThemedInputField
                          value={filterByQuery}
                          onChangeText={(text) => setFilterByQuery(text)}
                          autoCorrect={false}
                          returnKeyType="search"
                          placeholder={getTermFromDictionary(language, 'search') + ' ' + title}
-                         style={{ color: textColor }}
                          onSubmitEditing={async () => {
                               setIsLoading(true);
                               await filterFacets();
                          }}
                     />
-               </Input>
+               </ThemedInput>
           </Box>
      ) : (
           <Box pb="$5" />
@@ -248,16 +252,16 @@ export const Facet = ({ route, navigation }) => {
                <Center>
                     <ButtonGroup size="lg">
                          <Button variant="link" onPress={resetCluster}>
-                              <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>
+                             <ButtonText style={{ color: runtimeColors.primary[500] }}>
                                    {getTermFromDictionary(language, 'reset')}
                               </ButtonText>
                          </Button>
                          <Button
-                              style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                             style={{ backgroundColor: runtimeColors.primary[500] }}
                               isDisabled={isUpdating}
                               onPress={() => updateSearch()}
                          >
-                              <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
+                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
                                    {isUpdating ? getTermFromDictionary(language, 'updating', true) : getTermFromDictionary(language, 'update')}
                               </ButtonText>
                          </Button>

@@ -1,7 +1,6 @@
 import { FlatList, ScrollView, View } from 'react-native';
 import _ from 'lodash';
 import React from 'react';
-
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { Image } from 'expo-image';
@@ -12,21 +11,27 @@ import { updateBrowseCategoryStatus } from '../../util/api/user';
 import { logDebugMessage, logErrorMessage, getErrorMessage } from '../../util/logging';
 import { useMaxCategories, useToggleBrowseCategoryVisibility, useUpdateBrowseCategories } from '../../hooks/useBrowseCategoryData';
 import { popToast } from '../../components/feedback';
-
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { Badge, BadgeText } from '@/components/ui/badge';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
 
 const loggedEmptyCategoryKeys = new Set();
 
+/**
+ * DisplayBrowseCategory component that renders a browse category with its records and subcategories. It handles the display of records, subcategories, and provides functionality to hide categories or subcategories. It also manages the state of selected subcategory and refreshes the home feed when necessary.
+ * @param param0
+ * @param param0.category
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const DisplayBrowseCategory = ({category}) => {
-     const { theme, colorMode } = useTheme();
+     const { theme, runtimeColors, colorMode } = useTheme();
      const language = useActiveLanguage();
      const library = useLibrary();
      const maxNum = useMaxCategories();
@@ -155,6 +160,13 @@ const DisplayBrowseCategory = ({category}) => {
      );
 };
 
+/**
+ * DisplayBrowseCategoryTitle component that renders the title of a browse category. It uses the theme and color mode from the current theme context to style the text appropriately.
+ * @param param0
+ * @param param0.category
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const DisplayBrowseCategoryTitle = ({category}) => {
      const { colorMode, theme } = useTheme();
 
@@ -171,6 +183,13 @@ const DisplayBrowseCategoryTitle = ({category}) => {
      );
 }
 
+/**
+ * DisplayBrowseCategoryRecord component that renders a single record within a browse category. It handles the display of the record's image, title, and "new" badge if applicable. It also manages navigation to the appropriate screen based on the record's type when pressed.
+ * @param param0
+ * @param param0.record
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const DisplayBrowseCategoryRecord = ({record}) => {
      const library = useLibrary();
      const { theme } = useTheme();
@@ -299,17 +318,27 @@ const DisplayBrowseCategoryRecord = ({record}) => {
                />
                {isNew ? (
                     <Box style={{ zIndex: 1, alignItems: 'center' }}>
-                         <Badge style={{ backgroundColor: '#f59e0b', marginHorizontal: 20, marginTop: -8 }}>
-                              <BadgeText bold style={{ color: theme.tokens.colors.ui.white, textTransform: 'none' }}>
+                         <ThemedBadge action="warning" style={{ backgroundColor: '#f59e0b', marginHorizontal: 20, marginTop: -8 }}>
+                              <ThemedBadgeText action="warning" bold style={{ color: theme.tokens.colors.ui.white, textTransform: 'none' }}>
                                    {getTermFromDictionary(language, 'flag_new')}
-                              </BadgeText>
-                         </Badge>
+                              </ThemedBadgeText>
+                         </ThemedBadge>
                     </Box>
                ) : null}
           </Pressable>
      )
 }
 
+/**
+ * DisplaySubCategoryBar component that renders a horizontal bar of subcategories for a browse category. It allows users to select a subcategory and provides functionality to hide individual subcategories. The component uses the theme and color mode from the current theme context to style the buttons appropriately.
+ * @param param0
+ * @param param0.subCategories
+ * @param param0.selectedIndex
+ * @param param0.onSelect
+ * @param param0.isSystemBrowseCategory
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, isSystemBrowseCategory }) => {
      const { theme } = useTheme();
      const library = useLibrary();
@@ -345,19 +374,26 @@ const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, isSyste
      return (
           <ButtonGroup space="sm" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 8 }}>
                {subCategories.map((subCategory, index) => (
-                    <Button key={(subCategory?.id ?? subCategory?.textId ?? subCategory?.label ?? `subcategory-${index}`).toString()} style={{ backgroundColor: selectedIndex === index ? theme['tokens']['colors']['primary']['600'] : theme['tokens']['colors']['primary']['400'], paddingHorizontal: 12, height: 34 }} variant="solid" onPress={() => onSelect(index)}>
-                         <ButtonText style={{ fontWeight: '500', color: theme['tokens']['colors']['primary']['500-text'] }}>
+                   <Button key={(subCategory?.id ?? subCategory?.textId ?? subCategory?.label ?? `subcategory-${index}`).toString()} style={{ backgroundColor: selectedIndex === index ? runtimeColors.primary[600] : runtimeColors.primary[400], paddingHorizontal: 12, height: 34 }} variant="solid" onPress={() => onSelect(index)}>
+                        <ButtonText style={{ fontWeight: '500', color: runtimeColors.primary['500-text'] }}>
                               {subCategory.label}
                          </ButtonText>
-                         {!isSystemBrowseCategory && <MaterialIcons name="close" size={14} color={theme['tokens']['colors']['primary']['500-text']} style={{ marginLeft: 16 }} onPress={() => onPressHideSubCategory(index)} />}
+                        {!isSystemBrowseCategory && <MaterialIcons name="close" size={14} color={runtimeColors.primary['500-text']} style={{ marginLeft: 16 }} onPress={() => onPressHideSubCategory(index)} />}
                     </Button>
                ))}
           </ButtonGroup>
      );
 }
 
+/**
+ * DisplayMoreResultsButton component that renders a button to view more results for a given category. When pressed, it navigates to the appropriate screen based on the category's source. The component uses the theme and color mode from the current theme context to style the button appropriately.
+ * @param param0
+ * @param param0.category
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const DisplayMoreResultsButton = ({ category }) => {
-     const { theme } = useTheme();
+     const { runtimeColors } = useTheme();
      const language = useActiveLanguage();
 
      const isListSource = category.source === 'List';
@@ -383,13 +419,16 @@ const DisplayMoreResultsButton = ({ category }) => {
                     marginRight: 12,
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: theme.tokens.colors.primary['500'],
+                    backgroundColor: runtimeColors.primary[500],
                     borderRadius: 8,
                     width: 100,
                     height: 150 }}>
-               <Text bold style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_more')}</Text>
+               <Text bold style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_more')}</Text>
           </Pressable>
      )
 }
 
+/**
+ * Export the DisplayBrowseCategory component wrapped in React.memo to optimize rendering. The memoization checks if the category prop has changed, preventing unnecessary re-renders when the category data remains the same.
+ */
 export default React.memo(DisplayBrowseCategory, (prevProps, nextProps) => _.isEqual(prevProps.category, nextProps.category));

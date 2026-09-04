@@ -1,13 +1,17 @@
 import React from 'react';
-
 import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
-import { decodeHTML } from '../../../helpers/helpers';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-import { useTheme } from '../../../themes/theme';
+import { decodeHTML } from '@/src/helpers/helpers';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
 import { ScrollView } from '@/components/ui/scroll-view';
 
+/**
+ * PalaceProjectInstructions component for displaying instructions on how to use the Palace Project app.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const PalaceProjectInstructions = () => {
      const library = useLibrary();
      const { textColor } = useTheme();

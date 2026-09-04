@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useFocusEffect } from '@react-navigation/native';
 import _ from 'lodash';
 import { Box } from '@/components/ui/box';
@@ -9,18 +8,21 @@ import { Switch } from '@/components/ui/switch';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { loadingSpinner } from '../../../components/loadingSpinner';
-import { createChannelsAndCategories } from '../../../components/Notifications';
-import { getNotificationPreferences, setNotificationPreference } from '../../../util/api/user';
+import { loadingSpinner } from '@/src/components/loadingSpinner';
+import { createChannelsAndCategories } from '@/src/components/Notifications';
+import { getNotificationPreferences, setNotificationPreference } from '@/src/util/api/user';
+import { useUserState, useNotificationSettings, useUpdateUserProfile, useUpdateNotificationSettings } from '@/src/hooks/useUserData';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { refreshProfile } from '@/src/util/api/user';
+import { logDebugMessage, logWarnMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
-import { useUserState, useNotificationSettings, useUpdateUserProfile, useUpdateNotificationSettings, useUpdateExpoToken } from '../../../hooks/useUserData';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { refreshProfile } from '../../../util/api/user';
-
-import { logDebugMessage, logWarnMessage } from '../../../util/logging.js';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-
+/**
+ * Settings_NotificationOptions component that displays notification options for the user. It allows users to enable or disable notifications for saved searches, custom notifications, and account-related notifications. It fetches the user's notification preferences and updates them based on user interactions.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const Settings_NotificationOptions = () => {
      const [isLoading, setLoading] = React.useState(false);
      const [notifySavedSearch, setNotifySavedSearch] = React.useState(false);
@@ -118,6 +120,12 @@ export const Settings_NotificationOptions = () => {
      );
 };
 
+/**
+ * EnableAllNotifications component that provides a switch to enable or disable all notifications for the user. It updates the user's notification preferences based on the switch state and refreshes the user profile accordingly.
+ * @param data
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const EnableAllNotifications = (data) => {
      const language = useActiveLanguage();
      const { data: userState } = useUserState();
@@ -176,6 +184,19 @@ const EnableAllNotifications = (data) => {
      );
 };
 
+/**
+ * DisplayPreference component that renders a single notification preference option with a toggle switch. It updates the user's notification preferences based on the switch state and refreshes the user profile accordingly.
+ * @param param0
+ * @param param0.data
+ * @param param0.notifySavedSearch
+ * @param param0.setNotifySavedSearch
+ * @param param0.notifyCustom
+ * @param param0.setNotifyCustom
+ * @param param0.notifyAccount
+ * @param param0.setNotifyAccount
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const DisplayPreference = ({ data, notifySavedSearch, setNotifySavedSearch, notifyCustom, setNotifyCustom, notifyAccount, setNotifyAccount }) => {
      const { data: userState } = useUserState();
      const updateUserProfile = useUpdateUserProfile();

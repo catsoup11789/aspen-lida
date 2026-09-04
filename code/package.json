@@ -12,8 +12,8 @@
      "dependencies": {
           "@expo/html-elements": "^57.0.0",
           "@expo/vector-icons": "^15.0.2",
-          "@gluestack-ui/core": "^4.1.0-alpha.0",
-          "@gluestack-ui/utils": "^4.1.0-alpha.0",
+          "@gluestack-ui/core": "^5.0.15",
+          "@gluestack-ui/utils": "^5.0.6",
           "@legendapp/motion": "^2.5.3",
           "@react-aria/ssr": "^3.9.2",
           "@react-native-async-storage/async-storage": "2.2.0",
@@ -113,7 +113,7 @@
      },
      "private": true,
      "name": "aspen-lida",
-     "version": "26.08.00",
+     "version": "26.10.00",
      "repository": "https://github.com/Aspen-Discovery/aspen-lida",
      "author": "Aspen Discovery Community",
      "eslintConfig": {

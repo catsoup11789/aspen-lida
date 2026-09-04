@@ -1,10 +1,7 @@
 import React from 'react';
-
 import { AuthContext } from '../../context/AuthContext';
-
 import {getTermFromDictionary} from '../../translations/TranslationService';
-
-import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage } from '../../util/logging.js';
+import { logDebugMessage } from '../../util/logging.js';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
@@ -13,8 +10,13 @@ import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 
+/**
+ * InvalidCredentials component that displays an alert dialog when the user has entered invalid credentials, allowing the user to sign out.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const InvalidCredentials = () => {
-     const { theme, colorMode, textColor } = useTheme();
+     const { theme, runtimeColors, colorMode, textColor } = useTheme();
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const language = useActiveLanguage();
      const { signOut } = React.useContext(AuthContext);
@@ -32,8 +34,8 @@ export const InvalidCredentials = () => {
                          <AlertDialogBody><Text style={{ color: textColor }}>{getTermFromDictionary(language, 'error_invalid_credentials')}</Text></AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">
-                                   <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={signOut} ref={cancelRef}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                   <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={signOut} ref={cancelRef}>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

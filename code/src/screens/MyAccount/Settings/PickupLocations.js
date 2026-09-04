@@ -1,17 +1,15 @@
 import React from 'react';
-
-import { useUserState, useLocations, useSublocations, useUpdateLocations, useUpdateSublocations, useUpdateUserProfile } from '../../../hooks/useUserData';
-import {getTermFromDictionary} from "../../../translations/TranslationService";
+import { useUserState, useLocations, useSublocations, useUpdateLocations, useUpdateSublocations, useUpdateUserProfile } from '@/src/hooks/useUserData';
+import {getTermFromDictionary} from '@/src/translations/TranslationService';
 import {Platform} from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {getPickupLocations, getPickupSublocations, refreshProfile, updateHoldPickupPreferences} from "../../../util/api/user";
-import { formatPickupLocations } from '../../../util/api/userHelper';
-import {SelectNewHoldSublocation} from "../../../components/Action/Holds/SelectNewHoldSublocation";
-
-import { logDebugMessage } from '../../../util/logging.js';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import {getPickupLocations, getPickupSublocations, refreshProfile, updateHoldPickupPreferences} from '@/src/util/api/user';
+import { formatPickupLocations } from '@/src/util/api/userHelper';
+import {SelectNewHoldSublocation} from '@/src/components/Action/Holds/SelectNewHoldSublocation';
+import { logDebugMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonSpinner, ButtonText } from '@/components/ui/button';
 import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
@@ -19,6 +17,11 @@ import { FormControl, FormControlLabel, FormControlLabelText } from '@/component
 import { ChevronDownIcon, CheckIcon, Icon } from '@/components/ui/icon';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
+/**
+ * Settings_PickupLocations component that allows users to manage their preferred pickup locations and sublocations. It fetches available pickup locations and sublocations from the API, displays them in dropdown selects, and allows users to update their preferences. The component also handles state management for user selections and updates the user profile accordingly.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const Settings_PickupLocations = () => {
 	const stableNormalize = React.useCallback((value) => {
 		if (Array.isArray(value)) {
@@ -65,11 +68,11 @@ export const Settings_PickupLocations = () => {
 	const updateLocations = useUpdateLocations();
 	const updateSublocations = useUpdateSublocations();
     const updateUserProfile = useUpdateUserProfile();
-	const { theme, textColor, colorMode } = useTheme();
+	const { theme, runtimeColors, textColor, colorMode } = useTheme();
 	const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
     const locationsRef = React.useRef(locations);
 	const sublocationsRef = React.useRef(sublocations);
 
@@ -382,8 +385,8 @@ export const Settings_PickupLocations = () => {
                                    setRememberPickupLocation((prev) => !prev);
                               }}>
                               <CheckboxIndicator
-                                   style={rememberPickupLocation ? { marginRight: 8, borderColor: theme.tokens.colors.primary['500'], backgroundColor: theme.tokens.colors.primary['500'] } : { marginRight: 8, borderColor }}>
-                                   <CheckboxIcon as={CheckIcon} style={{ color: theme['tokens']['colors']['primary']['500-text'] }} />
+                                   style={rememberPickupLocation ? { marginRight: 8, borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : { marginRight: 8, borderColor }}>
+                                   <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }} />
                               </CheckboxIndicator>
                               <CheckboxLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'bypass_pickup_location_prompt')}</CheckboxLabel>
                          </Checkbox>
@@ -391,7 +394,7 @@ export const Settings_PickupLocations = () => {
                ) : null}
                <ButtonGroup>
                     <Button
-                         style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                         style={{ backgroundColor: runtimeColors.primary[500] }}
                          onPress={async () => {
                               if (!hasChanges) {
                                    return;
@@ -413,7 +416,7 @@ export const Settings_PickupLocations = () => {
                               }
                          }}
                          isDisabled={loading || !hasChanges}>
-                         {loading ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500-text'] }} /> : <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'update')}</ButtonText>}
+                        {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'update')}</ButtonText>}
                     </Button>
                </ButtonGroup>
           </Box>

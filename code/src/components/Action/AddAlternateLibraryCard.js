@@ -1,4 +1,3 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import _ from 'lodash';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
@@ -13,13 +12,18 @@ import { useQueryClient } from '@tanstack/react-query';
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedInput, ThemedInputField } from '../themed/ThemedFormControls';
 import { Button, ButtonGroup, ButtonSpinner, ButtonText } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { Icon, CloseIcon } from '@/components/ui/icon';
-import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 
+/**
+ * AddAlternateLibraryCard component for adding an alternate library card and password.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const AddAlternateLibraryCard = (props) => {
      const {
           id,
@@ -61,7 +65,7 @@ export const AddAlternateLibraryCard = (props) => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, textColor, colorMode, runtimeColors } = useTheme();
      const queryClient = useQueryClient();
      const { width } = useWindowDimensions();
      const [card, setCard] = React.useState(user?.alternateLibraryCard ?? '');
@@ -138,7 +142,7 @@ export const AddAlternateLibraryCard = (props) => {
                               {isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}
                          </Heading>
                          <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
-                              <Icon as={CloseIcon} style={{ color: textColor }} />
+                              <ThemedCloseIcon />
                          </ModalCloseButton>
                     </ModalHeader>
                     <ModalBody style={{ marginTop: 12 }}>
@@ -149,9 +153,9 @@ export const AddAlternateLibraryCard = (props) => {
                                         {cardLabel}
                                    </FormControlLabelText>
                               </FormControlLabel>
-                              <Input style={{ borderColor: inputBorderColor }}>
-                                   <InputField textContentType="none" style={{ color: textColor }} name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
-                              </Input>
+                              <ThemedInput style={{ borderColor: inputBorderColor }}>
+                                   <ThemedInputField textContentType="none" name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
+                              </ThemedInput>
                          </FormControl>
                          {showAlternateLibraryCardPassword ? (
                               <FormControl style={{ marginBottom: 8 }}>
@@ -160,12 +164,10 @@ export const AddAlternateLibraryCard = (props) => {
                                              {passwordLabel}
                                         </FormControlLabelText>
                                    </FormControlLabel>
-                                   <Input style={{ borderColor: inputBorderColor }}>
-                                        <InputField textContentType="none" type={showPassword ? 'text' : 'password'} style={{ color: textColor }} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
-                                        <InputSlot onPress={toggleShowPassword}>
-                                             <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} color={textColor} style={{ marginRight: 8 }} />
-                                        </InputSlot>
-                                   </Input>
+                                   <ThemedInput style={{ borderColor: inputBorderColor }}>
+                                        <ThemedInputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
+                                        <PasswordVisibilityToggle showPassword={showPassword} onPress={toggleShowPassword} />
+                                   </ThemedInput>
                               </FormControl>
                          ) : null}
                     </ModalBody>
@@ -181,7 +183,7 @@ export const AddAlternateLibraryCard = (props) => {
                                    <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                               </Button>
                               <Button
-                                   style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                   style={{ backgroundColor: runtimeColors.primary[500] }}
                                    isDisabled={loading}
                                    onPress={async () => {
                                         setLoading(true);
@@ -233,7 +235,7 @@ export const AddAlternateLibraryCard = (props) => {
                                              }
                                         });
                                    }}>
-                                   {loading ? <ButtonSpinner color={theme.tokens.colors.primary['500-text']} /> : <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{title}</ButtonText>}
+                                  {loading ? <ButtonSpinner color={runtimeColors.primary['500-text']} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>}
                               </Button>
                          </ButtonGroup>
                     </ModalFooter>

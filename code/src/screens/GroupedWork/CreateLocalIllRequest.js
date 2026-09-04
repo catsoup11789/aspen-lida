@@ -4,7 +4,6 @@ import { Platform } from 'react-native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { loadingSpinner } from '../../components/loadingSpinner';
 import { refreshProfile, submitLocalIllRequest } from '../../util/api/user';
-
 import { useLibraryLocation } from '../../hooks/useLibraryBranchData';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { useUserState, useUpdateUserProfile } from '../../hooks/useUserData';
@@ -15,7 +14,7 @@ import { stripHTML } from '../../helpers/helpers';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { Alert, AlertText } from '@/components/ui/alert';
+import { ThemedAlert, ThemedAlertText } from '../../components/themed/ThemedAlert';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
 import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
@@ -28,6 +27,11 @@ import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragI
 import { Text } from '@/components/ui/text';
 import { Textarea, TextareaInput } from '@/components/ui/textarea';
 
+/**
+ * CreateLocalIllRequest component that fetches the local ILL form configuration and renders a request form for users to submit local ILL requests. It handles form submission, error handling, and user profile updates.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const CreateLocalIllRequest = () => {
      const [formConfig, setFormConfig] = React.useState([]);
       const [hasError, setHasError] = React.useState(false);
@@ -84,6 +88,12 @@ export const CreateLocalIllRequest = () => {
      return <>{status === 'loading' || isFetching ? loadingSpinner() : (hasError || status === 'error') ? loadError('The ILL System is not setup properly, please contact your library to place a request', '') : <Request config={formConfig} workId={id} workTitle={title} volumeId={volumeId} volumeName={volumeName} />}</>;
 };
 
+/**
+ * Request component that renders the form for creating a local interlibrary loan (ILL) request. It manages the state of the form fields and handles the submission of the request.
+ * @param payload
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Request = (payload) => {
      const [title, setTitle] = React.useState('');
      const [note, setNote] = React.useState('');
@@ -96,7 +106,7 @@ const Request = (payload) => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { theme, colorMode, textColor } = useTheme();
+     const { theme, colorMode, textColor, runtimeColors, uiColors } = useTheme();
      const navigation = useNavigation();
      const queryClient = useQueryClient();
      const insets = useSafeAreaInsets();
@@ -268,13 +278,13 @@ const Request = (payload) => {
                               </SelectTrigger>
                               <SelectPortal>
                                    <SelectBackdrop />
-                                   <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                   <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                         <SelectDragIndicatorWrapper>
                                              <SelectDragIndicator />
                                         </SelectDragIndicatorWrapper>
                                         <SelectScrollView>
                                              {locations.map((location, index) => {
-                                                  return <SelectItem key={index} label={location.displayName} value={location.code} style={{ backgroundColor: pickupLocation === location.code ? theme.tokens.colors.tertiary['300'] : 'transparent' }} textStyle={{ color: pickupLocation === location.code ? theme.tokens.colors.tertiary['500-text'] : textColor }} />;
+                                                  return <SelectItem key={index} label={location.displayName} value={location.code} style={{ backgroundColor: pickupLocation === location.code ? runtimeColors.tertiary[300] : 'transparent' }} textStyle={{ color: pickupLocation === location.code ? runtimeColors.tertiary['500-text'] : textColor }} />;
                                              })}
                                         </SelectScrollView>
                                    </SelectContent>
@@ -341,8 +351,8 @@ const Request = (payload) => {
                               )}
                          </ButtonText>
                     </Button>
-                    <Button variant="outline" onPress={() => navigation.goBack()} style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
-                         <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark }}>Cancel</ButtonText>
+                    <Button variant="outline" onPress={() => navigation.goBack()} style={{ borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
+                         <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark }}>Cancel</ButtonText>
                     </Button>
                </HStack>
           );
@@ -351,11 +361,11 @@ const Request = (payload) => {
      const getErrorMessage = () => {
           if (errorMessage) {
                return (
-                    <Alert style={{ width: '100%' }} action="warning" variant="solid">
-                         <AlertText size="xs" bold>
+                    <ThemedAlert style={{ width: '100%' }} action="warning" variant="solid">
+                         <ThemedAlertText action="warning" variant="solid" size="xs" bold>
                               {errorMessage}
-                         </AlertText>
-                    </Alert>
+                         </ThemedAlertText>
+                    </ThemedAlert>
                );
           }
           return null;

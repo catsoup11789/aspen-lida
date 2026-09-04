@@ -4,7 +4,6 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import { useUserState, useLists, useListGroups } from '../../hooks/useUserData';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { addTitlesToList, createListFromTitle } from '../../util/api/list';
@@ -15,20 +14,26 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronDownIcon, CloseIcon, Icon, CircleIcon } from '@/components/ui/icon';
-import { Input, InputField } from '@/components/ui/input';
+import { ChevronDownIcon, Icon, CircleIcon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
 import { Textarea, TextareaInput } from '@/components/ui/textarea';
 import { VStack } from '@/components/ui/vstack';
+import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 
+/**
+ * AddToList component that displays a button to add an item to a list. When clicked, it opens a modal that allows the user to select an existing list or create a new one, and optionally add the list to a group. It handles the state of the modal, form fields, and API calls for adding items to lists and creating new lists.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const AddToList = (props) => {
      const item = props.itemId;
      const btnStyle = props.btnStyle;
@@ -51,10 +56,10 @@ const AddToList = (props) => {
      const [title, saveTitle] = useState();
      const [isPublic, saveIsPublic] = useState('1');
      const queryClient = useQueryClient();
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, runtimeColors, textColor, colorMode } = useTheme();
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
      const cancelColor = colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.textStrong.dark;
 
      const [addToGroup, setAddToGroup] = React.useState('no');
@@ -107,23 +112,23 @@ const AddToList = (props) => {
 
      const RenderLargeButton = () => (
           <Center>
-               <Button style={{ marginTop: 12, backgroundColor: theme.tokens.colors.tertiary['500'] }} onPress={toggleModal}>
-                    <MaterialIcons name="bookmark" size={18} color={theme.tokens.colors.tertiary['500-text']} style={{ marginRight: 4 }} />
-                    <ButtonText style={{ color: theme.tokens.colors.tertiary['500-text'] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
+               <Button style={{ marginTop: 12, backgroundColor: runtimeColors.tertiary[500] }} onPress={toggleModal}>
+                    <MaterialIcons name="bookmark" size={18} color={runtimeColors.tertiary['500-text']} style={{ marginRight: 4 }} />
+                    <ButtonText style={{ color: runtimeColors.tertiary['500-text'] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
                </Button>
           </Center>
      );
 
      const RenderSmallButton = () => (
           <Button size="xs" variant="link" style={{ marginTop: 4 }} onPress={toggleModal}>
-               <MaterialIcons name="bookmark" size={18} color={theme.tokens.colors.tertiary['500']} style={{ marginRight: 4 }} />
-               <ButtonText style={{ color: theme.tokens.colors.tertiary['500'] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
+               <MaterialIcons name="bookmark" size={18} color={runtimeColors.tertiary[500]} style={{ marginRight: 4 }} />
+               <ButtonText style={{ color: runtimeColors.tertiary[500] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
           </Button>
      );
 
      const RenderRegularButton = () => (
-          <Button style={{ width: btnWidth, backgroundColor: theme.tokens.colors.primary['500'] }} onPress={toggleModal}>
-               <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
+          <Button style={{ width: btnWidth, backgroundColor: runtimeColors.primary[500] }} onPress={toggleModal}>
+               <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
           </Button>
      );
 
@@ -147,7 +152,7 @@ const AddToList = (props) => {
                                              {getTermFromDictionary(language, 'add_to_list')}
                                         </Heading>
                                         <ModalCloseButton style={{ padding: 12 }} onPress={closeModal}>
-                                             <Icon as={CloseIcon} style={{ color: textColor }} />
+                                             <ThemedCloseIcon />
                                         </ModalCloseButton>
                                    </ModalHeader>
                                    <ModalBody>
@@ -186,11 +191,11 @@ const AddToList = (props) => {
                                                        <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'or')}</Text>
                                                        <Button
                                                             size="sm"
-                                                            style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                                            style={{ backgroundColor: runtimeColors.primary[500] }}
                                                             onPress={() => {
                                                                  setScreen('create-new');
                                                             }}>
-                                                            <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
+                                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
                                                        </Button>
                                                   </HStack>
                                              </VStack>
@@ -206,7 +211,7 @@ const AddToList = (props) => {
                                              </Button>
                                              {!_.isEmpty(lists) ? (
                                                   <Button
-                                                       style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                                       style={{ backgroundColor: runtimeColors.primary[500] }}
                                                        isLoading={loading}
                                                        onPress={() => {
                                                             setLoading(true);
@@ -216,11 +221,11 @@ const AddToList = (props) => {
                                                                  closeModal();
                                                             });
                                                        }}>
-                                                       <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'save_to_list')}</ButtonText>
+                                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'save_to_list')}</ButtonText>
                                                   </Button>
                                              ) : (
-                                                  <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                                                       <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
+                                                  <Button style={{ backgroundColor: runtimeColors.primary[500] }}>
+                                                       <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
                                                   </Button>
                                              )}
                                         </ButtonGroup>
@@ -233,7 +238,7 @@ const AddToList = (props) => {
                                              {getTermFromDictionary(language, 'create_new_list_item')}
                                         </Heading>
                                         <ModalCloseButton style={{ padding: 12 }} onPress={closeModal}>
-                                             <Icon as={CloseIcon} style={{ color: textColor }} />
+                                             <ThemedCloseIcon />
                                         </ModalCloseButton>
                                    </ModalHeader>
                                    <ModalBody>
@@ -243,9 +248,9 @@ const AddToList = (props) => {
                                                        <FormControlLabel>
                                                             <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                                        </FormControlLabel>
-                                                       <Input style={{ borderColor }}>
-                                                            <InputField id="title" onChangeText={(text) => saveTitle(text)} returnKeyType="next" style={{ color: textColor }} />
-                                                       </Input>
+                                                       <ThemedInput style={{ borderColor }}>
+                                                            <ThemedInputField id="title" onChangeText={(text) => saveTitle(text)} returnKeyType="next" />
+                                                       </ThemedInput>
                                                   </FormControl>
                                                   <FormControl>
                                                        <FormControlLabel>
@@ -317,9 +322,9 @@ const AddToList = (props) => {
                                                                  <FormControlLabel>
                                                                       <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
                                                                  </FormControlLabel>
-                                                                 <Input style={{ borderColor }}>
-                                                                      <InputField id="newGroupName" onChangeText={(text) => setNewGroupName(text)} defaultValue={newGroupName} style={{ color: textColor }} />
-                                                                 </Input>
+                                                                 <ThemedInput style={{ borderColor }}>
+                                                                      <ThemedInputField id="newGroupName" onChangeText={(text) => setNewGroupName(text)} defaultValue={newGroupName} />
+                                                                 </ThemedInput>
                                                             </FormControl>
                                                             {hasListGroups && (
                                                                  <FormControl style={{ paddingBottom: 8 }}>
@@ -411,7 +416,7 @@ const AddToList = (props) => {
                                                   <ButtonText style={{ color: cancelColor }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                              </Button>
                                              <Button
-                                                  style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                                  style={{ backgroundColor: runtimeColors.primary[500] }}
                                                   isLoading={loading}
                                                   isLoadingText={getTermFromDictionary(language, 'saving', true)}
                                                   onPress={() => {
@@ -423,7 +428,7 @@ const AddToList = (props) => {
                                                             closeModal();
                                                        });
                                                   }}>
-                                                  <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_list')}</ButtonText>
+                                                  <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'create_list')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
                                    </ModalFooter>

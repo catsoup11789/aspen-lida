@@ -5,11 +5,10 @@ import moment from 'moment';
 import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonText } from '@/components/ui/button';
 import { Menu, MenuItem, MenuItemLabel } from '@/components/ui/menu';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-
 import { saveLanguage } from '../util/api/user';
 import { useLibrary } from '../hooks/useLibrarySystemData';
 import {
@@ -22,7 +21,6 @@ import {
 
 import {decodeHTML } from '../helpers/helpers';
 import { GLOBALS } from '../util/globals';
-
 import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage, getErrorMessage } from '../util/logging.js';
 import { createApiClient } from '../util/api/apiFactory';
 import { loadDictionary, loadDictionaryForLanguage, saveDictionary } from '../util/db';
@@ -31,8 +29,13 @@ import { useTheme } from '../themes/theme';
 /** *******************************************************************
  * General
  ******************************************************************* **/
+/**
+ * LanguageSwitcher component that allows users to switch between available languages in the application. It displays a button with the current language and opens a menu with the list of available languages when clicked. When a language is selected, it updates the active language and fetches the corresponding translations.
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 export const LanguageSwitcher = () => {
-     const { theme, colorMode, textColor } = useTheme();
+     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
      const library = useLibrary();
      const language = useActiveLanguage();
      const languages = useAvailableLanguages();
@@ -89,7 +92,7 @@ export const LanguageSwitcher = () => {
                <>
                     <Box>
                          <Menu
-                         style={{ backgroundColor: colorMode === 'light' ? '#fafaf9' : '#374151' }}
+                         style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark }}
                          isOpen={isLanguageMenuOpen}
                          onClose={() => setIsLanguageMenuOpen(false)}
                          onOpen={() => setIsLanguageMenuOpen(true)}
@@ -109,8 +112,8 @@ export const LanguageSwitcher = () => {
                                         }}
                                         style={{ backgroundColor: 'transparent', borderRadius: 9999 }}
                                    >
-                                        <MaterialIcons name="language" size={18} color={theme.tokens.colors.primary['500']} />
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}> {languageDisplayName}</ButtonText>
+                                        <MaterialIcons name="language" size={18} color={runtimeColors.primary[500]} />
+                                        <ButtonText style={{ color: runtimeColors.primary[500] }}> {languageDisplayName}</ButtonText>
                                    </Button>
                               );
                          }}>
@@ -144,7 +147,7 @@ export const LanguageSwitcher = () => {
                          >
                               <Box
                                    style={{
-                                        backgroundColor: colorMode === 'dark' ? '#1f2937' : '#fafaf9',
+                                        backgroundColor: colorMode === 'dark' ? uiColors.card.dark : uiColors.surfaceSoft.light,
                                         borderRadius: 16,
                                         paddingHorizontal: 24,
                                         paddingVertical: 20,
@@ -152,7 +155,7 @@ export const LanguageSwitcher = () => {
                                         justifyContent: 'center',
                                    }}
                               >
-                                   <Spinner size="large" color={theme.tokens.colors.primary['500']} />
+                                   <Spinner size="large" color={runtimeColors.primary[500]} />
                                     <Text style={{ marginTop: 12, color: textColor }}>Switching language...</Text>
                               </Box>
                          </View>
@@ -470,6 +473,13 @@ export async function getTranslatedTermsForUserPreferredLanguage(language, url) 
      return true;
 }
 
+/**
+ * Returns translation of a single term for the given language from the local dictionary
+ * @param language
+ * @param key
+ * @param ellipsis
+ * @returns {*|string}
+ */
 export const getTermFromDictionary = (language = 'en', key, ellipsis = false) => {
      return helperGetTermFromDictionary(language, key, ellipsis, translationsLibrary);
 };

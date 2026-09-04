@@ -4,9 +4,6 @@ import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import { popToast } from '../../components/feedback';
-
-// custom components and helper files
-
 import { getCleanTitle } from '../../helpers/item';
 import { navigate } from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
@@ -16,15 +13,21 @@ import { logDebugMessage, logErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { Badge, BadgeText } from '@/components/ui/badge';
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
+import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * DisplayEventResult component that displays an individual event result with its image, title, date, time, location, and registration requirement. It handles user interaction to navigate to the event details or open the event URL in a web browser.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const DisplayEventResult = (props) => {
      const item = props.data;
      const library = useLibrary();
@@ -174,11 +177,11 @@ export const DisplayEventResult = (props) => {
                          ) : null}
                          {registrationRequired ? (
                               <HStack space="xs" style={{ marginTop: 16, flexWrap: 'wrap' }}>
-                                   <Badge key={0} variant="outline" style={{ borderRadius: 8, borderColor: theme['tokens']['colors']['secondary']['400'], backgroundColor: 'transparent' }}>
-                                        <BadgeText style={{ textTransform: 'none', color: theme['tokens']['colors']['secondary']['400'], fontSize: 10, lineHeight: 14 }}>
+                                   <ThemedBadge key={0} action="secondary" variant="outline" style={{ borderRadius: 8, borderColor: theme['tokens']['colors']['secondary']['400'], backgroundColor: 'transparent' }}>
+                                        <ThemedBadgeText action="secondary" style={{ textTransform: 'none', color: theme['tokens']['colors']['secondary']['400'], fontSize: 10, lineHeight: 14 }}>
                                              {getTermFromDictionary(language, 'registration_required')}
-                                        </BadgeText>
-                                   </Badge>
+                                        </ThemedBadgeText>
+                                   </ThemedBadge>
                               </HStack>
                          ) : null}
                     </VStack>

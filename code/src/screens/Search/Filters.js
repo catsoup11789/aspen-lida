@@ -2,13 +2,10 @@ import { useNavigation, useNavigationState, StackActions } from '@react-navigati
 import _ from 'lodash';
 import React from 'react';
 import { LoadingSpinner } from '../../components/loadingSpinner';
-
 import { SearchContext } from '../../context/initialContext';
 import { useLibraryLocation } from '../../hooks/useLibraryBranchData';
 import { navigateStack } from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
-
-// custom components and helper files
 import { SearchGlobal } from '../../util/globals';
 import { buildParamsForUrl } from '../../util/api/searchHelper';
 import { UnsavedChangesExit } from './UnsavedChanges';
@@ -22,13 +19,19 @@ import { Center } from '@/components/ui/center';
 import { ChevronRightIcon } from '@/components/ui/icon';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
-import { Input, InputField, InputSlot } from '@/components/ui/input';
+import { InputSlot } from '@/components/ui/input';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Text } from '@/components/ui/text';
 import { View } from '@/components/ui/view';
 import { VStack } from '@/components/ui/vstack';
+import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 
+/**
+ * FiltersScreen component that displays the search filters and allows users to modify their search criteria. It provides options to select search indexes, sources, and various facets, as well as buttons to update or reset the search.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const FiltersScreen = () => {
      const [isLoading] = React.useState(false);
      const navigation = useNavigation();
@@ -37,7 +40,7 @@ export const FiltersScreen = () => {
      const location = useLibraryLocation();
      const language = useActiveLanguage();
      const { currentIndex, currentSource } = React.useContext(SearchContext);
-     const {theme, textColor, colorMode } = useTheme();
+     const { theme, textColor, colorMode, runtimeColors } = useTheme();
      const pendingFiltersFromParams = useNavigationState((state) => state.routes[0]['params']['pendingFilters']);
      const [searchTerm, setSearchTerm] = React.useState(SearchGlobal.term ?? '');
 
@@ -160,16 +163,16 @@ export const FiltersScreen = () => {
                     <Center>
                          <ButtonGroup size="lg">
                               <Button variant="link" onPress={() => clearSelections()}>
-                                   <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'reset_all')}</ButtonText>
+                                   <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'reset_all')}</ButtonText>
                               </Button>
                               <Button
-                                   style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                   style={{ backgroundColor: runtimeColors.primary[500] }}
                                    isDisabled={loading}
                                    onPress={() => {
                                         setLoading(true);
                                         updateSearch();
                                    }}>
-                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{loading ? getTermFromDictionary(language, 'updating', true) : getTermFromDictionary(language, 'update')}</ButtonText>
+                                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{loading ? getTermFromDictionary(language, 'updating', true) : getTermFromDictionary(language, 'update')}</ButtonText>
                               </Button>
                          </ButtonGroup>
                     </Center>
@@ -289,11 +292,11 @@ export const FiltersScreen = () => {
                     <Box style={{ padding: 20 }}>
                          <VStack space="md">
                               <FormControl>
-                                   <Input variant="outline" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                                   <ThemedInput variant="outline">
                                         <InputSlot>
                                              <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />
                                         </InputSlot>
-                                        <InputField returnKeyType="search" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} style={{ color: textColor }} />
+                                        <ThemedInputField returnKeyType="search" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
                                                   <MaterialIcons name="close" size={20} color={textColor} style={{ marginRight: 8 }} />
@@ -302,7 +305,7 @@ export const FiltersScreen = () => {
                                         <InputSlot onPress={() => openScanner()}>
                                              <MaterialCommunityIcons name="barcode-scan" size={20} color={textColor} style={{ marginRight: 8 }} />
                                         </InputSlot>
-                                   </Input>
+                                   </ThemedInput>
                               </FormControl>
                          </VStack>
 

@@ -10,17 +10,15 @@ import React from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { AppState, Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonText } from '@/components/ui/button';
 import { Divider } from '@/components/ui/divider';
 import { HStack } from '@/components/ui/hstack';
 import { Image } from '@/components/ui/image';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-
-// custom components and helper files
 import { showILSMessage } from '../../components/Notifications';
 import { CheckoutsContext, HoldsContext, SystemMessagesContext } from '../../context/initialContext';
 import {
@@ -41,11 +39,9 @@ import { getLocations, getCatalogStatus, getSystemMessages } from '../../util/ap
 import { getILSMessages, refreshProfile, reloadProfile, validateSession, passUserToDiscovery, getPickupSublocations, getPatronHolds, getPatronCheckedOutItems, getPickupLocations, getLinkedAccounts } from '../../util/api/user';
 import { sortCheckouts, sortHolds, formatLinkedAccounts, formatHolds, formatPickupLocations } from '../../util/api/userHelper';
 import { getListGroups, getLists } from '../../util/api/list';
-
 import { GLOBALS } from '../../util/globals';
 import { stripHTML } from '../../helpers/helpers';
 import { loadUserState } from '../../util/db';
-
 import { logDebugMessage, logWarnMessage, logErrorMessage, getErrorMessage } from '../../util/logging.js';
 import { useActiveLanguage, useDictionaryQuery } from '../../hooks/useLanguageData';
 import { useTranslationWithValues } from '../../hooks/useTranslationWithValues';
@@ -57,6 +53,13 @@ Notifications.setNotificationHandler({
           shouldSetBadge: false }) });
 
 const USER_DATA_STALE_MS = 3 * 60 * 60 * 1000; // 3 hours — drawer background refresh
+
+/**
+ * Custom hook to manage a query with callbacks for success and error handling.
+ * @param queryOptions
+ * @param callbacks
+ * @returns {{data, error: null, isLoading: boolean, isSuccess: boolean, isError: boolean, dataUpdatedAt: number, errorUpdatedAt: number, refetch: (function(): Promise<null|*|undefined>)|*}}
+ */
 const useQueryWithCallbacks = (queryOptions, callbacks = {}) => {
      const {
           queryKey = [],
@@ -166,6 +169,12 @@ const useQueryWithCallbacks = (queryOptions, callbacks = {}) => {
           refetch: executeQuery };
 };
 
+/**
+ * DrawerContent component that manages user data, notifications, and system messages, and handles various API calls to fetch and update user-related information.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const DrawerContent = (props) => {
      const [userLatitude, setUserLatitude] = React.useState(0);
      const [userLongitude, setUserLongitude] = React.useState(0);
@@ -806,9 +815,9 @@ const Checkouts = () => {
                               <Text style={{ color: textColor, fontWeight: '700' }}> ({user.numCheckedOut ?? 0})</Text>
                          </HStack>
                          {user.numOverdue > 0 ? (
-                              <Badge action="error" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <BadgeText style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'checkouts_overdue_summary').replace("%1%", user.numOverdue)}</BadgeText>
-                              </Badge>
+                              <ThemedBadge action="error" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                   <ThemedBadgeText action="error" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'checkouts_overdue_summary').replace("%1%", user.numOverdue)}</ThemedBadgeText>
+                              </ThemedBadge>
                          ) : null}
                     </VStack>
                </HStack>
@@ -842,9 +851,9 @@ const Holds = () => {
                               <Text style={{ color: textColor, fontWeight: '700' }}> ({user.numHolds ?? 0})</Text>
                          </HStack>
                          {user.numHoldsAvailable > 0 ? (
-                              <Badge action="success" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <BadgeText style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'num_holds_ready_for_pickup', false).replace('%1%', user.numHoldsAvailable)}</BadgeText>
-                              </Badge>
+                              <ThemedBadge action="success" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                   <ThemedBadgeText action="success" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'num_holds_ready_for_pickup', false).replace('%1%', user.numHoldsAvailable)}</ThemedBadgeText>
+                              </ThemedBadge>
                          ) : null}
                     </VStack>
                </HStack>
@@ -911,9 +920,9 @@ const SavedSearches = () => {
                               <Text style={{ color: textColor, fontWeight: '700' }}> ({user.numSavedSearches ?? 0})</Text>
                          </HStack>
                          {user.numSavedSearchesNew > 0 ? (
-                              <Badge action="warning" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <BadgeText style={{ fontSize: 12 }}>{savedSearchSummary}</BadgeText>
-                              </Badge>
+                              <ThemedBadge action="warning" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                   <ThemedBadgeText action="warning" style={{ fontSize: 12 }}>{savedSearchSummary}</ThemedBadgeText>
+                              </ThemedBadge>
                          ) : null}
                     </VStack>
                </HStack>
@@ -1086,9 +1095,9 @@ const Fines = () => {
                          <MaterialIcons name="chevron-right" size={20} color={themeTextColor} />
                          <VStack>
                               <Text style={{ color: themeTextColor, fontWeight: '500' }}>{getTermFromDictionary(language, 'fines')}</Text>
-                              <Badge action={hasFines ? 'error' : 'info'} style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <BadgeText style={{ fontSize: 12 }}>{user.fines ?? '$0.00'}</BadgeText>
-                              </Badge>
+                              <ThemedBadge action={hasFines ? 'error' : 'info'} style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                   <ThemedBadgeText action={hasFines ? 'error' : 'info'} style={{ fontSize: 12 }}>{user.fines ?? '$0.00'}</ThemedBadgeText>
+                              </ThemedBadge>
                          </VStack>
                     </HStack>
                </Pressable>
@@ -1122,9 +1131,9 @@ const Events = () => {
                                    {getTermFromDictionary(language, 'events')}
                               </Text>
                               {user.numSavedEventsUpcoming > 0 ? (
-                                   <Badge action="info" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                        <BadgeText style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'num_saved_events_upcoming').replace('%1%', user.numSavedEventsUpcoming)}</BadgeText>
-                                   </Badge>
+                                   <ThemedBadge action="info" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                        <ThemedBadgeText action="info" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'num_saved_events_upcoming').replace('%1%', user.numSavedEventsUpcoming)}</ThemedBadgeText>
+                                   </ThemedBadge>
                               ) : null}
                          </VStack>
                     </HStack>
@@ -1155,9 +1164,9 @@ const YearInReview = () => {
                          <MaterialIcons name="chevron-right" size={20} color={themeTextColor} />
                          <VStack>
                               <Text style={{ color: themeTextColor, fontWeight: '500' }}>{user.yearInReviewName ?? yearInReviewLabel}</Text>
-                              <Badge action="info" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <BadgeText style={{ fontSize: 12 }}>{viewNowLabel}</BadgeText>
-                              </Badge>
+                              <ThemedBadge action="info" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                   <ThemedBadgeText action="info" style={{ fontSize: 12 }}>{viewNowLabel}</ThemedBadgeText>
+                              </ThemedBadge>
                          </VStack>
                     </HStack>
                </Pressable>
@@ -1234,12 +1243,12 @@ async function addStoredNotification(message) {
 function LogOutButton() {
      const language = useActiveLanguage();
      const { signOut } = React.useContext(AuthContext);
-     const { theme } = useTheme();
+     const { runtimeColors } = useTheme();
 
      return (
-          <Button size="md" action="secondary" onPress={signOut} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-               <MaterialIcons name="logout" size={14} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />
-               <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}> {getTermFromDictionary(language, 'logout')}</ButtonText>
+          <Button size="md" action="secondary" onPress={signOut} style={{ backgroundColor: runtimeColors.primary[500] }}>
+               <MaterialIcons name="logout" size={14} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+               <ButtonText style={{ color: runtimeColors.primary['500-text'] }}> {getTermFromDictionary(language, 'logout')}</ButtonText>
           </Button>
      );
 }

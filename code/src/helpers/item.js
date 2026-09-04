@@ -1,32 +1,40 @@
 import moment from 'moment';
 import React from 'react';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ActionsheetItemText } from '@/components/ui/actionsheet';
 import { Text } from '@/components/ui/text';
-
-
 import { useUserState } from '../hooks/useUserData';
 import { useLibrary } from '../hooks/useLibrarySystemData';
 import { getTermFromDictionary, getTranslationWithValuesText } from '../translations/TranslationService';
 import { useActiveLanguage } from '../hooks/useLanguageData';
 import { useTheme } from '../themes/theme';
 
+/**
+ * isOverdue component for displaying an overdue badge if the item is overdue.
+ * @param overdue
+ * @returns {React.JSX.Element|null}
+ */
 export const isOverdue = (overdue) => {
      const language = useActiveLanguage();
      if (overdue) {
           return (
-               <Badge action="error" style={{ marginTop: -8, alignSelf: 'flex-start', borderRadius: 4 }}>
-                    <BadgeText>
+               <ThemedBadge action="error" style={{ marginTop: -8, alignSelf: 'flex-start', borderRadius: 4 }}>
+                    <ThemedBadgeText action="error">
                          {getTermFromDictionary(language, 'checkout_overdue')}
-                    </BadgeText>
-               </Badge>
+                    </ThemedBadgeText>
+               </ThemedBadge>
           );
      } else {
           return null;
      }
 };
 
+/**
+ * getTitle component for displaying the title of an item, with formatting to remove any trailing slashes.
+ * @param title
+ * @returns {React.JSX.Element}
+ */
 export const getTitle = (title) => {
      const {textColor} = useTheme();
      if (title) {
@@ -55,6 +63,11 @@ export const getTitle = (title) => {
      }
 };
 
+/**
+ * getCleanTitle function for returning a cleaned-up version of the title, removing any trailing slashes.
+ * @param title
+ * @returns {string}
+ */
 export function getCleanTitle(title) {
      if (title) {
           let displayTitle = title;
@@ -67,6 +80,11 @@ export function getCleanTitle(title) {
      return 'Unknown';
 }
 
+/**
+ * getCallNumber component for displaying the call number of an item, if available.
+ * @param callNumber
+ * @returns {React.JSX.Element|null}
+ */
 export const getCallNumber = (callNumber) => {
      const {textColor} = useTheme();
      const language = useActiveLanguage();
@@ -83,6 +101,11 @@ export const getCallNumber = (callNumber) => {
      return null;
 }
 
+/**
+ * getVolume component for displaying the volume of an item, if available.
+ * @param volume
+ * @returns {React.JSX.Element|null}
+ */
 export const getVolume = (volume) => {
      const {textColor} = useTheme();
      const language = useActiveLanguage();
@@ -99,6 +122,11 @@ export const getVolume = (volume) => {
      return null;
 }
 
+/**
+ * getVolume component for displaying the volume of an item, if available.
+ * @param author
+ * @returns {React.JSX.Element|null}
+ */
 export const getAuthor = (author) => {
      const {textColor} = useTheme();
      const language = useActiveLanguage();
@@ -121,6 +149,12 @@ export const getAuthor = (author) => {
      return null;
 };
 
+/**
+ * getFormat component for displaying the format of an item, along with its source if available.
+ * @param format
+ * @param source
+ * @returns {React.JSX.Element|null}
+ */
 export const getFormat = (format, source = null) => {
      const language = useActiveLanguage();
      const library = useLibrary();
@@ -168,24 +202,33 @@ export const getFormat = (format, source = null) => {
      }
 };
 
+/**
+ * getBadge component for displaying a badge based on the status, frozen state, availability, source, and status message of an item.
+ * @param status
+ * @param frozen
+ * @param available
+ * @param source
+ * @param statusMessage
+ * @returns {React.JSX.Element|null}
+ */
 export const getBadge = (status, frozen, available, source, statusMessage) => {
      const language = useActiveLanguage();
      if (frozen) {
           if (statusMessage) {
                return (
-                    <Badge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
-                         <BadgeText>
+                    <ThemedBadge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+                         <ThemedBadgeText action="warning">
                               {statusMessage}
-                         </BadgeText>
-                    </Badge>
+                         </ThemedBadgeText>
+                    </ThemedBadge>
                );
           }
           return (
-               <Badge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
-                    <BadgeText>
+               <ThemedBadge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+                    <ThemedBadgeText action="warning">
                          {status}
-                    </BadgeText>
-               </Badge>
+                    </ThemedBadgeText>
+               </ThemedBadge>
           );
      } else if (available) {
           let message = getTermFromDictionary(language, 'overdrive_hold_ready');
@@ -193,26 +236,31 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
                message = status;
           }
           return (
-               <Badge action="success" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
-                    <BadgeText>
+               <ThemedBadge action="success" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+                    <ThemedBadgeText action="success">
                          {message}
-                    </BadgeText>
-               </Badge>
+                    </ThemedBadgeText>
+               </ThemedBadge>
           );
      } else {
           if (status) {
                return (
-                    <Badge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
-                         <BadgeText>
+                    <ThemedBadge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+                         <ThemedBadgeText action="warning">
                               {status}
-                         </BadgeText>
-                    </Badge>
+                         </ThemedBadgeText>
+                    </ThemedBadge>
                );
           }
      }
      return null;
 };
 
+/**
+ * getType component for displaying the type of an item, with translations for specific types.
+ * @param type
+ * @returns {React.JSX.Element|null}
+ */
 export const getType = (type) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -244,6 +292,11 @@ export const getType = (type) => {
      }
 };
 
+/**
+ * getOnHoldFor component for displaying the user for whom an item is on hold, if available.
+ * @param user
+ * @returns {React.JSX.Element|null}
+ */
 export const getOnHoldFor = (user) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -260,6 +313,11 @@ export const getOnHoldFor = (user) => {
      return null;
 };
 
+/**
+ * getCheckedOutTo component for displaying the user to whom an item is checked out, if available and different from the current user.
+ * @param props
+ * @returns {React.JSX.Element|null}
+ */
 export const getCheckedOutTo = (props) => {
      const language = useActiveLanguage();
      const { data: userState } = useUserState();
@@ -280,6 +338,11 @@ export const getCheckedOutTo = (props) => {
      }
 };
 
+/**
+ * getDueDate component for displaying the due date of an item, if available and not zero.
+ * @param date
+ * @returns {React.JSX.Element|null}
+ */
 export const getDueDate = (date) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -301,6 +364,12 @@ export const getDueDate = (date) => {
      return null;
 };
 
+/**
+ * getDateLastUsed component for displaying the last used date of an item, if available and not zero, or indicating if the item is currently checked out.
+ * @param date
+ * @param checkedOut
+ * @returns {React.JSX.Element|null}
+ */
 export const getDateLastUsed = (date, checkedOut) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -323,6 +392,11 @@ export const getDateLastUsed = (date, checkedOut) => {
      return null;
 };
 
+/**
+ * willAutoRenew component for displaying the auto-renewal information of an item, if applicable.
+ * @param props
+ * @returns {React.JSX.Element|null}
+ */
 export const willAutoRenew = (props) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -342,6 +416,12 @@ export const willAutoRenew = (props) => {
      }
 };
 
+/**
+ * getPickupLocation component for displaying the pickup location of an item, if available and the source is 'ils'.
+ * @param location
+ * @param source
+ * @returns {React.JSX.Element|null}
+ */
 export const getPickupLocation = (location, source) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -359,6 +439,11 @@ export const getPickupLocation = (location, source) => {
      }
 };
 
+/**
+ * getOutOfHoldGroupMessage component for displaying a message when an item is out of the hold group, if available.
+ * @param outOfHoldGroupMessage
+ * @returns {React.JSX.Element|null}
+ */
 export const getOutOfHoldGroupMessage = (outOfHoldGroupMessage) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -376,6 +461,16 @@ export const getOutOfHoldGroupMessage = (outOfHoldGroupMessage) => {
      }
 }
 
+/**
+ * getPosition component for displaying the position of an item in the hold queue, if applicable.
+ * @param position
+ * @param available
+ * @param length
+ * @param holdPosition
+ * @param usesHoldPosition
+ * @param outOfHoldGroupMessage
+ * @returns {React.JSX.Element|null}
+ */
 export const getPosition = (position, available, length, holdPosition, usesHoldPosition, outOfHoldGroupMessage) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -403,6 +498,12 @@ export const getPosition = (position, available, length, holdPosition, usesHoldP
      }
 };
 
+/**
+ * getExpirationDate component for displaying the expiration date of an item, if available.
+ * @param expiration
+ * @param available
+ * @returns {React.JSX.Element|null}
+ */
 export const getExpirationDate = (expiration, available) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -422,6 +523,12 @@ export const getExpirationDate = (expiration, available) => {
      }
 };
 
+/**
+ * getRenewalCount component for displaying the renewal count of an item, if available.
+ * @param count
+ * @param available
+ * @returns {React.JSX.Element|null}
+ */
 export const getRenewalCount = (count, available = null) => {
      const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -439,6 +546,12 @@ export const getRenewalCount = (count, available = null) => {
      }
 };
 
+/**
+ * getCollectionName component for displaying the collection name of an item, if the source is 'overdrive' and a collection name is provided.
+ * @param source
+ * @param collectionName
+ * @returns {React.JSX.Element|null}
+ */
 export const getCollectionName = (source, collectionName = null) => {
 	const language = useActiveLanguage();
      const {textColor} = useTheme();
@@ -456,6 +569,17 @@ export const getCollectionName = (source, collectionName = null) => {
 	}
 }
 
+/**
+ * CheckoutAccessLabel component for displaying the access label for a checkout, based on its source and other properties.
+ * @param param0
+ * @param param0.checkout
+ * @param param0.language
+ * @param param0.baseUrl
+ * @param param0.libbyReaderName
+ * @param param0.color
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const CheckoutAccessLabel = ({ checkout, language, baseUrl, libbyReaderName, color }) => {
      const [label, setLabel] = React.useState('...'); // Fallback / temporary loading text
 

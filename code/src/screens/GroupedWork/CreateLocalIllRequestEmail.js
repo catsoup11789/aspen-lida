@@ -1,19 +1,23 @@
 import { useRoute, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { submitLocalIllRequestEmail } from '../../util/api/user';
-
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { popAlert } from '../../components/feedback';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Input, InputField } from '@/components/ui/input';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Textarea, TextareaInput } from '@/components/ui/textarea';
 import { VStack } from '@/components/ui/vstack';
 
+/**
+ * CreateLocalIllRequestEmail component that renders a form for creating a local interlibrary loan (ILL) request email. It retrieves work details from the route parameters and allows the user to submit the request with optional volume name and note.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const CreateLocalIllRequestEmail = () => {
      const route = useRoute();
      const id = route.params.id;
@@ -25,6 +29,12 @@ export const CreateLocalIllRequestEmail = () => {
      return <Request workId={id} workTitle={title} author={author} volumeName={volumeName} recordId={recordId}/>;
 };
 
+/**
+ * Request component that renders the form for creating a local interlibrary loan (ILL) request email. It manages the state of the form fields and handles the submission of the request.
+ * @param payload
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Request = (payload) => {
      const navigation = useNavigation();
      const { workTitle, author, volumeName, recordId} = payload;
@@ -68,15 +78,15 @@ const Request = (payload) => {
                                    {getTermFromDictionary(language, 'title')}
                               </FormControlLabelText>
                          </FormControlLabel>
-                         <Input isReadOnly={true}>
-                              <InputField
+                         <ThemedInput isReadOnly={true}>
+                              <ThemedInputField
                                    id="title"
                                    size="$lg"
                                    value={workTitle}
                                    defaultValue={workTitle}
                                    isReadOnly={true}
                               />
-                         </Input>
+                         </ThemedInput>
                     </FormControl>
                     <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>
@@ -84,14 +94,14 @@ const Request = (payload) => {
                                    {getTermFromDictionary(language, 'author')}
                               </FormControlLabelText>
                          </FormControlLabel>
-                         <Input isReadOnly={true}>
-                              <InputField
+                         <ThemedInput isReadOnly={true}>
+                              <ThemedInputField
                                    id="author"
                                    size="$lg"
                                    value={author}
                                    defaultValue={author}
                               />
-                         </Input>
+                         </ThemedInput>
                     </FormControl>
                     <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>
@@ -99,8 +109,8 @@ const Request = (payload) => {
                                    {getTermFromDictionary(language, 'volume')}
                               </FormControlLabelText>
                          </FormControlLabel>
-                         <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
-                              <InputField
+                         <ThemedInput>
+                              <ThemedInputField
                                    id="volume"
                                    size="$lg"
                                    value={userVolumeName}
@@ -109,7 +119,7 @@ const Request = (payload) => {
                                         setUserVolumeName(text);
                                    }}
                               />
-                         </Input>
+                         </ThemedInput>
                     </FormControl>
                     <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>

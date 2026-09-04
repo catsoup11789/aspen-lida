@@ -4,9 +4,9 @@ import * as WebBrowser from 'expo-web-browser';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React from 'react';
 import { FlatList, Platform } from 'react-native';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { Icon, ChevronDownIcon } from '@/components/ui/icon';
@@ -15,25 +15,30 @@ import { ScrollView } from '@/components/ui/scroll-view';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-import { loadError } from '../../../components/loadError';
-import { popToast } from '../../../components/feedback';
-
-// custom components and helper files
-import { loadingSpinner } from '../../../components/loadingSpinner';
-import { DisplaySystemMessage } from '../../../components/Notifications';
-import { SystemMessagesContext } from '../../../context/initialContext';
-import { getCleanTitle } from '../../../helpers/item';
-import { navigateStack } from '../../../helpers/RootNavigator';
+import { loadError } from '@/src/components/loadError';
+import { popToast } from '@/src/components/feedback';
+import { loadingSpinner } from '@/src/components/loadingSpinner';
+import { DisplaySystemMessage } from '@/src/components/Notifications';
+import { SystemMessagesContext } from '@/src/context/initialContext';
+import { getCleanTitle } from '@/src/helpers/item';
+import { navigateStack } from '@/src/helpers/RootNavigator';
 import { getTermFromDictionary as getTermFromDictionaryHelper } from '../../../translations/TranslationHelper';
-import { getListTitles, removeTitlesFromList } from '../../../util/api/list';
+import { getListTitles, removeTitlesFromList } from '@/src/util/api/list';
 import EditList from './EditList';
-import {logDebugMessage, logErrorMessage, logInfoMessage} from '../../../util/logging';
-import { useActiveLanguage, useDictionary } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import {logDebugMessage, logErrorMessage, logInfoMessage} from '@/src/util/logging';
+import { useActiveLanguage, useDictionary } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * MyList component that displays a list of titles in a user's list. It fetches data from the API based on the provided list ID and renders a list of titles with sorting and pagination options. It also handles system messages, error states, and allows users to remove titles from the list.
+ * @param param0
+ * @param param0.route
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyList = ({ route }) => {
      const providedList = route?.params?.details ?? {};
      const id = providedList.id;
@@ -51,7 +56,7 @@ export const MyList = ({ route }) => {
           recentlyAdded: 'Sort By Recently Added',
           custom: 'Sort By User Defined' });
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, theme, colorMode } = useTheme();
+     const { textColor, theme, runtimeColors, colorMode } = useTheme();
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const [isLoading, setIsLoading] = React.useState(true);
      const [fetchError, setFetchError] = React.useState(null);
@@ -69,7 +74,7 @@ export const MyList = ({ route }) => {
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
      const dangerColor = theme.tokens.colors.ui.danger;
-     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
      const t = React.useCallback((key, ellipsis = false, forcedLanguage) => {
           const lang = forcedLanguage || language;
           return getTermFromDictionaryHelper(lang, key, ellipsis, dictionary);
@@ -273,9 +278,9 @@ export const MyList = ({ route }) => {
                                    ) : null}
                                    {registrationRequired ? (
                                         <HStack style={{ marginTop: 4, flexDirection: 'row', flexWrap: 'wrap' }} space="sm">
-                                             <Badge key={0} action="info" variant="outline" size="sm" style={{ marginTop: 4, borderRadius: 8 }}>
-                                                  <BadgeText>{t('registration_required')}</BadgeText>
-                                             </Badge>
+                                             <ThemedBadge key={0} action="info" variant="outline" size="sm" style={{ marginTop: 4, borderRadius: 8 }}>
+                                                  <ThemedBadgeText action="info">{t('registration_required')}</ThemedBadgeText>
+                                             </ThemedBadge>
                                         </HStack>
                                    ) : null}
                               </VStack>
@@ -337,11 +342,11 @@ export const MyList = ({ route }) => {
                     style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                     <ScrollView horizontal>
                          <ButtonGroup size="sm">
-                              <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={() => setPage(page - 1)} isDisabled={page === 1}>
-                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{t('previous')}</ButtonText>
+                              <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={() => setPage(page - 1)} isDisabled={page === 1}>
+                                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{t('previous')}</ButtonText>
                               </Button>
                               <Button
-                                   style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                   style={{ backgroundColor: runtimeColors.primary[500] }}
                                    onPress={() => {
                                         if (listData?.hasMore) {
                                              logDebugMessage('Adding to page');
@@ -349,7 +354,7 @@ export const MyList = ({ route }) => {
                                         }
                                    }}
                                    isDisabled={isLoading || !listData?.hasMore}>
-                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{t('next')}</ButtonText>
+                                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{t('next')}</ButtonText>
                               </Button>
                          </ButtonGroup>
                     </ScrollView>

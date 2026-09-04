@@ -1,23 +1,28 @@
 import _ from 'lodash';
 import React from 'react';
 import { ScrollView } from 'react-native';
-
-// custom components and helper files
-import { LoadingSpinner } from '../../../components/loadingSpinner';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { addAppliedFilter } from '../../../util/api/searchHelper';
-import { useTheme } from '../../../themes/theme';
+import { LoadingSpinner } from '@/src/components/loadingSpinner';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { addAppliedFilter } from '@/src/util/api/searchHelper';
 import { Box } from '@/components/ui/box';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
-import { Input, InputField } from '@/components/ui/input';
+import { ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 
-
+/**
+ * Facet_Slider component that renders a slider input for filtering search results based on a numeric range facet. It manages the start and end values of the range, updates the applied filters, and triggers an update to the parent component when the values change.
+ * @param param0
+ * @param param0.data
+ * @param param0.category
+ * @param param0.updater
+ * @param param0.language
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const Facet_Slider = ({ data, category, updater, language }) => {
      const [isLoading, setIsLoading] = React.useState(true);
      const [startValue, setStartValue] = React.useState('*');
      const [endValue, setEndValue] = React.useState('*');
-     const { textColor, colorMode, theme } = useTheme();
 
      React.useEffect(() => {
           appliedStartValue();
@@ -74,11 +79,11 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
                <Box style={{ padding: 20 }}>
                     <FormControl style={{ marginBottom: 8 }}>
                          <HStack space="sm" style={{ justifyContent: 'center' }}>
-                              <Input
+                              <ThemedInput
                                    size="lg"
-                                   style={{ flex: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
+                                   style={{ flex: 1 }}
                               >
-                                   <InputField
+                                   <ThemedInputField
                                         placeholder={getTermFromDictionary(language, 'from')}
                                         accessibilityLabel={getTermFromDictionary(language, 'from')}
                                         defaultValue={startValue}
@@ -86,14 +91,13 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
                                         onChangeText={(value) => {
                                              updateValue('startValue', value);
                                         }}
-                                       style={{ color: textColor }}
                                    />
-                              </Input>
-                              <Input
+                              </ThemedInput>
+                              <ThemedInput
                                    size="lg"
-                                   style={{ flex: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
+                                   style={{ flex: 1 }}
                               >
-                                   <InputField
+                                   <ThemedInputField
                                         placeholder={getTermFromDictionary(language, 'to')}
                                         accessibilityLabel={getTermFromDictionary(language, 'to')}
                                         defaultValue={endValue}
@@ -101,9 +105,8 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
                                         onChangeText={(value) => {
                                              updateValue('endValue', value);
                                         }}
-                                       style={{ color: textColor }}
                                    />
-                              </Input>
+                              </ThemedInput>
                          </HStack>
                     </FormControl>
                </Box>

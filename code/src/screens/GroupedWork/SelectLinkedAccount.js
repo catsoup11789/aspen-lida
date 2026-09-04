@@ -17,6 +17,12 @@ import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
+/**
+ * SelectLinkedAccount component that renders a button to select a linked account for placing holds or checking out items. It displays a modal with options to select the pickup location and the linked account, and handles the action of placing a hold or checking out an item for the selected account.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const SelectLinkedAccount = (props) => {
      const { id, action, title, volumeInfo, prevRoute, isEContent, response, setResponse, responseIsOpen, setResponseIsOpen, onResponseClose, cancelResponseRef } = props;
      const [loading, setResponseLoading] = React.useState(false);

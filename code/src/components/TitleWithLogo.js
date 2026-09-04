@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Platform, useWindowDimensions, View } from 'react-native';
-
+import { useWindowDimensions } from 'react-native';
 import { useLibrary } from '../hooks/useLibrarySystemData';
 import { Image } from '@/components/ui/image';
 import { Text } from '@/components/ui/text';
@@ -14,7 +13,12 @@ import { decodeHTML, isValidUrl } from '../helpers/helpers';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../themes/theme';
 
-const HeaderLogoBar = (props) => {
+/**
+ * HeaderLogoBar component for displaying the library's logo in the header.
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
+const HeaderLogoBar = () => {
      const { header } = useTheme();
      const library = useLibrary();
      const { width } = useWindowDimensions();

@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import _ from 'lodash';
 import React, {useContext} from 'react';
 import { Platform } from 'react-native';
-import { Alert, AlertIcon, AlertText } from '@/components/ui/alert';
+import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from './themed/ThemedAlert';
 import { Button, ButtonIcon } from '@/components/ui/button';
 import { CloseIcon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
@@ -13,13 +13,14 @@ import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { getTermFromDictionary } from '../translations/TranslationService';
 import { dismissSystemMessage } from '../util/api/system';
-
-
-// custom components and helper files
 import { normalizeDisplayText, stripHTML } from '../helpers/helpers';
 import { logDebugMessage, logErrorMessage } from '../util/logging.js';
-import { useTheme } from '../themes/theme';
 
+/**
+ * Registers the device for push notifications and returns the Expo push token.
+ * @param updateUserDebugMessage
+ * @returns {Promise<string|boolean>}
+ */
 export async function registerForPushNotificationsAsync(updateUserDebugMessage) {
      try {
           updateUserDebugMessage("Registering for push notifications async");
@@ -157,12 +158,12 @@ export function showILSMessage(type, message, index = 0) {
      const formattedMessage = stripHTML(message);
      logDebugMessage("Showing ILS Message");
      return (
-          <Alert action={type} key={index} style={{ marginHorizontal: 8, marginBottom: 4 }}>
-               <AlertIcon style={{ marginRight: 12 }} />
-               <AlertText size="xs" bold>
+          <ThemedAlert action={type} key={index} style={{ marginHorizontal: 8, marginBottom: 4 }}>
+               <ThemedAlertIcon action={type} style={{ marginRight: 12 }} />
+               <ThemedAlertText action={type} size="xs" bold>
                     {formattedMessage}
-               </AlertText>
-          </Alert>
+               </ThemedAlertText>
+          </ThemedAlert>
      );
 }
 
@@ -173,11 +174,11 @@ export const DisplayMessage = (props) => {
      const displayMessage = safeMessage || fallbackMessage;
 
      return (
-          <Alert action={props.type} variant="solid" style={{ marginBottom: 8, paddingVertical: 12, paddingHorizontal: 12, alignItems: 'flex-start', minHeight: 0, height: 'auto' }}>
+          <ThemedAlert action={props.type} variant="solid" style={{ marginBottom: 8, paddingVertical: 12, paddingHorizontal: 12, alignItems: 'flex-start', minHeight: 0, height: 'auto' }}>
                <Text size="sm" style={{ color: '#111827', flexShrink: 1, flexWrap: 'wrap', fontWeight: '500' }}>
                     {displayMessage}
                </Text>
-          </Alert>
+          </ThemedAlert>
      );
 };
 
@@ -198,12 +199,12 @@ export const DisplayAndroidEndOfSupportMessage = (props) => {
      const setIsOpen = props.setIsOpen;
      const language = props.language;
      return (
-          <Alert action="error" style={{ marginBottom: 12 }}>
+          <ThemedAlert action="error" style={{ marginBottom: 12 }}>
                <VStack space="xs" style={{ width: '100%' }}>
                     <HStack alignItems="flex-start" justifyContent="space-between">
-                         <AlertText size="sm">
+                         <ThemedAlertText action="error" size="sm">
                               {getTermFromDictionary(language, 'android_end_of_life')}
-                         </AlertText>
+                         </ThemedAlertText>
                          <Button
                               variant="link"
                               onPress={() => setIsOpen(false)}>
@@ -211,7 +212,7 @@ export const DisplayAndroidEndOfSupportMessage = (props) => {
                          </Button>
                     </HStack>
                </VStack>
-          </Alert>
+          </ThemedAlert>
      );
 };
 /** status/colorScheme options: success, error, info, warning **/
@@ -227,10 +228,10 @@ export const DisplaySystemMessage = (props) => {
      logDebugMessage("System Message Style is " + style);
 
      return (
-          <Alert action={style} variant="solid" style={{ minHeight: 200, marginBottom: 8, borderRadius: 4 }}>
+          <ThemedAlert action={style} variant="solid" style={{ minHeight: 200, marginBottom: 8, borderRadius: 4 }}>
                <VStack space="sm" style={{ width: '100%', padding: 12 }}>
                     <HStack alignItems="flex-start" justifyContent="space-between">
-                         <AlertText style={{ marginRight: 8 }}>{props.message}</AlertText>
+                         <ThemedAlertText action={style} variant="solid" style={{ marginRight: 8 }}>{props.message}</ThemedAlertText>
                          <Pressable
                               onPress={async () => {
                                    await hideSystemMessage(props.all, props.id, props.dismissable, props.url).then((result) => {
@@ -242,6 +243,6 @@ export const DisplaySystemMessage = (props) => {
                          </Pressable>
                     </HStack>
                </VStack>
-          </Alert>
+          </ThemedAlert>
      );
 };

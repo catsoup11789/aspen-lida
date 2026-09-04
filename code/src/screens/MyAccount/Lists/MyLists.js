@@ -3,7 +3,7 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { FlatList, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
@@ -15,29 +15,32 @@ import { ScrollView } from '@/components/ui/scroll-view';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-
-// custom components and helper files
-import { loadingSpinner } from '../../../components/loadingSpinner';
-import { DisplaySystemMessage } from '../../../components/Notifications';
-import { SystemMessagesContext } from '../../../context/initialContext';
-import { useLists, useListGroups, useUpdateLists, useUpdateListGroups, useUserState } from '../../../hooks/useUserData';
-import { navigateStack } from '../../../helpers/RootNavigator';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { getListGroupDetails, getListGroups, getLists } from '../../../util/api/list';
+import { loadingSpinner } from '@/src/components/loadingSpinner';
+import { DisplaySystemMessage } from '@/src/components/Notifications';
+import { SystemMessagesContext } from '@/src/context/initialContext';
+import { useLists, useListGroups, useUpdateLists, useUpdateListGroups, useUserState } from '@/src/hooks/useUserData';
+import { navigateStack } from '@/src/helpers/RootNavigator';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { getListGroupDetails, getListGroups, getLists } from '@/src/util/api/list';
 import CreateList from './CreateList';
-import { getErrorMessage, logDebugMessage, logErrorMessage } from '../../../util/logging';
+import { getErrorMessage, logDebugMessage, logErrorMessage } from '@/src/util/logging';
 import CreateListGroup from './CreateListGroup';
 import { EditListGroup } from './EditListGroup';
 import { EditListGroupParent } from './EditListGroupParent';
 import { DeleteListGroup } from './DeleteListGroup';
-import { formatUnixDate, orderByFields } from '../../../helpers/helpers';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { formatUnixDate, orderByFields } from '@/src/helpers/helpers';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 const LISTS_STALE_MS = 6 * 60 * 60 * 1000; // 6 hours
 
+/**
+ * MyLists component that displays a list of user-created lists and list groups. It fetches data from the API, handles pagination, and allows users to create, edit, and delete lists and list groups. It also manages system messages and loading states.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyLists = () => {
      const navigation = useNavigation();
      const hasPendingChanges = useRoute().params.hasPendingChanges ?? false;
@@ -54,12 +57,12 @@ export const MyLists = () => {
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const [loading, setLoading] = React.useState(false);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, runtimeColors, textColor, colorMode } = useTheme();
      const insets = useSafeAreaInsets();
      const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      const [currentListGroup, setCurrentListGroup] = React.useState(-1);
      const [currentListGroupData, setCurrentListGroupData] = React.useState({
@@ -299,9 +302,9 @@ export const MyLists = () => {
                                         transition={1000}
                                         contentFit="cover"
                                    />
-                                   <Badge style={{ marginTop: 4 }}>
-                                        <BadgeText>{privacy}</BadgeText>
-                                   </Badge>
+                                   <ThemedBadge style={{ marginTop: 4 }}>
+                                        <ThemedBadgeText>{privacy}</ThemedBadgeText>
+                                   </ThemedBadge>
                               </VStack>
                               <VStack space={1} style={{ justifyContent: 'space-between', maxWidth: '80%', paddingLeft: 8 }}>
                                    <Box>
@@ -338,17 +341,17 @@ export const MyLists = () => {
                     <ScrollView horizontal>
                          <ButtonGroup size="sm">
                               <Button
-                                   style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                   style={{ backgroundColor: runtimeColors.primary[500] }}
                                    onPress={async () => {
                                         if (page > 1) {
                                              await updatePage(page - 1, type);
                                         }
                                    }}
                                    isDisabled={page === 1}>
-                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                  <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
                               </Button>
                               <Button
-                                   style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                  style={{ backgroundColor: runtimeColors.primary[500] }}
                                    onPress={async () => {
                                         if ($type?.page_current !== $type?.page_total) {
                                              logDebugMessage('Adding to page');
@@ -356,7 +359,7 @@ export const MyLists = () => {
                                         }
                                    }}
                                    isDisabled={!($type?.page_current !== $type?.page_total) || loading}>
-                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                  <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
                               </Button>
                          </ButtonGroup>
                     </ScrollView>

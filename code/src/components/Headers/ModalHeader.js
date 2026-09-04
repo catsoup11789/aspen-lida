@@ -6,10 +6,22 @@ import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { useTheme } from '../../themes/theme';
 
+/**
+ * ModalHeader component for displaying a header in a modal with optional back and close buttons.
+ * @param param0
+ * @param param0.title
+ * @param param0.onBack
+ * @param param0.onClose
+ * @param param0.showBack
+ * @param param0.showClose
+ * @param param0.centerTitle
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const ModalHeader = ({ title, onBack, onClose, showBack = true, showClose = true, centerTitle = true }) => {
-     const { theme, textColor, colorMode } = useTheme();
-     const iconColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.icon.dark;
-     const bg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceSoft.light : theme.tokens.colors.ui.surfaceSoft.dark;
+     const { uiColors, textColor, colorMode } = useTheme();
+     const iconColor = colorMode === 'light' ? uiColors.icon.light : uiColors.icon.dark;
+     const bg = colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark;
 
      return (
           <Box className="px-3 py-3" style={{ backgroundColor: bg }}>

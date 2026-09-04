@@ -4,11 +4,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React, { useRef } from 'react';
-
-// custom components and helper files
 import { AuthContext } from '../../context/AuthContext';
 import { DisplayMessage } from '../../components/Notifications';
-
 import { useUpdateLibrary, useUpdateCatalogStatus, useCatalogStatus } from '../../hooks/useLibrarySystemData';
 import { useUpdateActiveLanguage } from '../../hooks/useLanguageData';
 import { navigate } from '../../helpers/RootNavigator';
@@ -20,17 +17,23 @@ import { GLOBALS, LIBRARY } from '../../util/globals';
 import { formatDiscoveryVersion } from '../../helpers/helpers';
 import { ResetExpiredPin } from './ResetExpiredPin';
 import { saveAllLibraryBranchData } from '../../util/db';
-
 import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from '../../util/logging.js';
 import { createApiClient } from '../../util/api/apiFactory';
 import { useTheme } from '../../themes/theme';
+import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { InputSlot } from '@/components/ui/input';
 
+/**
+ * GetLoginForm component that displays the login form for users to enter their username and password, handles login validation, and manages state for expired PINs and login errors.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const GetLoginForm = (props) => {
-     const {theme, textColor, colorMode, forceRefreshTheme} = useTheme();
+     const { theme, textColor, colorMode, forceRefreshTheme, runtimeColors } = useTheme();
      const borderColor = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.border?.light ?? '#6b7280') : (theme?.tokens?.colors?.ui?.border?.dark ?? '#d6d3d1');
      const navigation = useNavigation();
      const barcode = useRoute().params?.barcode ?? null;
@@ -348,8 +351,8 @@ export const GetLoginForm = (props) => {
                     <FormControlLabel>
                          <FormControlLabelText size="sm" style={{ color: textColor }}>{usernameLabel}</FormControlLabelText>
                     </FormControlLabel>
-                    <Input style={{ borderColor }}>
-                         <InputField autoCapitalize="none"
+                    <ThemedInput style={{ borderColor }}>
+                         <ThemedInputField autoCapitalize="none"
                               autoCorrect={false}
                               size="xl"
                               id="barcode"
@@ -362,21 +365,20 @@ export const GetLoginForm = (props) => {
                                    passwordRef.current.focus();
                               }}
                               blurOnSubmit={false}
-                             style={{ color: textColor }}
                                      autoComplete="username"
                          />
                          {allowBarcodeScanner ?
                               <InputSlot onPress={() => openScanner()}>
                              <Ionicons name="barcode-outline" size={20} color={textColor} style={{ marginRight: 8 }} />
-                         </InputSlot> : null}
-                    </Input>
+                        </InputSlot> : null}
+                    </ThemedInput>
                </FormControl>
                <FormControl style={{ marginTop: 12 }}>
                     <FormControlLabel>
                         <FormControlLabelText size="sm" style={{ color: textColor }}>{passwordLabel}</FormControlLabelText>
                     </FormControlLabel>
-                   <Input style={{ borderColor }}>
-                        <InputField
+                   <ThemedInput style={{ borderColor }}>
+                        <ThemedInputField
                              size="xl"
                               type={showPassword ? 'text' : 'password'}
                               returnKeyType="go"
@@ -387,17 +389,17 @@ export const GetLoginForm = (props) => {
                                    setLoading(true);
                                    await initialValidation();
                               }}
-                             style={{ color: textColor }} autoComplete="password"
+                              autoComplete="password"
                         />
                         <InputSlot onPress={toggleShowPassword}>
                              <Ionicons name={showPassword ? 'eye-outline' : 'eye-off-outline'} size={20} color={textColor} style={{ marginRight: 8 }} />
                         </InputSlot>
-                   </Input>
+                   </ThemedInput>
                </FormControl>
 
                <Center>
                     <Button
-                        style={{ marginTop: 12, backgroundColor: theme.tokens.colors.primary['500'] }}
+                        style={{ marginTop: 12, backgroundColor: runtimeColors.primary[500] }}
                         size="md"
                         isLoading={loading}
                         isLoadingText={getTermFromDictionary('en', 'logging_in', true)}
@@ -405,7 +407,7 @@ export const GetLoginForm = (props) => {
                              setLoading(true);
                              await initialValidation();
                          }}>
-                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary('en', 'login')}</ButtonText>
+                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary('en', 'login')}</ButtonText>
                     </Button>
                </Center>
           </>

@@ -1,26 +1,25 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { popAlert } from '../../../components/feedback';
-
-import { useUserState, useListGroups, useUpdateUserProfile, useUpdateLists } from '../../../hooks/useUserData';
-import { navigateStack } from '../../../helpers/RootNavigator';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { deleteList, editList, getLists } from '../../../util/api/list';
-import { refreshProfile } from '../../../util/api/user';
+import { popAlert } from '@/src/components/feedback';
+import { useUserState, useListGroups, useUpdateUserProfile, useUpdateLists } from '@/src/hooks/useUserData';
+import { navigateStack } from '@/src/helpers/RootNavigator';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { deleteList, editList, getLists } from '@/src/util/api/list';
+import { refreshProfile } from '@/src/util/api/user';
 import {Platform} from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { toArray } from '../../../helpers/helpers';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
+import { toArray } from '@/src/helpers/helpers';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { CheckIcon, ChevronDownIcon, ChevronLeftIcon, CircleIcon, CloseIcon, Icon } from '@/components/ui/icon';
-import { Input, InputField } from '@/components/ui/input';
+import { CheckIcon, ChevronDownIcon, ChevronLeftIcon, CircleIcon, Icon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
@@ -28,8 +27,14 @@ import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/comp
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
 import { Textarea, TextareaInput } from '@/components/ui/textarea';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
+/**
+ * EditList component that allows users to edit the details of a list, including title, description, access level (public/private), and list group. It provides a modal interface for editing and handles API calls to update the list information. It also includes functionality to delete the list with confirmation.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const EditList = (props) => {
       const { data, listId } = props;
       const navigation = useNavigation();
@@ -45,13 +50,13 @@ const EditList = (props) => {
       const [description, setDescription] = React.useState(data.description);
       const [isPublic, setPublic] = React.useState(data.public);
       const [listGroupId, setListGroupId] = React.useState(data.listGroupId);
-      const { theme, textColor, colorMode } = useTheme();
+      const { theme, runtimeColors, textColor, colorMode } = useTheme();
 
       const insets = useSafeAreaInsets();
       const user = userState?.user ?? {};
       const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
       const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-      const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+      const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      React.useLayoutEffect(() => {
           navigation.setOptions({
@@ -70,9 +75,9 @@ const EditList = (props) => {
      return (
           <>
                <ButtonGroup size="sm" style={{ justifyContent: 'center' }} >
-                    <Button onPress={() => setShowModal(true)} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                         <MaterialIcons name="edit" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />
-                         <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'edit')}</ButtonText>
+                    <Button onPress={() => setShowModal(true)} style={{ backgroundColor: runtimeColors.primary[500] }}>
+                         <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'edit')}</ButtonText>
                     </Button>
                     <DeleteList listId={listId} />
                </ButtonGroup>
@@ -82,7 +87,7 @@ const EditList = (props) => {
                          <ModalHeader>
                               <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'edit')} {data.title}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
-                                   <Icon as={CloseIcon} style={{ color: textColor }} />
+                                   <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
@@ -90,7 +95,7 @@ const EditList = (props) => {
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <Input style={{ borderColor }}><InputField id="title" defaultValue={data.title} autoComplete="off" onChangeText={(text) => setTitle(text)} style={{ color: textColor }}/></Input>
+                                   <ThemedInput style={{ borderColor }}><ThemedInputField id="title" defaultValue={data.title} autoComplete="off" onChangeText={(text) => setTitle(text)} /></ThemedInput>
                               </FormControl>
                               <FormControl style={{ paddingBottom: 20 }}>
                                    <FormControlLabel><FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'description')}</FormControlLabelText></FormControlLabel>
@@ -165,11 +170,11 @@ const EditList = (props) => {
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>
-                                   <Button variant="outline" onPress={() => setShowModal(false)} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                   <Button variant="outline" onPress={() => setShowModal(false)} style={{ borderColor: runtimeColors.primary[500] }}>
+                                        <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                     <Button
-                                         style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                         style={{ backgroundColor: runtimeColors.primary[500] }}
                                          isLoading={loading}
                                          isLoadingText={getTermFromDictionary(language, 'saving', true)}
                                          onPress={() => {
@@ -187,7 +192,7 @@ const EditList = (props) => {
                                                    }
                                               });
                                          }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'save')}</ButtonText>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'save')}</ButtonText>
                                     </Button>
                               </ButtonGroup>
                          </ModalFooter>
@@ -197,6 +202,12 @@ const EditList = (props) => {
      );
 };
 
+/**
+ * DeleteList component that provides a button to delete a list. When clicked, it opens a confirmation dialog asking the user to confirm the deletion. It also includes an option for the user to opt out of soft deletion. Upon confirmation, it calls the API to delete the list and refreshes the user's lists and profile.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const DeleteList = (props) => {
       const { listId } = props;
       const {textColor, colorMode, theme } = useTheme();
@@ -228,7 +239,7 @@ const DeleteList = (props) => {
                                    {getTermFromDictionary(language, 'delete_list')}
                               </Heading>
                               <AlertDialogCloseButton>
-                                   <Icon as={CloseIcon} style={{ color: textColor }} />
+                                   <ThemedCloseIcon />
                               </AlertDialogCloseButton>
                          </AlertDialogHeader>
                          <AlertDialogBody>
@@ -236,8 +247,8 @@ const DeleteList = (props) => {
                               {!user.hideSoftDeleteListUI && (
                                    <FormControl style={{ paddingTop: 12 }}>
                                         <Checkbox value="optOut" isChecked={optOutOfSoftDeletion} onChange={(isChecked) => setOptOutOfSoftDeletion(isChecked)} alignItems="center">
-                                             <CheckboxIndicator style={optOutOfSoftDeletion ? { borderColor: theme.tokens.colors.primary['500'], backgroundColor: theme.tokens.colors.primary['500'] } : { borderColor }}>
-                                                  <CheckboxIcon as={CheckIcon} style={{ color: theme.tokens.colors.primary['500-text'] }} />
+                                             <CheckboxIndicator style={optOutOfSoftDeletion ? { borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : { borderColor }}>
+                                                  <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }} />
                                              </CheckboxIndicator>
                                              <CheckboxLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'opt_out_soft_deletion')}</CheckboxLabel>
                                         </Checkbox>

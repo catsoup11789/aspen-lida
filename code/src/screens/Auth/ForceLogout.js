@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { AuthContext } from '../../context/AuthContext';
-
 import {getTermFromDictionary} from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
@@ -11,9 +9,15 @@ import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 
+/**
+ * ForceLogout component that displays an alert dialog when the user is forced to log out, allowing the user to sign out.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const ForceLogout = (props) => {
      const { title, reason } = props;
-	const { theme, colorMode, textColor } = useTheme();
+	const { theme, colorMode, textColor, runtimeColors } = useTheme();
 	const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
 	const language = useActiveLanguage();
 	const { signOut } = React.useContext(AuthContext);
@@ -30,8 +34,8 @@ export const ForceLogout = (props) => {
 					<AlertDialogBody><Text style={{ color: textColor }}>{reason ?? getTermFromDictionary(language, 'error_invalid_session')}</Text></AlertDialogBody>
 					<AlertDialogFooter>
 						<ButtonGroup space="sm">
-							<Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={signOut} ref={cancelRef}>
-								<ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+							<Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={signOut} ref={cancelRef}>
+								<ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
 							</Button>
 						</ButtonGroup>
 					</AlertDialogFooter>

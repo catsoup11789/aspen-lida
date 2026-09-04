@@ -1,13 +1,16 @@
 import { Button, ButtonText } from '@/components/ui/button';
 import React from 'react';
-import {navigate} from '../../../helpers/RootNavigator';
+import {navigate} from '@/src/helpers/RootNavigator';
+import { useTheme } from '@/src/themes/theme';
 
-
-import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage } from '../../../util/logging.js';
-import { useTheme } from '../../../themes/theme';
-
+/**
+ * StartLocalIllRequestEmail component for displaying a button that navigates to the "Create Local ILL Request Email" screen.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const StartLocalIllRequestEmail = (props) => {
-     const { theme } = useTheme();
+     const { runtimeColors } = useTheme();
      //logDebugMessage("Props for StartLocalIllRequest");
      //logDebugMessage(props);
      const openLocalIllRequestEmail = () => {
@@ -27,9 +30,9 @@ export const StartLocalIllRequestEmail = (props) => {
           <Button
                size="md"
                variant="solid"
-               style={{ backgroundColor: theme.tokens.colors.primary['500'], minWidth: '100%', maxWidth: '100%' }}
+               style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
                onPress={openLocalIllRequestEmail}>
-               <ButtonText style={{ color: theme.tokens.colors.primary['500-text'], textAlign: 'center' }}>
+               <ButtonText style={{ color: runtimeColors.primary['500-text'], textAlign: 'center' }}>
                     {props.title}
                </ButtonText>
           </Button>

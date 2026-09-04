@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import * as Linking from 'expo-linking';
 import { Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { loadingSpinner } from '../../../../components/loadingSpinner';
+import { loadingSpinner } from '@/src/components/loadingSpinner';
 import { Accordion, AccordionContent, AccordionContentText, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { Box } from '@/components/ui/box';
@@ -18,17 +18,21 @@ import { ScrollView } from '@/components/ui/scroll-view';
 import { Switch } from '@/components/ui/switch';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-
-import { useUserState, useNotificationSettings, useUpdateExpoToken, useAddDebugMessage } from '../../../../hooks/useUserData';
-import { navigate } from '../../../../helpers/RootNavigator';
-import { getTermFromDictionary } from '../../../../translations/TranslationService';
+import { useUserState, useNotificationSettings, useUpdateExpoToken, useAddDebugMessage } from '@/src/hooks/useUserData';
+import { navigate } from '@/src/helpers/RootNavigator';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import Constants from 'expo-constants';
-import { useNotificationPermissions, useNotificationPreferences } from '../../../../hooks/useNotifications';
-import {logDebugMessage, logErrorMessage} from '../../../../util/logging';
-import { useActiveLanguage } from '../../../../hooks/useLanguageData';
-import { useTheme } from '../../../../themes/theme';
-import { useLibrary } from '../../../../hooks/useLibrarySystemData';
+import { useNotificationPermissions, useNotificationPreferences } from '@/src/hooks/useNotifications';
+import {logDebugMessage, logErrorMessage} from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
+/**
+ * NotificationPermissionStatus component that displays the current notification permission status and allows users to navigate to the permission description screen. It checks and updates the notification permissions on mount, when the screen comes into focus, and when the Expo token changes.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const NotificationPermissionStatus = () => {
     const language = useActiveLanguage();
     const { textColor } = useTheme();
@@ -85,7 +89,7 @@ export const NotificationPermissionDescription = () => {
     const route = useRoute();
     const prevRoute = route.params?.prevRoute ?? null;
 
-    const { theme, textColor } = useTheme();
+    const { theme, runtimeColors, textColor } = useTheme();
     const language = useActiveLanguage();
     const library = useLibrary();
     const { data: notifSettings } = useNotificationSettings();
@@ -121,7 +125,7 @@ export const NotificationPermissionDescription = () => {
                         <ButtonIcon
                             size="lg"
                             variant="outline"
-                            style={{ borderWidth: 0, color: theme.tokens.colors.primary.baseContrast }}
+                            style={{ borderWidth: 0, color: runtimeColors.primary.baseContrast }}
                             as={ChevronLeftIcon}
                         />
                     </Button>
@@ -304,7 +308,7 @@ const NotificationPermissionUsage = () => {
 };
 
 const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermissions, revokeNotificationPermissions }) => {
-    const { colorMode, theme, textColor } = useTheme();
+    const { colorMode, theme, runtimeColors, textColor } = useTheme();
     const language = useActiveLanguage();
     const [isUpdating, setIsUpdating] = React.useState(false);
     const [showAlertDialog, setShowAlertDialog] = React.useState(false);
@@ -336,10 +340,10 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
         <Center>
             <Button
                 onPress={handleUpdatePermissions}
-                style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                style={{ backgroundColor: runtimeColors.primary[500] }}
                 isDisabled={isUpdating}
             >
-                <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
+                <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
                     {permissionStatus ?
                         getTermFromDictionary(language, 'revoke_device_settings') :
                         getTermFromDictionary(language, 'update_device_settings')}
@@ -373,9 +377,9 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
                                     Linking.openSettings();
                                     setShowAlertDialog(false);
                                 }}
-                                style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                style={{ backgroundColor: runtimeColors.primary[500] }}
                             >
-                                <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
+                                <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
                                     {getTermFromDictionary(language, 'open_device_settings')}
                                 </ButtonText>
                             </Button>

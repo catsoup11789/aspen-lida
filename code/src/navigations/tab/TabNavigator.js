@@ -6,21 +6,23 @@ import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-
 import { useSelfCheckEnabled, useSelfCheckSettings } from '../../hooks/useLibraryBranchData';
 import { getTermFromDictionary } from '../../translations/TranslationService';
-
 import AccountStackNavigator from '../stack/AccountStackNavigator';
 import BrowseStackNavigator from '../stack/BrowseStackNavigator';
 import LibraryCardStackNavigator from '../stack/LibraryCardStackNavigator';
 import MoreStackNavigator from '../stack/MoreStackNavigator';
 import SelfCheckOutStackNavigator from '../stack/SelfCheckOutStackNavigator';
-
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 
 const Tab = createBottomTabNavigator();
+/**
+ * TabNavigator component that sets up a bottom tab navigator with tabs for browsing, library card, self-checkout (if enabled), account, and more. The self-checkout tab is conditionally displayed based on the self-checkout settings.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export default function TabNavigator() {
      const enableSelfCheck = useSelfCheckEnabled();
      const selfCheckSettings = useSelfCheckSettings();
@@ -81,6 +83,15 @@ export default function TabNavigator() {
      );
 }
 
+/**
+ * TabItem component that renders the custom tab bar for the bottom tab navigator, displaying icons and labels for each tab based on the current state and descriptors. It also handles navigation when a tab is pressed or long-pressed.
+ * @param param0
+ * @param param0.state
+ * @param param0.descriptors
+ * @param param0.navigation
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const TabItem = ({ state, descriptors, navigation }) => {
      const language = useActiveLanguage();
      const { theme, colorMode } = useTheme();

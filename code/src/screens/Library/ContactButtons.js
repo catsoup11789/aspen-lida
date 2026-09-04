@@ -9,21 +9,24 @@ import { popToast } from '../../components/feedback';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-
 import { getTermFromDictionary } from '../../translations/TranslationService';
-
-// custom components and helper files
 import { logDebugMessage, logErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 
+/**
+ * ContactButtons component that renders a set of buttons for contacting a library, including options to call, email, get directions, and visit the website. The buttons are displayed based on the availability of the corresponding contact information in the provided data.
+ * @param data
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const ContactButtons = (data) => {
      const location = data.data;
      const language = useActiveLanguage();
-     const { textColor: themeTextColor, colorMode, theme } = useTheme();
+     const { uiColors } = useTheme();
 
-     const backgroundColor = useColorModeValue(theme.tokens.colors.ui.surface.light, theme.tokens.colors.ui.surface.dark);
-     const textColor = useColorModeValue(theme.tokens.colors.ui.text.light, theme.tokens.colors.ui.text.dark);
-     const iconBorderColor = useColorModeValue(theme.tokens.colors.ui.icon.light, theme.tokens.colors.ui.surface.light);
+     const backgroundColor = useColorModeValue(uiColors.surface.light, uiColors.surface.dark);
+     const textColor = useColorModeValue(uiColors.text.light, uiColors.text.dark);
+     const iconBorderColor = useColorModeValue(uiColors.icon.light, uiColors.surface.light);
 
      const callLibrary = () => {
           /* location.phone */

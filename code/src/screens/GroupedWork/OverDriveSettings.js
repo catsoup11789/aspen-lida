@@ -4,14 +4,12 @@ import {
      ButtonGroup,
 } from '@/components/ui/button';
 import React from 'react';
-
-// custom components and helper files
 import { updateOverDriveEmail } from '../../util/api/user';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { CheckIcon, CloseIcon, Icon } from '@/components/ui/icon';
+import { CheckIcon } from '@/components/ui/icon';
 import { Input, InputField } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { VStack } from '@/components/ui/vstack';

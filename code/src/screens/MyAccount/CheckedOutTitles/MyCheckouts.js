@@ -7,32 +7,36 @@ import { FlatList, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronDownIcon, CloseIcon, Icon } from '@/components/ui/icon';
+import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-
-// custom components and helper files
-import { loadingSpinner } from '../../../components/loadingSpinner';
-import { DisplaySystemMessage } from '../../../components/Notifications';
-import { CheckoutsContext, SystemMessagesContext } from '../../../context/initialContext';
-import { useUserState, useUpdateSortSettings, useUpdateUserProfile } from '../../../hooks/useUserData';
-import { getTermFromDictionary, getTranslationsWithValues } from '../../../translations/TranslationService';
-import { confirmRenewAllCheckouts, confirmRenewCheckout, renewAllCheckouts, getPatronCheckedOutItems, refreshProfile, setSortPreferences } from '../../../util/api/user';
-import { sortCheckouts } from '../../../util/api/userHelper';
-import { stripHTML } from '../../../helpers/helpers';
+import { loadingSpinner } from '@/src/components/loadingSpinner';
+import { DisplaySystemMessage } from '@/src/components/Notifications';
+import { CheckoutsContext, SystemMessagesContext } from '@/src/context/initialContext';
+import { useUserState, useUpdateSortSettings, useUpdateUserProfile } from '@/src/hooks/useUserData';
+import { getTermFromDictionary, getTranslationsWithValues } from '@/src/translations/TranslationService';
+import { confirmRenewAllCheckouts, confirmRenewCheckout, renewAllCheckouts, getPatronCheckedOutItems, refreshProfile, setSortPreferences } from '@/src/util/api/user';
+import { sortCheckouts } from '@/src/util/api/userHelper';
+import { stripHTML } from '@/src/helpers/helpers';
 import { MyCheckout } from './MyCheckout';
-import { logDebugMessage, logErrorMessage, getErrorMessage } from '../../../util/logging';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
 
+/**
+ * MyCheckouts component that displays the user's checked out items. It allows users to filter checkouts by source, sort them by various criteria, and renew all checkouts. The component fetches the user's checkouts from the API and updates the state accordingly. It also handles displaying system messages and managing the loading state.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyCheckouts = () => {
      const isFetchingCheckouts = useIsFetching({ queryKey: ['checkouts'] });
      const queryClient = useQueryClient();
@@ -58,11 +62,11 @@ export const MyCheckouts = () => {
      const renewConfirmationRef = React.useRef(null);
      const [renewConfirmationResponse, setRenewConfirmationResponse] = React.useState('');
      const [confirmingRenewal, setConfirmingRenewal] = React.useState(false);
-     const { theme, textColor, colorMode } = useTheme();
-     const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+     const { runtimeColors, uiColors, textColor, colorMode } = useTheme();
+     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      const [checkoutsBy, setCheckoutBy] = React.useState({
           ils: 'Checked Out Titles for Physical Materials',
@@ -393,7 +397,7 @@ export const MyCheckouts = () => {
                                    isLoadingText={getTermFromDictionary(language, 'renewing_all', true)}
                                    isDisabled={renewAll}
                                    size="sm"
-                                   style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                   style={{ backgroundColor: runtimeColors.primary[500] }}
                                    onPress={() => {
                                         if (renewAll) return;
                                         setRenewAll(true);
@@ -417,8 +421,8 @@ export const MyCheckouts = () => {
                                              setRenewAll(false);
                                         });
                                    }}>
-                                   {!renewAll && <MaterialIcons name="autorenew" size={18} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />}
-                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
+                                   {!renewAll && <MaterialIcons name="autorenew" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />}
+                                   <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
                                         {renewAll ? getTermFromDictionary(language, 'renewing_all', true) : getTermFromDictionary(language, 'checkout_renew_all')}
                                    </ButtonText>
                               </Button>
@@ -509,14 +513,14 @@ export const MyCheckouts = () => {
                return (
                     <HStack space="$2">
                          <Button
-                              style={{ margin: 8, borderColor: theme.tokens.colors.primary['500'] }}
+                              style={{ margin: 8, borderColor: runtimeColors.primary[500] }}
                               size="sm"
                               variant="outline"
                               onPress={() => {
                                    setLoading(true);
                                    reloadCheckouts();
                               }}>
-                              <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'checkouts_reload')}</ButtonText>
+                              <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'checkouts_reload')}</ButtonText>
                          </Button>
                     </HStack>
                );
@@ -555,17 +559,17 @@ export const MyCheckouts = () => {
                               <AlertDialogHeader>
                                    <Heading size="md" style={{ color: textColor }}>{renewConfirmationResponse?.title ? renewConfirmationResponse.title : 'Unknown Error'}</Heading>
                                    <AlertDialogCloseButton>
-                                        <Icon as={CloseIcon} style={{ color: textColor }} />
+                                        <ThemedCloseIcon />
                                    </AlertDialogCloseButton>
                               </AlertDialogHeader>
                               <AlertDialogBody><Text style={{ color: textColor }}>{renewConfirmationResponse?.message ? decodeMessage(renewConfirmationResponse.message) : 'Unable to renew checkout for unknown error. Please contact the library.'}</Text></AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">
-                                        <Button variant="outline" style={{ borderColor: theme.tokens.colors.primary['500'] }} onPress={() => setRenewConfirmationIsOpen(false)}>
-                                             <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <Button variant="outline" style={{ borderColor: runtimeColors.primary[500] }} onPress={() => setRenewConfirmationIsOpen(false)}>
+                                             <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
-                                             style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                             style={{ backgroundColor: runtimeColors.primary[500] }}
                                              isLoading={confirmingRenewal}
                                              isLoadingText={getTermFromDictionary(language, 'renewing', true)}
                                              onPress={async () => {
@@ -587,7 +591,7 @@ export const MyCheckouts = () => {
                                                        });
                                                   }
                                              }}>
-                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{renewConfirmationResponse?.action ? renewConfirmationResponse.action : 'Renew Item'}</ButtonText>
+                                             <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{renewConfirmationResponse?.action ? renewConfirmationResponse.action : 'Renew Item'}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>

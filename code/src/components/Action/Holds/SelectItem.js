@@ -2,14 +2,20 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import _ from 'lodash';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ChevronDownIcon, CircleIcon, Icon } from '@/components/ui/icon';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
+/**
+ * SelectItemHold component for selecting a hold type and item for a library hold request.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const SelectItemHold = (props) => {
-     const { id, data, item, setItem, setHoldType, showModal, holdTypeForFormat, language, url, textColor, theme, colorMode } = props;
+     const { id, data, item, setItem, setHoldType, showModal, holdTypeForFormat, language, url, textColor, theme, colorMode, runtimeColors } = props;
      const insets = useSafeAreaInsets();
 
      let holdType = props.holdType;
@@ -79,7 +85,7 @@ export const SelectItemHold = (props) => {
                                              {_.map(Object.keys(copies), function (item, index, array) {
                                                   let copy = copies[item];
                                                   if (copy.id === defaultItem) {
-                                                       return <SelectItem label={copy.location} value={copy.id} key={copy.id} style={{ backgroundColor: theme.tokens.colors.tertiary['300'] }} textStyle={{ color: theme.tokens.colors.tertiary['500-text'] }} />;
+                                                       return <SelectItem label={copy.location} value={copy.id} key={copy.id} style={{ backgroundColor: runtimeColors.tertiary[300] }} textStyle={{ color: runtimeColors.tertiary['500-text'] }} />;
                                                   }
                                                   return <SelectItem label={copy.location} value={copy.id} key={copy.id} textStyle={{ color: textColor }} />;
                                              })}

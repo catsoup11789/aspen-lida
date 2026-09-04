@@ -1,30 +1,75 @@
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Modal, ScrollView, StyleSheet, View } from 'react-native';
-import { useColorScheme } from '@/components/ui/gluestack-ui-provider';
+import { Uniwind } from 'uniwind';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonText } from '@/components/ui/button';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronLeftIcon, Icon } from '@/components/ui/icon';
+import { ChevronLeftIcon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-import { createConfig } from '@gluestack-style/react';
-import { config as defaultConfig } from '@gluestack-ui/config';
 import { GLOBALS } from '../util/globals';
 import {
      useThemeState,
      useUpdateThemeColorMode,
      useUpdateThemeColors,
-     useUpdateThemeTextColor,
+     useUpdateThemeColorMode as usePersistThemeColorMode,
      useResetThemeState,
      useAvailableThemes,
 } from '../hooks/useThemeData';
 import { useLibraryLocation } from '../hooks/useLibraryBranchData';
-
 import { logDebugMessage } from '../util/logging.js';
 import { getThemeInfo } from '../util/api/system';
 import { loadThemeCatalog } from '../util/db';
 import { buildSwatchFromThemeTokens } from '../helpers/helpers';
+
+function buildThemeVars(themeColors) {
+     const palette = themeColors?.primary && themeColors?.secondary && themeColors?.tertiary
+          ? themeColors
+          : buildFallbackPalette();
+
+     return {
+          '--color-primary-50': palette.primary[50],
+          '--color-primary-100': palette.primary[100],
+          '--color-primary-200': palette.primary[200],
+          '--color-primary-300': palette.primary[300],
+          '--color-primary-400': palette.primary[400],
+          '--color-primary-500': palette.primary[500],
+          '--color-primary-600': palette.primary[600],
+          '--color-primary-700': palette.primary[700],
+          '--color-primary-800': palette.primary[800],
+          '--color-primary-900': palette.primary[900],
+          '--color-primary-500-text': palette.primary['500-text'],
+          '--color-primary-base': palette.primary.base,
+          '--color-primary-base-contrast': palette.primary.baseContrast,
+          '--color-secondary-50': palette.secondary[50],
+          '--color-secondary-100': palette.secondary[100],
+          '--color-secondary-200': palette.secondary[200],
+          '--color-secondary-300': palette.secondary[300],
+          '--color-secondary-400': palette.secondary[400],
+          '--color-secondary-500': palette.secondary[500],
+          '--color-secondary-600': palette.secondary[600],
+          '--color-secondary-700': palette.secondary[700],
+          '--color-secondary-800': palette.secondary[800],
+          '--color-secondary-900': palette.secondary[900],
+          '--color-secondary-500-text': palette.secondary['500-text'],
+          '--color-secondary-base': palette.secondary.base,
+          '--color-secondary-base-contrast': palette.secondary.baseContrast,
+          '--color-tertiary-50': palette.tertiary[50],
+          '--color-tertiary-100': palette.tertiary[100],
+          '--color-tertiary-200': palette.tertiary[200],
+          '--color-tertiary-300': palette.tertiary[300],
+          '--color-tertiary-400': palette.tertiary[400],
+          '--color-tertiary-500': palette.tertiary[500],
+          '--color-tertiary-600': palette.tertiary[600],
+          '--color-tertiary-700': palette.tertiary[700],
+          '--color-tertiary-800': palette.tertiary[800],
+          '--color-tertiary-900': palette.tertiary[900],
+          '--color-tertiary-500-text': palette.tertiary['500-text'],
+          '--color-tertiary-base': palette.tertiary.base,
+          '--color-tertiary-base-contrast': palette.tertiary.baseContrast,
+     };
+}
 
 const DEFAULT_COLOR_SCALE = {
      50: '#f9fafb',
@@ -92,16 +137,80 @@ function buildFallbackPalette() {
      };
 }
 
-function buildThemeCompatibility(themeColors) {
+function buildThemeRuntime(themeColors) {
      const palette = themeColors?.primary && themeColors?.secondary && themeColors?.tertiary
           ? themeColors
           : buildFallbackPalette();
+
      return {
+          colors: palette,
+          ui: UI_NEUTRAL_COLORS,
           tokens: {
                colors: {
                     ...palette,
                     ui: UI_NEUTRAL_COLORS,
                },
+          },
+     };
+}
+
+function buildUiColorMap() {
+     return UI_NEUTRAL_COLORS;
+}
+
+function buildRuntimeColorMap(themeColors) {
+     const palette = themeColors?.primary && themeColors?.secondary && themeColors?.tertiary
+          ? themeColors
+          : buildFallbackPalette();
+
+     return {
+          primary: {
+               50: 'var(--color-primary-50)',
+               100: 'var(--color-primary-100)',
+               200: 'var(--color-primary-200)',
+               300: 'var(--color-primary-300)',
+               400: 'var(--color-primary-400)',
+               500: 'var(--color-primary-500)',
+               600: 'var(--color-primary-600)',
+               700: 'var(--color-primary-700)',
+               800: 'var(--color-primary-800)',
+               900: 'var(--color-primary-900)',
+               '500-text': 'var(--color-primary-500-text)',
+               base: 'var(--color-primary-base)',
+               baseContrast: 'var(--color-primary-base-contrast)',
+               raw: palette.primary,
+          },
+          secondary: {
+               50: 'var(--color-secondary-50)',
+               100: 'var(--color-secondary-100)',
+               200: 'var(--color-secondary-200)',
+               300: 'var(--color-secondary-300)',
+               400: 'var(--color-secondary-400)',
+               500: 'var(--color-secondary-500)',
+               600: 'var(--color-secondary-600)',
+               700: 'var(--color-secondary-700)',
+               800: 'var(--color-secondary-800)',
+               900: 'var(--color-secondary-900)',
+               '500-text': 'var(--color-secondary-500-text)',
+               base: 'var(--color-secondary-base)',
+               baseContrast: 'var(--color-secondary-base-contrast)',
+               raw: palette.secondary,
+          },
+          tertiary: {
+               50: 'var(--color-tertiary-50)',
+               100: 'var(--color-tertiary-100)',
+               200: 'var(--color-tertiary-200)',
+               300: 'var(--color-tertiary-300)',
+               400: 'var(--color-tertiary-400)',
+               500: 'var(--color-tertiary-500)',
+               600: 'var(--color-tertiary-600)',
+               700: 'var(--color-tertiary-700)',
+               800: 'var(--color-tertiary-800)',
+               900: 'var(--color-tertiary-900)',
+               '500-text': 'var(--color-tertiary-500-text)',
+               base: 'var(--color-tertiary-base)',
+               baseContrast: 'var(--color-tertiary-base-contrast)',
+               raw: palette.tertiary,
           },
      };
 }
@@ -112,119 +221,9 @@ export function useColorModeValue(lightValue, darkValue) {
 }
 
 export const BackIcon = (props) => {
-     const { theme } = useThemeForDisplay();
-     return <ChevronLeftIcon size="md" style={{ marginLeft: 1 }} {...props} color={theme.tokens.colors.primary.baseContrast} />;
+     const { runtimeColors } = useThemeForDisplay();
+     return <ChevronLeftIcon size="md" style={{ marginLeft: 1 }} {...props} color={runtimeColors.primary.baseContrast} />;
 };
-
-function buildAlertTheme(actionType) {
-     const actionColors = {
-          error: { bg: '#fecaca', icon: '#dc2625', text: '#000000' },
-          warning: { bg: '#ffd7aa', icon: '#ea580b', text: '#000000' },
-          success: { bg: '#bbf7d0', icon: '#17a34a', text: '#000000' },
-          info: { bg: '#bae6fe', icon: '#0084c7', text: '#000000' },
-          none: { bg: '#e6e7ea', icon: '#4f5562', text: '#000000' },
-     };
-
-     const colors = actionColors[actionType] || actionColors.info;
-
-     return {
-          backgroundColor: colors.bg,
-          '_icon': {
-               color: colors.icon,
-          },
-          '_text': {
-               color: colors.text,
-          },
-     };
-}
-
-function buildBadgeTheme(actionType) {
-     const actionColors = {
-          error: { bg: '#fee2e2', text: '#991b1b' },
-          warning: { bg: '#fef3c7', text: '#92400e' },
-          success: { bg: '#dcfce7', text: '#166534' },
-          info: { bg: '#e0f2fe', text: '#075985' },
-          muted: { bg: '#f3f4f6', text: '#1f2937' },
-          none: { bg: '#e5e7eb', text: '#1f2937' }
-     };
-
-     const colors = actionColors[actionType] || actionColors.muted;
-
-     return {
-          backgroundColor: colors.bg,
-          borderRadius: 'sm',
-          _text: {
-               color: colors.text,
-               fontSize: '$xs',
-               fontWeight: 'medium',
-               textTransform: 'none'
-          },
-     };
-}
-
-function buildConfigFromColors(colors) {
-     return createConfig({
-          ...defaultConfig,
-          tokens: {
-               ...defaultConfig.tokens,
-               colors: {
-                    ...defaultConfig.tokens.colors,
-                    primary: colors?.primary ?? defaultConfig.tokens.colors.primary,
-                    secondary: colors?.secondary ?? defaultConfig.tokens.colors.secondary,
-                    tertiary: colors?.tertiary ?? defaultConfig.tokens.colors.tertiary,
-                    ui: {
-                         ...(defaultConfig.tokens.colors?.ui ?? {}),
-                         ...UI_NEUTRAL_COLORS,
-                    },
-               },
-          },
-          components: {
-               ...defaultConfig.components,
-               Alert: {
-                    theme: {
-                         variants: {
-                              action: {
-                                   error: buildAlertTheme('error'),
-                                   warning: buildAlertTheme('warning'),
-                                   success: buildAlertTheme('success'),
-                                   info: buildAlertTheme('info'),
-                                   none: buildAlertTheme('none')
-                              },
-                         },
-                    },
-               },
-               ButtonText: {
-                    ...defaultConfig.components.ButtonText,
-                    theme: {
-                         ...defaultConfig.components.ButtonText?.theme,
-                         baseStyle: {
-                              ...defaultConfig.components.ButtonText?.theme?.baseStyle,
-                              fontSize: '$sm',
-                              fontWeight: '$normal',
-                         },
-                    },
-               },
-               Badge: {
-                    ...defaultConfig.components.Badge,
-                    theme: {
-                         ...defaultConfig.components.Badge?.theme,
-                         variants: {
-                              ...defaultConfig.components.Badge?.theme?.variants,
-                              action: {
-                                   ...(defaultConfig.components.Badge?.theme?.variants?.action ?? {}),
-                                   error: buildBadgeTheme('error'),
-                                   warning: buildBadgeTheme('warning'),
-                                   success: buildBadgeTheme('success'),
-                                   info: buildBadgeTheme('info'),
-                                   muted: buildBadgeTheme('muted'),
-                                   none: buildBadgeTheme('none'),
-                              },
-                         },
-                    },
-               },
-          },
-     });
-}
 
 function normalizeThemeColors(response = []) {
      return {
@@ -237,7 +236,7 @@ function normalizeThemeColors(response = []) {
 export async function buildThemeForLibrary(url = null, locationId = null) {
      const response = await getThemeInfo(url, locationId);
      const themeColors = normalizeThemeColors(response?.palettes);
-     const theme = buildConfigFromColors(themeColors);
+     const theme = buildThemeRuntime(themeColors);
      return {
           theme,
           themeColors,
@@ -270,7 +269,7 @@ export function buildThemeConfigFromCatalogEntry(themeEntry = {}) {
           logo: themeEntry?.logo ?? null,
           header: themeEntry?.header ?? null,
           themeColors,
-          theme: buildConfigFromColors(themeColors),
+          theme: buildThemeRuntime(themeColors),
      };
 }
 
@@ -287,10 +286,16 @@ export async function loadThemeConfigsForLocation(locationId) {
 
 export function useThemeForDisplay() {
      const { themeColors, colorMode, textColor, themeId, header } = useThemeState();
-     const theme = React.useMemo(() => buildThemeCompatibility(themeColors), [themeColors]);
+     const theme = React.useMemo(() => buildThemeRuntime(themeColors), [themeColors]);
+     const themeVars = React.useMemo(() => buildThemeVars(themeColors), [themeColors]);
+     const runtimeColors = React.useMemo(() => buildRuntimeColorMap(themeColors), [themeColors]);
+     const uiColors = React.useMemo(() => buildUiColorMap(), []);
 
      return {
           theme,
+          themeVars,
+          runtimeColors,
+          uiColors,
           themeColors,
           themeId,
           colorMode,
@@ -300,12 +305,10 @@ export function useThemeForDisplay() {
 }
 
 export function useTheme() {
-     const { theme, themeColors, themeId, colorMode, textColor, header } = useThemeForDisplay();
+     const { theme, themeVars, runtimeColors, uiColors, themeColors, themeId, colorMode, textColor, header } = useThemeForDisplay();
      const updateThemeColors = useUpdateThemeColors();
      const updateColorModeValue = useUpdateThemeColorMode();
-     const updateTextColorValue = useUpdateThemeTextColor();
      const resetThemeState = useResetThemeState();
-     const { setColorScheme } = useColorScheme();
 
      const updateTheme = React.useCallback(async (data, themeId, locationId, header) => {
           const primary = data?.tokens?.colors?.primary;
@@ -326,15 +329,9 @@ export function useTheme() {
      }, [updateThemeColors]);
 
      const updateColorMode = React.useCallback(async (mode) => {
-          setColorScheme(mode);
+          Uniwind.setTheme(mode);
           await updateColorModeValue(mode);
-          const nextTextColor = mode === 'light' ? '#1c1917' : '#f3f4f6';
-          await updateTextColorValue(nextTextColor);
-     }, [setColorScheme, updateColorModeValue, updateTextColorValue]);
-
-     const updateTextColor = React.useCallback(async (value) => {
-          await updateTextColorValue(value);
-     }, [updateTextColorValue]);
+     }, [updateColorModeValue]);
 
      const resetTheme = React.useCallback(async () => {
           await resetThemeState();
@@ -348,6 +345,9 @@ export function useTheme() {
 
      return {
           theme,
+          themeVars,
+          runtimeColors,
+          uiColors,
           themeColors,
           themeId,
           colorMode,
@@ -355,7 +355,6 @@ export function useTheme() {
           header,
           updateTheme,
           updateColorMode,
-          updateTextColor,
           resetTheme,
           forceRefreshTheme,
      };
@@ -363,15 +362,14 @@ export function useTheme() {
 
 export function UseColorMode(props) {
      const { showText } = props;
-     const { colorMode, theme } = useThemeForDisplay();
+     const { colorMode, runtimeColors, uiColors } = useThemeForDisplay();
      const location = useLibraryLocation();
      const themes = useAvailableThemes(location?.locationId);
-     const updateTextColor = useUpdateThemeTextColor();
+     const persistThemeColorMode = usePersistThemeColorMode();
      const currentMode = colorMode === 'dark' ? 'wb-sunny' : 'nightlight-round';
      const currentColorMode = colorMode === 'dark' ? 'Dark' : 'Light';
      const currentModeB = colorMode === 'dark' ? 'nightlight-round' : 'wb-sunny';
-     const iconColor = colorMode === 'dark' ? theme.tokens.colors.ui.text.dark : theme.tokens.colors.ui.icon.light;
-     const updateColorMode = useUpdateThemeColorMode();
+     const iconColor = colorMode === 'dark' ? uiColors.text.dark : uiColors.icon.light;
 
      // If Aspen LiDA Themes are present and 2 or more exist, then display ThemeSwitcher
      if (Array.isArray(themes) && themes.length > 1) {
@@ -392,15 +390,15 @@ export function UseColorMode(props) {
           }
 
           logDebugMessage("Switching color mode to: " + newColorMode);
-          await updateColorMode(newColorMode);
-          await updateTextColor(newColorMode === 'light' ? '#1c1917' : '#f3f4f6');
+          Uniwind.setTheme(newColorMode);
+         await persistThemeColorMode(newColorMode);
      };
 
      if (showText) {
           return (
                <HStack alignItems="center">
                     <Button onPress={switchColorMode} size="sm" style={{ backgroundColor: 'transparent', borderRadius: 9999 }}>
-                         <MaterialIcons name={currentModeB} size={18} color={theme.tokens.colors.primary['500']} />
+                         <MaterialIcons name={currentModeB} size={18} color={runtimeColors.primary[500]} />
                          <ButtonText style={{ fontSize: 14, color: iconColor }}> {currentColorMode}</ButtonText>
                     </Button>
                </HStack>
@@ -410,7 +408,7 @@ export function UseColorMode(props) {
      return (
           <Box alignItems="center">
                <Button onPress={switchColorMode} size="sm" style={{ backgroundColor: 'transparent', borderRadius: 9999 }}>
-                   <MaterialIcons name={currentMode} size={18} color={theme.tokens.colors.primary['500']} />
+                   <MaterialIcons name={currentMode} size={18} color={runtimeColors.primary[500]} />
                </Button>
           </Box>
      );
@@ -423,7 +421,7 @@ export function UseColorMode(props) {
  * @param showText whether to show the active theme's name next to the trigger icon, mirroring UseColorMode's prop
  */
 export const ThemeSwitcher = ({ showText = true } = {}) => {
-     const { theme, themeId, colorMode, textColor } = useTheme();
+     const { runtimeColors, uiColors, themeId, colorMode, textColor } = useTheme();
      const location = useLibraryLocation();
      const themes = useAvailableThemes(location?.locationId);
      const updateThemeColors = useUpdateThemeColors();
@@ -469,7 +467,7 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                               <Box style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-start', paddingBottom: 48, paddingLeft: 40 }}>
                                    <Box
                                         style={{
-                                             backgroundColor: colorMode === 'light' ? '#fafaf9' : '#374151',
+                                             backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark,
                                              borderRadius: 6,
                                              padding: 4,
                                              height: themes.length > 4 ? 150 : undefined,
@@ -507,22 +505,22 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                               setIsThemeMenuOpen(true);
                          }}
                          style={{ backgroundColor: 'transparent', borderRadius: 9999 }}>
-                         <MaterialIcons name="palette" size={18} color={theme.tokens.colors.primary['500']} />
-                         {showText ? <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}> {activeThemeName}</ButtonText> : null}
+                         <MaterialIcons name="palette" size={18} color={runtimeColors.primary[500]} />
+                         {showText ? <ButtonText style={{ color: runtimeColors.primary[500] }}> {activeThemeName}</ButtonText> : null}
                     </Button>
                </Box>
                <Modal transparent animationType="fade" visible={isSwitchingTheme}>
                     <View style={[themeSwitcherStyles.overlay, colorMode === 'dark' ? themeSwitcherStyles.overlayDark : themeSwitcherStyles.overlayLight]}>
                          <Box
                               style={{
-                                   backgroundColor: colorMode === 'dark' ? '#1f2937' : '#fafaf9',
+                                   backgroundColor: colorMode === 'dark' ? uiColors.card.dark : uiColors.surfaceSoft.light,
                                    borderRadius: 16,
                                    paddingHorizontal: 24,
                                    paddingVertical: 20,
                                    alignItems: 'center',
                                    justifyContent: 'center',
                               }}>
-                              <Spinner size="large" color={theme.tokens.colors.primary['500']} />
+                              <Spinner size="large" color={runtimeColors.primary[500]} />
                               <Text style={{ marginTop: 12, color: textColor }}>
                                    Switching theme...
                               </Text>

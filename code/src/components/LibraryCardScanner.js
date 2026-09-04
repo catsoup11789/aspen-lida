@@ -9,6 +9,11 @@ import { LoadingSpinner } from './loadingSpinner';
 import { Button, ButtonText } from '@/components/ui/button';
 import { View } from '@/components/ui/view';
 
+/**
+ * LibraryCardScanner component for scanning library cards using the device camera.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export default function LibraryCardScanner() {
      const navigation = useNavigation();
      const allowCode39 = useRoute().params?.allowCode39 ?? false;

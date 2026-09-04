@@ -5,16 +5,19 @@ import { useNavigation } from '@react-navigation/native';
 import { Box } from '@/components/ui/box';
 import { Divider } from '@/components/ui/divider';
 import { ScrollView } from '@/components/ui/scroll-view';
-
-// custom components and helper files
 import Profile_ContactInformation from './ContactInformation';
 import Profile_Identity from './Identity';
 import Profile_MainAddress from './MainAddress';
-import { SystemMessagesContext } from '../../../context/initialContext';
-import { useUserState } from '../../../hooks/useUserData';
-import { DisplaySystemMessage } from '../../../components/Notifications';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { SystemMessagesContext } from '@/src/context/initialContext';
+import { useUserState } from '@/src/hooks/useUserData';
+import { DisplaySystemMessage } from '@/src/components/Notifications';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
+/**
+ * MyProfile component that displays the user's profile information, including identity, main address, and contact information. It also handles system messages and updates them as needed.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyProfile = () => {
      const navigation = useNavigation();
      const library = useLibrary();

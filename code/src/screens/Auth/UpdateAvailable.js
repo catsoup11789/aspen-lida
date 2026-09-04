@@ -8,6 +8,12 @@ import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 
+/**
+ * UpdateAvailable component that displays an alert dialog informing the user about an available update and provides options to update or cancel.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const UpdateAvailable = (props) => {
 	const language = useActiveLanguage();
 	const { url, latest, setHasUpdate } = props;

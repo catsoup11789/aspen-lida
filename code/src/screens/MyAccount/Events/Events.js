@@ -7,34 +7,38 @@ import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import { FlatList } from 'react-native';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-import { useTheme } from '../../../themes/theme';
-import { loadError } from '../../../components/loadError';
-import { popAlert, popToast } from '../../../components/feedback';
-
-import { loadingSpinner } from '../../../components/loadingSpinner';
-import { DisplaySystemMessage } from '../../../components/Notifications';
-import { SystemMessagesContext } from '../../../context/initialContext';
-import { useUserState, useSavedEvents, useUpdateSavedEvents, useUpdateUserProfile } from '../../../hooks/useUserData';
-import { getCleanTitle } from '../../../helpers/item';
-import { navigate } from '../../../helpers/RootNavigator';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { fetchSavedEvents, removeSavedEvent } from '../../../util/api/event';
-import { refreshProfile } from '../../../util/api/user';
-import {logDebugMessage, logErrorMessage, getErrorMessage, logWarnMessage} from '../../../util/logging';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { useTheme } from '@/src/themes/theme';
+import { loadError } from '@/src/components/loadError';
+import { popAlert, popToast } from '@/src/components/feedback';
+import { loadingSpinner } from '@/src/components/loadingSpinner';
+import { DisplaySystemMessage } from '@/src/components/Notifications';
+import { SystemMessagesContext } from '@/src/context/initialContext';
+import { useUserState, useSavedEvents, useUpdateSavedEvents, useUpdateUserProfile } from '@/src/hooks/useUserData';
+import { getCleanTitle } from '@/src/helpers/item';
+import { navigate } from '@/src/helpers/RootNavigator';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { fetchSavedEvents, removeSavedEvent } from '@/src/util/api/event';
+import { refreshProfile } from '@/src/util/api/user';
+import {logDebugMessage, logErrorMessage, getErrorMessage, logWarnMessage} from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * MyEvents component that displays a list of saved events for the user. It allows users to filter events by upcoming, past, or all events, and provides pagination for navigating through the list. The component handles API calls to fetch saved events and remove events from the user's saved list. It also displays system messages and handles loading and error states.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyEvents = () => {
      const navigation = useNavigation();
      const queryClient = useQueryClient();
@@ -47,12 +51,12 @@ export const MyEvents = () => {
      const { data: savedEvents } = useSavedEvents();
      const updateSavedEvents = useUpdateSavedEvents();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { theme, colorMode, textColor} = useTheme();
+     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
      const pageSize = 25;
      const systemMessagesForScreen = [];
-     const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      const [filterBy, setFilterBy] = React.useState('upcoming');
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
@@ -125,23 +129,23 @@ export const MyEvents = () => {
                         <Button
                              variant={filterBy === 'all' ? 'solid' : 'outline'}
                              onPress={() => setFilterBy('all')}
-                             style={{ backgroundColor: filterBy === 'all' ? theme.tokens.colors.primary['500'] : surfaceBg, borderColor: theme.tokens.colors.primary['500'] }}
+                             style={{ backgroundColor: filterBy === 'all' ? runtimeColors.primary[500] : surfaceBg, borderColor: runtimeColors.primary[500] }}
                              action="primary">
-                             <ButtonText style={{ color: filterBy === 'all' ? theme.tokens.colors.primary['500-text'] : theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'all_events')}</ButtonText>
+                             <ButtonText style={{ color: filterBy === 'all' ? runtimeColors.primary['500-text'] : runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'all_events')}</ButtonText>
                         </Button>
                         <Button
                              variant={filterBy === 'upcoming' ? 'solid' : 'outline'}
                              action="primary"
-                             style={{ backgroundColor: filterBy === 'upcoming' ? theme.tokens.colors.primary['500'] : surfaceBg, borderColor: theme.tokens.colors.primary['500'] }}
+                             style={{ backgroundColor: filterBy === 'upcoming' ? runtimeColors.primary[500] : surfaceBg, borderColor: runtimeColors.primary[500] }}
                              onPress={() => setFilterBy('upcoming')}>
-                             <ButtonText style={{ color: filterBy === 'upcoming' ? theme.tokens.colors.primary['500-text'] : theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'upcoming_events')}</ButtonText>
+                             <ButtonText style={{ color: filterBy === 'upcoming' ? runtimeColors.primary['500-text'] : runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'upcoming_events')}</ButtonText>
                         </Button>
                         <Button
                              action="primary"
                              variant={filterBy === 'past' ? 'solid' : 'outline'}
-                             style={{ backgroundColor: filterBy === 'past' ? theme.tokens.colors.primary['500'] : surfaceBg, borderColor: theme.tokens.colors.primary['500'] }}
+                             style={{ backgroundColor: filterBy === 'past' ? runtimeColors.primary[500] : surfaceBg, borderColor: runtimeColors.primary[500] }}
                              onPress={() => setFilterBy('past')}>
-                             <ButtonText style={{ color: filterBy === 'past' ? theme.tokens.colors.primary['500-text'] : theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'past_events')}</ButtonText>
+                             <ButtonText style={{ color: filterBy === 'past' ? runtimeColors.primary['500-text'] : runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'past_events')}</ButtonText>
                         </Button>
                    </ButtonGroup>
                </Box>
@@ -220,6 +224,12 @@ export const MyEvents = () => {
      );
 };
 
+/**
+ * Item component that represents a single event item in the list of saved events. It displays the event's cover image, title, date, time, and registration requirement. The component also provides functionality to open the event details or remove the event from the saved list. It handles API calls to remove the event and refresh the user's profile.
+ * @param data
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Item = (data) => {
      const filterBy = data.filterBy;
      const setLoading = data.setLoading;
@@ -230,9 +240,9 @@ const Item = (data) => {
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
      const library = useLibrary();
-     const { colorMode, theme, textColor } = useTheme();
-     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const { colorMode, uiColors, textColor } = useTheme();
+     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      const refreshAndSaveUserProfile = React.useCallback(async () => {
           const profileResponse = await refreshProfile(library.baseUrl);
@@ -374,11 +384,11 @@ const Item = (data) => {
                         <VStack style={{ maxWidth: '35%' }}>
                               {hasPassed ? (
                                    <Box style={{ width: '100%', zIndex: 1 }}>
-                                        <Badge action="warning" variant="solid" style={{ marginBottom: -12, marginLeft: -4, borderRadius: 8 }}>
-                                             <BadgeText size="xs">
+                                        <ThemedBadge action="warning" variant="solid" style={{ marginBottom: -12, marginLeft: -4, borderRadius: 8 }}>
+                                             <ThemedBadgeText action="warning" size="xs">
                                                   {getTermFromDictionary(language, 'flag_past')}
-                                             </BadgeText>
-                                        </Badge>
+                                             </ThemedBadgeText>
+                                        </ThemedBadge>
                                    </Box>
                               ) : null}
                               <Image
@@ -436,11 +446,11 @@ const Item = (data) => {
                          ) : null}
                          {registrationRequired ? (
                               <HStack style={{ marginTop: 6, flexWrap: 'wrap' }} space="xs">
-                                   <Badge key={0} action="secondary" variant="outline" style={{ marginTop: 4, borderRadius: 8 }}>
-                                        <BadgeText size="sm">
+                                   <ThemedBadge key={0} action="muted" variant="outline" style={{ marginTop: 4, borderRadius: 8 }}>
+                                        <ThemedBadgeText action="muted" size="sm">
                                              {getTermFromDictionary(language, 'registration_required')}
-                                        </BadgeText>
-                                   </Badge>
+                                        </ThemedBadgeText>
+                                   </ThemedBadge>
                               </HStack>
                          ) : null}
                     </VStack>

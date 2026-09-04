@@ -12,6 +12,11 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { Button, ButtonText } from '@/components/ui/button';
 import { View } from '@/components/ui/view';
 
+/**
+ * SelfCheckScanner component that provides a camera view for scanning barcodes in a self-checkout process. It handles camera permissions, barcode scanning, and navigation to the self-checkout screen with the scanned barcode data.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export default function SelfCheckScanner() {
      const navigation = useNavigation();
      const isFocused = useIsFocused();
@@ -123,6 +128,12 @@ const styles = StyleSheet.create({
      },
 });
 
+/**
+ * Cleans the scanned barcode based on its type. For EAN-8 barcodes, it removes leading and trailing characters if they are 'A', 'B', 'C', or 'D'. For EAN-8 and EAN-13 barcodes, it removes the last character (check digit).
+ * @param barcode
+ * @param type
+ * @returns {string}
+ */
 function cleanBarcode(barcode, type) {
      barcode = barcode.toUpperCase();
      if (type === '8' || type === 8) {

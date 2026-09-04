@@ -1,19 +1,28 @@
 import React from 'react';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-
 import { useTheme } from '../themes/theme';
 import { loadLibraryUrl } from '../util/db';
 import { GLOBALS, LIBRARY } from '../util/globals';
 import { logDebugMessage, logErrorMessage } from '../util/logging';
 
+/**
+ * ThemeRefreshButton component for refreshing the theme.
+ * @param param0
+ * @param param0.label
+ * @param param0.refreshingLabel
+ * @param param0.onRefreshed
+ * @param param0.buttonProps
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const ThemeRefreshButton = ({
      label = 'Refresh Theme',
      refreshingLabel = 'Refreshing Theme...',
      onRefreshed,
      ...buttonProps
 }) => {
-     const { forceRefreshTheme, theme } = useTheme();
+     const { forceRefreshTheme, runtimeColors } = useTheme();
      const [isRefreshing, setIsRefreshing] = React.useState(false);
 
      const onPress = React.useCallback(async () => {
@@ -43,9 +52,9 @@ export const ThemeRefreshButton = ({
                <Button
                     onPress={onPress}
                     isDisabled={isRefreshing}
-                    style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                    style={{ backgroundColor: runtimeColors.primary[500] }}
                     {...buttonProps}>
-                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
+                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>
                          {isRefreshing ? refreshingLabel : label}
                     </ButtonText>
                </Button>

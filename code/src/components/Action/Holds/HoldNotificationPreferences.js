@@ -2,15 +2,21 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import _ from 'lodash';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { useTranslationWithValues } from '../../../hooks/useTranslationWithValues';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { useTranslationWithValues } from '@/src/hooks/useTranslationWithValues';
+import { ThemedInput, ThemedInputField } from '../../themed/ThemedFormControls';
 import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
 import { FormControl, FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ChevronDownIcon, CheckIcon, Icon } from '@/components/ui/icon';
-import { Input, InputField } from '@/components/ui/input';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 import { Text } from '@/components/ui/text';
 
+/**
+ * HoldNotificationPreferences component for displaying notification preferences for holds.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const HoldNotificationPreferences = (props) => {
      const { textColor, theme, user, language, emailNotification, setEmailNotification, phoneNotification, setPhoneNotification, smsNotification, setSMSNotification, smsCarrier, setSMSCarrier, smsNumber, setSMSNumber, phoneNumber, setPhoneNumber, colorMode } = props;
      const insets = useSafeAreaInsets();
@@ -67,9 +73,9 @@ export const HoldNotificationPreferences = (props) => {
                                         {getTermFromDictionary(language, 'hold_phone_number')}
                                    </FormControlLabelText>
                               </FormControlLabel>
-                              <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
-                                   <InputField style={{ color: textColor }} name="phoneNumber" defaultValue={phoneNumber} accessibilityLabel={getTermFromDictionary(language, 'hold_phone_number')} onChangeText={(value) => setPhoneNumber(value)} />
-                              </Input>
+                              <ThemedInput>
+                                   <ThemedInputField name="phoneNumber" defaultValue={phoneNumber} accessibilityLabel={getTermFromDictionary(language, 'hold_phone_number')} onChangeText={(value) => setPhoneNumber(value)} />
+                              </ThemedInput>
                          </FormControl>
                     </>
                ) : null}
@@ -120,9 +126,9 @@ export const HoldNotificationPreferences = (props) => {
                                                        <SelectScrollView>
                                                             {_.map(smsCarriers, function (carrier, index, array) {
                                                                  if (index === smsCarrier) {
-                                                                      return <SelectItem key={index} label={carrier} value={index} style={{ backgroundColor: theme.tokens.colors.tertiary['300'] }} textStyle={{ color: theme.tokens.colors.tertiary['500-text'] }} />;
+                                                                      return <SelectItem key={index} label={carrier} value={index} style={{ backgroundColor: runtimeColors.tertiary[300] }} textStyle={{ color: runtimeColors.tertiary['500-text'] }} />;
                                                                  }
-                                                                 return <SelectItem key={index} label={carrier} value={index} style={{ backgroundColor: smsCarrier === index ? theme.tokens.colors.tertiary['300'] : 'transparent' }} textStyle={{ color: smsCarrier === index ? theme.tokens.colors.tertiary['500-text'] : textColor }} />;
+                                                                 return <SelectItem key={index} label={carrier} value={index} style={{ backgroundColor: smsCarrier === index ? runtimeColors.tertiary[300] : 'transparent' }} textStyle={{ color: smsCarrier === index ? runtimeColors.tertiary['500-text'] : textColor }} />;
                                                             })}
                                                        </SelectScrollView>
                                                   </SelectContent>
@@ -140,9 +146,9 @@ export const HoldNotificationPreferences = (props) => {
                                                   {getTermFromDictionary(language, 'hold_sms_number')}
                                              </FormControlLabelText>
                                         </FormControlLabel>
-                                        <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
-                                             <InputField style={{ color: textColor }} name="smsNumber" defaultValue={smsNumber} accessibilityLabel={getTermFromDictionary(language, 'hold_sms_number')} onChangeText={(value) => setSMSNumber(value)} />
-                                        </Input>
+                                        <ThemedInput>
+                                             <ThemedInputField name="smsNumber" defaultValue={smsNumber} accessibilityLabel={getTermFromDictionary(language, 'hold_sms_number')} onChangeText={(value) => setSMSNumber(value)} />
+                                        </ThemedInput>
                                         <FormControlHelper style={{ marginBottom: 8 }}>
                                              <FormControlHelperText size="xs" style={{ color: textColor }}>
                                                   {getTermFromDictionary(language, 'hold_sms_format')}

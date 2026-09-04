@@ -1,7 +1,6 @@
 import React from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import _ from 'lodash';
-
 import { useCatalogStatus } from '../../hooks/useLibrarySystemData';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { logInfoMessage } from '../../util/logging';
@@ -13,11 +12,16 @@ import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 
+/**
+ * CatalogOffline component that displays an alert dialog when the catalog is offline, allowing the user to sign out.
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 export const CatalogOffline = () => {
       const language = useActiveLanguage();
      const { status: catalogStatus, message: catalogStatusMessage } = useCatalogStatus();
      const { signOut } = React.useContext(AuthContext);
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, textColor, colorMode, runtimeColors } = useTheme();
      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => setIsOpen(false);
@@ -40,8 +44,8 @@ export const CatalogOffline = () => {
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">
-                                       <Button onPress={signOut} style={{ backgroundColor: theme.tokens.colors.primary['500'] }} ref={cancelRef}>
-                                            <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                       <Button onPress={signOut} style={{ backgroundColor: runtimeColors.primary[500] }} ref={cancelRef}>
+                                            <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>

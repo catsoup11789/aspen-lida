@@ -5,13 +5,9 @@ import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetIcon, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
 import { HStack } from '@/components/ui/hstack';
-import { Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { VStack } from '@/components/ui/vstack';
-
-// custom components and helper files
-
-import { useUserState } from '../../../hooks/useUserData';
+import { useUserState } from '@/src/hooks/useUserData';
 import {
      getAuthor,
      getCheckedOutTo,
@@ -24,25 +20,31 @@ import {
      willAutoRenew,
      getCollectionName,
      CheckoutAccessLabel
-} from '../../../helpers/item';
-import { navigate, navigateStack } from '../../../helpers/RootNavigator';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { renewCheckout, returnCheckout, viewOnlineItem, viewOverDriveItem } from '../../../util/api/user';
-import { stripHTML, formatDiscoveryVersion } from '../../../helpers/helpers';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+} from '@/src/helpers/item';
+import { navigate, navigateStack } from '@/src/helpers/RootNavigator';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { renewCheckout, returnCheckout, viewOnlineItem, viewOverDriveItem } from '@/src/util/api/user';
+import { stripHTML, formatDiscoveryVersion } from '@/src/helpers/helpers';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
+/**
+ * MyCheckout component that displays information about a checked-out item and provides actions for renewing, returning, or accessing the item. It uses various hooks to manage state, theme, and library data, and it handles user interactions with the checkout item.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyCheckout = (props) => {
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
      const version = formatDiscoveryVersion(library.discoveryVersion);
-     const { colorMode, textColor, theme } = useTheme();
+     const { colorMode, textColor, uiColors } = useTheme();
      const insets = useSafeAreaInsets();
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const actionSheetBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const actionSheetBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const [access, setAccess] = useState(false);
      const [returning, setReturn] = useState(false);

@@ -1,9 +1,14 @@
 import { Button, ButtonText } from '@/components/ui/button';
 import React from 'react';
-import {navigate} from '../../../helpers/RootNavigator';
-import { useTheme } from '../../../themes/theme';
+import {navigate} from '@/src/helpers/RootNavigator';
+import { useTheme } from '@/src/themes/theme';
 
-
+/**
+ * StartLocalIllRequest component for displaying a button that navigates to the "Create Local ILL Request" screen.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const StartLocalIllRequest = (props) => {
      const openLocalIllRequest = () => {
           if (typeof props.onBeforeNavigate === 'function') {
@@ -16,15 +21,15 @@ export const StartLocalIllRequest = (props) => {
                volumeName: props.volumeName ?? null
           });
      };
-     const { theme } = useTheme();
+     const { runtimeColors } = useTheme();
 
      return (
           <Button
                size="md"
                variant="solid"
-               style={{ backgroundColor: theme.tokens.colors.primary['500'], minWidth: '100%', maxWidth: '100%' }}
+               style={{ backgroundColor: runtimeColors.primary[500], minWidth: '100%', maxWidth: '100%' }}
                onPress={openLocalIllRequest}>
-               <ButtonText style={{ color: theme.tokens.colors.primary['500-text'], textAlign: 'center' }}>
+               <ButtonText style={{ color: runtimeColors.primary['500-text'], textAlign: 'center' }}>
                     {props.title}
                </ButtonText>
           </Button>

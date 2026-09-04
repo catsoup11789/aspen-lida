@@ -7,13 +7,10 @@ import * as WebBrowser from 'expo-web-browser';
 import _ from 'lodash';
 import React from 'react';
 import { KeyboardAvoidingView, Platform } from 'react-native';
-
 import { navigate } from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { getLibraryInfo } from '../../util/api/system';
 import { saveLibrary, saveLibraryUrl } from '../../util/db';
-
-// custom components and helper files
 import { GLOBALS } from '../../util/globals';
 import { fetchAllLibrariesFromGreenhouse, fetchNearbyLibrariesFromGreenhouse } from '../../util/api/greenhouse';
 import { LIBRARY } from '../../util/globals';
@@ -23,19 +20,23 @@ import { ResetPassword } from './ResetPassword';
 import { SelectYourLibrary } from './SelectYourLibrary';
 import { SplashScreen } from './Splash';
 import { useTheme } from '../../themes/theme';
-import { APIErrorLog } from '../MyAccount/Settings/Logs/APIErrorLog'; // adjust path if your file differs
-
+import { APIErrorLog } from '../MyAccount/Settings/Logs/APIErrorLog';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { logDebugMessage, logInfoMessage, getErrorMessage } from '../../util/logging';
 import { popAlert } from '../../components/feedback';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Image } from '@/components/ui/image';
 import { Modal, ModalBackdrop, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 
+/**
+ * LoginScreen component that handles the login process, including library selection, user authentication, and displaying relevant modals for forgotten credentials or API error logs.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const LoginScreen = () => {
      const [isLoading, setIsLoading] = React.useState(true);
      const [isThemeInitialized, setIsThemeInitialized] = React.useState(false);
@@ -66,7 +67,7 @@ export const LoginScreen = () => {
      const [showApiErrorModal, setShowApiErrorModal] = React.useState(false);
      const logoTapCountRef = React.useRef(0);
      const logoTapTimerRef = React.useRef(null);
-     const { theme, colorMode, textColor } = useTheme();
+     const { theme, runtimeColors, colorMode, textColor } = useTheme();
      const surfaceBg =
           colorMode === 'light'
                ? theme?.tokens?.colors?.ui?.surface?.light ?? '#FFFFFF'
@@ -266,13 +267,13 @@ export const LoginScreen = () => {
                          </ButtonGroup>
                          {enableSelfRegistration ? (
                               <Button style={{ marginTop: 12 }} variant="link" onPress={openSelfRegistration}>
-                                   <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary('en', 'register_for_a_library_card')}</ButtonText>
+                                  <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary('en', 'register_for_a_library_card')}</ButtonText>
                               </Button>
                          ) : null}
                          {isCommunity && Platform.OS !== 'android' ? (
                               <Button style={{ marginTop: 20 }} size="xs" variant="link">
-                                   <Ionicons name="navigate-circle-outline" size={18} color={theme.tokens.colors.tertiary['500']} style={{ marginRight: 4 }} />
-                                   <ButtonText style={{ color: theme.tokens.colors.tertiary['500'] }}>{getTermFromDictionary('en', 'reset_geolocation')}</ButtonText>
+                                   <Ionicons name="navigate-circle-outline" size={18} color={runtimeColors.tertiary[500]} style={{ marginRight: 4 }} />
+                                   <ButtonText style={{ color: runtimeColors.tertiary[500] }}>{getTermFromDictionary('en', 'reset_geolocation')}</ButtonText>
                               </Button>
                          ) : null}
                          <Center>

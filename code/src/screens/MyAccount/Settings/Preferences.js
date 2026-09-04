@@ -10,19 +10,20 @@ import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-
-import { useUserState, useUpdateExpoToken } from '../../../hooks/useUserData';
-
-// custom components and helper files
-import { navigate } from '../../../helpers/RootNavigator';
-import { UseColorMode, useTheme } from '../../../themes/theme';
-import { getTermFromDictionary, LanguageSwitcher } from '../../../translations/TranslationService';
-import { logErrorMessage } from '../../../util/logging';
+import { useUserState, useUpdateExpoToken } from '@/src/hooks/useUserData';
+import { navigate } from '@/src/helpers/RootNavigator';
+import { UseColorMode, useTheme } from '@/src/themes/theme';
+import { getTermFromDictionary, LanguageSwitcher } from '@/src/translations/TranslationService';
+import { logErrorMessage } from '@/src/util/logging';
 import * as Device from "expo-device";
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-import { ThemeRefreshButton } from '../../../components/ThemeRefreshButton';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
+/**
+ * PreferencesScreen component that displays user preferences and settings. It allows users to manage browse categories, pickup locations, device permissions, support, language, and appearance settings. It also handles fetching and updating the Expo push notification token when the screen is focused.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const PreferencesScreen = () => {
       const navigation = useNavigation();
       const library = useLibrary();

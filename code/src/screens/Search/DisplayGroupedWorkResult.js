@@ -2,9 +2,6 @@ import { useRoute } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import _ from 'lodash';
 import React from 'react';
-
-// custom components and helper files
-
 import { getCleanTitle } from '../../helpers/item';
 import { navigate } from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
@@ -13,7 +10,7 @@ import AddToList from './AddToList';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
@@ -23,12 +20,18 @@ import { VStack } from '@/components/ui/vstack';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * DisplayGroupedWorkResult component that displays an individual grouped work result with its image, title, author, formats, and language. It handles user interaction to navigate to the grouped work details.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const DisplayGroupedWorkResult = (props) => {
      const item = props.data;
      let params = useRoute();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, textColor, colorMode } = useTheme();
+     const { runtimeColors, textColor, colorMode, theme } = useTheme();
 
      let formats = item?.itemList ?? [];
      const id = item.key ?? item.id;
@@ -67,20 +70,20 @@ export const DisplayGroupedWorkResult = (props) => {
      function getFormat(n) {
           if (_.isArray(n) || _.isObject(n)) {
                return (
-                    <Badge key={n.key} variant="outline" style={{ borderRadius: 8, borderColor: theme.tokens.colors.secondary['400'], backgroundColor: 'transparent' }}>
-                         <BadgeText textTransform="none" style={{ color: theme.tokens.colors.secondary['400'], fontSize: 12 }}>
+                    <ThemedBadge key={n.key} variant="outline" style={{ borderRadius: 8, borderColor: runtimeColors.secondary[400], backgroundColor: 'transparent' }}>
+                         <ThemedBadgeText textTransform="none" style={{ color: runtimeColors.secondary[400], fontSize: 12 }}>
                               {n.name}
-                         </BadgeText>
-                    </Badge>
+                         </ThemedBadgeText>
+                    </ThemedBadge>
                );
           }
 
           return (
-               <Badge key={n} variant="outline" style={{ borderRadius: 8, borderColor: theme.tokens.colors.secondary['400'], backgroundColor: 'transparent' }}>
-                    <BadgeText textTransform="none" style={{ color: theme.tokens.colors.secondary['400'], fontSize: 12 }}>
+               <ThemedBadge key={n} variant="outline" style={{ borderRadius: 8, borderColor: runtimeColors.secondary[400], backgroundColor: 'transparent' }}>
+                    <ThemedBadgeText textTransform="none" style={{ color: runtimeColors.secondary[400], fontSize: 12 }}>
                          {n}
-                    </BadgeText>
-               </Badge>
+                    </ThemedBadgeText>
+               </ThemedBadge>
           );
      }
 
@@ -107,13 +110,13 @@ export const DisplayGroupedWorkResult = (props) => {
                          </Box>
                          {item.language ? (
                               <Center style={{ marginTop: 4 }}>
-                                   <Badge
+                                   <ThemedBadge
                                         size="sm"
                                         style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark }}>
-                                        <BadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark, fontSize: 12, textAlign: 'center' }}>
+                                        <ThemedBadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark, fontSize: 12, textAlign: 'center' }}>
                                             {item.language}
-                                       </BadgeText>
-                                   </Badge>
+                                       </ThemedBadgeText>
+                                   </ThemedBadge>
                               </Center>
                          ) : null}
                          <AddToList itemId={id} btnStyle="sm" />

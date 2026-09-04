@@ -5,6 +5,10 @@ import { logDebugMessage } from '../../util/logging.js';
 
 let globalToastInstance = null;
 
+/**
+ * Registers a global toast instance for displaying toast notifications.
+ * @param toast
+ */
 export function registerGlobalToast(toast) {
      globalToastInstance = toast;
 }
@@ -52,7 +56,12 @@ function showToast({
      logDebugMessage(`${level} show returned id: ${shownId}`);
 }
 
-// Use for short, non-blocking feedback (quick confirmations or transient errors).
+/**
+ * Pops a toast notification with the specified title, description, and status.
+ * @param title
+ * @param description
+ * @param status
+ */
 export function popToast(title, description, status) {
      logDebugMessage('Popping a toast');
      showToast({
@@ -65,7 +74,12 @@ export function popToast(title, description, status) {
      });
 }
 
-// Use for higher-priority feedback that should remain visible longer.
+/**
+ * Pops an alert toast notification with the specified title, description, and status.
+ * @param title
+ * @param description
+ * @param status
+ */
 export function popAlert(title, description, status) {
      logDebugMessage('Popping an alert');
      showToast({

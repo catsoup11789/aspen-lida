@@ -1,18 +1,15 @@
 import { MaterialIcons } from '@expo/vector-icons';
-
 import { useRoute } from '@react-navigation/native';
 import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import _ from 'lodash';
 import React from 'react';
-
-// custom components and helper files
 import {loadError} from '../../components/loadError';
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import { DisplaySystemMessage } from '../../components/Notifications';
 import { GroupedWorkContext, SystemMessagesContext } from '../../context/initialContext';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { useUserState, useAccounts, useCards, useLocations, useSublocations, useUpdateAccounts, useUpdateCards, useUpdateLocations, useUpdateSublocations, useUpdatePickupLocationPrefs } from '../../hooks/useUserData';
+import { useUserState, useCards, useSublocations, useUpdateAccounts, useUpdateCards, useUpdateLocations, useUpdateSublocations, useUpdatePickupLocationPrefs } from '../../hooks/useUserData';
 import { startSearch } from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { getFirstRecord, getVariations } from '../../util/api/item';
@@ -24,7 +21,6 @@ import { getPickupLocations, getPickupSublocations } from '../../util/api/user';
 import { formatPickupLocations } from '../../util/api/userHelper';
 import AddToList from '../Search/AddToList';
 import Variations from './Variations';
-
 import { logDebugMessage, getErrorMessage } from '../../util/logging.js';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
@@ -38,17 +34,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * GroupedWorkScreen component that displays detailed information about a grouped work, including title, author, formats, variations, and description. It fetches data from the API based on the provided work ID and user language, and manages state for user accounts, pickup locations, and system messages.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const GroupedWorkScreen = () => {
      const route = useRoute();
      const queryClient = useQueryClient();
      const id = route.params.id;
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
-     const preferredPickupLocationIsValid = userState?.preferredPickupLocationIsValid ?? true;
-     const preferredPickupLocationWarning = userState?.preferredPickupLocationWarning ?? '';
-     const { data: locations } = useLocations();
      const { data: sublocations } = useSublocations();
-     const { data: accounts } = useAccounts();
      const { data: cards } = useCards();
      const updateLocations = useUpdateLocations();
      const updateSublocations = useUpdateSublocations();
@@ -59,7 +56,7 @@ export const GroupedWorkScreen = () => {
      const library = useLibrary();
      const userLanguage = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { theme, colorMode } = useTheme();
+     const { theme, runtimeColors, colorMode } = useTheme();
 
      const { status, data, error, isFetching } = useQuery(['groupedWork', id, userLanguage, library.baseUrl], () => getGroupedWork(route.params.id, userLanguage, library.baseUrl));
 
@@ -135,6 +132,12 @@ export const GroupedWorkScreen = () => {
      );
 };
 
+/**
+ * DisplayGroupedWork component that displays detailed information about a grouped work, including title, author, formats, variations, and description. It fetches additional data for each format and variation using React Query.
+ * @param payload
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const DisplayGroupedWork = (payload) => {
      const groupedWork = payload.data;
      const route = useRoute();
@@ -142,7 +145,6 @@ const DisplayGroupedWork = (payload) => {
      const { format } = React.useContext(GroupedWorkContext);
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode } = useTheme();
 
      const formats = Object.keys(groupedWork.formats);
 
@@ -179,6 +181,13 @@ const DisplayGroupedWork = (payload) => {
      );
 };
 
+/**
+ * Title component that displays the title of a grouped work. It renders the title text in bold and centered if provided, otherwise returns null.
+ * @param param0
+ * @param param0.title
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const Title = ({ title }) => {
      const { textColor } = useTheme();
      if (title) {
@@ -194,6 +203,13 @@ const Title = ({ title }) => {
      }
 };
 
+/**
+ * Author component that displays the author of a grouped work. It renders a button that allows the user to search for other works by the same author when pressed.
+ * @param param0
+ * @param param0.author
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const Author = ({ author }) => {
      const library = useLibrary();
      const { theme, colorMode } = useTheme();
@@ -210,6 +226,12 @@ const Author = ({ author }) => {
      return null;
 };
 
+/**
+ * Format component that renders a button for a specific format of a grouped work. It allows the user to select a format and updates the displayed information accordingly.
+ * @param data
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Format = (data) => {
      const format = data.data;
      const key = data.format;
@@ -219,14 +241,21 @@ const Format = (data) => {
      const { theme, colorMode } = useTheme();
 
      return (
-          <Button size="sm" variant={btnStyle} onPress={() => updateFormat(key)} style={{ backgroundColor: btnStyle === 'outline' ? 'transparent' : theme.tokens.colors.secondary['400'], borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white, marginBottom: 4, marginRight: 4 }}>
-               <ButtonText style={{ color: btnStyle === 'outline' ? (colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white) : theme.tokens.colors.secondary['400-text'] }}>{format.label}</ButtonText>
+          <Button size="sm" variant={btnStyle} onPress={() => updateFormat(key)} style={{ backgroundColor: btnStyle === 'outline' ? 'transparent' : runtimeColors.secondary[400], borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white, marginBottom: 4, marginRight: 4 }}>
+               <ButtonText style={{ color: btnStyle === 'outline' ? (colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white) : runtimeColors.secondary['400-text'] }}>{format.label}</ButtonText>
           </Button>
      );
 };
 
+/**
+ * Description component that displays the description of a grouped work. It renders the description text if provided, otherwise returns null.
+ * @param param0
+ * @param param0.description
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const Description = ({ description }) => {
-     const { theme, textColor } = useTheme();
+     const { textColor } = useTheme();
      if (description) {
           return (
                <Text style={{ marginTop: 20, marginBottom: 20, fontSize: 14, lineHeight: 21, color: textColor }}>
@@ -238,9 +267,16 @@ const Description = ({ description }) => {
      }
 };
 
+/**
+ * Language component that displays the language of a grouped work. It renders a label and the language value if provided.
+ * @param param0
+ * @param param0.language
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const Language = ({ language }) => {
      const user_language = useActiveLanguage();
-     const { theme, textColor } = useTheme();
+     const { textColor } = useTheme();
      if (language) {
           return (
                <HStack style={{ marginTop: 12, marginBottom: 4 }}>
@@ -258,10 +294,17 @@ const Language = ({ language }) => {
      }
 };
 
+/**
+ * Formats component that displays a list of available formats for a grouped work. It renders a button for each format, allowing the user to select a format and update the displayed information accordingly.
+ * @param param0
+ * @param param0.formats
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const Formats = ({ formats }) => {
      const language = useActiveLanguage();
      const { format, updateFormat } = React.useContext(GroupedWorkContext);
-     const { theme, textColor } = useTheme();
+     const { textColor } = useTheme();
      if (formats) {
           return (
                <>
@@ -284,9 +327,16 @@ const Formats = ({ formats }) => {
      }
 };
 
+/**
+ * BibliographicInformationLink component that renders a button linking to more bibliographic information for a grouped work. The button is displayed only if the library settings allow it and the grouped work ID is provided.
+ * @param param0
+ * @param param0.groupedWorkId
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const BibliographicInformationLink = ({ groupedWorkId }) => {
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
+     const { theme, runtimeColors, colorMode } = useTheme();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const library = useLibrary();
@@ -300,8 +350,8 @@ const BibliographicInformationLink = ({ groupedWorkId }) => {
 
      if (groupedWorkId && showMoreInfoBtn) {
           return (
-          <Button onPress={async () => await passUserToDiscovery(library.baseUrl, 'GroupedWork', user.id, backgroundColor, textColor, groupedWorkId)} style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}>
-              <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>
+          <Button onPress={async () => await passUserToDiscovery(library.baseUrl, 'GroupedWork', user.id, backgroundColor, textColor, groupedWorkId)} style={{ backgroundColor: runtimeColors.secondary[500] }}>
+              <ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>
                     {getTermFromDictionary(language, 'more_information')}
                </ButtonText>
           </Button>

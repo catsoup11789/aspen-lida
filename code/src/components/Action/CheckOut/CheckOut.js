@@ -1,4 +1,3 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import {
      Button,
      ButtonSpinner,
@@ -10,26 +9,27 @@ import _ from 'lodash';
 import { useQueryClient } from '@tanstack/react-query';
 import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
-
-// custom components and helper files
-
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-import { useUserState, useAccounts, useUpdateUserProfile } from '../../../hooks/useUserData';
-import { decodeHTML } from '../../../helpers/helpers';
-import { completeAction } from '../../../util/api/userHelper';
-import { refreshProfile, updateAlternateLibraryCard } from '../../../util/api/user';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { useUserState, useAccounts, useUpdateUserProfile } from '@/src/hooks/useUserData';
+import { decodeHTML } from '@/src/helpers/helpers';
+import { completeAction } from '@/src/util/api/userHelper';
+import { refreshProfile, updateAlternateLibraryCard } from '@/src/util/api/user';
 import { HoldPrompt } from '../Holds/HoldPrompt';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../../util/logging';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import { logDebugMessage, logWarnMessage, getErrorMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedInput, ThemedInputField } from '../../themed/ThemedFormControls';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { CloseIcon, Icon } from '@/components/ui/icon';
-import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
-import { Text } from '@/components/ui/text';
 
+/**
+ * CheckOut component for handling the checkout process of an item, including alternate library card handling and response management.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const CheckOut = (props) => {
      const queryClient = useQueryClient();
      const { id, title, type, record, prevRoute, response, setResponse, responseIsOpen, setResponseIsOpen, onResponseClose, cancelResponseRef, holdConfirmationResponse, setHoldConfirmationResponse, holdConfirmationIsOpen, setHoldConfirmationIsOpen, onHoldConfirmationClose, cancelHoldConfirmationRef, userHasAlternateLibraryCard, shouldPromptAlternateLibraryCard } = props;
@@ -40,7 +40,7 @@ export const CheckOut = (props) => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const [loading, setLoading] = React.useState(false);
-     const { theme, colorMode, textColor } = useTheme();
+     const { theme, runtimeColors, colorMode, textColor } = useTheme();
 
      const volumeInfo = {
           numItemsWithVolumes: 0,
@@ -140,8 +140,8 @@ export const CheckOut = (props) => {
           };
           return (
                <>
-                    <Button style={{ minWidth: '100%', maxWidth: '100%', backgroundColor: theme.tokens.colors.primary['500'] }} onPress={() => setShowAddAlternateLibraryCardModal(true)}>
-                         <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{title}</ButtonText>
+                    <Button style={{ minWidth: '100%', maxWidth: '100%', backgroundColor: runtimeColors.primary[500] }} onPress={() => setShowAddAlternateLibraryCardModal(true)}>
+                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>
                     </Button>
                     <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg">
                          <ModalBackdrop />
@@ -151,7 +151,7 @@ export const CheckOut = (props) => {
                                         {getTermFromDictionary(language, 'add_alternate_library_card')}
                                    </Heading>
                                    <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowAddAlternateLibraryCardModal(false); }}>
-                                        <Icon as={CloseIcon} style={{ color: textColor }} />
+                                        <ThemedCloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>
                               <ModalBody style={{ marginTop: 12 }}>
@@ -162,9 +162,9 @@ export const CheckOut = (props) => {
                                                   {cardLabel}
                                              </FormControlLabelText>
                                         </FormControlLabel>
-                                        <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
-                                             <InputField textContentType="none" style={{ color: textColor }} name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
-                                        </Input>
+                                        <ThemedInput>
+                                             <ThemedInputField textContentType="none" name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
+                                        </ThemedInput>
                                    </FormControl>
                                    {showAlternateLibraryCardPassword ? (
                                         <FormControl style={{ marginBottom: 8 }}>
@@ -173,12 +173,10 @@ export const CheckOut = (props) => {
                                                        {passwordLabel}
                                                   </FormControlLabelText>
                                              </FormControlLabel>
-                                             <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
-                                                  <InputField textContentType="none" type={showPassword ? 'text' : 'password'} style={{ color: textColor }} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
-                                                  <InputSlot onPress={toggleShowPassword}>
-                                                       <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} color={textColor} style={{ marginRight: 8 }} />
-                                                  </InputSlot>
-                                             </Input>
+                                             <ThemedInput>
+                                                  <ThemedInputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
+                                                  <PasswordVisibilityToggle showPassword={showPassword} onPress={toggleShowPassword} />
+                                             </ThemedInput>
                                         </FormControl>
                                    ) : null}
                               </ModalBody>
@@ -194,7 +192,7 @@ export const CheckOut = (props) => {
                                              <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
-                                             style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                             style={{ backgroundColor: runtimeColors.primary[500] }}
                                              isDisabled={loading}
                                              onPress={async () => {
                                                   setLoading(true);
@@ -211,7 +209,7 @@ export const CheckOut = (props) => {
                                                        setShowAddAlternateLibraryCardModal(false);
                                                   });
                                              }}>
-                                             {loading ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500-text'] }} /> : <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{title}</ButtonText>}
+                                             {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>}
                                         </Button>
                                    </ButtonGroup>
                               </ModalFooter>
@@ -224,7 +222,7 @@ export const CheckOut = (props) => {
                <>
                     <Button
                          variant="solid"
-                         style={{ minWidth: '100%', maxWidth: '100%', backgroundColor: theme.tokens.colors.primary['500'] }}
+                         style={{ minWidth: '100%', maxWidth: '100%', backgroundColor: runtimeColors.primary[500] }}
                          onPress={async () => {
                               setLoading(true);
                               await completeAction(record, type, user.id, null, null, null, null, null, library.baseUrl).then(async (eContentResponse) => {
@@ -238,7 +236,7 @@ export const CheckOut = (props) => {
                                    setResponseIsOpen(true);
                               });
                          }}>
-                         {loading ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500-text'], paddingRight: 8 }} /> : <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{title}</ButtonText>}
+                        {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'], paddingRight: 8 }} /> : <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{title}</ButtonText>}
                     </Button>
                </>
           );

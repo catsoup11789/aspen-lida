@@ -5,7 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { navigate } from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
-
 import { formatDiscoveryVersion } from '../../helpers/helpers';
 import { getDefaultFacets } from '../../util/api/search';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
@@ -17,6 +16,11 @@ import { FormControl } from '@/components/ui/form-control';
 import { Input, InputField } from '@/components/ui/input';
 import { Text } from '@/components/ui/text';
 
+/**
+ * SearchHome component that displays the search input field and quick search options. It allows users to enter a search term and navigate to the search results page. It also preloads default facets based on the library's discovery version.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const SearchHome = () => {
      const navigation = useNavigation();
      const [searchTerm, setSearchTerm] = React.useState('');
@@ -73,6 +77,12 @@ export const SearchHome = () => {
      );
 };
 
+/**
+ * QuickSearch component that renders a button for a quick search option. When pressed, it navigates to the search results page with the specified search term.
+ * @param data
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const QuickSearch = (data) => {
      const quickSearch = data.data;
      return (

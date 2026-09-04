@@ -5,14 +5,12 @@ import * as WebBrowser from 'expo-web-browser';
 import _ from 'lodash';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
-
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { loadError } from '../../components/loadError';
-import { popToast } from '../../components/feedback/toastService';
+import { popToast } from '@/src/components/feedback';
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import { DisplaySystemMessage } from '../../components/Notifications';
-
 import { SearchContext, SystemMessagesContext } from '../../context/initialContext';
 import { getCleanTitle } from '../../helpers/item';
 import { useLibraryScope, useLibraryLocation } from '../../hooks/useLibraryBranchData';
@@ -22,21 +20,21 @@ import { GLOBALS, SearchGlobal } from '../../util/globals';
 import { decodeHTML, isValidUrl } from '../../helpers/helpers';
 import { getAppliedFilters, getAvailableFacetsKeys, getSortList } from '../../util/api/search';
 import { setDefaultFacets } from '../../util/api/searchHelper';
-
 import AddToList from './AddToList';
 import {logDebugMessage, logErrorMessage, logInfoMessage} from '../../util/logging';
 import { createApiClient } from '../../util/api/apiFactory';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { FormControl } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { InputSlot } from '@/components/ui/input';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
@@ -45,6 +43,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * SearchResults component that displays search results based on the provided search term, page number, and other parameters. It fetches data from the API and renders a list of results with pagination controls. It also handles system messages and error states.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const SearchResults = () => {
      const navigation = useNavigation();
      const route = useRoute();
@@ -54,7 +57,7 @@ export const SearchResults = () => {
       const language = useActiveLanguage();
       const scope = useLibraryScope();
       const { currentIndex, currentSource } = React.useContext(SearchContext);
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, runtimeColors, textColor, colorMode } = useTheme();
      const url = library.baseUrl;
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
 
@@ -170,11 +173,11 @@ export const SearchResults = () => {
                     <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
-                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: runtimeColors.primary[500] }}>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                        style={{ backgroundColor: runtimeColors.primary[500] }}
                                         onPress={() => {
                                              if (!isPreviousData && data.hasMore) {
                                                   setPage(page + 1);
@@ -182,7 +185,7 @@ export const SearchResults = () => {
                                         }}
                                         isDisabled={isPreviousData || !data.hasMore}
                                         size="sm">
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
@@ -246,7 +249,7 @@ const DisplayResult = (data) => {
      const item = data.data;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, textColor, colorMode } = useTheme();
+     const { theme, runtimeColors, textColor, colorMode } = useTheme();
      const { currentSource } = React.useContext(SearchContext);
      const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
 
@@ -288,11 +291,11 @@ const DisplayResult = (data) => {
           }
 
           return (
-               <Badge key={n.key} variant="outline" style={{ borderRadius: 8, borderColor: theme.tokens.colors.primary['400'], backgroundColor: 'transparent' }}>
-                    <BadgeText textTransform="none" style={{ color: theme.tokens.colors.primary['400'], fontSize: 12 }}>
+               <ThemedBadge key={n.key} variant="outline" style={{ borderRadius: 8, borderColor: runtimeColors.primary[400], backgroundColor: 'transparent' }}>
+                    <ThemedBadgeText textTransform="none" style={{ color: runtimeColors.primary[400], fontSize: 12 }}>
                          {n.name}
-                    </BadgeText>
-               </Badge>
+                    </ThemedBadgeText>
+               </ThemedBadge>
           );
      }
 
@@ -418,11 +421,11 @@ const DisplayResult = (data) => {
                               ) : null}
                               {registrationRequired ? (
                                    <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
-                                        <Badge key={0} variant="outline" style={{ borderRadius: 8, borderColor: theme.tokens.colors.secondary['400'], backgroundColor: 'transparent' }}>
-                                             <BadgeText textTransform="none" style={{ color: theme.tokens.colors.secondary['400'], fontSize: 12 }}>
+                                        <ThemedBadge key={0} variant="outline" style={{ borderRadius: 8, borderColor: runtimeColors.secondary[400], backgroundColor: 'transparent' }}>
+                                             <ThemedBadgeText textTransform="none" style={{ color: runtimeColors.secondary[400], fontSize: 12 }}>
                                                   {getTermFromDictionary(language, 'registration_required')}
-                                             </BadgeText>
-                                        </Badge>
+                                             </ThemedBadgeText>
+                                        </ThemedBadge>
                                    </HStack>
                               ) : null}
                          </VStack>
@@ -450,13 +453,13 @@ const DisplayResult = (data) => {
                          </Box>
                          {item.language ? (
                               <Center style={{ marginTop: 4 }}>
-                                   <Badge
+                                   <ThemedBadge
                                         size="sm"
                                         style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark }}>
-                                        <BadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
+                                        <ThemedBadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
                                              {item.language}
-                                        </BadgeText>
-                                   </Badge>
+                                        </ThemedBadgeText>
+                                   </ThemedBadge>
                               </Center>
                          ) : null}
                          <AddToList itemId={item.key} btnStyle="sm" />
@@ -481,7 +484,7 @@ const DisplayResult = (data) => {
 
 const FilterBar = ({ navigation }) => {
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
+     const { theme, runtimeColors, colorMode } = useTheme();
      const type = useRoute().params.type ?? 'catalog';
 
      if (navigation === undefined) {
@@ -495,7 +498,7 @@ const FilterBar = ({ navigation }) => {
                          <Button
                               size="sm"
                               variant="solid"
-                              style={{ marginRight: 4, backgroundColor: theme.tokens.colors.primary['600'] }}
+                              style={{ marginRight: 4, backgroundColor: runtimeColors.primary[600] }}
                               onPress={() => {
                                    navigation.push('modal', {
                                         screen: 'Filters',
@@ -504,8 +507,8 @@ const FilterBar = ({ navigation }) => {
                                         },
                                    });
                               }}>
-                              <MaterialCommunityIcons name="tune" size={18} color={theme.tokens.colors.primary['600-text']} style={{ marginRight: 4 }} />
-                              <ButtonText style={{ color: theme.tokens.colors.primary['600-text'] }}>{getTermFromDictionary(language, 'filters')}</ButtonText>
+                              <MaterialCommunityIcons name="tune" size={18} color={runtimeColors.primary['600-text']} style={{ marginRight: 4 }} />
+                              <ButtonText style={{ color: runtimeColors.primary['600-text'] }}>{getTermFromDictionary(language, 'filters')}</ButtonText>
                          </Button>
                          <CreateFilterButton navigation={navigation} />
                     </ScrollView>
@@ -535,11 +538,11 @@ const SearchBox = ({term, navigation}) => {
      return (
           <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, borderBottomWidth: 1 }}>
                <FormControl style={{ paddingBottom: 20 }}>
-                    <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                    <ThemedInput>
                          <InputSlot>
                               <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />
                          </InputSlot>
-                         <InputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={updateSearch} value={searchTerm} style={{ color: textColor }} />
+                         <ThemedInputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={updateSearch} value={searchTerm} />
                          {searchTerm ? (
                               <InputSlot onPress={() => clearSearch()}>
                                    <MaterialIcons name="close" size={20} color={textColor} style={{ marginRight: 8 }} />
@@ -548,7 +551,7 @@ const SearchBox = ({term, navigation}) => {
                          <InputSlot onPress={() => openScanner()}>
                               <MaterialCommunityIcons name="barcode-scan" size={20} color={textColor} style={{ marginRight: 8 }} />
                          </InputSlot>
-                    </Input>
+                    </ThemedInput>
                </FormControl>
           </Box>
      );
@@ -558,7 +561,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
      const defaults = SearchGlobal.defaultFacets;
      const location = useLibraryLocation();
      const library = useLibrary();
-     const { theme, colorMode, textColor } = useTheme();
+     const { theme, runtimeColors, colorMode, textColor } = useTheme();
 
      const locationGroupedWorkDisplaySettings = location.groupedWorkDisplaySettings ?? [];
      const libraryGroupedWorkDisplaySettings = library.groupedWorkDisplaySettings ?? [];
@@ -631,7 +634,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                               key={index}
                               size="sm"
                               variant="outline"
-                              style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.primary['400'] : theme.tokens.colors.ui.border.dark }}
+                              style={{ borderColor: colorMode === 'light' ? runtimeColors.primary[400] : theme.tokens.colors.ui.border.dark }}
                               onPress={() => {
                                    navigation.push('modal', {
                                         screen: 'Facet',

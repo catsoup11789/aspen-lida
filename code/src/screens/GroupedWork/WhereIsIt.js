@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
@@ -14,6 +13,11 @@ import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
 import { Text } from '@/components/ui/text';
 
+/**
+ * WhereIsIt component that displays the availability and location of a specific item or manifestation. It fetches data from the API based on the provided parameters and renders a list of available copies, locations, and call numbers or holds.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const WhereIsIt = () => {
      const route = useRoute();
      const { id, format, prevRoute, type, recordId, source } = route.params;
@@ -64,6 +68,12 @@ export const WhereIsIt = () => {
      );
 };
 
+/**
+ * Details component that renders the details of a specific manifestation, including available copies, shelf location, and either call number or number of holds based on the source. It uses the theme and text color from the current theme context.
+ * @param data
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const Details = (data) => {
      const { theme, textColor } = useTheme();
      const manifestation = data.manifestation;

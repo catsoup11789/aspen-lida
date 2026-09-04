@@ -4,17 +4,21 @@ import { FlatList } from '@/components/ui/flat-list';
 import { HStack } from '@/components/ui/hstack';
 import { Switch } from '@/components/ui/switch';
 import { Text } from '@/components/ui/text';
-import { LoadingSpinner } from '../../../components/loadingSpinner';
-import { DisplayErrorAlertDialog } from '../../../components/loadError';
+import { LoadingSpinner } from '@/src/components/loadingSpinner';
+import { DisplayErrorAlertDialog } from '@/src/components/loadError';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { useBrowseCategoryList, useUpdateBrowseCategoryList, useToggleBrowseCategoryVisibility, useToggleBrowseCategoryVisibilityBatch, useMaxCategories, useUpdateBrowseCategories } from '@/src/hooks/useBrowseCategoryData';
+import { updateBrowseCategoryStatus } from '@/src/util/api/user';
+import { getBrowseCategoryListForUser, getHomeScreenFeed } from '@/src/util/api/search';
+import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/logging';
+import { useTheme } from '@/src/themes/theme';
+import { popToast } from '@/src/components/feedback';
 
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-import { useBrowseCategoryList, useUpdateBrowseCategoryList, useToggleBrowseCategoryVisibility, useToggleBrowseCategoryVisibilityBatch, useMaxCategories, useUpdateBrowseCategories } from '../../../hooks/useBrowseCategoryData';
-import { updateBrowseCategoryStatus } from '../../../util/api/user';
-import { getBrowseCategoryListForUser, getHomeScreenFeed } from '../../../util/api/search';
-import { logDebugMessage, logErrorMessage, getErrorMessage } from '../../../util/logging';
-import { useTheme } from '../../../themes/theme';
-import { popToast } from '../../../components/feedback';
-
+/**
+ * Settings_BrowseCategories component that displays a list of browse categories for the user to manage. It fetches the category list from the API, allows users to toggle visibility of categories, and handles syncing changes with the backend. It also manages loading states and error handling.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const Settings_BrowseCategories = () => {
      const library = useLibrary();
      const list = useBrowseCategoryList();
@@ -88,7 +92,7 @@ const DisplayCategory = (data) => {
      const [errorTitle, setErrorTitle] = React.useState('');
      const [errorMessage, setErrorMessage] = React.useState('');
      const library = useLibrary();
-     const { colorMode, textColor, theme} = useTheme();
+     const { colorMode, textColor, theme, runtimeColors } = useTheme();
      const toggleCategoryVisibility = useToggleBrowseCategoryVisibility();
      const toggleCategoryVisibilityBatch = useToggleBrowseCategoryVisibilityBatch();
      const maxNum = useMaxCategories();
@@ -223,7 +227,7 @@ const DisplayCategory = (data) => {
                          isDisabled={isUpdating}
                          isChecked={isVisible}
                          trackColor={{
-                              true: theme.tokens.colors.primary['500'],
+                              true: runtimeColors.primary[500],
                               false: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surfaceMuted.dark
                          }}
 

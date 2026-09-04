@@ -1,7 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-
-import { useUserState } from '../../hooks/useUserData';
 import { useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import { getCleanTitle } from '../../helpers/item';
@@ -12,7 +10,7 @@ import AddToList from './AddToList';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { Badge, BadgeText } from '@/components/ui/badge';
+import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
@@ -23,6 +21,12 @@ import { VStack } from '@/components/ui/vstack';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * DisplayListResult component that displays an individual list result with its image, title, author, formats, and language. It handles user interaction to navigate to the list result details or remove the item from the user's list.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const DisplayListResult = (props) => {
      const item = props.data;
      const isUserList = props.isUserList;
@@ -31,14 +35,13 @@ export const DisplayListResult = (props) => {
      const library = useLibrary();
      const queryClient = useQueryClient();
 
-     const { theme, textColor, colorMode } = useTheme();
+     const { runtimeColors, textColor, colorMode } = useTheme();
 
      let recordType = 'grouped_work';
      if (item.recordtype) {
           recordType = item.recordtype;
      }
      const imageUrl = library.baseUrl + '/bookcover.php?id=' + item.id + '&size=medium&type=' + recordType;
-     const key = 'medium_' + item.id;
      const handlePressItem = () => {
           if (item) {
                if (recordType === 'list') {
@@ -77,13 +80,13 @@ export const DisplayListResult = (props) => {
                          </Box>
                          {item.language ? (
                               <Center>
-                                   <Badge
+                                   <ThemedBadge
                                         size="sm"
                                         style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark }}>
-                                        <BadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
+                                        <ThemedBadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
                                             {item.language}
-                                       </BadgeText>
-                                   </Badge>
+                                       </ThemedBadgeText>
+                                   </ThemedBadge>
                               </Center>
                          ) : null}
                          {isUserList ? (
@@ -117,11 +120,11 @@ export const DisplayListResult = (props) => {
                               <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
                                    {item.format.map((format, i) => {
                                         return (
-                                             <Badge key={i} variant="outline" style={{ borderRadius: 8, borderColor: theme.tokens.colors.secondary['400'], backgroundColor: 'transparent' }}>
-                                                  <BadgeText textTransform="none" style={{ color: theme.tokens.colors.secondary['400'], fontSize: 10, lineHeight: 14 }}>
+                                             <ThemedBadge key={i} variant="outline" style={{ borderRadius: 8, borderColor: runtimeColors.secondary[400], backgroundColor: 'transparent' }}>
+                                                  <ThemedBadgeText textTransform="none" style={{ color: runtimeColors.secondary[400], fontSize: 10, lineHeight: 14 }}>
                                                        {format}
-                                                  </BadgeText>
-                                             </Badge>
+                                                  </ThemedBadgeText>
+                                             </ThemedBadge>
                                         );
                                    })}
                               </HStack>

@@ -2,9 +2,8 @@ import React, { useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { fetchCampaigns, unenrollCampaign, enrollCampaign, optIntoCampaignEmails, optUserOutOfCampaignLeaderboard, optUserInToCampaignLeaderboard, addActivityProgress } from '../../../util/api/user';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-
+import { fetchCampaigns, unenrollCampaign, enrollCampaign, optIntoCampaignEmails, optUserOutOfCampaignLeaderboard, optUserInToCampaignLeaderboard, addActivityProgress } from '@/src/util/api/user';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { Image } from 'expo-image';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
@@ -21,10 +20,10 @@ import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragI
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import PlaceholderImg from '../../../assets/digital-reward-placeholder.png';
-import { logDebugMessage, logErrorMessage } from '../../../util/logging';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { logDebugMessage, logErrorMessage } from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
 // Constants
 const PAGE_SIZE = 20;
@@ -47,6 +46,11 @@ const EMPTY_MESSAGES = {
   default: 'no_campaigns'
 };
 
+/**
+ * MyCampaigns component that displays a list of campaigns based on the selected filter. It allows users to enroll/unenroll in campaigns, opt in/out of email notifications and leaderboards, and add progress to activities. The component fetches campaign data from the API and handles user interactions with the campaigns.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const MyCampaigns = () => {
 	const navigation = useNavigation();
 	const queryClient = useQueryClient();

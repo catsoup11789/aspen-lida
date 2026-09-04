@@ -4,8 +4,6 @@ import React from 'react';
 import * as Device from 'expo-device';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-// custom components and helper files
 import { loadingSpinner } from '../../components/loadingSpinner';
 import { DisplayAndroidEndOfSupportMessage, DisplaySystemMessage } from '../../components/Notifications';
 import { SearchContext, SystemMessagesContext } from '../../context/initialContext';
@@ -28,10 +26,16 @@ import { Button, ButtonGroup, ButtonSpinner, ButtonText } from '@/components/ui/
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { FormControl } from '@/components/ui/form-control';
-import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { InputSlot } from '@/components/ui/input';
+import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
+/**
+ * DiscoverHomeScreen component that displays the home screen of the discovery interface, including a search bar, home screen links, and browse categories. It fetches data from the API and updates the state accordingly.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const DiscoverHomeScreen = () => {
      const navigation = useNavigation();
      const isFocused = useIsFocused();
@@ -309,11 +313,11 @@ export const DiscoverHomeScreen = () => {
                               {androidEndSupportMessage()}
                               {showSystemMessage()}
                               <FormControl style={{ paddingBottom: 20 }}>
-                                   <Input>
+                                   <ThemedInput>
                                         <InputSlot>
                                              <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />
                                         </InputSlot>
-                                        <InputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} style={{ color: textColor }} />
+                                        <ThemedInputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
                                                   <MaterialIcons name="close" size={20} color={textColor} style={{ marginRight: 8 }} />
@@ -322,7 +326,7 @@ export const DiscoverHomeScreen = () => {
                                         <InputSlot onPress={() => openScanner()}>
                                              <MaterialCommunityIcons name="barcode-scan" size={20} color={textColor} style={{ marginRight: 8 }} />
                                         </InputSlot>
-                                   </Input>
+                                   </ThemedInput>
                               </FormControl>
                               {homeScreenLinks && homeScreenLinks.length > 0 ? (
                                    <HomeScreenLinkGrid links={homeScreenLinks} />
@@ -351,8 +355,14 @@ export const DiscoverHomeScreen = () => {
      );
 };
 
+/**
+ * ButtonOptions component that renders a group of buttons for managing browse categories, including loading all categories, managing categories, and refreshing categories. It uses the theme colors and handles loading states for each button.
+ * @param props
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const ButtonOptions = (props) => {
-     const { theme } = useTheme();
+     const { runtimeColors } = useTheme();
      const [loading, setLoading] = React.useState(false);
      const [refreshing, setRefreshing] = React.useState(false);
      const { language, showManageCategories, onRefreshCategories, onLoadAllCategories } = props;
@@ -363,7 +373,7 @@ const ButtonOptions = (props) => {
                     style={{ flexDirection: 'column' }}>
                     <Button
                          isDisabled={loading}
-                         style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                         style={{ backgroundColor: runtimeColors.primary[500] }}
                          size="md"
                          onPress={async () => {
                               setLoading(true);
@@ -374,18 +384,18 @@ const ButtonOptions = (props) => {
                               }
                          }}>
                          {loading ? (
-                          <ButtonSpinner key="spinner" style={{ color: theme.tokens.colors.primary['500-text'], marginRight: 4 }} />
+                          <ButtonSpinner key="spinner" style={{ color: runtimeColors.primary['500-text'], marginRight: 4 }} />
                          ) : (
                              <MaterialIcons
                                   key="icon"
                                   name="schedule"
                                   size={16}
-                                  color={theme.tokens.colors.primary['500-text']}
+                                  color={runtimeColors.primary['500-text']}
                                   style={{ marginRight: 4 }}
                              />
                          )}
                          <ButtonText
-                             style={{ color: theme.tokens.colors.primary['500-text'], fontWeight: '500' }}
+                             style={{ color: runtimeColors.primary['500-text'], fontWeight: '500' }}
                              size="sm"
                          >
                              {getTermFromDictionary(language, 'browse_categories_load_all')}
@@ -393,18 +403,18 @@ const ButtonOptions = (props) => {
                     </Button>
 
                     <Button
-                         style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                         style={{ backgroundColor: runtimeColors.primary[500] }}
                          onPress={() => {
                              showManageCategories();
                          }}>
                          <MaterialIcons
                              name="settings"
                              size={16}
-                             color={theme.tokens.colors.primary['500-text']}
+                             color={runtimeColors.primary['500-text']}
                              style={{ marginRight: 4 }}
                          />
                          <ButtonText
-                             style={{ color: theme.tokens.colors.primary['500-text'], fontWeight: '500' }}
+                             style={{ color: runtimeColors.primary['500-text'], fontWeight: '500' }}
                              size="sm"
                          >
                              {getTermFromDictionary(language, 'browse_categories_manage')}
@@ -413,7 +423,7 @@ const ButtonOptions = (props) => {
 
                     <Button
                          isDisabled={refreshing}
-                         style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                         style={{ backgroundColor: runtimeColors.primary[500] }}
                          onPress={async () => {
                              setRefreshing(true);
                              try {
@@ -422,9 +432,9 @@ const ButtonOptions = (props) => {
                                    setRefreshing(false);
                               }
                          }}>
-                         {refreshing ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500-text'] }} /> : <MaterialIcons name="refresh" size={16} color={theme.tokens.colors.primary['500-text']} style={{ marginRight: 4 }} />}
+                         {refreshing ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <MaterialIcons name="refresh" size={16} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />}
 
-                         <ButtonText size="sm" style={{ fontWeight: '500', color: theme.tokens.colors.primary['500-text'] }}>
+                         <ButtonText size="sm" style={{ fontWeight: '500', color: runtimeColors.primary['500-text'] }}>
                               {getTermFromDictionary(language, 'browse_categories_refresh')}
                          </ButtonText>
                     </Button>

@@ -3,29 +3,30 @@ import _ from 'lodash';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ScrollView } from 'react-native';
-
-import { SearchContext } from '../../../context/initialContext';
-import { getSearchIndexes } from '../../../util/api/search';
-import { SearchGlobal } from '../../../util/globals';
-import {logDebugMessage} from "../../../util/logging";
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { SearchContext } from '@/src/context/initialContext';
+import { getSearchIndexes } from '@/src/util/api/search';
+import { SearchGlobal } from '@/src/util/globals';
+import {logDebugMessage} from '@/src/util/logging';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
-import { Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 
-// custom components and helper files
-
+/**
+ * SearchSourceScreen component that displays a list of search sources for the user to select from. It manages the current source state and updates the search results when a new source is selected.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const SearchSourceScreen = () => {
      const navigation = useNavigation();
      const library = useLibrary();
      const language = useActiveLanguage();
      const { currentSource, sources, updateCurrentSource, updateIndexes, updateCurrentIndex } = React.useContext(SearchContext);
-     const { textColor, theme } = useTheme();
+     const { textColor, runtimeColors } = useTheme();
      logDebugMessage('currentSource: ' + currentSource);
 
      const search = async () => {
@@ -63,14 +64,14 @@ export const SearchSourceScreen = () => {
                                        <Pressable key={index} style={{ padding: 2, paddingVertical: 8 }} onPress={() => updateSource(index)}>
                                              {currentSource === index ? (
                                                  <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
-                                                      <MaterialIcons name="radio-button-checked" size={20} color={theme.tokens.colors.primary['600']} />
+                                                      <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} />
                                                       <Text style={{ color: textColor, marginLeft: 8 }}>
                                                             {source.name}
                                                        </Text>
                                                   </HStack>
                                              ) : (
                                                  <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
-                                                      <MaterialIcons name="radio-button-unchecked" size={20} color={theme.tokens.colors.primary['200']} />
+                                                      <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
                                                       <Text style={{ color: textColor, marginLeft: 8 }}>
                                                             {source.name}
                                                        </Text>

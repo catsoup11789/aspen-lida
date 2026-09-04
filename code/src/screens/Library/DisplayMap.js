@@ -218,6 +218,12 @@ const mapStyleDark = [
      },
 ];
 
+/**
+ * DisplayMap component that displays a map with a marker for the given location data. It uses Apple Maps on iOS and Google Maps on other platforms, and adjusts the map style based on the current color mode (light or dark).
+ * @param data
+ * @returns {React.JSX.Element|null}
+ * @constructor
+ */
 const DisplayMap = (data) => {
      const location = data?.data ?? {};
 

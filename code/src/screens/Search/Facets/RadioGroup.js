@@ -2,20 +2,28 @@ import { MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
 import React from 'react';
 import { HStack } from '@/components/ui/hstack';
-import { Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
+import { SearchGlobal } from '@/src/util/globals';
+import { logDebugMessage } from '@/src/util/logging';
+import { addAppliedFilter, removeAppliedFilter } from '@/src/util/api/searchHelper';
+import { useTheme } from '@/src/themes/theme';
 
-import { SearchGlobal } from '../../../util/globals';
-import { logDebugMessage } from '../../../util/logging';
-import { addAppliedFilter, removeAppliedFilter } from '../../../util/api/searchHelper';
-import { useTheme } from '../../../themes/theme';
-
-
+/**
+ * Facet_RadioGroup component that renders a group of radio buttons for a given facet category. It manages the selected value state, updates the applied filters, and triggers an update to the parent component when a radio button is selected or deselected.
+ * @param param0
+ * @param param0.title
+ * @param param0.data
+ * @param param0.category
+ * @param param0.updater
+ * @param param0.applied
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const Facet_RadioGroup = ({ title, data, category, updater, applied }) => {
      const [value, setValue] = React.useState('');
-     const {theme, textColor } = useTheme();
+     const { runtimeColors, textColor } = useTheme();
 
      React.useEffect(() => {
           const facets = data;
@@ -71,14 +79,14 @@ export const Facet_RadioGroup = ({ title, data, category, updater, applied }) =>
                          <Pressable key={index} onPress={() => updateValue(facet.value)} style={{ paddingVertical: 8, paddingHorizontal: 2 }}>
                               {value === facet.value ? (
                                    <HStack space="sm" justifyContent="flex-start" alignItems="center">
-                                        <MaterialIcons name="radio-button-checked" size={20} color={theme.tokens.colors.primary['600']} />
+                                        <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} />
                                         <Text style={{ color: textColor, marginLeft: 8 }}>
                                              {facet.display}
                                         </Text>
                                    </HStack>
                               ) : (
                                    <HStack space="sm" justifyContent="flex-start" alignItems="center">
-                                        <MaterialIcons name="radio-button-unchecked" size={20} color={theme.tokens.colors.primary['200']} />
+                                        <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
                                         <Text style={{ color: textColor, marginLeft: 8 }}>
                                              {facet.display}
                                         </Text>
@@ -96,14 +104,14 @@ export const Facet_RadioGroup = ({ title, data, category, updater, applied }) =>
                     <Pressable key={index} onPress={() => updateValue(facet.value)} style={{ paddingVertical: 8, paddingHorizontal: 2 }}>
                          {value === facet.value ? (
                               <HStack space="sm" justifyContent="flex-start" alignItems="center">
-                                   <MaterialIcons name="radio-button-checked" size={20} color={theme.tokens.colors.primary['600']} />
+                                   <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} />
                                    <Text style={{ color: textColor, marginLeft: 8 }}>
                                         {facet.display} ({facet.count})
                                    </Text>
                               </HStack>
                          ) : (
                               <HStack space="sm" justifyContent="flex-start" alignItems="center">
-                                   <MaterialIcons name="radio-button-unchecked" size={20} color={theme.tokens.colors.primary['200']} />
+                                   <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
                                    <Text style={{ color: textColor, marginLeft: 8 }}>
                                         {facet.display} ({facet.count})
                                    </Text>

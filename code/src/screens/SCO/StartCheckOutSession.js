@@ -1,7 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import { useUserState, useAccounts } from '../../hooks/useUserData';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { navigateStack } from '../../helpers/RootNavigator';
@@ -19,13 +18,18 @@ import { Heading } from '@/components/ui/heading';
 import { ChevronDownIcon, Icon } from '@/components/ui/icon';
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
+/**
+ * StartCheckOutSession component that displays an alert dialog for starting a new checkout session. It allows the user to select an account and either start a new session or cancel and go back home.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 export const StartCheckOutSession = () => {
      const navigation = useNavigation();
      const language = useActiveLanguage();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const { data: accounts } = useAccounts();
-     const { textColor, colorMode, theme } = useTheme();
+     const { textColor, colorMode, theme, runtimeColors } = useTheme();
      const insets = useSafeAreaInsets();
 
      let startNew = useRoute().params?.startNew ?? false;
@@ -129,9 +133,9 @@ export const StartCheckOutSession = () => {
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
                                                   <SelectScrollView>
-                                                       <SelectItem label={user.displayName} value={user.ils_barcode ?? user.cat_username} style={activeAccount === (user.ils_barcode ?? user.cat_username) ? { backgroundColor: theme.tokens.colors.tertiary['300'] } : undefined} textStyle={{ color: activeAccount === (user.ils_barcode ?? user.cat_username) ? theme.tokens.colors.tertiary['500-text'] : textColor }} />
+                                                       <SelectItem label={user.displayName} value={user.ils_barcode ?? user.cat_username} style={activeAccount === (user.ils_barcode ?? user.cat_username) ? { backgroundColor: runtimeColors.tertiary[300] } : undefined} textStyle={{ color: activeAccount === (user.ils_barcode ?? user.cat_username) ? runtimeColors.tertiary['500-text'] : textColor }} />
                                                        {availableAccounts.map((item, index) => {
-                                                            return <SelectItem label={item.displayName} value={item.ils_barcode ?? item.cat_username} key={index} style={activeAccount === (item.ils_barcode || item.cat_username) ? { backgroundColor: theme.tokens.colors.tertiary['300'] } : undefined} textStyle={{ color: activeAccount === (item.ils_barcode || item.cat_username) ? theme.tokens.colors.tertiary['500-text'] : textColor }} />;
+                                                            return <SelectItem label={item.displayName} value={item.ils_barcode ?? item.cat_username} key={index} style={activeAccount === (item.ils_barcode || item.cat_username) ? { backgroundColor: runtimeColors.tertiary[300] } : undefined} textStyle={{ color: activeAccount === (item.ils_barcode || item.cat_username) ? runtimeColors.tertiary['500-text'] : textColor }} />;
                                                        })}
                                                   </SelectScrollView>
                                              </SelectContent>
@@ -141,11 +145,11 @@ export const StartCheckOutSession = () => {
                          </AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">
-                                   <Button ref={cancelRef} onPress={() => GoBackHome()} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                   <Button ref={cancelRef} onPress={() => GoBackHome()} style={{ backgroundColor: runtimeColors.primary[500] }}>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
-                                   <Button onPress={() => StartNewSession()} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_start')}</ButtonText>
+                                   <Button onPress={() => StartNewSession()} style={{ backgroundColor: runtimeColors.primary[500] }}>
+                                        <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_start')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

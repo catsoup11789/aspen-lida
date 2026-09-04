@@ -4,23 +4,24 @@ import { Button, ButtonText, ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { Icon, CloseIcon } from '@/components/ui/icon';
-import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { useUserState, useUpdateUserProfile, useUpdateAccounts, useUpdateViewers } from '@/src/hooks/useUserData';
+import { addLinkedAccount, refreshProfile, getLinkedAccounts, getViewerAccounts } from '@/src/util/api/user';
+import { formatLinkedAccounts } from '@/src/util/api/userHelper';
+import { getTermFromDictionary } from '@/src/translations/TranslationService';
+import {logErrorMessage} from '@/src/util/logging';
+import { toArray } from '@/src/helpers/helpers';
+import { useActiveLanguage } from '@/src/hooks/useLanguageData';
+import { useTheme } from '@/src/themes/theme';
+import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 
-
-import { useUserState, useUpdateUserProfile, useUpdateAccounts, useUpdateViewers } from '../../../hooks/useUserData';
-import { addLinkedAccount, refreshProfile, getLinkedAccounts, getViewerAccounts } from '../../../util/api/user';
-import { formatLinkedAccounts } from '../../../util/api/userHelper';
-import { getTermFromDictionary } from '../../../translations/TranslationService';
-import {logErrorMessage} from "../../../util/logging";
-import { toArray } from '../../../helpers/helpers';
-import { useActiveLanguage } from '../../../hooks/useLanguageData';
-import { useTheme } from '../../../themes/theme';
-import { useLibrary } from '../../../hooks/useLibrarySystemData';
-
-// custom components and helper files
-
+/**
+ * AddLinkedAccount component that allows users to add a linked account. It displays a button that opens a modal where users can input the username and password of the account they want to link. The component handles API calls to add the linked account and refreshes the linked accounts, viewer accounts, and user profile upon successful completion.
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
 const AddLinkedAccount = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
@@ -29,7 +30,7 @@ const AddLinkedAccount = () => {
      const updateUserProfile = useUpdateUserProfile();
      const updateAccounts = useUpdateAccounts();
      const updateViewers = useUpdateViewers();
-     const { textColor, theme, colorMode } = useTheme();
+     const { textColor, theme, runtimeColors, colorMode } = useTheme();
      const [loading, setLoading] = useState(false);
      const [showModal, setShowModal] = useState(false);
      const [showPassword, setShowPassword] = useState(false);
@@ -68,8 +69,8 @@ const AddLinkedAccount = () => {
 
      return (
           <Center>
-               <Button onPress={toggle} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
-                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'linked_add_an_account')}</ButtonText>
+               <Button onPress={toggle} style={{ backgroundColor: runtimeColors.primary[500] }}>
+                    <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'linked_add_an_account')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
                     <ModalBackdrop />
@@ -77,49 +78,48 @@ const AddLinkedAccount = () => {
                          <ModalHeader>
                               <Heading size="sm" style={{ color: textColor }}>{getTermFromDictionary(language, 'linked_account_to_manage')}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
-                                   <Icon as={CloseIcon} style={{ color: textColor }} />
+                                   <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
                               <FormControl>
                                    <FormControlLabel><FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'username')}</FormControlLabelText></FormControlLabel>
-                                   <Input style={{ borderColor: inputBorderColor }}>
-                                        <InputField onChangeText={(text) => setNewUser(text)}
+                                   <ThemedInput style={{ borderColor: inputBorderColor }}>
+                                        <ThemedInputField onChangeText={(text) => setNewUser(text)}
                                                       autoCorrect={false}
                                                       autoCapitalize="none"
                                                       id="username"
                                                       returnKeyType="next"
                                                       textContentType="username"
                                                       required
-                                                      style={{ color: textColor }}
-                                                      onSubmitEditing={() => {
-                                                           passwordRef.current.focus();
+                                                     onSubmitEditing={() => {
+                                                          passwordRef.current.focus();
                                                       }}
-                                                      value={newUser}/>
-                                   </Input>
+                                                     value={newUser}/>
+                                   </ThemedInput>
                               </FormControl>
                               <FormControl style={{ marginTop: 12 }}>
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'password')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <Input style={{ borderColor: inputBorderColor }}>
-                                        <InputField onChangeText={(text) => setPassword(text)} value={password} style={{ color: textColor }} autoCorrect={false}
+                                   <ThemedInput style={{ borderColor: inputBorderColor }}>
+                                        <ThemedInputField onChangeText={(text) => setPassword(text)} value={password} autoCorrect={false}
                                                     autoCapitalize="none" id="password" returnKeyType="next"
                                                     textContentType="password" required type={showPassword ? 'text' : 'password'} ref={passwordRef}
                                         />
                                         <InputSlot onPress={() => setShowPassword(!showPassword)}>
                                              <MaterialCommunityIcons name={showPassword ? 'eye' : 'eye-off'} size={20} color={textColor} style={{ marginRight: 8 }} />
                                         </InputSlot>
-                                   </Input>
+                                   </ThemedInput>
                               </FormControl>
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>
                                    <Button variant="link" onPress={toggle}>
-                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                       <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                       style={{ backgroundColor: runtimeColors.primary[500] }}
                                         isLoading={loading}
                                         isLoadingText={getTermFromDictionary(language, 'adding', true)}
                                         onPress={async () => {
@@ -134,7 +134,7 @@ const AddLinkedAccount = () => {
                                                   toggle();
                                              }
                                         }}>
-                                       <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'linked_add_account')}</ButtonText>
+                                      <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'linked_add_account')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>
