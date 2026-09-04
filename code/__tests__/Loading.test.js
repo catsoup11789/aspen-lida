@@ -16,7 +16,7 @@ GLOBALS.logLevel = 1;
 
 import {render, screen, waitFor} from '@testing-library/react-native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {GluestackUIProvider} from '../components/ui/gluestack-ui-provider';
+import {GluestackUIProvider} from '@/components/ui/gluestack-ui-provider';
 
 // Import all contexts used by the component to mock them
 import {
