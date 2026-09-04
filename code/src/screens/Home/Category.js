@@ -18,7 +18,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
 

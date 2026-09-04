@@ -16,7 +16,7 @@ import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * ResetPassword component that displays a modal for resetting the user's password or PIN, depending on the ILS and configuration.
@@ -177,7 +177,7 @@ function ResetForm({ resetBody, usernameLabel, emailLabel, username, setUsername
      return (
           <>
                <ModalBody>
-                    <Text style={{ color: textColor, marginBottom: 8 }}>{resetBody}</Text>
+                    <Text style={{ marginBottom: 8 }}>{resetBody}</Text>
                     <FormControl style={{ marginBottom: emailLabel ? 8 : 0 }}>
                          <FormControlLabel>
                               <FormControlLabelText size="sm" style={{ color: textColor }}>
@@ -291,7 +291,7 @@ function renderStandardResults({ results, showResults, hasError, textColor, clos
                return (
                     <>
                          <ModalBody>
-                              <Text style={{ color: textColor }}>{normalizeDisplayText(results.error)}</Text>
+                              <Text>{normalizeDisplayText(results.error)}</Text>
                          </ModalBody>
                          <ResultFooter textColor={textColor} onClose={closeWindow} onRetry={resetWindow} showRetry primaryColor={primaryColor} primaryTextColor={primaryTextColor} />
                     </>
@@ -302,7 +302,7 @@ function renderStandardResults({ results, showResults, hasError, textColor, clos
                return (
                     <>
                          <ModalBody>
-                              <Text style={{ color: textColor }}>{normalizeDisplayText(results.message)}</Text>
+                              <Text>{normalizeDisplayText(results.message)}</Text>
                               {successHasResend ? (
                                    <Center>
                                         <Button size="sm" style={{ backgroundColor: primaryColor, marginTop: 12 }} onPress={onResend}>
@@ -319,8 +319,8 @@ function renderStandardResults({ results, showResults, hasError, textColor, clos
           return (
                <>
                     <ModalBody>
-                         <Text style={{ color: textColor }}>{getTermFromDictionary('en', 'password_reset_success_body_1')}</Text>
-                         <Text style={{ color: textColor }}>{getTermFromDictionary('en', 'password_reset_success_body_2')}</Text>
+                         <Text>{getTermFromDictionary('en', 'password_reset_success_body_1')}</Text>
+                         <Text>{getTermFromDictionary('en', 'password_reset_success_body_2')}</Text>
                          {successHasResend ? (
                               <Center>
                                    <Button size="sm" style={{ backgroundColor: primaryColor, marginTop: 12 }} onPress={onResend}>
@@ -338,7 +338,7 @@ function renderStandardResults({ results, showResults, hasError, textColor, clos
           return (
                <>
                     <ModalBody>
-                         <Text style={{ color: textColor }}>{normalizeDisplayText(results)}</Text>
+                         <Text>{normalizeDisplayText(results)}</Text>
                     </ModalBody>
                     <ResultFooter textColor={textColor} onClose={closeWindow} okLabel="cancel" primaryColor={primaryColor} primaryTextColor={primaryTextColor} />
                </>
@@ -647,7 +647,7 @@ function MillenniumResetPassword(props) {
           return (
                <>
                     <ModalBody>
-                         <Text style={{ color: textColor }}>{normalizeDisplayText(results.message)}</Text>
+                         <Text>{normalizeDisplayText(results.message)}</Text>
                     </ModalBody>
                     <ModalFooter>
                          <ButtonGroup space="sm">
@@ -669,7 +669,7 @@ function MillenniumResetPassword(props) {
           return (
                <>
                     <ModalBody>
-                         <Text style={{ color: textColor }}>{normalizeDisplayText(results)}</Text>
+                         <Text>{normalizeDisplayText(results)}</Text>
                     </ModalBody>
                     <ResultFooter textColor={textColor} onClose={closeWindow} okLabel="cancel" primaryColor={runtimeColors.primary[500]} primaryTextColor={runtimeColors.primary['500-text']} />
                </>

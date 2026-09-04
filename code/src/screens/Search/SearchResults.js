@@ -38,7 +38,7 @@ import { Heading } from '@/components/ui/heading';
 import { InputSlot } from '@/components/ui/input';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -159,7 +159,7 @@ export const SearchResults = () => {
                return (
                     <Box style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surface.dark, borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
                          <Box style={{ margin: 8 }}>
-                              <Text style={{ color: textColor }}>{label}</Text>
+                              <Text>{label}</Text>
                          </Box>
                     </Box>
                );
@@ -190,7 +190,7 @@ export const SearchResults = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text style={{ marginTop: 8, fontSize: 10, color: textColor }}>
+                         <Text style={{ marginTop: 8 }} size="2xs">
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -220,7 +220,7 @@ export const SearchResults = () => {
                          <Heading style={{ paddingTop: 20, color: textColor }}>
                               {getTermFromDictionary(language, 'no_results')}
                          </Heading>
-                         <Text bold style={{ width: '75%', textAlign: 'center', color: textColor }}>
+                         <Text bold style={{ width: '75%', textAlign: 'center' }}>
                               {route.params?.term}
                          </Text>
                     </Center>
@@ -402,21 +402,21 @@ const DisplayResult = (data) => {
                               {item.canAddToList ? <AddToList source="Events" itemId={item.key} btnStyle="sm" /> : null}
                          </VStack>
                          <VStack style={{ width: '65%', paddingTop: 4 }}>
-                              <Text bold style={{ color: textColor, fontSize: 14, paddingBottom: 4 }}>
+                              <Text bold style={{ paddingBottom: 4 }} size="sm">
                                    {decodeHTML(item.title)}
                               </Text>
                               {item.start_date && item.end_date ? (
                                    <>
-                                        <Text style={{ color: textColor, fontSize: 12 }}>
+                                        <Text size="xs">
                                              {displayDay}
                                         </Text>
-                                        <Text style={{ color: textColor, fontSize: 12 }}>
+                                        <Text size="xs">
                                              {displayStartTime} - {displayEndTime}
                                         </Text>
                                    </>
                               ) : null}
                               {locationData.name ? (
-                                   <Text style={{ color: textColor, fontSize: 12 }}>
+                                   <Text size="xs">
                                         {locationData.name}
                                    </Text>
                               ) : null}
@@ -466,11 +466,11 @@ const DisplayResult = (data) => {
                          <AddToList itemId={item.key} btnStyle="sm" />
                     </VStack>
                     <VStack style={{ width: '65%', paddingTop: 4 }}>
-                         <Text bold style={{ color: textColor, fontSize: 14, paddingBottom: 4 }}>
+                         <Text bold style={{ paddingBottom: 4 }} size="sm">
                               {item.title}
                          </Text>
                          {item.author ? (
-                              <Text style={{ color: textColor, fontSize: 12 }}>
+                              <Text size="xs">
                                    {getTermFromDictionary(language, 'by')} {item.author}
                               </Text>
                          ) : null}

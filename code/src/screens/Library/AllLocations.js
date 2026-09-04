@@ -14,7 +14,7 @@ import { Divider } from '@/components/ui/divider';
 import { FlatList } from '@/components/ui/flat-list';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { loadError } from '../../components/loadError';
 import { loadingSpinner } from '../../components/loadingSpinner';
@@ -254,20 +254,20 @@ const DisplayLocation = (data) => {
                               </Box>
                          ) : null}
                          <VStack style={{ width: location.locationImage ? '60%' : '85%' }}>
-                              <Text size="md" bold style={{ color: textColor }}>{location.displayName}</Text>
-                              <Text size="xs" style={{ marginBottom: 8, color: textColor }}>
+                              <Text size="md" bold>{location.displayName}</Text>
+                              <Text size="xs" style={{ marginBottom: 8 }}>
                                    {location.address}
                               </Text>
                               {hasHours ? (
                                    <HStack alignItems="center" space="xs">
                                         <MaterialIcons name="access-time" size={16} color={textColor} />
-                                        <Text size="xs" style={{ color: textColor }}>{hoursLabel}</Text>
+                                        <Text size="xs">{hoursLabel}</Text>
                                    </HStack>
                               ) : null}
                               {distanceText ? (
                                    <HStack alignItems="center" space="xs">
                                         <MaterialIcons name="pin-drop" size={16} color={textColor} />
-                                        <Text size="xs" style={{ color: textColor }}>{distanceText}</Text>
+                                        <Text size="xs">{distanceText}</Text>
                                    </HStack>
                               ) : null}
                          </VStack>

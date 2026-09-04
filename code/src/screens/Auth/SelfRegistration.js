@@ -15,7 +15,7 @@ import { FormControl, FormControlHelper, FormControlHelperText, FormControlLabel
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 
 /**
@@ -84,7 +84,7 @@ export const SelfRegistration = () => {
 						const {label, properties} = section;
 						return (
 							<Box style={{ marginBottom: 20 }}>
-							<Text bold size="md" style={{ color: textColor }}>{label}</Text>
+							<Text bold size="md">{label}</Text>
 							{_.map(properties, function(field, key) {
 							const {type, description, maxLength, required, property} = field;
 							const fieldLabel = field.label;
@@ -236,43 +236,43 @@ export const SelfRegistration = () => {
 					<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 						<Box style={{ padding: 12 }}>
 						{!showResults ? (
-							<Text style={{ marginBottom: 12, color: textColor }}>{getTermFromDictionary('en', 'self_registration_message')}</Text>
+							<Text style={{ marginBottom: 12 }}>{getTermFromDictionary('en', 'self_registration_message')}</Text>
 						) : null}
 						{showResults && !hasError ? (
 							<>
 								{results.success === true ? (
-									<Text style={{ marginBottom: 12, color: textColor }}>{getTermFromDictionary('en', 'self_registration_success')}</Text>
+									<Text style={{ marginBottom: 12 }}>{getTermFromDictionary('en', 'self_registration_success')}</Text>
 								) : (
-									<Text style={{ marginBottom: 12, color: textColor }}>{getTermFromDictionary('en', 'self_registration_error')}</Text>
+									<Text style={{ marginBottom: 12 }}>{getTermFromDictionary('en', 'self_registration_error')}</Text>
 								)}
 
 								{results.message ? (
-									<Text style={{ marginBottom: 12, color: textColor }}>{results.message}</Text>
+									<Text style={{ marginBottom: 12 }}>{results.message}</Text>
 								) : null}
 
 								{results.barcode ? (
 									<HStack space="xs" style={{ marginBottom: 12 }}>
-										<Text style={{ color: textColor }}>Your library card is</Text>
-										<Text bold style={{ color: textColor }}>{results.barcode}</Text>
+										<Text>Your library card is</Text>
+										<Text bold>{results.barcode}</Text>
 									</HStack>
 								) : null}
 
 								{results.username ? (
 									<HStack space="xs" style={{ marginBottom: 12 }}>
-										<Text style={{ color: textColor }}>Your username is</Text>
-										<Text bold style={{ color: textColor }}>{results.username}</Text>
+										<Text>Your username is</Text>
+										<Text bold>{results.username}</Text>
 									</HStack>
 								) : null}
 
 								{results.password ? (
 									<HStack space="xs" style={{ marginBottom: 12 }}>
-										<Text style={{ color: textColor }}>Your initial password is</Text>
-										<Text bold style={{ color: textColor }}>{results.password}</Text>
+										<Text>Your initial password is</Text>
+										<Text bold>{results.password}</Text>
 									</HStack>
 								) : null}
 
 								{results.requirePinReset ? (
-									<Text style={{ marginBottom: 12, color: textColor }}>To login to the catalog, you must reset your PIN.</Text>
+									<Text style={{ marginBottom: 12 }}>To login to the catalog, you must reset your PIN.</Text>
 								) : null}
 
 								<Button colorScheme="secondary" variant="outline" onPress={() => {
@@ -285,7 +285,7 @@ export const SelfRegistration = () => {
 							</>
 						) : showResults && hasError ? (
                                    <>
-                                        <Text style={{ marginBottom: 12, color: textColor }}>{results}</Text>
+                                        <Text style={{ marginBottom: 12 }}>{results}</Text>
                                         <Button colorScheme="secondary" variant="outline" onPress={() => {
                                              navigation.goBack();
                                              setShowResults(false);

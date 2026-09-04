@@ -16,7 +16,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import PlaceholderImg from '../../../assets/digital-reward-placeholder.png';
 import { logDebugMessage, logErrorMessage } from '@/src/util/logging';
@@ -237,7 +237,7 @@ export const MyCampaigns = () => {
 				/>
 					{canShare && onShare ? (
 					<Pressable onPress={() => onShare(imageUrl)}>
-						<Text style={{ color: textColor }}>{getTermFromDictionary(language, 'share_on_social_media')}</Text>
+						<Text>{getTermFromDictionary(language, 'share_on_social_media')}</Text>
 					</Pressable>
 				) : null}
 			</VStack>
@@ -285,7 +285,7 @@ export const MyCampaigns = () => {
 		return (
 			<Box style={{ flex: type === 'campaign' ? 3 : 1 }}>
 				{displayName && rewardName && (
-					<Text style={{ color: textColor }}>
+					<Text>
 						{rewardName}
 					</Text>
 				)}
@@ -341,15 +341,15 @@ export const MyCampaigns = () => {
 
 		return (
 			<Box style={{ marginTop: 16 }}>
-				<Text bold size="md" style={{ marginBottom: 8, color: textColor }}>
+				<Text bold size="md" style={{ marginBottom: 8 }}>
 					{title}
 				</Text>
 				<VStack space="md">
      <HStack style={{ justifyContent: 'space-between', paddingBottom: 4, borderBottomWidth: 1, borderColor }}>
-						<Text bold style={{ flex: 3, color: textColor }}>{getTermFromDictionary(language, 'activity_name')}</Text>
-						<Text bold style={{ flex: 2, color: textColor }}>{getTermFromDictionary(language, 'activity_goal')}</Text>
-						<Text bold style={{ flex: 2, color: textColor }}>{getTermFromDictionary(language, 'activity_reward')}</Text>
-						<Text bold style={{ flex: 2, color: textColor }}>{getTermFromDictionary(language, 'progress')}</Text>
+						<Text bold style={{ flex: 3 }}>{getTermFromDictionary(language, 'activity_name')}</Text>
+						<Text bold style={{ flex: 2 }}>{getTermFromDictionary(language, 'activity_goal')}</Text>
+						<Text bold style={{ flex: 2 }}>{getTermFromDictionary(language, 'activity_reward')}</Text>
+						<Text bold style={{ flex: 2 }}>{getTermFromDictionary(language, 'progress')}</Text>
 					</HStack>
 
 					{items.map((item, i) => {
@@ -365,10 +365,10 @@ export const MyCampaigns = () => {
 								space="md"
 								style={{ justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}
 							>
-								<Text style={{ flex: 2, color: textColor }}>
+								<Text style={{ flex: 2 }}>
 									{String(item.name || '')}
 								</Text>
-								<Text style={{ flex: 1, color: textColor }}>
+								<Text style={{ flex: 1 }}>
 									{String(item.completedGoals || 0)} / {String(item.totalGoals || 0)}
 								</Text>
 								<Box style={{ width: 120 }}>
@@ -415,17 +415,17 @@ export const MyCampaigns = () => {
 		return (
 			<VStack space="md" style={{ paddingHorizontal: 16, paddingVertical: 12 }} key={item.id}>
     <HStack style={{ justifyContent: 'space-between', borderBottomWidth: 1, borderColor, paddingBottom: 8 }}>
-					<Text bold style={{ flex: 2, color: textColor }}>{getTermFromDictionary(language, 'campaign_name_header')}</Text>
-					<Text bold style={{ flex: 3, color: textColor }}>{getTermFromDictionary(language, 'campaign_reward')}</Text>
-					<Text bold style={{ flex: 2, color: textColor }}>{getTermFromDictionary(language, 'campaign_dates')}</Text>
-					<Text bold style={{ flex: 1, color: textColor }}> </Text>
-					<Text bold style={{ flex: 1, color: textColor }}> </Text>
+					<Text bold style={{ flex: 2 }}>{getTermFromDictionary(language, 'campaign_name_header')}</Text>
+					<Text bold style={{ flex: 3 }}>{getTermFromDictionary(language, 'campaign_reward')}</Text>
+					<Text bold style={{ flex: 2 }}>{getTermFromDictionary(language, 'campaign_dates')}</Text>
+					<Text bold style={{ flex: 1 }}> </Text>
+					<Text bold style={{ flex: 1 }}> </Text>
 				</HStack>
 
 				<HStack
 					style={{ justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8, borderBottomWidth: 0.5, borderColor }}
 				>
-					<Text style={{ flex: 2, color: textColor }}>
+					<Text style={{ flex: 2 }}>
 						{String(item.name || '')}
 					</Text>
 					<RewardDisplay
@@ -433,7 +433,7 @@ export const MyCampaigns = () => {
 						imageUrl={campaignImageUrl}
 						type="campaign"
 					/>
-					<Text style={{ flex: 2, color: textColor }}>
+					<Text style={{ flex: 2 }}>
 						{startDate} {'\n'} - {'\n'}{endDate}
 					</Text>
 					<Button
@@ -458,7 +458,7 @@ export const MyCampaigns = () => {
 				{expanded && (
 					<Box style={{ paddingHorizontal: 8, paddingVertical: 8, backgroundColor: panelBg, borderRadius: 12 }}>
 						{(!Array.isArray(item.milestones) || item.milestones.length === 0) && (!Array.isArray(item.extraCreditActivities) || item.extraCreditActivities.length === 0) ? (
-							<Text italic style={{ color: textColor }}>
+							<Text italic>
 								{getTermFromDictionary(language, 'no_activities_available')}
 							</Text>
 						) : (
@@ -535,7 +535,7 @@ export const MyCampaigns = () => {
 
 	const EmptyComponent = () => (
 		<Center style={{ marginTop: 20, marginBottom: 20 }}>
-			<Text bold size="lg" style={{ color: textColor }}>
+			<Text bold size="lg">
 				{getTermFromDictionary(language, EMPTY_MESSAGES[filterBy] || EMPTY_MESSAGES.default)}
 			</Text>
 		</Center>
@@ -587,11 +587,11 @@ export const MyCampaigns = () => {
 
 			{status === 'loading' || isFetching ? (
 				<Center style={{ flex: 1 }}>
-					<Text style={{ color: textColor }}>{getTermFromDictionary(language, 'loading')}</Text>
+					<Text>{getTermFromDictionary(language, 'loading')}</Text>
 				</Center>
 			) : status === 'error' ? (
 				<Center style={{ flex: 1 }}>
-					<Text style={{ color: textColor }}>{getTermFromDictionary(language, 'campaign_loading_error')}</Text>
+					<Text>{getTermFromDictionary(language, 'campaign_loading_error')}</Text>
 				</Center>
 			) : campaignsData.length === 0 ? (
 				<EmptyComponent />
@@ -600,7 +600,7 @@ export const MyCampaigns = () => {
 					{Object.entries(groupedCampaigns).map(([userName, { userId, campaigns: groupedCampaignsList}]) => (
 						<Box key={String(userId)} style={{ marginBottom: 24 }}>
 							<Box style={{ paddingHorizontal: 16, paddingVertical: 8, backgroundColor: panelBg }}>
-								<Text size="lg" bold style={{ color: textColor }}>
+								<Text size="lg" bold>
 									{getTermFromDictionary(language, 'campaigns_for_linked_user')}: {String(userName)}
 								</Text>
 							</Box>

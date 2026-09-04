@@ -7,7 +7,7 @@ import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
@@ -141,7 +141,7 @@ export const Variations = (props) => {
                                    ))
                               ) : (
                                    <Center style={{ padding: 20 }}>
-                                       <Text style={{ color: textColor, textAlign: 'center' }}>The library does not own any copies of this title</Text>
+                                       <Text style={{ textAlign: 'center' }}>The library does not own any copies of this title</Text>
                                    </Center>
                               )}
                          </VStack>
@@ -153,7 +153,7 @@ export const Variations = (props) => {
                                              <Heading style={{ color: textColor }}>{response?.title ? response.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
-                                             <Text style={{ color: textColor }}>{response?.message ? decodeMessage(response.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
+                                             <Text>{response?.message ? decodeMessage(response.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                         </AlertDialogBody>
                                         <AlertDialogFooter>
                                              <ButtonGroup space="sm">
@@ -176,7 +176,7 @@ export const Variations = (props) => {
                                              <Heading style={{ color: textColor }}>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
-                                             <Text style={{ color: textColor }}>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
+                                             <Text>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                         </AlertDialogBody>
                                         <AlertDialogFooter>
                                              <ButtonGroup space="md">
@@ -225,7 +225,7 @@ export const Variations = (props) => {
                                              <Heading style={{ color: textColor }}>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
-                                             <Text style={{ color: textColor }}>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
+                                             <Text>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                              {holdSelectItemResponse?.items ? (
                                                   <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setSelectedItem(itemValue)}>
                                                        <SelectTrigger>
@@ -420,7 +420,7 @@ const Variation = (props) => {
                               ) : null}
                          </HStack>
                          {status.message ? (
-                              <Text italic style={{ color: textColor, fontSize: 12, lineHeight: 14, textAlign: 'center' }}>
+                              <Text italic style={{ lineHeight: 14, textAlign: 'center' }} size="xs">
                                    {status.message}
                               </Text>
                          ) : null}

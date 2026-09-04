@@ -11,7 +11,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ButtonGroup } from '@/components/ui/button';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 
@@ -30,7 +30,7 @@ export const Facet_Year = ({ data, category, updater, language }) => {
      const [yearFrom, setYearFrom] = React.useState('');
      const [yearTo, setYearTo] = React.useState('');
      const [value, setValue] = React.useState('');
-     const { textColor } = useTheme();
+     const {  } = useTheme();
 
      React.useEffect(() => {
           setIsLoading(false);
@@ -111,7 +111,7 @@ export const Facet_Year = ({ data, category, updater, language }) => {
                     </FormControl>
                     {category === 'publishDate' || category === 'publishDateSort' ? (
                          <VStack space="sm">
-                              <Text style={{ color: textColor }}>
+                              <Text>
                                    {getTermFromDictionary(language, 'published_in_the_last')}
                               </Text>
                               <ButtonGroup>

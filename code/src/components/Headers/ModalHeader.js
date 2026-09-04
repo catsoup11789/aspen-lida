@@ -3,7 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { useTheme } from '../../themes/theme';
 
 /**
@@ -19,7 +19,7 @@ import { useTheme } from '../../themes/theme';
  * @constructor
  */
 export const ModalHeader = ({ title, onBack, onClose, showBack = true, showClose = true, centerTitle = true }) => {
-     const { uiColors, textColor, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const iconColor = colorMode === 'light' ? uiColors.icon.light : uiColors.icon.dark;
      const bg = colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark;
 
@@ -35,7 +35,7 @@ export const ModalHeader = ({ title, onBack, onClose, showBack = true, showClose
                     </Box>
 
                     <Box className={centerTitle ? 'flex-1 items-center' : 'flex-1 items-start'}>
-                         <Text bold numberOfLines={1} style={{ color: textColor }}>
+                         <Text bold numberOfLines={1}>
                               {title}
                          </Text>
                     </Box>

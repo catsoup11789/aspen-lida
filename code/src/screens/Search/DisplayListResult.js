@@ -16,7 +16,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
@@ -35,7 +35,7 @@ export const DisplayListResult = (props) => {
      const library = useLibrary();
      const queryClient = useQueryClient();
 
-     const { runtimeColors, textColor, colorMode, uiColors } = useTheme();
+     const { runtimeColors, colorMode, uiColors } = useTheme();
 
      let recordType = 'grouped_work';
      if (item.recordtype) {
@@ -108,11 +108,11 @@ export const DisplayListResult = (props) => {
                          )}
                     </VStack>
                     <VStack style={{ width: '65%', paddingTop: 4 }}>
-                         <Text bold style={{ color: textColor, fontSize: 14, lineHeight: 17, paddingBottom: 4 }}>
+                         <Text bold style={{ lineHeight: 17, paddingBottom: 4 }} size="sm">
                               {item.title_display}
                          </Text>
                          {item.author_display ? (
-                              <Text style={{ color: textColor, fontSize: 12, lineHeight: 15 }}>
+                              <Text style={{ lineHeight: 15 }} size="xs">
                                    {getTermFromDictionary(language, 'by')} {item.author_display}
                               </Text>
                          ) : null}

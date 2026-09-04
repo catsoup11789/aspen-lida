@@ -8,7 +8,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../components/themed/ThemedButton';
 import { Menu, MenuItem, MenuItemLabel } from '@/components/ui/menu';
 import { Spinner } from '@/components/ui/spinner';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { saveLanguage } from '../util/api/user';
 import { useLibrary } from '../hooks/useLibrarySystemData';
 import {
@@ -158,7 +158,7 @@ export const LanguageSwitcher = () => {
                                    }}
                               >
                                    <Spinner size="large" color={runtimeColors.primary[500]} />
-                                    <Text style={{ marginTop: 12, color: textColor }}>Switching language...</Text>
+                                    <Text style={{ marginTop: 12 }}>Switching language...</Text>
                               </Box>
                          </View>
                     </Modal>

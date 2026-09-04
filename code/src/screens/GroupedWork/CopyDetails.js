@@ -13,7 +13,7 @@ import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBody, ModalContent, ModalHeader } from '@/components/ui/modal';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * ShowItemDetails component that displays a button to show item details in a modal, including available copies, location, and call number. It fetches item details from the API based on the provided library URL, item ID, and format.

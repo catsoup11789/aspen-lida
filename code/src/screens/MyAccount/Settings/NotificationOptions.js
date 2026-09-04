@@ -5,7 +5,7 @@ import { Box } from '@/components/ui/box';
 import { FlatList } from '@/components/ui/flat-list';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedSwitch as Switch } from '@/src/components/themed/ThemedSwitch';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { loadingSpinner } from '@/src/components/loadingSpinner';

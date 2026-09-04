@@ -17,7 +17,7 @@ import { ChevronLeftIcon, Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSwitch as Switch } from '@/src/components/themed/ThemedSwitch';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { useUserState, useNotificationSettings, useUpdateExpoToken, useAddDebugMessage } from '@/src/hooks/useUserData';
 import { navigate } from '@/src/helpers/RootNavigator';
@@ -71,11 +71,11 @@ export const NotificationPermissionStatus = () => {
     return (
         <Pressable onPress={() => navigate('PermissionNotificationDescription', { permissionStatus })} style={{ paddingBottom: 12 }}>
             <HStack space="md" justifyContent="space-between" alignItems="center">
-                <Text bold style={{ color: textColor }}>
+                <Text bold>
                     {getTermFromDictionary(language, 'notification_permission')}
                 </Text>
                 <HStack alignItems="center">
-                    <Text style={{ color: textColor }}>
+                    <Text>
                         {permissionStatus ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                     </Text>
                     <MaterialIcons name="chevron-right" size={20} color={textColor} style={{ marginLeft: 4 }} />
@@ -221,18 +221,18 @@ export const NotificationPermissionDescription = () => {
         <ScrollView contentContainerStyle={{ padding: 20 }}>
             <VStack alignItems="stretch">
                 <Box>
-                    <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'device_set_to')}</Text>
+                    <Text>{getTermFromDictionary(language, 'device_set_to')}</Text>
                     <Heading style={{ marginBottom: 4, color: textColor }}>
                         {permissionStatus ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                     </Heading>
-                    <Text style={{ color: textColor }}>
+                    <Text>
                         {Constants.expoConfig.name} {permissionStatus ?
                             getTermFromDictionary(language, 'allowed_notification') :
                             getTermFromDictionary(language, 'not_allowed_notification')
                         }
                     </Text>
 
-                    <Text style={{ color: textColor, marginTop: 20 }}>
+                    <Text style={{ marginTop: 20 }}>
                         {getTermFromDictionary(language, 'to_update_settings')}
                     </Text>
 
@@ -265,7 +265,7 @@ const NotificationPreferencesSection = ({ preferences, updatePreference, notific
         <>
             {Object.entries(notificationSettings).map(([key, setting]) => (
                 <HStack key={key} space="md" justifyContent="space-between" alignItems="center" style={{ marginVertical: 8 }}>
-                    <Text style={{ color: textColor }}>{setting.label}</Text>
+                    <Text>{setting.label}</Text>
                     <Switch
                         value={preferences[setting.option]}
                         onValueChange={(value) => updatePreference(setting.option, value)}
@@ -365,7 +365,7 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
                         </Heading>
                     </AlertDialogHeader>
                     <AlertDialogBody>
-                        <Text style={{ color: textColor }}>
+                        <Text>
                             {Platform.OS === 'android' ?
                                 getTermFromDictionary(language, 'update_notification_android') :
                                 getTermFromDictionary(language, 'update_notification_ios')}

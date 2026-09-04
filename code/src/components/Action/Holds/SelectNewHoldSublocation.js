@@ -6,7 +6,7 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { logDebugMessage, logErrorMessage } from '@/src/util/logging';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * SelectNewHoldSublocation component for selecting a new hold sublocation for a library hold request.

@@ -15,7 +15,7 @@ import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { loadingSpinner } from '@/src/components/loadingSpinner';
 import { DisplaySystemMessage } from '@/src/components/Notifications';
@@ -259,7 +259,7 @@ export const MyCheckouts = () => {
      const noCheckouts = () => {
           return (
                <Center style={{ marginTop: 20, marginBottom: 20 }}>
-                   <Text bold size="lg" style={{ color: textColor }}>
+                   <Text bold size="lg">
                          {getTermFromDictionary(language, 'no_checkouts')}
                     </Text>
                </Center>
@@ -555,7 +555,7 @@ export const MyCheckouts = () => {
                                         <ThemedCloseIcon />
                                    </AlertDialogCloseButton>
                               </AlertDialogHeader>
-                              <AlertDialogBody><Text style={{ color: textColor }}>{renewConfirmationResponse?.message ? decodeMessage(renewConfirmationResponse.message) : 'Unable to renew checkout for unknown error. Please contact the library.'}</Text></AlertDialogBody>
+                              <AlertDialogBody><Text>{renewConfirmationResponse?.message ? decodeMessage(renewConfirmationResponse.message) : 'Unable to renew checkout for unknown error. Please contact the library.'}</Text></AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">
                                         <Button colorScheme="primary" variant="outline" onPress={() => setRenewConfirmationIsOpen(false)}>

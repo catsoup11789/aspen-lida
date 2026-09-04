@@ -13,7 +13,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { loadError } from '@/src/components/loadError';
 import { popToast } from '@/src/components/feedback';
@@ -263,14 +263,14 @@ export const MyList = ({ route }) => {
                                    <Text
                                         bold
                                         size="sm"
-                                        style={{ color: textColor }}
+                                       
                                         >
                                         {item.title}
                                    </Text>
                                    {item.start_date && item.end_date ? (
                                         <>
-                                             <Text size="xs" style={{ color: textColor }}>{displayDay}</Text>
-                                             <Text size="xs" style={{ color: textColor }}>
+                                             <Text size="xs">{displayDay}</Text>
+                                             <Text size="xs">
                                                   {displayStartTime} - {displayEndTime}
                                              </Text>
                                         </>
@@ -320,12 +320,12 @@ export const MyList = ({ route }) => {
                               <Text
                                    bold
                                    size="sm"
-                                   style={{ color: textColor }}
+                                  
                                    >
                                    {item.title}
                               </Text>
                               {item.author ? (
-                                   <Text size="xs" style={{ color: textColor }}>
+                                   <Text size="xs">
                                         {t('by')} {item.author}
                                    </Text>
                               ) : null}
@@ -357,7 +357,7 @@ export const MyList = ({ route }) => {
                               </Button>
                          </ButtonGroup>
                     </ScrollView>
-                    <Text size="sm" style={{ marginTop: 8, color: textColor }}>
+                    <Text size="sm" style={{ marginTop: 8 }}>
                          {paginationLabel}
                     </Text>
                </Box>

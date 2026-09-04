@@ -26,7 +26,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { ThemedCloseIcon } from '../../components/themed/ThemedFormControls';
 
@@ -119,7 +119,7 @@ export const MoreMenu = () => {
                                         <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={toggleDeleteConfirmationModal}>
                                              <HStack space="sm" style={{ alignItems: 'center' }}>
                                                   <MaterialIcons name="chevron-right" size={20} color={textColor} />
-                                                  <Text style={{ color: textColor, fontWeight: '500' }}>
+                                                  <Text style={{ fontWeight: '500' }}>
                                                        {getTermFromDictionary(language, 'delete_account')}
                                                   </Text>
                                              </HStack>
@@ -140,7 +140,7 @@ export const MoreMenu = () => {
                                    </ModalCloseButton>
                               </ModalHeader>
                               <ModalBody>
-                                   <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'confirm_delete_account_message')}</Text>
+                                   <Text>{getTermFromDictionary(language, 'confirm_delete_account_message')}</Text>
                               </ModalBody>
                               <ModalFooter>
                                    <ButtonGroup>
@@ -174,7 +174,7 @@ export const MoreMenu = () => {
                                         <ThemedCloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>
-                              <ModalBody>{deleteResults?.message ? <Text style={{ color: textColor }}>{deleteResults.message}</Text> : <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'error_deleting_account')}</Text>}</ModalBody>
+                              <ModalBody>{deleteResults?.message ? <Text>{deleteResults.message}</Text> : <Text>{getTermFromDictionary(language, 'error_deleting_account')}</Text>}</ModalBody>
                               <ModalFooter>
                                    {deleteResults.success === true ? (
                                        <Button colorScheme="primary" onPress={signOut}>
@@ -274,7 +274,7 @@ const ViewAllLocations = () => {
                <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => navigate('AllLocations')}>
                     <HStack space="sm" style={{ alignItems: 'center' }}>
                          <MaterialIcons name="chevron-right" size={20} color={textColor} />
-                         <Text style={{ fontWeight: '500', color: textColor }}>{getTermFromDictionary(language, 'view_all_locations')}</Text>
+                         <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'view_all_locations')}</Text>
                     </HStack>
                </Pressable>
           );
@@ -296,7 +296,7 @@ const Settings = () => {
           <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => navigate('MyPreferences')}>
                <HStack space="sm" style={{ alignItems: 'center' }}>
                     <MaterialIcons name="chevron-right" size={20} color={textColor} />
-                    <Text style={{ fontWeight: '500', color: textColor }}>{getTermFromDictionary(language, 'preferences')}</Text>
+                    <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'preferences')}</Text>
                </HStack>
           </Pressable>
      );
@@ -365,7 +365,7 @@ const PrivacyPolicy = () => {
           <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => openURL()}>
                <HStack space="sm" style={{ alignItems: 'center' }}>
                     <MaterialIcons name="chevron-right" size={20} color={textColor} />
-                    <Text style={{ fontWeight: '500', color: textColor }}>{getTermFromDictionary(language, 'privacy_policy')}</Text>
+                    <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'privacy_policy')}</Text>
                </HStack>
           </Pressable>
      );
@@ -478,7 +478,7 @@ const MenuLink = (payload) => {
                                                        style={{ color: textColor }}
                                                   />
                                                   <VStack style={{ width: '100%' }}>
-                                                       <Text style={{ fontWeight: '500', color: textColor }}>
+                                                       <Text style={{ fontWeight: '500' }}>
                                                             {categoryLabel}
                                                        </Text>
                                                   </VStack>
@@ -503,7 +503,7 @@ const MenuLink = (payload) => {
                                                             style={{ color: textColor }}
                                                        />
                                                        <VStack style={{ width: '100%' }}>
-                                                            <Text style={{ fontWeight: '500', color: textColor }}>
+                                                            <Text style={{ fontWeight: '500' }}>
                                                                  {item.linkText}
                                                             </Text>
                                                        </VStack>
@@ -526,7 +526,7 @@ const MenuLink = (payload) => {
                              <HStack space="sm" style={{ alignItems: 'center' }}>
                                   <MaterialIcons name="chevron-right" size={20} color={textColor} />
                                   <VStack style={{ width: '100%' }}>
-                                       <Text style={{ fontWeight: '500', color: textColor }}>{item.linkText}</Text>
+                                       <Text style={{ fontWeight: '500' }}>{item.linkText}</Text>
                                    </VStack>
                               </HStack>
                          </Pressable>

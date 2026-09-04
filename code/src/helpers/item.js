@@ -3,7 +3,7 @@ import React from 'react';
 import { ThemedBadge, ThemedBadgeText } from '../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ActionsheetItemText } from '@/components/ui/actionsheet';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { useUserState } from '../hooks/useUserData';
 import { useLibrary } from '../hooks/useLibrarySystemData';
 import { getTermFromDictionary, getTranslationWithValuesText } from '../translations/TranslationService';
@@ -36,7 +36,7 @@ export const isOverdue = (overdue) => {
  * @returns {React.JSX.Element}
  */
 export const getTitle = (title) => {
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (title) {
           let displayTitle = title;
           const countSlash = displayTitle.split('/').length - 1;
@@ -47,7 +47,7 @@ export const getTitle = (title) => {
                <Text
                     bold
                     size="sm"
-                    style={{ marginBottom: 4, paddingRight: 12, color: textColor, maxWidth: '100%' }}>
+                    style={{ marginBottom: 4, paddingRight: 12, maxWidth: '100%' }}>
                     {displayTitle}
                </Text>
           );
@@ -56,7 +56,7 @@ export const getTitle = (title) => {
                <Text
                     bold
                     size="sm"
-                    style={{ marginBottom: 4, paddingRight: 12, color: textColor, maxWidth: '100%' }}>
+                    style={{ marginBottom: 4, paddingRight: 12, maxWidth: '100%' }}>
                     Title Not Available
                </Text>
           );
@@ -86,12 +86,12 @@ export function getCleanTitle(title) {
  * @returns {React.JSX.Element|null}
  */
 export const getCallNumber = (callNumber) => {
-     const {textColor} = useTheme();
+     const {} = useTheme();
      const language = useActiveLanguage();
      if (callNumber) {
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'call_number')}:
                     </Text>
                     {' '}{callNumber}
@@ -107,12 +107,12 @@ export const getCallNumber = (callNumber) => {
  * @returns {React.JSX.Element|null}
  */
 export const getVolume = (volume) => {
-     const {textColor} = useTheme();
+     const {} = useTheme();
      const language = useActiveLanguage();
      if (volume) {
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'volume')}:
                     </Text>
                     {' '}{volume}
@@ -128,7 +128,7 @@ export const getVolume = (volume) => {
  * @returns {React.JSX.Element|null}
  */
 export const getAuthor = (author) => {
-     const {textColor} = useTheme();
+     const {} = useTheme();
      const language = useActiveLanguage();
      if (author) {
           let displayAuthor = author;
@@ -138,8 +138,8 @@ export const getAuthor = (author) => {
           }
 
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'author')}:
                     </Text>
                     {' '}{displayAuthor}
@@ -158,7 +158,7 @@ export const getAuthor = (author) => {
 export const getFormat = (format, source = null) => {
      const language = useActiveLanguage();
      const library = useLibrary();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (format && format !== 'Unknown') {
           if (source) {
                if (source !== 'ils') {
@@ -180,8 +180,8 @@ export const getFormat = (format, source = null) => {
                          source = getTermFromDictionary(language, 'palace_project');
                     }
                     return (
-                         <Text size="xs" style={{ color: textColor }}>
-                              <Text bold size="xs" style={{ color: textColor }}>
+                         <Text size="xs">
+                              <Text bold size="xs">
                                    {getTermFromDictionary(language, 'format')}:
                               </Text>
                               {' '}{format !== '' ? format : 'Unknown'} - {source}
@@ -190,8 +190,8 @@ export const getFormat = (format, source = null) => {
                }
           }
           return (
-               <Text style={{ fontSize: 12, color: textColor }}>
-                    <Text bold style={{ fontSize: 12, color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'format')}:
                     </Text>
                     {' '}{format}
@@ -263,7 +263,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
  */
 export const getType = (type) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (type && type !== 'ils') {
           if (type === 'interlibrary_loan') {
                type = getTermFromDictionary(language, 'interlibrary_loan');
@@ -280,8 +280,8 @@ export const getType = (type) => {
           }
 
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'hold_source')}:
                     </Text>
                     {' '}{type}
@@ -299,11 +299,11 @@ export const getType = (type) => {
  */
 export const getOnHoldFor = (user) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (user) {
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'on_hold_for')}:
                     </Text>
                     {' '}{user}
@@ -323,11 +323,11 @@ export const getCheckedOutTo = (props) => {
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const [checkedOutTo] = React.useState();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (user.id !== checkedOutTo) {
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'checked_out_to')}:
                     </Text>
                     {' '}{props}
@@ -345,15 +345,15 @@ export const getCheckedOutTo = (props) => {
  */
 export const getDueDate = (date) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (date && date !== 0) {
           //offset is in minutes we multiply 60 to get seconds
           const timezoneOffset = new Date().getTimezoneOffset() * 60;
           const dueDate = moment.unix(date - timezoneOffset);
           const itemDueOn = moment(dueDate).format('MMM D, YYYY');
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'checkout_due')}:
                     </Text>
                     {' '}{itemDueOn}
@@ -372,7 +372,7 @@ export const getDueDate = (date) => {
  */
 export const getDateLastUsed = (date, checkedOut) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (date && date !== 0) {
           const dateLastUsed = moment.unix(date);
           let itemLastUsedOn = moment(dateLastUsed).format('MMM D, YYYY');
@@ -380,8 +380,8 @@ export const getDateLastUsed = (date, checkedOut) => {
                itemLastUsedOn = getTermFromDictionary(language, 'in_use');
           }
           return (
-               <Text style={{ fontSize: 12, color: textColor }}>
-                    <Text bold style={{ fontSize: 12, color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'last_used')}:
                     </Text>
                     {' '}{itemLastUsedOn}
@@ -399,12 +399,12 @@ export const getDateLastUsed = (date, checkedOut) => {
  */
 export const willAutoRenew = (props) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (props.autoRenew === 1 || props.autoRenew === '1') {
           return (
                <Box style={{ marginTop: 1, padding: 2, backgroundColor: '#f5f5f5' }}>
-                    <Text size="xs" style={{ color: textColor }}>
-                         <Text bold size="xs" style={{ color: textColor }}>
+                    <Text size="xs">
+                         <Text bold size="xs">
                               {getTermFromDictionary(language, 'if_eligible_auto_renew')}:
                          </Text>
                          {' '}{props.renewalDate}
@@ -424,11 +424,11 @@ export const willAutoRenew = (props) => {
  */
 export const getPickupLocation = (location, source) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (location && source === 'ils') {
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'hold_pickup_at')}:
                     </Text>
                     {' '}{location}
@@ -446,11 +446,11 @@ export const getPickupLocation = (location, source) => {
  */
 export const getOutOfHoldGroupMessage = (outOfHoldGroupMessage) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (outOfHoldGroupMessage) {
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'interlibrary_loan')}:
                     </Text>
                     {' '}{outOfHoldGroupMessage}
@@ -473,12 +473,12 @@ export const getOutOfHoldGroupMessage = (outOfHoldGroupMessage) => {
  */
 export const getPosition = (position, available, length, holdPosition, usesHoldPosition, outOfHoldGroupMessage) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (!outOfHoldGroupMessage && position && !available && position !== 0 && position !== '0') {
           if (length && usesHoldPosition) {
                return (
-                    <Text size="xs" style={{ color: textColor }}>
-                         <Text bold size="xs" style={{ color: textColor }}>
+                    <Text size="xs">
+                         <Text bold size="xs">
                               {getTermFromDictionary(language, 'hold_position')}:
                          </Text>
                          {' '}{holdPosition}
@@ -486,8 +486,8 @@ export const getPosition = (position, available, length, holdPosition, usesHoldP
                );
           }
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'hold_position')}:
                     </Text>
                     {' '}{position}
@@ -506,13 +506,13 @@ export const getPosition = (position, available, length, holdPosition, usesHoldP
  */
 export const getExpirationDate = (expiration, available) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (expiration && available) {
           const expirationDateUnix = moment.unix(expiration);
           let expirationDate = moment(expirationDateUnix).format('MMM D, YYYY');
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'hold_pickup_by')}:
                     </Text>
                     {' '}{expirationDate}
@@ -531,11 +531,11 @@ export const getExpirationDate = (expiration, available) => {
  */
 export const getRenewalCount = (count, available = null) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
      if (available) {
           return (
-               <Text size="xs" style={{ color: textColor }}>
-                    <Text bold size="xs" style={{ color: textColor }}>
+               <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'checkout_renewed')}:
                     </Text>
                     {' '}{count} of {available} times
@@ -554,11 +554,11 @@ export const getRenewalCount = (count, available = null) => {
  */
 export const getCollectionName = (source, collectionName = null) => {
 	const language = useActiveLanguage();
-     const {textColor} = useTheme();
+     const {} = useTheme();
 	if (source === 'overdrive' && collectionName) {
 		return (
-		     <Text style={{ fontSize: 12, color: textColor }}>
-                    <Text bold style={{ fontSize: 12, color: textColor }}>
+		     <Text size="xs">
+                    <Text bold size="xs">
                          {getTermFromDictionary(language, 'collection')}:
                     </Text>
                     {' '}{collectionName}

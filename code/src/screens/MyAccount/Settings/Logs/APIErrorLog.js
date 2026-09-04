@@ -11,7 +11,7 @@ import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { ChevronDownIcon, ChevronUpIcon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 /* move this to the helpers.js */
@@ -89,19 +89,19 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
      const renderEntry = ({ item }) => (
           <Box style={{ borderBottomWidth: 1, borderColor, paddingHorizontal: 12, paddingVertical: 12 }}>
                <VStack space="xs">
-                    <Text size="xs" style={{ color: textColor }}>
+                    <Text size="xs">
                          {formatDate(item.created_at)}
                     </Text>
-                    <Text bold size="sm" style={{ color: textColor }}>
+                    <Text bold size="sm">
                          {(item.method ?? 'UNKNOWN') + ' ' + (item.endpoint ?? '-')}
                     </Text>
-                    <Text size="xs" style={{ color: textColor }}>
+                    <Text size="xs">
                          {'status=' + (item.status ?? 'n/a') + '  problem=' + (item.problem ?? 'n/a')}
                     </Text>
-                    <Text style={{ color: textColor }}>{item.requestParams}</Text>
+                    <Text>{item.requestParams}</Text>
                     {item.message ? (
                          <>
-                              <Text size="xs" style={{ color: textColor }}>
+                              <Text size="xs">
                                    {item.message ?? ''}
                               </Text>
                          </>
@@ -125,11 +125,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
                                    <AccordionContent style={{ backgroundColor: panelBg }}>
                                         <AccordionContentText>
                                              <Text
-                                                  style={{
-                                                       fontFamily: 'Courier New, monospace',
-                                                       fontSize: 12,
-                                                       whiteSpace: 'pre-wrap',
-                                                       color: textColor }}>
+                                                  style={{ fontFamily: 'Courier New, monospace', whiteSpace: 'pre-wrap' }} size="xs">
                                                   {(() => {
                                                        try {
                                                             const parsed = JSON.parse(item.response_body);
@@ -154,7 +150,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
                    <Heading size="sm" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'api_error_log')}
                     </Heading>
-                    <Text size="xs" style={{ color: textColor }}>
+                    <Text size="xs">
                          {getTermFromDictionary(language, 'total') + ': ' + meta.total}
                     </Text>
                </Box>
@@ -181,7 +177,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
                         <ButtonText>{getTermFromDictionary(language, 'previous')}</ButtonText>
                     </Button>
 
-                    <Text size="xs" style={{ color: textColor }}>{`Page ${page} / ${meta.totalPages}`}</Text>
+                    <Text size="xs">{`Page ${page} / ${meta.totalPages}`}</Text>
 
                     <Button colorScheme="secondary" onPress={() => loadPage(page + 1)} isDisabled={loading || !meta.hasMore}>
                         <ButtonText>{getTermFromDictionary(language, 'next')}</ButtonText>

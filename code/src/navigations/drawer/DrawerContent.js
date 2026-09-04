@@ -17,7 +17,7 @@ import { Divider } from '@/components/ui/divider';
 import { HStack } from '@/components/ui/hstack';
 import { Image } from '@/components/ui/image';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { showILSMessage } from '../../components/Notifications';
 import { CheckoutsContext, HoldsContext, SystemMessagesContext } from '../../context/initialContext';
@@ -765,20 +765,20 @@ const UserProfileOverview = () => {
                     <Image source={{ uri: icon }} fallbackSource={require('../../themes/default/aspenLogo.png')} style={{ width: 42, height: 42, borderRadius: 6 }} alt={getTermFromDictionary(language, 'library_card')} />
                     <Box style={{ marginLeft: 12 }}>
                          {user.displayName ? (
-                              <Text numberOfLines={1} style={{ maxWidth: 175, color: textColor, fontWeight: '700', fontSize: 16 }}>
+                              <Text numberOfLines={1} style={{ maxWidth: 175, fontWeight: '700' }} size="md">
                                    {user.displayName}
                               </Text>
                          ) : null}
 
                          {library && library.displayName ? (
-                              <Text numberOfLines={1} style={{ maxWidth: 175, color: textColor, fontWeight: '500', fontSize: 14 }}>
+                              <Text numberOfLines={1} style={{ maxWidth: 175, fontWeight: '500' }} size="sm">
                                    {library.displayName}
                               </Text>
                          ) : null}
                          <HStack space="sm" alignItems="center">
                               <MaterialIcons name="credit-card" size={14} color={textColor} />
                               {(user.ils_barcode || user.cat_username) ? (
-                                   <Text numberOfLines={1} style={{ maxWidth: 175, color: textColor, fontWeight: '500', fontSize: 14 }}>
+                                   <Text numberOfLines={1} style={{ maxWidth: 175, fontWeight: '500' }} size="sm">
                                         {user.ils_barcode ?? user.cat_username}
                                    </Text>
                               ) : null}
@@ -809,10 +809,10 @@ const Checkouts = () => {
                     <MaterialIcons name="chevron-right" size={20} color={textColor} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
-                              <Text style={{ color: textColor, fontWeight: '500' }}>
+                              <Text style={{ fontWeight: '500' }}>
                                    {getTermFromDictionary(language, 'checked_out_titles')}
                               </Text>
-                              <Text style={{ color: textColor, fontWeight: '700' }}> ({user.numCheckedOut ?? 0})</Text>
+                              <Text style={{ fontWeight: '700' }}> ({user.numCheckedOut ?? 0})</Text>
                          </HStack>
                          {user.numOverdue > 0 ? (
                               <ThemedBadge action="error" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
@@ -845,10 +845,10 @@ const Holds = () => {
                     <MaterialIcons name="chevron-right" size={20} color={textColor} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
-                              <Text style={{ color: textColor, fontWeight: '500' }}>
+                              <Text style={{ fontWeight: '500' }}>
                                    {getTermFromDictionary(language, 'titles_on_hold')}
                               </Text>
-                              <Text style={{ color: textColor, fontWeight: '700' }}> ({user.numHolds ?? 0})</Text>
+                              <Text style={{ fontWeight: '700' }}> ({user.numHolds ?? 0})</Text>
                          </HStack>
                          {user.numHoldsAvailable > 0 ? (
                               <ThemedBadge action="success" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
@@ -881,10 +881,10 @@ const UserLists = () => {
                     <MaterialIcons name="chevron-right" size={20} color={textColor} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
-                              <Text style={{ color: textColor, fontWeight: '500' }}>
+                              <Text style={{ fontWeight: '500' }}>
                                    {getTermFromDictionary(language, 'my_lists')}
                               </Text>
-                              <Text style={{ color: textColor, fontWeight: '700' }}> ({user.numLists ?? 0})</Text>
+                              <Text style={{ fontWeight: '700' }}> ({user.numLists ?? 0})</Text>
                          </HStack>
                     </VStack>
                </HStack>
@@ -914,10 +914,10 @@ const SavedSearches = () => {
                     <MaterialIcons name="chevron-right" size={20} color={textColor} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
-                              <Text style={{ color: textColor, fontWeight: '500' }}>
+                              <Text style={{ fontWeight: '500' }}>
                                    {getTermFromDictionary(language, 'saved_searches')}
                               </Text>
-                              <Text style={{ color: textColor, fontWeight: '700' }}> ({user.numSavedSearches ?? 0})</Text>
+                              <Text style={{ fontWeight: '700' }}> ({user.numSavedSearches ?? 0})</Text>
                          </HStack>
                          {user.numSavedSearchesNew > 0 ? (
                               <ThemedBadge action="warning" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
@@ -950,10 +950,10 @@ const ReadingHistory = () => {
                     <MaterialIcons name="chevron-right" size={20} color={textColor} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
-                              <Text style={{ color: textColor, fontWeight: '500' }}>
+                              <Text style={{ fontWeight: '500' }}>
                                    {getTermFromDictionary(language, 'reading_history')}
                               </Text>
-                              <Text style={{ color: textColor, fontWeight: '700' }}> ({user.numReadingHistory ?? 0})</Text>
+                              <Text style={{ fontWeight: '700' }}> ({user.numReadingHistory ?? 0})</Text>
                          </HStack>
                     </VStack>
                </HStack>
@@ -977,7 +977,7 @@ const UserProfile = () => {
                }}>
                <HStack space="xs" alignItems="center">
                     <MaterialIcons name="chevron-right" size={20} color={textColor} />
-                    <Text style={{ color: textColor, fontWeight: '500' }}>{getTermFromDictionary(language, 'contact_information')}</Text>
+                    <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'contact_information')}</Text>
                </HStack>
           </Pressable>
      );
@@ -999,7 +999,7 @@ const NotificationHistory = () => {
                     }}>
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} color={textColor} />
-                         <Text style={{ color: textColor, fontWeight: '500' }}>{getTermFromDictionary(language, 'notification_history')}</Text>
+                         <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'notification_history')}</Text>
                     </HStack>
                </Pressable>
           );
@@ -1027,10 +1027,10 @@ const LinkedAccounts = () => {
                     }>
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} color={textColor} />
-                         <Text style={{ color: textColor, fontWeight: '500' }}>
+                         <Text style={{ fontWeight: '500' }}>
                               {getTermFromDictionary(language, 'linked_accounts')}
                          </Text>
-                         <Text style={{ color: textColor, fontWeight: '700' }}> ({user.numLinkedAccounts ?? 0})</Text>
+                         <Text style={{ fontWeight: '700' }}> ({user.numLinkedAccounts ?? 0})</Text>
                     </HStack>
                </Pressable>
           );
@@ -1058,7 +1058,7 @@ const AlternateLibraryCard = () => {
                     }}>
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} color={textColor} />
-                         <Text style={{ color: textColor, fontWeight: '500' }}>{getTermFromDictionary(language, 'alternate_library_card')}</Text>
+                         <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'alternate_library_card')}</Text>
                     </HStack>
                </Pressable>
           );
@@ -1127,7 +1127,7 @@ const Events = () => {
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} color={textColor} />
                          <VStack>
-                              <Text style={{ color: textColor, fontWeight: '500' }}>
+                              <Text style={{ fontWeight: '500' }}>
                                    {getTermFromDictionary(language, 'events')}
                               </Text>
                               {user.numSavedEventsUpcoming > 0 ? (
@@ -1193,7 +1193,7 @@ const Campaigns = () => {
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} color={textColor} />
                          <VStack>
-                              <Text style={{ color: textColor, fontWeight: '500' }}>
+                              <Text style={{ fontWeight: '500' }}>
                                    {getTermFromDictionary(language, 'campaigns')}
                               </Text>
                          </VStack>

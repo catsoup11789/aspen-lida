@@ -15,7 +15,7 @@ import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { useTheme } from '@/src/themes/theme';
 import { loadError } from '@/src/components/loadError';
@@ -156,7 +156,7 @@ export const MyEvents = () => {
      const Empty = () => {
           return (
                <Center style={{ marginTop: 20, marginBottom: 20 }}>
-                   <Text bold size="lg" style={{ color: textColor }}>
+                   <Text bold size="lg">
                          {filterBy === 'upcoming' ? getTermFromDictionary(language, 'no_events_upcoming') : filterBy === 'past' ? getTermFromDictionary(language, 'no_events_past') : getTermFromDictionary(language, 'no_events_all')}
                     </Text>
                </Center>
@@ -186,7 +186,7 @@ export const MyEvents = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text size="sm" style={{ marginTop: 8, color: textColor }}>
+                         <Text size="sm" style={{ marginTop: 8 }}>
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -415,24 +415,24 @@ const Item = (data) => {
                          <Text
                               bold
                               size="md"
-                              style={{ color: textColor }}>
+                             >
                               {event.title}
                          </Text>
                          {event.startDate && event.endDate ? (
                               <>
-                                   <Text style={{ color: textColor }}>
+                                   <Text>
                                         {displayDay}
                                    </Text>
-                                   <Text style={{ color: textColor }}>
+                                   <Text>
                                         {displayStartTime} - {displayEndTime}
                                    </Text>
                               </>
                          ) : event.startDate && !event.endDate ? (
                               <>
-                                   <Text style={{ color: textColor }}>
+                                   <Text>
                                         {displayDay}
                                    </Text>
-                                   <Text style={{ color: textColor }}>
+                                   <Text>
                                         {displayStartTime}
                                    </Text>
                               </>

@@ -10,7 +10,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { Divider } from '@/components/ui/divider';
 import { Heading } from '@/components/ui/heading';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { DisplaySystemMessage } from '../../components/Notifications';
 import { SystemMessagesContext } from '../../context/initialContext';
@@ -133,9 +133,9 @@ export const Location = () => {
                          <Box style={{ marginHorizontal: 16, zIndex: 200 }}>
                               {showSystemMessage()}
                               {library.displayName !== location.displayName ? <Heading style={{ marginBottom: 8, color: textColor }}>{location.displayName}</Heading> : <Heading style={{ marginBottom: 4, color: textColor }}>{library.displayName}</Heading>}
-                              {location.address ? <Text style={{ color: textColor }}>{location.address}</Text> : null}
+                              {location.address ? <Text>{location.address}</Text> : null}
                               {location.phone ? (
-                                   <Text style={{ color: textColor }}>
+                                   <Text>
                                         {getTermFromDictionary(language, 'phone')}: {location.phone}
                                    </Text>
                               ) : null}

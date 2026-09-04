@@ -31,7 +31,7 @@ import { Center } from '@/components/ui/center';
 import { Image } from '@/components/ui/image';
 import { Modal, ModalBackdrop, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * LoginScreen component that handles the login process, including library selection, user authentication, and displaying relevant modals for forgotten credentials or API error logs.
@@ -278,7 +278,7 @@ export const LoginScreen = () => {
                               </Button>
                          ) : null}
                          <Center>
-                              <Text size="xs" style={{ marginTop: 20, color: textColor }}>
+                              <Text size="xs" style={{ marginTop: 20 }}>
                                    {GLOBALS.appVersion} {GLOBALS.appStage} b[{GLOBALS.appBuild}] p[{GLOBALS.appPatch}] c[{GLOBALS.releaseChannel ?? 'Development'}]
                               </Text>
                               {showApiErrorButton ? (

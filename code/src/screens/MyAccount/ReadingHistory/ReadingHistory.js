@@ -19,7 +19,7 @@ import { ChevronDownIcon, ChevronUpIcon, InfoIcon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { loadError } from '@/src/components/loadError';
 import { loadingSpinner } from '@/src/components/loadingSpinner';
@@ -337,7 +337,7 @@ export const MyReadingHistory = () => {
                                         <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'reading_history_opt_out')}</Heading>
                                    </AlertDialogHeader>
                                    <AlertDialogBody>
-                                        <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'reading_history_opt_out_warning')}</Text>
+                                        <Text>{getTermFromDictionary(language, 'reading_history_opt_out_warning')}</Text>
                                    </AlertDialogBody>
                                    <AlertDialogFooter>
                                         <ButtonGroup space="sm">
@@ -361,7 +361,7 @@ export const MyReadingHistory = () => {
                                         <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'reading_history_delete_all')}</Heading>
                                    </AlertDialogHeader>
                                    <AlertDialogBody>
-                                        <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'reading_history_delete_all_warning')}</Text>
+                                        <Text>{getTermFromDictionary(language, 'reading_history_delete_all_warning')}</Text>
                                    </AlertDialogBody>
                                    <AlertDialogFooter>
                                         <ButtonGroup space="sm">
@@ -383,7 +383,7 @@ export const MyReadingHistory = () => {
      const Empty = () => {
           return (
                <Center style={{ marginTop: 20, marginBottom: 20 }}>
-                   <Text bold size="lg" style={{ color: textColor }}>
+                   <Text bold size="lg">
                          {getTermFromDictionary(language, 'reading_history_empty')}
                     </Text>
                </Center>
@@ -421,7 +421,7 @@ export const MyReadingHistory = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text size="sm" style={{ marginTop: 8, color: textColor }}>
+                         <Text size="sm" style={{ marginTop: 8 }}>
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -579,7 +579,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                              <Box style={{ width: '100%', height: 60, paddingHorizontal: 16, justifyContent: 'center' }}>
                                    <Text
                                        size="lg"
-                                       style={{ color: textColor }}>
+                                      >
                                         {getTitle(item.title)}
                                    </Text>
                               </Box>

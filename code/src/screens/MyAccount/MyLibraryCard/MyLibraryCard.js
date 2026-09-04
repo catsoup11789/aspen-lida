@@ -14,7 +14,7 @@ import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { Image } from '@/components/ui/image';
 import { Modal, ModalBackdrop, ModalBody, ModalContent } from '@/components/ui/modal';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { PermissionsPrompt } from '@/src/components/PermissionsPrompt';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
@@ -244,7 +244,7 @@ export const MyLibraryCard = () => {
                               </ActionsheetDragIndicatorWrapper>
                               <VStack space="md" style={{ width: '100%', padding: 16 }}>
                                    <Box>
-                                        <Text size="sm" style={{ color: textColor, marginBottom: 8 }}>{getTermFromDictionary(language, 'select_card')}</Text>
+                                        <Text size="sm" style={{ marginBottom: 8 }}>{getTermFromDictionary(language, 'select_card')}</Text>
                                         <Box style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
                                              {cards.map((card, index) => (
                                                   <Button
@@ -404,20 +404,20 @@ const CreateLibraryCard = (data) => {
                          <Center>
                               <HStack>
                                    {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} alt={getTermFromDictionary(language, 'library_card')} style={{ width: 42, height: 42 }} /> : null}
-                                   <Text bold size="lg" style={{ marginLeft: 12, marginTop: 8, color: textColor }}>
+                                   <Text bold size="lg" style={{ marginLeft: 12, marginTop: 8 }}>
                                         {card.homeLocation}
                                    </Text>
                               </HStack>
                          </Center>
                          <Center style={{ paddingTop: 8 }}>
-                              <Text size="md" style={{ color: textColor }}>
+                              <Text size="md">
                                    {card.displayName}
                               </Text>
                          </Center>
                     </>
                ) : null}
                <Center>
-                    {showExpirationDate && expirationDate && !neverExpires && numCards > 1 ? <Text style={{ color: textColor }}>{expirationText}</Text> : null}
+                    {showExpirationDate && expirationDate && !neverExpires && numCards > 1 ? <Text>{expirationText}</Text> : null}
                     {numCards > 1 ? (
                          <Button colorScheme="primary" variant="link" onPress={() => openBarcodeModal && openBarcodeModal(card)}>
                               <MaterialCommunityIcons name="barcode-scan" size={20} color={runtimeColors.primary[500]} style={{ marginRight: 4 }} />
@@ -433,11 +433,11 @@ const CreateLibraryCard = (data) => {
                                         onError={handleBarcodeError}
                                    />
                               </Box>
-                              <Text size="xl" style={{ color: textColor, textAlign: 'center' }}>{barcodeValue}</Text>
+                              <Text size="xl" style={{ textAlign: 'center' }}>{barcodeValue}</Text>
                          </VStack>
                     )}
                     {showExpirationDate && expirationDate && !neverExpires && numCards === 1 ? (
-                         <Text size="sm" style={{ color: textColor, paddingTop: 8 }}>
+                         <Text size="sm" style={{ paddingTop: 8 }}>
                               {expirationText}
                          </Text>
                     ) : null}
@@ -676,7 +676,7 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
 
                               {showRotateWarning && (
                                    <VStack space="md" style={{ alignItems: 'center', padding: 16 }}>
-                                        <Text size="lg" style={{ textAlign: 'center', color: textColor }}>
+                                        <Text size="lg" style={{ textAlign: 'center' }}>
                                              {getTermFromDictionary(language, 'rotate_device_for_barcode')}
                                         </Text>
                                         <Button
@@ -707,7 +707,7 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                               )}
 
                               <Center style={{ marginTop: 8 }}>
-                                   <Text size="xl" style={{ color: textColor }}>{barcodeValue}</Text>
+                                   <Text size="xl">{barcodeValue}</Text>
                               </Center>
                          </ModalBody>
                     </ModalContent>

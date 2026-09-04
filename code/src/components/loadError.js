@@ -6,7 +6,7 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { getTermFromDictionary } from '../translations/TranslationHelper';
 import { useActiveLanguage } from '../hooks/useLanguageData';
 import { useTheme } from '../themes/theme';
@@ -31,7 +31,7 @@ export const LoadError = (props) => {
                          {getTermFromDictionary('en', 'error')}
                     </Heading>
                </HStack>
-               <Text bold style={{ width: '75%', textAlign: 'center', color: textColor }}>
+               <Text bold style={{ width: '75%', textAlign: 'center' }}>
                     {getTermFromDictionary('en', 'error_loading_results')}
                </Text>
                {reloadAction ? (
@@ -82,7 +82,7 @@ export const DisplayErrorAlertDialog = (props) => {
                         <Heading style={{ color: textColor }}>{title}</Heading>
                     </AlertDialogHeader>
                     <AlertDialogBody>
-                        <Text style={{ color: textColor }}>{message}</Text>
+                        <Text>{message}</Text>
                     </AlertDialogBody>
                     <AlertDialogFooter>
                         <ButtonGroup space="md">

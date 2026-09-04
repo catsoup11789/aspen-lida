@@ -16,7 +16,7 @@ import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { ThemedBadge, ThemedBadgeText, buildBrandOutlineBadgeStyle, buildBrandOutlineBadgeTextStyle } from '../../components/themed/ThemedBadge';
 
@@ -157,21 +157,21 @@ export const DisplayEventResult = (props) => {
                          {item.canAddToList ? <AddToList source="Events" itemId={item.key} btnStyle="sm" /> : null}
                     </VStack>
                     <VStack style={{ width: '65%', paddingTop: 4 }}>
-                         <Text bold style={{ color: textColor, fontSize: 14, lineHeight: 17, paddingBottom: 4 }}>
+                         <Text bold style={{ lineHeight: 17, paddingBottom: 4 }} size="sm">
                               {decodeHTML(item.title)}
                          </Text>
                          {item.start_date && item.end_date ? (
                               <>
-                                   <Text style={{ color: textColor, fontSize: 12, lineHeight: 15 }}>
+                                   <Text style={{ lineHeight: 15 }} size="xs">
                                         {displayDay}
                                    </Text>
-                                   <Text style={{ color: textColor, fontSize: 12, lineHeight: 15 }}>
+                                   <Text style={{ lineHeight: 15 }} size="xs">
                                         {displayStartTime} - {displayEndTime}
                                    </Text>
                               </>
                          ) : null}
                          {locationData.name ? (
-                              <Text style={{ color: textColor, fontSize: 12, lineHeight: 15 }}>
+                              <Text style={{ lineHeight: 15 }} size="xs">
                                    {locationData.name}
                               </Text>
                          ) : null}

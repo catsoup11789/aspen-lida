@@ -5,7 +5,7 @@ import { Box } from '@/components/ui/box';
 import { FlatList } from '@/components/ui/flat-list';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
@@ -51,19 +51,19 @@ const Day = (data) => {
      return (
           <VStack style={{ marginBottom: 8, marginHorizontal: 16 }}>
                <HStack justifyContent="space-between">
-                    <Text style={{ color: textColor }} bold>
+                    <Text bold>
                          {hours.dayName}
                     </Text>
                     {!hours.isClosed ? (
-                         <Text style={{ color: textColor }}>
+                         <Text>
                               {formatTime(hours.open)} - {formatTime(hours.close)}
                          </Text>
                     ) : (
-                         <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'location_closed')}</Text>
+                         <Text>{getTermFromDictionary(language, 'location_closed')}</Text>
                     )}
                </HStack>
                {hours.notes !== '' ? (
-                    <Text size="xs" style={{ color: textColor }} italic>
+                    <Text size="xs" italic>
                          {hours.notes}
                     </Text>
                ) : null}

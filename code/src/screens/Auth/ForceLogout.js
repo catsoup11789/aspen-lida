@@ -8,7 +8,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * ForceLogout component that displays an alert dialog when the user is forced to log out, allowing the user to sign out.
@@ -32,7 +32,7 @@ export const ForceLogout = (props) => {
 				<AlertDialogBackdrop/>
 				<AlertDialogContent style={{ backgroundColor: surfaceBg }}>
 					<AlertDialogHeader><Heading style={{ color: textColor }}>{title ?? getTermFromDictionary(language, 'error')}</Heading></AlertDialogHeader>
-					<AlertDialogBody><Text style={{ color: textColor }}>{reason ?? getTermFromDictionary(language, 'error_invalid_session')}</Text></AlertDialogBody>
+					<AlertDialogBody><Text>{reason ?? getTermFromDictionary(language, 'error_invalid_session')}</Text></AlertDialogBody>
 					<AlertDialogFooter>
 						<ButtonGroup space="sm">
 							<Button colorScheme="primary" onPress={signOut} ref={cancelRef}>

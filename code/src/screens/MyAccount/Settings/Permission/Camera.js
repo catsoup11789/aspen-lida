@@ -14,7 +14,7 @@ import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { navigate } from '@/src/helpers/RootNavigator';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
@@ -59,11 +59,11 @@ export const CameraPermissionStatus = () => {
      return (
           <Pressable onPress={() => navigate('PermissionCameraDescription', { permissionStatus })} style={{ paddingBottom: 12 }}>
                <HStack space="md" justifyContent="space-between" alignItems="center">
-                    <Text bold style={{ color: textColor }}>
+                    <Text bold>
                          {getTermFromDictionary(language, 'camera_permission')}
                     </Text>
                     <HStack alignItems="center">
-                         <Text style={{ color: textColor }}>{permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}</Text>
+                         <Text>{permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}</Text>
                          <MaterialIcons name="chevron-right" size={20} color={textColor} style={{ marginLeft: 4 }} />
                     </HStack>
                </HStack>
@@ -80,16 +80,16 @@ export const CameraPermissionDescription = () => {
           <ScrollView contentContainerStyle={{ padding: 20 }}>
                <VStack alignItems="stretch">
                     <Box>
-                         <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'device_set_to')}</Text>
+                         <Text>{getTermFromDictionary(language, 'device_set_to')}</Text>
 
                          <Heading style={{ marginBottom: 4, color: textColor }}>
                               {permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                          </Heading>
-                         <Text style={{ color: textColor }}>
+                         <Text>
                               {Constants.expoConfig.name} {permissionStatus === true ? getTermFromDictionary(language, 'allowed_camera') : getTermFromDictionary(language, 'not_allowed_camera')}
                          </Text>
 
-                         <Text style={{ color: textColor, marginTop: 20 }}>
+                         <Text style={{ marginTop: 20 }}>
                               {getTermFromDictionary(language, 'to_update_settings')}
                          </Text>
                          <CameraPermissionUsage />
@@ -181,7 +181,7 @@ const CameraPermissionUpdate = (payload) => {
                               <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'update_device_settings')}</Heading>
                          </AlertDialogHeader>
                          <AlertDialogBody>
-                              <Text style={{ color: textColor }}>{Platform.OS === 'android' ? getTermFromDictionary(language, 'update_camera_android') : getTermFromDictionary(language, 'update_camera_ios')}</Text>
+                              <Text>{Platform.OS === 'android' ? getTermFromDictionary(language, 'update_camera_android') : getTermFromDictionary(language, 'update_camera_ios')}</Text>
                          </AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup style={{ flexDirection: 'column', alignItems: 'stretch', width: '100%' }}>

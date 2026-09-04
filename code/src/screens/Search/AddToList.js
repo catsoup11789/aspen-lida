@@ -24,7 +24,7 @@ import { CircleIcon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ThemedRadio as Radio, ThemedRadioGroup as RadioGroup, ThemedRadioIcon as RadioIcon, ThemedRadioIndicator as RadioIndicator, ThemedRadioLabel as RadioLabel } from '../../components/themed/ThemedRadio';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '@/src/components/themed/ThemedTextarea';
 import { VStack } from '@/components/ui/vstack';
 import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
@@ -181,7 +181,7 @@ const AddToList = (props) => {
                                                        </Select>
                                                   </FormControl>
                                                   <HStack space="sm" style={{ alignItems: 'center' }}>
-                                                       <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'or')}</Text>
+                                                       <Text>{getTermFromDictionary(language, 'or')}</Text>
                                                        <Button
                                                             size="sm"
                                                             colorScheme="primary"

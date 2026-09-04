@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { LanguageSwitcher } from '@/src/translations/TranslationService';
 
 /**

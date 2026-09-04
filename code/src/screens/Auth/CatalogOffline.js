@@ -10,7 +10,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * CatalogOffline component that displays an alert dialog when the catalog is offline, allowing the user to sign out.
@@ -40,7 +40,7 @@ export const CatalogOffline = () => {
                                   <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'catalog_offline')}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                  <Text style={{ color: textColor }}>{catalogStatusMessage ? catalogStatusMessage : getTermFromDictionary(language, 'catalog_offline_message')}</Text>
+                                  <Text>{catalogStatusMessage ? catalogStatusMessage : getTermFromDictionary(language, 'catalog_offline_message')}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">

@@ -6,7 +6,7 @@ import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { loadingSpinner } from '@/src/components/loadingSpinner';
 import { SystemMessagesContext } from '@/src/context/initialContext';
@@ -34,7 +34,7 @@ export const MySavedSearches = () => {
      const updateSavedSearches = useUpdateSavedSearches();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor, uiColors, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
 
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
 
@@ -76,7 +76,7 @@ export const MySavedSearches = () => {
      const Empty = () => {
           return (
                <Center style={{ marginTop: 20, marginBottom: 20 }}>
-                   <Text bold size="lg" style={{ color: textColor }}>
+                   <Text bold size="lg">
                          {getTermFromDictionary(language, 'saved_searches_empty')}
                     </Text>
                </Center>
@@ -121,7 +121,7 @@ export const MySavedSearches = () => {
 const Item = (data) => {
      const language = useActiveLanguage();
      const item = data.data;
-     const { textColor, colorMode } = useTheme();
+     const { colorMode } = useTheme();
      const { uiColors } = useTheme();
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
@@ -147,7 +147,7 @@ const Item = (data) => {
                     <VStack space="sm">{/*<Image source={{uri: item.cover}} alt={item.title} size="lg" resizeMode="contain" />*/}</VStack>
                     <VStack space="sm" style={{ justifyContent: 'space-between', maxWidth: '80%' }}>
                          <Box>
-                              <Text bold size="md" style={{ color: textColor }}>
+                              <Text bold size="md">
                                    {item.title}{' '}
                                    {hasNewResults === 1 ? (
                                         <ThemedBadge action="warning" style={{ marginBottom: -2 }}>
@@ -155,7 +155,7 @@ const Item = (data) => {
                                         </ThemedBadge>
                                    ) : null}
                               </Text>
-                              <Text size="xs" italic style={{ color: textColor }}>
+                              <Text size="xs" italic>
                                    Created on {item.created}
                               </Text>
                          </Box>

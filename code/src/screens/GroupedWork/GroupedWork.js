@@ -30,7 +30,7 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
@@ -194,7 +194,7 @@ const Title = ({ title }) => {
      if (title) {
           return (
                <>
-                    <Text bold style={{ color: textColor, fontSize: 16, lineHeight: 19, paddingTop: 20, textAlign: 'center' }}>
+                    <Text bold style={{ lineHeight: 19, paddingTop: 20, textAlign: 'center' }} size="md">
                          {title}
                     </Text>
                </>
@@ -266,7 +266,7 @@ const Description = ({ description }) => {
      const { textColor } = useTheme();
      if (description) {
           return (
-               <Text style={{ marginTop: 20, marginBottom: 20, fontSize: 14, lineHeight: 21, color: textColor }}>
+               <Text style={{ marginTop: 20, marginBottom: 20, lineHeight: 21 }} size="sm">
                     {decodeHTML(description)}
                </Text>
           );
@@ -288,10 +288,10 @@ const Language = ({ language }) => {
      if (language) {
           return (
                <HStack style={{ marginTop: 12, marginBottom: 4 }}>
-                    <Text bold style={{ fontSize: 12, lineHeight: 15, color: textColor }}>
+                    <Text bold style={{ lineHeight: 15 }} size="xs">
                          {getTermFromDictionary(user_language, 'language')}:
                     </Text>
-                    <Text style={{ fontSize: 12, lineHeight: 15, marginLeft: 4, color: textColor }}>
+                    <Text style={{ lineHeight: 15, marginLeft: 4 }} size="xs">
                          {' '}
                          {language}
                     </Text>
@@ -316,7 +316,7 @@ const Formats = ({ formats }) => {
      if (formats) {
           return (
                <>
-                    <Text bold style={{ fontSize: 12, lineHeight: 15, marginTop: 12, marginBottom: 4, color: textColor }}>
+                    <Text bold style={{ lineHeight: 15, marginTop: 12, marginBottom: 4 }} size="xs">
                          {getTermFromDictionary(language, 'format')}:
                     </Text>
                     <ButtonGroup style={{ flexDirection: 'row', flexWrap: 'wrap' }}>

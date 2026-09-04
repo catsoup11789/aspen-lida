@@ -4,7 +4,7 @@ import { DrawerActions } from '@react-navigation/native';
 import React from 'react';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { useSelfCheckEnabled, useSelfCheckSettings } from '../../hooks/useLibraryBranchData';
 import { getTermFromDictionary } from '../../translations/TranslationService';

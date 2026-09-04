@@ -7,7 +7,7 @@ import { Center } from '@/components/ui/center';
 import { CloseIcon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { SearchGlobal } from '../../util/globals';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useTheme } from '../../themes/theme';
@@ -68,7 +68,7 @@ export const UnsavedChangesExit = (props) => {
                               <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'discard_changes')}</Heading>
                          </AlertDialogHeader>
                          <AlertDialogBody>
-                              <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'unsaved_changes_warning')}</Text>
+                              <Text>{getTermFromDictionary(language, 'unsaved_changes_warning')}</Text>
                          </AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">

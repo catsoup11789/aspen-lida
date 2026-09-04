@@ -11,7 +11,7 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * WhereIsIt component that displays the availability and location of a specific item or manifestation. It fetches data from the API based on the provided parameters and renders a list of available copies, locations, and call numbers or holds.
@@ -23,7 +23,7 @@ export const WhereIsIt = () => {
      const { id, format, prevRoute, type, recordId, source } = route.params;
      const language = useActiveLanguage();
      const library = useLibrary();
-     const { textColor } = useTheme();
+     const {  } = useTheme();
      const [isLoading, setLoading] = React.useState(false);
 
      const { status, data, error, isFetching } = useQuery({
@@ -45,18 +45,18 @@ export const WhereIsIt = () => {
                ) : (
                     <Box>
                          <HStack space="md" style={{ justifyContent: 'space-between', paddingBottom: 8 }}>
-                              <Text bold size="xs" style={{ width: '30%', color: textColor }}>
+                              <Text bold size="xs" style={{ width: '30%' }}>
                                    {getTermFromDictionary(language, 'available_copies')}
                               </Text>
-                              <Text bold size="xs" style={{ width: '30%', color: textColor }}>
+                              <Text bold size="xs" style={{ width: '30%' }}>
                                    {getTermFromDictionary(language, 'location')}
                               </Text>
 							 {source === 'overdrive' ? (
-								 <Text bold size="xs" style={{ width: '30%', color: textColor }}>
+								 <Text bold size="xs" style={{ width: '30%' }}>
 									 {getTermFromDictionary(language, 'holds')}
 								 </Text>
 							 ) : (
-                             <Text bold size="xs" style={{ width: '30%', color: textColor }}>
+                             <Text bold size="xs" style={{ width: '30%' }}>
                                    {getTermFromDictionary(language, 'call_num')}
                               </Text>
 							 )}
@@ -75,23 +75,23 @@ export const WhereIsIt = () => {
  * @constructor
  */
 const Details = (data) => {
-     const { textColor } = useTheme();
+     const {  } = useTheme();
      const manifestation = data.manifestation;
      const source = data.source;
      return (
           <HStack space="md" style={{ justifyContent: 'space-between' }}>
-               <Text size="xs" style={{ width: '30%', color: textColor }}>
+               <Text size="xs" style={{ width: '30%' }}>
                     {manifestation.availableCopies} of {manifestation.totalCopies}
                </Text>
-               <Text size="xs" style={{ width: '30%', color: textColor }}>
+               <Text size="xs" style={{ width: '30%' }}>
                     {manifestation.shelfLocation}
                </Text>
 			  {source === 'overdrive' ? (
-				  <Text size="xs" style={{ width: '30%', color: textColor }}>
+				  <Text size="xs" style={{ width: '30%' }}>
 					  {manifestation.numHolds}
 				  </Text>
 			  ) : (
-               <Text size="xs" style={{ width: '30%', color: textColor }}>
+               <Text size="xs" style={{ width: '30%' }}>
                     {manifestation.callNumber}
                </Text>
 			  )}

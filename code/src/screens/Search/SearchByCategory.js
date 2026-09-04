@@ -20,7 +20,7 @@ import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { Heading } from '@/components/ui/heading';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
@@ -94,7 +94,7 @@ export const SearchResultsForBrowseCategory = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text style={{ marginTop: 8, fontSize: 10, color: textColor }}>
+                         <Text style={{ marginTop: 8 }} size="2xs">
                               {paginationLabel}
                          </Text>
                     </Box>

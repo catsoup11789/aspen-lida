@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from '@/components/ui/box';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import {getTermFromDictionary} from '@/src/translations/TranslationService';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 

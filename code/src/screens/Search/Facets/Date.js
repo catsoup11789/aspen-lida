@@ -12,7 +12,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * Facet_Date component that displays a date range picker for filtering search results based on a date facet. It allows users to select a "from" and "to" date, updates the applied filters accordingly, and triggers an update to the search results.
@@ -26,7 +26,7 @@ export const Facet_Date = (props) => {
 
      const [loading, setLoading] = React.useState(false);
 
-     const { textColor, colorMode } = useTheme();
+     const { colorMode } = useTheme();
 
      const today = new Date();
      const [fromValue, setFrom] = React.useState(today);
@@ -101,7 +101,7 @@ export const Facet_Date = (props) => {
                               <Button colorScheme="primary" variant="outline" onPress={() => toggleFromDatePicker()}>
                                    <ButtonText>{moment(fromValue).format('MM/DD/YYYY')}</ButtonText>
                               </Button>
-                              <Text style={{ color: textColor }}>to</Text>
+                              <Text>to</Text>
                               <Button colorScheme="primary" variant="outline" onPress={() => toggleToDatePicker()}>
                                    <ButtonText>{toFacet === '*' ? 'MM/DD/YYYY' : moment(toValue).format('MM/DD/YYYY')}</ButtonText>
                               </Button>

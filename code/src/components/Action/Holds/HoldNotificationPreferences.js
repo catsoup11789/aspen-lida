@@ -9,7 +9,7 @@ import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedC
 import { FormControl, FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { CheckIcon } from '@/components/ui/icon';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * HoldNotificationPreferences component for displaying notification preferences for holds.
@@ -32,7 +32,7 @@ export const HoldNotificationPreferences = (props) => {
 
      return (
           <>
-               <Text size="sm" style={{ color: textColor, marginBottom: 8 }}>
+               <Text size="sm" style={{ marginBottom: 8 }}>
                     {getTermFromDictionary(language, 'hold_notify_for_pickup')}
                </Text>
                {user.email ? (

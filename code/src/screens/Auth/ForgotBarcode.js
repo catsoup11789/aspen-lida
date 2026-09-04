@@ -16,7 +16,7 @@ import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * ForgotBarcode component that displays a modal for users to request their forgotten barcode by entering their phone number.
@@ -105,14 +105,14 @@ export const ForgotBarcode = (props) => {
      }
 
      const ResultsMessage = showResults && !results.success ? (
-          <Text style={{ color: textColor }}>{stripHTML(results.message || getTermFromDictionary('en', 'forgot_barcode_error_message'))}</Text>
+          <Text>{stripHTML(results.message || getTermFromDictionary('en', 'forgot_barcode_error_message'))}</Text>
      ) : hasError ? (
-          <Text style={{ color: textColor }}>{results}</Text>
+          <Text>{results}</Text>
      ) : showResults ? (
-          <Text style={{ color: textColor }}>{stripHTML(results.message || getTermFromDictionary('en', 'forgot_barcode_success_message'))}</Text>
+          <Text>{stripHTML(results.message || getTermFromDictionary('en', 'forgot_barcode_success_message'))}</Text>
      ) : (
           <>
-               <Text style={{ color: textColor }}>{modalBody}</Text>
+               <Text>{modalBody}</Text>
                <FormControl>
                     <FormControlLabel>
                          <FormControlLabelText size="sm" style={{ color: textColor }}>{fieldLabel}</FormControlLabelText>

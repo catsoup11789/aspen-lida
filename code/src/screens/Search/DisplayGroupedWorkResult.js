@@ -15,7 +15,7 @@ import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
@@ -31,7 +31,7 @@ export const DisplayGroupedWorkResult = (props) => {
      let params = useRoute();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { runtimeColors, textColor, colorMode, uiColors } = useTheme();
+     const { runtimeColors, colorMode, uiColors } = useTheme();
 
      let formats = item?.itemList ?? [];
      const id = item.key ?? item.id;
@@ -123,12 +123,12 @@ export const DisplayGroupedWorkResult = (props) => {
                     </VStack>
                     <VStack style={{ width: '65%', paddingTop: 4 }}>
                          {title ? (
-                              <Text bold style={{ color: textColor, fontSize: 14, paddingBottom: 4 }}>
+                              <Text bold style={{ paddingBottom: 4 }} size="sm">
                                    {title}
                               </Text>
                          ) : null}
                          {author ? (
-                              <Text style={{ color: textColor, fontSize: 12 }}>
+                              <Text size="xs">
                                    {getTermFromDictionary(language, 'by')} {author}
                               </Text>
                          ) : null}

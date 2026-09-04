@@ -24,7 +24,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { Divider } from '@/components/ui/divider';
 import { Heading } from '@/components/ui/heading';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
@@ -156,12 +156,12 @@ export const MyLibrary = () => {
                     <Box style={{ marginTop: location.locationImage ? 160 : 0, marginHorizontal: 8, zIndex: 200 }}>
                          {showSystemMessage()}
                          {library.displayName !== location.displayName ? <Heading style={{ color: textColor, marginBottom: 8 }}>{location.displayName}</Heading> : <Heading style={{ color: textColor, marginBottom: 16 }}>{library.displayName}</Heading>}
-                         {location.address ? <Text style={{ color: textColor }}>{location.address}</Text> : null}
+                         {location.address ? <Text>{location.address}</Text> : null}
                          {location.phone ? (
-                              <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'phone')}: {location.phone}</Text>
+                              <Text>{getTermFromDictionary(language, 'phone')}: {location.phone}</Text>
                          ) : null}
                          {hasHours ? (
-                              <Text style={{ color: textColor, marginTop: 16, marginBottom: 8 }}>
+                              <Text style={{ marginTop: 16, marginBottom: 8 }}>
                                    <ThemedBadge action={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
                                         <ThemedBadgeText action={isClosedToday ? 'error' : 'success'}>
                                              {hoursLabel}

@@ -24,7 +24,7 @@ import { CheckIcon } from '@/components/ui/icon';
 import { ThemedInput as Input, ThemedInputField as InputField } from '../../components/themed/ThemedFormControls';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '../../components/themed/ThemedTextarea';
 
 /**
@@ -152,7 +152,7 @@ const Request = (payload) => {
           const field = config.fields.introText;
           if (field.display === 'show') {
                return (
-                    <Text size="sm" style={{ paddingBottom: 12, color: textColor }}>
+                    <Text size="sm" style={{ paddingBottom: 12 }}>
                          {stripHTML(field.label)}
                     </Text>
                );
@@ -192,7 +192,7 @@ const Request = (payload) => {
           const field = config.fields.feeInformationText;
           if (field.display === 'show' && field.label && field.label.trim() !== '') {
                return (
-                    <Text bold style={{ color: textColor }}>
+                    <Text bold>
                          {stripHTML(field.label)}
                     </Text>
                );
@@ -217,7 +217,7 @@ const Request = (payload) => {
                                    </CheckboxIcon>
                               </CheckboxIndicator>
                               <CheckboxLabel>
-                                   <Text style={{ color: textColor }}>{field.label}</Text>
+                                   <Text>{field.label}</Text>
                               </CheckboxLabel>
                          </Checkbox>
                     </FormControl>

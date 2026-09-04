@@ -7,7 +7,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * UpdateAvailable component that displays an alert dialog informing the user about an available update and provides options to update or cancel.

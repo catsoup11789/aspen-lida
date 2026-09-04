@@ -13,7 +13,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { loadingSpinner } from '@/src/components/loadingSpinner';
 import { DisplaySystemMessage } from '@/src/components/Notifications';
@@ -274,7 +274,7 @@ export const MyLists = () => {
 
      const listEmptyComponent = () => (
           <Center style={{ marginTop: 5, marginBottom: 5 }}>
-               <Text bold size="lg" style={{ color: textColor }}>
+               <Text bold size="lg">
                     {getTermFromDictionary(language, 'no_lists_yet')}
                </Text>
           </Center>
@@ -307,12 +307,12 @@ export const MyLists = () => {
                               </VStack>
                               <VStack space={1} style={{ justifyContent: 'space-between', maxWidth: '80%', paddingLeft: 8 }}>
                                    <Box>
-                                        <Text bold size="md" style={{ color: textColor }}>{item.title}</Text>
+                                        <Text bold size="md">{item.title}</Text>
                                         {item.description ? (
-                                             <Text size="xs" style={{ marginBottom: 8, color: textColor }}>{item.description}</Text>
+                                             <Text size="xs" style={{ marginBottom: 8 }}>{item.description}</Text>
                                         ) : null}
-                                        <Text size="xs" italic style={{ color: textColor }}>{listLastUpdatedOn}</Text>
-                                        <Text size="xs" italic style={{ color: textColor }}>{item.numTitles ?? 0} {getTermFromDictionary(language, 'items')}</Text>
+                                        <Text size="xs" italic>{listLastUpdatedOn}</Text>
+                                        <Text size="xs" italic>{item.numTitles ?? 0} {getTermFromDictionary(language, 'items')}</Text>
                                    </Box>
                               </VStack>
                          </HStack>
@@ -362,7 +362,7 @@ export const MyLists = () => {
                               </Button>
                          </ButtonGroup>
                     </ScrollView>
-                    <Text size="sm" style={{ marginTop: 8, color: textColor }}>{paginationLabel}</Text>
+                    <Text size="sm" style={{ marginTop: 8 }}>{paginationLabel}</Text>
                </Box>
           );
      };

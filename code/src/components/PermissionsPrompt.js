@@ -4,7 +4,7 @@ import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, 
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from './themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { getTermFromDictionary } from '../translations/TranslationService';
 import { useActiveLanguage } from '../hooks/useLanguageData';
 import { useTheme } from '../themes/theme';
@@ -31,7 +31,7 @@ export const PermissionsPrompt = (data) => {
                <AlertDialogBackdrop />
                <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark }}>
                     <AlertDialogHeader><Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, promptTitle)}</Heading></AlertDialogHeader>
-                    <AlertDialogBody><Text style={{ color: textColor }}>{getTermFromDictionary(language, promptBody)}</Text></AlertDialogBody>
+                    <AlertDialogBody><Text>{getTermFromDictionary(language, promptBody)}</Text></AlertDialogBody>
                     <AlertDialogFooter>
                          <ButtonGroup space="md">
                               <Button style={{ backgroundColor: uiColors.surface.light }} onPress={onClose} ref={cancelRef}>

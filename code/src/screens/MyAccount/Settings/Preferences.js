@@ -8,7 +8,7 @@ import { Box } from '@/components/ui/box';
 import { Divider } from '@/components/ui/divider';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { useUserState, useUpdateExpoToken } from '@/src/hooks/useUserData';
 import { navigate } from '@/src/helpers/RootNavigator';
@@ -64,7 +64,7 @@ export const PreferencesScreen = () => {
                               <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('MyPreferences_ManageBrowseCategories', { prevRoute: 'Preferences' })}>
                                    <HStack space="xs" alignItems="center">
                                         <MaterialIcons name="chevron-right" size={24} color={textColor} />
-                                        <Text style={{ color: textColor, fontWeight: '500' }}>
+                                        <Text style={{ fontWeight: '500' }}>
                                              {getTermFromDictionary(language, 'manage_browse_categories')}
                                         </Text>
                                    </HStack>
@@ -73,7 +73,7 @@ export const PreferencesScreen = () => {
                                    <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('MyPreferences_ManagePickupLocations')}>
                                         <HStack space="xs" alignItems="center">
                                              <MaterialIcons name="chevron-right" size={24} color={textColor} />
-                                             <Text style={{ color: textColor, fontWeight: '500' }}>
+                                             <Text style={{ fontWeight: '500' }}>
                                                   {getTermFromDictionary(language, 'manage_pickup_locations')}
                                              </Text>
                                         </HStack>
@@ -82,7 +82,7 @@ export const PreferencesScreen = () => {
                               <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('PermissionDashboard')}>
                                    <HStack space="xs" alignItems="center">
                                         <MaterialIcons name="chevron-right" size={24} color={textColor} />
-                                        <Text style={{ color: textColor, fontWeight: '500' }}>
+                                        <Text style={{ fontWeight: '500' }}>
                                              {getTermFromDictionary(language, 'device_permissions')}
                                         </Text>
                                    </HStack>
@@ -90,7 +90,7 @@ export const PreferencesScreen = () => {
                               <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('MyDevice_Support')}>
                                    <HStack space="xs" alignItems="center">
                                         <MaterialIcons name="chevron-right" size={24} color={textColor} />
-                                        <Text style={{ color: textColor, fontWeight: '500' }}>
+                                        <Text style={{ fontWeight: '500' }}>
                                              {getTermFromDictionary(language, 'support')}
                                         </Text>
                                    </HStack>
@@ -100,13 +100,13 @@ export const PreferencesScreen = () => {
                     <Divider/>
                     <VStack>
                          <HStack style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                              <Text bold style={{ color: textColor }}>
+                              <Text bold>
                                    {getTermFromDictionary(language, 'language')}
                               </Text>
                               <LanguageSwitcher />
                          </HStack>
                          <HStack style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                              <Text bold style={{ color: textColor }}>
+                              <Text bold>
                                    {getTermFromDictionary(language, 'appearance')}
                               </Text>
                               <UseColorMode showText={true} />

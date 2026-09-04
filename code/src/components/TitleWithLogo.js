@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useWindowDimensions } from 'react-native';
 import { useLibrary } from '../hooks/useLibrarySystemData';
 import { Image } from '@/components/ui/image';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { HStack } from '@/components/ui/hstack';
 import { VStack } from '@/components/ui/vstack';
 import { Box } from '@/components/ui/box';

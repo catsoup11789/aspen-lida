@@ -26,7 +26,7 @@ import { FormControl, FormControlLabel, FormControlLabelText } from '@/component
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * SelfCheckOut component that manages the self-checkout process for library items. It allows users to scan or enter barcodes, checks out items, and displays the current session's checked-out items. It also handles errors and confirmation messages during the checkout process.
@@ -215,10 +215,10 @@ export const SelfCheckOut = () => {
           if (_.size(items) >= 1) {
                return (
                     <HStack space="md" style={{ justifyContent: 'space-between', paddingBottom: 8 }}>
-                         <Text bold style={{ fontSize: 12, width: '70%', color: textColor }}>
+                         <Text bold style={{ width: '70%' }} size="xs">
                               {getTermFromDictionary(language, 'title')}
                          </Text>
-                         <Text bold style={{ fontSize: 12, width: '25%', color: textColor }}>
+                         <Text bold style={{ width: '25%' }} size="xs">
                               {getTermFromDictionary(language, 'checkout_due')}
                          </Text>
                     </HStack>
@@ -238,14 +238,14 @@ export const SelfCheckOut = () => {
                     <>
                          <HStack space="md" style={{ justifyContent: 'space-between' }}>
                               <HStack space="xs" style={{ width: '70%', flexWrap: 'wrap' }}>
-                                   <Text bold style={{ fontSize: 12, color: textColor }}>
+                                   <Text bold size="xs">
                                         {title}
                                    </Text>
-                                   <Text style={{ fontSize: 12, color: textColor }}>
+                                   <Text size="xs">
                                         ({barcode})
                                    </Text>
                               </HStack>
-                              <Text style={{ fontSize: 12, width: '25%', color: textColor }}>
+                              <Text style={{ width: '25%' }} size="xs">
                                    {dueDate}
                               </Text>
                          </HStack>
@@ -270,7 +270,7 @@ export const SelfCheckOut = () => {
      }
 
      const currentCheckOutEmpty = () => {
-          return <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'no_items_checked_out')}</Text>;
+          return <Text>{getTermFromDictionary(language, 'no_items_checked_out')}</Text>;
      };
 
      const currentCheckOutFooter = () => {};
@@ -279,7 +279,7 @@ export const SelfCheckOut = () => {
           <Box style={{ flex: 1, padding: 20, width: '100%' }}>
                <Center style={{ paddingBottom: 20 }}>
                     {activeAccount?.displayName ? (
-                         <Text style={{ paddingBottom: 12, color: textColor }}>
+                         <Text style={{ paddingBottom: 12 }}>
                               {getTermFromDictionary(language, 'checking_out_as')} {activeAccount.displayName}
                          </Text>
                     ) : null}
@@ -355,7 +355,7 @@ export const SelfCheckOut = () => {
                </Heading>
                {isProcessingCheckout ? (
                     <Center>
-                         <Text style={{ paddingBottom: 20, color: textColor }}>
+                         <Text style={{ paddingBottom: 20 }}>
                               {getTermFromDictionary(language, 'processing_checkout_message')}
                          </Text>
                          {loadingSpinner()}
@@ -376,7 +376,7 @@ export const SelfCheckOut = () => {
                                    <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'notice_about_item')}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text style={{ color: textColor }}>{confirmMessage}</Text>
+                                   <Text>{confirmMessage}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="sm">
@@ -398,7 +398,7 @@ export const SelfCheckOut = () => {
                                    </Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text style={{ color: textColor }}>{errorBody}</Text>
+                                   <Text>{errorBody}</Text>
                                    {itemNotFound && tempBarcode ? (
                                         <>
                                              <FormControl>
@@ -448,7 +448,7 @@ export const SelfCheckOut = () => {
                                    </Button>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'finish_checkout_session_body')}</Text>
+                                   <Text>{getTermFromDictionary(language, 'finish_checkout_session_body')}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <HStack style={{ width: '100%', justifyContent: 'center' }}>

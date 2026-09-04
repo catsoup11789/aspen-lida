@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
 import { HStack } from '@/components/ui/hstack';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { logDebugMessage } from '@/src/util/logging';
 import { useTheme } from '@/src/themes/theme';
 
@@ -17,7 +17,7 @@ import { useTheme } from '@/src/themes/theme';
  * @constructor
  */
 export const Facet_Checkbox = ({ data, category, values = [], updateCheckboxFacet }) => {
-     const { textColor, runtimeColors } = useTheme();
+     const { runtimeColors } = useTheme();
      const isChecked = values.includes(data.value);
      const handleChange = (newValue) => {
           logDebugMessage("Clicked on " + data.value + " isChecked is " + isChecked + " newValue is " + newValue);
@@ -37,7 +37,7 @@ export const Facet_Checkbox = ({ data, category, values = [], updateCheckboxFace
                          {isChecked ? <CheckboxIcon as={MaterialIcons} style={{ color: runtimeColors.primary['500-text'] }} size="sm" /> : null}
                     </CheckboxIndicator>
                     <CheckboxLabel style={{ paddingLeft: 8 }}>
-                         <Text style={{ color: textColor }}>
+                         <Text>
                               {data.display}
                               {data.count ? ` (${data.count})` : ''}
                          </Text>

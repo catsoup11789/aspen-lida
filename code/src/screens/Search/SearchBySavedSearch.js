@@ -20,7 +20,7 @@ import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { Heading } from '@/components/ui/heading';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 /**
@@ -32,7 +32,7 @@ export const SearchResultsForSavedSearch = () => {
      const [page, setPage] = React.useState(1);
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { uiColors, textColor, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const searchId = useRoute().params.id ?? '';
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
@@ -86,7 +86,7 @@ export const SearchResultsForSavedSearch = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text style={{ marginTop: 8, fontSize: 10, color: textColor }}>
+                         <Text style={{ marginTop: 8 }} size="2xs">
                               {paginationLabel}
                          </Text>
                     </Box>

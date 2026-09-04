@@ -17,7 +17,7 @@ import { useTheme } from '../../themes/theme';
 import { passUserToDiscovery } from '../../util/api/user';
 import { Heading } from '@/components/ui/heading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalHeader } from '@/components/ui/modal';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedCloseIcon } from '../themed/ThemedFormControls';
 
 /**
@@ -231,7 +231,7 @@ export const ActionButton = (data) => {
                                         </ModalCloseButton>
                                    </ModalHeader>
 
-                                   <ModalBody><Text style={{ color: textColor }}>{action.message}</Text></ModalBody>
+                                   <ModalBody><Text>{action.message}</Text></ModalBody>
                               </ModalContent>
                          </Modal>
                     </>

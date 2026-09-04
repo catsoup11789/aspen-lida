@@ -4,7 +4,7 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { useUserState, useUpdateUserProfile, useUpdateAccounts, useUpdateViewers } from '@/src/hooks/useUserData';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { disableAccountLinking, refreshProfile, getLinkedAccounts, getViewerAccounts } from '@/src/util/api/user';
@@ -72,7 +72,7 @@ const DisableAccountLinking = () => {
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
-                              <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'disable_linked_accounts_body')}</Text>
+                              <Text>{getTermFromDictionary(language, 'disable_linked_accounts_body')}</Text>
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>

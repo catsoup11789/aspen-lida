@@ -23,7 +23,7 @@ import { HStack } from '@/components/ui/hstack';
 import { InputSlot } from '@/components/ui/input';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { View } from '@/components/ui/view';
 import { VStack } from '@/components/ui/vstack';
 import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
@@ -63,7 +63,7 @@ export const FiltersScreen = () => {
                     <VStack style={{ alignContent: 'center' }}>
                          <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                               <VStack>
-                                   <Text bold style={{ color: textColor }}>{label}</Text>
+                                   <Text bold>{label}</Text>
                                    {appliedFacet(label)}
                               </VStack>
                               <ChevronRightIcon style={{ color: textColor }} />
@@ -147,11 +147,11 @@ export const FiltersScreen = () => {
 
           if (!_.isEmpty(text) || !_.isEmpty(pendingText)) {
                if (!_.isEmpty(pendingText) && _.isEmpty(text)) {
-                   return <Text italic style={{ color: textColor }}>{pendingText}</Text>;
+                   return <Text italic>{pendingText}</Text>;
                } else if (!_.isEmpty(pendingText) && !_.isEmpty(text)) {
-                   return <Text italic style={{ color: textColor }}>{pendingText}</Text>;
+                   return <Text italic>{pendingText}</Text>;
                } else {
-                   return <Text style={{ color: textColor }}>{text}</Text>;
+                   return <Text>{text}</Text>;
                }
           } else {
                return null;
@@ -316,10 +316,10 @@ export const FiltersScreen = () => {
                                         <VStack style={{ alignContent: 'center' }}>
                                              <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                                                   <VStack>
-                                                       <Text bold style={{ color: textColor }}>
+                                                       <Text bold>
                                                             {getTermFromDictionary(language, 'search_by')}
                                                        </Text>
-                                                       <Text italic style={{ color: textColor }}>
+                                                       <Text italic>
                                                             {getSearchIndexLabel()}
                                                        </Text>
                                                   </VStack>
@@ -331,10 +331,10 @@ export const FiltersScreen = () => {
                                         <VStack style={{ alignContent: 'center' }}>
                                              <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                                                   <VStack>
-                                                       <Text bold style={{ color: textColor }}>
+                                                       <Text bold>
                                                             {getTermFromDictionary(language, 'search_in')}
                                                        </Text>
-                                                       <Text italic style={{ color: textColor }}>
+                                                       <Text italic>
                                                             {getSearchSourceLabel()}
                                                        </Text>
                                                   </VStack>

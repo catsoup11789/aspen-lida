@@ -15,7 +15,7 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * DeleteListGroup component that allows users to delete a list group. It displays a button that opens a confirmation modal where users can confirm the deletion. The component handles API calls to delete the list group and provides feedback on the deletion process, including refreshing the user's profile and updating the list groups and lists in the local state.
@@ -57,7 +57,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
-                              <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'delete_list_group_confirmation')}</Text>
+                              <Text>{getTermFromDictionary(language, 'delete_list_group_confirmation')}</Text>
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>

@@ -4,7 +4,7 @@ import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
 import { Heading } from '@/components/ui/heading';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 /**
@@ -41,9 +41,9 @@ export const NotificationHistoryMessageModal = () => {
                <Box style={{ padding: 20 }}>
                     <VStack space="md">
                          <Heading size="lg" style={{ color: textColor }}>{message.title}</Heading>
-                         <Text style={{ color: textColor }}>{message.content}</Text>
+                         <Text>{message.content}</Text>
                          {message.dateSent && (
-                              <Text size="sm" style={{ opacity: 0.7, color: textColor }}>
+                              <Text size="sm" style={{ opacity: 0.7 }}>
                                    {formatDate(message.dateSent)}
                               </Text>
                          )}

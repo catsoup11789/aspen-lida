@@ -8,7 +8,7 @@ import { FlatList } from '@/components/ui/flat-list';
 import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { DisplayMessage, DisplaySystemMessage } from '@/src/components/Notifications';
 import { SystemMessagesContext } from '@/src/context/initialContext';
 import { useUserState, useAccounts, useViewers, useUpdateAccounts, useUpdateViewers, useUpdateUserProfile } from '@/src/hooks/useUserData';
@@ -61,7 +61,7 @@ export const MyLinkedAccounts = () => {
      const Empty = () => {
           return (
                <Box style={{ paddingTop: 12, paddingBottom: 20 }}>
-                    <Text bold style={{ color: textColor }}>{getTermFromDictionary(language, 'none')}</Text>
+                    <Text bold>{getTermFromDictionary(language, 'none')}</Text>
                </Box>
           );
      };
@@ -116,7 +116,7 @@ export const MyLinkedAccounts = () => {
                          <Heading size="lg" style={{ paddingBottom: 8, color: textColor }}>
                               {getTermFromDictionary(language, 'linked_additional_accounts')}
                          </Heading>
-                         <Text size="sm" style={{ color: textColor }}>
+                         <Text size="sm">
                               {getTermFromDictionary(language, 'linked_following_accounts_can_manage')}
                          </Text>
                          <FlatList
@@ -135,7 +135,7 @@ export const MyLinkedAccounts = () => {
                          <Heading size="lg" style={{ paddingBottom: 8, color: textColor }}>
                               {getTermFromDictionary(language, 'linked_other_accounts')}
                          </Heading>
-                         <Text size="sm" style={{ color: textColor }}>
+                         <Text size="sm">
                               {getTermFromDictionary(language, 'linked_following_accounts_can_view')}
                          </Text>
                          <FlatList
@@ -215,7 +215,7 @@ const Account = ({ account, type }) => {
 
      return (
           <HStack justifyContent="space-around" style={{ paddingTop: 8, paddingBottom: 8, alignItems: 'center', alignContent: 'flex-start' }}>
-               <Text bold isTruncated style={{ width: '60%', maxWidth: '60%', color: textColor }}>
+               <Text bold isTruncated style={{ width: '60%', maxWidth: '60%' }}>
                     {account.displayName ? account.displayName : account.ils_barcode} - {account.homeLocation}
                </Text>
                {type === 'viewer' && user.removeLinkedAccountRule === 0 ? null : (

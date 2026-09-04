@@ -14,7 +14,7 @@ import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { FormControl } from '@/components/ui/form-control';
 import { ThemedInput as Input, ThemedInputField as InputField } from '../../components/themed/ThemedFormControls';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * SearchHome component that displays the search input field and quick search options. It allows users to enter a search term and navigate to the search results page. It also preloads default facets based on the library's discovery version.
@@ -65,7 +65,7 @@ export const SearchHome = () => {
                     {quickSearchNum > 0 ? (
                          <Box>
                               <Center>
-                                   <Text bold style={{ marginTop: 8, marginBottom: 2, fontSize: 20 }}>
+                                   <Text bold style={{ marginTop: 8, marginBottom: 2 }} size="xl">
                                         {getTermFromDictionary(language, 'quick_searches')}
                                    </Text>
                               </Center>

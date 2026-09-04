@@ -7,7 +7,7 @@ import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { loadError } from '@/src/components/loadError';
 import { DisplaySystemMessage } from '@/src/components/Notifications';
@@ -77,7 +77,7 @@ export const MySavedSearch = () => {
                <>
                     {(systemMessages?.length ?? 0) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                     <Center style={{ marginTop: 20, marginBottom: 20 }}>
-                        <Text bold size="lg" style={{ color: textColor }}>
+                        <Text bold size="lg">
                               {getTermFromDictionary(language, 'no_results_found')}
                          </Text>
                     </Center>
@@ -165,11 +165,11 @@ const SavedSearch = (data) => {
                          <Text
                               bold
                               size="xs"
-                              style={{ color: textColor }}>
+                             >
                               {item.title}
                          </Text>
                          {item.author ? (
-                              <Text size="xs" style={{ color: textColor }}>
+                              <Text size="xs">
                                    {getTermFromDictionary(language, 'by')} {item.author}
                               </Text>
                          ) : null}

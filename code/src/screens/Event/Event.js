@@ -36,7 +36,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { ThemedCloseIcon } from '../../components/themed/ThemedFormControls';
 
@@ -256,10 +256,10 @@ const EventDescription = ({ description }) => {
      if (description) {
           return (
                <Box style={{ marginTop: 20 }}>
-                    <Text size="lg" bold style={{ textAlign: 'center', color: textColor }}>
+                    <Text size="lg" bold style={{ textAlign: 'center' }}>
                          {getTermFromDictionary(language, 'about')}
                     </Text>
-                    <Text size="md" style={{ color: textColor }}>
+                    <Text size="md">
                          {decodeHTML(description)}
                     </Text>
                </Box>
@@ -282,11 +282,11 @@ const EventAudiences = ({ audiences }) => {
      if (audiences) {
           return (
                <Box>
-                    <Text size="lg" bold style={{ textAlign: 'center', color: textColor }}>
+                    <Text size="lg" bold style={{ textAlign: 'center' }}>
                          {getTermFromDictionary(language, 'audiences')}
                     </Text>
                     {_.map(audiences, function (item, index, array) {
-                         return <Text key={index} style={{ color: textColor }}>{item}</Text>;
+                         return <Text key={index}>{item}</Text>;
                     })}
                </Box>
           );
@@ -308,11 +308,11 @@ const EventCategories = ({ categories }) => {
      if (categories) {
           return (
                <Box>
-                    <Text size="lg" bold style={{ textAlign: 'center', color: textColor }}>
+                    <Text size="lg" bold style={{ textAlign: 'center' }}>
                          {getTermFromDictionary(language, 'categories')}
                     </Text>
                     {_.map(categories, function (item, index, array) {
-                         return <Text key={index} style={{ color: textColor }}>{item}</Text>;
+                         return <Text key={index}>{item}</Text>;
                     })}
                </Box>
           );
@@ -334,11 +334,11 @@ const EventProgramTypes = ({ programTypes }) => {
      if (programTypes) {
           return (
                <Box>
-                    <Text size="lg" bold style={{ textAlign: 'center', color: textColor }}>
+                    <Text size="lg" bold style={{ textAlign: 'center' }}>
                          {getTermFromDictionary(language, 'program_types')}
                     </Text>
                     {_.map(programTypes, function (item, index, array) {
-                         return <Text key={index} style={{ color: textColor }}>{item}</Text>;
+                         return <Text key={index}>{item}</Text>;
                     })}
                </Box>
           );
@@ -471,8 +471,8 @@ const AddToCalendar = ({ start, end, location, event }) => {
                          <HStack space="sm" style={{ alignItems: 'center' }}>
                               <MaterialIcons name="calendar-today" size={18} color={textColor} />
                               <VStack>
-                                   <Text bold style={{ color: textColor }}>{displayDay}</Text>
-                                   <Text style={{ color: textColor }}>
+                                   <Text bold>{displayDay}</Text>
+                                   <Text>
                                         {displayStartTime} - {displayEndTime}
                                    </Text>
                               </VStack>
@@ -489,7 +489,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
-                         <ModalBody><Text style={{ color: textColor }}>{modalBodyText}</Text></ModalBody>
+                         <ModalBody><Text>{modalBodyText}</Text></ModalBody>
                          <ModalFooter>
                               <ButtonGroup space="sm" size="md">
                                    <Button colorScheme="primary"
@@ -571,9 +571,9 @@ const Directions = ({ location, room }) => {
                          <HStack space="sm" style={{ alignItems: 'center' }}>
                               <MaterialIcons name="location-pin" size={18} color={textColor} />
                               <VStack>
-                                   {location.name ? <Text bold style={{ color: textColor }}>{location.name}</Text> : null}
-                                   {room ? <Text style={{ color: textColor }}>{room}</Text> : null}
-                                   {location.address ? <Text style={{ color: textColor }}>{location.address}</Text> : null}
+                                   {location.name ? <Text bold>{location.name}</Text> : null}
+                                   {room ? <Text>{room}</Text> : null}
+                                   {location.address ? <Text>{location.address}</Text> : null}
                               </VStack>
                          </HStack>
                          {hasCoordinates ? <MaterialIcons name="chevron-right" size={20} color={textColor} /> : null}
@@ -688,7 +688,7 @@ const RegistrationModal = ({ event }) => {
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
-                         <ModalBody><Text style={{ color: textColor }}>{stripHTML(decodeHTML(event.registrationBody))}</Text></ModalBody>
+                         <ModalBody><Text>{stripHTML(decodeHTML(event.registrationBody))}</Text></ModalBody>
                          <ModalFooter>
                               <ButtonGroup space="sm" size="md">
                                    <Button

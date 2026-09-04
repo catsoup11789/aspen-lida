@@ -15,7 +15,7 @@ import { HStack } from '@/components/ui/hstack';
 import { InfoIcon } from '@/components/ui/icon';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { DisplaySystemMessage } from '@/src/components/Notifications';
 import { HoldsContext, SystemMessagesContext } from '@/src/context/initialContext';
@@ -610,7 +610,7 @@ export const MyHolds = () => {
           if (title === 'Pending') {
                return (
                    <Center style={{ padding: 8 }}>
-                        <Text bold size="lg" style={{ color: textColor }}>
+                        <Text bold size="lg">
                               {getTermFromDictionary(language, 'pending_holds_none')}
                          </Text>
                     </Center>
@@ -618,7 +618,7 @@ export const MyHolds = () => {
           } else {
                return (
                    <Center style={{ padding: 8 }}>
-                        <Text bold size="lg" style={{ color: textColor }}>
+                        <Text bold size="lg">
                               {getTermFromDictionary(language, 'holds_ready_for_pickup_none')}
                          </Text>
                     </Center>

@@ -3,7 +3,7 @@ import { Box } from '@/components/ui/box';
 import { FlatList } from '@/components/ui/flat-list';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedSwitch as Switch } from '@/src/components/themed/ThemedSwitch';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { DisplayErrorAlertDialog } from '@/src/components/loadError';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
@@ -92,7 +92,7 @@ const DisplayCategory = (data) => {
      const [errorTitle, setErrorTitle] = React.useState('');
      const [errorMessage, setErrorMessage] = React.useState('');
      const library = useLibrary();
-     const { colorMode, textColor, uiColors, runtimeColors } = useTheme();
+     const { colorMode, uiColors, runtimeColors } = useTheme();
      const toggleCategoryVisibility = useToggleBrowseCategoryVisibility();
      const toggleCategoryVisibilityBatch = useToggleBrowseCategoryVisibilityBatch();
      const maxNum = useMaxCategories();
@@ -215,7 +215,7 @@ const DisplayCategory = (data) => {
                     <Text
                          bold
                          size="lg"
-                         style={{ flexWrap: 'wrap', flex: 1, color: textColor }}>
+                         style={{ flexWrap: 'wrap', flex: 1 }}>
                          {category.title}
                     </Text>
                     <Switch

@@ -7,7 +7,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../compo
 import { HStack } from '@/components/ui/hstack';
 import { ChevronLeftIcon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { GLOBALS } from '../util/globals';
 import {
      useThemeState,
@@ -490,7 +490,7 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                                                                  changeTheme(themeEntry);
                                                             }}>
                                                             <HStack space="md" alignItems="center">
-                                                                 <Text style={{ color: textColor }}>{themeEntry.name}</Text>
+                                                                 <Text>{themeEntry.name}</Text>
                                                                  {isActive ? <MaterialIcons name="check" size={18} color={textColor} /> : null}
                                                             </HStack>
                                                        </Box>
@@ -528,7 +528,7 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                                    justifyContent: 'center',
                               }}>
                               <Spinner size="large" color={runtimeColors.primary[500]} />
-                              <Text style={{ marginTop: 12, color: textColor }}>
+                              <Text style={{ marginTop: 12 }}>
                                    Switching theme...
                               </Text>
                          </Box>

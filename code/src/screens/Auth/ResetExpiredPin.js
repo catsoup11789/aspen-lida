@@ -27,7 +27,7 @@ import { Heading } from '@/components/ui/heading';
 import { AlertCircleIcon } from '@/components/ui/icon';
 import { InputSlot } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 /**
@@ -183,7 +183,7 @@ export const ResetExpiredPin = (props) => {
                                    <AlertDialogBody>
                                         <Center>
                                              <VStack>
-                                                  <Text style={{ color: textColor }}>{resetMessage}. Logging you in...</Text>
+                                                  <Text>{resetMessage}. Logging you in...</Text>
                                                   <Spinner style={{ color: runtimeColors.primary[500] }} />
                                              </VStack>
                                         </Center>
@@ -192,7 +192,7 @@ export const ResetExpiredPin = (props) => {
                          ) : (
                               <>
                                    <AlertDialogBody>
-                                       <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'pin_has_expired')}</Text>
+                                       <Text>{getTermFromDictionary(language, 'pin_has_expired')}</Text>
                                        <FormControl isRequired isInvalid={'pin' in errors} style={{ marginTop: 12 }}>
                                              <FormControlLabel>
                                                  <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_pin')}</FormControlLabelText>

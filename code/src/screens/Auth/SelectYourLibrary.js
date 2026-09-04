@@ -16,7 +16,7 @@ import { Image } from '@/components/ui/image';
 import { InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 /**
@@ -165,11 +165,11 @@ const Item = (data) => {
                          />
                     )}
                     <VStack style={{ marginLeft: 12 }}>
-                         <Text bold size="sm" style={{ color: textColor }}>
+                         <Text bold size="sm">
                               {library.name}
                          </Text>
                          {isCommunity ? (
-                              <Text size="sm" style={{ color: textColor }}>
+                              <Text size="sm">
                                    {library.librarySystem}
                               </Text>
                          ) : null}

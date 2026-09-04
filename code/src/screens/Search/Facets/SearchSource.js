@@ -13,7 +13,7 @@ import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 /**
@@ -26,7 +26,7 @@ export const SearchSourceScreen = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { currentSource, sources, updateCurrentSource, updateIndexes, updateCurrentIndex } = React.useContext(SearchContext);
-     const { textColor, runtimeColors } = useTheme();
+     const { runtimeColors } = useTheme();
      logDebugMessage('currentSource: ' + currentSource);
 
      const search = async () => {
@@ -65,14 +65,14 @@ export const SearchSourceScreen = () => {
                                              {currentSource === index ? (
                                                  <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
                                                       <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} />
-                                                      <Text style={{ color: textColor, marginLeft: 8 }}>
+                                                      <Text style={{ marginLeft: 8 }}>
                                                             {source.name}
                                                        </Text>
                                                   </HStack>
                                              ) : (
                                                  <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
                                                       <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
-                                                      <Text style={{ color: textColor, marginLeft: 8 }}>
+                                                      <Text style={{ marginLeft: 8 }}>
                                                             {source.name}
                                                        </Text>
                                                   </HStack>

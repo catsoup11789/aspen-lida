@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@/components/ui/box';
 import { Divider } from '@/components/ui/divider';
 import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { decodeHTML, stripHTML } from '../../helpers/helpers';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
@@ -24,7 +24,7 @@ const AdditionalInformation = (data) => {
                <Box>
                     <Divider style={{ marginBottom: 8 }} />
                     <Heading style={{ color: textColor, marginBottom: 8 }}>{getTermFromDictionary(language, 'additional_information')}</Heading>
-                    <Text style={{ color: textColor }}>{stripHTML(decodeHTML(location.description))}</Text>
+                    <Text>{stripHTML(decodeHTML(location.description))}</Text>
                </Box>
           );
      }

@@ -8,7 +8,7 @@ import { addAppliedFilter, removeAppliedFilter } from '@/src/util/api/searchHelp
 import { useTheme } from '@/src/themes/theme';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 /**
@@ -43,7 +43,7 @@ export const Facet_Rating = ({ data, category, updater }) => {
                label: 'Unrated',
                value: '0' },
      ]);
-     const { textColor, runtimeColors } = useTheme();
+     const { runtimeColors } = useTheme();
      const starColor = '#eab308';
 
      React.useEffect(() => {
@@ -99,7 +99,7 @@ export const Facet_Rating = ({ data, category, updater }) => {
                                        emptyStar={<MaterialIcons name="star-border" size={20} color={starColor} />}
                                    />
                                    <Text
-                                       style={{ color: textColor, marginLeft: 8 }}
+                                       style={{ marginLeft: 8 }}
                                    >
                                        ({getRatingCount(star.label)})
                                    </Text>

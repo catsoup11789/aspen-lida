@@ -26,7 +26,7 @@ import { Heading } from '@/components/ui/heading';
 import { CheckIcon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * HoldPrompt component for displaying a prompt to the user for placing holds on items.
@@ -454,8 +454,8 @@ export const HoldPrompt = (props) => {
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody style={{ marginTop: 12 }}>
-                              {alreadyOnHold ? <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'already_on_hold')}</Text> : null}
-                              {!preferredPickupLocationIsValid ? <Text style={{ color: textColor }}>{preferredPickupLocationWarning}</Text> : null}
+                              {alreadyOnHold ? <Text>{getTermFromDictionary(language, 'already_on_hold')}</Text> : null}
+                              {!preferredPickupLocationIsValid ? <Text>{preferredPickupLocationWarning}</Text> : null}
                               {promptForHoldNotifications ? (
                                    <HoldNotificationPreferences
                                         user={user}

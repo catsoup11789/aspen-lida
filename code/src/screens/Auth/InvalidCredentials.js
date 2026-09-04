@@ -9,7 +9,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
  * InvalidCredentials component that displays an alert dialog when the user has entered invalid credentials, allowing the user to sign out.
@@ -32,7 +32,7 @@ export const InvalidCredentials = () => {
                     <AlertDialogBackdrop/>
                     <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                          <AlertDialogHeader><Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'error')}</Heading></AlertDialogHeader>
-                         <AlertDialogBody><Text style={{ color: textColor }}>{getTermFromDictionary(language, 'error_invalid_credentials')}</Text></AlertDialogBody>
+                         <AlertDialogBody><Text>{getTermFromDictionary(language, 'error_invalid_credentials')}</Text></AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">
                                    <Button colorScheme="primary" onPress={signOut} ref={cancelRef}>

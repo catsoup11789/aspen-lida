@@ -26,7 +26,7 @@ import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalF
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedRadio as Radio, ThemedRadioGroup as RadioGroup, ThemedRadioIcon as RadioIcon, ThemedRadioIndicator as RadioIndicator, ThemedRadioLabel as RadioLabel } from '../../../components/themed/ThemedRadio';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '@/src/components/themed/ThemedTextarea';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 
@@ -240,7 +240,7 @@ const DeleteList = (props) => {
                               </AlertDialogCloseButton>
                          </AlertDialogHeader>
                          <AlertDialogBody>
-                              <Text style={{ color: textColor }}>{user.hideSoftDeleteListUI ? getTermFromDictionary(language, 'delete_list_confirmation_no_restore') : getTermFromDictionary(language, 'delete_list_confirmation')}</Text>
+                              <Text>{user.hideSoftDeleteListUI ? getTermFromDictionary(language, 'delete_list_confirmation_no_restore') : getTermFromDictionary(language, 'delete_list_confirmation')}</Text>
                               {!user.hideSoftDeleteListUI && (
                                    <FormControl style={{ paddingTop: 12 }}>
                                         <Checkbox value="optOut" isChecked={optOutOfSoftDeletion} onChange={(isChecked) => setOptOutOfSoftDeletion(isChecked)} alignItems="center">

@@ -32,7 +32,7 @@ import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 export const Editions = () => {
@@ -201,7 +201,7 @@ export const Editions = () => {
                                    <Heading style={{ color: textColor }}>{response?.title}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text style={{ color: textColor }}>{response?.message}</Text>
+                                   <Text>{response?.message}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="sm">
@@ -224,7 +224,7 @@ export const Editions = () => {
                                    <Heading style={{ color: textColor }}>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text style={{ color: textColor }}>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
+                                   <Text>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">
@@ -271,7 +271,7 @@ export const Editions = () => {
                                    <Heading style={{ color: textColor }}>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text style={{ color: textColor }}>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
+                                   <Text>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                    {holdSelectItemResponse?.items ? (
                                         <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setSelectedItem(itemValue)}>
                                              <SelectTrigger>
@@ -403,10 +403,10 @@ const Edition = (props) => {
                <HStack space="sm" style={{ justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
                     <VStack space="sm" style={{ maxWidth: '40%', flex: 1, justifyContent: 'center' }}>
                          <HStack space="xs" style={{ flexWrap: 'wrap' }}>
-                              <Text bold size="xs" style={{ color: textColor }}>
+                              <Text bold size="xs">
                                    {records.publicationDate}
                               </Text>
-                              <Text size="xs" style={{ color: textColor }}>
+                              <Text size="xs">
                                    {records.publisher}. {records.edition} {records.physical} {closedCaptioned === '1' ? <MaterialIcons name="closed-caption" size={16} color={textColor} /> : null}
                               </Text>
                          </HStack>

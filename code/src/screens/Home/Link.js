@@ -13,7 +13,7 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 /**
@@ -61,7 +61,7 @@ const HomeScreenLinkGrid = ({links}) => {
  * @constructor
  */
 const Link = ({link}) => {
-     const { uiColors, textColor, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const library = useLibrary();
      const language = useActiveLanguage();
      const { updateCurrentIndex } = React.useContext(SearchContext);
@@ -184,7 +184,7 @@ const Link = ({link}) => {
                          />
                     )}
                     <Box style={{ paddingHorizontal: 8 }}>
-                         <Text bold size="sm" style={{ color: textColor, textAlign: 'center' }}>{link?.title}</Text>
+                         <Text bold size="sm" style={{ textAlign: 'center' }}>{link?.title}</Text>
                     </Box>
                </VStack>
           </Pressable>

@@ -11,7 +11,7 @@ import { Center } from '@/components/ui/center';
 import { Divider } from '@/components/ui/divider';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { useAccounts, useDebugMessages, useUserState } from '@/src/hooks/useUserData';
 import { formatLinkedAccounts, formatNotificationHistory, formatPickupLocations } from '@/src/util/api/userHelper';
@@ -290,7 +290,7 @@ export const SupportScreen = () => {
                <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
                     <VStack space="sm" style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
                          <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
-                              <Text size="xs" bold style={{ color: textColor }}>
+                              <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'app_name')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>
@@ -298,13 +298,13 @@ export const SupportScreen = () => {
                               </Text>
                          </VStack>
                          <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
-                              <Text size="xs" bold style={{ color: textColor }}>
+                              <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'aspen_discovery')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>{library.discoveryVersion}</Text>
                          </VStack>
                          <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
-                              <Text size="xs" bold style={{ color: textColor }}>
+                              <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'os_information')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>
@@ -312,7 +312,7 @@ export const SupportScreen = () => {
                               </Text>
                          </VStack>
                          <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
-                              <Text size="xs" bold style={{ color: textColor }}>
+                              <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'device_information')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>
@@ -320,32 +320,32 @@ export const SupportScreen = () => {
                               </Text>
                          </VStack>
                          <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
-                              <Text size="xs" bold style={{ color: textColor }}>
+                              <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'current_location')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>{location?.displayName ?? '-'}</Text>
                          </VStack>
                          <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
-                              <Text size="xs" bold style={{ color: textColor }}>
+                              <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'current_library')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>{library.displayName}</Text>
                          </VStack>
                          <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
-                              <Text size="xs" bold style={{ color: textColor }}>
+                              <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'connected_to')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>{library.baseUrl}</Text>
                          </VStack>
                          <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
-                              <Text size="xs" bold style={{ color: textColor }}>
+                              <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'num_linked_accounts')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>{numLinkedAccounts}</Text>
                          </VStack>
                          <Divider style={{ marginVertical: 8 }} />
                          <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
-                              <Text bold style={{ color: textColor }}>
+                              <Text bold>
                                    Data Caches
                               </Text>
                               <VStack space="sm" style={{ marginTop: 8 }}>
@@ -353,7 +353,7 @@ export const SupportScreen = () => {
                                         <Box key={cacheItem.key} style={{ paddingVertical: 8 }}>
                                              <HStack space="sm" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
                                                   <VStack style={{ flex: 1 }}>
-                                                       <Text size="xs" bold style={{ color: textColor }}>
+                                                       <Text size="xs" bold>
                                                             {cacheItem.label}
                                                        </Text>
                                                        <Text size="2xs" style={{ color: mutedTextColor }}>
@@ -372,12 +372,12 @@ export const SupportScreen = () => {
                               <>
                                    <Divider style={{ marginVertical: 8 }} />
                                    <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
-                                        <Text size="xs" bold style={{ color: textColor }}>
+                                        <Text size="xs" bold>
                                              Support Log
                                         </Text>
                                         <ScrollView>
                                              <Box>
-                                                  <Text size="xs" style={{ color: textColor, marginTop: 20, marginBottom: 20 }}>
+                                                  <Text size="xs" style={{ marginTop: 20, marginBottom: 20 }}>
                                                        {userDebugMessage.join('\n')}
                                                   </Text>
                                              </Box>

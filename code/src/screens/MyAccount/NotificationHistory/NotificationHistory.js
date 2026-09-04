@@ -24,7 +24,7 @@ import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 
 /**
@@ -133,7 +133,7 @@ export const MyNotificationHistory = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text size="2xs" style={{ marginTop: 8, color: textColor }}>
+                         <Text size="2xs" style={{ marginTop: 8 }}>
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -187,15 +187,15 @@ const Item = (data) => {
                     )}
                     <VStack style={{ width: '86%' }}>
                          {message.isRead === '0' ? (
-                              <Text bold size="sm" style={{ color: textColor }}>
+                              <Text bold size="sm">
                                    {message.title}
                               </Text>
                          ) : (
-                              <Text size="sm" style={{ color: textColor }}>
+                              <Text size="sm">
                                    {message.title}
                               </Text>
                          )}
-                         <Text size="xs" style={{ color: textColor }}>
+                         <Text size="xs">
                               {content}
                          </Text>
                     </VStack>

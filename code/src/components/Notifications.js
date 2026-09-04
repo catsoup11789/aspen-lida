@@ -10,7 +10,7 @@ import { CloseIcon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
 import { VStack } from '@/components/ui/vstack';
 import { Pressable } from '@/components/ui/pressable';
-import { Text } from '@/components/ui/text';
+import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { getTermFromDictionary } from '../translations/TranslationService';
 import { dismissSystemMessage } from '../util/api/system';
 import { normalizeDisplayText, stripHTML } from '../helpers/helpers';
