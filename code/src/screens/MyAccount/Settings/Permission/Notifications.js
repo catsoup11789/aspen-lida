@@ -16,7 +16,7 @@ import { HStack } from '@/components/ui/hstack';
 import { ChevronLeftIcon, Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Switch } from '@/components/ui/switch';
+import { ThemedSwitch as Switch } from '@/src/components/themed/ThemedSwitch';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { useUserState, useNotificationSettings, useUpdateExpoToken, useAddDebugMessage } from '@/src/hooks/useUserData';

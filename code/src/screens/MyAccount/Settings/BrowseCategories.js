@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@/components/ui/box';
 import { FlatList } from '@/components/ui/flat-list';
 import { HStack } from '@/components/ui/hstack';
-import { Switch } from '@/components/ui/switch';
+import { ThemedSwitch as Switch } from '@/src/components/themed/ThemedSwitch';
 import { Text } from '@/components/ui/text';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { DisplayErrorAlertDialog } from '@/src/components/loadError';

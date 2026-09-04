@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Box } from '@/components/ui/box';
 import { FlatList } from '@/components/ui/flat-list';
 import { HStack } from '@/components/ui/hstack';
-import { Switch } from '@/components/ui/switch';
+import { ThemedSwitch as Switch } from '@/src/components/themed/ThemedSwitch';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { SafeAreaView } from 'react-native-safe-area-context';
