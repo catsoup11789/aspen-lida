@@ -1,5 +1,4 @@
-import { Button, ButtonGroup, ButtonIcon, ButtonText, FlatList, View, HStack, Pressable, Text, SafeAreaView, Box, Badge, BadgeText } from '@gluestack-ui/themed';
-import { ScrollView } from 'react-native';
+import { FlatList, ScrollView, View } from 'react-native';
 import _ from 'lodash';
 import React from 'react';
 
@@ -16,6 +15,13 @@ import { popToast } from '../../components/feedback';
 
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { HStack } from '@/components/ui/hstack';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const loggedEmptyCategoryKeys = new Set();
 
@@ -26,10 +32,6 @@ const DisplayBrowseCategory = ({category}) => {
      const maxNum = useMaxCategories();
      const toggleCategoryVisibility = useToggleBrowseCategoryVisibility();
      const updateBrowseCategories = useUpdateBrowseCategories();
-
-     const [showErrorDialog, setShowErrorDialog] = React.useState(false);
-     const [errorTitle, setErrorTitle] = React.useState('');
-     const [errorMessage, setErrorMessage] = React.useState('');
 
      const [selectedSubCategoryIndex, setSelectedSubCategoryIndex] = React.useState(0);
      const handleSelectSubCategory = (index) => setSelectedSubCategoryIndex(index);
@@ -95,10 +97,7 @@ const DisplayBrowseCategory = ({category}) => {
 
           if (!result.success) {
                const error = getErrorMessage({ statusCode: result.error?.status, problem: result.error?.problem });
-               setErrorTitle(error.title);
-               setErrorMessage(error.message);
                logErrorMessage(result.error);
-               setShowErrorDialog(true);
                popToast(error.title, error.message, 'error');
           } else {
                await refreshHomeFeed();
@@ -113,10 +112,7 @@ const DisplayBrowseCategory = ({category}) => {
 
           if (!result.success) {
                const error = getErrorMessage({ statusCode: result.error?.status, problem: result.error?.problem });
-               setErrorTitle(error.title);
-               setErrorMessage(error.message);
                logErrorMessage(result.error);
-               setShowErrorDialog(true);
                popToast(error.title, error.message, 'error');
           } else {
                await refreshHomeFeed();
@@ -125,18 +121,18 @@ const DisplayBrowseCategory = ({category}) => {
 
      return (
           <SafeAreaView>
-               <View pb="$3">
-                    <HStack space="$3" alignItems="center" justifyContent="space-between" pb="$2">
+               <View style={{ paddingBottom: 12 }}>
+                    <HStack space="md" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 8 }}>
                          <DisplayBrowseCategoryTitle category={category.label} key={category.id} textId={id} source={category.source ?? 'GroupedWork'} />
                          {subCategories.length > 0 ? (
-                              <Button variant="outline" size="xs" borderColor={colorMode === 'light' ? "$coolGray700" : "$warmGray100"} sx={{ paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
-                                   <ButtonIcon as={MaterialIcons} name="close" color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"} mr="$1" />
-                                   <ButtonText color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
+                              <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
+                                   <ButtonIcon as={MaterialIcons} name="close" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, marginRight: 4 }} />
+                                   <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
                               </Button>
                          ) : (
-                              <Button variant="outline" size="xs" borderColor={colorMode === 'light' ? "$coolGray700" : "$warmGray100"} sx={{ paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHide(category.textId)}>
-                                   <ButtonIcon as={MaterialIcons} name="close" color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"} mr="$1" />
-                                   <ButtonText color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"}>{getTermFromDictionary(language, 'hide')}</ButtonText>
+                              <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHide(category.textId)}>
+                                   <ButtonIcon as={MaterialIcons} name="close" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, marginRight: 4 }} />
+                                   <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }}>{getTermFromDictionary(language, 'hide')}</ButtonText>
                               </Button>
                          )}
                     </HStack>
@@ -145,41 +141,25 @@ const DisplayBrowseCategory = ({category}) => {
                               <ScrollView horizontal>
                                    <DisplaySubCategoryBar data={subCategoryRecords} subCategories={subCategories} selectedIndex={selectedSubCategoryIndex} onSelect={handleSelectSubCategory} isSystemBrowseCategory={isSystemBrowseCategory} />
                               </ScrollView>
-                              {showSubCategoryRecords && <FlatList pb="$8" data={subCategoryRecords} keyExtractor={(item, index) => item.key?.toString() ?? item.id?.toString() ?? `subcategory-${index}`} horizontal renderItem={({ item }) => <DisplayBrowseCategoryRecord record={item} />} ListFooterComponent={subCategoryHasMore ? <DisplayMoreResultsButton category={subCategories[selectedSubCategoryIndex]} /> : null} />}
+                              {showSubCategoryRecords && <FlatList contentContainerStyle={{ paddingBottom: 32 }} data={subCategoryRecords} keyExtractor={(item, index) => item.key?.toString() ?? item.id?.toString() ?? `subcategory-${index}`} horizontal renderItem={({ item }) => <DisplayBrowseCategoryRecord record={item} />} ListFooterComponent={subCategoryHasMore ? <DisplayMoreResultsButton category={subCategories[selectedSubCategoryIndex]} /> : null} />}
                          </>
                     ) : records.length > 0 ? (
-                         <FlatList pb="$8" data={displayedData} keyExtractor={(item, index) => item.id?.toString() ?? item.key?.toString() ?? `record-${index}`} horizontal renderItem={({ item }) => <DisplayBrowseCategoryRecord record={item} />} ListFooterComponent={hasMore ? <DisplayMoreResultsButton category={category} /> : null} />
+                         <FlatList contentContainerStyle={{ paddingBottom: 32 }} data={displayedData} keyExtractor={(item, index) => item.id?.toString() ?? item.key?.toString() ?? `record-${index}`} horizontal renderItem={({ item }) => <DisplayBrowseCategoryRecord record={item} />} ListFooterComponent={hasMore ? <DisplayMoreResultsButton category={category} /> : null} />
                     ) : null}
                </View>
           </SafeAreaView>
      );
 };
 
-const DisplayBrowseCategoryTitle = ({category, textId, source}) => {
+const DisplayBrowseCategoryTitle = ({category}) => {
      const { colorMode, theme } = useTheme();
 
-     const isSystemCategory = textId === 'system_user_lists' || textId === 'system_saved_searches' || textId === 'system_recommended_for_you';
-
-     const onPressCategory = (label, key, source) => {
-          let screen = 'SearchByCategory';
-          if (source === 'List') {
-               screen = 'SearchByList';
-          } else if (source === 'SavedSearch') {
-               screen = 'SearchBySavedSearch';
-          }
-
-          navigateStack('BrowseTab', screen, {
-               title: label,
-               id: key });
-     };
-
      return (
-          <Pressable maxWidth="80%" /*onPress={() => onPressCategory(category, textId, source)}*/>
+          <Pressable style={{ maxWidth: '80%' }} /*onPress={() => onPressCategory(category, textId, source)}*/>
                <Text
-                    color={colorMode === 'light' ? "$warmGray600" : "$coolGray200"}
                     bold
-                    mb="$1"
-                    fontSize="$lg"
+                    size="lg"
+                    style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark, marginBottom: 4 }}
                     >
                     {category}
                </Text>
@@ -300,31 +280,23 @@ const DisplayBrowseCategoryRecord = ({record}) => {
      return (
           <Pressable
                onPress={() => onPressItem(id, type, getTitle)}
-               ml="$1"
-               mr="$3"
-               sx={{
-                    '@base': {
-                         width: 100,
-                         height: 150 },
-                    '@lg': {
-                         width: 180,
-                         height: 250 } }}>
+               style={{ marginLeft: 4, marginRight: 12, width: 100, height: 150 }}>
                <Image
                     alt={getTitle}
                     source={imageUrl}
                     style={{
                          width: '100%',
                          height: '100%',
-                         borderRadius: "$sm" }}
+                         borderRadius: 8 }}
                     placeholder={blurhash}
                     transition={0}
                     cachePolicy="memory-disk"
                     contentFit="cover"
                />
                {isNew ? (
-                    <Box zIndex={1} alignItems="center">
-                         <Badge bgColor="$warning500" mx={5} mt={-8}>
-                              <BadgeText bold color="$white" textTransform="none">
+                    <Box style={{ zIndex: 1, alignItems: 'center' }}>
+                         <Badge style={{ backgroundColor: '#f59e0b', marginHorizontal: 20, marginTop: -8 }}>
+                              <BadgeText bold style={{ color: theme.tokens.colors.ui.white.light, textTransform: 'none' }}>
                                    {getTermFromDictionary(language, 'flag_new')}
                               </BadgeText>
                          </Badge>
@@ -334,17 +306,12 @@ const DisplayBrowseCategoryRecord = ({record}) => {
      )
 }
 
-const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, data, isSystemBrowseCategory }) => {
-     const { theme, textColor, colorMode } = useTheme();
+const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, isSystemBrowseCategory }) => {
+     const { theme } = useTheme();
      const library = useLibrary();
-     const language = useActiveLanguage();
      const maxNum = useMaxCategories();
      const toggleCategoryVisibility = useToggleBrowseCategoryVisibility();
      const updateBrowseCategories = useUpdateBrowseCategories();
-
-     const [showErrorDialog, setShowErrorDialog] = React.useState(false);
-     const [errorTitle, setErrorTitle] = React.useState('');
-     const [errorMessage, setErrorMessage] = React.useState('');
 
      const refreshHomeFeed = React.useCallback(async () => {
           const requestedMax = maxNum > 0 ? maxNum : 5;
@@ -364,10 +331,7 @@ const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, data, i
 
           if (!result.success) {
                const error = getErrorMessage({ statusCode: result.error?.status, problem: result.error?.problem });
-               setErrorTitle(error.title);
-               setErrorMessage(error.message);
                logErrorMessage(result.error);
-               setShowErrorDialog(true);
                popToast(error.title, error.message, 'error');
           } else {
                await refreshHomeFeed();
@@ -375,13 +339,13 @@ const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, data, i
      }
 
      return (
-          <ButtonGroup vertical space="sm" pb="$2">
+          <ButtonGroup vertical space="sm" style={{ paddingBottom: 8 }}>
                {subCategories.map((subCategory, index) => (
-                    <Button key={(subCategory?.id ?? subCategory?.textId ?? subCategory?.label ?? `subcategory-${index}`).toString()} bgColor={selectedIndex === index ? theme['tokens']['colors']['primary']['600'] : theme['tokens']['colors']['primary']['400']} variant="solid" sx={{ paddingHorizontal: 12, height: 34 }} onPress={() => onSelect(index)}>
-                         <ButtonText fontWeight="$medium" color={theme['tokens']['colors']['primary']['500-text']}>
+                    <Button key={(subCategory?.id ?? subCategory?.textId ?? subCategory?.label ?? `subcategory-${index}`).toString()} style={{ backgroundColor: selectedIndex === index ? theme['tokens']['colors']['primary']['600'] : theme['tokens']['colors']['primary']['400'], paddingHorizontal: 12, height: 34 }} variant="solid" onPress={() => onSelect(index)}>
+                         <ButtonText style={{ fontWeight: '500', color: theme['tokens']['colors']['primary']['500-text'] }}>
                               {subCategory.label}
                          </ButtonText>
-                         {!isSystemBrowseCategory && <ButtonIcon as={MaterialIcons} name="close" onPress={() => onPressHideSubCategory(index)} size="sm" color={theme['tokens']['colors']['primary']['500-text']} ml="$4" />}
+                         {!isSystemBrowseCategory && <ButtonIcon as={MaterialIcons} name="close" onPress={() => onPressHideSubCategory(index)} size="sm" style={{ color: theme['tokens']['colors']['primary']['500-text'], marginLeft: 16 }} />}
                     </Button>
                ))}
           </ButtonGroup>
@@ -410,21 +374,16 @@ const DisplayMoreResultsButton = ({ category }) => {
      return (
           <Pressable
                onPress={() => onPressMoreResults(category.label, isListSource ? category.sourceListId : category.textId, category.source ?? 'GroupedWork')}
-               ml="$1"
-               alignItems="center"
-               justifyContent="center"
-               mr="$3"
-               bgColor={theme.tokens.colors.primary['500']}
                style={{
-                    borderRadius: "$sm" }}
-               sx={{
-                    '@base': {
-                         width: 100,
-                         height: 150 },
-                    '@lg': {
-                         width: 180,
-                         height: 250 } }}>
-               <Text bold color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'view_more')}</Text>
+                    marginLeft: 4,
+                    marginRight: 12,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: theme.tokens.colors.primary['500'],
+                    borderRadius: 8,
+                    width: 100,
+                    height: 150 }}>
+               <Text bold style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_more')}</Text>
           </Pressable>
      )
 }

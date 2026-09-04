@@ -1,8 +1,14 @@
 import _ from 'lodash';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Box, Button, ButtonGroup, ButtonText, Center, CheckboxGroup, Input, InputField, Pressable, VStack, useToken } from '@gluestack-ui/themed';
 import React from 'react';
 import { ScrollView } from 'react-native';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { CheckboxGroup } from '@/components/ui/checkbox';
+import { Input, InputField } from '@/components/ui/input';
+import { Pressable } from '@/components/ui/pressable';
+import { VStack } from '@/components/ui/vstack';
 
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import { useTheme } from '../../themes/theme';
@@ -33,7 +39,9 @@ export const Facet = ({ route, navigation }) => {
      const [valuesDefault, setValuesDefault] = React.useState([]);
      const [language] = React.useState(route.params?.language ?? 'en');
      const { theme, textColor, colorMode } = useTheme();
-     const headerIconColor = useToken('colors', colorMode === 'light' ? 'coolGray600' : 'coolGray200');
+     const headerIconColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.icon.dark;
+     const fieldBorderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const actionBarBackgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
 
      const preselectValues = () => {
           let newValues = [];
@@ -90,12 +98,11 @@ export const Facet = ({ route, navigation }) => {
                     headerBackVisible: false,
                     headerLeft: () => (
                          <Pressable
-                              mr={3}
                               onPress={() => {
                                    updateGlobal();
                                    navigation.goBack();
                               }}
-                              p="$1">
+                              style={{ marginRight: 12, padding: 4 }}>
                               <Box>
                                    <MaterialIcons name="chevron-left" size={28} color={headerIconColor} />
                               </Box>
@@ -144,8 +151,8 @@ export const Facet = ({ route, navigation }) => {
           <Box p="$5">
                <Input
                     size="lg"
-                    borderColor={colorMode === 'light' ? '$coolGray500' : '$warmGray300'}
                     variant="outline"
+                    style={{ borderColor: fieldBorderColor }}
                >
                     <InputField
                          value={filterByQuery}
@@ -153,7 +160,7 @@ export const Facet = ({ route, navigation }) => {
                          autoCorrect={false}
                          returnKeyType="search"
                          placeholder={getTermFromDictionary(language, 'search') + ' ' + title}
-                         color={textColor}
+                         style={{ color: textColor }}
                          onSubmitEditing={async () => {
                               setIsLoading(true);
                               await filterFacets();
@@ -237,20 +244,20 @@ export const Facet = ({ route, navigation }) => {
      };
 
      const actionButtons = (
-          <Box p="$3" bgColor={colorMode === 'light' ? '$coolGray50' : '$coolGray700'} shadowOpacity={0.1} shadowRadius={1}>
+          <Box style={{ padding: 12, backgroundColor: actionBarBackgroundColor, shadowOpacity: 0.1, shadowRadius: 1 }}>
                <Center>
                     <ButtonGroup size="lg">
                          <Button variant="link" onPress={resetCluster}>
-                              <ButtonText color={theme.tokens.colors.primary['500']}>
+                              <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>
                                    {getTermFromDictionary(language, 'reset')}
                               </ButtonText>
                          </Button>
                          <Button
-                              bgColor={theme.tokens.colors.primary['500']}
+                              style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                               isDisabled={isUpdating}
                               onPress={() => updateSearch()}
                          >
-                              <ButtonText color={theme.tokens.colors.primary['500-text']}>
+                              <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
                                    {isUpdating ? getTermFromDictionary(language, 'updating', true) : getTermFromDictionary(language, 'update')}
                               </ButtonText>
                          </Button>

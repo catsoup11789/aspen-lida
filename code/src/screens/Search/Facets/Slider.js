@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { Box, FormControl, HStack, Input, InputField } from '@gluestack-ui/themed';
 import React from 'react';
 import { ScrollView } from 'react-native';
 
@@ -8,13 +7,17 @@ import { LoadingSpinner } from '../../../components/loadingSpinner';
 import { getTermFromDictionary } from '../../../translations/TranslationService';
 import { addAppliedFilter } from '../../../util/api/searchHelper';
 import { useTheme } from '../../../themes/theme';
+import { Box } from '@/components/ui/box';
+import { FormControl } from '@/components/ui/form-control';
+import { HStack } from '@/components/ui/hstack';
+import { Input, InputField } from '@/components/ui/input';
 
 
 export const Facet_Slider = ({ data, category, updater, language }) => {
      const [isLoading, setIsLoading] = React.useState(true);
      const [startValue, setStartValue] = React.useState('*');
      const [endValue, setEndValue] = React.useState('*');
-     const {theme, textColor, colorMode } = useTheme();
+     const { textColor, colorMode, theme } = useTheme();
 
      React.useEffect(() => {
           appliedStartValue();
@@ -68,13 +71,12 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
 
      return (
           <ScrollView>
-               <Box p="$5">
-                    <FormControl mb="$2">
-                         <HStack space="sm" justifyContent="center">
+               <Box style={{ padding: 20 }}>
+                    <FormControl style={{ marginBottom: 8 }}>
+                         <HStack space="sm" style={{ justifyContent: 'center' }}>
                               <Input
                                    size="lg"
-                                   flex={1}
-                                   borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}
+                                   style={{ flex: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}
                               >
                                    <InputField
                                         placeholder={getTermFromDictionary(language, 'from')}
@@ -84,13 +86,12 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
                                         onChangeText={(value) => {
                                              updateValue('startValue', value);
                                         }}
-                                        color={textColor}
+                                       style={{ color: textColor }}
                                    />
                               </Input>
                               <Input
                                    size="lg"
-                                   flex={1}
-                                   borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}
+                                   style={{ flex: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}
                               >
                                    <InputField
                                         placeholder={getTermFromDictionary(language, 'to')}
@@ -100,7 +101,7 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
                                         onChangeText={(value) => {
                                              updateValue('endValue', value);
                                         }}
-                                        color={textColor}
+                                       style={{ color: textColor }}
                                    />
                               </Input>
                          </HStack>

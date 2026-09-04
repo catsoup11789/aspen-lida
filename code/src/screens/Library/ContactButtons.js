@@ -2,11 +2,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import * as SecureStore from 'expo-secure-store';
-import {Box, ButtonGroup, Button, ButtonText, ButtonIcon, Center, Icon, useToken} from '@gluestack-ui/themed';
 import { useColorModeValue, useTheme } from '../../themes/theme';
 import React from 'react';
 import { showLocation } from 'react-native-map-link';
 import { popToast } from '../../components/feedback';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Icon } from '@/components/ui/icon';
 
 import { getTermFromDictionary } from '../../translations/TranslationService';
 
@@ -19,8 +22,9 @@ const ContactButtons = (data) => {
      const language = useActiveLanguage();
      const { textColor: themeTextColor, colorMode, theme } = useTheme();
 
-     const backgroundColor = useToken('colors', useColorModeValue('warmGray.200', 'coolGray.900'));
-     const textColor = useToken('colors', useColorModeValue('gray.800', 'coolGray.200'));
+     const backgroundColor = useColorModeValue(theme.tokens.colors.ui.surface.light, theme.tokens.colors.ui.surface.dark);
+     const textColor = useColorModeValue(theme.tokens.colors.ui.text.light, theme.tokens.colors.ui.text.dark);
+     const iconBorderColor = useColorModeValue(theme.tokens.colors.ui.icon.light, theme.tokens.colors.ui.surface.light);
 
      const callLibrary = () => {
           /* location.phone */
@@ -143,9 +147,9 @@ const ContactButtons = (data) => {
                               <Button
                                    variant="outline"
                                    width="23%"
-                                   borderColor={colorMode === 'light' ? '$coolGray600' : '$warmGray200'}
                                    onPress={() => callLibrary()}
                                    style={{
+                                       borderColor: iconBorderColor,
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         paddingVertical: 10,
@@ -164,9 +168,9 @@ const ContactButtons = (data) => {
                               <Button
                                    variant="outline"
                                    width="23%"
-                                   borderColor={colorMode === 'light' ? '$coolGray600' : '$warmGray200'}
                                    onPress={() => emailLibrary()}
                                    style={{
+                                       borderColor: iconBorderColor,
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         paddingVertical: 10,
@@ -186,8 +190,8 @@ const ContactButtons = (data) => {
                                    variant="outline"
                                    width="23%"
                                    onPress={() => getDirections()}
-                                   borderColor={colorMode === 'light' ? '$coolGray600' : '$warmGray200'}
                                    style={{
+                                       borderColor: iconBorderColor,
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         paddingVertical: 10,
@@ -207,8 +211,8 @@ const ContactButtons = (data) => {
                                    variant="outline"
                                    width="23%"
                                    onPress={() => visitWebsite()}
-                                   borderColor={colorMode === 'light' ? '$coolGray600' : '$warmGray200'}
                                    style={{
+                                       borderColor: iconBorderColor,
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         paddingVertical: 10,

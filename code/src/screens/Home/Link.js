@@ -1,4 +1,3 @@
-import { Box, Pressable, VStack, Text } from '@gluestack-ui/themed';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
@@ -13,6 +12,10 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { Box } from '@/components/ui/box';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 const HomeScreenLinkGrid = ({links}) => {
      const { width } = Dimensions.get('window');
@@ -21,7 +24,7 @@ const HomeScreenLinkGrid = ({links}) => {
      const itemWidth = `${100 / columnsPerRow}%`;
 
      return (
-          <Box flexDirection="row" flexWrap="wrap">
+          <Box style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                {links.map((item, index) => {
                     // Check if this is the last item and if it would be alone in its row
                     const isLastItem = index === links.length - 1;
@@ -33,11 +36,8 @@ const HomeScreenLinkGrid = ({links}) => {
 
                     return (
                          <Box
-                              key={item.id || index}
-                              width={width}
-                              alignItems="center"
-                              marginBottom={16}
-                              paddingHorizontal="$2"
+                             key={item.id || index}
+                             style={{ width, alignItems: 'center', marginBottom: 16, paddingHorizontal: 8 }}
                          >
                               <Link link={item} />
                          </Box>
@@ -154,8 +154,8 @@ const Link = ({link}) => {
      const imgSource = link?.typeOfIcon === 'uploadIcon' && link?.uploadIcon ? library.baseUrl + '/files/original/' + link.uploadIcon : null;
 
      return (
-          <Pressable onPress={(link?.linkType !== 'deepLink') ? handleOpenLink : handleOpenScreen} alignItems="center" justifyContent="center" padding="$2" width="100%" borderRadius="$lg" backgroundColor={colorMode === 'light' ? "$coolGray200" : "$coolGray700"}>
-               <VStack alignItems="center" justifyContent="center" minHeight={100}>
+          <Pressable onPress={(link?.linkType !== 'deepLink') ? handleOpenLink : handleOpenScreen} style={{ alignItems: 'center', justifyContent: 'center', padding: 8, width: '100%', borderRadius: 12, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark }}>
+               <VStack style={{ alignItems: 'center', justifyContent: 'center', minHeight: 100 }}>
                     {link?.typeOfIcon === 'uploadIcon' && imgSource ? (
                          <Image
                               source={{ uri: imgSource }}
@@ -170,8 +170,8 @@ const Link = ({link}) => {
                               style={{ marginBottom: 8 }}
                          />
                     )}
-                    <Box paddingHorizontal="$2">
-                         <Text bold color={textColor} fontSize="$sm" textAlign="center">{link?.title}</Text>
+                    <Box style={{ paddingHorizontal: 8 }}>
+                         <Text bold size="sm" style={{ color: textColor, textAlign: 'center' }}>{link?.title}</Text>
                     </Box>
                </VStack>
           </Pressable>

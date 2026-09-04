@@ -1,5 +1,6 @@
-import { Box, Text } from "@gluestack-ui/themed";
 import React from "react";
+import { Box } from '@/components/ui/box';
+import { Text } from '@/components/ui/text';
 import {getTermFromDictionary} from '../../../translations/TranslationService';
 import { useActiveLanguage } from '../../../hooks/useLanguageData';
 
@@ -8,10 +9,10 @@ import { useActiveLanguage } from '../../../hooks/useLanguageData';
 const Profile_ContactInformation = (props) => {
     const language = useActiveLanguage();
   return (
-    <Box py={5}>
+    <Box style={{ paddingVertical: 20 }}>
       <Text bold>{getTermFromDictionary(language, 'patron_primary_phone')}</Text>
       <Text>{props.phone}</Text>
-      <Text bold mt={2}>
+      <Text bold style={{ marginTop: 8 }}>
           {getTermFromDictionary(language, 'patron_email')}
       </Text>
       <Text>{props.email}</Text>

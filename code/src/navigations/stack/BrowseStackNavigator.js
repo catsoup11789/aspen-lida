@@ -1,7 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Pressable, Icon, useToken } from '@gluestack-ui/themed';
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
+import { Icon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
 import Scanner from '../../components/Scanner';
 import TitleWithLogo from '../../components/TitleWithLogo'
 import { useTheme } from '../../themes/theme';
@@ -335,8 +336,8 @@ export const EditionsModal = () => {
 const FilterModalStack = createNativeStackNavigator();
 const FilterModal = () => {
      const language = useActiveLanguage();
-     const { colorMode } = useTheme();
-     const iconColor = useToken('colors', colorMode === 'light' ? 'coolGray600' : 'coolGray200');
+     const { theme, colorMode } = useTheme();
+     const iconColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.icon.dark;
      return (
           <FilterModalStack.Navigator
                id="SearchFilters"

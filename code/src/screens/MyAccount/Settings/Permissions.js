@@ -1,5 +1,5 @@
-import { ScrollView } from '@gluestack-ui/themed';
 import React from 'react';
+import { ScrollView } from '@/components/ui/scroll-view';
 
 
 import { CalendarPermissionStatus } from './Permission/Calendar';
@@ -9,7 +9,7 @@ import { NotificationPermissionStatus } from './Permission/Notifications';
 import { ScreenBrightnessPermissionStatus } from './Permission/ScreenBrightness';
 export const PermissionsDashboard = () => {
      return (
-          <ScrollView p="$5">
+          <ScrollView contentContainerStyle={{ padding: 20 }}>
                <CameraPermissionStatus />
                <CalendarPermissionStatus />
                <GeolocationPermissionStatus />

@@ -1,6 +1,9 @@
 import moment from 'moment';
-import { Badge, BadgeText, Box, Text, ActionsheetItemText } from '@gluestack-ui/themed';
 import React from 'react';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { ActionsheetItemText } from '@/components/ui/actionsheet';
+import { Text } from '@/components/ui/text';
 
 
 import { useUserState } from '../hooks/useUserData';
@@ -13,7 +16,7 @@ export const isOverdue = (overdue) => {
      const language = useActiveLanguage();
      if (overdue) {
           return (
-               <Badge action="error" borderRadius="$sm" mt={-2} alignSelf="flex-start">
+               <Badge action="error" style={{ marginTop: -8, alignSelf: 'flex-start', borderRadius: 4 }}>
                     <BadgeText>
                          {getTermFromDictionary(language, 'checkout_overdue')}
                     </BadgeText>
@@ -35,11 +38,8 @@ export const getTitle = (title) => {
           return (
                <Text
                     bold
-                    mb="$1"
-                    pr="$3"
-                    fontSize="$sm"
-                    color={textColor}
-                    maxwidth="$full">
+                    size="sm"
+                    style={{ marginBottom: 4, paddingRight: 12, color: textColor, maxWidth: '100%' }}>
                     {displayTitle}
                </Text>
           );
@@ -47,11 +47,8 @@ export const getTitle = (title) => {
           return (
                <Text
                     bold
-                    mb="$1"
-                    pr="$3"
-                    fontSize='$sm'
-                    color={textColor}
-                    maxwidth="$full">
+                    size="sm"
+                    style={{ marginBottom: 4, paddingRight: 12, color: textColor, maxWidth: '100%' }}>
                     Title Not Available
                </Text>
           );
@@ -75,8 +72,8 @@ export const getCallNumber = (callNumber) => {
      const language = useActiveLanguage();
      if (callNumber) {
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'call_number')}:
                     </Text>
                     {' '}{callNumber}
@@ -91,8 +88,8 @@ export const getVolume = (volume) => {
      const language = useActiveLanguage();
      if (volume) {
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'volume')}:
                     </Text>
                     {' '}{volume}
@@ -113,8 +110,8 @@ export const getAuthor = (author) => {
           }
 
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'author')}:
                     </Text>
                     {' '}{displayAuthor}
@@ -149,8 +146,8 @@ export const getFormat = (format, source = null) => {
                          source = getTermFromDictionary(language, 'palace_project');
                     }
                     return (
-                         <Text fontSize="$xs" color={textColor}>
-                              <Text bold fontSize="$xs" color={textColor}>
+                         <Text size="xs" style={{ color: textColor }}>
+                              <Text bold size="xs" style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'format')}:
                               </Text>
                               {' '}{format !== '' ? format : 'Unknown'} - {source}
@@ -176,7 +173,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
      if (frozen) {
           if (statusMessage) {
                return (
-                    <Badge colorScheme="yellow" borderRadius="$sm" mt={-0.5} alignSelf="flex-start">
+                    <Badge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
                          <BadgeText>
                               {statusMessage}
                          </BadgeText>
@@ -184,7 +181,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
                );
           }
           return (
-               <Badge colorScheme="yellow" borderRadius="$sm" mt={-0.5} alignSelf="flex-start">
+               <Badge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
                     <BadgeText>
                          {status}
                     </BadgeText>
@@ -196,7 +193,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
                message = status;
           }
           return (
-               <Badge colorScheme="green" borderRadius="$sm" mt={-0.5} alignSelf="flex-start">
+               <Badge action="success" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
                     <BadgeText>
                          {message}
                     </BadgeText>
@@ -205,7 +202,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
      } else {
           if (status) {
                return (
-                    <Badge colorScheme="orange" borderRadius="$sm" mt={-0.5} alignSelf="flex-start">
+                    <Badge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
                          <BadgeText>
                               {status}
                          </BadgeText>
@@ -235,8 +232,8 @@ export const getType = (type) => {
           }
 
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'hold_source')}:
                     </Text>
                     {' '}{type}
@@ -252,8 +249,8 @@ export const getOnHoldFor = (user) => {
      const {textColor} = useTheme();
      if (user) {
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'on_hold_for')}:
                     </Text>
                     {' '}{user}
@@ -271,8 +268,8 @@ export const getCheckedOutTo = (props) => {
      const {textColor} = useTheme();
      if (user.id !== checkedOutTo) {
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'checked_out_to')}:
                     </Text>
                     {' '}{props}
@@ -292,8 +289,8 @@ export const getDueDate = (date) => {
           const dueDate = moment.unix(date - timezoneOffset);
           const itemDueOn = moment(dueDate).format('MMM D, YYYY');
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'checkout_due')}:
                     </Text>
                     {' '}{itemDueOn}
@@ -331,9 +328,9 @@ export const willAutoRenew = (props) => {
      const {textColor} = useTheme();
      if (props.autoRenew === 1 || props.autoRenew === '1') {
           return (
-               <Box mt={1} p={0.5} bgColor="trueGray100">
-                    <Text fontSize="$xs" color={textColor}>
-                         <Text bold fontSize="$xs" color={textColor}>
+               <Box style={{ marginTop: 1, padding: 2, backgroundColor: '#f5f5f5' }}>
+                    <Text size="xs" style={{ color: textColor }}>
+                         <Text bold size="xs" style={{ color: textColor }}>
                               {getTermFromDictionary(language, 'if_eligible_auto_renew')}:
                          </Text>
                          {' '}{props.renewalDate}
@@ -350,8 +347,8 @@ export const getPickupLocation = (location, source) => {
      const {textColor} = useTheme();
      if (location && source === 'ils') {
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'hold_pickup_at')}:
                     </Text>
                     {' '}{location}
@@ -367,8 +364,8 @@ export const getOutOfHoldGroupMessage = (outOfHoldGroupMessage) => {
      const {textColor} = useTheme();
      if (outOfHoldGroupMessage) {
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'interlibrary_loan')}:
                     </Text>
                     {' '}{outOfHoldGroupMessage}
@@ -385,8 +382,8 @@ export const getPosition = (position, available, length, holdPosition, usesHoldP
      if (!outOfHoldGroupMessage && position && !available && position !== 0 && position !== '0') {
           if (length && usesHoldPosition) {
                return (
-                    <Text fontSize="$xs" color={textColor}>
-                         <Text bold fontSize="$xs" color={textColor}>
+                    <Text size="xs" style={{ color: textColor }}>
+                         <Text bold size="xs" style={{ color: textColor }}>
                               {getTermFromDictionary(language, 'hold_position')}:
                          </Text>
                          {' '}{holdPosition}
@@ -394,8 +391,8 @@ export const getPosition = (position, available, length, holdPosition, usesHoldP
                );
           }
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'hold_position')}:
                     </Text>
                     {' '}{position}
@@ -413,8 +410,8 @@ export const getExpirationDate = (expiration, available) => {
           const expirationDateUnix = moment.unix(expiration);
           let expirationDate = moment(expirationDateUnix).format('MMM D, YYYY');
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'hold_pickup_by')}:
                     </Text>
                     {' '}{expirationDate}
@@ -430,8 +427,8 @@ export const getRenewalCount = (count, available = null) => {
      const {textColor} = useTheme();
      if (available) {
           return (
-               <Text fontSize="$xs" color={textColor}>
-                    <Text bold fontSize="$xs" color={textColor}>
+               <Text size="xs" style={{ color: textColor }}>
+                    <Text bold size="xs" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'checkout_renewed')}:
                     </Text>
                     {' '}{count} of {available} times

@@ -5,27 +5,21 @@ import { useFocusEffect } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as SecureStore from 'expo-secure-store';
-import {
-     Badge,
-     BadgeText,
-     Box,
-     Button,
-     ButtonText,
-     ButtonIcon,
-     Divider,
-     HStack,
-     Icon,
-     Image,
-     Pressable,
-     Text,
-     useToken,
-     VStack
-} from '@gluestack-ui/themed';
-import { useColorModeValue, UseColorMode, useTheme } from '../../themes/theme';
+import { UseColorMode, useTheme } from '../../themes/theme';
 import React from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { AppState, Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Divider } from '@/components/ui/divider';
+import { HStack } from '@/components/ui/hstack';
+import { Icon } from '@/components/ui/icon';
+import { Image } from '@/components/ui/image';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 // custom components and helper files
 import { showILSMessage } from '../../components/Notifications';
@@ -64,7 +58,6 @@ Notifications.setNotificationHandler({
           shouldSetBadge: false }) });
 
 const USER_DATA_STALE_MS = 3 * 60 * 60 * 1000; // 3 hours — drawer background refresh
-
 const useQueryWithCallbacks = (queryOptions, callbacks = {}) => {
      const {
           queryKey = [],
@@ -1076,11 +1069,9 @@ const Fines = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor: themeTextColor } = useTheme();
-     const bgMode = useColorModeValue('warmGray.200', 'coolGray.900');
-     const textMode = useColorModeValue('gray.800', 'coolGray.200');
-     const backgroundColor = useToken('colors', bgMode);
-     const textColor = useToken('colors', textMode);
+     const { textColor: themeTextColor, theme, colorMode } = useTheme();
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
 
      const shouldShowFines = library.showFines ?? true;
 
@@ -1154,11 +1145,9 @@ const Events = () => {
 const YearInReview = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor: themeTextColor } = useTheme();
-     const bgMode = useColorModeValue('warmGray.200', 'coolGray.900');
-     const textMode = useColorModeValue('gray.800', 'coolGray.200');
-     const backgroundColor = useToken('colors', bgMode);
-     const textColor = useToken('colors', textMode);
+     const { textColor: themeTextColor, theme, colorMode } = useTheme();
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const yearInReviewLabel = getTermFromDictionary(language, 'year_in_review');
@@ -1256,9 +1245,9 @@ function LogOutButton() {
      const { theme } = useTheme();
 
      return (
-          <Button size="md" action="secondary" onPress={signOut} bgColor={theme.tokens.colors.primary['500']}>
-               <ButtonIcon as={MaterialIcons} name="logout" size="xs" color={theme.tokens.colors.primary['500-text']} />
-               <ButtonText color={theme.tokens.colors.primary['500-text']}> {getTermFromDictionary(language, 'logout')}</ButtonText>
+          <Button size="md" action="secondary" onPress={signOut} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+               <ButtonIcon as={MaterialIcons} name="logout" size="xs" style={{ color: theme.tokens.colors.primary['500-text'] }} />
+               <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}> {getTermFromDictionary(language, 'logout')}</ButtonText>
           </Button>
      );
 }

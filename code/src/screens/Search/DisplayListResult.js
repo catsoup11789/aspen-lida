@@ -1,5 +1,4 @@
 import React from 'react';
-import { Badge, BadgeText, Box, HStack, Pressable, Text, VStack, Button, ButtonText, ButtonIcon, Center } from '@gluestack-ui/themed';
 
 import { useUserState } from '../../hooks/useUserData';
 import { TrashIcon } from 'lucide-react-native';
@@ -13,6 +12,14 @@ import AddToList from './AddToList';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { HStack } from '@/components/ui/hstack';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -25,8 +32,6 @@ export const DisplayListResult = (props) => {
      const queryClient = useQueryClient();
 
      const { theme, textColor, colorMode } = useTheme();
-
-     const backgroundColor = colorMode === 'light' ? "$warmGray200" : "$coolGray900";
 
      let recordType = 'grouped_work';
      if (item.recordtype) {
@@ -54,17 +59,17 @@ export const DisplayListResult = (props) => {
      };
 
      return (
-          <Pressable borderBottomWidth="$1" borderColor={colorMode === 'light' ? "$warmGray400" : "$warmGray600"} pl="$4" pr="$5" py="$2" onPress={handlePressItem}>
+          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray400 : theme.tokens.colors.ui.gray600, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
-                    <VStack sx={{ '@base': { width: 100 }, '@lg': { width: 180 } }}>
-                         <Box sx={{ '@base': { height: 150 }, '@lg': { height: 250 } }}>
+                    <VStack style={{ width: 100 }}>
+                         <Box style={{ height: 150 }}>
                               <Image
                                    alt={item.title_display}
                                    source={imageUrl}
                                    style={{
                                         width: '100%',
                                         height: '100%',
-                                        borderRadius: "$sm" }}
+                                        borderRadius: 8 }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -73,12 +78,11 @@ export const DisplayListResult = (props) => {
                          {item.language ? (
                               <Center>
                                    <Badge
-                                        size="$sm"
-                                        sx={{
-                                             bgColor: colorMode === 'light' ? "$warmGray200" : "$coolGray900" }}>
-                                        <BadgeText textTransform="none" color={colorMode === 'light' ? "$coolGray600" : "$warmGray400"} sx={{ '@base': { fontSize: 10 }, '@lg': { fontSize: 16, padding: 4, textAlign: 'center' } }}>
-                                             {item.language}
-                                        </BadgeText>
+                                        size="sm"
+                                        style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.background.dark }}>
+                                        <BadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textMuted.light : theme.tokens.colors.ui.gray400, fontSize: 10, textAlign: 'center' }}>
+                                            {item.language}
+                                       </BadgeText>
                                    </Badge>
                               </Center>
                          ) : null}
@@ -100,21 +104,21 @@ export const DisplayListResult = (props) => {
                               <AddToList itemId={item.id} btnStyle="sm" />
                          )}
                     </VStack>
-                    <VStack w="65%" pt="$1">
-                         <Text color={textColor} bold sx={{ '@base': { fontSize: 14, lineHeight: 17, paddingBottom: 4 }, '@lg': { fontSize: 22, lineHeight: 25, paddingBottom: 4 } }}>
+                    <VStack style={{ width: '65%', paddingTop: 4 }}>
+                         <Text bold style={{ color: textColor, fontSize: 14, lineHeight: 17, paddingBottom: 4 }}>
                               {item.title_display}
                          </Text>
                          {item.author_display ? (
-                              <Text color={textColor} sx={{ '@base': { fontSize: 12, lineHeight: 15 }, '@lg': { fontSize: 18, lineHeight: 21 } }}>
+                              <Text style={{ color: textColor, fontSize: 12, lineHeight: 15 }}>
                                    {getTermFromDictionary(language, 'by')} {item.author_display}
                               </Text>
                          ) : null}
                          {item.format ? (
-                              <HStack mt="$4" direction="row" space="xs" flexWrap="wrap">
+                              <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
                                    {item.format.map((format, i) => {
                                         return (
-                                             <Badge key={i} borderRadius="$sm" borderColor={theme['tokens']['colors']['secondary']['400']} variant="outline" bg="transparent">
-                                                  <BadgeText textTransform="none" color={theme['tokens']['colors']['secondary']['400']} sx={{ '@base': { fontSize: 10, lineHeight: 14 }, '@lg': { fontSize: 16, lineHeight: 20 } }}>
+                                             <Badge key={i} variant="outline" style={{ borderRadius: 8, borderColor: theme.tokens.colors.secondary['400'], backgroundColor: 'transparent' }}>
+                                                  <BadgeText textTransform="none" style={{ color: theme.tokens.colors.secondary['400'], fontSize: 10, lineHeight: 14 }}>
                                                        {format}
                                                   </BadgeText>
                                              </Badge>

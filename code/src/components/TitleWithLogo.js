@@ -1,17 +1,23 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { Platform, useWindowDimensions, View } from 'react-native';
 
 import { useLibrary } from '../hooks/useLibrarySystemData';
-import { View, Image, Text, HStack, VStack, Box, Pressable, Icon, ChevronLeftIcon } from '@gluestack-ui/themed';
-import { Platform, useWindowDimensions } from 'react-native';
+import { Image } from '@/components/ui/image';
+import { Text } from '@/components/ui/text';
+import { HStack } from '@/components/ui/hstack';
+import { VStack } from '@/components/ui/vstack';
+import { Box } from '@/components/ui/box';
+import { Pressable } from '@/components/ui/pressable';
+import { Icon, ChevronLeftIcon } from '@/components/ui/icon';
 import { decodeHTML, isValidUrl } from '../helpers/helpers';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../themes/theme';
 
 const HeaderLogoBar = (props) => {
-     const { theme, colorMode, header } = useTheme();
+     const { header } = useTheme();
      const library = useLibrary();
-     const { width, height } = useWindowDimensions();
+     const { width } = useWindowDimensions();
 
      // Prefer the active theme's header data (logo/backgroundColor/alignment) when the
      // theme catalog actually provides a logo; otherwise fall back to the library's
@@ -32,8 +38,8 @@ const HeaderLogoBar = (props) => {
           const dims = logoSize(width, 50, originalWidth, originalHeight);
 
           return (
-               <HStack backgroundColor={backgroundColor} safeAreaTop='1' safeAreaBottom='1' justifyContent={headerLogoAlignment} flexDirection='row' height={dims.height}>
-                         <Image source={{uri: localBrandingLogoUri}} alt={library.displayName ?? ''} placeholder="" width={dims.width} height={dims.height} resizeMode='contain' />
+               <HStack style={{ backgroundColor, justifyContent: headerLogoAlignment, flexDirection: 'row', height: dims.height, paddingTop: 4, paddingBottom: 4 }}>
+                         <Image source={{uri: localBrandingLogoUri}} alt={library.displayName ?? ''} resizeMode='contain' style={{ width: dims.width, height: dims.height }} />
                </HStack>
           );
      }
@@ -66,8 +72,8 @@ const HeaderLogoBar = (props) => {
           var scaledImageHeight = dims.height;
 
           return (
-               <HStack backgroundColor={backgroundColor} safeAreaTop='1' safeAreaBottom='1' justifyContent={headerLogoAlignment} flexDirection='row' height={scaledImageHeight}>
-                         <Image source={{uri: localBrandingLogoUri}} alt={library.displayName ?? ''} placeholder="" width={scaledImageWidth} height={scaledImageHeight} resizeMode='contain' />
+               <HStack style={{ backgroundColor, justifyContent: headerLogoAlignment, flexDirection: 'row', height: scaledImageHeight, paddingTop: 4, paddingBottom: 4 }}>
+                         <Image source={{uri: localBrandingLogoUri}} alt={library.displayName ?? ''} resizeMode='contain' style={{ width: scaledImageWidth, height: scaledImageHeight }} />
                </HStack>
           );
      }else{
@@ -82,64 +88,55 @@ export default function TitleWithLogo(props) {
      const insets = useSafeAreaInsets();
 
      return (
-          <VStack pt={insets.top} pl={insets.left} pr={insets.right}>
+          <VStack style={{ paddingTop: insets.top, paddingLeft: insets.left, paddingRight: insets.right }}>
                <HeaderLogoBar />
-               <HStack px="$1" py="$2" alignItems="left" justifyContent="space-between" backgroundColor={theme['tokens']['colors']['primary']['base']}>
+               <HStack style={{ paddingHorizontal: 4, paddingVertical: 8, alignItems: 'center', justifyContent: 'space-between', backgroundColor: theme['tokens']['colors']['primary']['base'] }}>
                     {navigation.canGoBack() && !hideBack ? (
-                       <Pressable onPress={() => navigation.goBack()} pl="$1">
-                            <Icon as={ChevronLeftIcon} size="xl" color={theme['tokens']['colors']['primary']['baseContrast']} />
+                       <Pressable onPress={() => navigation.goBack()} style={{ paddingLeft: 4 }}>
+                            <Icon as={ChevronLeftIcon} size="xl" style={{ color: theme['tokens']['colors']['primary']['baseContrast'] }} />
                        </Pressable>
                     ) : (
-                       <Box width="$6" />
+                       <Box style={{ width: 24 }} />
                     )}
-                    <Text pl="$2" flex={1} textAlign="left" color={theme['tokens']['colors']['primary']['baseContrast']} size="lg" lineHeight="$lg" fontWeight="bold" numberOfLines={1} ellipsizeMode="tail">{decodeHTML(props.title)}</Text>
-                    <Box width="$6" />
+                    <Text style={{ paddingLeft: 8, flex: 1, textAlign: 'left', color: theme['tokens']['colors']['primary']['baseContrast'], fontWeight: 'bold' }} size="lg" numberOfLines={1} ellipsizeMode="tail">{decodeHTML(props.title)}</Text>
+                    <Box style={{ width: 24 }} />
                </HStack>
           </VStack>
      );
 }
 
 function logoSize(maxWidth, maxHeight, width, height) {
-  var maxWidth = maxWidth;
-  var maxHeight = maxHeight;
-
   if (width >= height) {
-    var ratio = maxWidth / width;
-    var h = Math.ceil(ratio * height);
+    const ratio = maxWidth / width;
+    const scaledHeight = Math.ceil(ratio * height);
 
-    if (h > maxHeight) {
-      // Too tall, resize
-      var ratio = maxHeight / height;
-      var w = Math.ceil(ratio * width);
-      var ret = {
-        'width': w,
-        'height': maxHeight
-      };
-    } else {
-      var ret = {
-        'width': maxWidth,
-        'height': h
+    if (scaledHeight > maxHeight) {
+      const constrainedRatio = maxHeight / height;
+      return {
+        width: Math.ceil(constrainedRatio * width),
+        height: maxHeight,
       };
     }
 
-  } else {
-    var ratio = maxHeight / height;
-    var w = Math.ceil(ratio * width);
-
-    if (w > maxWidth) {
-      var ratio = maxWidth / width;
-      var h = Math.ceil(ratio * height);
-      var ret = {
-        'width': maxWidth,
-        'height': h
-      };
-    } else {
-      var ret = {
-        'width': w,
-        'height': maxHeight
-      };
-    }
+    return {
+      width: maxWidth,
+      height: scaledHeight,
+    };
   }
 
-  return ret;
+  const ratio = maxHeight / height;
+  const scaledWidth = Math.ceil(ratio * width);
+
+  if (scaledWidth > maxWidth) {
+    const constrainedRatio = maxWidth / width;
+    return {
+      width: maxWidth,
+      height: Math.ceil(constrainedRatio * height),
+    };
+  }
+
+  return {
+    width: scaledWidth,
+    height: maxHeight,
+  };
 }

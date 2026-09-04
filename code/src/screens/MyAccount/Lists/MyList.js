@@ -2,34 +2,19 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-     Badge,
-     BadgeText,
-     Box,
-     Button,
-     ButtonGroup,
-     ButtonIcon,
-     ButtonText,
-     ChevronDownIcon,
-     FlatList,
-     FormControl,
-     HStack,
-     Icon,
-     Pressable,
-     ScrollView,
-     Select,
-     SelectBackdrop,
-     SelectContent, SelectDragIndicator,
-     SelectDragIndicatorWrapper,
-     SelectIcon,
-     SelectInput, SelectItem,
-     SelectPortal,
-     SelectScrollView,
-     SelectTrigger,
-     Text,
-     VStack } from '@gluestack-ui/themed';
 import React from 'react';
-import { Platform } from 'react-native';
+import { FlatList, Platform } from 'react-native';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { FormControl } from '@/components/ui/form-control';
+import { HStack } from '@/components/ui/hstack';
+import { Icon, ChevronDownIcon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 import { loadError } from '../../../components/loadError';
 import { popToast } from '../../../components/feedback';
 
@@ -80,6 +65,11 @@ export const MyList = ({ route }) => {
           message: null });
      const hasAppliedDefaultSort = React.useRef(false);
      const browserBackgroundColor = colorMode === 'light' ? '#ffffff' : '#111827';
+     const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const dangerColor = theme.tokens.colors.ui.danger;
+     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
      const t = React.useCallback((key, ellipsis = false, forcedLanguage) => {
           const lang = forcedLanguage || language;
           return getTermFromDictionaryHelper(lang, key, ellipsis, dictionary);
@@ -239,16 +229,16 @@ export const MyList = ({ route }) => {
                const displayEndTime = endDate ? timeFormatter.format(endDate) : '';
 
                return (
-                    <Pressable borderBottomWidth="$1" _dark={{ borderColor: 'gray.600' }} borderColor="coolGray.200" pl="$4" pr="$5" py="$2" onPress={() => handleOpenEvent(item)}>
+                    <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={() => handleOpenEvent(item)}>
                          <HStack space="sm">
-                              <VStack maxW="35%">
+                              <VStack style={{ maxWidth: '35%' }}>
                                    <Image
                                         alt={item.title}
                                         source={imageUrl}
                                         style={{
                                              width: 100,
                                              height: 150,
-                                             borderRadius: "$sm" }}
+                                             borderRadius: 8 }}
                                         placeholder={blurhash}
                                         transition={1000}
                                         contentFit="cover"
@@ -259,31 +249,31 @@ export const MyList = ({ route }) => {
                                                        await loadListDetails(page, sort);
                                              });
                                         }}
-                                        size="$sm"
+                                        size="sm"
                                         variant="link">
-                                        <ButtonIcon color="$warning500" as={MaterialIcons} name="delete" />
-                                        <ButtonText color="$warning500">{t('delete')}</ButtonText>
+                                        <ButtonIcon as={MaterialIcons} name="delete" style={{ color: dangerColor }} />
+                                        <ButtonText style={{ color: dangerColor }}>{t('delete')}</ButtonText>
                                    </Button>
                               </VStack>
-                              <VStack w="65%">
+                              <VStack style={{ width: '65%' }}>
                                    <Text
-                                        color={textColor}
                                         bold
-                                        fontSize="$sm"
+                                        size="sm"
+                                        style={{ color: textColor }}
                                         >
                                         {item.title}
                                    </Text>
                                    {item.start_date && item.end_date ? (
                                         <>
-                                             <Text color={textColor} fontSize="$xs">{displayDay}</Text>
-                                             <Text color={textColor} fontSize="$xs">
+                                             <Text size="xs" style={{ color: textColor }}>{displayDay}</Text>
+                                             <Text size="xs" style={{ color: textColor }}>
                                                   {displayStartTime} - {displayEndTime}
                                              </Text>
                                         </>
                                    ) : null}
                                    {registrationRequired ? (
-                                        <HStack mt="$1" direction="row" space="sm" flexWrap="wrap">
-                                             <Badge key={0} colorScheme="secondary" mt="$1" variant="outline" borderRadius="$sm" fontSize="$xs">
+                                        <HStack style={{ marginTop: 4, flexDirection: 'row', flexWrap: 'wrap' }} space="sm">
+                                             <Badge key={0} action="info" variant="outline" size="sm" style={{ marginTop: 4, borderRadius: 8 }}>
                                                   <BadgeText>{t('registration_required')}</BadgeText>
                                              </Badge>
                                         </HStack>
@@ -295,16 +285,16 @@ export const MyList = ({ route }) => {
           }
 
           return (
-               <Pressable borderBottomWidth="$1" borderColor={colorMode === 'light' ? "$coolGray200" : "$warmGray600"} pl="$4" pr="$5" py="$2" onPress={() => handleOpenItem(item.id, item.title)}>
+               <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={() => handleOpenItem(item.id, item.title)}>
                     <HStack space="sm">
-                         <VStack maxW="35%">
+                         <VStack style={{ maxWidth: '35%' }}>
                               <Image
                                    alt={item.title}
                                    source={imageUrl}
                                    style={{
                                         width: 100,
                                         height: 150,
-                                        borderRadius: "$sm"
+                                        borderRadius: 8
                                    }}
                                    placeholder={blurhash}
                                    transition={1000}
@@ -318,20 +308,20 @@ export const MyList = ({ route }) => {
                                    }}
                                    size="sm"
                                    variant="link">
-                                   <ButtonIcon color="$warning500" as={MaterialIcons} name="delete" mr="$1" />
-                                   <ButtonText color="$warning500">{t('delete')}</ButtonText>
+                                   <ButtonIcon as={MaterialIcons} name="delete" style={{ color: dangerColor, marginRight: 4 }} />
+                                   <ButtonText style={{ color: dangerColor }}>{t('delete')}</ButtonText>
                               </Button>
                          </VStack>
-                         <VStack w="65%">
+                         <VStack style={{ width: '65%' }}>
                               <Text
-                                   color={textColor}
                                    bold
-                                   fontSize="$sm"
+                                   size="sm"
+                                   style={{ color: textColor }}
                                    >
                                    {item.title}
                               </Text>
                               {item.author ? (
-                                   <Text color={textColor} fontSize="$xs">
+                                   <Text size="xs" style={{ color: textColor }}>
                                         {t('by')} {item.author}
                                    </Text>
                               ) : null}
@@ -344,19 +334,14 @@ export const MyList = ({ route }) => {
      const Paging = () => {
           return (
                <Box
-                    p="$2"
-                    bgColor={colorMode === 'light' ? "$coolGray100" : "$coolGray700"}
-                    borderBottomWidth="$1"
-                    borderColor={colorMode === 'light' ? "$coolGray200" : "$warmGray600"}
-                    flexWrap="nowrap"
-                    alignItems="center">
+                    style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                     <ScrollView horizontal>
                          <ButtonGroup size="sm">
-                              <Button bgColor={theme.tokens.colors.primary['500']} onPress={() => setPage(page - 1)} isDisabled={page === 1}>
-                                   <ButtonText color={theme.tokens.colors.primary['500-text']}>{t('previous')}</ButtonText>
+                              <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={() => setPage(page - 1)} isDisabled={page === 1}>
+                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{t('previous')}</ButtonText>
                               </Button>
                               <Button
-                                   bgColor={theme.tokens.colors.primary['500']}
+                                   style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                    onPress={() => {
                                         if (listData?.hasMore) {
                                              logDebugMessage('Adding to page');
@@ -364,11 +349,11 @@ export const MyList = ({ route }) => {
                                         }
                                    }}
                                    isDisabled={isLoading || !listData?.hasMore}>
-                                   <ButtonText color={theme.tokens.colors.primary['500-text']}>{t('next')}</ButtonText>
+                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{t('next')}</ButtonText>
                               </Button>
                          </ButtonGroup>
                     </ScrollView>
-                    <Text mt="$2" fontSize="$sm" color={textColor}>
+                    <Text size="sm" style={{ marginTop: 8, color: textColor }}>
                          {paginationLabel}
                     </Text>
                </Box>
@@ -404,14 +389,10 @@ export const MyList = ({ route }) => {
 
           return (
                <Box
-                    p="$2"
-                    bgColor={colorMode === 'light' ? "$coolGray100" : "$coolGray700"}
-                    borderBottomWidth="$1"
-                    borderColor={colorMode === 'light' ? "$coolGray200" : "$warmGray600"}
-                    flexWrap="nowrap">
+                    style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
                     <ScrollView horizontal>
                          <HStack space="sm">
-                              <FormControl w={sortLength}>
+                              <FormControl style={{ width: sortLength }}>
                                    <Select
                                         name="sortBy"
                                         selectedValue={sort}
@@ -419,25 +400,24 @@ export const MyList = ({ route }) => {
                                         accessibilityLabel={t('select_sort_method')}
                                         onValueChange={(itemValue) => setSort(itemValue)}>
                                         <SelectTrigger variant="outline" size="sm">
-                                             <SelectInput py={0} color={textColor} value={sortLabel()} />
-                                             <SelectIcon mr="$3">
-                                                  <Icon color={textColor} as={ChevronDownIcon} />
+                                             <SelectInput style={{ paddingVertical: 0, color: textColor }} value={sortLabel()} />
+                                             <SelectIcon style={{ marginRight: 12 }}>
+                                                  <Icon style={{ color: textColor }} as={ChevronDownIcon} />
                                              </SelectIcon>
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
                                              <SelectContent
-                                                  bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-                                                  pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}
+                                                  style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
                                              >
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
                                                   <SelectScrollView>
-                                                       <SelectItem label={sortBy.title} value="title" key={0} bgColor={sort == "title" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: sort == "title" ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>
-                                                       <SelectItem label={sortBy.dateAdded} value="dateAdded" key={1} bgColor={sort == "dateAdded" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: sort == "dateAdded" ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>
-                                                       <SelectItem label={sortBy.recentlyAdded} value="recentlyAdded" key={2} bgColor={sort == "recentlyAdded" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: sort == "recentlyAdded" ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>
-                                                       <SelectItem label={sortBy.custom} value="custom" key={3} bgColor={sort == "custom" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: sort == "custom" ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>
+                                                       <SelectItem label={sortBy.title} value="title" key={0} style={{ backgroundColor: sort === "title" ? tertiaryBg : 'transparent' }} />
+                                                       <SelectItem label={sortBy.dateAdded} value="dateAdded" key={1} style={{ backgroundColor: sort === "dateAdded" ? tertiaryBg : 'transparent' }} />
+                                                       <SelectItem label={sortBy.recentlyAdded} value="recentlyAdded" key={2} style={{ backgroundColor: sort === "recentlyAdded" ? tertiaryBg : 'transparent' }} />
+                                                       <SelectItem label={sortBy.custom} value="custom" key={3} style={{ backgroundColor: sort === "custom" ? tertiaryBg : 'transparent' }} />
                                                   </SelectScrollView>
                                              </SelectContent>
                                         </SelectPortal>
@@ -464,7 +444,7 @@ export const MyList = ({ route }) => {
 
      return (
           <Box style={{ flex: 1 }}>
-               {systemMessagesForScreen.length > 0 ? <Box safeArea={2}>{showSystemMessage()}</Box> : null}
+               {systemMessagesForScreen.length > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                {isLoading ? (
                     loadingSpinner()
                ) : fetchError ? (

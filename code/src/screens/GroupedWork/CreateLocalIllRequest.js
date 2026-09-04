@@ -1,39 +1,4 @@
 import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/native';
-import {
-     Box,
-     Button,
-     ButtonText,
-     ButtonSpinner,
-     Checkbox,
-     CheckboxIndicator,
-     CheckboxIcon,
-     CheckboxLabel,
-     CheckIcon,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Input,
-     InputField,
-     Select,
-     SelectTrigger,
-     SelectInput,
-     SelectIcon,
-     SelectPortal,
-     SelectBackdrop,
-     SelectContent,
-     SelectDragIndicatorWrapper,
-     SelectDragIndicator,
-     SelectItem,
-     SelectScrollView,
-     Text,
-     Textarea,
-     TextareaInput,
-     ScrollView,
-     HStack,
-     ChevronDownIcon,
-     Alert,
-     AlertText
-} from '@gluestack-ui/themed';
 import React from 'react';
 import { Platform } from 'react-native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -50,6 +15,18 @@ import { stripHTML } from '../../helpers/helpers';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { Alert, AlertText } from '@/components/ui/alert';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
+import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { HStack } from '@/components/ui/hstack';
+import { CheckIcon, ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { Input, InputField } from '@/components/ui/input';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { Text } from '@/components/ui/text';
+import { Textarea, TextareaInput } from '@/components/ui/textarea';
 
 export const CreateLocalIllRequest = () => {
      const [formConfig, setFormConfig] = React.useState([]);
@@ -165,7 +142,7 @@ const Request = (payload) => {
           const field = config.fields.introText;
           if (field.display === 'show') {
                return (
-                    <Text size="sm" pb="$3" color={textColor}>
+                    <Text size="sm" style={{ paddingBottom: 12, color: textColor }}>
                          {stripHTML(field.label)}
                     </Text>
                );
@@ -181,9 +158,9 @@ const Request = (payload) => {
                     fullTitle += " " + volumeName;
                }
                return (
-                    <FormControl my="$2" isRequired={field.required}>
+                    <FormControl style={{ marginVertical: 8 }} isRequired={field.required}>
                          <FormControlLabel>
-                              <FormControlLabelText color={textColor}>{field.label}</FormControlLabelText>
+                              <FormControlLabelText style={{ color: textColor }}>{field.label}</FormControlLabelText>
                          </FormControlLabel>
                          <Input>
                               <InputField
@@ -205,7 +182,7 @@ const Request = (payload) => {
           const field = config.fields.feeInformationText;
           if (field.display === 'show' && field.label && field.label.trim() !== '') {
                return (
-                    <Text fontWeight="bold" color={textColor}>
+                    <Text bold style={{ color: textColor }}>
                          {stripHTML(field.label)}
                     </Text>
                );
@@ -217,20 +194,20 @@ const Request = (payload) => {
           const field = config.fields.acceptFee;
           if (field.display === 'show') {
                return (
-                    <FormControl my="$2" maxWidth="90%" isRequired={field.required}>
+                    <FormControl style={{ marginVertical: 8, maxWidth: '90%' }} isRequired={field.required}>
                          <Checkbox
                               value="accept"
                               accessibilityLabel={field.description ?? field.label}
                               onChange={(value) => {
                                    setAcceptFee(value);
                               }}>
-                              <CheckboxIndicator mr="$2">
+                              <CheckboxIndicator style={{ marginRight: 8 }}>
                                    <CheckboxIcon>
                                         <CheckIcon />
                                    </CheckboxIcon>
                               </CheckboxIndicator>
                               <CheckboxLabel>
-                                   <Text color={textColor}>{field.label}</Text>
+                                   <Text style={{ color: textColor }}>{field.label}</Text>
                               </CheckboxLabel>
                          </Checkbox>
                     </FormControl>
@@ -243,9 +220,9 @@ const Request = (payload) => {
           const field = config.fields.note;
           if (field.display === 'show') {
                return (
-                    <FormControl my="$2" isRequired={field.required}>
+                    <FormControl style={{ marginVertical: 8 }} isRequired={field.required}>
                          <FormControlLabel>
-                              <FormControlLabelText color={textColor}>{field.label}</FormControlLabelText>
+                              <FormControlLabelText style={{ color: textColor }}>{field.label}</FormControlLabelText>
                          </FormControlLabel>
                          <Textarea>
                               <TextareaInput
@@ -268,9 +245,9 @@ const Request = (payload) => {
           if (field.display === 'show' && Array.isArray(field.options)) {
                const locations = field.options;
                return (
-                    <FormControl my="$2" isRequired={field.required}>
+                    <FormControl style={{ marginVertical: 8 }} isRequired={field.required}>
                          <FormControlLabel>
-                              <FormControlLabelText color={textColor}>{field.label}</FormControlLabelText>
+                              <FormControlLabelText style={{ color: textColor }}>{field.label}</FormControlLabelText>
                          </FormControlLabel>
                          <Select
                               selectedValue={pickupLocation}
@@ -281,23 +258,23 @@ const Request = (payload) => {
                                    {pickupLocation ? (
                                         locations.map((location, index) => {
                                              if (location.code === pickupLocation) {
-                                                  return <SelectInput py={0} key={index} value={location.displayName} color={textColor} />;
+                                                  return <SelectInput style={{ paddingVertical: 0, color: textColor }} key={index} value={location.displayName} />;
                                              }
                                         })
                                    ) : (
-                                        <SelectInput py={0} placeholder="Select a pickup location" color={textColor} />
+                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select a pickup location" />
                                    )}
-                                   <SelectIcon mr="$3" as={ChevronDownIcon} color={textColor} />
+                                   <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                               </SelectTrigger>
                               <SelectPortal>
                                    <SelectBackdrop />
-                                   <SelectContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"} pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}>
+                                   <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                         <SelectDragIndicatorWrapper>
                                              <SelectDragIndicator />
                                         </SelectDragIndicatorWrapper>
                                         <SelectScrollView>
                                              {locations.map((location, index) => {
-                                                  return <SelectItem key={index} label={location.displayName} value={location.code} bgColor={pickupLocation === location.code ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: pickupLocation === location.code ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />;
+                                                  return <SelectItem key={index} label={location.displayName} value={location.code} style={{ backgroundColor: pickupLocation === location.code ? theme.tokens.colors.tertiary['300'] : 'transparent' }} textStyle={{ color: pickupLocation === location.code ? theme.tokens.colors.tertiary['500-text'] : textColor }} />;
                                              })}
                                         </SelectScrollView>
                                    </SelectContent>
@@ -313,9 +290,9 @@ const Request = (payload) => {
           const field = config.fields.catalogKey;
           if (field.display === 'show') {
                return (
-                    <FormControl my="$2" isDisabled isRequired={field.required}>
+                    <FormControl style={{ marginVertical: 8 }} isDisabled isRequired={field.required}>
                          <FormControlLabel>
-                              <FormControlLabelText color={textColor}>{field.label}</FormControlLabelText>
+                              <FormControlLabelText style={{ color: textColor }}>{field.label}</FormControlLabelText>
                          </FormControlLabel>
                          <Input>
                               <InputField name={field.property} defaultValue={catalogKey} accessibilityLabel={field.description ?? field.label} />
@@ -330,9 +307,9 @@ const Request = (payload) => {
           const field = config.fields.volumeId;
           if (field.display === 'show') {
                return (
-                    <FormControl my="$2" isDisabled isRequired={field.required}>
+                    <FormControl style={{ marginVertical: 8 }} isDisabled isRequired={field.required}>
                          <FormControlLabel>
-                              <FormControlLabelText color={textColor}>{field.label}</FormControlLabelText>
+                              <FormControlLabelText style={{ color: textColor }}>{field.label}</FormControlLabelText>
                          </FormControlLabel>
                          <Input>
                               <InputField name={field.property} defaultValue={volumeId} accessibilityLabel={field.description ?? field.label} />
@@ -345,18 +322,18 @@ const Request = (payload) => {
 
      const getActions = () => {
           return (
-               <HStack space="md" pt="$3">
+               <HStack space="md" style={{ paddingTop: 12 }}>
                     <Button
-                         bgColor={theme['tokens']['colors']['secondary']['500']}
+                         style={{ backgroundColor: theme['tokens']['colors']['secondary']['500'] }}
                          isDisabled={isSubmitting}
                          onPress={() => {
                               setIsSubmitting(true);
                               handleSubmission();
                          }}>
-                         <ButtonText color={theme['tokens']['colors']['secondary']['500-text']}>
+                        <ButtonText style={{ color: theme['tokens']['colors']['secondary']['500-text'] }}>
                               {isSubmitting ? (
                                    <>
-                                        <ButtonSpinner mr="$2" />
+                                        <ButtonSpinner style={{ marginRight: 8 }} />
                                         {config.buttonLabelProcessing}
                                    </>
                               ) : (
@@ -364,8 +341,8 @@ const Request = (payload) => {
                               )}
                          </ButtonText>
                     </Button>
-                    <Button variant="outline" onPress={() => navigation.goBack()} borderColor={colorMode === 'light' ? "$warmGray300" : "$coolGray500"}>
-                         <ButtonText color={colorMode === 'light' ? "$warmGray500" : "$coolGray300"}>Cancel</ButtonText>
+                    <Button variant="outline" onPress={() => navigation.goBack()} style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                         <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark }}>Cancel</ButtonText>
                     </Button>
                </HStack>
           );
@@ -374,7 +351,7 @@ const Request = (payload) => {
      const getErrorMessage = () => {
           if (errorMessage) {
                return (
-                    <Alert width="100%" maxwidth="$full" action="warning" variant="solid">
+                    <Alert style={{ width: '100%' }} action="warning" variant="solid">
                          <AlertText size="xs" bold>
                               {errorMessage}
                          </AlertText>
@@ -386,7 +363,7 @@ const Request = (payload) => {
 
      return (
           <ScrollView>
-               <Box p="$5">
+               <Box style={{ padding: 20 }}>
                     {errorMessage ? getErrorMessage() : null}
                     {getIntroText()}
                     {getTitleField()}

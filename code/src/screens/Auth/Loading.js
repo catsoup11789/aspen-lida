@@ -1,7 +1,6 @@
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import * as SecureStore from 'expo-secure-store';
-import {Box, Center, Heading, Progress, VStack} from '@gluestack-ui/themed';
 import React from 'react';
 import * as Sentry from '@sentry/react-native';
 import { SystemMessagesContext } from '../../context/initialContext';
@@ -76,6 +75,11 @@ import {
 import {getErrorMessage, logDebugMessage, logErrorMessage, logWarnMessage} from '../../util/logging.js';
 import {isPlainObject, orderByFields, stripHTML, RemoveData} from '../../helpers/helpers';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Box } from '@/components/ui/box';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { Progress, ProgressFilledTrack } from '@/components/ui/progress';
+import { VStack } from '@/components/ui/vstack';
 
 const USER_DATA_STALE_MS = 24 * 60 * 60 * 1000;         // 24 hours
 const LANGUAGE_DATA_STALE_MS = 24 * 60 * 60 * 1000;     // 24 hours
@@ -186,6 +190,8 @@ export const LoadingScreen = () => {
         const hasResolvedLibraryContext = !!LIBRARY.url;
 
      const insets = useSafeAreaInsets();
+     const { theme } = useTheme();
+     const borderColor = theme.tokens.colors.ui?.border?.light ?? '#6b7280';
 
      const numSteps = 14;
 
@@ -1533,14 +1539,14 @@ export const LoadingScreen = () => {
      }
 
      return (
-          <Center flex={1} px="$3" width="$full">
-               <Box w="90%" maxW={400} pt={insets.top} pb={insets.bottom} pl={insets.left} pr={insets.right}>
+          <Center style={{ flex: 1, paddingHorizontal: 12, width: '100%' }}>
+               <Box style={{ width: '90%', maxWidth: 400, paddingTop: insets.top, paddingBottom: insets.bottom, paddingLeft: insets.left, paddingRight: insets.right }}>
                     <VStack>
-                         <Heading pb="$5" size="md" color={textColor}>
+                         <Heading size="md" style={{ paddingBottom: 20, color: textColor }}>
                               {loadingText}
                          </Heading>
-                         <Progress value={progress} width="$full" h="$3" size="lg" testID="progress-bar">
-                              <Progress.FilledTrack />
+                         <Progress value={progress} size="md" testID="progress-bar" style={{ width: '100%', backgroundColor: borderColor }}>
+                              <ProgressFilledTrack />
                          </Progress>
                     </VStack>
                </Box>

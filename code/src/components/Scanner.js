@@ -1,9 +1,9 @@
 import { useIsFocused } from '@react-navigation/native';
 import { useCameraPermissions, CameraView } from 'expo-camera';
-import { Button, ButtonText, View } from '@gluestack-ui/themed';
 import React from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
+import { Button, ButtonText } from '@/components/ui/button';
 
 import { useNavigation } from '@react-navigation/native';
 import { navigateStack } from '../helpers/RootNavigator';
@@ -68,11 +68,11 @@ export default function Scanner() {
                          <CameraView onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]} barcodeScannerSettings={{ barcodeTypes: allowedBarcodes }}>
                               <BarcodeMask edgeColor="#62B1F6" showAnimatedLine={false} />
                               <View style={styles.buttonContainer}>
-                                   <Button variant="outline" action="secondary" onPress={() => navigation.goBack()} bgColor="rgba(0,0,0,0.5)" borderColor="$white">
-                                        <ButtonText color="$white">Cancel</ButtonText>
+                                   <Button variant="outline" action="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: '#ffffff' }}>
+                                       <ButtonText style={{ color: '#ffffff' }}>Cancel</ButtonText>
                                    </Button>
                                    {scanned && (
-                                        <Button onPress={() => setScanned(false)} ml="$4">
+                                       <Button onPress={() => setScanned(false)} style={{ marginLeft: 16 }}>
                                              <ButtonText>{getTermFromDictionary(language, 'scan_again')}</ButtonText>
                                         </Button>
                                    )}

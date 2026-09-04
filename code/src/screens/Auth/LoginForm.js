@@ -3,16 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
-import {
-     Button,
-     ButtonText,
-     Center,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Input,
-     InputField, InputIcon,
-     InputSlot } from '@gluestack-ui/themed';
 import React, { useRef } from 'react';
 
 // custom components and helper files
@@ -34,9 +24,14 @@ import { saveAllLibraryBranchData } from '../../util/db';
 import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from '../../util/logging.js';
 import { createApiClient } from '../../util/api/apiFactory';
 import { useTheme } from '../../themes/theme';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
 
 export const GetLoginForm = (props) => {
      const {theme, textColor, colorMode, forceRefreshTheme} = useTheme();
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
      const navigation = useNavigation();
      const barcode = useRoute().params?.barcode ?? null;
      const [loading, setLoading] = React.useState(false);
@@ -351,13 +346,12 @@ export const GetLoginForm = (props) => {
                {loginError ? <DisplayMessage type="error" message={loginErrorMessage} /> : null}
                <FormControl>
                     <FormControlLabel>
-                         <FormControlLabelText fontSize="$sm" color={textColor}>{usernameLabel}</FormControlLabelText>
+                         <FormControlLabelText size="sm" style={{ color: textColor }}>{usernameLabel}</FormControlLabelText>
                     </FormControlLabel>
-                    <Input>
+                    <Input style={{ borderColor }}>
                          <InputField autoCapitalize="none"
-                              size="$xl"
                               autoCorrect={false}
-                              variant="filled"
+                              size="xl"
                               id="barcode"
                               value={username}
                               default={username}
@@ -368,22 +362,22 @@ export const GetLoginForm = (props) => {
                                    passwordRef.current.focus();
                               }}
                               blurOnSubmit={false}
-                              color={textColor}
+                             style={{ color: textColor }}
                                      autoComplete="username"
                          />
                          {allowBarcodeScanner ?
                               <InputSlot onPress={() => openScanner()}>
-                              <InputIcon as={Ionicons} name="barcode-outline" mr="$2" color={textColor} />
+                             <InputIcon as={Ionicons} name="barcode-outline" style={{ marginRight: 8, color: textColor }} />
                          </InputSlot> : null}
                     </Input>
                </FormControl>
-               <FormControl mt="$3">
+               <FormControl style={{ marginTop: 12 }}>
                     <FormControlLabel>
-                         <FormControlLabelText size="sm" color={textColor}>{passwordLabel}</FormControlLabelText>
+                        <FormControlLabelText size="sm" style={{ color: textColor }}>{passwordLabel}</FormControlLabelText>
                     </FormControlLabel>
-                    <Input>
-                         <InputField variant="filled"
-                              size="$xl"
+                   <Input style={{ borderColor }}>
+                        <InputField
+                             size="xl"
                               type={showPassword ? 'text' : 'password'}
                               returnKeyType="go"
                               textContentType="password"
@@ -393,26 +387,25 @@ export const GetLoginForm = (props) => {
                                    setLoading(true);
                                    await initialValidation();
                               }}
-                              color={textColor} autoComplete="password"
-                         />
-                         <InputSlot onPress={toggleShowPassword}>
-                              <InputIcon as={Ionicons} name={showPassword ? 'eye-outline' : 'eye-off-outline'} mr="$2" color={textColor} />
-                         </InputSlot>
-                    </Input>
+                             style={{ color: textColor }} autoComplete="password"
+                        />
+                        <InputSlot onPress={toggleShowPassword}>
+                             <InputIcon as={Ionicons} name={showPassword ? 'eye-outline' : 'eye-off-outline'} style={{ marginRight: 8, color: textColor }} />
+                        </InputSlot>
+                   </Input>
                </FormControl>
 
                <Center>
                     <Button
-                         mt="$3"
-                         size="md"
-                         bgColor={theme.tokens.colors.primary['500']}
-                         isLoading={loading}
-                         isLoadingText={getTermFromDictionary('en', 'logging_in', true)}
-                         onPress={async () => {
-                              setLoading(true);
-                              await initialValidation();
+                        style={{ marginTop: 12, backgroundColor: theme.tokens.colors.primary['500'] }}
+                        size="md"
+                        isLoading={loading}
+                        isLoadingText={getTermFromDictionary('en', 'logging_in', true)}
+                        onPress={async () => {
+                             setLoading(true);
+                             await initialValidation();
                          }}>
-                         <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary('en', 'login')}</ButtonText>
+                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary('en', 'login')}</ButtonText>
                     </Button>
                </Center>
           </>

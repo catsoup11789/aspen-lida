@@ -1,7 +1,10 @@
 import React from 'react';
-import { Center, Heading, HStack, VStack, Spinner } from '@gluestack-ui/themed';
-
 import {isEmpty, isUndefined} from 'lodash';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { Spinner } from '@/components/ui/spinner';
+import { VStack } from '@/components/ui/vstack';
 
 import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage } from '../util/logging.js';
 import { useTheme } from '../themes/theme';
@@ -18,10 +21,10 @@ export const LoadingSpinner = (props) => {
      if (!isUndefined(props) && !isEmpty(props) && !isUndefined(props.message) && !isEmpty(props.message)) {
           logDebugMessage("Showing loading spinner with message: " + props.message);
           return (
-               <Center flex={1} px="$3">
-                    <VStack space="md" alignItems="center">
+               <Center style={{ flex: 1, paddingHorizontal: 12 }}>
+                    <VStack space="md" style={{ alignItems: 'center' }}>
                          <Spinner size="large" color={theme.tokens?.colors.primary['500']} accessibilityLabel="Loading..." />
-                         <Heading size="md" color={textColor}>
+                         <Heading size="md" style={{ color: textColor }}>
                               {props.message}
                          </Heading>
                     </VStack>
@@ -30,7 +33,7 @@ export const LoadingSpinner = (props) => {
      }
 
      return (
-          <Center flex={1}>
+          <Center style={{ flex: 1 }}>
                <HStack>
                     <Spinner color={theme.tokens?.colors.primary['500']} size="large" accessibilityLabel="Loading..." />
                </HStack>

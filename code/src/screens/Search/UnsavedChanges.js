@@ -1,6 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, Button, ButtonText, ButtonGroup, Text, Heading, Center, CloseIcon, Pressable } from '@gluestack-ui/themed';
 import React from 'react';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { CloseIcon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { Heading } from '@/components/ui/heading';
+import { Text } from '@/components/ui/text';
 
 import { SearchGlobal } from '../../util/globals';
 import { getTermFromDictionary } from '../../translations/TranslationService';
@@ -47,24 +53,24 @@ export const UnsavedChangesExit = (props) => {
      return (
           <Center>
                <Pressable onPress={() => getStatus()}>
-                    <CloseIcon size="lg" color={textColor} />
+                    <CloseIcon size="lg" style={{ color: textColor }} />
                </Pressable>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose} useRNModal={true}>
                     <AlertDialogBackdrop/>
-                    <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceSoft.light : theme.tokens.colors.ui.surfaceSoft.dark }}>
                          <AlertDialogHeader>
-                              <Heading color={textColor}>{getTermFromDictionary(language, 'discard_changes')}</Heading>
+                              <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'discard_changes')}</Heading>
                          </AlertDialogHeader>
                          <AlertDialogBody>
-                              <Text color={textColor}>{getTermFromDictionary(language, 'unsaved_changes_warning')}</Text>
+                              <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'unsaved_changes_warning')}</Text>
                          </AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">
-                                   <Button bgColor={theme.tokens.colors.primary['500']} onPress={updateClose} ref={cancelRef}>
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'save')}</ButtonText>
+                                   <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={updateClose} ref={cancelRef}>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'save')}</ButtonText>
                                    </Button>
                                    <Button variant="link" onPress={forceClose}>
-                                        <ButtonText color="$error500">{getTermFromDictionary(language, 'discard')}</ButtonText>
+                                        <ButtonText style={{ color: theme.tokens.colors.ui.danger }}>{getTermFromDictionary(language, 'discard')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

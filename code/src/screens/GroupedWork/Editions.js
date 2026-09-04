@@ -1,5 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
-import { Text, ChevronDownIcon, Heading, HStack, VStack, Badge, BadgeText, Button, ButtonGroup, ButtonText, ButtonIcon, Box, Icon, Center, AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, AlertDialogBackdrop, Select, SelectTrigger, SelectInput, SelectIcon, SelectPortal, SelectBackdrop, SelectContent, SelectDragIndicatorWrapper, SelectDragIndicator, SelectItem, SelectScrollView, ScrollView } from '@gluestack-ui/themed';
+import React, { useState, useRef } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -23,6 +22,18 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/logging.js';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { HStack } from '@/components/ui/hstack';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 export const Editions = () => {
      // 1. Hooks
@@ -36,7 +47,7 @@ export const Editions = () => {
      const { colorMode, theme, textColor } = useTheme();
      const insets = useSafeAreaInsets();
 
-     const [isLoading, setLoading] = useState(false);
+     const [isLoading] = useState(false);
      const [confirmingHold, setConfirmingHold] = useState(false);
      const [selectedItem, setSelectedItem] = useState('');
      const [responseIsOpen, setResponseIsOpen] = useState(false);
@@ -55,9 +66,9 @@ export const Editions = () => {
      let route = navigation.getParent()?.getState()?.routes || [];
      const editionsModalRoute = route.find(r => r.name === 'EditionsModal');
      const params = editionsModalRoute?.params || {};
-     const { id, recordId, format, source, volumeInfo, prevRoute } = params;
+     const { id, format, source, volumeInfo, prevRoute } = params;
 
-     const { status, data, error, isFetching } = useQuery({
+     const { status, data, isFetching } = useQuery({
           queryKey: ['records', id, source, format, language, library.baseUrl],
           queryFn: () => getRecords(id, format, source, language, library.baseUrl),
           enabled: !!id && !!format && !!source });
@@ -134,15 +145,15 @@ export const Editions = () => {
      const records = data?.records ? (Array.isArray(data.records) ? data.records : Object.values(data.records)) : [];
 
      return (
-          <Box flex={1}>
+          <Box style={{ flex: 1 }}>
                <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}>
-                    <Box p="$3">
+                    <Box style={{ padding: 12 }}>
                          {isFetching ? (
                               loadingSpinner()
                          ) : status === 'error' ? (
                               loadError('Error', '')
                          ) : records.length === 0 ? (
-                              <Center p="$5">
+                              <Center style={{ padding: 20 }}>
                                    <Text>Edition information was not found</Text>
                               </Center>
                          ) : (
@@ -185,22 +196,22 @@ export const Editions = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelResponseRef} isOpen={responseIsOpen} onClose={onResponseClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading color={textColor}>{response?.title}</Heading>
+                                   <Heading style={{ color: textColor }}>{response?.title}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text color={textColor}>{response?.message}</Text>
+                                   <Text style={{ color: textColor }}>{response?.message}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="sm">
                                         {response?.action ? (
-                                             <Button onPress={() => handleNavigation(response.action)} variant="solid" bgColor={theme.tokens.colors.primary['500']}>
-                                                  <ButtonText color={theme.tokens.colors.primary['500-text']}>{response.action}</ButtonText>
+                                             <Button onPress={() => handleNavigation(response.action)} variant="solid" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                                                  <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{response.action}</ButtonText>
                                              </Button>
                                         ) : null}
-                                        <Button variant="outline" borderColor={theme.tokens.colors.primary['500']} ref={cancelResponseRef} onPress={() => setResponseIsOpen(false)}>
-                                             <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                        <Button variant="outline" style={{ borderColor: theme.tokens.colors.primary['500'] }} ref={cancelResponseRef} onPress={() => setResponseIsOpen(false)}>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>
@@ -208,23 +219,23 @@ export const Editions = () => {
                     </AlertDialog>
                     <AlertDialog leastDestructiveRef={cancelHoldConfirmationRef} isOpen={holdConfirmationIsOpen} onClose={onHoldConfirmationClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading color={textColor}>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
+                                   <Heading style={{ color: textColor }}>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text color={textColor}>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
+                                   <Text style={{ color: textColor }}>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">
                                         <Button variant="link" onPress={() => setHoldConfirmationIsOpen(false)}>
-                                             <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
                                              isLoading={confirmingHold}
                                              isLoadingText="Placing hold..."
                                              variant="solid"
-                                             bgColor={theme.tokens.colors.primary['500']}
+                                             style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                              onPress={async () => {
                                                   setConfirmingHold(true);
                                                   await confirmHold(holdConfirmationResponse.recordId, holdConfirmationResponse.confirmationId, language, library.baseUrl).then(async (result) => {
@@ -247,7 +258,7 @@ export const Editions = () => {
                                                        }
                                                   });
                                              }}>
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'confirm_place_hold')}</ButtonText>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'confirm_place_hold')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>
@@ -255,26 +266,21 @@ export const Editions = () => {
                     </AlertDialog>
                     <AlertDialog leastDestructiveRef={cancelHoldItemSelectRef} isOpen={holdItemSelectIsOpen} onClose={onHoldItemSelectClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading color={textColor}>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
+                                   <Heading style={{ color: textColor }}>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text color={textColor}>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
+                                   <Text style={{ color: textColor }}>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                    {holdSelectItemResponse?.items ? (
-                                        <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} mt="$1" mb="$2" onValueChange={(itemValue) => setSelectedItem(itemValue)}>
+                                        <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setSelectedItem(itemValue)}>
                                              <SelectTrigger>
-                                                  <SelectInput py={0} placeholder="Select option" color={textColor} />
-                                                  <SelectIcon mr="$3">
-                                                       <Icon as={ChevronDownIcon} color={textColor} />
-                                                  </SelectIcon>
+                                                  <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select option" />
+                                                  <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent
-                                                       bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-                                                       pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}
-                                                  >
+                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
@@ -288,7 +294,7 @@ export const Editions = () => {
                                                                  if (item.status) {
                                                                       itemLabel += " - " + item.status;
                                                                  }
-                                                                 return <SelectItem label={item.callNumber} value={item.itemNumber} key={index} sx={{ _text: { color: textColor } }} />;
+                                                                 return <SelectItem label={itemLabel} value={item.itemNumber} key={index} textStyle={{ color: textColor }} />;
                                                             })}
                                                        </SelectScrollView>
                                                   </SelectContent>
@@ -299,13 +305,13 @@ export const Editions = () => {
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">
                                         <Button variant="link" onPress={() => setHoldItemSelectIsOpen(false)}>
-                                             <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
                                              isLoading={placingItemHold}
                                              isLoadingText="Placing hold..."
                                              variant="solid"
-                                             bgColor={theme.tokens.colors.primary['500']}
+                                             style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                              onPress={async () => {
                                                   setPlacingItemHold(true);
                                                   await placeHold(library.baseUrl, selectedItem, 'ils', holdSelectItemResponse.patronId, holdSelectItemResponse.pickupLocation, holdSelectItemResponse.sublocation, false, '', 'item', null, null, null, holdSelectItemResponse.bibId, language).then(async (result) => {
@@ -327,7 +333,7 @@ export const Editions = () => {
                                                        }
                                                   });
                                              }}>
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'place_hold')}</ButtonText>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'place_hold')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>
@@ -394,32 +400,32 @@ const Edition = (props) => {
      const statusIndicator = getStatusIndicator(status, language);
 
      return (
-          <Box mt="$0" mb="$0" p="$3" borderBottomWidth="$1" borderColor="$warmGray200">
-               <HStack justifyContent="space-between" alignItems="center" space="sm" flex={1}>
-                    <VStack space="sm" maxW="40%" flex={1} justifyContent="center">
-                         <HStack space="xs" flexWrap="wrap">
-                              <Text bold size="xs" color={textColor}>
+          <Box style={{ marginTop: 0, marginBottom: 0, padding: 12, borderBottomWidth: 1, borderColor: theme.tokens.colors.ui.border.light }}>
+               <HStack space="sm" style={{ justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
+                    <VStack space="sm" style={{ maxWidth: '40%', flex: 1, justifyContent: 'center' }}>
+                         <HStack space="xs" style={{ flexWrap: 'wrap' }}>
+                              <Text bold size="xs" style={{ color: textColor }}>
                                    {records.publicationDate}
                               </Text>
-                              <Text size="xs" color={textColor}>
-                                   {records.publisher}. {records.edition} {records.physical} {closedCaptioned === '1' ? <Icon as={MaterialIcons} name="closed-caption" size="sm" color={textColor} /> : null}
+                              <Text size="xs" style={{ color: textColor }}>
+                                   {records.publisher}. {records.edition} {records.physical} {closedCaptioned === '1' ? <Icon as={MaterialIcons} name="closed-caption" size="sm" style={{ color: textColor }} /> : null}
                               </Text>
                          </HStack>
                          <VStack space="sm">
                               <Center>
-                                   <Badge action={statusIndicator.indicator} borderRadius="$sm" variant="solid">
+                                   <Badge action={statusIndicator.indicator} variant="solid" style={{ borderRadius: 8 }}>
                                         <BadgeText textTransform="none">{statusIndicator.label}</BadgeText>
                                    </Badge>
                               </Center>
                               {records.source === 'ils' || status.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
-                                        <ButtonIcon as={MaterialIcons} name="location-pin" size="xs" color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"} />
-                                        <ButtonText color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
+                                        <ButtonIcon as={MaterialIcons} name="location-pin" size="xs" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }} />
+                                        <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                                    </Button>
                               ) : null}
                          </VStack>
                     </VStack>
-                    <ButtonGroup flexDirection={actions.length > 1 ? 'column' : 'row'} width="50%" justifyContent="center" alignItems="stretch" space="sm">
+                    <ButtonGroup space="sm" style={{ flexDirection: actions.length > 1 ? 'column' : 'row', width: '50%', justifyContent: 'center', alignItems: 'stretch' }}>
                          {actions.map((item, index) => (
                               <ActionButton
                                    key={index}

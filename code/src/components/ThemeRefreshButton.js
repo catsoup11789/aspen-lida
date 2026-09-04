@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, ButtonText, Center } from '@gluestack-ui/themed';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
 
 import { useTheme } from '../themes/theme';
 import { loadLibraryUrl } from '../util/db';
@@ -39,10 +40,15 @@ export const ThemeRefreshButton = ({
 
      return (
           <Center>
-               <Button bgColor={theme.tokens.colors.primary['500']} onPress={onPress} isDisabled={isRefreshing} {...buttonProps}>
-                    <ButtonText color={theme.tokens.colors.primary['500-text']}>{isRefreshing ? refreshingLabel : label}</ButtonText>
+               <Button
+                    onPress={onPress}
+                    isDisabled={isRefreshing}
+                    style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                    {...buttonProps}>
+                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
+                         {isRefreshing ? refreshingLabel : label}
+                    </ButtonText>
                </Button>
           </Center>
      );
 };
-

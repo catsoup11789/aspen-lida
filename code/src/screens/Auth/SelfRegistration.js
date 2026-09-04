@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { LoadingSpinner } from '../../components/loadingSpinner';
@@ -9,13 +9,24 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import { getSelfRegistrationForm, submitSelfRegistration } from '../../util/api/registration';
 
 
-import { ScrollView, Box, Button, ButtonGroup, ButtonText, FormControl, FormControlHelper, FormControlHelperText, Icon, Input, Text, Select, SelectTrigger, SelectInput, SelectIcon, ChevronDownIcon, SelectPortal, SelectBackdrop, SelectContent, SelectDragIndicatorWrapper, SelectDragIndicator, SelectItem, SelectScrollView, CheckIcon, FormControlLabel, FormControlLabelText, InputField, HStack, KeyboardAvoidingView } from '@gluestack-ui/themed';
 import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { useTheme } from '../../themes/theme';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { FormControl, FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { HStack } from '@/components/ui/hstack';
+import { Input, InputField } from '@/components/ui/input';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { Text } from '@/components/ui/text';
 
 export const SelfRegistration = () => {
 	const insets = useSafeAreaInsets();
 	const {theme, textColor, colorMode} = useTheme();
+	const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+	const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+	const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
 	const route = useRoute();
 	const navigation = useNavigation();
 	const libraryUrl = route?.params?.libraryUrl ?? '';
@@ -35,9 +46,9 @@ export const SelfRegistration = () => {
                          const formFields = response.data.result ?? [];
                          setFields(formFields);
                          let object = {};
-                         _.map(formFields, function(section, index, collection) {
+                         _.map(formFields, function(section) {
                               const properties = section.properties;
-                              _.forEach(properties, function (field, key) {
+                              _.forEach(properties, function (field) {
                                    let prop = field.property;
                                    const property = {
                                         [prop]: '' };
@@ -68,25 +79,25 @@ export const SelfRegistration = () => {
 		if(_.size(fields) > 0) {
 			return (
 				<>
-					{_.map(fields, function(section, index, collection) {
+					{_.map(fields, function(section) {
 						const {label, properties} = section;
 						return (
-							<Box mb="$5">
-							<Text bold fontSize="$md" color={textColor}>{label}</Text>
+							<Box style={{ marginBottom: 20 }}>
+							<Text bold size="md" style={{ color: textColor }}>{label}</Text>
 							{_.map(properties, function(field, key) {
 							const {type, description, maxLength, required, property} = field;
 							const fieldLabel = field.label;
 							if (type === 'text') {
 								return (
-									<FormControl my="$2" isRequired={required}>
-										<FormControlLabel><FormControlLabelText color={textColor}>{fieldLabel}</FormControlLabelText></FormControlLabel>
-										<Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}><InputField type='text'
+									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
+										<FormControlLabel><FormControlLabelText style={{ color: textColor }}>{fieldLabel}</FormControlLabelText></FormControlLabel>
+										<Input style={{ borderColor }}><InputField type='text'
 										                   key={key}
 										                   name={property}
 										                   maxLength={maxLength ? parseInt(maxLength) : undefined}
 										                   accessibilityLabel={description}
 										                   returnKeyType="next"
-										                   color={textColor}
+										                   style={{ color: textColor }}
 										                   onChangeText={(value) => {
 											                   handleInputChange(property, value);
 										                   }}/></Input>
@@ -101,14 +112,14 @@ export const SelfRegistration = () => {
 								)
 							} else if (type === 'password') {
 								return (
-									<FormControl my="$2" isRequired={required}>
-										<FormControlLabel><FormControlLabelText color={textColor}>{fieldLabel}</FormControlLabelText></FormControlLabel>
-										<Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}><InputField type='password'
+									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
+										<FormControlLabel><FormControlLabelText style={{ color: textColor }}>{fieldLabel}</FormControlLabelText></FormControlLabel>
+										<Input style={{ borderColor }}><InputField type='password'
 										                   key={property}
 										                   name={property}
 										                   maxLength={maxLength ? parseInt(maxLength) : undefined}
 										                   accessibilityLabel={description}
-										                   color={textColor}
+										                   style={{ color: textColor }}
 										                   onChangeText={(value) => {
 											                   handleInputChange(property, value);
 										                   }}/>
@@ -124,14 +135,14 @@ export const SelfRegistration = () => {
 								)
 							}  else if (type === 'email') {
 								return (
-									<FormControl my="$2" isRequired={required}>
-										<FormControlLabel><FormControlLabelText color={textColor}>{fieldLabel}</FormControlLabelText></FormControlLabel>
-										<Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}><InputField type='email'
+									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
+										<FormControlLabel><FormControlLabelText style={{ color: textColor }}>{fieldLabel}</FormControlLabelText></FormControlLabel>
+										<Input style={{ borderColor }}><InputField type='email'
 										                   key={property}
 										                   name={property}
 										                   maxLength={maxLength ? parseInt(maxLength) : undefined}
 										                   accessibilityLabel={description}
-										                   color={textColor}
+										                   style={{ color: textColor }}
 										                   onChangeText={(value) => {
 											                   handleInputChange(property, value);
 										                   }} /></Input>
@@ -147,8 +158,8 @@ export const SelfRegistration = () => {
 							} else if (type === 'enum') {
 								const values = field.values ?? {};
 								return (
-									<FormControl my="$2" isRequired={required}>
-										<FormControlLabel><FormControlLabelText color={textColor}>{fieldLabel}</FormControlLabelText></FormControlLabel>
+									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
+										<FormControlLabel><FormControlLabelText style={{ color: textColor }}>{fieldLabel}</FormControlLabelText></FormControlLabel>
 										<Select
 											name={property}
 											accessibilityLabel={description}
@@ -157,23 +168,22 @@ export const SelfRegistration = () => {
 											}}
 										>
 											<SelectTrigger variant="outline" size="md">
-												<SelectInput py={0} placeholder="Select option" color={textColor}/>
-												<SelectIcon mr="$3">
-													<Icon as={ChevronDownIcon} color={textColor}/>
+												<SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select option"/>
+												<SelectIcon style={{ marginRight: 12 }}>
+													<Icon as={ChevronDownIcon} style={{ color: textColor }}/>
 												</SelectIcon>
 											</SelectTrigger>
 											<SelectPortal>
 												<SelectBackdrop />
 												<SelectContent
-													bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-													pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}
+													style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
 												>
 													<SelectDragIndicatorWrapper>
 														<SelectDragIndicator />
 													</SelectDragIndicatorWrapper>
 													<SelectScrollView>
-														{_.map(values, function (item, index, array) {
-															return <SelectItem key={index} value={index} label={item} bgColor={property === index ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: property === index ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />;
+														{_.map(values, function (item, index) {
+															return <SelectItem key={index} value={index} label={item} style={{ backgroundColor: property === index ? tertiaryBg : 'transparent' }} />;
 														})}
 													</SelectScrollView>
 												</SelectContent>
@@ -221,7 +231,7 @@ export const SelfRegistration = () => {
 	};
 
 	return (
-		<Box flex={1} pb={insets.bottom}>
+		<Box style={{ flex: 1, paddingBottom: insets.bottom }}>
 			{isLoading ? (
 				<LoadingSpinner />
 			) : (
@@ -230,83 +240,83 @@ export const SelfRegistration = () => {
 					style={{ flex: 1 }}
 				>
 					<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-						<Box p="$3">
+						<Box style={{ padding: 12 }}>
 						{!showResults ? (
-							<Text mb="$3" color={textColor}>{getTermFromDictionary('en', 'self_registration_message')}</Text>
+							<Text style={{ marginBottom: 12, color: textColor }}>{getTermFromDictionary('en', 'self_registration_message')}</Text>
 						) : null}
 						{showResults && !hasError ? (
 							<>
 								{results.success === true ? (
-									<Text mb="$3" color={textColor}>{getTermFromDictionary('en', 'self_registration_success')}</Text>
+									<Text style={{ marginBottom: 12, color: textColor }}>{getTermFromDictionary('en', 'self_registration_success')}</Text>
 								) : (
-									<Text mb="$3" color={textColor}>{getTermFromDictionary('en', 'self_registration_error')}</Text>
+									<Text style={{ marginBottom: 12, color: textColor }}>{getTermFromDictionary('en', 'self_registration_error')}</Text>
 								)}
 
 								{results.message ? (
-									<Text mb="$3" color={textColor}>{results.message}</Text>
+									<Text style={{ marginBottom: 12, color: textColor }}>{results.message}</Text>
 								) : null}
 
 								{results.barcode ? (
-									<HStack space="xs" mb="$3">
-										<Text color={textColor}>Your library card is</Text>
-										<Text bold color={textColor}>{results.barcode}</Text>
+									<HStack space="xs" style={{ marginBottom: 12 }}>
+										<Text style={{ color: textColor }}>Your library card is</Text>
+										<Text bold style={{ color: textColor }}>{results.barcode}</Text>
 									</HStack>
 								) : null}
 
 								{results.username ? (
-									<HStack space="xs" mb="$3">
-										<Text color={textColor}>Your username is</Text>
-										<Text bold color={textColor}>{results.username}</Text>
+									<HStack space="xs" style={{ marginBottom: 12 }}>
+										<Text style={{ color: textColor }}>Your username is</Text>
+										<Text bold style={{ color: textColor }}>{results.username}</Text>
 									</HStack>
 								) : null}
 
 								{results.password ? (
-									<HStack space="xs" mb="$3">
-										<Text color={textColor}>Your initial password is</Text>
-										<Text bold color={textColor}>{results.password}</Text>
+									<HStack space="xs" style={{ marginBottom: 12 }}>
+										<Text style={{ color: textColor }}>Your initial password is</Text>
+										<Text bold style={{ color: textColor }}>{results.password}</Text>
 									</HStack>
 								) : null}
 
 								{results.requirePinReset ? (
-									<Text mb="$3" color={textColor}>To login to the catalog, you must reset your PIN.</Text>
+									<Text style={{ marginBottom: 12, color: textColor }}>To login to the catalog, you must reset your PIN.</Text>
 								) : null}
 
-								<Button borderColor={theme['tokens']['colors']['secondary']['500']} variant="outline" onPress={() => {
+								<Button style={{ borderColor: theme['tokens']['colors']['secondary']['500'] }} variant="outline" onPress={() => {
 									navigation.goBack();
 									setShowResults(false);
 									setResults('');
 								}}>
-									<ButtonText color={theme['tokens']['colors']['secondary']['500']}>{getTermFromDictionary('en', 'close_window')}</ButtonText>
+									<ButtonText style={{ color: theme['tokens']['colors']['secondary']['500'] }}>{getTermFromDictionary('en', 'close_window')}</ButtonText>
 								</Button>
 							</>
 						) : showResults && hasError ? (
                                    <>
-                                        <Text mb="$3" color={textColor}>{results}</Text>
-                                        <Button borderColor={theme['tokens']['colors']['secondary']['500']} variant="outline" onPress={() => {
+                                        <Text style={{ marginBottom: 12, color: textColor }}>{results}</Text>
+                                        <Button style={{ borderColor: theme['tokens']['colors']['secondary']['500'] }} variant="outline" onPress={() => {
                                              navigation.goBack();
                                              setShowResults(false);
                                              setResults('');
                                              setHasError(false);
                                         }}>
-                                             <ButtonText color={theme['tokens']['colors']['secondary']['500']}>{getTermFromDictionary('en', 'close_window')}</ButtonText>
+                                             <ButtonText style={{ color: theme['tokens']['colors']['secondary']['500'] }}>{getTermFromDictionary('en', 'close_window')}</ButtonText>
                                         </Button>
                                    </>
                               ) :  (
 							<>
 								{getFields()}
-								<ButtonGroup pt="$3" pb="$5">
+								<ButtonGroup style={{ paddingTop: 12, paddingBottom: 20 }}>
 									<Button
-										bgColor={theme['tokens']['colors']['secondary']['500']}
+										style={{ backgroundColor: theme['tokens']['colors']['secondary']['500'] }}
 										isLoading={isSubmitting}
 										isLoadingText="Registering..."
 										onPress={() => {
 											setIsSubmitting(true);
 											handleSubmission();
 										}}>
-										<ButtonText color={theme['tokens']['colors']['secondary']['500-text']}>{getTermFromDictionary('en', 'register')}</ButtonText>
+										<ButtonText style={{ color: theme['tokens']['colors']['secondary']['500-text'] }}>{getTermFromDictionary('en', 'register')}</ButtonText>
 									</Button>
-									<Button borderColor={theme['tokens']['colors']['secondary']['500']} variant="outline" onPress={() => navigation.goBack()}>
-										<ButtonText color={theme['tokens']['colors']['secondary']['500']}>{getTermFromDictionary('en', 'cancel')}</ButtonText>
+									<Button style={{ borderColor: theme['tokens']['colors']['secondary']['500'] }} variant="outline" onPress={() => navigation.goBack()}>
+										<ButtonText style={{ color: theme['tokens']['colors']['secondary']['500'] }}>{getTermFromDictionary('en', 'cancel')}</ButtonText>
 									</Button>
 								</ButtonGroup>
 							</>

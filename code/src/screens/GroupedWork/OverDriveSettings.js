@@ -2,31 +2,19 @@ import {
      Button,
      ButtonText,
      ButtonGroup,
-     Checkbox,
-     CheckboxIndicator,
-     CheckboxIcon,
-     CheckboxLabel,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Input,
-     InputField,
-     Modal,
-     ModalBackdrop,
-     ModalContent,
-     ModalHeader,
-     ModalBody,
-     ModalFooter,
-     ModalCloseButton,
-     VStack,
-     CheckIcon,
-     Icon, CloseIcon, Heading
-} from '@gluestack-ui/themed';
+} from '@/components/ui/button';
 import React from 'react';
 
 // custom components and helper files
 import { updateOverDriveEmail } from '../../util/api/user';
 import { getTermFromDictionary } from '../../translations/TranslationService';
+import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { CheckIcon, CloseIcon, Icon } from '@/components/ui/icon';
+import { Input, InputField } from '@/components/ui/input';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { VStack } from '@/components/ui/vstack';
 
 export const GetOverDriveSettings = (props) => {
      const { promptTitle, promptItemId, promptSource, promptPatronId, promptForOverdriveEmail, libraryUrl, showOverDriveSettings, handleOverDriveSettings, showAlert, setEmail, setRememberPrompt, overdriveEmail, language } = props;
@@ -35,11 +23,11 @@ export const GetOverDriveSettings = (props) => {
           <Modal isOpen={showOverDriveSettings} onClose={() => handleOverDriveSettings(false)}>
                <ModalBackdrop />
                <ModalContent>
-                    <ModalHeader borderBottomWidth="$0">
+                    <ModalHeader style={{ borderBottomWidth: 0 }}>
                          <Heading>{promptTitle}</Heading>
                          <ModalCloseButton />
                     </ModalHeader>
-                    <ModalBody mt="$4">
+                    <ModalBody style={{ marginTop: 16 }}>
                          <FormControl>
                               <VStack space="md">
                                    <FormControlLabel>
@@ -49,7 +37,7 @@ export const GetOverDriveSettings = (props) => {
                                         <InputField autoCapitalize="none" autoCorrect={false} onChangeText={(text) => setEmail(text)} />
                                    </Input>
                                    <Checkbox value="yes" size="md" onChange={(isSelected) => setRememberPrompt(isSelected)}>
-                                        <CheckboxIndicator mr="$2">
+                                        <CheckboxIndicator style={{ marginRight: 8 }}>
                                              <CheckboxIcon as={CheckIcon} />
                                         </CheckboxIndicator>
                                         <CheckboxLabel>{getTermFromDictionary(language, 'remember_settings')}</CheckboxLabel>
@@ -57,7 +45,7 @@ export const GetOverDriveSettings = (props) => {
                               </VStack>
                          </FormControl>
                     </ModalBody>
-                    <ModalFooter borderTopWidth="$0">
+                    <ModalFooter style={{ borderTopWidth: 0 }}>
                          <ButtonGroup space="md" size="md">
                               <Button action="secondary" variant="ghost" onPress={() => handleOverDriveSettings(false)}>
                                    <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>

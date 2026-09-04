@@ -5,9 +5,8 @@ import * as Location from 'expo-location';
 import * as SecureStore from 'expo-secure-store';
 import * as WebBrowser from 'expo-web-browser';
 import _ from 'lodash';
-import { Pressable, Box, Button, ButtonGroup, ButtonText, ButtonIcon, Center, Image, Text, KeyboardAvoidingView, Modal, ModalBackdrop, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@gluestack-ui/themed';
 import React from 'react';
-import { Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 import { navigate } from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
@@ -29,6 +28,13 @@ import { APIErrorLog } from '../MyAccount/Settings/Logs/APIErrorLog'; // adjust 
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { logDebugMessage, logInfoMessage, getErrorMessage } from '../../util/logging';
 import { popAlert } from '../../components/feedback';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Image } from '@/components/ui/image';
+import { Modal, ModalBackdrop, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
 
 export const LoginScreen = () => {
      const [isLoading, setIsLoading] = React.useState(true);
@@ -61,6 +67,7 @@ export const LoginScreen = () => {
      const logoTapCountRef = React.useRef(0);
      const logoTapTimerRef = React.useRef(null);
      const { theme, colorMode, textColor } = useTheme();
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
 
      let isCommunity = true;
      if (!GLOBALS.slug.startsWith('aspen-lida') || GLOBALS.slug === 'aspen-lida-bws') {
@@ -242,35 +249,35 @@ export const LoginScreen = () => {
      };
 
      const loginScreenContent = (
-          <SafeAreaView flex={1}>
-               <Box px="$5" h="$full" alignItems="center" justifyContent="center">
+          <SafeAreaView style={{ flex: 1 }}>
+               <Box style={{ paddingHorizontal: 20, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <Pressable onPress={onLogoTap}>
-                         <Image source={{ uri: logoImage }} rounded="$2xl" size="xl" alt="" fallbackSource={require('../../themes/default/aspenLogo.png')} />
+                         <Image source={{ uri: logoImage }} style={{ width: 96, height: 96, borderRadius: 24 }} alt="" fallbackSource={require('../../themes/default/aspenLogo.png')} />
                     </Pressable>
                     {isCommunity || shouldShowSelectLibrary ? <SelectYourLibrary updateSelectedLibrary={updateSelectedLibrary} selectedLibrary={selectedLibrary} query={query} setQuery={setQuery} showModal={showModal} setShowModal={setShowModal} isCommunity={isCommunity} setShouldRequestPermissions={setShouldRequestPermissions} shouldRequestPermissions={shouldRequestPermissions} permissionRequested={permissionRequested} libraries={libraries} allLibraries={allLibraries} /> : null}
-                    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'padding'} width="100%">
+                    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'padding'} style={{ width: '100%' }}>
                          {selectedLibrary ? <GetLoginForm selectedLibrary={selectedLibrary} usernameLabel={usernameLabel} passwordLabel={passwordLabel} allowBarcodeScanner={allowBarcodeScanner} allowCode39={allowCode39} updateSelectedLibrary={updateSelectedLibrary} /> : null}
-                         <ButtonGroup space="$1" justifyContent="center" pt="$5" flexWrap="wrap">
+                         <ButtonGroup space="sm" style={{ justifyContent: 'center', paddingTop: 20, flexWrap: 'wrap' }}>
                               {enableForgotPasswordLink === '1' || enableForgotPasswordLink === 1 ? <ResetPassword ils={ils} enableForgotPasswordLink={enableForgotPasswordLink} usernameLabel={usernameLabel} passwordLabel={passwordLabel} forgotPasswordType={forgotPasswordType} showForgotPasswordModal={showForgotPasswordModal} setShowForgotPasswordModal={setShowForgotPasswordModal} /> : null}
                               {enableForgotBarcode === '1' || enableForgotBarcode === 1 ? <ForgotBarcode usernameLabel={usernameLabel} showForgotBarcodeModal={showForgotBarcodeModal} setShowForgotBarcodeModal={setShowForgotBarcodeModal} /> : null}
                          </ButtonGroup>
                          {enableSelfRegistration ? (
-                              <Button mt="$3" variant="link" onPress={openSelfRegistration}>
-                                   <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary('en', 'register_for_a_library_card')}</ButtonText>
+                              <Button style={{ marginTop: 12 }} variant="link" onPress={openSelfRegistration}>
+                                   <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary('en', 'register_for_a_library_card')}</ButtonText>
                               </Button>
                          ) : null}
                          {isCommunity && Platform.OS !== 'android' ? (
-                              <Button mt="$5" size="xs" variant="link">
-                                   <ButtonIcon mr="$1" as={Ionicons} name="navigate-circle-outline" bg={theme['tokens']['colors']['tertiary']['500']} />
-                                   <ButtonText color={theme['tokens']['colors']['tertiary']['500-text']}>{getTermFromDictionary('en', 'reset_geolocation')}</ButtonText>
+                              <Button style={{ marginTop: 20 }} size="xs" variant="link">
+                                   <ButtonIcon as={Ionicons} name="navigate-circle-outline" style={{ marginRight: 4, color: theme.tokens.colors.tertiary['500'] }} />
+                                   <ButtonText style={{ color: theme.tokens.colors.tertiary['500'] }}>{getTermFromDictionary('en', 'reset_geolocation')}</ButtonText>
                               </Button>
                          ) : null}
                          <Center>
-                              <Text mt="$5" fontSize="$xs" color={textColor}>
+                              <Text size="xs" style={{ marginTop: 20, color: textColor }}>
                                    {GLOBALS.appVersion} {GLOBALS.appStage} b[{GLOBALS.appBuild}] p[{GLOBALS.appPatch}] c[{GLOBALS.releaseChannel ?? 'Development'}]
                               </Text>
                               {showApiErrorButton ? (
-                                   <Button mt="$4" size="xs" variant="outline" onPress={() => setShowApiErrorModal(true)}>
+                                   <Button style={{ marginTop: 16 }} size="xs" variant="outline" onPress={() => setShowApiErrorModal(true)}>
                                         <ButtonText>Open API Error Log</ButtonText>
                                    </Button>
                               ) : null}
@@ -278,12 +285,12 @@ export const LoginScreen = () => {
                     </KeyboardAvoidingView>
                     <Modal isOpen={showApiErrorModal} onClose={() => setShowApiErrorModal(false)}>
                          <ModalBackdrop />
-                         <ModalContent maxHeight="75%" width="95%" alignSelf="center" borderRadius="$lg">
+                         <ModalContent style={{ maxHeight: '75%', width: '95%', alignSelf: 'center', borderRadius: 12, backgroundColor: surfaceBg }}>
                               <ModalHeader></ModalHeader>
-                              <ModalBody px="$4">
+                              <ModalBody style={{ paddingHorizontal: 16 }}>
                                    <APIErrorLog theme={theme} colorMode={colorMode} textColor={textColor} />
                               </ModalBody>
-                              <ModalFooter pb={Math.max(insets.bottom, 8)} pt="$2" px="$4">
+                              <ModalFooter style={{ paddingBottom: Math.max(insets.bottom, 8), paddingTop: 8, paddingHorizontal: 16 }}>
                                    <Button variant="outline" onPress={() => setShowApiErrorModal(false)}>
                                         <ButtonText>Close</ButtonText>
                                    </Button>

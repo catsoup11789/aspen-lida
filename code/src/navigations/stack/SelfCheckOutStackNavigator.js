@@ -1,6 +1,4 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Pressable, Icon } from '@gluestack-ui/themed';
-import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 
 
@@ -22,7 +20,7 @@ const Stack = createNativeStackNavigator();
 const SelfCheckOutStackNavigator = () => {
      const language = useActiveLanguage();
      const { data: accounts } = useAccounts();
-     const {textColor} = useTheme();
+     useTheme();
 
      let defaultRoute = 'SelfCheckOut';
      if (_.size(accounts) >= 1) {

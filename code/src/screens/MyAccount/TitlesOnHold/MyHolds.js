@@ -1,10 +1,21 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useIsFetching, useQuery, useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
-import { Box, Button, ButtonText, Center, CheckboxGroup, ChevronDownIcon, FormControl, Heading, HStack, Icon, ScrollView, Select, SelectBackdrop, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectTrigger, SelectItem, SelectContent, SelectPortal, SelectScrollView, Text, AlertIcon, InfoIcon, AlertText, Alert, VStack } from '@gluestack-ui/themed';
 import React from 'react';
 import { Platform, SectionList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Alert, AlertIcon, AlertText } from '@/components/ui/alert';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { CheckboxGroup } from '@/components/ui/checkbox';
+import { FormControl } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { Icon, ChevronDownIcon, InfoIcon } from '@/components/ui/icon';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { Text } from '@/components/ui/text';
 
 // custom components and helper files
 import { LoadingSpinner } from '../../../components/loadingSpinner';
@@ -43,10 +54,14 @@ export const MyHolds = () => {
      const [isLoading, setLoading] = React.useState(false);
      const [values, setGroupValues] = React.useState([]);
      const [date, setNewDate] = React.useState();
-     const [pickupLocations, setPickupLocations] = React.useState([]);
+     const [pickupLocations] = React.useState([]);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const { theme, textColor, colorMode } = useTheme();
      const insets = useSafeAreaInsets();
+     const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
 
      const [sortBy, setSortBy] = React.useState({
           title: 'Sort by Title',
@@ -87,7 +102,7 @@ export const MyHolds = () => {
                     getErrorMessage(data.code ?? 0, data.problem);
                }
           },
-          onSettle: (data) => setLoading(false),
+          onSettle: () => setLoading(false),
           onError: (error) => {
                logDebugMessage("Error fetching user holds");
                logErrorMessage(error);
@@ -150,7 +165,7 @@ export const MyHolds = () => {
                     });
 
                     let tmp = sortBy;
-                    let term = '';
+                    let term;
 
                     term = getTermFromDictionary(language, 'sort_by_title');
 
@@ -322,59 +337,58 @@ export const MyHolds = () => {
           if (section === 'pending') {
                if (showSelectOptions) {
                     return (
-                         <Box p="$2">
-                              <ScrollView horizontal>
+                        <Box style={{ padding: 8 }}>
+                             <ScrollView horizontal>
                                    <HStack space="sm">
-                                        <FormControl w={pendingSortLength}>
-                                             <Select
-                                                  name="sortBy"
-                                                  selectedValue={userHoldPendingSortMethod}
-                                                  accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
-                                                  onValueChange={(itemValue) => togglePendingSort(itemValue)}>
-                                                  <SelectTrigger variant="outline" size="sm">
-                                                       <SelectInput py={0} color={textColor} value={pendingSortLabel()} />
-                                                       <SelectIcon mr="$0">
-                                                            <Icon color={textColor} as={ChevronDownIcon} />
+                                        <FormControl style={{ width: pendingSortLength }}>
+                                            <Select
+                                                 name="sortBy"
+                                                 selectedValue={userHoldPendingSortMethod}
+                                                 accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
+                                                 onValueChange={(itemValue) => togglePendingSort(itemValue)}>
+                                                 <SelectTrigger variant="outline" size="sm">
+                                                       <SelectInput style={{ paddingVertical: 0, color: textColor }} value={pendingSortLabel()} />
+                                                       <SelectIcon style={{ marginRight: 0 }}>
+                                                            <Icon style={{ color: textColor }} as={ChevronDownIcon} />
                                                        </SelectIcon>
                                                   </SelectTrigger>
                                                   <SelectPortal>
                                                        <SelectBackdrop />
                                                        <SelectContent
-                                                            bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-                                                            pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}
+                                                            style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
                                                        >
                                                             <SelectDragIndicatorWrapper>
                                                                  <SelectDragIndicator />
                                                             </SelectDragIndicatorWrapper>
                                                             <SelectScrollView>
-                                                                 <SelectItem label={sortBy.title} value="sortTitle" key="pending-manage-sortTitle" bgColor={userHoldPendingSortMethod == "sortTitle" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "sortTitle" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                                 <SelectItem label={sortBy.author} value="author" key="pending-manage-author" bgColor={userHoldPendingSortMethod == "author" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "author" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                                 <SelectItem label={sortBy.format} value="format" key="pending-manage-format" bgColor={userHoldPendingSortMethod == "format" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "format" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                                 <SelectItem label={sortBy.status} value="status" key="pending-manage-status" bgColor={userHoldPendingSortMethod == "status" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "status" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                                 <SelectItem label={sortBy.date_placed} value="placed" key="pending-manage-placed" bgColor={userHoldPendingSortMethod == "placed" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "placed" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                                 <SelectItem label={sortBy.position} value="position" key="pending-manage-position" bgColor={userHoldPendingSortMethod == "position" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "position" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                                 <SelectItem label={sortBy.pickup_location} value="location" key="pending-manage-location" bgColor={userHoldPendingSortMethod == "location" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "location" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                                 <SelectItem label={sortBy.library_account} value="libraryAccount" key="pending-manage-libraryAccount" bgColor={userHoldPendingSortMethod == "libraryAccount" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "libraryAccount" ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>
+                                                                 <SelectItem label={sortBy.title} value="sortTitle" key="pending-manage-sortTitle" style={{ backgroundColor: userHoldPendingSortMethod === "sortTitle" ? tertiaryBg : 'transparent' }} />
+                                                                 <SelectItem label={sortBy.author} value="author" key="pending-manage-author" style={{ backgroundColor: userHoldPendingSortMethod === "author" ? tertiaryBg : 'transparent' }} />
+                                                                 <SelectItem label={sortBy.format} value="format" key="pending-manage-format" style={{ backgroundColor: userHoldPendingSortMethod === "format" ? tertiaryBg : 'transparent' }} />
+                                                                 <SelectItem label={sortBy.status} value="status" key="pending-manage-status" style={{ backgroundColor: userHoldPendingSortMethod === "status" ? tertiaryBg : 'transparent' }} />
+                                                                 <SelectItem label={sortBy.date_placed} value="placed" key="pending-manage-placed" style={{ backgroundColor: userHoldPendingSortMethod === "placed" ? tertiaryBg : 'transparent' }} />
+                                                                 <SelectItem label={sortBy.position} value="position" key="pending-manage-position" style={{ backgroundColor: userHoldPendingSortMethod === "position" ? tertiaryBg : 'transparent' }} />
+                                                                 <SelectItem label={sortBy.pickup_location} value="location" key="pending-manage-location" style={{ backgroundColor: userHoldPendingSortMethod === "location" ? tertiaryBg : 'transparent' }} />
+                                                                 <SelectItem label={sortBy.library_account} value="libraryAccount" key="pending-manage-libraryAccount" style={{ backgroundColor: userHoldPendingSortMethod === "libraryAccount" ? tertiaryBg : 'transparent' }} />
                                                             </SelectScrollView>
                                                        </SelectContent>
                                                   </SelectPortal>
                                              </Select>
                                         </FormControl>
                                         <ManageSelectedHolds language={language} selectedValues={values} onAllDateChange={handleDateChange} selectedReactivationDate={date} resetGroup={resetGroup} />
-                                        <Button size="sm" variant="outline" mr="$1" onPress={() => clearGroupValue()} borderColor={colorMode === 'light' ? "$coolGray700" : "$warmGray100"}>
-                                             <ButtonText color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"}>{getTermFromDictionary(language, 'holds_clear_selections')}</ButtonText>
+                                        <Button size="sm" variant="outline" style={{ marginRight: 4, borderColor }} onPress={() => clearGroupValue()}>
+                                             <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'holds_clear_selections')}</ButtonText>
                                         </Button>
                                    </HStack>
-                              </ScrollView>
+                             </ScrollView>
                          </Box>
                     );
                }
 
                return (
-                    <Box p="$2">
+                   <Box style={{ padding: 8 }}>
                          <ScrollView horizontal>
                               <HStack space="sm">
-                                   <FormControl w={pendingSortLength}>
+                                   <FormControl style={{ width: pendingSortLength }}>
                                         <Select
                                              name="sortBy"
                                              selectedValue={userHoldPendingSortMethod}
@@ -382,29 +396,28 @@ export const MyHolds = () => {
                                              accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
                                              onValueChange={(itemValue) => togglePendingSort(itemValue)}>
                                              <SelectTrigger variant="outline" size="sm">
-                                                  <SelectInput  py={0}color={textColor} value={pendingSortLabel()} />
-                                                  <SelectIcon mr="$3">
-                                                       <Icon color={textColor} as={ChevronDownIcon} />
+                                                  <SelectInput style={{ paddingVertical: 0, color: textColor }} value={pendingSortLabel()} />
+                                                  <SelectIcon style={{ marginRight: 12 }}>
+                                                       <Icon style={{ color: textColor }} as={ChevronDownIcon} />
                                                   </SelectIcon>
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
                                                   <SelectContent
-                                                       bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-                                                       pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}
+                                                       style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
                                                   >
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
                                                        <SelectScrollView>
-                                                            <SelectItem label={sortBy.title} value="sortTitle" key="pending-select-sortTitle" bgColor={userHoldPendingSortMethod == "sortTitle" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "sortTitle" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                            <SelectItem label={sortBy.author} value="author" key="pending-select-author" bgColor={userHoldPendingSortMethod == "author" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "author" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                            <SelectItem label={sortBy.format} value="format" key="pending-select-format" bgColor={userHoldPendingSortMethod == "format" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "format" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                            <SelectItem label={sortBy.status} value="status" key="pending-select-status" bgColor={userHoldPendingSortMethod == "status" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "status" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                            <SelectItem label={sortBy.date_placed} value="placed" key="pending-select-placed" bgColor={userHoldPendingSortMethod == "placed" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "placed" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                            <SelectItem label={sortBy.position} value="position" key="pending-select-position" bgColor={userHoldPendingSortMethod == "position" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "position" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                            <SelectItem label={sortBy.pickup_location} value="location" key="pending-select-location" bgColor={userHoldPendingSortMethod == "location" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "location" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                            <SelectItem label={sortBy.library_account} value="libraryAccount" key="pending-select-libraryAccount" bgColor={userHoldPendingSortMethod == "libraryAccount" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldPendingSortMethod == "libraryAccount" ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>
+                                                            <SelectItem label={sortBy.title} value="sortTitle" key="pending-select-sortTitle" style={{ backgroundColor: userHoldPendingSortMethod === "sortTitle" ? tertiaryBg : 'transparent' }} />
+                                                            <SelectItem label={sortBy.author} value="author" key="pending-select-author" style={{ backgroundColor: userHoldPendingSortMethod === "author" ? tertiaryBg : 'transparent' }} />
+                                                            <SelectItem label={sortBy.format} value="format" key="pending-select-format" style={{ backgroundColor: userHoldPendingSortMethod === "format" ? tertiaryBg : 'transparent' }} />
+                                                            <SelectItem label={sortBy.status} value="status" key="pending-select-status" style={{ backgroundColor: userHoldPendingSortMethod === "status" ? tertiaryBg : 'transparent' }} />
+                                                            <SelectItem label={sortBy.date_placed} value="placed" key="pending-select-placed" style={{ backgroundColor: userHoldPendingSortMethod === "placed" ? tertiaryBg : 'transparent' }} />
+                                                            <SelectItem label={sortBy.position} value="position" key="pending-select-position" style={{ backgroundColor: userHoldPendingSortMethod === "position" ? tertiaryBg : 'transparent' }} />
+                                                            <SelectItem label={sortBy.pickup_location} value="location" key="pending-select-location" style={{ backgroundColor: userHoldPendingSortMethod === "location" ? tertiaryBg : 'transparent' }} />
+                                                            <SelectItem label={sortBy.library_account} value="libraryAccount" key="pending-select-libraryAccount" style={{ backgroundColor: userHoldPendingSortMethod === "libraryAccount" ? tertiaryBg : 'transparent' }} />
                                                        </SelectScrollView>
                                                   </SelectContent>
                                              </SelectPortal>
@@ -465,10 +478,10 @@ export const MyHolds = () => {
 
           if (section === 'ready') {
                return (
-                    <Box p="$2">
+                   <Box style={{ padding: 8 }}>
                          <ScrollView horizontal>
                               <HStack space="sm">
-                                   <FormControl w={readySortLength}>
+                                   <FormControl style={{ width: readySortLength }}>
                                         <Select
                                              name="sortBy"
                                              selectedValue={userHoldReadySortMethod}
@@ -476,27 +489,26 @@ export const MyHolds = () => {
                                              accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
                                              onValueChange={(itemValue) => toggleReadySort(itemValue)}>
                                              <SelectTrigger variant="outline" size="sm">
-                                                  <SelectInput py={0} color={textColor} value={readySortLabel()} />
-                                                  <SelectIcon mr="$3">
-                                                       <Icon color={textColor} as={ChevronDownIcon} />
+                                                  <SelectInput style={{ paddingVertical: 0, color: textColor }} value={readySortLabel()} />
+                                                  <SelectIcon style={{ marginRight: 12 }}>
+                                                       <Icon style={{ color: textColor }} as={ChevronDownIcon} />
                                                   </SelectIcon>
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
                                                   <SelectContent
-                                                       bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-                                                       pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}
+                                                       style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
                                                   >
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
-                                                  <SelectItem label={sortBy.title} value="sortTitle" key="ready-sortTitle" bgColor={userHoldReadySortMethod == "sortTitle" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldReadySortMethod == "sortTitle" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                  <SelectItem label={sortBy.author} value="author" key="ready-author" bgColor={userHoldReadySortMethod == "author" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldReadySortMethod == "author" ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>
-                                                  <SelectItem label={sortBy.format} value="format" key="ready-format" bgColor={userHoldReadySortMethod == "format" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldReadySortMethod == "format" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                  <SelectItem label={sortBy.expiration} value="expire" key="ready-expire" bgColor={userHoldReadySortMethod == "expire" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldReadySortMethod == "expire" ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>
-                                                  <SelectItem label={sortBy.date_placed} value="placed" key="ready-placed" bgColor={userHoldReadySortMethod == "placed" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldReadySortMethod == "placed" ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>
-                                                  <SelectItem label={sortBy.pickup_location} value="location" key="ready-location" bgColor={userHoldReadySortMethod == "location" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldReadySortMethod == "location" ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>
-                                                  <SelectItem label={sortBy.library_account} value="libraryAccount" key="ready-libraryAccount" bgColor={userHoldReadySortMethod == "libraryAccount" ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: userHoldReadySortMethod == "libraryAccount" ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
+                                                 <SelectItem label={sortBy.title} value="sortTitle" key="ready-sortTitle" style={{ backgroundColor: userHoldReadySortMethod === "sortTitle" ? tertiaryBg : 'transparent' }} />
+                                                 <SelectItem label={sortBy.author} value="author" key="ready-author" style={{ backgroundColor: userHoldReadySortMethod === "author" ? tertiaryBg : 'transparent' }} />
+                                                 <SelectItem label={sortBy.format} value="format" key="ready-format" style={{ backgroundColor: userHoldReadySortMethod === "format" ? tertiaryBg : 'transparent' }} />
+                                                 <SelectItem label={sortBy.expiration} value="expire" key="ready-expire" style={{ backgroundColor: userHoldReadySortMethod === "expire" ? tertiaryBg : 'transparent' }} />
+                                                 <SelectItem label={sortBy.date_placed} value="placed" key="ready-placed" style={{ backgroundColor: userHoldReadySortMethod === "placed" ? tertiaryBg : 'transparent' }} />
+                                                 <SelectItem label={sortBy.pickup_location} value="location" key="ready-location" style={{ backgroundColor: userHoldReadySortMethod === "location" ? tertiaryBg : 'transparent' }} />
+                                                 <SelectItem label={sortBy.library_account} value="libraryAccount" key="ready-libraryAccount" style={{ backgroundColor: userHoldReadySortMethod === "libraryAccount" ? tertiaryBg : 'transparent' }} />
                                                   </SelectContent>
                                              </SelectPortal>
                                         </Select>
@@ -527,40 +539,40 @@ export const MyHolds = () => {
           };
 
           return (
-               <Box p="$2" bgColor={colorMode === 'light' ? "$coolGray100" : "$coolGray700"} borderBottomWidth="$1" borderColor={colorMode === 'light' ? "$coolGray200" : "$warmGray600"} flexWrap="nowrap">
+               <Box style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
                     {showSystemMessage()}
                     <ScrollView horizontal>
                          <HStack space="sm">
                               <Button
                                    size="sm"
-                                   borderColor={colorMode === 'light' ? "$coolGray700" : "$warmGray100"}
                                    variant="outline"
+                                   style={{ borderColor }}
                                    onPress={() => {
                                         refreshHolds();
                                    }}>
-                                   <ButtonText color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"}>{getTermFromDictionary(language, 'holds_reload')}</ButtonText>
+                                   <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'holds_reload')}</ButtonText>
                               </Button>
-                              <FormControl w={245}>
+                              <FormControl style={{ width: 245 }}>
                                    <Select name="holdSource" selectedValue={holdSource} defaultValue={holdSource} initialLabel="Test" accessibilityLabel="Filter By Source" onValueChange={(itemValue) => toggleHoldSource(itemValue)}>
                                         <SelectTrigger variant="outline" size="sm">
-                                             <SelectInput py={0} color={textColor} value={holdSourceLabel()}/>
-                                             <SelectIcon mr="$3">
-                                                  <Icon color={textColor} as={ChevronDownIcon} />
+                                             <SelectInput style={{ paddingVertical: 0, color: textColor }} value={holdSourceLabel()}/>
+                                             <SelectIcon style={{ marginRight: 12 }}>
+                                                  <Icon style={{ color: textColor }} as={ChevronDownIcon} />
                                              </SelectIcon>
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"} pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}>
+                                             <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
-                                                  <SelectItem label={getTermFromDictionary(language, 'filter_by_all') + ' (' + (user.numHolds ?? 0) + ')'} value="all" key="source-all" bgColor={holdSource == 'all' ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: holdSource == 'all' ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                  <SelectItem label={getTermFromDictionary(language, 'filter_by_ils') + ' (' + (user.numHoldsRequestedIls ?? 0) + ')'} value="ils" key="source-ils" bgColor={holdSource == 'ils' ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: holdSource == 'ils' ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
-                                                  {user.isValidForOverdrive ? <SelectItem label={filterByLibby + ' (' + (user.numHoldsOverDrive ?? 0) + ')'} value="overdrive" key="source-overdrive" bgColor={holdSource == 'overdrive' ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: holdSource == 'overdrive' ? theme.tokens.colors.tertiary['500-text'] : textColor } }} /> : null}
-                                                  {user.isValidForHoopla ? <SelectItem label={getTermFromDictionary(language, 'filter_by_hoopla') + ' (' + (user.numHolds_Hoopla ?? 0) + ')'} value="hoopla" key="source-hoopla" bgColor={holdSource == 'hoopla' ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: holdSource == 'hoopla' ? theme.tokens.colors.tertiary['500-text'] : textColor } }} /> : null}
-                                                  {user.isValidForCloudLibrary ? <SelectItem label={getTermFromDictionary(language, 'filter_by_cloud_library') + ' (' + (user.numHolds_cloudLibrary ?? 0) + ')'} value="cloud_library" key="source-cloud_library" bgColor={holdSource == 'cloud_library' ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: holdSource == 'cloud_library' ? theme.tokens.colors.tertiary['500-text'] : textColor } }} /> : null}
-                                                  {user.isValidForAxis360 ? <SelectItem label={getTermFromDictionary(language, 'filter_by_boundless') + ' (' + (user.numHolds_axis360 ?? 0) + ')'} value="axis360" key="source-axis360" bgColor={holdSource == 'axis360' ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: holdSource == 'axis360' ? theme.tokens.colors.tertiary['500-text'] : textColor } }} /> : null}
-                                                  {user.isValidForPalaceProject ? <SelectItem label={getTermFromDictionary(language, 'filter_by_palace_project') + ' (' + (user.numHolds_PalaceProject ?? 0) + ')'} value="palace_project" key="source-palace_project" bgColor={holdSource == 'palace_project' ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: holdSource == 'palace_project' ? theme.tokens.colors.tertiary['500-text'] : textColor } }} /> : null}
+                                                  <SelectItem label={getTermFromDictionary(language, 'filter_by_all') + ' (' + (user.numHolds ?? 0) + ')'} value="all" key="source-all" style={{ backgroundColor: holdSource === 'all' ? tertiaryBg : 'transparent' }} />
+                                                  <SelectItem label={getTermFromDictionary(language, 'filter_by_ils') + ' (' + (user.numHoldsRequestedIls ?? 0) + ')'} value="ils" key="source-ils" style={{ backgroundColor: holdSource === 'ils' ? tertiaryBg : 'transparent' }} />
+                                                  {user.isValidForOverdrive ? <SelectItem label={filterByLibby + ' (' + (user.numHoldsOverDrive ?? 0) + ')'} value="overdrive" key="source-overdrive" style={{ backgroundColor: holdSource === 'overdrive' ? tertiaryBg : 'transparent' }} /> : null}
+                                                  {user.isValidForHoopla ? <SelectItem label={getTermFromDictionary(language, 'filter_by_hoopla') + ' (' + (user.numHolds_Hoopla ?? 0) + ')'} value="hoopla" key="source-hoopla" style={{ backgroundColor: holdSource === 'hoopla' ? tertiaryBg : 'transparent' }} /> : null}
+                                                  {user.isValidForCloudLibrary ? <SelectItem label={getTermFromDictionary(language, 'filter_by_cloud_library') + ' (' + (user.numHolds_cloudLibrary ?? 0) + ')'} value="cloud_library" key="source-cloud_library" style={{ backgroundColor: holdSource === 'cloud_library' ? tertiaryBg : 'transparent' }} /> : null}
+                                                  {user.isValidForAxis360 ? <SelectItem label={getTermFromDictionary(language, 'filter_by_boundless') + ' (' + (user.numHolds_axis360 ?? 0) + ')'} value="axis360" key="source-axis360" style={{ backgroundColor: holdSource === 'axis360' ? tertiaryBg : 'transparent' }} /> : null}
+                                                  {user.isValidForPalaceProject ? <SelectItem label={getTermFromDictionary(language, 'filter_by_palace_project') + ' (' + (user.numHolds_PalaceProject ?? 0) + ')'} value="palace_project" key="source-palace_project" style={{ backgroundColor: holdSource === 'palace_project' ? tertiaryBg : 'transparent' }} /> : null}
                                              </SelectContent>
                                         </SelectPortal>
                                    </Select>
@@ -574,14 +586,14 @@ export const MyHolds = () => {
      const displaySectionHeader = (title) => {
           if (title === 'Pending') {
                return (
-                    <Box bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray800'} borderBottomWidth="$1" borderColor={colorMode === 'light' ? '$coolGray200' : '$warmGray600'} flexWrap="nowrap" maxWidth="100%" p="$2">
-                         <Heading pb="$1" pt="$3" color={textColor}>
+                   <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
+                        <Heading style={{ paddingBottom: 4, paddingTop: 12, color: textColor }}>
                               {getTermFromDictionary(language, 'pending_holds')}
                          </Heading>
-                         <Alert borderRadius="$sm" action="info" mb="$2">
-                              <HStack p="$3">
-                                   <AlertIcon as={InfoIcon} mr="$3" />
-                                   <AlertText fontSize="$xs">{getTermFromDictionary(language, 'pending_holds_message')}</AlertText>
+                        <Alert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
+                             <HStack style={{ padding: 12 }}>
+                                  <AlertIcon as={InfoIcon} style={{ marginRight: 12 }} />
+                                  <AlertText size="xs">{getTermFromDictionary(language, 'pending_holds_message')}</AlertText>
                               </HStack>
                          </Alert>
                          {actionButtons('pending')}
@@ -589,14 +601,14 @@ export const MyHolds = () => {
                );
           } else {
                return (
-                    <Box bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray800'} borderBottomWidth="$1" borderColor={colorMode === 'light' ? '$coolGray200' : '$warmGray600'} flexWrap="nowrap" maxWidth="100%" p="$2">
-                         <Heading pb="$1" color={textColor}>
+                   <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
+                        <Heading style={{ paddingBottom: 4, color: textColor }}>
                               {getTermFromDictionary(language, 'holds_ready_for_pickup')}
                          </Heading>
-                         <Alert borderRadius="$sm" action="info" mb="$2">
-                              <HStack p="$3">
-                              <AlertIcon as={InfoIcon} mr="$3" />
-                              <AlertText fontSize="$xs">{getTermFromDictionary(language, 'holds_ready_for_pickup_message')}</AlertText>
+                        <Alert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
+                             <HStack style={{ padding: 12 }}>
+                             <AlertIcon as={InfoIcon} style={{ marginRight: 12 }} />
+                             <AlertText size="xs">{getTermFromDictionary(language, 'holds_ready_for_pickup_message')}</AlertText>
                               </HStack>
                          </Alert>
                          {actionButtons('ready')}
@@ -608,16 +620,16 @@ export const MyHolds = () => {
      const noHolds = (title) => {
           if (title === 'Pending') {
                return (
-                    <Center p="$2">
-                         <Text color={textColor} bold fontSize="$lg">
+                   <Center style={{ padding: 8 }}>
+                        <Text bold size="lg" style={{ color: textColor }}>
                               {getTermFromDictionary(language, 'pending_holds_none')}
                          </Text>
                     </Center>
                );
           } else {
                return (
-                    <Center p="$2">
-                         <Text color={textColor} bold fontSize="$lg">
+                   <Center style={{ padding: 8 }}>
+                        <Text bold size="lg" style={{ color: textColor }}>
                               {getTermFromDictionary(language, 'holds_ready_for_pickup_none')}
                          </Text>
                     </Center>
@@ -632,7 +644,7 @@ export const MyHolds = () => {
                if (_.isEmpty(sectionItems)) {
                     return noHolds(title);
                } else {
-                    return <Box mb="300px"></Box>;
+                    return <Box style={{ marginBottom: 300 }} />;
                }
           } else if (title === 'Ready') {
                if (_.isEmpty(sectionItems)) {
@@ -644,7 +656,7 @@ export const MyHolds = () => {
 
      const showSystemMessage = () => {
           if (_.isArray(systemMessages)) {
-               return systemMessages.map((obj, index, collection) => {
+               return systemMessages.map((obj, index) => {
                     if (obj.showOn === '0' || obj.showOn === '1' || obj.showOn === '3') {
                          return <DisplaySystemMessage key={`system-msg-${obj.id || index}`} style={obj.style} message={obj.message} dismissable={obj.dismissable} id={obj.id} all={systemMessages} url={library.baseUrl} updateSystemMessages={updateSystemMessages} queryClient={queryClient} />;
                     }
@@ -656,7 +668,7 @@ export const MyHolds = () => {
      const showLoading = isLoading || (_.isEmpty(holds) && isFetchingHolds);
 
      return (
-          <Box flex={1}>
+          <Box style={{ flex: 1 }}>
                {showLoading ? (
                     <LoadingSpinner />
                ) : (

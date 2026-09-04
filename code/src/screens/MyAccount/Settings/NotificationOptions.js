@@ -2,7 +2,12 @@ import React from 'react';
 
 import { useFocusEffect } from '@react-navigation/native';
 import _ from 'lodash';
-import {Box, FlatList, HStack, Switch, Text, VStack} from '@gluestack-ui/themed';
+import { Box } from '@/components/ui/box';
+import { FlatList } from '@/components/ui/flat-list';
+import { HStack } from '@/components/ui/hstack';
+import { Switch } from '@/components/ui/switch';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { loadingSpinner } from '../../../components/loadingSpinner';
 import { createChannelsAndCategories } from '../../../components/Notifications';
@@ -71,12 +76,12 @@ export const Settings_NotificationOptions = () => {
      logDebugMessage(notificationSettings);
      return (
           <SafeAreaView style={{ flex: 1 }}>
-               <Box flex={1} safeArea={5}>
-                    <HStack space={3} pb={3} alignItems="center" justifyContent="space-between">
+               <Box style={{ flex: 1, padding: 20 }}>
+                    <HStack space="sm" style={{ paddingBottom: 12, alignItems: 'center', justifyContent: 'space-between' }}>
                          <Text bold>{getTermFromDictionary(language, 'notifications_allow')}</Text>
                          <Switch
                               isDisabled={true}
-                              value={isNotificationsEnabled}
+                              isChecked={isNotificationsEnabled}
                          />
                     </HStack>
                     {/* Show options whenever an expoToken is present and settings object exists */}
@@ -115,6 +120,7 @@ export const Settings_NotificationOptions = () => {
 
 const EnableAllNotifications = (data) => {
      const language = useActiveLanguage();
+     const { data: userState } = useUserState();
      const updateUserProfile = useUpdateUserProfile();
      const updateNotificationSettings = useUpdateNotificationSettings();
      const expoToken = userState?.expoToken ?? false;
@@ -154,7 +160,7 @@ const EnableAllNotifications = (data) => {
 
      logDebugMessage("Rendering enable all notifications switch");
      return (
-          <HStack space={3} alignItems="center" justifyContent="space-between" pb={1}>
+          <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}>
                <Text bold>{getTermFromDictionary(language, 'notifications_enable_all')}</Text>
                <Switch
                     onToggle={() => {
@@ -171,6 +177,7 @@ const EnableAllNotifications = (data) => {
 };
 
 const DisplayPreference = ({ data, notifySavedSearch, setNotifySavedSearch, notifyCustom, setNotifyCustom, notifyAccount, setNotifyAccount }) => {
+     const { data: userState } = useUserState();
      const updateUserProfile = useUpdateUserProfile();
      const expoToken = userState?.expoToken ?? false;
      const library = useLibrary();
@@ -213,7 +220,7 @@ const DisplayPreference = ({ data, notifySavedSearch, setNotifySavedSearch, noti
 
      logDebugMessage(`Rendering preference toggle for ${preference.label}`);
      return (
-          <HStack space={3} alignItems="center" justifyContent="space-between" pb={1}>
+          <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}>
                <Text>{preference.label}</Text>
                <Switch
                     onToggle={() => updatePreference(preference.option, isChecked)}

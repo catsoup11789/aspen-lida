@@ -4,33 +4,6 @@ import { useUserState, useLocations, useSublocations, useUpdateLocations, useUpd
 import {getTermFromDictionary} from "../../../translations/TranslationService";
 import {Platform} from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-     Box,
-     ButtonGroup,
-     Button,
-     ButtonText,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Select,
-     SelectTrigger,
-     SelectInput,
-     SelectIcon,
-     SelectPortal,
-     SelectBackdrop,
-     SelectContent,
-     SelectDragIndicatorWrapper,
-     SelectDragIndicator,
-     SelectItem,
-     SelectScrollView,
-     ChevronDownIcon,
-     Checkbox,
-     CheckboxLabel,
-     CheckIcon,
-     CheckboxIndicator,
-     CheckboxIcon,
-     ButtonSpinner
-} from '@gluestack-ui/themed';
 import {getPickupLocations, getPickupSublocations, refreshProfile, updateHoldPickupPreferences} from "../../../util/api/user";
 import { formatPickupLocations } from '../../../util/api/userHelper';
 import {SelectNewHoldSublocation} from "../../../components/Action/Holds/SelectNewHoldSublocation";
@@ -39,6 +12,12 @@ import { logDebugMessage } from '../../../util/logging.js';
 import { useActiveLanguage } from '../../../hooks/useLanguageData';
 import { useTheme } from '../../../themes/theme';
 import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonSpinner, ButtonText } from '@/components/ui/button';
+import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { ChevronDownIcon, CheckIcon, Icon } from '@/components/ui/icon';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
 export const Settings_PickupLocations = () => {
 	const stableNormalize = React.useCallback((value) => {
@@ -88,7 +67,10 @@ export const Settings_PickupLocations = () => {
     const updateUserProfile = useUpdateUserProfile();
 	const { theme, textColor, colorMode } = useTheme();
 	const insets = useSafeAreaInsets();
-	const locationsRef = React.useRef(locations);
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
+    const locationsRef = React.useRef(locations);
 	const sublocationsRef = React.useRef(sublocations);
 
 	React.useEffect(() => {
@@ -259,29 +241,29 @@ export const Settings_PickupLocations = () => {
 	const getLocationLabel = React.useCallback((item) => item?.displayName ?? item?.name ?? item?.code ?? '', []);
 
 	return (
-          <Box p="$5">
-               <FormControl mb="$3">
-                    <FormControlLabel>
-                         <FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'preferred_pickup_branch')}</FormControlLabelText>
-                    </FormControlLabel>
+          <Box style={{ padding: 20 }}>
+               <FormControl style={{ marginBottom: 12 }}>
+                   <FormControlLabel>
+                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'preferred_pickup_branch')}</FormControlLabelText>
+                   </FormControlLabel>
                     <Select
                          name="pickupLocations"
                          selectedValue={location}
                          minWidth="200"
                          accessibilityLabel={getTermFromDictionary(language, 'select_pickup_location')}
-                         mt="$1"
-                         mb="$2"
                          onValueChange={(itemValue) => {
                               setIsDirty(true);
                               setLocation(itemValue);
                          }}>
                          <SelectTrigger variant="outline" size="md">
-                              {selectedLocationObj ? <SelectInput py={0} value={getLocationLabel(selectedLocationObj)} color={textColor} /> : <SelectInput py={0} value={getTermFromDictionary(language, 'select_pickup_location')} color={textColor} />}
-                              <SelectIcon mr="$3" as={ChevronDownIcon} color={textColor} />
+                              {selectedLocationObj ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getLocationLabel(selectedLocationObj)} /> : <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'select_pickup_location')} />}
+                              <SelectIcon style={{ marginRight: 12 }}>
+                                   <Icon as={ChevronDownIcon} style={{ color: textColor }} />
+                              </SelectIcon>
                          </SelectTrigger>
                          <SelectPortal>
                               <SelectBackdrop />
-                              <SelectContent bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'} pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}>
+                              <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                    <SelectDragIndicatorWrapper>
                                         <SelectDragIndicator />
                                    </SelectDragIndicatorWrapper>
@@ -289,18 +271,9 @@ export const Settings_PickupLocations = () => {
                                         {locations.map((availableLocations, index) => {
                                              const locationLabel = getLocationLabel(availableLocations);
                                              if (availableLocations.code === location) {
-                                                  return <SelectItem label={locationLabel} value={availableLocations.code} key={index} bgColor={theme.tokens.colors.tertiary['300']} sx={{ _text: { color: theme.tokens.colors.tertiary['500-text'] } }} />;
+                                                  return <SelectItem label={locationLabel} value={availableLocations.code} key={index} style={{ backgroundColor: tertiaryBg }} />;
                                              }
-                                             return (
-                                                  <SelectItem
-                                                       label={locationLabel}
-                                                       value={availableLocations.code}
-                                                       key={index}
-                                                       sx={{
-                                                            _text: { color: textColor },
-                                                       }}
-                                                  />
-                                             );
+                                             return <SelectItem label={locationLabel} value={availableLocations.code} key={index} />;
                                         })}
                                    </SelectScrollView>
                               </SelectContent>
@@ -309,27 +282,27 @@ export const Settings_PickupLocations = () => {
                </FormControl>
                {showAlternatePickupLocations ? (
                     <>
-                         <FormControl mb="$3">
-                              <FormControlLabel>
-                                   <FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'alternate_pickup_location_1')}</FormControlLabelText>
-                              </FormControlLabel>
-                              <Select
+                        <FormControl style={{ marginBottom: 12 }}>
+                             <FormControlLabel>
+                                  <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'alternate_pickup_location_1')}</FormControlLabelText>
+                             </FormControlLabel>
+                             <Select
                                    name="pickupLocations1"
                                    selectedValue={location1Id}
                                    accessibilityLabel={getTermFromDictionary(language, 'select_pickup_location')}
-                                   mt="$1"
-                                   mb="$2"
                                    onValueChange={(itemValue) => {
                                         setIsDirty(true);
                                         setLocation1Id(itemValue);
                                    }}>
                                    <SelectTrigger variant="outline" size="md">
-                                        {selectedLocation1Obj ? <SelectInput py={0} value={getLocationLabel(selectedLocation1Obj)} color={textColor} /> : <SelectInput py={0} value={getTermFromDictionary(language, 'select_pickup_location')} color={textColor} />}
-                                        <SelectIcon mr="$3" as={ChevronDownIcon} color={textColor} />
+                                        {selectedLocation1Obj ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getLocationLabel(selectedLocation1Obj)} /> : <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'select_pickup_location')} />}
+                                        <SelectIcon style={{ marginRight: 12 }}>
+                                             <Icon as={ChevronDownIcon} style={{ color: textColor }} />
+                                        </SelectIcon>
                                    </SelectTrigger>
                                    <SelectPortal>
                                         <SelectBackdrop />
-                                        <SelectContent bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'} pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}>
+                                        <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                              <SelectDragIndicatorWrapper>
                                                   <SelectDragIndicator />
                                              </SelectDragIndicatorWrapper>
@@ -337,45 +310,36 @@ export const Settings_PickupLocations = () => {
                                                   {locations.map((availableLocations, index) => {
                                                        const locationLabel = getLocationLabel(availableLocations);
                                                        if (availableLocations.code === location1Id) {
-                                                            return <SelectItem label={locationLabel} value={availableLocations.code} key={index} bgColor={theme.tokens.colors.tertiary['300']} sx={{ _text: { color: theme.tokens.colors.tertiary['500-text'] } }} />;
+                                                            return <SelectItem label={locationLabel} value={availableLocations.code} key={index} style={{ backgroundColor: tertiaryBg }} />;
                                                        }
-                                                       return (
-                                                            <SelectItem
-                                                                 label={locationLabel}
-                                                                 value={availableLocations.code}
-                                                                 key={index}
-                                                                 sx={{
-                                                                      _text: { color: textColor },
-                                                                 }}
-                                                            />
-                                                       );
+                                                       return <SelectItem label={locationLabel} value={availableLocations.code} key={index} />;
                                                   })}
                                              </SelectScrollView>
                                         </SelectContent>
                                    </SelectPortal>
                               </Select>
                          </FormControl>
-                         <FormControl mb="$5">
+                         <FormControl style={{ marginBottom: 20 }}>
                               <FormControlLabel>
-                                   <FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'alternate_pickup_location_2')}</FormControlLabelText>
+                                   <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'alternate_pickup_location_2')}</FormControlLabelText>
                               </FormControlLabel>
                               <Select
                                    name="pickupLocation2"
                                    selectedValue={location2Id}
                                    accessibilityLabel={getTermFromDictionary(language, 'select_pickup_location')}
-                                   mt="$1"
-                                   mb="$2"
                                    onValueChange={(itemValue) => {
                                         setIsDirty(true);
                                         setLocation2Id(itemValue);
                                    }}>
                                    <SelectTrigger variant="outline" size="md">
-                                        {selectedLocation2Obj ? <SelectInput py={0} value={getLocationLabel(selectedLocation2Obj)} color={textColor} /> : <SelectInput py={0} value={getTermFromDictionary(language, 'select_pickup_location')} color={textColor} />}
-                                        <SelectIcon mr="$3" as={ChevronDownIcon} color={textColor} />
+                                        {selectedLocation2Obj ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getLocationLabel(selectedLocation2Obj)} /> : <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'select_pickup_location')} />}
+                                        <SelectIcon style={{ marginRight: 12 }}>
+                                             <Icon as={ChevronDownIcon} style={{ color: textColor }} />
+                                        </SelectIcon>
                                    </SelectTrigger>
                                    <SelectPortal>
                                         <SelectBackdrop />
-                                        <SelectContent bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'} pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}>
+                                        <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                              <SelectDragIndicatorWrapper>
                                                   <SelectDragIndicator />
                                              </SelectDragIndicatorWrapper>
@@ -383,18 +347,9 @@ export const Settings_PickupLocations = () => {
                                                   {locations.map((availableLocations, index) => {
                                                        const locationLabel = getLocationLabel(availableLocations);
                                                        if (availableLocations.code === location2Id) {
-                                                            return <SelectItem label={locationLabel} value={availableLocations.code} key={index} bgColor={theme.tokens.colors.tertiary['300']} sx={{ _text: { color: theme.tokens.colors.tertiary['500-text'] } }} />;
+                                                            return <SelectItem label={locationLabel} value={availableLocations.code} key={index} style={{ backgroundColor: tertiaryBg }} />;
                                                        }
-                                                       return (
-                                                            <SelectItem
-                                                                 label={locationLabel}
-                                                                 value={availableLocations.code}
-                                                                 key={index}
-                                                                 sx={{
-                                                                      _text: { color: textColor },
-                                                                 }}
-                                                            />
-                                                       );
+                                                       return <SelectItem label={locationLabel} value={availableLocations.code} key={index} />;
                                                   })}
                                              </SelectScrollView>
                                         </SelectContent>
@@ -417,7 +372,7 @@ export const Settings_PickupLocations = () => {
                     colorMode={colorMode}
                />
                {library.allowRememberPickupLocation ? (
-                    <FormControl mb="$3">
+                    <FormControl style={{ marginBottom: 12 }}>
                          <Checkbox
                               size="sm"
                               name="rememberHoldPickupLocation"
@@ -427,22 +382,16 @@ export const Settings_PickupLocations = () => {
                                    setRememberPickupLocation((prev) => !prev);
                               }}>
                               <CheckboxIndicator
-                                   mr="$2"
-                                   sx={{
-                                        ':checked': {
-                                             borderColor: theme['tokens']['colors']['primary']['500'],
-                                             backgroundColor: theme['tokens']['colors']['primary']['500'],
-                                        },
-                                   }}>
-                                   <CheckboxIcon as={CheckIcon} sx={{ color: theme['tokens']['colors']['primary']['500-text'] }} />
+                                   style={rememberPickupLocation ? { marginRight: 8, borderColor: theme.tokens.colors.primary['500'], backgroundColor: theme.tokens.colors.primary['500'] } : { marginRight: 8, borderColor }}>
+                                   <CheckboxIcon as={CheckIcon} style={{ color: theme['tokens']['colors']['primary']['500-text'] }} />
                               </CheckboxIndicator>
-                              <CheckboxLabel color={textColor}>{getTermFromDictionary(language, 'bypass_pickup_location_prompt')}</CheckboxLabel>
+                              <CheckboxLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'bypass_pickup_location_prompt')}</CheckboxLabel>
                          </Checkbox>
                     </FormControl>
                ) : null}
                <ButtonGroup>
                     <Button
-                         bgColor={theme.tokens.colors.primary['500']}
+                         style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                          onPress={async () => {
                               if (!hasChanges) {
                                    return;
@@ -464,7 +413,7 @@ export const Settings_PickupLocations = () => {
                               }
                          }}
                          isDisabled={loading || !hasChanges}>
-                         {loading ? <ButtonSpinner color={theme.tokens.colors.primary['500-text']} /> : <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'update')}</ButtonText>}
+                         {loading ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500-text'] }} /> : <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'update')}</ButtonText>}
                     </Button>
                </ButtonGroup>
           </Box>

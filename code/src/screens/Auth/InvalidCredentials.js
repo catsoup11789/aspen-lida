@@ -1,5 +1,3 @@
-import { Center, AlertDialog, AlertDialogBackdrop, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, Button, ButtonGroup, ButtonText, Heading, Text } from '@gluestack-ui/themed';
-
 import React from 'react';
 
 import { AuthContext } from '../../context/AuthContext';
@@ -9,9 +7,15 @@ import {getTermFromDictionary} from '../../translations/TranslationService';
 import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage } from '../../util/logging.js';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { Text } from '@/components/ui/text';
 
 export const InvalidCredentials = () => {
      const { theme, colorMode, textColor } = useTheme();
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const language = useActiveLanguage();
      const { signOut } = React.useContext(AuthContext);
      const [isOpen, setIsOpen] = React.useState(true);
@@ -23,13 +27,13 @@ export const InvalidCredentials = () => {
           <Center>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                     <AlertDialogBackdrop/>
-                    <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
-                         <AlertDialogHeader><Heading color={textColor}>{getTermFromDictionary(language, 'error')}</Heading></AlertDialogHeader>
-                         <AlertDialogBody><Text color={textColor}>{getTermFromDictionary(language, 'error_invalid_credentials')}</Text></AlertDialogBody>
+                    <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
+                         <AlertDialogHeader><Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'error')}</Heading></AlertDialogHeader>
+                         <AlertDialogBody><Text style={{ color: textColor }}>{getTermFromDictionary(language, 'error_invalid_credentials')}</Text></AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">
-                                   <Button bgColor={theme.tokens.colors.primary['500']} onPress={signOut} ref={cancelRef}>
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                   <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={signOut} ref={cancelRef}>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

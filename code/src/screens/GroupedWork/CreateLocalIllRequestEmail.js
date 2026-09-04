@@ -1,17 +1,4 @@
 import { useRoute, useNavigation } from '@react-navigation/native';
-import {
-     Button,
-     ButtonGroup,
-     ButtonText,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Input,
-     InputField,
-     Textarea,
-     TextareaInput,
-     ScrollView,
-     VStack } from '@gluestack-ui/themed';
 import React from 'react';
 import { submitLocalIllRequestEmail } from '../../util/api/user';
 
@@ -20,6 +7,12 @@ import { popAlert } from '../../components/feedback';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Input, InputField } from '@/components/ui/input';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Textarea, TextareaInput } from '@/components/ui/textarea';
+import { VStack } from '@/components/ui/vstack';
 
 export const CreateLocalIllRequestEmail = () => {
      const route = useRoute();
@@ -68,10 +61,10 @@ const Request = (payload) => {
 
      return (
           <ScrollView>
-               <VStack space="md" p="$4">
-                    <FormControl my={2}>
+               <VStack space="md" style={{ padding: 16 }}>
+                    <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>
-                              <FormControlLabelText fontSize="$sm" color={textColor}>
+                              <FormControlLabelText size="sm" style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'title')}
                               </FormControlLabelText>
                          </FormControlLabel>
@@ -85,9 +78,9 @@ const Request = (payload) => {
                               />
                          </Input>
                     </FormControl>
-                    <FormControl my={2}>
+                    <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>
-                              <FormControlLabelText fontSize="$sm" color={textColor}>
+                              <FormControlLabelText size="sm" style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'author')}
                               </FormControlLabelText>
                          </FormControlLabel>
@@ -100,13 +93,13 @@ const Request = (payload) => {
                               />
                          </Input>
                     </FormControl>
-                    <FormControl my={2}>
+                    <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>
-                              <FormControlLabelText fontSize="$sm" color={textColor}>
+                              <FormControlLabelText size="sm" style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'volume')}
                               </FormControlLabelText>
                          </FormControlLabel>
-                         <Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}>
+                         <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
                               <InputField
                                    id="volume"
                                    size="$lg"
@@ -118,9 +111,9 @@ const Request = (payload) => {
                               />
                          </Input>
                     </FormControl>
-                    <FormControl my={2}>
+                    <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>
-                              <FormControlLabelText fontSize="$sm" color={textColor}>
+                              <FormControlLabelText size="sm" style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'note')}
                               </FormControlLabelText>
                          </FormControlLabel>
@@ -129,7 +122,7 @@ const Request = (payload) => {
                               size="$lg"
                          >
                               <TextareaInput
-                                   color={textColor}
+                                   style={{ color: textColor }}
                                    value={userNote}
                                    defaultValue={userNote}
                                    onChangeText={(text) => {

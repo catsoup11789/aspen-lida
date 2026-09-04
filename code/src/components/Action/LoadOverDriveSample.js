@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonSpinner, Button, ButtonText } from '@gluestack-ui/themed';
+import { ButtonSpinner, Button, ButtonText } from '@/components/ui/button';
 
 // custom components and helper files
 
@@ -22,19 +22,15 @@ export const LoadOverDriveSample = (props) => {
      return (
           <Button
                size="xs"
-               minWidth="100%"
-               maxWidth="100%"
                variant="link"
-               mb="$1"
-               borderWidth="$1"
-               borderColor={theme.tokens.colors.primary['500']}
+               style={{ width: '100%', marginBottom: 4, borderWidth: 1, borderColor: theme.tokens.colors.primary['500'] }}
                onPress={() => {
-                    setLoading(true);
-                    completeAction(props.id, props.type, user.id, props.formatId, props.sampleNumber, '', '', '', library?.baseUrl ?? '', '', '', '', '').then((r) => {
-                         setLoading(false);
-                    });
+                   setLoading(true);
+                   completeAction(props.id, props.type, user.id, props.formatId, props.sampleNumber, '', '', '', library?.baseUrl ?? '', '', '', '', '').then((r) => {
+                        setLoading(false);
+                   });
                }}>
-               {loading ? <ButtonSpinner color={theme.tokens.colors.primary['500']} /> : <ButtonText color={theme.tokens.colors.primary['500']}>{props.title}</ButtonText>}
+               {loading ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500'] }} /> : <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{props.title}</ButtonText>}
           </Button>
      );
 };

@@ -1,5 +1,8 @@
-import { Box, Divider, Heading, Text } from '@gluestack-ui/themed';
 import React from 'react';
+import { Box } from '@/components/ui/box';
+import { Divider } from '@/components/ui/divider';
+import { Heading } from '@/components/ui/heading';
+import { Text } from '@/components/ui/text';
 
 import { getTermFromDictionary } from '../../translations/TranslationService';
 
@@ -16,9 +19,9 @@ const AdditionalInformation = (data) => {
      if (location.description) {
           return (
                <Box>
-                    <Divider mb="$2" />
-                    <Heading color={textColor} mb="$2">{getTermFromDictionary(language, 'additional_information')}</Heading>
-                    <Text color={textColor}>{stripHTML(decodeHTML(location.description))}</Text>
+                    <Divider style={{ marginBottom: 8 }} />
+                    <Heading style={{ color: textColor, marginBottom: 8 }}>{getTermFromDictionary(language, 'additional_information')}</Heading>
+                    <Text style={{ color: textColor }}>{stripHTML(decodeHTML(location.description))}</Text>
                </Box>
           );
      }

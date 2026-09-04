@@ -6,7 +6,6 @@ import { loadingSpinner } from '../../../components/loadingSpinner';
 import { DisplaySystemMessage } from '../../../components/Notifications';
 import { SystemMessagesContext } from '../../../context/initialContext';
 import { useNotificationHistory, useUpdateNotificationHistory, useInbox, useUpdateInbox } from '../../../hooks/useUserData';
-import { Heading, Box, Button, ButtonText, ButtonGroup, Center, FlatList, HStack, Icon, Pressable, ScrollView, Text, VStack } from '@gluestack-ui/themed';
 import { navigate } from '../../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../../translations/TranslationService';
 import { stripHTML, truncate } from '../../../helpers/helpers';
@@ -16,6 +15,17 @@ import { logDebugMessage, logErrorMessage, getErrorMessage } from '../../../util
 import { useActiveLanguage } from '../../../hooks/useLanguageData';
 import { useTheme } from '../../../themes/theme';
 import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FlatList } from '@/components/ui/flat-list';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { Icon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 export const MyNotificationHistory = () => {
      const navigation = useNavigation();
@@ -86,9 +96,9 @@ export const MyNotificationHistory = () => {
      const Empty = () => {
           return (
                <>
-                    {systemMessagesForScreen.length > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
-                    <Center flex={1} p="$5">
-                         <Heading pt="$5" color={textColor}>{getTermFromDictionary(language, 'notification_history_empty')}</Heading>
+                   {systemMessagesForScreen.length > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+                   <Center style={{ flex: 1, padding: 20 }}>
+                        <Heading style={{ paddingTop: 20, color: textColor }}>{getTermFromDictionary(language, 'notification_history_empty')}</Heading>
                     </Center>
                </>
           );
@@ -97,14 +107,14 @@ export const MyNotificationHistory = () => {
      const Paging = () => {
           if (notificationHistory?.totalResults > 0) {
                return (
-                    <Box p="$2" bgColor={colorMode === 'light' ? "$coolGray100" : "$coolGray700"} borderTopWidth="$1" borderColor={colorMode === 'light' ? "$coolGray200" : "$warmGray600"} flexWrap="nowrap" alignItems="center">
+                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.iconMuted.light, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
-                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" bgColor={theme.tokens.colors.primary['500']}>
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                        bgColor={theme.tokens.colors.primary['500']}
+                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                         onPress={() => {
                                              const totalPages = notificationHistory?.totalPages ?? 1;
                                              if (page < totalPages) {
@@ -114,11 +124,11 @@ export const MyNotificationHistory = () => {
                                         }}
                                         isDisabled={isFetching || page >= (notificationHistory?.totalPages ?? 1)}
                                         size="sm">
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text mt="$2" fontSize="$2xs" color={textColor}>
+                         <Text size="2xs" style={{ marginTop: 8, color: textColor }}>
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -134,7 +144,7 @@ export const MyNotificationHistory = () => {
 
      return (
           <Box style={{ flex: 1 }}>
-               {systemMessagesForScreen.length > 0 ? <Box safeArea="$2">{showSystemMessage()}</Box> : null}
+               {systemMessagesForScreen.length > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                {isFetching && !inbox?.length ? (
                     loadingSpinner()
                ) : fetchError ? (
@@ -155,31 +165,31 @@ const Item = (data) => {
      let content = stripHTML(message.content);
      content = truncate(content, 35);
      return (
-          <Pressable onPress={() => handleOpenMyMessage(message)} borderBottomWidth="$1" borderColor={colorMode === 'light' ? "$warmGray300" : "$coolGray500"} pl="$4" pr="$5" py="$2">
-               <HStack alignItems="start">
+          <Pressable onPress={() => handleOpenMyMessage(message)} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.dark : theme.tokens.colors.ui.iconMuted.light, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
+               <HStack style={{ alignItems: 'flex-start' }}>
                     {message.isRead === '0' ? (
-                         <Box width="7%">
-                              <Icon as={Dot} color={textColor} />
+                         <Box style={{ width: '7%' }}>
+                              <Icon as={Dot} style={{ color: textColor }} />
                          </Box>
                     ) : (
-                         <Box width="7%" />
+                         <Box style={{ width: '7%' }} />
                     )}
-                    <VStack width="86%">
+                    <VStack style={{ width: '86%' }}>
                          {message.isRead === '0' ? (
-                              <Text bold color={textColor} fontSize="$sm">
+                              <Text bold size="sm" style={{ color: textColor }}>
                                    {message.title}
                               </Text>
                          ) : (
-                              <Text color={textColor} fontSize="$sm">
+                              <Text size="sm" style={{ color: textColor }}>
                                    {message.title}
                               </Text>
                          )}
-                         <Text color={textColor} fontSize="$xs">
+                         <Text size="xs" style={{ color: textColor }}>
                               {content}
                          </Text>
                     </VStack>
-                    <Box width="7%">
-                         <Icon as={ChevronRight} color={textColor} />
+                    <Box style={{ width: '7%' }}>
+                         <Icon as={ChevronRight} style={{ color: textColor }} />
                     </Box>
                </HStack>
           </Pressable>

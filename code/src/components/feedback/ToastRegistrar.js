@@ -1,5 +1,5 @@
 import React from 'react';
-import { useToast } from '@gluestack-ui/themed';
+import { useToast } from '@/components/ui/toast';
 import { registerGlobalToast } from './toastService';
 
 export const ToastRegistrar = () => {
@@ -11,4 +11,3 @@ export const ToastRegistrar = () => {
 
      return null;
 };
-

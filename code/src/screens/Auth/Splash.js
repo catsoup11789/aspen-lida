@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
-import { Center, Image, Spinner, VStack } from '@gluestack-ui/themed';
 import React from 'react';
+import { Image } from 'expo-image';
 import { getTermFromDictionary, ensureTranslationsLibraryHydrated, setTranslationsLibrary } from '../../translations/TranslationService';
 import { buildThemeForLibrary, THEME_STALE_MS, useTheme } from '../../themes/theme';
 import {
@@ -24,6 +24,9 @@ import { prehydrateLanguageSnapshotCache } from '../../hooks/useLanguageData';
 import { prehydrateUserDataSnapshotCache } from '../../hooks/useUserData';
 import { saveSelfCheckEnabled, saveSelfCheckSettings } from '../../util/db';
 import { getSelfCheckSettings } from '../../util/api/system';
+import { Center } from '@/components/ui/center';
+import { Spinner } from '@/components/ui/spinner';
+import { VStack } from '@/components/ui/vstack';
 
 const splashImage = Constants.expoConfig.extra.loginLogo;
 const splashBackgroundColor = Constants.expoConfig.splash.backgroundColor;
@@ -341,9 +344,9 @@ export const SplashScreen = ({ shouldInitializeTheme = false, forceRefreshTheme 
      }, [forceRefreshTheme, onThemeInitialized, shouldInitializeTheme, updateColorMode, updateTheme]);
 
      return (
-          <Center testID="splash-center" flex={1} px="$3" style={{ backgroundColor: splashBackgroundColor }}>
-               <VStack space="md" alignItems="center">
-                    <Image source={{ uri: splashImage }} size="2xl" alt={getTermFromDictionary('en', 'app_name')} />
+          <Center testID="splash-center" style={{ flex: 1, paddingHorizontal: 12, backgroundColor: splashBackgroundColor }}>
+               <VStack space="md" style={{ alignItems: 'center' }}>
+                    <Image source={{ uri: splashImage }} style={{ width: 192, height: 192 }} contentFit="contain" alt={getTermFromDictionary('en', 'app_name')} />
                     <Spinner size="small" />
                </VStack>
           </Center>

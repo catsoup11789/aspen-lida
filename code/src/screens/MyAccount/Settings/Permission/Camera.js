@@ -1,9 +1,20 @@
-import { ScrollView, AlertDialog, AlertDialogBackdrop, Icon, Pressable, HStack, VStack, Text, Center, Button, ButtonText, ButtonIcon, ButtonGroup, Heading, Box, Accordion, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AccordionItem, AccordionContent, AccordionContentText, AccordionHeader, AccordionTrigger, AccordionTitleText, AccordionIcon } from '@gluestack-ui/themed';
 import React from 'react';
 import { Camera } from 'expo-camera';
 import { useRoute } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import { AppState, Platform } from 'react-native';
+import { Accordion, AccordionContent, AccordionContentText, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { Icon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 
 import { navigate } from '../../../../helpers/RootNavigator';
@@ -15,7 +26,7 @@ import { useTheme } from '../../../../themes/theme';
 
 export const CameraPermissionStatus = () => {
      const language = useActiveLanguage();
-     const { colorMode, textColor } = useTheme();
+     const { textColor } = useTheme();
      const [permissionStatus, setPermissionStatus] = React.useState(false);
 
      const appState = React.useRef(AppState.currentState);
@@ -43,14 +54,14 @@ export const CameraPermissionStatus = () => {
      }, []);
 
      return (
-          <Pressable onPress={() => navigate('PermissionCameraDescription', { permissionStatus })} pb="$3">
+          <Pressable onPress={() => navigate('PermissionCameraDescription', { permissionStatus })} style={{ paddingBottom: 12 }}>
                <HStack space="md" justifyContent="space-between" alignItems="center">
-                    <Text bold color={textColor}>
+                    <Text bold style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'camera_permission')}
                     </Text>
                     <HStack alignItems="center">
-                         <Text color={textColor}>{permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}</Text>
-                         <Icon ml="$1" as={ChevronRight} color={textColor} />
+                         <Text style={{ color: textColor }}>{permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}</Text>
+                         <Icon as={ChevronRight} style={{ marginLeft: 4, color: textColor }} />
                     </HStack>
                </HStack>
           </Pressable>
@@ -58,24 +69,24 @@ export const CameraPermissionStatus = () => {
 };
 
 export const CameraPermissionDescription = () => {
-     const { colorMode, textColor } = useTheme();
+     const { textColor } = useTheme();
      const [permissionStatus, setPermissionStatus] = React.useState(useRoute().params?.permissionStatus ?? false);
      const language = useActiveLanguage();
 
      return (
-          <ScrollView p="$5">
+          <ScrollView contentContainerStyle={{ padding: 20 }}>
                <VStack alignItems="stretch">
                     <Box>
-                         <Text color={textColor}>{getTermFromDictionary(language, 'device_set_to')}</Text>
+                         <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'device_set_to')}</Text>
 
-                         <Heading mb="$1" color={textColor}>
+                         <Heading style={{ marginBottom: 4, color: textColor }}>
                               {permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                          </Heading>
-                         <Text color={textColor}>
+                         <Text style={{ color: textColor }}>
                               {Constants.expoConfig.name} {permissionStatus === true ? getTermFromDictionary(language, 'allowed_camera') : getTermFromDictionary(language, 'not_allowed_camera')}
                          </Text>
 
-                         <Text color={textColor} mt="$5">
+                         <Text style={{ color: textColor, marginTop: 20 }}>
                               {getTermFromDictionary(language, 'to_update_settings')}
                          </Text>
                          <CameraPermissionUsage />
@@ -94,19 +105,19 @@ const CameraPermissionUsage = () => {
           <Accordion variant="unfilled" width="$full" size="sm">
                <AccordionItem value="description">
                     <AccordionHeader>
-                         <AccordionTrigger px="$0">
+                         <AccordionTrigger style={{ paddingHorizontal: 0 }}>
                               {({ isExpanded }) => {
                                    return (
                                         <>
-                                             <AccordionTitleText color={textColor}>{getTermFromDictionary(language, 'how_we_use_camera_title')}</AccordionTitleText>
-                                             {isExpanded ? <AccordionIcon as={ChevronUp} ml="$3" color={textColor} /> : <AccordionIcon as={ChevronDown} ml="$3" color={textColor} />}
+                                             <AccordionTitleText style={{ color: textColor }}>{getTermFromDictionary(language, 'how_we_use_camera_title')}</AccordionTitleText>
+                                             {isExpanded ? <AccordionIcon as={ChevronUp} style={{ marginLeft: 12, color: textColor }} /> : <AccordionIcon as={ChevronDown} style={{ marginLeft: 12, color: textColor }} />}
                                         </>
                                    );
                               }}
                          </AccordionTrigger>
                     </AccordionHeader>
-                    <AccordionContent px="$0">
-                         <AccordionContentText color={textColor}>
+                    <AccordionContent style={{ paddingHorizontal: 0 }}>
+                         <AccordionContentText style={{ color: textColor }}>
                               {Constants.expoConfig.name} {getTermFromDictionary(language, 'how_we_use_camera_body')}
                          </AccordionContentText>
                     </AccordionContent>
@@ -141,6 +152,8 @@ const CameraPermissionUpdate = (payload) => {
           })();
      }, []);
 
+     const dialogBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+
      return (
           <Center>
                <Button
@@ -151,8 +164,8 @@ const CameraPermissionUpdate = (payload) => {
                               setShowAlertDialog(true);
                          }
                     }}
-                    bgColor={theme.tokens.colors.primary['500']}>
-                    <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'update_device_settings')}</ButtonText>
+                    style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'update_device_settings')}</ButtonText>
                </Button>
                <AlertDialog
                     isOpen={showAlertDialog}
@@ -160,25 +173,25 @@ const CameraPermissionUpdate = (payload) => {
                          setShowAlertDialog(false);
                     }}>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                    <AlertDialogContent style={{ backgroundColor: dialogBg }}>
                          <AlertDialogHeader>
-                              <Heading color={textColor}>{getTermFromDictionary(language, 'update_device_settings')}</Heading>
+                              <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'update_device_settings')}</Heading>
                          </AlertDialogHeader>
                          <AlertDialogBody>
-                              <Text color={textColor}>{Platform.OS === 'android' ? getTermFromDictionary(language, 'update_camera_android') : getTermFromDictionary(language, 'update_camera_ios')}</Text>
+                              <Text style={{ color: textColor }}>{Platform.OS === 'android' ? getTermFromDictionary(language, 'update_camera_android') : getTermFromDictionary(language, 'update_camera_ios')}</Text>
                          </AlertDialogBody>
                          <AlertDialogFooter>
-                              <ButtonGroup flexDirection="column" alignItems="stretch" width="$full">
+                              <ButtonGroup style={{ flexDirection: 'column', alignItems: 'stretch', width: '100%' }}>
                                    <Button
                                         onPress={() => {
                                              Linking.openSettings();
                                              setShowAlertDialog(false);
                                         }}
-                                        bgColor={theme.tokens.colors.primary['500']}>
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'open_device_settings')}</ButtonText>
+                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'open_device_settings')}</ButtonText>
                                    </Button>
                                    <Button variant="link" onPress={() => setShowAlertDialog(false)}>
-                                        <ButtonText color={textColor}>{getTermFromDictionary(language, 'not_now')}</ButtonText>
+                                        <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'not_now')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

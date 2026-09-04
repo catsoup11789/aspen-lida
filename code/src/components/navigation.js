@@ -6,7 +6,6 @@ import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import * as SecureStore from 'expo-secure-store';
 import * as Updates from 'expo-updates';
-import { Spinner, useToken } from '@gluestack-ui/themed';
 import React from 'react';
 import { AppState, Platform } from 'react-native';
 import { enableScreens } from 'react-native-screens';
@@ -50,6 +49,7 @@ try {
 import { AuthContext } from '../context/AuthContext';
 import { useActiveLanguage } from '../hooks/useLanguageData';
 import { useTheme } from '../themes/theme';
+import { Spinner } from '@/components/ui/spinner';
 export { AuthContext };
 
 const iOSRelease = Constants.expoConfig.ios.bundleIdentifier;
@@ -148,7 +148,7 @@ export function App() {
                               logDebugMessage('Found an update...');
                               try {
                                    logDebugMessage('Downloading update...');
-                                   await Updates.fetchUpdateAsync().then(async (r) => {
+                                   await Updates.fetchUpdateAsync().then(async () => {
                                         logInfoMessage('Updating app...');
                                         await Updates.reloadAsync();
                                    });

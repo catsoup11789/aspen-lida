@@ -1,20 +1,14 @@
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import { findNodeHandle, Modal, ScrollView, StyleSheet, UIManager, View } from 'react-native';
-import {
-     Box,
-     createConfig,
-     HStack,
-     Button,
-     ButtonIcon,
-     ButtonText,
-     ChevronLeftIcon,
-     Menu,
-     MenuItem,
-     MenuItemLabel,
-     Spinner,
-     Text, Icon,
-} from '@gluestack-ui/themed';
+import { Modal, ScrollView, StyleSheet, View } from 'react-native';
+import { useColorScheme } from '@/components/ui/gluestack-ui-provider';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { HStack } from '@/components/ui/hstack';
+import { ChevronLeftIcon, Icon } from '@/components/ui/icon';
+import { Spinner } from '@/components/ui/spinner';
+import { Text } from '@/components/ui/text';
+import { createConfig } from '@gluestack-style/react';
 import { config as defaultConfig } from '@gluestack-ui/config';
 import { GLOBALS } from '../util/globals';
 import {
@@ -32,6 +26,84 @@ import { getThemeInfo } from '../util/api/system';
 import { loadThemeCatalog } from '../util/db';
 import { buildSwatchFromThemeTokens } from '../helpers/helpers';
 
+const DEFAULT_COLOR_SCALE = {
+     50: '#f9fafb',
+     100: '#f3f4f6',
+     200: '#e5e7eb',
+     300: '#d1d5db',
+     400: '#9ca3af',
+     500: '#6b7280',
+     600: '#4b5563',
+     700: '#374151',
+     800: '#1f2937',
+     900: '#111827',
+     '500-text': '#ffffff',
+     base: '#6b7280',
+     baseContrast: '#ffffff',
+};
+
+const UI_NEUTRAL_COLORS = {
+     surface: {
+          light: '#e7e5e4',
+          dark: '#111827',
+     },
+     surfaceMuted: {
+          light: '#f9fafb',
+          dark: '#374151',
+     },
+     surfaceSoft: {
+          light: '#fafaf9',
+          dark: '#374151',
+     },
+     text: {
+          light: '#1f2937',
+          dark: '#e5e7eb',
+     },
+     textStrong: {
+          light: '#1c1917',
+          dark: '#f3f4f6',
+     },
+     border: {
+          light: '#6b7280',
+          dark: '#d6d3d1',
+     },
+     icon: {
+          light: '#57534e',
+          dark: '#e5e7eb',
+     },
+     iconMuted: {
+          light: '#6b7280',
+          dark: '#9ca3af',
+     },
+     card: {
+          light: '#f9fafb',
+          dark: '#1f2937',
+     },
+     white: '#ffffff',
+     black: '#000000',
+     danger: '#ef4444',
+};
+
+function buildFallbackPalette() {
+     return {
+          primary: { ...DEFAULT_COLOR_SCALE },
+          secondary: { ...DEFAULT_COLOR_SCALE, base: '#9ca3af', 500: '#9ca3af', '500-text': '#000000', baseContrast: '#000000' },
+          tertiary: { ...DEFAULT_COLOR_SCALE, base: '#c08428', 500: '#c08428' },
+     };
+}
+
+function buildThemeCompatibility(themeColors) {
+     const palette = themeColors?.primary && themeColors?.secondary && themeColors?.tertiary
+          ? themeColors
+          : buildFallbackPalette();
+     return {
+          tokens: {
+               colors: palette,
+               ui: UI_NEUTRAL_COLORS,
+          },
+     };
+}
+
 export function useColorModeValue(lightValue, darkValue) {
      const { colorMode } = useThemeState();
      return colorMode === 'dark' ? darkValue : lightValue;
@@ -39,7 +111,7 @@ export function useColorModeValue(lightValue, darkValue) {
 
 export const BackIcon = (props) => {
      const { theme } = useThemeForDisplay();
-     return <ChevronLeftIcon size="md" ml={1} {...props} color={theme['tokens']['colors']['primary']['baseContrast']} />;
+     return <ChevronLeftIcon size="md" style={{ marginLeft: 1 }} {...props} color={theme.tokens.colors.primary.baseContrast} />;
 };
 
 function buildAlertTheme(actionType) {
@@ -209,12 +281,7 @@ export async function loadThemeConfigsForLocation(locationId) {
 
 export function useThemeForDisplay() {
      const { themeColors, colorMode, textColor, themeId, header } = useThemeState();
-     const theme = React.useMemo(() => {
-          if (!themeColors?.primary || !themeColors?.secondary || !themeColors?.tertiary) {
-               return defaultConfig;
-          }
-          return buildConfigFromColors(themeColors);
-     }, [themeColors]);
+     const theme = React.useMemo(() => buildThemeCompatibility(themeColors), [themeColors]);
 
      return {
           theme,
@@ -232,6 +299,7 @@ export function useTheme() {
      const updateColorModeValue = useUpdateThemeColorMode();
      const updateTextColorValue = useUpdateThemeTextColor();
      const resetThemeState = useResetThemeState();
+     const { setColorScheme } = useColorScheme();
 
      const updateTheme = React.useCallback(async (data, themeId, locationId, header) => {
           const primary = data?.tokens?.colors?.primary;
@@ -252,10 +320,11 @@ export function useTheme() {
      }, [updateThemeColors]);
 
      const updateColorMode = React.useCallback(async (mode) => {
+          setColorScheme(mode);
           await updateColorModeValue(mode);
           const nextTextColor = mode === 'light' ? '#1c1917' : '#f3f4f6';
           await updateTextColorValue(nextTextColor);
-     }, [updateColorModeValue, updateTextColorValue]);
+     }, [setColorScheme, updateColorModeValue, updateTextColorValue]);
 
      const updateTextColor = React.useCallback(async (value) => {
           await updateTextColorValue(value);
@@ -357,26 +426,6 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
      const [isThemeMenuOpen, setIsThemeMenuOpen] = React.useState(false);
      const [isSwitchingTheme, setIsSwitchingTheme] = React.useState(false);
 
-     const buttonRef = React.useRef(null);
-     const [buttonY, setButtonY] = React.useState(0);
-
-     const measureButton = React.useCallback(() => {
-          if (buttonRef.current) {
-               buttonRef.current.measureInWindow((x, y, width, height) => {
-                    setButtonY(y + height + 8); // 8 for small padding below button
-               });
-          }
-     }, []);
-
-     const selectedThemeKey = React.useMemo(() => {
-          if (themeId != null && themes.some((t) => t.id === themeId)) {
-               return new Set([String(themeId)]);
-          }
-          if (Array.isArray(themes) && themes.length > 0) {
-               return new Set([String(themes[0].id)]);
-          }
-          return new Set();
-     }, [themeId, themes]);
      const activeTheme = themes.find((entry) => entry.id === themeId);
      const activeThemeName = activeTheme?.name ?? '';
 
@@ -411,22 +460,28 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                                    flex: 1,
                               }}
                               onTouchEnd={() => setIsThemeMenuOpen(false)}>
-                              <Box flex={1} justifyContent="flex-end" alignItems="flex-start" pb="$12" pl="$10">
-                                   <Box bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'} borderRadius="$md" p="$1" height={themes.length > 4 ? '150px' : undefined} width="200">
+                              <Box style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-start', paddingBottom: 48, paddingLeft: 40 }}>
+                                   <Box
+                                        style={{
+                                             backgroundColor: colorMode === 'light' ? '#fafaf9' : '#374151',
+                                             borderRadius: 6,
+                                             padding: 4,
+                                             height: themes.length > 4 ? 150 : undefined,
+                                             width: 200,
+                                        }}>
                                         <ScrollView nestedScrollEnabled={true} scrollEnabled={true}>
                                              {themes.map((themeEntry) => {
                                                   const isActive = themeEntry.id === themeId;
                                                   return (
                                                        <Box
                                                             key={themeEntry.id}
-                                                            px="$4"
-                                                            py="$3"
+                                                            style={{ paddingHorizontal: 16, paddingVertical: 12 }}
                                                             onTouchEnd={() => {
                                                                  setIsThemeMenuOpen(false);
                                                                  changeTheme(themeEntry);
                                                             }}>
-                                                            <HStack space="md">
-                                                                 <Text color={textColor}>{themeEntry.name}</Text>
+                                                            <HStack space="md" alignItems="center">
+                                                                 <Text style={{ color: textColor }}>{themeEntry.name}</Text>
                                                                  {isActive ? <Icon as={MaterialIcons} name="check" size="md" color={textColor} /> : null}
                                                             </HStack>
                                                        </Box>
@@ -440,24 +495,30 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                )}
                <Box alignItems="center">
                     <Button
-                         ref={buttonRef}
                          size="sm"
                          borderRadius="$full"
                          isDisabled={isSwitchingTheme}
                          onPress={() => {
-                              measureButton();
                               setIsThemeMenuOpen(true);
                          }}
-                         bg="transparent">
-                         <ButtonIcon as={MaterialIcons} name="palette" color={theme['tokens']['colors']['primary']['500']} />
-                         {showText ? <ButtonText color={theme['tokens']['colors']['primary']['500']}> {activeThemeName}</ButtonText> : null}
+                         style={{ backgroundColor: 'transparent', borderRadius: 9999 }}>
+                         <ButtonIcon as={MaterialIcons} name="palette" color={theme.tokens.colors.primary['500']} />
+                         {showText ? <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}> {activeThemeName}</ButtonText> : null}
                     </Button>
                </Box>
                <Modal transparent animationType="fade" visible={isSwitchingTheme}>
                     <View style={[themeSwitcherStyles.overlay, colorMode === 'dark' ? themeSwitcherStyles.overlayDark : themeSwitcherStyles.overlayLight]}>
-                         <Box bg={colorMode === 'dark' ? '$coolGray800' : '$warmGray50'} borderRadius="$xl" px="$6" py="$5" alignItems="center" justifyContent="center">
-                              <Spinner size="large" color={theme['tokens']['colors']['primary']['500']} />
-                              <Text mt="$3" color={textColor}>
+                         <Box
+                              style={{
+                                   backgroundColor: colorMode === 'dark' ? '#1f2937' : '#fafaf9',
+                                   borderRadius: 16,
+                                   paddingHorizontal: 24,
+                                   paddingVertical: 20,
+                                   alignItems: 'center',
+                                   justifyContent: 'center',
+                              }}>
+                              <Spinner size="large" color={theme.tokens.colors.primary['500']} />
+                              <Text style={{ marginTop: 12, color: textColor }}>
                                    Switching theme...
                               </Text>
                          </Box>

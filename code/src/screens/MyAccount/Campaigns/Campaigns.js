@@ -1,46 +1,25 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Actionsheet,
-  ActionsheetBackdrop,
-  ActionsheetContent,
-  ActionsheetDragIndicator,
-  ActionsheetDragIndicatorWrapper,
-  ActionsheetItem,
-  ActionsheetItemText,
-  Box,
-  Button,
-  ButtonText,
-  Center,
-  FlatList,
-  HStack,
-  Pressable,
-  ScrollView,
-  Text,
-  VStack,
-  Select,
-  SelectTrigger,
-  SelectInput,
-  SelectIcon,
-  SelectPortal,
-  SelectBackdrop,
-  SelectContent,
-  SelectDragIndicator,
-  SelectDragIndicatorWrapper,
-  SelectItem,
-  SelectScrollView,
-  ChevronDownIcon,
-  CheckIcon
-} from '@gluestack-ui/themed';
 import { fetchCampaigns, unenrollCampaign, enrollCampaign, optIntoCampaignEmails, optUserOutOfCampaignLeaderboard, optUserInToCampaignLeaderboard, addActivityProgress } from '../../../util/api/user';
 import { getTermFromDictionary } from '../../../translations/TranslationService';
 
-import { useUserState } from '../../../hooks/useUserData';
 import { Image } from 'expo-image';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
+import { FlatList } from 'react-native';
+import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { HStack } from '@/components/ui/hstack';
+import { ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 import PlaceholderImg from '../../../assets/digital-reward-placeholder.png';
 import { logDebugMessage, logErrorMessage } from '../../../util/logging';
 import { useActiveLanguage } from '../../../hooks/useLanguageData';
@@ -74,15 +53,17 @@ export const MyCampaigns = () => {
 	const library = useLibrary();
 	const language = useActiveLanguage();
 	const { theme, textColor, colorMode } = useTheme();
+	const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+	const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+	const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
 
 	React.useEffect(() => {
 		queryClient.invalidateQueries(['all_campaigns']);
 	}, [filterBy]);
 
 
-	const [isLoading, setLoading] = React.useState(false);
 	const [filterBy, setFilterBy] = React.useState('enrolled');
-	const [page, setPage] = React.useState(1);
+	const [page] = React.useState(1);
 	const [campaigns, updateCampaigns] = React.useState([]);
 	const [expandedCampaigns, setExpandedCampaigns] = React.useState({});
 	const [selectedCampaign, setSelectedCampaign] = React.useState(null);
@@ -150,7 +131,7 @@ export const MyCampaigns = () => {
 	};
 
 	// Data fetching
-	const { status, data, error, isFetching, refetch} = useQuery(
+	const { status, data, isFetching, refetch} = useQuery(
 		['all_campaigns', library.baseUrl, language, filterBy, page],
 		() => fetchCampaigns(page, PAGE_SIZE, filterBy, library.baseUrl),
 		{
@@ -162,7 +143,6 @@ export const MyCampaigns = () => {
 					updateCampaigns(data.campaigns);
 				}
 			},
-		  	onSettled: () => setLoading(false),
                onError: (error) => {
                     logDebugMessage("Error searching for saved search");
                     logErrorMessage(error);
@@ -243,7 +223,7 @@ export const MyCampaigns = () => {
 		setShowActionSheet(false);
 	};
 
-	const RewardImage = ({ imageUrl, rewardName, canShare, onShare }) => {
+	const RewardImage = ({ imageUrl, canShare, onShare }) => {
 		if (!imageUrl) return null;
 
 		return (
@@ -254,7 +234,7 @@ export const MyCampaigns = () => {
 				/>
 					{canShare && onShare ? (
 					<Pressable onPress={() => onShare(imageUrl)}>
-						<Text color={textColor}>{getTermFromDictionary(language, 'share_on_social_media')}</Text>
+						<Text style={{ color: textColor }}>{getTermFromDictionary(language, 'share_on_social_media')}</Text>
 					</Pressable>
 				) : null}
 			</VStack>
@@ -300,9 +280,9 @@ export const MyCampaigns = () => {
 			: (item.rewardGiven || (item.awardAutomatically && item.isComplete));
 
 		return (
-			<Box flex={type === 'campaign' ? 3 : 1}>
+			<Box style={{ flex: type === 'campaign' ? 3 : 1 }}>
 				{displayName && rewardName && (
-					<Text color={textColor}>
+					<Text style={{ color: textColor }}>
 						{rewardName}
 					</Text>
 				)}
@@ -310,7 +290,6 @@ export const MyCampaigns = () => {
 					<>
 						<RewardImage
 							imageUrl={actualImageUrl}
-							rewardName={rewardName}
 							canShare={canShare && !item.isPlaceholderImage}
 							onShare={handleShareOnSocial}
 						/>
@@ -344,11 +323,7 @@ export const MyCampaigns = () => {
 				return false;
 			}
 
-			if (item.allowPatronProgressInput){
-				return true;
-			}
-
-			return false;
+			return !!item.allowPatronProgressInput;
 		};
 
 
@@ -362,16 +337,16 @@ export const MyCampaigns = () => {
 		}
 
 		return (
-			<Box mt="$4">
-				<Text fontWeight="$bold" fontSize="$md" mb="$2">
+			<Box style={{ marginTop: 16 }}>
+				<Text bold size="md" style={{ marginBottom: 8, color: textColor }}>
 					{title}
 				</Text>
 				<VStack space="md">
-     <HStack justifyContent="space-between" pb="$1" borderBottomWidth="$1">
-						<Text flex={3} fontWeight="$bold">{getTermFromDictionary(language, 'activity_name')}</Text>
-						<Text flex={2} fontWeight="$bold">{getTermFromDictionary(language, 'activity_goal')}</Text>
-						<Text flex={2} fontWeight="$bold">{getTermFromDictionary(language, 'activity_reward')}</Text>
-						<Text flex={2} fontWeight="$bold">{getTermFromDictionary(language, 'progress')}</Text>
+     <HStack style={{ justifyContent: 'space-between', paddingBottom: 4, borderBottomWidth: 1, borderColor }}>
+						<Text bold style={{ flex: 3, color: textColor }}>{getTermFromDictionary(language, 'activity_name')}</Text>
+						<Text bold style={{ flex: 2, color: textColor }}>{getTermFromDictionary(language, 'activity_goal')}</Text>
+						<Text bold style={{ flex: 2, color: textColor }}>{getTermFromDictionary(language, 'activity_reward')}</Text>
+						<Text bold style={{ flex: 2, color: textColor }}>{getTermFromDictionary(language, 'progress')}</Text>
 					</HStack>
 
 					{items.map((item, i) => {
@@ -384,39 +359,31 @@ export const MyCampaigns = () => {
 						return(
 							<HStack
 								key={i}
-								justifyContent="space-between"
-								alignItems="center"
 								space="md"
-								borderBottomWidth="$1"
-								borderBottomColor={colorMode === 'light' ? "$coolGray200" : "$coolGray500"}
-								pl="$4"
-								pr="$5"
-								py="$2"
+								style={{ justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}
 							>
-								<Text flex={2}>
+								<Text style={{ flex: 2, color: textColor }}>
 									{String(item.name || '')}
 								</Text>
-								<Text flex={1}>
+								<Text style={{ flex: 1, color: textColor }}>
 									{String(item.completedGoals || 0)} / {String(item.totalGoals || 0)}
 								</Text>
-								<Box width={120}>
+								<Box style={{ width: 120 }}>
 									<RewardDisplay
 										item={item}
 										imageUrl={imageUrl}
 										type={type}
 									/>
 								</Box>
-								<Box flex={1} alignItems="center">
+								<Box style={{ flex: 1, alignItems: 'center' }}>
 									{!!showButton && (
 										<Button
 											size="sm"
 											onPress={() => handleAddProgress(item)}
 											isDisabled={isDisabled}
-											opacity={isDisabled ? 0.5 : 1}
-											width="100%"
-											px={2}
+											style={{ opacity: isDisabled ? 0.5 : 1, width: '100%', paddingHorizontal: 8 }}
 										>
-											<ButtonText fontSize="$xs" textAlign="center">
+											<ButtonText size="xs" style={{ textAlign: 'center' }}>
 												{getTermFromDictionary(language, 'add_progress')}
 											</ButtonText>
 										</Button>
@@ -443,23 +410,19 @@ export const MyCampaigns = () => {
 		const isUserEnrolled = item.enrolled || false;
 
 		return (
-			<VStack space="md" px="$4" py="$3" key={item.id}>
-    <HStack justifyContent="space-between" borderBottomWidth="$1" pb="$2">
-					<Text flex={2} fontWeight="$bold">{getTermFromDictionary(language, 'campaign_name_header')}</Text>
-					<Text flex={3} fontWeight="$bold">{getTermFromDictionary(language, 'campaign_reward')}</Text>
-					<Text flex={2} fontWeight="$bold">{getTermFromDictionary(language, 'campaign_dates')}</Text>
-					<Text flex={1} fontWeight="$bold"> </Text>
-					<Text flex={1} fontWeight="$bold"> </Text>
+			<VStack space="md" style={{ paddingHorizontal: 16, paddingVertical: 12 }} key={item.id}>
+    <HStack style={{ justifyContent: 'space-between', borderBottomWidth: 1, borderColor, paddingBottom: 8 }}>
+					<Text bold style={{ flex: 2, color: textColor }}>{getTermFromDictionary(language, 'campaign_name_header')}</Text>
+					<Text bold style={{ flex: 3, color: textColor }}>{getTermFromDictionary(language, 'campaign_reward')}</Text>
+					<Text bold style={{ flex: 2, color: textColor }}>{getTermFromDictionary(language, 'campaign_dates')}</Text>
+					<Text bold style={{ flex: 1, color: textColor }}> </Text>
+					<Text bold style={{ flex: 1, color: textColor }}> </Text>
 				</HStack>
 
 				<HStack
-					justifyContent="space-between"
-					alignItems="center"
-					py="$2"
-					borderBottomWidth={0.5}
-					borderColor="$coolGray200"
+					style={{ justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8, borderBottomWidth: 0.5, borderColor }}
 				>
-					<Text flex={2}>
+					<Text style={{ flex: 2, color: textColor }}>
 						{String(item.name || '')}
 					</Text>
 					<RewardDisplay
@@ -467,13 +430,13 @@ export const MyCampaigns = () => {
 						imageUrl={campaignImageUrl}
 						type="campaign"
 					/>
-					<Text flex={2} color={textColor}>
+					<Text style={{ flex: 2, color: textColor }}>
 						{startDate} {'\n'} - {'\n'}{endDate}
 					</Text>
 					<Button
 						onPress={onToggle}
 						variant="link"
-						flex={1}
+						style={{ flex: 1 }}
 						accessibilityLabel={expanded ? "Collapse campaign details" : "Expand campaign details"}
 					>
 						<ButtonText>
@@ -490,9 +453,9 @@ export const MyCampaigns = () => {
 				</HStack>
 
 				{expanded && (
-					<Box px="$2" py="$2" bg="$coolGray100" borderRadius="$md">
+					<Box style={{ paddingHorizontal: 8, paddingVertical: 8, backgroundColor: panelBg, borderRadius: 12 }}>
 						{(!Array.isArray(item.milestones) || item.milestones.length === 0) && (!Array.isArray(item.extraCreditActivities) || item.extraCreditActivities.length === 0) ? (
-							<Text color="$textLight900" fontStyle="italic">
+							<Text italic style={{ color: textColor }}>
 								{getTermFromDictionary(language, 'no_activities_available')}
 							</Text>
 						) : (
@@ -531,14 +494,14 @@ export const MyCampaigns = () => {
 		return (
 			<Actionsheet isOpen={showActionSheet} onClose={handleCloseActions}>
 				<ActionsheetBackdrop />
-				<ActionsheetContent>
+				<ActionsheetContent style={{ backgroundColor: surfaceBg }}>
 					<ActionsheetDragIndicatorWrapper>
 						<ActionsheetDragIndicator />
 					</ActionsheetDragIndicatorWrapper>
 
 					{(selectedCampaign?.canEnroll || selectedCampaign?.enrolled) && (
 						<ActionsheetItem onPress={handleEnrollUnenroll}>
-							<ActionsheetItemText>
+							<ActionsheetItemText style={{ color: textColor }}>
 								{selectedCampaign?.enrolled ? 'Unenroll' : 'Enroll'}
 							</ActionsheetItemText>
 						</ActionsheetItem>
@@ -546,13 +509,13 @@ export const MyCampaigns = () => {
 					{filterBy !== 'linkedUserCampaigns' && selectedCampaign?.enrolled && (
 						<React.Fragment>
 							<ActionsheetItem onPress={handleEmailNotificationOptions}>
-								<ActionsheetItemText>
+								<ActionsheetItemText style={{ color: textColor }}>
 									{selectedCampaign?.optInToCampaignEmailNotifications ? 'Opt Out of Notifications' : 'Opt in to Notifications'}
 								</ActionsheetItemText>
 							</ActionsheetItem>
 							{library?.displayCampaignLeaderboard && library?.campaignLeaderboardDisplay === 'displayUser' && (
 								<ActionsheetItem onPress={handleLeaderboardOptions}>
-									<ActionsheetItemText>
+									<ActionsheetItemText style={{ color: textColor }}>
 										{selectedCampaign?.optInToCampaignLeaderboard ? 'Opt Out of Leaderboard' : 'Opt in to Leaderboard'}
 									</ActionsheetItemText>
 								</ActionsheetItem>
@@ -560,7 +523,7 @@ export const MyCampaigns = () => {
 						</React.Fragment>
 					)}
 					<ActionsheetItem onPress={handleCloseActions}>
-						<ActionsheetItemText>{getTermFromDictionary(language, 'cancel')}</ActionsheetItemText>
+						<ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'cancel')}</ActionsheetItemText>
 					</ActionsheetItem>
 				</ActionsheetContent>
 			</Actionsheet>
@@ -568,8 +531,8 @@ export const MyCampaigns = () => {
 	};
 
 	const EmptyComponent = () => (
-		<Center mt="$5" mb="$5">
-			<Text fontWeight="$bold" fontSize="$lg">
+		<Center style={{ marginTop: 20, marginBottom: 20 }}>
+			<Text bold size="lg" style={{ color: textColor }}>
 				{getTermFromDictionary(language, EMPTY_MESSAGES[filterBy] || EMPTY_MESSAGES.default)}
 			</Text>
 		</Center>
@@ -588,23 +551,23 @@ export const MyCampaigns = () => {
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
-			<Box px="$4" py="$3" bg="$coolGray100" borderBottomWidth="$1">
+			<Box style={{ paddingHorizontal: 16, paddingVertical: 12, backgroundColor: panelBg, borderBottomWidth: 1, borderColor }}>
 				<Select
 					onValueChange={(itemValue) => setFilterBy(itemValue)}
 				>
-					<SelectTrigger variant="outline" size="md" w="$64">
+					<SelectTrigger variant="outline" size="md" style={{ width: 256 }}>
 						<SelectInput
-                            py={0}
+                            style={{ paddingVertical: 0, color: textColor }}
 							placeholder="Select Filter"
 							value={getFilterLabel(filterBy)}
 						/>
-						<SelectIcon mr="$3">
-							<ChevronDownIcon />
+						<SelectIcon style={{ marginRight: 12 }}>
+							<Icon as={ChevronDownIcon} style={{ color: textColor }} />
 						</SelectIcon>
 					</SelectTrigger>
 					<SelectPortal>
 						<SelectBackdrop />
-						<SelectContent>
+						<SelectContent style={{ backgroundColor: surfaceBg }}>
 							<SelectDragIndicatorWrapper>
 								<SelectDragIndicator />
 							</SelectDragIndicatorWrapper>
@@ -623,21 +586,21 @@ export const MyCampaigns = () => {
 			</Box>
 
 			{status === 'loading' || isFetching ? (
-				<Center flex={1}>
-					<Text>{getTermFromDictionary(language, 'loading')}</Text>
+				<Center style={{ flex: 1 }}>
+					<Text style={{ color: textColor }}>{getTermFromDictionary(language, 'loading')}</Text>
 				</Center>
 			) : status === 'error' ? (
-				<Center flex={1}>
-					<Text>{getTermFromDictionary(language, 'campaign_loading_error')}</Text>
+				<Center style={{ flex: 1 }}>
+					<Text style={{ color: textColor }}>{getTermFromDictionary(language, 'campaign_loading_error')}</Text>
 				</Center>
 			) : campaignsData.length === 0 ? (
 				<EmptyComponent />
 			) : filterBy === 'linkedUserCampaigns' ? (
 				<ScrollView>
 					{Object.entries(groupedCampaigns).map(([userName, { userId, campaigns: groupedCampaignsList}]) => (
-						<Box key={String(userId)} mb="$6">
-							<Box px="$4" py="$2" bg="$coolGray200">
-								<Text fontSize="$lg" fontWeight="$bold">
+						<Box key={String(userId)} style={{ marginBottom: 24 }}>
+							<Box style={{ paddingHorizontal: 16, paddingVertical: 8, backgroundColor: panelBg }}>
+								<Text size="lg" bold style={{ color: textColor }}>
 									{getTermFromDictionary(language, 'campaigns_for_linked_user')}: {String(userName)}
 								</Text>
 							</Box>

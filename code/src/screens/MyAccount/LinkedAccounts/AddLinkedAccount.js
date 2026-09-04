@@ -1,23 +1,12 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {
-     Button,
-     ButtonText,
-     ButtonGroup,
-     Center,
-     Modal,
-     ModalContent,
-     ModalHeader,
-     ModalBody,
-     ModalFooter,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Input,
-     InputField,
-     Icon,
-     Heading,
-     ModalBackdrop, CloseIcon, ModalCloseButton, InputIcon, InputSlot } from '@gluestack-ui/themed';
 import React, { useState, useRef } from 'react';
+import { Button, ButtonText, ButtonGroup } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { Icon, CloseIcon } from '@/components/ui/icon';
+import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 
 
 import { useUserState, useUpdateUserProfile, useUpdateAccounts, useUpdateViewers } from '../../../hooks/useUserData';
@@ -48,6 +37,8 @@ const AddLinkedAccount = () => {
      const [password, setPassword] = useState('');
 
      const passwordRef = useRef();
+     const modalBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const inputBorderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
 
      const toggle = () => {
           setShowModal(!showModal);
@@ -77,22 +68,22 @@ const AddLinkedAccount = () => {
 
      return (
           <Center>
-               <Button onPress={toggle} bgColor={theme.tokens.colors.primary['500']}>
-                    <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'linked_add_an_account')}</ButtonText>
+               <Button onPress={toggle} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'linked_add_an_account')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
                     <ModalBackdrop />
-                    <ModalContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"} maxWidth="95%">
+                    <ModalContent style={{ backgroundColor: modalBg, maxWidth: '95%' }}>
                          <ModalHeader>
-                              <Heading size="sm" color={textColor}>{getTermFromDictionary(language, 'linked_account_to_manage')}</Heading>
-                              <ModalCloseButton p="$3" onPress={toggle}>
-                                   <Icon as={CloseIcon} color={textColor} />
+                              <Heading size="sm" style={{ color: textColor }}>{getTermFromDictionary(language, 'linked_account_to_manage')}</Heading>
+                              <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
+                                   <Icon as={CloseIcon} style={{ color: textColor }} />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
                               <FormControl>
-                                   <FormControlLabel><FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'username')}</FormControlLabelText></FormControlLabel>
-                                   <Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}>
+                                   <FormControlLabel><FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'username')}</FormControlLabelText></FormControlLabel>
+                                   <Input style={{ borderColor: inputBorderColor }}>
                                         <InputField onChangeText={(text) => setNewUser(text)}
                                                       autoCorrect={false}
                                                       autoCapitalize="none"
@@ -100,25 +91,24 @@ const AddLinkedAccount = () => {
                                                       returnKeyType="next"
                                                       textContentType="username"
                                                       required
-                                                      color={textColor}
+                                                      style={{ color: textColor }}
                                                       onSubmitEditing={() => {
                                                            passwordRef.current.focus();
                                                       }}
-                                                      blurOnSubmit={false}
                                                       value={newUser}/>
                                    </Input>
                               </FormControl>
-                              <FormControl mt="$3">
+                              <FormControl style={{ marginTop: 12 }}>
                                    <FormControlLabel>
-                                        <FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'password')}</FormControlLabelText>
+                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'password')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}>
-                                        <InputField onChangeText={(text) => setPassword(text)} value={password} color={textColor} autoCorrect={false}
+                                   <Input style={{ borderColor: inputBorderColor }}>
+                                        <InputField onChangeText={(text) => setPassword(text)} value={password} style={{ color: textColor }} autoCorrect={false}
                                                     autoCapitalize="none" id="password" returnKeyType="next"
-                                                    textContentType="password" required size="$lg" type={showPassword ? 'text' : 'password'} ref={passwordRef}
+                                                    textContentType="password" required type={showPassword ? 'text' : 'password'} ref={passwordRef}
                                         />
                                         <InputSlot onPress={() => setShowPassword(!showPassword)}>
-                                             <InputIcon as={MaterialCommunityIcons} name={showPassword ? 'eye' : 'eye-off'} mr="$2" color={textColor} />
+                                             <InputIcon as={MaterialCommunityIcons} name={showPassword ? 'eye' : 'eye-off'} style={{ marginRight: 8, color: textColor }} />
                                         </InputSlot>
                                    </Input>
                               </FormControl>
@@ -126,10 +116,10 @@ const AddLinkedAccount = () => {
                          <ModalFooter>
                               <ButtonGroup>
                                    <Button variant="link" onPress={toggle}>
-                                        <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button
-                                        bgColor={theme.tokens.colors.primary['500']}
+                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                         isLoading={loading}
                                         isLoadingText={getTermFromDictionary(language, 'adding', true)}
                                         onPress={async () => {
@@ -144,7 +134,7 @@ const AddLinkedAccount = () => {
                                                   toggle();
                                              }
                                         }}>
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'linked_add_account')}</ButtonText>
+                                       <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'linked_add_account')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>

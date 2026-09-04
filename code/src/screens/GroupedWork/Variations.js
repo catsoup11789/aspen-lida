@@ -1,4 +1,14 @@
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, AlertDialogBackdrop, Badge, BadgeText, Heading, Select, VStack, Button, ButtonGroup, ButtonIcon, ButtonText, Box, Center, HStack, Text, SelectTrigger, SelectInput, SelectIcon, SelectPortal, SelectBackdrop, SelectContent, SelectDragIndicatorWrapper, SelectDragIndicator, SelectItem, Icon, SelectScrollView, ChevronDownIcon } from '@gluestack-ui/themed';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { HStack } from '@/components/ui/hstack';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 import { MapPinIcon } from 'lucide-react-native';
 import { useRoute } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -93,9 +103,9 @@ export const Variations = (props) => {
      return (
           <>
                {isLoading || status === 'loading' || isFetching ? (
-                    <Box padding="$5"><LoadingSpinner /></Box>
+                    <Box style={{ padding: 20 }}><LoadingSpinner /></Box>
                ) : status === 'error' ? (
-                    <Box padding="$5"><LoadError error={error} /></Box>
+                    <Box style={{ padding: 20 }}><LoadError error={error} /></Box>
                ) : (
                     <>
                          <VStack space="md">
@@ -129,30 +139,30 @@ export const Variations = (props) => {
                                         />
                                    ))
                               ) : (
-                                   <Center p="$5">
-                                        <Text color={textColor} textAlign="center">The library does not own any copies of this title</Text>
+                                   <Center style={{ padding: 20 }}>
+                                       <Text style={{ color: textColor, textAlign: 'center' }}>The library does not own any copies of this title</Text>
                                    </Center>
                               )}
                          </VStack>
                          <Center>
                               <AlertDialog leastDestructiveRef={cancelResponseRef} isOpen={responseIsOpen} onClose={onResponseClose}>
                                    <AlertDialogBackdrop />
-                                   <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                                   <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                                         <AlertDialogHeader>
-                                             <Heading color={textColor}>{response?.title ? response.title : 'Unknown Error'}</Heading>
+                                             <Heading style={{ color: textColor }}>{response?.title ? response.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
-                                             <Text color={textColor}>{response?.message ? decodeMessage(response.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
+                                             <Text style={{ color: textColor }}>{response?.message ? decodeMessage(response.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                         </AlertDialogBody>
                                         <AlertDialogFooter>
                                              <ButtonGroup space="sm">
                                                   {response?.action ? (
-                                                       <Button bgColor={theme.tokens.colors.primary['500']} onPress={() => handleNavigation(response.action)}>
-                                                            <ButtonText color={theme.tokens.colors.primary['500-text']}>{response.action}</ButtonText>
+                                                       <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={() => handleNavigation(response.action)}>
+                                                            <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{response.action}</ButtonText>
                                                        </Button>
                                                   ) : null}
                                                   <Button variant="link" onPress={() => setResponseIsOpen(false)}>
-                                                       <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                                       <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                                   </Button>
                                              </ButtonGroup>
                                         </AlertDialogFooter>
@@ -160,23 +170,23 @@ export const Variations = (props) => {
                               </AlertDialog>
                               <AlertDialog leastDestructiveRef={cancelHoldConfirmationRef} isOpen={holdConfirmationIsOpen} onClose={onHoldConfirmationClose}>
                                    <AlertDialogBackdrop />
-                                   <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                                   <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                                         <AlertDialogHeader>
-                                             <Heading color={textColor}>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
+                                             <Heading style={{ color: textColor }}>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
-                                             <Text color={textColor}>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
+                                             <Text style={{ color: textColor }}>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                         </AlertDialogBody>
                                         <AlertDialogFooter>
                                              <ButtonGroup space="md">
                                                   <Button variant="link" onPress={() => setHoldConfirmationIsOpen(false)}>
-                                                       <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                                       <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                                   </Button>
                                                   <Button
                                                        isLoading={confirmingHold}
                                                        isLoadingText="Placing hold..."
                                                        variant="solid"
-                                                       bgColor={theme.tokens.colors.primary['500']}
+                                                       style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                                        onPress={async () => {
                                                             setConfirmingHold(true);
                                                             await confirmHold(holdConfirmationResponse.recordId, holdConfirmationResponse.confirmationId, language, library.baseUrl).then(async (result) => {
@@ -201,7 +211,7 @@ export const Variations = (props) => {
                                                                  }
                                                             });
                                                        }}>
-                                                       <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'confirm_place_hold')}</ButtonText>
+                                                       <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'confirm_place_hold')}</ButtonText>
                                                   </Button>
                                              </ButtonGroup>
                                         </AlertDialogFooter>
@@ -209,26 +219,21 @@ export const Variations = (props) => {
                               </AlertDialog>
                               <AlertDialog leastDestructiveRef={cancelHoldItemSelectRef} isOpen={holdItemSelectIsOpen} onClose={onHoldItemSelectClose}>
                                    <AlertDialogBackdrop />
-                                   <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                                   <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                                         <AlertDialogHeader>
-                                             <Heading color={textColor}>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
+                                             <Heading style={{ color: textColor }}>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
-                                             <Text color={textColor}>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
+                                             <Text style={{ color: textColor }}>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                              {holdSelectItemResponse?.items ? (
-                                                  <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} mt="$1" mb="$2" onValueChange={(itemValue) => setSelectedItem(itemValue)}>
+                                                  <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setSelectedItem(itemValue)}>
                                                        <SelectTrigger>
-                                                            <SelectInput py={0} placeholder="Select option" color={textColor} />
-                                                            <SelectIcon mr="$3">
-                                                                 <Icon as={ChevronDownIcon} color={textColor} />
-                                                            </SelectIcon>
+                                                            <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select option" />
+                                                            <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                                        </SelectTrigger>
                                                        <SelectPortal>
                                                             <SelectBackdrop />
-                                                            <SelectContent
-                                                  bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-                                                  pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}
-                                             >
+                                                            <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                                                  <SelectDragIndicatorWrapper>
                                                                       <SelectDragIndicator />
                                                                  </SelectDragIndicatorWrapper>
@@ -242,7 +247,7 @@ export const Variations = (props) => {
                                                                            if (item.status) {
                                                                                 itemLabel += " - " + item.status;
                                                                            }
-                                                                           return <SelectItem label={itemLabel} value={item.itemNumber} key={index} sx={{ _text: { color: textColor } }} />;
+                                                                          return <SelectItem label={itemLabel} value={item.itemNumber} key={index} textStyle={{ color: textColor }} />;
                                                                       })}
                                                                  </SelectScrollView>
                                                             </SelectContent>
@@ -253,13 +258,13 @@ export const Variations = (props) => {
                                         <AlertDialogFooter>
                                              <ButtonGroup space="md">
                                                   <Button variant="link" onPress={() => setHoldItemSelectIsOpen(false)}>
-                                                       <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                                       <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                                   </Button>
                                                   <Button
                                                        isLoading={placingItemHold}
                                                        isLoadingText="Placing hold..."
                                                        variant="solid"
-                                                       bgColor={theme.tokens.colors.primary['500']}
+                                                       style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                                        onPress={async () => {
                                                             setPlacingItemHold(true);
                                                             await placeHold(library.baseUrl, selectedItem, 'ils', holdSelectItemResponse.patronId, holdSelectItemResponse.pickupLocation, holdSelectItemResponse.sublocation, false, '', 'item', null, null, null, holdSelectItemResponse.bibId, language).then(async (result) => {
@@ -281,7 +286,7 @@ export const Variations = (props) => {
                                                                  }
                                                             });
                                                        }}>
-                                                       <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'place_hold')}</ButtonText>
+                                                       <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'place_hold')}</ButtonText>
                                                   </Button>
                                              </ButtonGroup>
                                         </AlertDialogFooter>
@@ -392,29 +397,29 @@ const Variation = (props) => {
      };
 
      return (
-          <Box mt="$5" mb="$0">
-               <Center m="$1" softShadow="5" p="$3" bgColor={colorMode === 'light' ? "$white" : "$coolGray900"} borderRadius="$md" alignSelf="center" sx={{ '@base': { width: '100%' }, '@lg': { width: '75%' } }}>
-                    <VStack mb="$3" width="100%" space="md">
-                         <HStack width="100%" space="sm" justifyContent="space-around" alignItems="center">
-                              <Badge variant="solid" action={status.indicator} borderRadius="$sm" p="$1">
-                                   <BadgeText textTransform="none" sx={{ '@base': { fontSize: 12, lineHeight: 13 }, '@lg': { fontSize: 16, lineHeight: 20 } }}>
+          <Box style={{ marginTop: 20, marginBottom: 0 }}>
+               <Center style={{ margin: 4, padding: 12, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.white.light : theme.tokens.colors.ui.background.dark, borderRadius: 8, alignSelf: 'center', width: '100%' }}>
+                    <VStack space="md" style={{ marginBottom: 12, width: '100%' }}>
+                         <HStack space="sm" style={{ width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
+                              <Badge variant="solid" action={status.indicator} style={{ borderRadius: 8, padding: 4 }}>
+                                   <BadgeText textTransform="none" style={{ fontSize: 12, lineHeight: 13 }}>
                                         {status.label}
                                    </BadgeText>
                               </Badge>
                               {source === 'ils' || statusIndicator.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
-                                        <ButtonIcon as={MapPinIcon} size="xs" color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"} mr="$1" />
-                                        <ButtonText color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
+                                        <ButtonIcon as={MapPinIcon} size="xs" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, marginRight: 4 }} />
+                                        <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                                    </Button>
                               ) : null}
                          </HStack>
                          {status.message ? (
-                              <Text color={textColor} sx={{ '@base': { fontSize: 12, lineHeight: 14 }, '@lg': { fontSize: 12, lineHeight: 14 } }} textAlign="center" italic>
+                              <Text italic style={{ color: textColor, fontSize: 12, lineHeight: 14, textAlign: 'center' }}>
                                    {status.message}
                               </Text>
                          ) : null}
                     </VStack>
-                    <ButtonGroup width="100%" flexDirection={actions.length > 1 ? 'column' : 'row'} space="sm">
+                    <ButtonGroup space="sm" style={{ width: '100%', flexDirection: actions.length > 1 ? 'column' : 'row' }}>
                          {actions.map((item, index) => (
                               <ActionButton
                                    key={index}
@@ -456,8 +461,8 @@ const Variation = (props) => {
                               />
                          ))}
                     </ButtonGroup>
-                    <Button width="100%" mt="$2" size="xs" variant="solid" bgColor="$warmGray200" onPress={handleOpenEditions}>
-                         <ButtonText color="$warmGray900">{getTermFromDictionary(language, 'show_editions')}</ButtonText>
+                    <Button size="xs" variant="solid" onPress={handleOpenEditions} style={{ width: '100%', marginTop: 8, backgroundColor: theme.tokens.colors.ui.gray200 }}>
+                         <ButtonText style={{ color: theme.tokens.colors.ui.gray900 }}>{getTermFromDictionary(language, 'show_editions')}</ButtonText>
                     </Button>
                </Center>
           </Box>

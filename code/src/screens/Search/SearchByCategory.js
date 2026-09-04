@@ -1,4 +1,3 @@
-import { Box, Button, ButtonGroup, ButtonText, Center, FlatList, Heading, SafeAreaView, ScrollView, Text } from '@gluestack-ui/themed';
 import { useRoute } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
@@ -16,6 +15,14 @@ import { DisplayResult } from './DisplayResult';
 import { logDebugMessage, logErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FlatList } from '@/components/ui/flat-list';
+import { Heading } from '@/components/ui/heading';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -64,14 +71,14 @@ export const SearchResultsForBrowseCategory = () => {
      const Paging = () => {
           if (data.totalPages > 1) {
                return (
-                    <Box p="$2" bgColor={colorMode === 'light' ? "$coolGray100" : "$coolGray700"} borderTopWidth="$1" borderColor={colorMode === 'light' ? "$coolGray200" : "$warmGray600"} flexWrap="nowrap" alignItems="center">
+                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray100 : theme.tokens.colors.ui.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
-                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" bgColor={theme.tokens.colors.primary['500']}>
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                        bgColor={theme.tokens.colors.primary['500']}
+                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                         onPress={() => {
                                              if (!isPreviousData && data.hasMore) {
                                                   setPage(page + 1);
@@ -79,11 +86,11 @@ export const SearchResultsForBrowseCategory = () => {
                                         }}
                                         isDisabled={isPreviousData || !data.hasMore}
                                         size="sm">
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                       <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text mt="$2" fontSize="$2xs" color={textColor}>
+                         <Text style={{ marginTop: 8, fontSize: 10, color: textColor }}>
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -107,9 +114,9 @@ export const SearchResultsForBrowseCategory = () => {
      const NoResults = () => {
           return (
                <>
-                    {_.size(systemMessagesForScreen) > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
-                    <Center flex={1}>
-                         <Heading pt="$5" color={textColor}>{getTermFromDictionary(language, 'no_results')}</Heading>
+                    {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+                    <Center style={{ flex: 1 }}>
+                        <Heading style={{ paddingTop: 20, color: textColor }}>{getTermFromDictionary(language, 'no_results')}</Heading>
                     </Center>
                </>
           );
@@ -117,13 +124,13 @@ export const SearchResultsForBrowseCategory = () => {
 
      return (
           <SafeAreaView style={{ flex: 1 }}>
-               {_.size(systemMessagesForScreen) > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
+               {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                {status === 'loading' || isFetching ? (
                     loadingSpinner('Fetching results...')
                ) : status === 'error' ? (
                     loadError('Error', '')
                ) : (
-                    <Box flex={1}>
+                    <Box style={{ flex: 1 }}>
                          <FlatList data={data.results} ListFooterComponent={Paging} ListEmptyComponent={NoResults} renderItem={({ item }) => <DisplayResult data={item} />} keyExtractor={(item, index) => index.toString()} />
                     </Box>
                )}

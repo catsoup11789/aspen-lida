@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
-import { Button, ButtonText, ButtonSpinner } from '@gluestack-ui/themed';
 import React from 'react';
+import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
 
 // custom components and helper files
 import { HoldsContext } from '../../../context/initialContext';
@@ -210,10 +210,8 @@ export const PlaceHold = (props = {}) => {
                <>
                     <Button
                          size="md"
-                         bgColor={primary500}
                          variant="solid"
-                         minWidth="100%"
-                         maxWidth="100%"
+                         style={{ backgroundColor: primary500, minWidth: '100%', maxWidth: '100%' }}
                          onPress={async () => {
                               setLoading(true);
                               await completeAction(record, type, user.id, '', '', pickupLocation, sublocation, user.rememberHoldPickupLocation, library.baseUrl, volumeId, holdType).then(async (ilsResponse) => {
@@ -260,9 +258,9 @@ export const PlaceHold = (props = {}) => {
                               });
                          }}>
                          {loading ? (
-                              <ButtonSpinner color={primary500Text} />
+                              <ButtonSpinner style={{ color: primary500Text }} />
                          ) : (
-                              <ButtonText color={primary500Text} textAlign="center">
+                              <ButtonText style={{ color: primary500Text, textAlign: 'center' }}>
                                    {title}
                               </ButtonText>
                          )}

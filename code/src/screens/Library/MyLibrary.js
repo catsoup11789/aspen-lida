@@ -2,8 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import _ from 'lodash';
 import moment from 'moment';
-import { Badge, BadgeText, Box, Button, ButtonText, Divider, Heading, HStack, ScrollView, Text, VStack } from '@gluestack-ui/themed';
-import { colorMode, useTheme } from '../../themes/theme';
+import { useTheme } from '../../themes/theme';
 import React from 'react';
 
 import { DisplaySystemMessage } from '../../components/Notifications';
@@ -21,6 +20,14 @@ import { LoadingSpinner } from '../../components/loadingSpinner';
 import {logDebugMessage} from "../../util/logging";
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Divider } from '@/components/ui/divider';
+import { Heading } from '@/components/ui/heading';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -44,7 +51,7 @@ export const MyLibrary = () => {
 
      const showSystemMessage = () => {
           if (_.isArray(systemMessages)) {
-               return systemMessages.map((obj, index, collection) => {
+               return systemMessages.map((obj, index) => {
                     if (obj.showOn === '0') {
                          return <DisplaySystemMessage key={obj.id || index} style={obj.style} message={obj.message} dismissable={obj.dismissable} id={obj.id} all={systemMessages} url={library.baseUrl} updateSystemMessages={updateSystemMessages} queryClient={queryClient} />;
                     }
@@ -131,37 +138,39 @@ export const MyLibrary = () => {
 
                     </>
                ) : null}
-               <Box safeArea={5} mt={location.locationImage ? "$40" : "$0"} mx="$2" zIndex={200}>
-                    {showSystemMessage()}
-                    {library.displayName !== location.displayName ? <Heading color={textColor} mb="$2">{location.displayName}</Heading> : <Heading color={textColor} mb="$4">{library.displayName}</Heading>}
-                    {location.address ? <Text color={textColor}>{location.address}</Text> : null}
-                    {location.phone ? (
-                         <Text color={textColor}>{getTermFromDictionary(language, 'phone')}: {location.phone}</Text>
-                    ) : null}
-                    {hasHours ? (
-                         <Text color={textColor} mt="$4" mb="$2">
-                              <Badge colorScheme={isClosedToday ? 'error' : 'success'} alignSelf="flex-start">
-                                   <BadgeText>
-                                        {hoursLabel}
-                                   </BadgeText>
-                              </Badge>
-                         </Text>
-                    ) : null}
-                    <DisplayMap data={location} />
-                    <Box mt="$4">
-                         <ContactButtons data={location} />
-                         {hasHours ? <Hours data={location} /> : null}
-                         <AdditionalInformation data={location} />
+               <SafeAreaView>
+                    <Box style={{ marginTop: location.locationImage ? 160 : 0, marginHorizontal: 8, zIndex: 200 }}>
+                         {showSystemMessage()}
+                         {library.displayName !== location.displayName ? <Heading style={{ color: textColor, marginBottom: 8 }}>{location.displayName}</Heading> : <Heading style={{ color: textColor, marginBottom: 16 }}>{library.displayName}</Heading>}
+                         {location.address ? <Text style={{ color: textColor }}>{location.address}</Text> : null}
+                         {location.phone ? (
+                              <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'phone')}: {location.phone}</Text>
+                         ) : null}
+                         {hasHours ? (
+                              <Text style={{ color: textColor, marginTop: 16, marginBottom: 8 }}>
+                                   <Badge action={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
+                                        <BadgeText>
+                                             {hoursLabel}
+                                        </BadgeText>
+                                   </Badge>
+                              </Text>
+                         ) : null}
+                         <DisplayMap data={location} />
+                         <Box style={{ marginTop: 16 }}>
+                              <ContactButtons data={location} />
+                              {hasHours ? <Hours data={location} /> : null}
+                              <AdditionalInformation data={location} />
+                         </Box>
+                         {_.size(locations) > 1 ? (
+                              <>
+                                   <Divider style={{ marginTop: 20, marginBottom: 8 }} />
+                                   <Button variant="ghost" size="sm" onPress={selectLocations} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
+                                   </Button>
+                              </>
+                         ) : null}
                     </Box>
-                    {_.size(locations) > 1 ? (
-                         <>
-                              <Divider mt="$5" mb="$2" />
-                              <Button variant="ghost" size="sm" onPress={selectLocations} bgColor={theme.tokens.colors.primary['500']}>
-                                   <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
-                              </Button>
-                         </>
-                    ) : null}
-               </Box>
+               </SafeAreaView>
           </ScrollView>
      );
 };

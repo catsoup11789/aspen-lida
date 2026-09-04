@@ -189,3 +189,23 @@ jest.mock('@sentry/react-native', () => {
     ReactNativeTracing: jest.fn().mockImplementation(() => ({})),
   };
 });
+
+jest.mock('react-native-css-interop', () => {
+  return {
+    __esModule: true,
+    createInteropElement: jest.fn(),
+    cssInterop: jest.fn(),
+  };
+});
+
+jest.mock('nativewind', () => {
+  return {
+    __esModule: true,
+    cssInterop: jest.fn(),
+    useColorScheme: jest.fn(() => ({
+      colorScheme: 'light',
+      setColorScheme: jest.fn(),
+    })),
+    vars: jest.fn((value) => value),
+  };
+});

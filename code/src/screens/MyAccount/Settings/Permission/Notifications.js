@@ -1,10 +1,22 @@
-import { ChevronLeftIcon, Switch, ScrollView, AlertDialog, AlertDialogBackdrop, HStack, VStack, Pressable, Icon, Text, Center, Button, ButtonText, ButtonIcon, ButtonGroup, Heading, Box, Accordion, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AccordionItem, AccordionContent, AccordionContentText, AccordionHeader, AccordionTrigger, AccordionTitleText, AccordionIcon } from '@gluestack-ui/themed';
 import React from 'react';
 import * as Notifications from 'expo-notifications';
 import * as Linking from 'expo-linking';
 import { Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { loadingSpinner } from '../../../../components/loadingSpinner';
+import { Accordion, AccordionContent, AccordionContentText, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { Icon, ChevronLeftIcon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Switch } from '@/components/ui/switch';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 import { useUserState, useNotificationSettings, useUpdateExpoToken, useAddDebugMessage } from '../../../../hooks/useUserData';
 import { navigate } from '../../../../helpers/RootNavigator';
@@ -52,16 +64,16 @@ export const NotificationPermissionStatus = () => {
     }, [expoToken]);
 
     return (
-        <Pressable onPress={() => navigate('PermissionNotificationDescription', { permissionStatus })} pb="$3">
+        <Pressable onPress={() => navigate('PermissionNotificationDescription', { permissionStatus })} style={{ paddingBottom: 12 }}>
             <HStack space="md" justifyContent="space-between" alignItems="center">
-                <Text bold color={textColor}>
+                <Text bold style={{ color: textColor }}>
                     {getTermFromDictionary(language, 'notification_permission')}
                 </Text>
                 <HStack alignItems="center">
-                    <Text color={textColor}>
+                    <Text style={{ color: textColor }}>
                         {permissionStatus ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                     </Text>
-                    <Icon ml="$1" as={ChevronRight} color={textColor} />
+                    <Icon as={ChevronRight} style={{ marginLeft: 4, color: textColor }} />
                 </HStack>
             </HStack>
         </Pressable>
@@ -101,18 +113,15 @@ export const NotificationPermissionDescription = () => {
             navigation.setOptions({
                 headerLeft: () => (
                     <Button
-                        bg="transparent"
+                        style={{ backgroundColor: 'transparent', marginRight: 12, padding: 4 }}
                         onPress={() => {
                             navigation.goBack();
                         }}
-                        mr="$3"
-                        p="$1"
                     >
                         <ButtonIcon
                             size="lg"
                             variant="outline"
-                            borderWidth={0}
-                            color={theme['tokens']['colors']['primary']['baseContrast']}
+                            style={{ borderWidth: 0, color: theme.tokens.colors.primary.baseContrast }}
                             as={ChevronLeftIcon}
                         />
                     </Button>
@@ -204,28 +213,28 @@ export const NotificationPermissionDescription = () => {
      }
 
     return (
-        <ScrollView p="$5">
+        <ScrollView contentContainerStyle={{ padding: 20 }}>
             <VStack alignItems="stretch">
                 <Box>
-                    <Text color={textColor}>{getTermFromDictionary(language, 'device_set_to')}</Text>
-                    <Heading mb="$1" color={textColor}>
+                    <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'device_set_to')}</Text>
+                    <Heading style={{ marginBottom: 4, color: textColor }}>
                         {permissionStatus ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                     </Heading>
-                    <Text color={textColor}>
+                    <Text style={{ color: textColor }}>
                         {Constants.expoConfig.name} {permissionStatus ?
                             getTermFromDictionary(language, 'allowed_notification') :
                             getTermFromDictionary(language, 'not_allowed_notification')
                         }
                     </Text>
 
-                    <Text color={textColor} mt="$5">
+                    <Text style={{ color: textColor, marginTop: 20 }}>
                         {getTermFromDictionary(language, 'to_update_settings')}
                     </Text>
 
                     <NotificationPermissionUsage />
 
                     {permissionStatus && (
-                        <Box mb="$5">
+                        <Box style={{ marginBottom: 20 }}>
                             <NotificationPreferencesSection
                                 preferences={preferences}
                                 updatePreference={updatePreference}
@@ -250,8 +259,8 @@ const NotificationPreferencesSection = ({ preferences, updatePreference, notific
     return (
         <>
             {Object.entries(notificationSettings).map(([key, setting]) => (
-                <HStack key={key} space="md" justifyContent="space-between" alignItems="center" my="$2">
-                    <Text color={textColor}>{setting.label}</Text>
+                <HStack key={key} space="md" justifyContent="space-between" alignItems="center" style={{ marginVertical: 8 }}>
+                    <Text style={{ color: textColor }}>{setting.label}</Text>
                     <Switch
                         value={preferences[setting.option]}
                         onValueChange={(value) => updatePreference(setting.option, value)}
@@ -270,22 +279,22 @@ const NotificationPermissionUsage = () => {
         <Accordion variant="unfilled" width="$full" size="sm">
             <AccordionItem value="description">
                 <AccordionHeader>
-                    <AccordionTrigger px="$0">
+                    <AccordionTrigger style={{ paddingHorizontal: 0 }}>
                         {({ isExpanded }) => (
                             <>
-                                <AccordionTitleText color={textColor}>
+                                <AccordionTitleText style={{ color: textColor }}>
                                     {getTermFromDictionary(language, 'how_we_use_notification_title')}
                                 </AccordionTitleText>
                                 {isExpanded ?
-                                    <AccordionIcon as={ChevronUp} ml="$3" color={textColor} /> :
-                                    <AccordionIcon as={ChevronDown} ml="$3" color={textColor} />
+                                    <AccordionIcon as={ChevronUp} style={{ marginLeft: 12, color: textColor }} /> :
+                                    <AccordionIcon as={ChevronDown} style={{ marginLeft: 12, color: textColor }} />
                                 }
                             </>
                         )}
                     </AccordionTrigger>
                 </AccordionHeader>
-                <AccordionContent px="$0">
-                    <AccordionContentText color={textColor}>
+                <AccordionContent style={{ paddingHorizontal: 0 }}>
+                    <AccordionContentText style={{ color: textColor }}>
                         {Constants.expoConfig.name} {getTermFromDictionary(language, 'how_we_use_notification_body')}
                     </AccordionContentText>
                 </AccordionContent>
@@ -299,6 +308,7 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
     const language = useActiveLanguage();
     const [isUpdating, setIsUpdating] = React.useState(false);
     const [showAlertDialog, setShowAlertDialog] = React.useState(false);
+    const dialogBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
 
     const handleUpdatePermissions = async () => {
         try {
@@ -326,10 +336,10 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
         <Center>
             <Button
                 onPress={handleUpdatePermissions}
-                bgColor={theme.tokens.colors.primary['500']}
+                style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                 isDisabled={isUpdating}
             >
-                <ButtonText color={theme.tokens.colors.primary['500-text']}>
+                <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
                     {permissionStatus ?
                         getTermFromDictionary(language, 'revoke_device_settings') :
                         getTermFromDictionary(language, 'update_device_settings')}
@@ -342,32 +352,30 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
             >
                 <AlertDialogBackdrop />
                 <AlertDialogContent
-                    bgColor={colorMode === 'light' ?
-                        "$warmGray50" :
-                        "$coolGray700"}
+                    style={{ backgroundColor: dialogBg }}
                 >
                     <AlertDialogHeader>
-                        <Heading color={textColor}>
+                        <Heading style={{ color: textColor }}>
                             {getTermFromDictionary(language, 'update_device_settings')}
                         </Heading>
                     </AlertDialogHeader>
                     <AlertDialogBody>
-                        <Text color={textColor}>
+                        <Text style={{ color: textColor }}>
                             {Platform.OS === 'android' ?
                                 getTermFromDictionary(language, 'update_notification_android') :
                                 getTermFromDictionary(language, 'update_notification_ios')}
                         </Text>
                     </AlertDialogBody>
                     <AlertDialogFooter>
-                        <ButtonGroup flexDirection="column" alignItems="stretch" width="$full">
+                        <ButtonGroup style={{ flexDirection: 'column', alignItems: 'stretch', width: '100%' }}>
                             <Button
                                 onPress={() => {
                                     Linking.openSettings();
                                     setShowAlertDialog(false);
                                 }}
-                                bgColor={theme.tokens.colors.primary['500']}
+                                style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                             >
-                                <ButtonText color={theme.tokens.colors.primary['500-text']}>
+                                <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
                                     {getTermFromDictionary(language, 'open_device_settings')}
                                 </ButtonText>
                             </Button>
@@ -375,7 +383,7 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
                                 variant="link"
                                 onPress={() => setShowAlertDialog(false)}
                             >
-                                <ButtonText color={textColor}>
+                                <ButtonText style={{ color: textColor }}>
                                     {getTermFromDictionary(language, 'not_now')}
                                 </ButtonText>
                             </Button>

@@ -4,8 +4,15 @@ import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import _ from 'lodash';
 import moment from 'moment';
-import { Badge, BadgeText, Box, Button, ButtonText, Divider, Heading, ScrollView, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Divider } from '@/components/ui/divider';
+import { Heading } from '@/components/ui/heading';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 import { DisplaySystemMessage } from '../../components/Notifications';
 import { SystemMessagesContext } from '../../context/initialContext';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
@@ -32,8 +39,6 @@ export const Location = () => {
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const { colorMode, textColor, theme } = useTheme();
-
-     const bgColor = (colorMode === 'light' ? "$warmGray50" : "$coolGray800");
      const showSystemMessage = () => {
           if (_.isArray(systemMessages)) {
                return systemMessages.map((obj, index) => {
@@ -122,33 +127,33 @@ export const Location = () => {
                                    />
                               </>
                          ) : null}
-                         <Box safeArea={5} mx="$4" zIndex={200}>
+                         <Box style={{ marginHorizontal: 16, zIndex: 200 }}>
                               {showSystemMessage()}
-                              {library.displayName !== location.displayName ? <Heading mb={2} color={textColor}>{location.displayName}</Heading> : <Heading mb={1} color={textColor}>{library.displayName}</Heading>}
-                              {location.address ? <Text color={textColor}>{location.address}</Text> : null}
+                              {library.displayName !== location.displayName ? <Heading style={{ marginBottom: 8, color: textColor }}>{location.displayName}</Heading> : <Heading style={{ marginBottom: 4, color: textColor }}>{library.displayName}</Heading>}
+                              {location.address ? <Text style={{ color: textColor }}>{location.address}</Text> : null}
                               {location.phone ? (
-                                   <Text color={textColor}>
+                                   <Text style={{ color: textColor }}>
                                         {getTermFromDictionary(language, 'phone')}: {location.phone}
                                    </Text>
                               ) : null}
                               {hasHours ? (
-                                   <Badge colorScheme={isClosedToday ? 'error' : 'success'} alignSelf="flex-start">
-                                        <BadgeText color={textColor}>
+                                   <Badge action={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
+                                        <BadgeText style={{ color: textColor }}>
                                              {hoursLabel}
                                         </BadgeText>
                                    </Badge>
                               ) : null}
                          </Box>
                          <DisplayMap data={location} />
-                         <Box safeArea={5} mx={4} >
+                         <Box style={{ marginHorizontal: 16 }} >
                               <ContactButtons data={location} />
                               {hasHours ? <Hours data={location} /> : null}
                               <AdditionalInformation data={location} />
                               {_.size(locations) > 1 ? (
                                    <>
-                                        <Divider mt={5} mb={2} />
-                                        <Button variant="ghost" size="sm" onPress={selectLocations} bgColor={theme.tokens.colors.primary['500']}>
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
+                                        <Divider style={{ marginTop: 20, marginBottom: 8 }} />
+                                        <Button size="sm" onPress={selectLocations} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
                                         </Button>
                                    </>
                               ) : null}

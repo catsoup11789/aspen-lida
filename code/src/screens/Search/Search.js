@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import _ from 'lodash';
-import { Box, Button, ButtonText, Center, FlatList, FormControl, Input, InputField, Text } from '@gluestack-ui/themed';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
@@ -10,6 +9,13 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import { formatDiscoveryVersion } from '../../helpers/helpers';
 import { getDefaultFacets } from '../../util/api/search';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FlatList } from '@/components/ui/flat-list';
+import { FormControl } from '@/components/ui/form-control';
+import { Input, InputField } from '@/components/ui/input';
+import { Text } from '@/components/ui/text';
 
 export const SearchHome = () => {
      const navigation = useNavigation();
@@ -46,14 +52,16 @@ export const SearchHome = () => {
 
      return (
           <SafeAreaView>
-               <Box safeArea={5}>
+               <Box style={{ padding: 20 }}>
                     <FormControl>
-                         <Input variant="filled" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} status="info" placeholder={getTermFromDictionary(language, 'search')} clearButtonMode="always" onSubmitEditing={search} value={searchTerm} size="xl" />
+                         <Input variant="filled" size="xl">
+                              <InputField autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} clearButtonMode="always" onSubmitEditing={search} value={searchTerm} />
+                         </Input>
                     </FormControl>
                     {quickSearchNum > 0 ? (
                          <Box>
                               <Center>
-                                   <Text mt={8} mb={2} fontSize="xl" bold>
+                                   <Text bold style={{ marginTop: 8, marginBottom: 2, fontSize: 20 }}>
                                         {getTermFromDictionary(language, 'quick_searches')}
                                    </Text>
                               </Center>
@@ -69,13 +77,13 @@ const QuickSearch = (data) => {
      const quickSearch = data.data;
      return (
           <Button
-               mb={3}
+               style={{ marginBottom: 12 }}
                onPress={() =>
                     navigate('SearchResults', {
                          term: quickSearch.searchTerm,
                     })
                }>
-               {quickSearch.label}
+               <ButtonText>{quickSearch.label}</ButtonText>
           </Button>
      );
 };

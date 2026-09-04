@@ -3,34 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import _ from 'lodash';
-import {
-     VStack,
-     Icon,
-     Center,
-     AlertDialog,
-     AlertDialogCloseButton,
-     AlertDialogBackdrop,
-     AlertDialogContent,
-     AlertDialogHeader,
-     AlertDialogBody,
-     AlertDialogFooter,
-     Button,
-     ButtonGroup,
-     ButtonText,
-     Heading,
-     Text,
-     Input,
-     InputField,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     FormControlError,
-     FormControlErrorIcon,
-     FormControlErrorText,
-     CloseIcon,
-     AlertCircleIcon,
-     Spinner
-} from '@gluestack-ui/themed';
 
 import React from 'react';
 import { popAlert } from '../../components/feedback';
@@ -48,6 +20,16 @@ import { getBrowseCategoriesAndHomeLinks } from '../../util/api/search';
 import { logDebugMessage, logInfoMessage, getErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FormControl, FormControlError, FormControlErrorIcon, FormControlErrorText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { AlertCircleIcon, CloseIcon, Icon } from '@/components/ui/icon';
+import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 export const ResetExpiredPin = (props) => {
      const [resetSuccessful, setResetSuccessful] = React.useState(false);
@@ -61,6 +43,8 @@ export const ResetExpiredPin = (props) => {
      const updateBrowseCategories = useUpdateBrowseCategories();
      const language = useActiveLanguage();
      const { username, resetToken, url, pinValidationRules, setExpiredPin, patronsLibrary } = props;
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => {
           setExpiredPin(false);
@@ -182,11 +166,11 @@ export const ResetExpiredPin = (props) => {
           <Center>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose} avoidKeyboard>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                    <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                          <AlertDialogHeader>
-                              <Heading color={textColor}>{resetSuccessful ? getTermFromDictionary(language, 'pin_updated') : getTermFromDictionary(language, 'reset_my_pin')}</Heading>
+                              <Heading style={{ color: textColor }}>{resetSuccessful ? getTermFromDictionary(language, 'pin_updated') : getTermFromDictionary(language, 'reset_my_pin')}</Heading>
                               <AlertDialogCloseButton>
-                                   <Icon as={CloseIcon} color={textColor} />
+                                   <Icon as={CloseIcon} style={{ color: textColor }} />
                               </AlertDialogCloseButton>
                          </AlertDialogHeader>
                          {resetSuccessful ? (
@@ -194,8 +178,8 @@ export const ResetExpiredPin = (props) => {
                                    <AlertDialogBody>
                                         <Center>
                                              <VStack>
-                                                  <Text color={textColor}>{resetMessage}. Logging you in...</Text>
-                                                  <Spinner color={theme.tokens.colors.primary['500']} />
+                                                  <Text style={{ color: textColor }}>{resetMessage}. Logging you in...</Text>
+                                                  <Spinner style={{ color: theme.tokens.colors.primary['500'] }} />
                                              </VStack>
                                         </Center>
                                    </AlertDialogBody>
@@ -203,30 +187,31 @@ export const ResetExpiredPin = (props) => {
                          ) : (
                               <>
                                    <AlertDialogBody>
-                                        <Text color={textColor}>{getTermFromDictionary(language, 'pin_has_expired')}</Text>
-                                        <FormControl isRequired isInvalid={'pin' in errors} mt="$3">
+                                       <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'pin_has_expired')}</Text>
+                                       <FormControl isRequired isInvalid={'pin' in errors} style={{ marginTop: 12 }}>
                                              <FormControlLabel>
-                                                  <FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'new_pin')}</FormControlLabelText>
+                                                 <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_pin')}</FormControlLabelText>
                                              </FormControlLabel>
-                                             <Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}>
+                                            <Input style={{ borderColor }}>
                                                   <InputField
                                                        keyboardType={pinValidationRules.onlyDigitsAllowed === '1' ? 'numeric' : 'default'}
                                                        autoCapitalize="none"
                                                        size="xl"
-                                                       color={textColor}
+                                                      style={{ color: textColor }}
                                                        autoCorrect={false}
                                                        type={showPin ? 'text' : 'password'}
-                                                       variant="filled"
-                                                       id="pin"
-                                                       returnKeyType="next"
-                                                       enterKeyHint="next"
-                                                       textContentType="password"
-                                                       onChangeText={(text) => setPin(text)}
-                                                       InputRightElement={<Icon as={<Ionicons name={showPin ? 'eye-outline' : 'eye-off-outline'} />} size="md" ml={1} mr={3} onPress={toggleShowPin} roundedLeft={0} roundedRight="md" />}
-                                                       onSubmitEditing={() => pinConfirmedRef.current.focus()}
-                                                       blurOnSubmit={false}
+                                                      id="pin"
+                                                      returnKeyType="next"
+                                                      enterKeyHint="next"
+                                                      textContentType="password"
+                                                      onChangeText={(text) => setPin(text)}
+                                                      onSubmitEditing={() => pinConfirmedRef.current.focus()}
+                                                      blurOnSubmit={false}
                                                   />
-                                             </Input>
+                                                 <InputSlot onPress={toggleShowPin}>
+                                                      <InputIcon as={Ionicons} name={showPin ? 'eye-outline' : 'eye-off-outline'} style={{ marginRight: 12, color: textColor }} />
+                                                 </InputSlot>
+                                            </Input>
                                              {'pin' in errors ? (
                                                   <FormControlError>
                                                        <FormControlErrorIcon as={AlertCircleIcon} />
@@ -234,28 +219,29 @@ export const ResetExpiredPin = (props) => {
                                                   </FormControlError>
                                              ) : null}
                                         </FormControl>
-                                        <FormControl isRequired isInvalid={'pinConfirmed' in errors} mt="$3">
+                                        <FormControl isRequired isInvalid={'pinConfirmed' in errors} style={{ marginTop: 12 }}>
                                              <FormControlLabel>
-                                                  <FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'new_pin_confirmed')}</FormControlLabelText>
+                                                  <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_pin_confirmed')}</FormControlLabelText>
                                              </FormControlLabel>
-                                             <Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}>
+                                             <Input style={{ borderColor }}>
                                                   <InputField
                                                        keyboardType={pinValidationRules.onlyDigitsAllowed === '1' ? 'numeric' : 'default'}
                                                        autoCapitalize="none"
-                                                       color={textColor}
+                                                       style={{ color: textColor }}
                                                        size="xl"
                                                        autoCorrect={false}
                                                        type={showPinConfirmed ? 'text' : 'password'}
-                                                       variant="filled"
                                                        id="pinConfirmed"
                                                        enterKeyHint="done"
                                                        returnKeyType="done"
                                                        textContentType="password"
                                                        onChangeText={(text) => setPinConfirmed(text)}
-                                                       InputRightElement={<Icon as={<Ionicons name={showPinConfirmed ? 'eye-outline' : 'eye-off-outline'} />} size="md" ml={1} mr={3} onPress={toggleShowPinConfirmed} roundedLeft={0} roundedRight="md" />}
                                                        onSubmitEditing={() => updatePIN()}
                                                        ref={pinConfirmedRef}
                                                   />
+                                                  <InputSlot onPress={toggleShowPinConfirmed}>
+                                                       <InputIcon as={Ionicons} name={showPinConfirmed ? 'eye-outline' : 'eye-off-outline'} style={{ marginRight: 12, color: textColor }} />
+                                                  </InputSlot>
                                              </Input>
                                              {'pinConfirmed' in errors ? (
                                                   <FormControlError>
@@ -267,12 +253,12 @@ export const ResetExpiredPin = (props) => {
                                    </AlertDialogBody>
 
                                    <AlertDialogFooter>
-                                        <ButtonGroup space="$3">
-                                             <Button variant="outline" onPress={onClose} borderColor={theme.tokens.colors.primary['500']}>
-                                                  <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                       <ButtonGroup space="md">
+                                            <Button variant="outline" onPress={onClose} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
+                                                 <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                              </Button>
-                                             <Button bgColor={theme.tokens.colors.primary['500']} onPress={() => updatePIN()}>
-                                                  <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'update')}</ButtonText>
+                                            <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={() => updatePIN()}>
+                                                 <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'update')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
                                    </AlertDialogFooter>

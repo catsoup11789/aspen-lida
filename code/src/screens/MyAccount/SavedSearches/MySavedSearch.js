@@ -1,7 +1,14 @@
 import { useRoute } from '@react-navigation/native';
 import { Image } from 'expo-image';
-import { Badge, BadgeText, Box, Center, FlatList, HStack, Pressable, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
+import { FlatList } from 'react-native';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Center } from '@/components/ui/center';
+import { HStack } from '@/components/ui/hstack';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 import { loadError } from '../../../components/loadError';
 
 // custom components and helper files
@@ -26,9 +33,12 @@ export const MySavedSearch = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const {colorMode} = useTheme();
+     const { colorMode, theme, textColor } = useTheme();
      const [status, setStatus] = React.useState('loading');
      const [data, setData] = React.useState([]);
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const surfaceMuted = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const subtitleColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.iconMuted.dark;
 
      React.useEffect(() => {
           let isMounted = true;
@@ -65,9 +75,9 @@ export const MySavedSearch = () => {
      const Empty = () => {
           return (
                <>
-                    {(systemMessages?.length ?? 0) > 0 ? <Box safeArea={2}>{showSystemMessage()}</Box> : null}
-                    <Center mt={5} mb={5}>
-                         <Text bold fontSize="$lg" color={colorMode === 'light' ? "$coolGray800" : "$warmGray50"}>
+                    {(systemMessages?.length ?? 0) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+                    <Center style={{ marginTop: 20, marginBottom: 20 }}>
+                        <Text bold size="lg" style={{ color: textColor }}>
                               {getTermFromDictionary(language, 'no_results_found')}
                          </Text>
                     </Center>
@@ -77,8 +87,8 @@ export const MySavedSearch = () => {
 
      return (
           <Box style={{ flex: 1 }}>
-               {(systemMessages?.length ?? 0) > 0 ? <Box safeArea={2}>{showSystemMessage()}</Box> : null}
-               <Box safeArea={2}>{status === 'error' ? loadError('Error', '') : <FlatList data={data} ListEmptyComponent={Empty} renderItem={({ item }) => <SavedSearch data={item} />} keyExtractor={(item, index) => index.toString()} contentContainerStyle={{ paddingBottom: 30 }} />}</Box>
+              {(systemMessages?.length ?? 0) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+              <Box style={{ flex: 1 }}>{status === 'error' ? loadError('Error', '') : <FlatList data={data} ListEmptyComponent={Empty} renderItem={({ item }) => <SavedSearch data={item} />} keyExtractor={(item, index) => index.toString()} contentContainerStyle={{ paddingBottom: 30 }} />}</Box>
           </Box>
      );
 };
@@ -87,7 +97,10 @@ const SavedSearch = (data) => {
      const item = data.data;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const {colorMode} = useTheme();
+     const { colorMode, theme, textColor } = useTheme();
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const surfaceMuted = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const subtitleColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.iconMuted.dark;
 
      const imageUrl = library.baseUrl + item.image;
 
@@ -107,13 +120,13 @@ const SavedSearch = (data) => {
      };
 
      return (
-          <Pressable borderBottomWidth="$1" _dark={{ borderColor: 'gray.600' }} borderColor="coolGray.200" pl="$4" pr="$5" py="$2" onPress={() => openGroupedWork()}>
+          <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={() => openGroupedWork()}>
                <HStack space={3}>
-                    <VStack maxW="35%">
+                    <VStack style={{ maxWidth: '35%' }}>
                          {isNew ? (
-                              <Box width="$full" zIndex={1}>
-                                   <Badge colorScheme="warning" shadow={1} mb={-3} ml={-1}>
-                                        <BadgeText fontSize="$xs">
+                              <Box style={{ width: '100%', zIndex: 1 }}>
+                                   <Badge action="warning" style={{ marginBottom: -12, marginLeft: -4 }}>
+                                        <BadgeText size="xs">
                                              {getTermFromDictionary(language, 'flag_new')}
                                         </BadgeText>
                                    </Badge>
@@ -121,46 +134,45 @@ const SavedSearch = (data) => {
                          ) : null}
                          <Image
                               alt={item.title}
-                              source={imageUrl}
-                              style={{
-                                   width: 100,
-                                   height: 150,
-                                   borderRadius: "$sm" }}
-                              placeholder={blurhash}
-                              transition={1000}
-                              contentFit="cover"
-                         />
+                             source={imageUrl}
+                             style={{
+                                  width: 100,
+                                  height: 150,
+                                  borderRadius: 8 }}
+                             placeholder={blurhash}
+                             transition={1000}
+                             contentFit="cover"
+                        />
                          <Badge
-                              mt={1}
-                              bgColor={colorMode === 'light' ? "$warmGray200" : "$coolGray900"}
-                              >
+                              style={{ marginTop: 4, backgroundColor: surfaceMuted }}
+                         >
                               <BadgeText
-                                   fontSize="$sm"
-                                   color={colorMode === 'light' ? "$coolGray600":  "$warmGray400"}>
+                                   size="sm"
+                                   style={{ color: subtitleColor }}>
                                    {item.language}
                               </BadgeText>
                          </Badge>
                          <AddToList item={item.id} libraryUrl={library.baseUrl} />
                     </VStack>
 
-                    <VStack w="65%" ml="$3">
+                    <VStack style={{ width: '65%', marginLeft: 12 }}>
                          <Text
-                              color={colorMode === 'light' ? "$coolGray800" : "$warmGray50"}
                               bold
-                              fontSize="$xs">
+                              size="xs"
+                              style={{ color: textColor }}>
                               {item.title}
                          </Text>
                          {item.author ? (
-                              <Text color={colorMode === 'light' ? "$coolGray800" : "$warmGray50"} fontSize="$xs">
+                              <Text size="xs" style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'by')} {item.author}
                               </Text>
                          ) : null}
                          {item.format ? (
-                              <HStack mt={1.5} space={1} flexWrap="wrap">
-                                   {formats.map((format) => {
+                              <HStack style={{ marginTop: 6, flexWrap: 'wrap' }} space={1}>
+                                   {formats.map((format, index) => {
                                         return (
-                                             <Badge colorScheme="secondary" mt={1} variant="outline" borderRadius="$sm" ml="$2">
-                                                  <BadgeText fontSize="$sm" textTransform="none"  color={colorMode === 'light' ? "$coolGray800" : "$warmGray50"}>
+                                             <Badge key={index} action="info" variant="outline" style={{ marginTop: 4, borderRadius: 8, marginLeft: 8 }}>
+                                                  <BadgeText size="sm" style={{ textTransform: 'none', color: textColor }}>
                                                        {format}
                                                   </BadgeText>
                                              </Badge>
@@ -176,7 +188,7 @@ const SavedSearch = (data) => {
 
 function getFormats(data) {
      let formats = [];
-     data.map((item) => {
+     data.forEach((item) => {
           let thisFormat = item.split('#');
           thisFormat = thisFormat[thisFormat.length - 1];
           formats.push(thisFormat);

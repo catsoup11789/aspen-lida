@@ -1,8 +1,8 @@
-import { Box } from '@gluestack-ui/themed';
 import { useColorModeValue } from '../../themes/theme';
 import React from 'react';
 import { Platform } from 'react-native';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
+import { Box } from '@/components/ui/box';
 
 const mapStyle = [
      {
@@ -245,7 +245,7 @@ const DisplayMap = (data) => {
 
      if (Platform.OS === 'ios') {
           return (
-               <Box pt={2} pb={2}>
+               <Box style={{ paddingTop: 2, paddingBottom: 2 }}>
                     <AppleMaps.View
                          ref={mapRef}
                          style={{ height: 180, width: '100%' }}
@@ -273,7 +273,7 @@ const DisplayMap = (data) => {
      }
 
      return (
-          <Box pt={2} pb={2}>
+         <Box style={{ paddingTop: 2, paddingBottom: 2 }}>
                <GoogleMaps.View
                     ref={mapRef}
                     style={{ height: 180, width: '100%' }}

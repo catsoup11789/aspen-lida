@@ -1,7 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import _ from 'lodash';
 import moment from 'moment/moment';
-import { Box, Button, ButtonText, FormControl, HStack, Text, useColorMode } from '@gluestack-ui/themed';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -10,6 +9,11 @@ import { getTermFromDictionary } from '../../../translations/TranslationService'
 import { addAppliedFilter } from '../../../util/api/searchHelper';
 import { useActiveLanguage } from '../../../hooks/useLanguageData';
 import { useTheme } from '../../../themes/theme';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText } from '@/components/ui/button';
+import { FormControl } from '@/components/ui/form-control';
+import { HStack } from '@/components/ui/hstack';
+import { Text } from '@/components/ui/text';
 
 // custom components and helper files
 
@@ -19,7 +23,7 @@ export const Facet_Date = (props) => {
 
      const [loading, setLoading] = React.useState(false);
 
-     const {theme, textColor, colorMode } = useTheme();;
+     const { theme, textColor, colorMode } = useTheme();
 
      const today = new Date();
      const [fromValue, setFrom] = React.useState(today);
@@ -88,15 +92,15 @@ export const Facet_Date = (props) => {
 
      return (
           <ScrollView>
-               <Box p="$5">
-                    <FormControl mb="$2">
-                         <HStack space="sm" alignItems="center" justifyContent="center">
-                              <Button variant="outline" onPress={() => toggleFromDatePicker()} borderColor={theme.tokens.colors.primary['500']}>
-                                   <ButtonText color={theme.tokens.colors.primary['500']}>{moment(fromValue).format('MM/DD/YYYY')}</ButtonText>
+               <Box style={{ padding: 20 }}>
+                    <FormControl style={{ marginBottom: 8 }}>
+                         <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'center' }}>
+                              <Button variant="outline" onPress={() => toggleFromDatePicker()} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
+                                   <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{moment(fromValue).format('MM/DD/YYYY')}</ButtonText>
                               </Button>
-                              <Text color={textColor}>to</Text>
-                              <Button variant="outline" onPress={() => toggleToDatePicker()} borderColor={theme.tokens.colors.primary['500']}>
-                                   <ButtonText color={theme.tokens.colors.primary['500']}>{toFacet === '*' ? 'MM/DD/YYYY' : moment(toValue).format('MM/DD/YYYY')}</ButtonText>
+                              <Text style={{ color: textColor }}>to</Text>
+                              <Button variant="outline" onPress={() => toggleToDatePicker()} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
+                                   <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{toFacet === '*' ? 'MM/DD/YYYY' : moment(toValue).format('MM/DD/YYYY')}</ButtonText>
                               </Button>
                          </HStack>
                     </FormControl>

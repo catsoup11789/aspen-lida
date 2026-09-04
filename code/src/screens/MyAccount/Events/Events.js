@@ -5,9 +5,18 @@ import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
 import _ from 'lodash';
 import moment from 'moment';
-import { Badge, BadgeText, Box, Button, ButtonText, ButtonGroup, ButtonIcon, Center, FlatList, HStack, Pressable, ScrollView, Text, useToken, VStack } from '@gluestack-ui/themed';
-import { useColorModeValue, useTheme } from '../../../themes/theme';
 import React from 'react';
+import { FlatList } from 'react-native';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { HStack } from '@/components/ui/hstack';
+import { Pressable } from '@/components/ui/pressable';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
+import { useTheme } from '../../../themes/theme';
 import { loadError } from '../../../components/loadError';
 import { popAlert, popToast } from '../../../components/feedback';
 
@@ -41,6 +50,9 @@ export const MyEvents = () => {
      const { theme, colorMode, textColor} = useTheme();
      const pageSize = 25;
      const systemMessagesForScreen = [];
+     const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
 
      const [filterBy, setFilterBy] = React.useState('upcoming');
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
@@ -107,46 +119,39 @@ export const MyEvents = () => {
      const getActionButtons = () => {
           return (
                <Box
-                    alignItems="center"
-                    p="$2"
-                    borderBottomWidth="$1"
-                    bgColor={colorMode==='light'?"$coolGray100" : '$coolGray700'}
-                    borderColor={colorMode==='light'?"$coolGray200" : '$coolGray600'}
+                   style={{ alignItems: 'center', padding: 8, borderBottomWidth: 1, backgroundColor: panelBg, borderColor }}
                >
-                    <ButtonGroup alignItems="center" space="md" isAttached size="sm" pb="$1">
-                         <Button
-                              variant={filterBy === 'all' ? 'solid' : 'outline'}
-                              onPress={() => setFilterBy('all')}
-                              bgColor={filterBy === 'all' ?  theme.tokens.colors.primary['500'] : (colorMode === 'light' ? "$warmGray50" : "$coolGray900")}
-                              borderColor={theme.tokens.colors.primary['500']}
-                              action="primary">
-                              <ButtonText color={filterBy === 'all' ? theme.tokens.colors.primary['500-text'] : theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'all_events')}</ButtonText>
-                         </Button>
-                         <Button
-                              variant={filterBy === 'upcoming' ? 'solid' : 'outline'}
-                              action="primary"
-                              bgColor={filterBy === 'upcoming' ?  theme.tokens.colors.primary['500'] : (colorMode === 'light' ? "$warmGray50" : "$coolGray900")}
-                              borderColor={theme.tokens.colors.primary['500']}
-                              onPress={() => setFilterBy('upcoming')}>
-                              <ButtonText color={filterBy === 'upcoming' ? theme.tokens.colors.primary['500-text'] : theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'upcoming_events')}</ButtonText>
-                         </Button>
-                         <Button
-                              action="primary"
-                              variant={filterBy === 'past' ? 'solid' : 'outline'}
-                              bgColor={filterBy === 'past' ?  theme.tokens.colors.primary['500'] : (colorMode === 'light' ? "$warmGray50" : "$coolGray900")}
-                              borderColor={theme.tokens.colors.primary['500']}
-                              onPress={() => setFilterBy('past')}>
-                              <ButtonText color={filterBy === 'past' ? theme.tokens.colors.primary['500-text'] : theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'past_events')}</ButtonText>
-                         </Button>
-                    </ButtonGroup>
+                   <ButtonGroup alignItems="center" space="md" isAttached size="sm" style={{ paddingBottom: 4 }}>
+                        <Button
+                             variant={filterBy === 'all' ? 'solid' : 'outline'}
+                             onPress={() => setFilterBy('all')}
+                             style={{ backgroundColor: filterBy === 'all' ? theme.tokens.colors.primary['500'] : surfaceBg, borderColor: theme.tokens.colors.primary['500'] }}
+                             action="primary">
+                             <ButtonText style={{ color: filterBy === 'all' ? theme.tokens.colors.primary['500-text'] : theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'all_events')}</ButtonText>
+                        </Button>
+                        <Button
+                             variant={filterBy === 'upcoming' ? 'solid' : 'outline'}
+                             action="primary"
+                             style={{ backgroundColor: filterBy === 'upcoming' ? theme.tokens.colors.primary['500'] : surfaceBg, borderColor: theme.tokens.colors.primary['500'] }}
+                             onPress={() => setFilterBy('upcoming')}>
+                             <ButtonText style={{ color: filterBy === 'upcoming' ? theme.tokens.colors.primary['500-text'] : theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'upcoming_events')}</ButtonText>
+                        </Button>
+                        <Button
+                             action="primary"
+                             variant={filterBy === 'past' ? 'solid' : 'outline'}
+                             style={{ backgroundColor: filterBy === 'past' ? theme.tokens.colors.primary['500'] : surfaceBg, borderColor: theme.tokens.colors.primary['500'] }}
+                             onPress={() => setFilterBy('past')}>
+                             <ButtonText style={{ color: filterBy === 'past' ? theme.tokens.colors.primary['500-text'] : theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'past_events')}</ButtonText>
+                        </Button>
+                   </ButtonGroup>
                </Box>
           );
      };
 
      const Empty = () => {
           return (
-               <Center mt={5} mb={5}>
-                    <Text bold fontSize="$lg" color={textColor}>
+               <Center style={{ marginTop: 20, marginBottom: 20 }}>
+                   <Text bold size="lg" style={{ color: textColor }}>
                          {filterBy === 'upcoming' ? getTermFromDictionary(language, 'no_events_upcoming') : filterBy === 'past' ? getTermFromDictionary(language, 'no_events_past') : getTermFromDictionary(language, 'no_events_all')}
                     </Text>
                </Center>
@@ -157,15 +162,7 @@ export const MyEvents = () => {
           if (savedEvents?.totalResults > 0) {
                return (
                     <Box
-                         p="$2"
-                         backgroundColor="$coolGray100"
-                         borderTopWidth="$1"
-                         _dark={{
-                              borderColor: '$coolGray600',
-                              backgroundColor: '$coolGray700' }}
-                         borderColor="$coolGray200"
-                         flexWrap="nowrap"
-                         alignItems="center">
+                         style={{ padding: 8, backgroundColor: panelBg, borderTopWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup size="sm" space="md">
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} action="primary">
@@ -184,7 +181,7 @@ export const MyEvents = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text mt="$2" fontSize="$sm" color={textColor}>
+                         <Text size="sm" style={{ marginTop: 8, color: textColor }}>
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -233,10 +230,9 @@ const Item = (data) => {
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
      const library = useLibrary();
-     const {colorMode} = useTheme();
-
-     const backgroundColor = useToken('colors', useColorModeValue('warmGray.200', 'coolGray.900'));
-     const textColor = useToken('colors', useColorModeValue('gray.800', 'coolGray.200'));
+     const { colorMode, theme, textColor } = useTheme();
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
 
      const refreshAndSaveUserProfile = React.useCallback(async () => {
           const profileResponse = await refreshProfile(library.baseUrl);
@@ -372,14 +368,14 @@ const Item = (data) => {
      };
 
      return (
-          <Pressable borderBottomWidth="$1" _dark={{ borderColor: '$coolGray600' }} borderColor="$coolGray200" pl="$4" pr="$5" py="$2" onPress={openEvent}>
+         <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={openEvent}>
                <HStack space="md">
                     {event.cover ? (
-                         <VStack maxW="35%">
+                        <VStack style={{ maxWidth: '35%' }}>
                               {hasPassed ? (
-                                   <Box width="$full" zIndex={1}>
-                                        <Badge action="warning" variant="solid" mb="-$3" ml="-$1" borderRadius="$sm">
-                                             <BadgeText fontSize="$xs">
+                                   <Box style={{ width: '100%', zIndex: 1 }}>
+                                        <Badge action="warning" variant="solid" style={{ marginBottom: -12, marginLeft: -4, borderRadius: 8 }}>
+                                             <BadgeText size="xs">
                                                   {getTermFromDictionary(language, 'flag_past')}
                                              </BadgeText>
                                         </Badge>
@@ -391,57 +387,57 @@ const Item = (data) => {
                                    style={{
                                         width: 100,
                                         height: 150,
-                                        borderRadius: "$sm" }}
+                                        borderRadius: 8 }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
                               />
 
                               <Button size="sm" variant="ghost" action="negative" onPress={() => removeEvent()}>
-                                   <ButtonIcon as={MaterialIcons} name="delete" size="xs" mr="$1" />
+                                   <ButtonIcon as={MaterialIcons} name="delete" size="xs" style={{ marginRight: 4 }} />
                                    <ButtonText>{getTermFromDictionary(language, 'remove')}</ButtonText>
                               </Button>
                          </VStack>
                     ) : null}
 
-                    <VStack w={event.cover ? '65%' : '100%'}>
+                    <VStack style={{ width: event.cover ? '65%' : '100%' }}>
                          <Text
-                              color={colorMode==='light'?"$coolGray800" : "$warmGray50"}
-                              fontWeight="$bold"
-                              fontSize="$md">
+                              bold
+                              size="md"
+                              style={{ color: textColor }}>
                               {event.title}
                          </Text>
                          {event.startDate && event.endDate ? (
                               <>
-                                   <Text color={colorMode==='light'?"$coolGray800" : "$warmGray50"}>
+                                   <Text style={{ color: textColor }}>
                                         {displayDay}
                                    </Text>
-                                   <Text color={colorMode==='light'?"$coolGray800" : "$warmGray50"}>
+                                   <Text style={{ color: textColor }}>
                                         {displayStartTime} - {displayEndTime}
                                    </Text>
                               </>
                          ) : event.startDate && !event.endDate ? (
                               <>
-                                   <Text color={colorMode==='light'?"$coolGray800" : "$warmGray50"}>
+                                   <Text style={{ color: textColor }}>
                                         {displayDay}
                                    </Text>
-                                   <Text color={colorMode==='light'?"$coolGray800" : "$warmGray50"}>
+                                   <Text style={{ color: textColor }}>
                                         {displayStartTime}
                                    </Text>
                               </>
                          ) : null}
                          {!event.cover ? (
-                              <Box alignItems="flex-start" pt="$2">
-                                   <Button p="$0" size="sm" variant="ghost" action="negative" onPress={() => removeEvent()}>
-                                        <ButtonIcon as={MaterialIcons} name="delete" size="xs" mr="$1" />
+                              <Box style={{ alignItems: 'flex-start', paddingTop: 8 }}>
+                                   <Button size="sm" variant="ghost" action="negative" style={{ padding: 0 }} onPress={() => removeEvent()}>
+                                        <ButtonIcon as={MaterialIcons} name="delete" size="xs" style={{ marginRight: 4 }} />
                                         <ButtonText>{getTermFromDictionary(language, 'remove')}</ButtonText>
                                    </Button>
                               </Box>
                          ) : null}
                          {registrationRequired ? (
-                              <HStack mt="$1.5" space="xs" flexWrap="wrap">
-                                   <Badge key={0} action="secondary" mt="$1" variant="outline" borderRadius="$sm">
-                                        <BadgeText fontSize="$sm">
+                              <HStack style={{ marginTop: 6, flexWrap: 'wrap' }} space="xs">
+                                   <Badge key={0} action="secondary" variant="outline" style={{ marginTop: 4, borderRadius: 8 }}>
+                                        <BadgeText size="sm">
                                              {getTermFromDictionary(language, 'registration_required')}
                                         </BadgeText>
                                    </Badge>

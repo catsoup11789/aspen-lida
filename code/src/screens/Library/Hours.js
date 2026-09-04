@@ -1,7 +1,12 @@
 import _ from 'lodash';
 import moment from 'moment';
-import { Box, FlatList, Heading, HStack, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
+import { Box } from '@/components/ui/box';
+import { FlatList } from '@/components/ui/flat-list';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 // custom components and helper files
 
@@ -20,7 +25,7 @@ const Hours = (data) => {
           if (_.isArrayLikeObject(location.hours)) {
                return (
                     <Box>
-                         <Heading color={textColor} mb="$2" mx="$2">{getTermFromDictionary(language, 'library_hours')}</Heading>
+                         <Heading style={{ color: textColor, marginBottom: 8, marginHorizontal: 8 }}>{getTermFromDictionary(language, 'library_hours')}</Heading>
                          <FlatList data={location.hours} renderItem={({ item }) => <Day hours={item} textColor={textColor} />} />
                     </Box>
                );
@@ -41,21 +46,21 @@ const Day = (data) => {
      }
 
      return (
-          <VStack mb="$2" mx="$4">
+          <VStack style={{ marginBottom: 8, marginHorizontal: 16 }}>
                <HStack justifyContent="space-between">
-                    <Text color={textColor} bold>
+                    <Text style={{ color: textColor }} bold>
                          {hours.dayName}
                     </Text>
                     {!hours.isClosed ? (
-                         <Text color={textColor}>
+                         <Text style={{ color: textColor }}>
                               {formatTime(hours.open)} - {formatTime(hours.close)}
                          </Text>
                     ) : (
-                         <Text color={textColor}>{getTermFromDictionary(language, 'location_closed')}</Text>
+                         <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'location_closed')}</Text>
                     )}
                </HStack>
                {hours.notes !== '' ? (
-                    <Text color={textColor} fontSize="$xs" italic>
+                    <Text size="xs" style={{ color: textColor }} italic>
                          {hours.notes}
                     </Text>
                ) : null}

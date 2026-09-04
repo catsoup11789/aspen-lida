@@ -2,12 +2,22 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as Brightness from 'expo-brightness';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { Box, Button, ButtonText, ButtonIcon, Center, HStack, VStack, Icon, Image, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Text, Heading, ModalBackdrop, CloseIcon, ModalCloseButton, Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper } from '@gluestack-ui/themed';
 import React from 'react';
 import { Dimensions } from 'react-native';
 import Barcode from 'react-native-barcode-expo';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
+import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper } from '@/components/ui/actionsheet';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { Icon, CloseIcon } from '@/components/ui/icon';
+import { Image } from '@/components/ui/image';
+import { Modal, ModalBackdrop, ModalBody, ModalContent } from '@/components/ui/modal';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 // custom components and helper files
 import { PermissionsPrompt } from '../../../components/PermissionsPrompt';
@@ -183,12 +193,12 @@ export const MyLibraryCard = () => {
      };
 
      const { textColor, colorMode } = useTheme();
-     const drawerBg = colorMode === 'light' ? "$warmGray50" : "$coolGray800";
+     const drawerBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
 
      return (
           <>
-               <VStack flex={1} justifyContent={!isLandscape ? "space-between" : "flex-start"}>
-                    <Box flex={1} justifyContent={!isLandscape ? "center" : "flex-start"}>
+               <VStack style={{ flex: 1, justifyContent: !isLandscape ? 'space-between' : 'flex-start' }}>
+                    <Box style={{ flex: 1, justifyContent: !isLandscape ? 'center' : 'flex-start' }}>
                          <CardCarousel
                               cards={cards}
                               orientation={isLandscape}
@@ -202,25 +212,25 @@ export const MyLibraryCard = () => {
                     </Box>
 
                     {isLandscape && cards.length > 1 && (
-                         <Box position="absolute" bottom={0} left={0} right={0} alignItems="center" pb="$2">
+                        <Box style={{ position: 'absolute', bottom: 0, left: 0, right: 0, alignItems: 'center', paddingBottom: 8 }}>
                               <Button variant="link" onPress={() => setShowDrawer(true)} size="sm">
-                                   <ButtonIcon as={MaterialCommunityIcons} name="chevron-up" size="xl" color={textColor} />
+                                  <ButtonIcon as={MaterialCommunityIcons} name="chevron-up" size="xl" style={{ color: textColor }} />
                               </Button>
                          </Box>
                     )}
 
                     {!isLandscape && shouldShowAlternateLibraryCard && (
-                         <Box pb="$5">
+                        <Box style={{ paddingBottom: 20 }}>
                               <Center>
                                    <Button
                                         size="md"
-                                        bgColor={theme['tokens']['colors']['secondary']['500']}
+                                        style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}
                                         onPress={() => {
                                              navigateStack('LibraryCardTab', 'MyAlternateLibraryCard', {
                                                   prevRoute: 'MyLibraryCard',
                                                   hasPendingChanges: false });
                                         }}>
-                                        <ButtonText color={theme['tokens']['colors']['secondary']['500-text']}>{getTermFromDictionary(language, 'manage_alternate_library_card')}</ButtonText>
+                                        <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>{getTermFromDictionary(language, 'manage_alternate_library_card')}</ButtonText>
                                    </Button>
                               </Center>
                          </Box>
@@ -229,30 +239,32 @@ export const MyLibraryCard = () => {
 
                     <Actionsheet isOpen={showDrawer} onClose={() => setShowDrawer(false)}>
                          <ActionsheetBackdrop />
-                         <ActionsheetContent bgColor={drawerBg}>
+                         <ActionsheetContent style={{ backgroundColor: drawerBg }}>
                               <ActionsheetDragIndicatorWrapper>
-                                   <ActionsheetDragIndicator bgColor={textColor} />
+                                   <ActionsheetDragIndicator style={{ backgroundColor: textColor }} />
                               </ActionsheetDragIndicatorWrapper>
-                              <VStack space="md" w="$full" p="$4">
+                              <VStack space="md" style={{ width: '100%', padding: 16 }}>
                                    <Box>
-                                        <Text fontSize="$sm" color={textColor} mb="$2">{getTermFromDictionary(language, 'select_card')}</Text>
-                                        <Box flexDirection="row" flexWrap="wrap" justifyContent="center">
+                                        <Text size="sm" style={{ color: textColor, marginBottom: 8 }}>{getTermFromDictionary(language, 'select_card')}</Text>
+                                        <Box style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
                                              {cards.map((card, index) => (
                                                   <Button
                                                        key={index}
                                                        size="sm"
-                                                       mr="$1"
-                                                       mb="$1"
-                                                       bgColor={index === currentCardIndex ? theme['tokens']['colors']['tertiary']['500'] : '$none'}
-                                                       borderColor={index === currentCardIndex ? 'transparent' : theme['tokens']['colors']['tertiary']['500']}
-                                                       borderWidth={index === currentCardIndex ? 0 : 1}
+                                                       style={{
+                                                            marginRight: 4,
+                                                            marginBottom: 4,
+                                                            backgroundColor: index === currentCardIndex ? theme.tokens.colors.tertiary['500'] : 'transparent',
+                                                            borderColor: index === currentCardIndex ? 'transparent' : theme.tokens.colors.tertiary['500'],
+                                                            borderWidth: index === currentCardIndex ? 0 : 1,
+                                                       }}
                                                        variant={index === currentCardIndex ? 'solid' : 'outline'}
                                                        onPress={() => {
                                                             carouselRef.current?.scrollTo({ index: index, animated: false });
                                                             setCurrentCardIndex(index);
                                                             setShowDrawer(false);
                                                        }}>
-                                                       <ButtonText color={index === currentCardIndex ? theme.tokens.colors.tertiary['500-text'] : textColor}>
+                                                       <ButtonText style={{ color: index === currentCardIndex ? theme.tokens.colors.tertiary['500-text'] : textColor }}>
                                                             {card.displayName}
                                                        </ButtonText>
                                                   </Button>
@@ -260,20 +272,20 @@ export const MyLibraryCard = () => {
                                         </Box>
                                    </Box>
                                    {shouldShowAlternateLibraryCard && (
-                                        <Box mt="$2">
-                                             <Button
-                                                  size="md"
-                                                  bgColor={theme['tokens']['colors']['secondary']['500']}
-                                                  onPress={() => {
-                                                       setShowDrawer(false);
-                                                       navigateStack('LibraryCardTab', 'MyAlternateLibraryCard', {
-                                                            prevRoute: 'MyLibraryCard',
-                                                            hasPendingChanges: false });
-                                                  }}>
-                                                  <ButtonText color={theme['tokens']['colors']['secondary']['500-text']}>
-                                                       {getTermFromDictionary(language, 'manage_alternate_library_card')}
-                                                  </ButtonText>
-                                             </Button>
+                                        <Box style={{ marginTop: 8 }}>
+                                            <Button
+                                                 size="md"
+                                                 style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}
+                                                 onPress={() => {
+                                                      setShowDrawer(false);
+                                                      navigateStack('LibraryCardTab', 'MyAlternateLibraryCard', {
+                                                           prevRoute: 'MyLibraryCard',
+                                                           hasPendingChanges: false });
+                                                 }}>
+                                                 <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>
+                                                      {getTermFromDictionary(language, 'manage_alternate_library_card')}
+                                                 </ButtonText>
+                                            </Button>
                                         </Box>
                                    )}
                               </VStack>
@@ -356,24 +368,24 @@ const CreateLibraryCard = (data) => {
 
      if (barcodeValue === 'UNKNOWN' || barcodeValue === null || barcodeStyle === null || barcodeValue === '' || barcodeStyle === '' || barcodeStyle === 'INVALID' || barcodeStyle === 'none') {
           return (
-               <VStack maxW="90%" px="$8" py="$5" borderRadius="$lg">
+               <VStack style={{ maxWidth: '90%', paddingHorizontal: 32, paddingVertical: 20, borderRadius: 12 }}>
                     <Center>
                          <HStack>
                               {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} alt={getTermFromDictionary(language, 'library_card')} /> : null}
-                              <Text bold ml="$3" mt="$2" fontSize="$lg">
+                              <Text bold size="lg" style={{ marginLeft: 12, marginTop: 8 }}>
                                    {card.homeLocation}
                               </Text>
                          </HStack>
                     </Center>
-                    <Center pt="$8">
-                         <Text pb="$2">
+                    <Center style={{ paddingTop: 32 }}>
+                         <Text style={{ paddingBottom: 8 }}>
                               {card.displayName}
                          </Text>
-                         <Text bold fontSize="$xl">
+                         <Text bold size="xl">
                               {barcodeValue}
                          </Text>
                          {showExpirationDate && expirationDate && !neverExpires ? (
-                              <Text fontSize="$sm">
+                              <Text size="sm">
                                    {expirationText}
                               </Text>
                          ) : null}
@@ -382,51 +394,50 @@ const CreateLibraryCard = (data) => {
           );
      }
 
-     let cardBg = colorMode === 'light' ? "$warmGray50" : "$coolGray800";
+     let cardBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const barcodeBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
 
      return (
-          <VStack bg={cardBg} px="$8" py="$5" borderRadius="$lg" shadow="$1">
+          <VStack style={{ backgroundColor: cardBg, paddingHorizontal: 32, paddingVertical: 20, borderRadius: 12 }}>
                {numCards > 1 ? (
                     <>
                          <Center>
                               <HStack>
-                                   {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} w={42} h={42} alt={getTermFromDictionary(language, 'library_card')} /> : null}
-                                   <Text bold ml="$3" mt="$2" fontSize="$lg" color={textColor}>
+                                   {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} alt={getTermFromDictionary(language, 'library_card')} style={{ width: 42, height: 42 }} /> : null}
+                                   <Text bold size="lg" style={{ marginLeft: 12, marginTop: 8, color: textColor }}>
                                         {card.homeLocation}
                                    </Text>
                               </HStack>
                          </Center>
-                         <Center pt="$2">
-                              <Text fontSize="$md" color={textColor}>
+                         <Center style={{ paddingTop: 8 }}>
+                              <Text size="md" style={{ color: textColor }}>
                                    {card.displayName}
                               </Text>
                          </Center>
                     </>
                ) : null}
                <Center>
-                    {showExpirationDate && expirationDate && !neverExpires && numCards > 1 ? <Text color={textColor}>{expirationText}</Text> : null}
+                    {showExpirationDate && expirationDate && !neverExpires && numCards > 1 ? <Text style={{ color: textColor }}>{expirationText}</Text> : null}
                     {numCards > 1 ? (
                          <Button variant="link" onPress={() => openBarcodeModal && openBarcodeModal(card)}>
-                              <ButtonIcon color={theme.tokens.colors.primary['500']} as={MaterialCommunityIcons} name="barcode-scan" size="lg" mr="$1" />
-                              <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'open_barcode')}</ButtonText>
+                              <ButtonIcon as={MaterialCommunityIcons} name="barcode-scan" size="lg" style={{ color: theme.tokens.colors.primary['500'], marginRight: 4 }} />
+                              <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'open_barcode')}</ButtonText>
                          </Button>
                     ) : (
                          <VStack alignItems="center" space="sm">
-                              <Box bg={"$warmGray200"}
-                                   p="$3"
-                                   borderRadius="$sm">
+                              <Box style={{ backgroundColor: barcodeBg, padding: 12, borderRadius: 8 }}>
                                    <Barcode
                                         value={barcodeValue}
                                         format={barcodeStyle}
-                                        background={"$warmGray200"}
+                                        background={barcodeBg}
                                         onError={handleBarcodeError}
                                    />
                               </Box>
-                              <Text color={textColor} fontSize="$xl" textAlign="center">{barcodeValue}</Text>
+                              <Text size="xl" style={{ color: textColor, textAlign: 'center' }}>{barcodeValue}</Text>
                          </VStack>
                     )}
                     {showExpirationDate && expirationDate && !neverExpires && numCards === 1 ? (
-                         <Text color={textColor} fontSize="$sm" pt="$2">
+                         <Text size="sm" style={{ color: textColor, paddingTop: 8 }}>
                               {expirationText}
                          </Text>
                     ) : null}
@@ -470,11 +481,13 @@ const CardCarousel = (data) => {
           return (
                <Button
                     size="sm"
-                    mr="$1"
-                    mb="$1"
-                    bgColor={index === currentIndex ? theme['tokens']['colors']['tertiary']['500'] : '$none'}
-                    borderColor={index === currentIndex ? 'transparent' : theme['tokens']['colors']['tertiary']['500']}
-                    borderWidth={index === currentIndex ? 0 : 1}
+                    style={{
+                         marginRight: 4,
+                         marginBottom: 4,
+                         backgroundColor: index === currentIndex ? theme.tokens.colors.tertiary['500'] : 'transparent',
+                         borderColor: index === currentIndex ? 'transparent' : theme.tokens.colors.tertiary['500'],
+                         borderWidth: index === currentIndex ? 0 : 1,
+                    }}
                     variant={index === currentIndex ? 'solid' : 'outline'}
                     onPress={() => {
                          setCurrentIndex(index);
@@ -482,7 +495,7 @@ const CardCarousel = (data) => {
                               index: index,
                               animated: false });
                     }}>
-                    <ButtonText color={index === currentIndex ? theme.tokens.colors.tertiary['500-text'] : textColor}>{card.displayName}</ButtonText>
+                    <ButtonText style={{ color: index === currentIndex ? theme.tokens.colors.tertiary['500-text'] : textColor }}>{card.displayName}</ButtonText>
                </Button>
           );
      };
@@ -491,10 +504,10 @@ const CardCarousel = (data) => {
           const card = cards[0];
           return (
                <Box
-                    p="$5"
-                    flex={1}
-                    alignItems="center"
                     style={{
+                         padding: 20,
+                         flex: 1,
+                         alignItems: 'center',
                          transform: [{ scale: 0.9 }] }}>
                     <CreateLibraryCard key={0} card={card} numCards={cards.length} language={language} hasOpenModalRef={hasOpenModalRef} openBarcodeModal={openBarcodeModal} />
                </Box>
@@ -502,7 +515,7 @@ const CardCarousel = (data) => {
      }
 
      return (
-          <Box alignItems="center" px="$3">
+          <Box style={{ alignItems: 'center', paddingHorizontal: 12 }}>
                <Carousel
                     {...baseOptions}
                     ref={ref}
@@ -528,7 +541,7 @@ const CardCarousel = (data) => {
                     renderItem={({ item, index }) => <CreateLibraryCard key={index} card={item} numCards={cards.length} language={language} hasOpenModalRef={hasOpenModalRef} openBarcodeModal={openBarcodeModal} />}
                />
                {!!progressValue && (
-                    <Box flexDirection="row" flexWrap="wrap" alignContent="center" alignSelf="center" maxWidth="100%" justifyContent="center">
+                    <Box style={{ flexDirection: 'row', flexWrap: 'wrap', alignContent: 'center', alignSelf: 'center', maxWidth: '100%', justifyContent: 'center' }}>
                          {cards.map((card, index) => {
                               return <PaginationItem card={card} animValue={progressValue} index={index} key={index} isRotate={isVertical} length={cards.length} />;
                          })}
@@ -539,7 +552,7 @@ const CardCarousel = (data) => {
 };
 
 const BarcodeModal = ({ card, showModal, closeModal, language }) => {
-     const { theme } = useTheme();
+     const { theme, textColor, colorMode } = useTheme();
      const library = useLibrary();
      const [orientation, setOrientation] = React.useState('portrait');
      const [screenDimensions, setScreenDimensions] = React.useState(Dimensions.get('window'));
@@ -626,41 +639,42 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
           }
      };
 
+     const modalBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const barcodeBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+
      return (
           <Modal isOpen={showModal} onClose={closeModal} size="full">
-                    <ModalBackdrop sx={{ opacity: 0.85 }} />
-                    <ModalContent bgColor="white">
-                         <ModalBody style={{margin: 20}} bgColor="white" p="$4">
+                    <ModalBackdrop style={{ opacity: 0.85 }} />
+                    <ModalContent style={{ backgroundColor: modalBg }}>
+                         <ModalBody style={{ margin: 20, padding: 16, backgroundColor: modalBg }}>
                               {/* Always render barcode to measure it, but hide if showing warning. */}
                               <Box style={{ opacity: showRotateWarning ? 0 : 1, position: showRotateWarning ? 'absolute' : 'relative' }}>
-                                   <Center p="$2">
+                                   <Center style={{ padding: 8 }}>
                                         <Box
-                                             bg={"$warmGray200"}
-                                             p="$3"
-                                             borderRadius="$sm"
+                                             style={{ backgroundColor: barcodeBg, padding: 12, borderRadius: 8 }}
                                              onLayout={onBarcodeLayout}>
                                              <Barcode
                                                   value={barcodeValue}
                                                   format={barcodeStyle}
                                                   onError={handleBarcodeError}
-                                                  background={"$warmGray200"}
+                                                  background={barcodeBg}
                                              />
                                         </Box>
                                    </Center>
                               </Box>
 
                               {showRotateWarning && (
-                                   <VStack space="md" alignItems="center" p="$4">
-                                        <Text fontSize="$lg" textAlign="center" color="black">
+                                   <VStack space="md" style={{ alignItems: 'center', padding: 16 }}>
+                                        <Text size="lg" style={{ textAlign: 'center', color: textColor }}>
                                              {getTermFromDictionary(language, 'rotate_device_for_barcode')}
                                         </Text>
                                         <Button
                                              size="md"
-                                             bgColor={theme.tokens.colors.primary['500']}
+                                             style={{ backgroundColor: theme.tokens.colors.primary['500'], marginTop: 8 }}
                                              onPress={rotateToLandscape}
-                                             mt="$2">
-                                             <ButtonIcon as={MaterialCommunityIcons} name="phone-rotate-landscape" size="sm" mr="$2" />
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>
+                                        >
+                                             <ButtonIcon as={MaterialCommunityIcons} name="phone-rotate-landscape" size="sm" style={{ marginRight: 8, color: theme.tokens.colors.primary['500-text'] }} />
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
                                                   {getTermFromDictionary(language, 'rotate_to_landscape') || 'Rotate to Landscape'}
                                              </ButtonText>
                                         </Button>
@@ -668,21 +682,21 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                               )}
 
                               {!showRotateWarning && !isPortrait && manuallyRotated && (
-                                   <Center mt="$2" mb="$2">
+                                   <Center style={{ marginTop: 8, marginBottom: 8 }}>
                                         <Button
                                              size="md"
-                                             bgColor={theme.tokens.colors.primary['500']}
+                                             style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                              onPress={rotateToPortrait}>
-                                             <ButtonIcon as={MaterialCommunityIcons} name="phone-rotate-portrait" size="sm" mr="$2" />
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>
+                                             <ButtonIcon as={MaterialCommunityIcons} name="phone-rotate-portrait" size="sm" style={{ marginRight: 8, color: theme.tokens.colors.primary['500-text'] }} />
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>
                                                   {getTermFromDictionary(language, 'rotate_to_portrait') || 'Rotate to Portrait'}
                                              </ButtonText>
                                         </Button>
                                    </Center>
                               )}
 
-                              <Center mt="$2">
-                                   <Text fontSize="$xl" color="black">{barcodeValue}</Text>
+                              <Center style={{ marginTop: 8 }}>
+                                   <Text size="xl" style={{ color: textColor }}>{barcodeValue}</Text>
                               </Center>
                          </ModalBody>
                     </ModalContent>

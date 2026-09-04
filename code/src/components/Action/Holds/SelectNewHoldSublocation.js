@@ -1,15 +1,20 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Select, SelectTrigger, SelectInput, SelectIcon, SelectPortal, SelectBackdrop, SelectContent, SelectDragIndicatorWrapper, SelectDragIndicator, SelectItem, Icon, ChevronDownIcon, SelectScrollView, FormControl, FormControlLabel, FormControlLabelText, Text } from '@gluestack-ui/themed';
 import _ from 'lodash';
 import { getTermFromDictionary } from '../../../translations/TranslationService';
 
 import { logDebugMessage, logInfoMessage, logWarnMessage, logErrorMessage } from '../../../util/logging.js';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { Text } from '@/components/ui/text';
 
 export const SelectNewHoldSublocation = (props) => {
      const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor, theme, colorMode} = props;
      const insets = useSafeAreaInsets();
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
 
      if (sublocations !== undefined) {
           try {
@@ -47,33 +52,36 @@ export const SelectNewHoldSublocation = (props) => {
                               <>
                                    <FormControl>
                                         <FormControlLabel>
-                                             <FormControlLabelText size="sm" color={textColor}>
+                                             <FormControlLabelText size="sm" style={{ color: textColor }}>
                                                   {getTermFromDictionary(language, 'select_pickup_area')}
                                              </FormControlLabelText>
                                         </FormControlLabel>
-                                        <Select name="sublocations" selectedValue={activeSublocation} minWidth={200} mt="$1" mb="$2" onValueChange={(itemValue) => setActiveSublocation(itemValue)}>
+                                        <Select name="sublocations" selectedValue={activeSublocation} minWidth={200} onValueChange={(itemValue) => setActiveSublocation(itemValue)}>
                                              <SelectTrigger variant="outline" size="md">
                                                   {validSublocations.map((sublocation, index) => {
                                                        if (sublocation.id === activeSublocation) {
-                                                            return <SelectInput py={0} value={sublocation.displayName} color={textColor} />;
+                                                            return <SelectInput key={index} style={{ paddingVertical: 0, color: textColor }} value={sublocation.displayName} />;
                                                        }
+                                                       return null;
                                                   })}
-                                                  <SelectIcon mr="$3" as={ChevronDownIcon} color={textColor} />
+                                                  <SelectIcon style={{ marginRight: 12 }}>
+                                                       <Icon as={ChevronDownIcon} style={{ color: textColor }} />
+                                                  </SelectIcon>
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />
-                                                  <SelectContent bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'} pb={bottomPadding}>
-                                                       <SelectDragIndicatorWrapper>
-                                                            <SelectDragIndicator />
-                                                       </SelectDragIndicatorWrapper>
-                                                       <SelectScrollView>
+                                                  <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: bottomPadding === '$4' ? 16 : bottomPadding }}>
+                                                      <SelectDragIndicatorWrapper>
+                                                           <SelectDragIndicator />
+                                                      </SelectDragIndicatorWrapper>
+                                                      <SelectScrollView>
                                                             {validSublocations.map((sublocation, index) => {
                                                                  if (sublocation.id === activeSublocation) {
-                                                                      return <SelectItem label={sublocation.displayName} value={sublocation.id} key={index} bgColor={theme.tokens.colors.tertiary['300']} sx={{ _text: { color: theme.tokens.colors.tertiary['500-text'] } }} />;
+                                                                      return <SelectItem label={sublocation.displayName} value={sublocation.id} key={index} style={{ backgroundColor: tertiaryBg }} />;
                                                                  }
-                                                                 return <SelectItem label={sublocation.displayName} value={sublocation.id} key={index} sx={{ _text: { color: textColor } }} />;
+                                                                 return <SelectItem label={sublocation.displayName} value={sublocation.id} key={index} />;
                                                             })}
-                                                       </SelectScrollView>
+                                                      </SelectScrollView>
                                                   </SelectContent>
                                              </SelectPortal>
                                         </Select>

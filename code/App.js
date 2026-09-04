@@ -1,7 +1,8 @@
 import 'expo-dev-client';
+import '@/global.css';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import Constants from 'expo-constants';
-import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { QueryClient, QueryClientProvider, dehydrate, hydrate } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -101,7 +102,7 @@ if (__DEV__) {
 
 export default function AppContainer() {
      const [isLoading, setLoading] = React.useState(true);
-     const { colorMode, theme } = useThemeForDisplay();
+     const { colorMode } = useThemeForDisplay();
 
      const [dbReady, setDbReady] = React.useState(false);
      const persistTimeoutRef = React.useRef(null);
@@ -221,7 +222,7 @@ export default function AppContainer() {
                <SafeAreaProvider>
                     <QueryClientProvider client={queryClient}>
                           <Sentry.TouchEventBoundary>
-                                <GluestackUIProvider config={theme} colorMode={colorMode}>
+                                <GluestackUIProvider colorMode={colorMode}>
                                       <ToastRegistrar />
                                      <SearchProvider>
                                            <CheckoutsProvider>

@@ -1,4 +1,3 @@
-import { Badge, BadgeText, Box, HStack, Pressable, Text, VStack } from '@gluestack-ui/themed';
 import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
 import _ from 'lodash';
@@ -17,6 +16,12 @@ import { logDebugMessage, logErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { HStack } from '@/components/ui/hstack';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -26,7 +31,7 @@ export const DisplayEventResult = (props) => {
      const language = useActiveLanguage();
      const { theme, textColor, colorMode } = useTheme();
 
-     const backgroundColor = colorMode === 'light' ? "$warmGray200" : "$coolGray900";
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
 
      const id = item.key ?? item.id;
      const keyParts = item.key.split('_');
@@ -57,7 +62,6 @@ export const DisplayEventResult = (props) => {
      displayEndTime = moment(displayEndTime).format('h:mm A');
 
      let locationData = item?.location ?? [];
-     let roomData = item?.room ?? null;
 
      const handlePressItem = () => {
           let eventSource = item.source;
@@ -131,17 +135,17 @@ export const DisplayEventResult = (props) => {
      };
 
      return (
-          <Pressable borderBottomWidth="$1" borderColor={colorMode === 'light' ? "$warmGray400" : "$warmGray600"} pl="$4" pr="$5" py="$2" onPress={handlePressItem}>
+         <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
-                    <VStack sx={{ '@base': { width: 100 }, '@lg': { width: 180 } }}>
-                         <Box sx={{ '@base': { height: 150 }, '@lg': { height: 250 } }}>
+                    <VStack style={{ width: 100 }}>
+                         <Box style={{ height: 150 }}>
                               <Image
                                    alt={item.title}
                                    source={url}
                                    style={{
                                         width: '100%',
                                         height: '100%',
-                                        borderRadius: "$sm" }}
+                                        borderRadius: 8 }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -149,29 +153,29 @@ export const DisplayEventResult = (props) => {
                          </Box>
                          {item.canAddToList ? <AddToList source="Events" itemId={item.key} btnStyle="sm" /> : null}
                     </VStack>
-                    <VStack w="65%" pt="$1">
-                         <Text color={textColor} bold sx={{ '@base': { fontSize: 14, lineHeight: 17, paddingBottom: 4 }, '@lg': { fontSize: 22, lineHeight: 25, paddingBottom: 4 } }}>
+                    <VStack style={{ width: '65%', paddingTop: 4 }}>
+                         <Text bold style={{ color: textColor, fontSize: 14, lineHeight: 17, paddingBottom: 4 }}>
                               {decodeHTML(item.title)}
                          </Text>
                          {item.start_date && item.end_date ? (
                               <>
-                                   <Text color={textColor} sx={{ '@base': { fontSize: 12, lineHeight: 15 }, '@lg': { fontSize: 18, lineHeight: 21 } }}>
+                                   <Text style={{ color: textColor, fontSize: 12, lineHeight: 15 }}>
                                         {displayDay}
                                    </Text>
-                                   <Text color={textColor} sx={{ '@base': { fontSize: 12, lineHeight: 15 }, '@lg': { fontSize: 18, lineHeight: 21 } }}>
+                                   <Text style={{ color: textColor, fontSize: 12, lineHeight: 15 }}>
                                         {displayStartTime} - {displayEndTime}
                                    </Text>
                               </>
                          ) : null}
                          {locationData.name ? (
-                              <Text color={textColor} sx={{ '@base': { fontSize: 12, lineHeight: 15 }, '@lg': { fontSize: 18, lineHeight: 21 } }}>
+                              <Text style={{ color: textColor, fontSize: 12, lineHeight: 15 }}>
                                    {locationData.name}
                               </Text>
                          ) : null}
                          {registrationRequired ? (
-                              <HStack mt="$4" direction="row" space="xs" flexWrap="wrap">
-                                   <Badge key={0} borderRadius="$sm" borderColor={theme['tokens']['colors']['secondary']['400']} variant="outline" bg="transparent">
-                                        <BadgeText textTransform="none" color={theme['tokens']['colors']['secondary']['400']} sx={{ '@base': { fontSize: 10, lineHeight: 14 }, '@lg': { fontSize: 16, lineHeight: 20 } }}>
+                              <HStack space="xs" style={{ marginTop: 16, flexWrap: 'wrap' }}>
+                                   <Badge key={0} variant="outline" style={{ borderRadius: 8, borderColor: theme['tokens']['colors']['secondary']['400'], backgroundColor: 'transparent' }}>
+                                        <BadgeText style={{ textTransform: 'none', color: theme['tokens']['colors']['secondary']['400'], fontSize: 10, lineHeight: 14 }}>
                                              {getTermFromDictionary(language, 'registration_required')}
                                         </BadgeText>
                                    </Badge>

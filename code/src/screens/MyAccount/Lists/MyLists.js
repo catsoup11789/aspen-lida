@@ -1,8 +1,20 @@
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { Image } from 'expo-image';
-import { Badge, BadgeText, Box, Center, ChevronDownIcon, FlatList, Heading, HStack, Pressable, ScrollView, Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger, Text, VStack, ButtonGroup, Button, ButtonText } from '@gluestack-ui/themed';
 import React from 'react';
+import { FlatList, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 // custom components and helper files
 import { loadingSpinner } from '../../../components/loadingSpinner';
@@ -15,7 +27,6 @@ import { getListGroupDetails, getListGroups, getLists } from '../../../util/api/
 import CreateList from './CreateList';
 import { getErrorMessage, logDebugMessage, logErrorMessage } from '../../../util/logging';
 import CreateListGroup from './CreateListGroup';
-import { Platform } from 'react-native';
 import { EditListGroup } from './EditListGroup';
 import { EditListGroupParent } from './EditListGroupParent';
 import { DeleteListGroup } from './DeleteListGroup';
@@ -45,6 +56,10 @@ export const MyLists = () => {
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const { theme, textColor, colorMode } = useTheme();
      const insets = useSafeAreaInsets();
+     const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
 
      const [currentListGroup, setCurrentListGroup] = React.useState(-1);
      const [currentListGroupData, setCurrentListGroupData] = React.useState({
@@ -257,7 +272,7 @@ export const MyLists = () => {
 
      const listEmptyComponent = () => (
           <Center mt={5} mb={5}>
-               <Text bold fontSize="$lg" color={textColor}>
+               <Text bold size="lg" style={{ color: textColor }}>
                     {getTermFromDictionary(language, 'no_lists_yet')}
                </Text>
           </Center>
@@ -273,29 +288,29 @@ export const MyLists = () => {
           const imageUrl = item.cover ?? library.baseUrl + '/bookcover.php?type=list&id=' + item.id + '&size=medium';
           if (item.id !== 'recommendations') {
                return (
-                    <Pressable onPress={() => handleOpenList(item)} pl="$1" pr="$1" py="$2">
-                         <HStack space={3} mt="$2" mb="$2" justifyContent="flex-start">
+                    <Pressable onPress={() => handleOpenList(item)} style={{ paddingLeft: 4, paddingRight: 4, paddingVertical: 8 }}>
+                         <HStack space={3} style={{ marginTop: 8, marginBottom: 8, justifyContent: 'flex-start' }}>
                               <VStack space={1}>
                                    <Image
                                         alt={item.title}
                                         source={imageUrl}
-                                        style={{ width: 100, height: 150, borderRadius: '$sm' }}
+                                        style={{ width: 100, height: 150, borderRadius: 8 }}
                                         placeholder={blurhash}
                                         transition={1000}
                                         contentFit="cover"
                                    />
-                                   <Badge mt={1}>
+                                   <Badge style={{ marginTop: 4 }}>
                                         <BadgeText>{privacy}</BadgeText>
                                    </Badge>
                               </VStack>
-                              <VStack space={1} justifyContent="space-between" maxW="80%" pl="$2">
+                              <VStack space={1} style={{ justifyContent: 'space-between', maxWidth: '80%', paddingLeft: 8 }}>
                                    <Box>
-                                        <Text bold fontSize="$md" color={textColor}>{item.title}</Text>
+                                        <Text bold size="md" style={{ color: textColor }}>{item.title}</Text>
                                         {item.description ? (
-                                             <Text fontSize="$xs" mb={2} color={textColor}>{item.description}</Text>
+                                             <Text size="xs" style={{ marginBottom: 8, color: textColor }}>{item.description}</Text>
                                         ) : null}
-                                        <Text fontSize="$xs" italic color={textColor}>{listLastUpdatedOn}</Text>
-                                        <Text fontSize="$xs" italic color={textColor}>{item.numTitles ?? 0} {getTermFromDictionary(language, 'items')}</Text>
+                                        <Text size="xs" italic style={{ color: textColor }}>{listLastUpdatedOn}</Text>
+                                        <Text size="xs" italic style={{ color: textColor }}>{item.numTitles ?? 0} {getTermFromDictionary(language, 'items')}</Text>
                                    </Box>
                               </VStack>
                          </HStack>
@@ -319,26 +334,21 @@ export const MyLists = () => {
           const $type = type === 'lists' ? lists : currentListGroupData;
           return (
                <Box
-                    p="$2"
-                    borderTopWidth="$1"
-                    bgColor={colorMode === 'light' ? '$coolGray100' : '$coolGray700'}
-                    borderColor={colorMode === 'light' ? '$coolGray400' : '$warmGray600'}
-                    flexWrap="nowrap"
-                    alignItems="center">
+                    style={{ padding: 8, borderTopWidth: 1, backgroundColor: panelBg, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                     <ScrollView horizontal>
                          <ButtonGroup size="sm">
                               <Button
-                                   bgColor={theme.tokens.colors.primary['500']}
+                                   style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                    onPress={async () => {
                                         if (page > 1) {
                                              await updatePage(page - 1, type);
                                         }
                                    }}
                                    isDisabled={page === 1}>
-                                   <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
                               </Button>
                               <Button
-                                   bgColor={theme.tokens.colors.primary['500']}
+                                   style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                    onPress={async () => {
                                         if ($type?.page_current !== $type?.page_total) {
                                              logDebugMessage('Adding to page');
@@ -346,11 +356,11 @@ export const MyLists = () => {
                                         }
                                    }}
                                    isDisabled={!($type?.page_current !== $type?.page_total) || loading}>
-                                   <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
                               </Button>
                          </ButtonGroup>
                     </ScrollView>
-                    <Text mt="$2" fontSize="$sm" color={textColor}>{paginationLabel}</Text>
+                    <Text size="sm" style={{ marginTop: 8, color: textColor }}>{paginationLabel}</Text>
                </Box>
           );
      };
@@ -361,7 +371,7 @@ export const MyLists = () => {
 
      return (
           <Box style={{ flex: 1 }}>
-               <Box pt="$2" px="$5" flexWrap="nowrap">
+               <Box style={{ paddingTop: 8, paddingHorizontal: 20, flexWrap: 'nowrap' }}>
                     {showSystemMessage()}
                     <ScrollView horizontal>
                          <ButtonGroup space="sm">
@@ -371,26 +381,28 @@ export const MyLists = () => {
                     </ScrollView>
                </Box>
                {hasListGroups && listGroups?.groups && Object.values(listGroups.groups).length > 0 ? (
-                    <Box px="$5" mt="$2">
+                    <Box style={{ paddingHorizontal: 20, marginTop: 8 }}>
                          <Select name="listGroupSelect" selectedValue={currentListGroup} defaultValue={defaultListGroup} onValueChange={(itemValue) => updateSelectedListGroup(itemValue)}>
                               <SelectTrigger variant="outline" size="md">
                                    {currentListGroup && currentListGroup !== '-1' && currentListGroup !== -1 ? (
                                         Object.values(listGroups.groups).map((group, selectedIndex) => {
                                              if (group.id === currentListGroup) {
-                                                  return <SelectInput key={selectedIndex} py={0} value={group.title} color={textColor} />;
+                                                  return <SelectInput key={selectedIndex} style={{ paddingVertical: 0, color: textColor }} value={group.title} />;
                                              }
                                              return null;
                                         })
                                    ) : currentListGroup == '-1' ? (
-                                        <SelectInput py={0} value={getTermFromDictionary(language, 'unassigned_lists')} color={textColor} />
+                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'unassigned_lists')} />
                                    ) : defaultListGroup ? (
-                                        <SelectInput py={0} value={defaultListGroup} color={textColor} />
+                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} value={defaultListGroup} />
                                    ) : null}
-                                   <SelectIcon mr="$3" as={ChevronDownIcon} color={textColor} />
+                                   <SelectIcon style={{ marginRight: 12 }}>
+                                        <Icon as={ChevronDownIcon} style={{ color: textColor }} />
+                                   </SelectIcon>
                               </SelectTrigger>
                               <SelectPortal>
                                    <SelectBackdrop />
-                                   <SelectContent bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'} pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}>
+                                   <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                         <SelectDragIndicatorWrapper>
                                              <SelectDragIndicator />
                                         </SelectDragIndicatorWrapper>
@@ -400,8 +412,7 @@ export const MyLists = () => {
                                                        key={index}
                                                        value={item.id}
                                                        label={item.title}
-                                                       bgColor={currentListGroup === item.id ? theme.tokens.colors.tertiary['300'] : ''}
-                                                       sx={{ _text: { color: currentListGroup === item.id ? theme.tokens.colors.tertiary['500-text'] : textColor } }}
+                                                       style={{ backgroundColor: currentListGroup === item.id ? tertiaryBg : 'transparent' }}
                                                   />
                                              ))}
                                              {listGroups.unassigned > 0 ? (
@@ -409,8 +420,7 @@ export const MyLists = () => {
                                                        key={-1}
                                                        value="-1"
                                                        label={getTermFromDictionary(language, 'unassigned_lists')}
-                                                       bgColor={currentListGroup == '-1' ? theme.tokens.colors.tertiary['300'] : ''}
-                                                       sx={{ _text: { color: currentListGroup == '-1' ? theme.tokens.colors.tertiary['500-text'] : textColor } }}
+                                                       style={{ backgroundColor: currentListGroup == '-1' ? tertiaryBg : 'transparent' }}
                                                   />
                                              ) : null}
                                         </SelectScrollView>
@@ -418,9 +428,9 @@ export const MyLists = () => {
                               </SelectPortal>
                          </Select>
                          {currentListGroupData ? (
-                              <Box mt="$2">
+                              <Box style={{ marginTop: 8 }}>
                                    <Box>
-                                        <Heading size="xl" color={textColor}>{currentListGroupData.listGroupDetails?.title}</Heading>
+                                        <Heading size="xl" style={{ color: textColor }}>{currentListGroupData.listGroupDetails?.title}</Heading>
                                         {currentListGroup != '-1' && (
                                              <ScrollView horizontal>
                                                   <HStack space="sm">
@@ -433,7 +443,7 @@ export const MyLists = () => {
                                    </Box>
                                    <FlatList
                                         contentContainerStyle={{ paddingBottom: 200 }}
-                                        mt="$2"
+                                        style={{ marginTop: 8 }}
                                         data={currentListGroupData.listsInGroup}
                                         renderItem={({ item }) => renderList(item)}
                                         keyExtractor={(item, index) => item.id ? String(item.id) : index.toString()}
@@ -445,8 +455,7 @@ export const MyLists = () => {
                     </Box>
                ) : (
                     <FlatList
-                         px="$5"
-                         mt="$2"
+                         contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 32 }}
                          data={sortedLists}
                          ListEmptyComponent={listEmptyComponent}
                          renderItem={({ item }) => renderList(item)}

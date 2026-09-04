@@ -3,7 +3,6 @@ import { CheckoutsContext } from '../../context/initialContext';
 import { useLibraryLocation, useSelfCheckSettings } from '../../hooks/useLibraryBranchData';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { useUserState, useCards, useAccounts, useUpdateUserProfile } from '../../hooks/useUserData';
-import { Box, Button, ButtonGroup, ButtonIcon, ButtonText, Text, Heading, Center, HStack, VStack, Icon, FlatList, FormControl, FormControlLabel, FormControlLabelText, Input, InputField, Modal, ModalBackdrop, ModalContent, ModalHeader, ModalBody, ModalFooter, CloseIcon, ModalCloseButton, AlertDialog, AlertDialogBackdrop, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, Alert, AlertText } from '@gluestack-ui/themed';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { navigateStack } from '../../helpers/RootNavigator';
@@ -15,6 +14,19 @@ import { useQueryClient } from '@tanstack/react-query';
 import { logDebugMessage, logErrorMessage, logInfoMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { Alert, AlertText } from '@/components/ui/alert';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FlatList } from '@/components/ui/flat-list';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { CloseIcon, Icon } from '@/components/ui/icon';
+import { HStack } from '@/components/ui/hstack';
+import { Input, InputField } from '@/components/ui/input';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { Text } from '@/components/ui/text';
 
 export const SelfCheckOut = () => {
      const queryClient = useQueryClient();
@@ -197,11 +209,11 @@ export const SelfCheckOut = () => {
      const currentCheckoutHeader = () => {
           if (_.size(items) >= 1) {
                return (
-                    <HStack space="md" justifyContent="space-between" pb="$2">
-                         <Text bold fontSize="$xs" w="70%" color={textColor}>
+                    <HStack space="md" style={{ justifyContent: 'space-between', paddingBottom: 8 }}>
+                         <Text bold style={{ fontSize: 12, width: '70%', color: textColor }}>
                               {getTermFromDictionary(language, 'title')}
                          </Text>
-                         <Text bold fontSize="$xs" w="25%" color={textColor}>
+                         <Text bold style={{ fontSize: 12, width: '25%', color: textColor }}>
                               {getTermFromDictionary(language, 'checkout_due')}
                          </Text>
                     </HStack>
@@ -219,16 +231,16 @@ export const SelfCheckOut = () => {
                let mustConfirm = item?.mustConfirm ?? false;
                return (
                     <>
-                         <HStack space="md" justifyContent="space-between">
-                              <HStack space="xs" w="70%" flexWrap="wrap">
-                                   <Text bold fontSize="$xs" color={textColor}>
+                         <HStack space="md" style={{ justifyContent: 'space-between' }}>
+                              <HStack space="xs" style={{ width: '70%', flexWrap: 'wrap' }}>
+                                   <Text bold style={{ fontSize: 12, color: textColor }}>
                                         {title}
                                    </Text>
-                                   <Text fontSize="$xs" color={textColor}>
+                                   <Text style={{ fontSize: 12, color: textColor }}>
                                         ({barcode})
                                    </Text>
                               </HStack>
-                              <Text fontSize="$xs" w="25%" color={textColor}>
+                              <Text style={{ fontSize: 12, width: '25%', color: textColor }}>
                                    {dueDate}
                               </Text>
                          </HStack>
@@ -242,8 +254,8 @@ export const SelfCheckOut = () => {
      const DisplayCompletionMessage = (message) => {
           if (message && !mustConfirm) {
                return (
-                    <Alert width="100%" maxwidth="$full" action="warning" variant="solid">
-                         <AlertText size="xs" bold>
+                    <Alert action="warning" variant="solid" style={{ width: '100%', maxWidth: '100%' }}>
+                         <AlertText bold style={{ fontSize: 12 }}>
                               {message}
                          </AlertText>
                     </Alert>
@@ -253,68 +265,68 @@ export const SelfCheckOut = () => {
      }
 
      const currentCheckOutEmpty = () => {
-          return <Text color={textColor}>{getTermFromDictionary(language, 'no_items_checked_out')}</Text>;
+          return <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'no_items_checked_out')}</Text>;
      };
 
      const currentCheckOutFooter = () => {};
 
      return (
-          <Box p="$5" width="$full" style={{ flex: 1 }}>
-               <Center pb="$5">
+          <Box style={{ flex: 1, padding: 20, width: '100%' }}>
+               <Center style={{ paddingBottom: 20 }}>
                     {activeAccount?.displayName ? (
-                         <Text pb="$3" color={textColor}>
+                         <Text style={{ paddingBottom: 12, color: textColor }}>
                               {getTermFromDictionary(language, 'checking_out_as')} {activeAccount.displayName}
                          </Text>
                     ) : null}
                     {keyboardType === 0 ? (
-                         <Button bgColor={theme['tokens']['colors']['secondary']['500']} onPress={() => openScanner()}>
-                              <ButtonIcon as={Ionicons} name="barcode-outline" color={theme['tokens']['colors']['secondary']['500-text']} />
-                              <ButtonText color={theme['tokens']['colors']['secondary']['500-text']}>{getTermFromDictionary(language, 'add_new_item')}</ButtonText>
+                         <Button onPress={() => openScanner()} style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}>
+                              <ButtonIcon as={Ionicons} name="barcode-outline" style={{ color: theme.tokens.colors.secondary['500-text'] }} />
+                              <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>{getTermFromDictionary(language, 'add_new_item')}</ButtonText>
                          </Button>
                     ) : (
                          <Center>
                               <FormControl>
                                    <Center>
                                         <FormControlLabel>
-                                             <FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'add_new_item')}</FormControlLabelText>
+                                            <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'add_new_item')}</FormControlLabelText>
                                         </FormControlLabel>
-                                        <ButtonGroup sp="md">
-                                             <Button bgColor={theme['tokens']['colors']['secondary']['500']} onPress={() => openScanner()}>
-                                                  <ButtonIcon as={Ionicons} name="barcode-outline" color={theme['tokens']['colors']['secondary']['500-text']} />
-                                                  <ButtonText color={theme['tokens']['colors']['secondary']['500-text']}>{getTermFromDictionary(language, 'scan')}</ButtonText>
+                                       <ButtonGroup space="md">
+                                            <Button onPress={() => openScanner()} style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}>
+                                                 <ButtonIcon as={Ionicons} name="barcode-outline" style={{ color: theme.tokens.colors.secondary['500-text'] }} />
+                                                 <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>{getTermFromDictionary(language, 'scan')}</ButtonText>
                                              </Button>
-                                             <Button bgColor={theme['tokens']['colors']['secondary']['500']} onPress={toggle}>
-                                                  <ButtonIcon as={Ionicons} name="keypad-outline" color={theme['tokens']['colors']['secondary']['500-text']} />
-                                                  <ButtonText color={theme['tokens']['colors']['secondary']['500-text']}>{getTermFromDictionary(language, 'type')}</ButtonText>
+                                            <Button onPress={toggle} style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}>
+                                                 <ButtonIcon as={Ionicons} name="keypad-outline" style={{ color: theme.tokens.colors.secondary['500-text'] }} />
+                                                 <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>{getTermFromDictionary(language, 'type')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
                                    </Center>
                               </FormControl>
                               <Modal isOpen={showModal} onClose={toggle} size="md" avoidKeyboard useRNModal={true}>
                                    <ModalBackdrop />
-                                   <ModalContent maxWidth="90%" bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'}>
+                                   <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                                         <ModalHeader>
-                                             <Heading size="md" color={textColor}>
+                                            <Heading size="md" style={{ color: textColor }}>
                                                   {getTermFromDictionary(language, 'add_new_item')}
                                              </Heading>
-                                             <ModalCloseButton p="$3" onPress={toggle}>
-                                                  <Icon as={CloseIcon} color={textColor} />
+                                            <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
+                                                 <Icon as={CloseIcon} style={{ color: textColor }} />
                                              </ModalCloseButton>
                                         </ModalHeader>
                                         <ModalBody>
-                                             <FormControl pb="$5">
-                                                  <Input borderColor={colorMode === 'light' ? '$coolGray500' : '$warmGray300'}>
-                                                       <InputField color={textColor} keyboardType={keyboardType === 1 ? 'number-pad' : 'default'} variant="outline" autoCapitalize="none" placeholder={getTermFromDictionary(language, 'enter_barcode')} size="$lg" defaultValue={newBarcode} onChangeText={(text) => setNewBarcode(text)} />
+                                            <FormControl style={{ paddingBottom: 20 }}>
+                                                 <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}>
+                                                      <InputField style={{ color: textColor }} keyboardType={keyboardType === 1 ? 'number-pad' : 'default'} variant="outline" autoCapitalize="none" placeholder={getTermFromDictionary(language, 'enter_barcode')} size="$lg" defaultValue={newBarcode} onChangeText={(text) => setNewBarcode(text)} />
                                                   </Input>
                                              </FormControl>
                                         </ModalBody>
                                         <ModalFooter>
                                              <ButtonGroup>
-                                                  <Button variant="outline" onPress={toggle} borderColor={theme.tokens.colors.primary['500']}>
-                                                       <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                                 <Button variant="outline" onPress={toggle} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
+                                                      <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                                   </Button>
                                                   <Button
-                                                       bgColor={theme.tokens.colors.primary['500']}
+                                                      style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                                        onPress={() => {
                                                             navigation.replace('SelfCheckOut', {
                                                                  barcode: newBarcode,
@@ -324,7 +336,7 @@ export const SelfCheckOut = () => {
                                                                  items,
                                                             });
                                                        }}>
-                                                       <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'add_new_item')}</ButtonText>
+                                                       <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'add_new_item')}</ButtonText>
                                                   </Button>
                                              </ButtonGroup>
                                         </ModalFooter>
@@ -333,12 +345,12 @@ export const SelfCheckOut = () => {
                          </Center>
                     )}
                </Center>
-               <Heading size="md" pb="$2" color={textColor}>
+               <Heading size="md" style={{ paddingBottom: 8, color: textColor }}>
                     {getTermFromDictionary(language, 'checked_out_during_session')}
                </Heading>
                {isProcessingCheckout ? (
                     <Center>
-                         <Text pb="$5" color={textColor}>
+                         <Text style={{ paddingBottom: 20, color: textColor }}>
                               {getTermFromDictionary(language, 'processing_checkout_message')}
                          </Text>
                          {loadingSpinner()}
@@ -346,25 +358,25 @@ export const SelfCheckOut = () => {
                ) : (
                     <FlatList data={items} keyExtractor={(item, index) => index.toString()} ListEmptyComponent={currentCheckOutEmpty()} ListHeaderComponent={currentCheckoutHeader()} renderItem={({ item }) => currentCheckOutItem(item)} />
                )}
-               <Center pt="$5">
-                    <Button onPress={() => finishSession()} bgColor={theme.tokens.colors.primary['500']} size="sm">
-                         <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'button_finish')}</ButtonText>
+               <Center style={{ paddingTop: 20 }}>
+                    <Button onPress={() => finishSession()} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                         <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_finish')}</ButtonText>
                     </Button>
                </Center>
                <Center>
                     <AlertDialog leastDestructiveRef={cancelRefConfirm} isOpen={openConfirmAlert} onClose={onCloseConfirm} closeOnOverlayClick={false} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'}>
+                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading color={textColor}>{getTermFromDictionary(language, 'notice_about_item')}</Heading>
+                                   <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'notice_about_item')}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text color={textColor}>{confirmMessage}</Text>
+                                   <Text style={{ color: textColor }}>{confirmMessage}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="sm">
-                                        <Button variant="outline" borderColor={theme.tokens.colors.primary['500']} onPress={() => setOpenConfirmAlert(false)}>
-                                             <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                        <Button variant="outline" style={{ borderColor: theme.tokens.colors.primary['500'] }} onPress={() => setOpenConfirmAlert(false)}>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>
@@ -374,22 +386,22 @@ export const SelfCheckOut = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'}>
+                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading size="md" color={textColor}>
+                                   <Heading size="md" style={{ color: textColor }}>
                                         {errorTitle}
                                    </Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text color={textColor}>{errorBody}</Text>
+                                   <Text style={{ color: textColor }}>{errorBody}</Text>
                                    {itemNotFound && tempBarcode ? (
                                         <>
                                              <FormControl>
                                                   <FormControlLabel>
-                                                       <FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'does_barcode_match_item')}</FormControlLabelText>
+                                                       <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'does_barcode_match_item')}</FormControlLabelText>
                                                   </FormControlLabel>
-                                                  <Input borderColor={colorMode === 'light' ? '$coolGray500' : '$warmGray300'}>
-                                                       <InputField id="barcode" autoCapitalize="none" autoCorrect={false} onChangeText={(text) => setTempBarcode(text)} defaultValue={tempBarcode} color={textColor} />
+                                                  <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}>
+                                                       <InputField id="barcode" autoCapitalize="none" autoCorrect={false} onChangeText={(text) => setTempBarcode(text)} defaultValue={tempBarcode} style={{ color: textColor }} />
                                                   </Input>
                                              </FormControl>
                                         </>
@@ -397,12 +409,12 @@ export const SelfCheckOut = () => {
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="sm">
-                                        <Button variant="outline" borderColor={theme.tokens.colors.primary['500']} onPress={() => setIsOpen(false)}>
-                                             <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                        <Button variant="outline" style={{ borderColor: theme.tokens.colors.primary['500'] }} onPress={() => setIsOpen(false)}>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                         {itemNotFound && tempBarcode ? (
                                              <Button
-                                                  bgColor={theme.tokens.colors.primary['500']}
+                                                  style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                                   onPress={() => {
                                                        navigation.replace('SelfCheckOut', {
                                                             barcode: tempBarcode,
@@ -412,7 +424,7 @@ export const SelfCheckOut = () => {
                                                             items,
                                                        });
                                                   }}>
-                                                  <ButtonText textColor={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'try_again')}</ButtonText>
+                                                  <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'try_again')}</ButtonText>
                                              </Button>
                                         ) : null}
                                    </ButtonGroup>
@@ -423,23 +435,23 @@ export const SelfCheckOut = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelRef} isOpen={showFinishModal} onClose={() => startNewSession()} size="lg" useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'}>
+                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading color={textColor}>{getTermFromDictionary(language, 'finish_checkout_session')}</Heading>
-                                   <Button variant="link" onPress={() => setShowFinishModal(false)} position="absolute" right="$3" top="$1" bg="transparent">
-                                        <Icon as={CloseIcon} color={textColor} />
+                                   <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'finish_checkout_session')}</Heading>
+                                   <Button variant="link" onPress={() => setShowFinishModal(false)} style={{ position: 'absolute', right: 12, top: 4, backgroundColor: 'transparent' }}>
+                                        <Icon as={CloseIcon} style={{ color: textColor }} />
                                    </Button>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text color={textColor}>{getTermFromDictionary(language, 'finish_checkout_session_body')}</Text>
+                                   <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'finish_checkout_session_body')}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
-                                   <HStack width="$full" justifyContent="center">
-                                        <Button size="sm" onPress={() => startNewSession()} bgColor={theme.tokens.colors.primary['500']} mr="$5">
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'start_new_session')}</ButtonText>
+                                   <HStack style={{ width: '100%', justifyContent: 'center' }}>
+                                        <Button size="sm" onPress={() => startNewSession()} style={{ backgroundColor: theme.tokens.colors.primary['500'], marginRight: 20 }}>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'start_new_session')}</ButtonText>
                                         </Button>
-                                        <Button size="sm" bgColor={theme.tokens.colors.primary['500']} onPress={() => goToCheckouts()}>
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'view_checkouts')}</ButtonText>
+                                        <Button size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={() => goToCheckouts()}>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_checkouts')}</ButtonText>
                                         </Button>
                                    </HStack>
                               </AlertDialogFooter>

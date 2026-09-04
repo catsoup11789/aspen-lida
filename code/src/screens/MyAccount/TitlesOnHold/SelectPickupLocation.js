@@ -1,44 +1,18 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
-import {
-     ActionsheetItem,
-     ActionsheetItemText,
-     Box,
-     Button,
-     ButtonGroup,
-     ButtonText,
-     ChevronDownIcon,
-     CloseIcon,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Heading,
-     Icon,
-     Select,
-     SelectTrigger,
-     SelectInput,
-     SelectIcon,
-     SelectPortal,
-     SelectBackdrop,
-     SelectContent,
-     SelectDragIndicatorWrapper,
-     SelectDragIndicator,
-     SelectItem,
-     ActionsheetIcon,
-     Modal,
-     ModalBackdrop,
-     ModalContent,
-     ModalCloseButton,
-     ModalHeader,
-     ModalBody,
-     ModalFooter
-} from '@gluestack-ui/themed';
 import React from 'react';
 import { getTermFromDictionary } from '../../../translations/TranslationService';
-
 import { changeHoldPickUpLocation } from '../../../util/api/user';
 import {SelectExistingHoldSubLocation} from './SelectExistingHoldSubLocation';
-import { ScrollView } from '@gluestack-ui/themed';
+import { ActionsheetIcon, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { Icon, ChevronDownIcon, CloseIcon } from '@/components/ui/icon';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectTrigger } from '@/components/ui/select';
 
 export const SelectPickupLocation = (props) => {
      const { locations, sublocations, onClose, currentPickupId, holdId, userId, libraryContext, holdsContext, resetGroup, language, textColor, colorMode, theme } = props;
@@ -66,6 +40,8 @@ export const SelectPickupLocation = (props) => {
      const [showModal, setShowModal] = React.useState(false);
      let [location, setLocation] = React.useState(pickupLocation);
      let [activeSublocation, setActiveSublocation] = React.useState(null);
+     const modalBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
 
      return (
           <>
@@ -74,9 +50,9 @@ export const SelectPickupLocation = (props) => {
                          setShowModal(true);
                     }}>
                     <ActionsheetIcon>
-                         <Icon as={Ionicons} name="location" mr="$1" size="md" color={textColor} />
+                        <Icon as={Ionicons} name="location" size="md" style={{ marginRight: 4, color: textColor }} />
                     </ActionsheetIcon>
-                    <ActionsheetItemText color={textColor}>{getTermFromDictionary(language, 'change_location')}</ActionsheetItemText>
+                   <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'change_location')}</ActionsheetItemText>
                </ActionsheetItem>
                <Modal
 
@@ -86,24 +62,23 @@ export const SelectPickupLocation = (props) => {
                          setShowModal(false);
                     }}>
                     <ModalBackdrop />
-                    <ModalContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                    <ModalContent style={{ backgroundColor: modalBg }}>
                          <ModalHeader>
-                              <Heading size="md" color={textColor}>{getTermFromDictionary(language, 'change_hold_location')}</Heading>
-                              <ModalCloseButton p="$3" onPress={() => { setShowModal(false); }}>
-                                   <Icon as={CloseIcon} color={textColor} />
+                              <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'change_hold_location')}</Heading>
+                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
+                                  <Icon as={CloseIcon} style={{ color: textColor }} />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
-                              <Box pl="$4" pr="$4">
+                              <Box style={{ paddingLeft: 16, paddingRight: 16 }}>
                                    <FormControl>
-                                        <FormControlLabel><FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'select_new_pickup')}</FormControlLabelText></FormControlLabel>
+                                       <FormControlLabel><FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'select_new_pickup')}</FormControlLabelText></FormControlLabel>
                                         <Select
                                              name="pickupLocations"
                                              selectedValue={location}
                                              minWidth="100%"
                                              accessibilityLabel={getTermFromDictionary(language, 'select_new_pickup')}
-                                             mt="$1"
-                                             mb="$3"
+                                             style={{ marginTop: 4, marginBottom: 12 }}
                                              onValueChange={(itemValue) => setLocation(itemValue)}>
 
                                              <SelectTrigger variant="outline" size="md">
@@ -112,16 +87,15 @@ export const SelectPickupLocation = (props) => {
                                                        const code = item.code;
                                                        const id = locationId.concat('_', code);
                                                        if (id === location) {
-                                                            return <SelectInput py={0} value={item.name} color={textColor} />;
+                                                            return <SelectInput key={index} value={item.name} style={{ color: textColor, paddingVertical: 0 }} />;
                                                        }
+                                                       return null;
                                                   })}
-                                                  <SelectIcon mr="$3" as={ChevronDownIcon} color={textColor} />
+                                                  <SelectIcon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent
-                                                       bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-                                                  >
+                                                  <SelectContent style={{ backgroundColor: modalBg }}>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
@@ -130,7 +104,14 @@ export const SelectPickupLocation = (props) => {
                                                                  const locationId = item.locationId;
                                                                  const code = item.code;
                                                                  const id = locationId.concat('_', code);
-                                                                 return <SelectItem value={id} label={item.name} key={index}  bgColor={location === (id) ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: location === (id) ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>;
+                                                                 return (
+                                                                     <SelectItem
+                                                                          value={id}
+                                                                          label={item.name}
+                                                                          key={index}
+                                                                          style={{ backgroundColor: location === id ? tertiaryBg : 'transparent' }}
+                                                                      />
+                                                                 );
                                                             })}
                                                        </ScrollView>
                                                   </SelectContent>
@@ -138,26 +119,24 @@ export const SelectPickupLocation = (props) => {
                                         </Select>
                                    </FormControl>
                               </Box>
-                              <SelectExistingHoldSubLocation location={location} sublocations={sublocations} language={language} activeSublocation={activeSublocation} setActiveSublocation={setActiveSublocation}/>
+                              <SelectExistingHoldSubLocation location={location} sublocations={sublocations} language={language} activeSublocation={activeSublocation} setActiveSublocation={setActiveSublocation} textColor={textColor} colorMode={colorMode} theme={theme} />
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup
-                                   space="$4"
-                                   flexDirection="row"
-                                   justifyContent="flex-end"
-                                   flexWrap="wrap"
+                                   space="md"
+                                   style={{ flexDirection: 'row', justifyContent: 'flex-end', flexWrap: 'wrap' }}
                                    >
                                    <Button
                                         variant="outline"
-                                        borderColor={theme.tokens.colors.primary['500']}
+                                        style={{ borderColor: theme.tokens.colors.primary['500'] }}
                                         onPress={() => {
                                              setShowModal(false);
                                         }}>
-                                        <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
                                    <Button
                                         isLoading={loading}
-                                        bgColor={theme.tokens.colors.primary['500']}
+                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                         isLoadingText={getTermFromDictionary(language, 'updating', true)}
                                         onPress={() => {
                                              setLoading(true);
@@ -168,7 +147,7 @@ export const SelectPickupLocation = (props) => {
                                                   setLoading(false);
                                              });
                                         }}>
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'change_location')}</ButtonText>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'change_location')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>

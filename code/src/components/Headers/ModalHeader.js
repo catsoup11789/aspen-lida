@@ -1,33 +1,36 @@
 import React from 'react';
-import { HStack, Pressable, Text, Box, useToken } from '@gluestack-ui/themed';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Box } from '@/components/ui/box';
+import { HStack } from '@/components/ui/hstack';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
 import { useTheme } from '../../themes/theme';
 
 export const ModalHeader = ({ title, onBack, onClose, showBack = true, showClose = true, centerTitle = true }) => {
-     const { textColor, colorMode } = useTheme();
-     const iconColor = useToken('colors', colorMode === 'light' ? 'coolGray600' : 'coolGray200');
-     const bg = colorMode === 'light' ? '$warmGray50' : '$coolGray700';
+     const { theme, textColor, colorMode } = useTheme();
+     const iconColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.icon.dark;
+     const bg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceSoft.light : theme.tokens.colors.ui.surfaceSoft.dark;
 
      return (
-          <Box bg={bg} px="$3" py="$3">
-               <HStack alignItems="center" justifyContent="space-between">
-                    <Box minWidth={40}>
+          <Box className="px-3 py-3" style={{ backgroundColor: bg }}>
+               <HStack className="items-center justify-between">
+                    <Box style={{ minWidth: 40 }}>
                          {showBack && onBack ? (
-                              <Pressable onPress={onBack} p="$1">
+                              <Pressable onPress={onBack} className="p-1">
                                    <MaterialIcons name="chevron-left" size={28} color={iconColor} />
                               </Pressable>
                          ) : null}
                     </Box>
 
-                    <Box flex={1} alignItems={centerTitle ? 'center' : 'flex-start'}>
-                         <Text bold color={textColor} numberOfLines={1}>
+                    <Box className={centerTitle ? 'flex-1 items-center' : 'flex-1 items-start'}>
+                         <Text bold numberOfLines={1} style={{ color: textColor }}>
                               {title}
                          </Text>
                     </Box>
 
-                    <Box minWidth={40} alignItems="flex-end">
+                    <Box className="items-end" style={{ minWidth: 40 }}>
                          {showClose && onClose ? (
-                              <Pressable onPress={onClose} p="$1">
+                              <Pressable onPress={onClose} className="p-1">
                                    <MaterialIcons name="close" size={24} color={iconColor} />
                               </Pressable>
                          ) : null}

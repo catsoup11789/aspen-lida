@@ -1,7 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
 import { useNavigation } from '@react-navigation/native';
-import { Box, HStack, Icon, Pressable, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
 import { ScrollView } from 'react-native';
 
@@ -12,6 +11,12 @@ import {logDebugMessage} from "../../../util/logging";
 import { useActiveLanguage } from '../../../hooks/useLanguageData';
 import { useTheme } from '../../../themes/theme';
 import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { Box } from '@/components/ui/box';
+import { HStack } from '@/components/ui/hstack';
+import { Icon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 // custom components and helper files
 
@@ -49,24 +54,24 @@ export const SearchSourceScreen = () => {
      };
 
      return (
-          <VStack pt="$5" flex={1}>
+          <VStack style={{ paddingTop: 20, flex: 1 }}>
                <ScrollView>
-                    <Box px="$5">
+                    <Box style={{ paddingHorizontal: 20 }}>
                          {_.map(sources, function (source, index, array) {
                               if (index === 'events' || index === 'local') {
                                    return (
-                                        <Pressable p="$0.5" py="$2" onPress={() => updateSource(index)}>
+                                       <Pressable key={index} style={{ padding: 2, paddingVertical: 8 }} onPress={() => updateSource(index)}>
                                              {currentSource === index ? (
-                                                  <HStack space="sm" justifyContent="flex-start" alignItems="center">
-                                                       <Icon as={MaterialIcons} name="radio-button-checked" size="lg" color={theme.tokens.colors.primary['600']} />
-                                                       <Text color={textColor} ml="$2">
+                                                 <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+                                                      <Icon as={MaterialIcons} name="radio-button-checked" size="lg" style={{ color: theme.tokens.colors.primary['600'] }} />
+                                                      <Text style={{ color: textColor, marginLeft: 8 }}>
                                                             {source.name}
                                                        </Text>
                                                   </HStack>
                                              ) : (
-                                                  <HStack space="sm" justifyContent="flex-start" alignItems="center">
-                                                       <Icon as={MaterialIcons} name="radio-button-unchecked" size="lg" color={theme.tokens.colors.primary['200']} />
-                                                       <Text color={textColor} ml="$2">
+                                                 <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+                                                      <Icon as={MaterialIcons} name="radio-button-unchecked" size="lg" style={{ color: theme.tokens.colors.primary['200'] }} />
+                                                      <Text style={{ color: textColor, marginLeft: 8 }}>
                                                             {source.name}
                                                        </Text>
                                                   </HStack>

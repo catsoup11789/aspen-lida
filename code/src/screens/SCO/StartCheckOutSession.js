@@ -3,33 +3,6 @@ import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useUserState, useAccounts } from '../../hooks/useUserData';
-import {
-     AlertDialog,
-     AlertDialogBackdrop,
-     AlertDialogContent,
-     AlertDialogHeader,
-     AlertDialogBody,
-     AlertDialogFooter,
-     Box,
-     Heading,
-     Button,
-     ButtonGroup,
-     ButtonText,
-     Center,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Select,
-     SelectItem,
-     SelectTrigger,
-     SelectInput,
-     SelectIcon,
-     Icon,
-     ChevronDownIcon,
-     SelectPortal, SelectContent, SelectScrollView,
-     SelectBackdrop,
-     SelectDragIndicatorWrapper,
-     SelectDragIndicator } from '@gluestack-ui/themed';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { navigateStack } from '../../helpers/RootNavigator';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -37,6 +10,14 @@ import _ from 'lodash';
 import {logDebugMessage} from "../../util/logging";
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
 export const StartCheckOutSession = () => {
      const navigation = useNavigation();
@@ -109,23 +90,22 @@ export const StartCheckOutSession = () => {
           <Center>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={() => GoBackHome()}>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
-                         <AlertDialogHeader><Heading size="md" color={textColor}>{getTermFromDictionary(language, 'start_checkout_session')}</Heading></AlertDialogHeader>
+                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
+                         <AlertDialogHeader><Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'start_checkout_session')}</Heading></AlertDialogHeader>
                          <AlertDialogBody>
-                              <FormControl pb="$5">
+                              <FormControl style={{ paddingBottom: 20 }}>
                                    <FormControlLabel>
-                                        <FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'select_an_account')}</FormControlLabelText>
+                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'select_an_account')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <Select
                                         name="linkedAccount"
                                         selectedValue={activeAccount}
                                         accessibilityLabel={getTermFromDictionary(language, 'select_an_account')}
-                                        mt="$1"
-                                        mb="$3"
+                                        style={{ marginTop: 4, marginBottom: 12 }}
                                         onValueChange={(itemValue) => setActiveAccount(itemValue)}>
                                         <SelectTrigger variant="outline" size="md">
                                              <SelectInput
-                                                  py={0}
+                                                  style={{ paddingVertical: 0, color: textColor }}
                                                   value={
                                                        // Find the displayName of the selected account or use placeholder
                                                        (() => {
@@ -138,26 +118,20 @@ export const StartCheckOutSession = () => {
                                                             return found ? found.displayName : '';
                                                        })()
                                                   }
-                                                  color={textColor}
                                                   placeholder={getTermFromDictionary(language, 'select_an_account')}
                                              />
-                                             <SelectIcon mr="$3">
-                                                  <Icon as={ChevronDownIcon} color={textColor} />
-                                             </SelectIcon>
+                                             <Icon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent
-                                                  bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-                                                  pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}
-                                             >
+                                             <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
                                                   <SelectScrollView>
-                                                       <SelectItem label={user.displayName} value={user.ils_barcode ?? user.cat_username} bgColor={activeAccount === (user.ils_barcode ?? user.cat_username) ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: activeAccount === (user.ils_barcode ?? user.cat_username) ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />
+                                                       <SelectItem label={user.displayName} value={user.ils_barcode ?? user.cat_username} style={activeAccount === (user.ils_barcode ?? user.cat_username) ? { backgroundColor: theme.tokens.colors.tertiary['300'] } : undefined} textStyle={{ color: activeAccount === (user.ils_barcode ?? user.cat_username) ? theme.tokens.colors.tertiary['500-text'] : textColor }} />
                                                        {availableAccounts.map((item, index) => {
-                                                            return <SelectItem label={item.displayName} value={item.ils_barcode ?? item.cat_username} key={index} bgColor={activeAccount === (item.ils_barcode || item.cat_username) ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: activeAccount === (item.ils_barcode || item.cat_username) ? theme.tokens.colors.tertiary['500-text'] : textColor } }}/>;
+                                                            return <SelectItem label={item.displayName} value={item.ils_barcode ?? item.cat_username} key={index} style={activeAccount === (item.ils_barcode || item.cat_username) ? { backgroundColor: theme.tokens.colors.tertiary['300'] } : undefined} textStyle={{ color: activeAccount === (item.ils_barcode || item.cat_username) ? theme.tokens.colors.tertiary['500-text'] : textColor }} />;
                                                        })}
                                                   </SelectScrollView>
                                              </SelectContent>
@@ -167,11 +141,11 @@ export const StartCheckOutSession = () => {
                          </AlertDialogBody>
                          <AlertDialogFooter>
                               <ButtonGroup space="sm">
-                                   <Button ref={cancelRef} onPress={() => GoBackHome()} bgColor={theme.tokens.colors.primary['500']}>
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                   <Button ref={cancelRef} onPress={() => GoBackHome()} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
-                                   <Button onPress={() => StartNewSession()} bgColor={theme.tokens.colors.primary['500']}>
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'button_start')}</ButtonText>
+                                   <Button onPress={() => StartNewSession()} style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_start')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

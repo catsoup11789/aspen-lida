@@ -1,5 +1,5 @@
-import {Button, ButtonText, ButtonSpinner} from '@gluestack-ui/themed';
 import React from 'react';
+import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
 
 import { openSideLoad } from '../../util/api/userHelper';
 import { useTheme } from '../../themes/theme';
@@ -13,15 +13,13 @@ export const OpenSideLoad = (props) => {
      return (
           <Button
                size="md"
-               bgColor={theme.tokens.colors.primary['500']}
                variant="solid"
-               minWidth="100%"
-               maxWidth="100%"
+               style={{ width: '100%', backgroundColor: theme.tokens.colors.primary['500'] }}
                onPress={async () => {
-                    setLoading(true);
-                    await openSideLoad(props.url).then((r) => setLoading(false));
+                   setLoading(true);
+                   await openSideLoad(props.url).then((r) => setLoading(false));
                }}>
-               {loading ? <ButtonSpinner color={theme.tokens.colors.primary['500-text']} /> : <ButtonText color={theme.tokens.colors.primary['500-text']}>{props.title}</ButtonText>}
+               {loading ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500-text'] }} /> : <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{props.title}</ButtonText>}
           </Button>
      );
 };

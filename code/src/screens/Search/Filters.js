@@ -1,32 +1,10 @@
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation, useNavigationState, StackActions } from '@react-navigation/native';
 import _ from 'lodash';
 import React from 'react';
-import {
-    Box,
-    Button,
-    ButtonText,
-    ButtonGroup,
-    Center,
-    FormControl,
-    HStack,
-    Icon,
-    Input,
-    InputField,
-    InputIcon,
-    InputSlot,
-    Pressable,
-    ScrollView,
-    Text,
-    View,
-    VStack,
-    ChevronRightIcon
-} from '@gluestack-ui/themed';
 import { LoadingSpinner } from '../../components/loadingSpinner';
 
 import { SearchContext } from '../../context/initialContext';
 import { useLibraryLocation } from '../../hooks/useLibraryBranchData';
-import { useUserState } from '../../hooks/useUserData';
 import { navigateStack } from '../../helpers/RootNavigator';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 
@@ -38,9 +16,21 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { ScanBarcode, SearchIcon, XIcon } from 'lucide-react-native';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { ChevronRightIcon, InputIcon } from '@/components/ui/icon';
+import { FormControl } from '@/components/ui/form-control';
+import { HStack } from '@/components/ui/hstack';
+import { Input, InputField, InputSlot } from '@/components/ui/input';
+import { Pressable } from '@/components/ui/pressable';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { View } from '@/components/ui/view';
+import { VStack } from '@/components/ui/vstack';
 
 export const FiltersScreen = () => {
-     const [isLoading, setIsLoading] = React.useState(false);
+     const [isLoading] = React.useState(false);
      const navigation = useNavigation();
      const [loading, setLoading] = React.useState(false);
      const library = useLibrary();
@@ -65,14 +55,14 @@ export const FiltersScreen = () => {
 
      const renderFilter = (label, index) => {
           return (
-               <Pressable key={index} borderBottomWidth="$1" borderColor={colorMode === 'light' ? "$coolGray200" : "$warmGray600"} py="$5" onPress={() => openCluster(label)}>
-                    <VStack alignContent="center">
-                         <HStack justifyContent="space-between" alignItems="center" alignContent="center">
+               <Pressable key={index} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, paddingVertical: 20 }} onPress={() => openCluster(label)}>
+                    <VStack style={{ alignContent: 'center' }}>
+                         <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                               <VStack>
-                                   <Text bold color={textColor}>{label}</Text>
+                                   <Text bold style={{ color: textColor }}>{label}</Text>
                                    {appliedFacet(label)}
                               </VStack>
-                              <ChevronRightIcon color={textColor} />
+                              <ChevronRightIcon style={{ color: textColor }} />
                          </HStack>
                     </VStack>
                </Pressable>
@@ -85,7 +75,7 @@ export const FiltersScreen = () => {
           let text = '';
           if (_.isObjectLike(SearchGlobal.appliedFilters) && !_.isUndefined(SearchGlobal.appliedFilters[cluster])) {
                const facet = SearchGlobal.appliedFilters[cluster];
-               _.forEach(facet, function (item, key) {
+               _.forEach(facet, function (item) {
                     if (text.length === 0) {
                          text = text.concat(_.toString(item['display']));
                     } else {
@@ -97,7 +87,7 @@ export const FiltersScreen = () => {
           let pendingText = '';
           if (!_.isUndefined(pendingFacets[0])) {
                const obj = pendingFacets[0]['facets'];
-               _.forEach(obj, function (value, key) {
+               _.forEach(obj, function (value) {
                     if (value === 'year desc,title asc') {
                          value = getTermFromDictionary(language, 'year_desc_title_asc');
                     } else if (value === 'relevance') {
@@ -153,11 +143,11 @@ export const FiltersScreen = () => {
 
           if (!_.isEmpty(text) || !_.isEmpty(pendingText)) {
                if (!_.isEmpty(pendingText) && _.isEmpty(text)) {
-                    return <Text italic color={textColor}>{pendingText}</Text>;
+                   return <Text italic style={{ color: textColor }}>{pendingText}</Text>;
                } else if (!_.isEmpty(pendingText) && !_.isEmpty(text)) {
-                    return <Text italic color={textColor}>{pendingText}</Text>;
+                   return <Text italic style={{ color: textColor }}>{pendingText}</Text>;
                } else {
-                    return <Text color={textColor}>{text}</Text>;
+                   return <Text style={{ color: textColor }}>{text}</Text>;
                }
           } else {
                return null;
@@ -166,20 +156,20 @@ export const FiltersScreen = () => {
 
      const actionButtons = () => {
           return (
-               <Box p="$3" bgColor={colorMode === 'light' ? "$coolGray50" : "$coolGray700"}  shadowOpacity={0.2} shadowRadius={1}>
+               <Box style={{ padding: 12, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray50 : theme.tokens.colors.ui.surface.dark, shadowOpacity: 0.2, shadowRadius: 1 }}>
                     <Center>
                          <ButtonGroup size="lg">
                               <Button variant="link" onPress={() => clearSelections()}>
-                                   <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'reset_all')}</ButtonText>
+                                   <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'reset_all')}</ButtonText>
                               </Button>
                               <Button
-                                   bgColor={theme.tokens.colors.primary['500']}
+                                   style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                    isDisabled={loading}
                                    onPress={() => {
                                         setLoading(true);
                                         updateSearch();
                                    }}>
-                                   <ButtonText color={theme.tokens.colors.primary['500-text']}>{loading ? getTermFromDictionary(language, 'updating', true) : getTermFromDictionary(language, 'update')}</ButtonText>
+                                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{loading ? getTermFromDictionary(language, 'updating', true) : getTermFromDictionary(language, 'update')}</ButtonText>
                               </Button>
                          </ButtonGroup>
                     </Center>
@@ -296,21 +286,21 @@ export const FiltersScreen = () => {
      return (
           <View style={{ flex: 1 }}>
                <ScrollView>
-                    <Box p="$5">
+                    <Box style={{ padding: 20 }}>
                          <VStack space="md">
                               <FormControl>
-                                   <Input borderColor={colorMode === 'light' ? '$coolGray500' : '$warmGray300'} color={textColor} variant="outline">
+                                   <Input variant="outline" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}>
                                         <InputSlot>
-                                             <InputIcon as={SearchIcon} name="search" color={textColor} ml="$2" />
+                                             <InputIcon as={SearchIcon} name="search" style={{ color: textColor, marginLeft: 8 }} />
                                         </InputSlot>
-                                        <InputField returnKeyType="search" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} color={textColor} />
+                                        <InputField returnKeyType="search" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} style={{ color: textColor }} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
-                                                  <InputIcon as={XIcon} mr="$2" color={textColor} />
+                                                  <InputIcon as={XIcon} style={{ marginRight: 8, color: textColor }} />
                                              </InputSlot>
                                         ) : null}
                                         <InputSlot onPress={() => openScanner()}>
-                                             <InputIcon as={ScanBarcode} mr="$2" color={textColor} />
+                                             <InputIcon as={ScanBarcode} style={{ marginRight: 8, color: textColor }} />
                                         </InputSlot>
                                    </Input>
                               </FormControl>
@@ -318,42 +308,42 @@ export const FiltersScreen = () => {
 
                          {!isLoading ? (
                               <>
-                                   <Pressable key={0} borderBottomWidth="$1" borderColor={colorMode === 'light' ? '$coolGray200' : '$warmGray600'} py="$5" onPress={() => openSearchIndexes()}>
-                                        <VStack alignContent="center">
-                                             <HStack justifyContent="space-between" alignItems="center" alignContent="center">
+                                   <Pressable key={0} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, paddingVertical: 20 }} onPress={() => openSearchIndexes()}>
+                                        <VStack style={{ alignContent: 'center' }}>
+                                             <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                                                   <VStack>
-                                                       <Text bold color={textColor}>
+                                                       <Text bold style={{ color: textColor }}>
                                                             {getTermFromDictionary(language, 'search_by')}
                                                        </Text>
-                                                       <Text italic color={textColor}>
+                                                       <Text italic style={{ color: textColor }}>
                                                             {getSearchIndexLabel()}
                                                        </Text>
                                                   </VStack>
-                                                  <ChevronRightIcon color={textColor} />
+                                                  <ChevronRightIcon style={{ color: textColor }} />
                                              </HStack>
                                         </VStack>
                                    </Pressable>
-                                   <Pressable key={1} borderBottomWidth="$1" borderColor={colorMode === 'light' ? '$coolGray200' : '$warmGray600'} py="$5" onPress={() => openSearchSources()}>
-                                        <VStack alignContent="center">
-                                             <HStack justifyContent="space-between" alignItems="center" alignContent="center">
+                                   <Pressable key={1} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, paddingVertical: 20 }} onPress={() => openSearchSources()}>
+                                        <VStack style={{ alignContent: 'center' }}>
+                                             <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                                                   <VStack>
-                                                       <Text bold color={textColor}>
+                                                       <Text bold style={{ color: textColor }}>
                                                             {getTermFromDictionary(language, 'search_in')}
                                                        </Text>
-                                                       <Text italic color={textColor}>
+                                                       <Text italic style={{ color: textColor }}>
                                                             {getSearchSourceLabel()}
                                                        </Text>
                                                   </VStack>
-                                                  <ChevronRightIcon color={textColor} />
+                                                  <ChevronRightIcon style={{ color: textColor }} />
                                              </HStack>
                                         </VStack>
                                    </Pressable>
                               </>
                          ) : null}
                          {!isLoading ? (
-                              facets.map((item, index, array) => renderFilter(item, index))
+                              facets.map((item, index) => renderFilter(item, index))
                          ) : (
-                              <Box mt="$5">
+                              <Box style={{ marginTop: 20 }}>
                                    <LoadingSpinner />
                               </Box>
                          )}

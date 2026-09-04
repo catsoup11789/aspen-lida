@@ -2,9 +2,13 @@ import { translationsLibrary as helperLibrary, getTermFromDictionary as helperGe
 import { MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
 import moment from 'moment';
-import { Box, Button, ButtonText, ButtonIcon, Menu, MenuItem, MenuItemLabel, Spinner, Text } from '@gluestack-ui/themed';
 import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Menu, MenuItem, MenuItemLabel } from '@/components/ui/menu';
+import { Spinner } from '@/components/ui/spinner';
+import { Text } from '@/components/ui/text';
 
 import { saveLanguage } from '../util/api/user';
 import { useLibrary } from '../hooks/useLibrarySystemData';
@@ -103,10 +107,10 @@ export const LanguageSwitcher = () => {
                                                   setIsLanguageMenuOpen(true);
                                              }
                                         }}
-                                        bg="transparent"
+                                        style={{ backgroundColor: 'transparent', borderRadius: 9999 }}
                                    >
-                                        <ButtonIcon as={MaterialIcons} name="language" color={theme['tokens']['colors']['primary']['500']} />
-                                        <ButtonText color={theme['tokens']['colors']['primary']['500']}> {languageDisplayName}</ButtonText>
+                                        <ButtonIcon as={MaterialIcons} name="language" color={theme.tokens.colors.primary['500']} />
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}> {languageDisplayName}</ButtonText>
                                    </Button>
                               );
                          }}>
@@ -123,7 +127,7 @@ export const LanguageSwitcher = () => {
                                                        changeLanguage(language.code);
                                                   }}
                                              >
-                                                  <MenuItemLabel color={textColor}>{language.displayName}</MenuItemLabel>
+                                                  <MenuItemLabel style={{ color: textColor }}>{language.displayName}</MenuItemLabel>
                                              </MenuItem>
                                         );
                                    })}
@@ -139,15 +143,17 @@ export const LanguageSwitcher = () => {
                               ]}
                          >
                               <Box
-                                   bg={colorMode === 'dark' ? '$coolGray800' : '$warmGray50'}
-                                   borderRadius="$xl"
-                                   px="$6"
-                                   py="$5"
-                                   alignItems="center"
-                                   justifyContent="center"
+                                   style={{
+                                        backgroundColor: colorMode === 'dark' ? '#1f2937' : '#fafaf9',
+                                        borderRadius: 16,
+                                        paddingHorizontal: 24,
+                                        paddingVertical: 20,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                   }}
                               >
-                                   <Spinner size="large" color={theme['tokens']['colors']['primary']['500']} />
-                                    <Text mt="$3" color={textColor}>Switching language...</Text>
+                                   <Spinner size="large" color={theme.tokens.colors.primary['500']} />
+                                    <Text style={{ marginTop: 12, color: textColor }}>Switching language...</Text>
                               </Box>
                          </View>
                     </Modal>
@@ -481,4 +487,3 @@ const styles = StyleSheet.create({
           backgroundColor: 'rgba(0, 0, 0, 0.6)',
      },
 });
-

@@ -1,5 +1,5 @@
-import { Button, ButtonText } from '@gluestack-ui/themed';
 import React, {useContext} from 'react';
+import { Button, ButtonText } from '@/components/ui/button';
 
 
 // custom components and helper files
@@ -20,8 +20,8 @@ export const OnHoldForYou = (props) => {
      };
 
      return (
-          <Button minWidth="100%" maxWidth="100%" mb="$1" size="md" bgColor={theme.tokens.colors.primary['500']} variant="solid" onPress={handleNavigation}>
-               <ButtonText textAlign="center" p="$0" color={theme.tokens.colors.primary['500-text']}>
+          <Button size="md" variant="solid" onPress={handleNavigation} style={{ width: '100%', marginBottom: 4, backgroundColor: theme.tokens.colors.primary['500'] }}>
+               <ButtonText style={{ textAlign: 'center', color: theme.tokens.colors.primary['500-text'] }}>
                     {props.title}
                </ButtonText>
           </Button>

@@ -3,29 +3,6 @@ import * as WebBrowser from 'expo-web-browser';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import _ from 'lodash';
 import moment from 'moment';
-import {
-     Accordion,
-     AccordionItem,
-     AccordionHeader,
-     AccordionTrigger,
-     AccordionContent,
-     Box,
-     Divider,
-     HStack,
-     Icon,
-     Pressable,
-     ScrollView,
-     Heading,
-     Button,
-     Text,
-     VStack,
-     Modal,
-     ModalBackdrop,
-     ModalContent,
-     ModalHeader,
-     ModalFooter,
-     ModalCloseButton, CloseIcon, ModalBody, ButtonText, ButtonGroup
-} from '@gluestack-ui/themed';
 import React from 'react';
 import { popToast } from '../../components/feedback';
 import { AuthContext } from '../../context/AuthContext';
@@ -40,13 +17,25 @@ import { GLOBALS } from '../../util/globals';
 import { logDebugMessage, logErrorMessage, logInfoMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { Accordion, AccordionContent, AccordionHeader, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText, ButtonGroup } from '@/components/ui/button';
+import { Divider } from '@/components/ui/divider';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { CloseIcon, Icon } from '@/components/ui/icon';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { Pressable } from '@/components/ui/pressable';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 export const MoreMenu = () => {
      const language = useActiveLanguage();
      const library = useLibrary();
      const menu = useLibraryMenu();
      const updateMenu = useUpdateMenu();
-     const { textColor, theme, colorMode } = useTheme();
+     const { theme } = useTheme();
 
      const { signOut } = React.useContext(AuthContext);
      const hasMenuItems = _.size(menu);
@@ -110,7 +99,7 @@ export const MoreMenu = () => {
      return (
           <ScrollView>
                <Box>
-                    <VStack space="md" my="$2" mx="$1">
+                    <VStack space="md" style={{ marginVertical: 8, marginHorizontal: 4 }}>
                          <MyLibrary />
                          <Divider />
 
@@ -122,10 +111,10 @@ export const MoreMenu = () => {
                                    <Settings />
                                    <PrivacyPolicy />
                                    {library.catalogRegistrationCapabilities?.enableSelfRegistration === '1' && library.catalogRegistrationCapabilities.enableSelfRegistrationInApp === '1' ? (
-                                        <Pressable px="$2" py="$3" onPress={toggleDeleteConfirmationModal}>
-                                             <HStack space="sm" alignItems="center">
-                                                  <Icon as={MaterialIcons} name="chevron-right" size="lg" color={textColor} onPress={() => setShowDeleteConfirmationModal(true)} />
-                                                  <Text color={textColor} fontWeight="$medium">
+                                        <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={toggleDeleteConfirmationModal}>
+                                             <HStack space="sm" style={{ alignItems: 'center' }}>
+                                                  <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }} onPress={() => setShowDeleteConfirmationModal(true)} />
+                                                  <Text style={{ color: textColor, fontWeight: '500' }}>
                                                        {getTermFromDictionary(language, 'delete_account')}
                                                   </Text>
                                              </HStack>
@@ -136,25 +125,25 @@ export const MoreMenu = () => {
                     </VStack>
                     <Modal isOpen={showDeleteConfirmationModal} onClose={toggleDeleteConfirmationModal}>
                          <ModalBackdrop />
-                         <ModalContent bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'}>
+                         <ModalContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                               <ModalHeader>
-                                   <Heading size="md" color={textColor}>
+                                   <Heading size="md" style={{ color: textColor }}>
                                         {getTermFromDictionary(language, 'delete_account')}
                                    </Heading>
-                                   <ModalCloseButton p="$3" onPress={toggleDeleteConfirmationModal}>
-                                        <Icon as={CloseIcon} color={textColor} />
+                                   <ModalCloseButton style={{ padding: 12 }} onPress={toggleDeleteConfirmationModal}>
+                                        <Icon as={CloseIcon} style={{ color: textColor }} />
                                    </ModalCloseButton>
                               </ModalHeader>
                               <ModalBody>
-                                   <Text color={textColor}>{getTermFromDictionary(language, 'confirm_delete_account_message')}</Text>
+                                   <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'confirm_delete_account_message')}</Text>
                               </ModalBody>
                               <ModalFooter>
                                    <ButtonGroup>
-                                        <Button variant="outline" borderColor={theme.tokens.colors.primary['500']} onPress={toggleDeleteConfirmationModal}>
-                                             <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
+                                        <Button variant="outline" style={{ borderColor: theme.tokens.colors.primary['500'] }} onPress={toggleDeleteConfirmationModal}>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                         </Button>
                                         <Button
-                                             bgColor={theme.tokens.colors.primary['500']}
+                                             style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                              isLoading={deleting}
                                              isLoadingText={getTermFromDictionary(language, 'deleting', true)}
                                              onPress={async () => {
@@ -163,7 +152,7 @@ export const MoreMenu = () => {
                                                        setShowDeleteResultsModal(true);
                                                   });
                                              }}>
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'confirm_delete_account')}</ButtonText>
+                                            <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'confirm_delete_account')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </ModalFooter>
@@ -171,24 +160,24 @@ export const MoreMenu = () => {
                     </Modal>
                     <Modal isOpen={showDeleteResultsModal}>
                          <ModalBackdrop />
-                         <ModalContent bgColor={colorMode === 'light' ? '$warmGray50' : '$coolGray700'}>
+                         <ModalContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
                               <ModalHeader>
-                                   <Heading size="md" color={textColor}>
+                                   <Heading size="md" style={{ color: textColor }}>
                                         {getTermFromDictionary(language, 'delete_account')}
                                    </Heading>
-                                   <ModalCloseButton p="$3" onPress={signOut}>
-                                        <Icon as={CloseIcon} color={textColor} />
+                                   <ModalCloseButton style={{ padding: 12 }} onPress={signOut}>
+                                        <Icon as={CloseIcon} style={{ color: textColor }} />
                                    </ModalCloseButton>
                               </ModalHeader>
-                              <ModalBody>{deleteResults?.message ? <Text color={textColor}>{deleteResults.message}</Text> : <Text color={textColor}>{getTermFromDictionary(language, 'error_deleting_account')}</Text>}</ModalBody>
+                              <ModalBody>{deleteResults?.message ? <Text style={{ color: textColor }}>{deleteResults.message}</Text> : <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'error_deleting_account')}</Text>}</ModalBody>
                               <ModalFooter>
                                    {deleteResults.success === true ? (
-                                        <Button bgColor={theme.tokens.colors.primary['500']} onPress={signOut}>
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                        <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={signOut}>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    ) : (
-                                        <Button bgColor={theme.tokens.colors.primary['500']} variant="primary" onPress={toggleDeleteResultsModal}>
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                        <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} variant="primary" onPress={toggleDeleteResultsModal}>
+                                             <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    )}
                               </ModalFooter>
@@ -204,9 +193,8 @@ const MyLibrary = () => {
      const location = useLibraryLocation();
      const language = useActiveLanguage();
 
-     const { textColor, theme, colorMode } = useTheme();
+     const { theme } = useTheme();
 
-     let isClosedToday = false;
      let hoursLabel = '';
      if (location?.hours) {
           const day = moment().day();
@@ -215,7 +203,6 @@ const MyLibrary = () => {
                if (todaysHours[0]) {
                     todaysHours = todaysHours[0];
                     if (todaysHours.isClosed) {
-                         isClosedToday = true;
                          hoursLabel = getTermFromDictionary(language, 'location_closed');
                     } else {
                          const closingText = todaysHours.close;
@@ -228,11 +215,9 @@ const MyLibrary = () => {
                          const stillOpen = moment(nowTime).isBefore(closeTime);
                          const stillClosed = moment(openTime).isBefore(nowTime);
                          if (!stillOpen) {
-                              isClosedToday = true;
                               hoursLabel = getTermFromDictionary(language, 'location_closed');
                          }
                          if (!stillClosed) {
-                              isClosedToday = true;
                               let openingTime = moment(openTime).format('h:mm A');
                               hoursLabel = 'Closed until ' + openingTime;
                          } else {
@@ -245,20 +230,20 @@ const MyLibrary = () => {
      }
 
      return (
-          <Box m="$4" bgColor={theme['tokens']['colors']['primary']['400']} p="$6" borderRadius="$xl">
-               <Pressable display="flex" flexDirection="row" onPress={() => navigate('MyLibrary')} space="sm" alignItems="center" justifyContent="space-between">
+          <Box style={{ margin: 16, backgroundColor: theme['tokens']['colors']['primary']['400'], padding: 24, borderRadius: 16 }}>
+               <Pressable style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} onPress={() => navigate('MyLibrary')}>
                     <VStack>
-                         <Text bold fontSize="$md" color={theme['tokens']['colors']['primary']['400-text']}>
+                         <Text bold size="md" style={{ color: theme['tokens']['colors']['primary']['400-text'] }}>
                               {library.displayName}
                          </Text>
                          {library.displayName !== location?.displayName ? (
-                              <Text bold color={theme['tokens']['colors']['primary']['400-text']}>
+                              <Text bold style={{ color: theme['tokens']['colors']['primary']['400-text'] }}>
                                    {location?.displayName}
                               </Text>
                          ) : null}
-                         {hoursLabel ? <Text color={theme['tokens']['colors']['primary']['400-text']}>{hoursLabel}</Text> : null}
+                         {hoursLabel ? <Text style={{ color: theme['tokens']['colors']['primary']['400-text'] }}>{hoursLabel}</Text> : null}
                     </VStack>
-                    <Icon as={MaterialIcons} name="chevron-right" size="lg" color={theme['tokens']['colors']['primary']['400-text']} />
+                    <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: theme['tokens']['colors']['primary']['400-text'] }} />
                </Pressable>
           </Box>
      );
@@ -267,14 +252,14 @@ const MyLibrary = () => {
 const ViewAllLocations = () => {
      const language = useActiveLanguage();
      const locations = useAvailableLocations();
-     const { textColor, theme, colorMode } = useTheme();
+     const { textColor } = useTheme();
 
      if (_.size(locations) > 1) {
           return (
-               <Pressable px="$2" py="$3" onPress={() => navigate('AllLocations')}>
-                    <HStack space="sm" alignItems="center">
-                         <Icon as={MaterialIcons} name="chevron-right" size="lg" color={textColor}/>
-                         <Text fontWeight="$medium" color={textColor}>{getTermFromDictionary(language, 'view_all_locations')}</Text>
+               <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => navigate('AllLocations')}>
+                    <HStack space="sm" style={{ alignItems: 'center' }}>
+                         <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }}/>
+                         <Text style={{ fontWeight: '500', color: textColor }}>{getTermFromDictionary(language, 'view_all_locations')}</Text>
                     </HStack>
                </Pressable>
           );
@@ -285,29 +270,15 @@ const ViewAllLocations = () => {
 
 const Settings = () => {
      const language = useActiveLanguage();
-     const { textColor, theme, colorMode } = useTheme();
+     const { textColor } = useTheme();
 
      return (
-          <Pressable px="$2" py="$3" onPress={() => navigate('MyPreferences')}>
-               <HStack space="sm" alignItems="center">
-                    <Icon as={MaterialIcons} name="chevron-right" size="lg" color={textColor} />
-                    <Text fontWeight="$medium" color={textColor}>{getTermFromDictionary(language, 'preferences')}</Text>
+          <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => navigate('MyPreferences')}>
+               <HStack space="sm" style={{ alignItems: 'center' }}>
+                    <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }} />
+                    <Text style={{ fontWeight: '500', color: textColor }}>{getTermFromDictionary(language, 'preferences')}</Text>
                </HStack>
           </Pressable>
-     );
-};
-
-const DeleteAccount = () => {
-     const language = useActiveLanguage();
-     const { textColor, theme, colorMode } = useTheme();
-
-     return (
-         <Pressable px="$2" py="$3" onPress={() => navigate('MyPreferences')}>
-              <HStack space="sm" alignItems="center">
-                   <Icon as={MaterialIcons} name="chevron-right" size="lg" color={textColor}/>
-                   <Text fontWeight="$medium" color={textColor}>{getTermFromDictionary(language, 'preferences')}</Text>
-              </HStack>
-         </Pressable>
      );
 };
 
@@ -316,7 +287,7 @@ const PrivacyPolicy = () => {
      const appSettings = useAppSettings();
 
      const { textColor, theme, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? "$warmGray200" : "$coolGray900";
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
 
      const browserParams = {
           enableDefaultShareMenuItem: false,
@@ -366,10 +337,10 @@ const PrivacyPolicy = () => {
      };
 
      return (
-          <Pressable px="$2" py="$3" onPress={() => openURL()}>
-               <HStack space="sm" alignItems="center">
-                    <Icon as={MaterialIcons} name="chevron-right" size="lg" color={textColor} />
-                    <Text fontWeight="$medium" color={textColor}>{getTermFromDictionary(language, 'privacy_policy')}</Text>
+          <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => openURL()}>
+               <HStack space="sm" style={{ alignItems: 'center' }}>
+                    <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }} />
+                    <Text style={{ fontWeight: '500', color: textColor }}>{getTermFromDictionary(language, 'privacy_policy')}</Text>
                </HStack>
           </Pressable>
      );
@@ -386,23 +357,12 @@ const MenuLink = (payload) => {
      categoryLabel = categoryLabel.category;
 
      const { textColor, theme, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? "$warmGray200" : "$coolGray900";
-
-     const browserParams = {
-          enableDefaultShareMenuItem: false,
-          presentationStyle: 'automatic',
-          showTitle: false,
-          toolbarColor: backgroundColor,
-          controlsColor: textColor,
-          secondaryToolbarColor: backgroundColor };
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
 
      const [expanded, setExpanded] = React.useState(false);
 
      function isValidHttpUrl(str) {
-          if (str.startsWith('http://') || str.startsWith('https://')) {
-               return true;
-          }
-          return false;
+         return str.startsWith('http://') || str.startsWith('https://');
      }
 
      const openURL = async (url) => {
@@ -448,7 +408,7 @@ const MenuLink = (payload) => {
                                              WebBrowser.coolDownAsync();
                                         }
                                    })
-                                   .catch(async (error) => {
+                                   .catch(async () => {
                                         logDebugMessage('Unable to close previous browser session.');
                                    });
                          } catch (error) {
@@ -476,18 +436,18 @@ const MenuLink = (payload) => {
                     >
                          <AccordionItem value="category-panel" style={{ borderBottomWidth: 0 }}>
                               <AccordionHeader>
-                                   <AccordionTrigger px="$2" py="$3">
+                                   <AccordionTrigger style={{ paddingHorizontal: 8, paddingVertical: 12 }}>
                                         {/* gluestack-ui allows passing a function to dynamically check states like isExpanded */}
                                         {({ isExpanded }) => (
-                                             <HStack space="sm" alignItems="center">
+                                             <HStack space="sm" style={{ alignItems: 'center' }}>
                                                   <Icon
                                                        as={isExpanded ? Entypo : MaterialIcons}
                                                        name={isExpanded ? 'chevron-small-down' : 'chevron-right'}
                                                        size="lg"
-                                                       color={textColor}
+                                                       style={{ color: textColor }}
                                                   />
-                                                  <VStack width="$full">
-                                                       <Text fontWeight="$medium" color={textColor}>
+                                                  <VStack style={{ width: '100%' }}>
+                                                       <Text style={{ fontWeight: '500', color: textColor }}>
                                                             {categoryLabel}
                                                        </Text>
                                                   </VStack>
@@ -496,26 +456,23 @@ const MenuLink = (payload) => {
                                    </AccordionTrigger>
                               </AccordionHeader>
 
-                              <AccordionContent p="$0" pt="$1">
+                              <AccordionContent style={{ padding: 0, paddingTop: 4 }}>
                                    {_.map(categories, function (item, index) {
                                         return (
                                              <Pressable
                                                   key={index}
                                                   onPress={() => openURL(item.url)}
-                                                  style={{ backgroundColor: 'transparent' }}
-                                                  borderBottomWidth={1}
-                                                  borderBottomColor="$borderLight200" // Adjust to your theme border token if needed
-                                                  py="$2"
+                                                  style={{ backgroundColor: 'transparent', borderBottomWidth: 1, borderBottomColor: theme.tokens.colors.ui.border.light, paddingVertical: 8 }}
                                              >
-                                                  <HStack space="sm" alignItems="center" ml="$4">
+                                                  <HStack space="sm" style={{ alignItems: 'center', marginLeft: 16 }}>
                                                        <Icon
                                                             as={MaterialIcons}
                                                             name="chevron-right"
                                                             size="lg"
-                                                            color={textColor}
+                                                            style={{ color: textColor }}
                                                        />
-                                                       <VStack width="$full">
-                                                            <Text fontWeight="$medium" color={textColor}>
+                                                       <VStack style={{ width: '100%' }}>
+                                                            <Text style={{ fontWeight: '500', color: textColor }}>
                                                                  {item.linkText}
                                                             </Text>
                                                        </VStack>
@@ -534,11 +491,11 @@ const MenuLink = (payload) => {
           <>
                {_.map(categories, function (item, index) {
                     return (
-                         <Pressable key={index} px="$2" py="$3" borderRadius="$md" onPress={() => openURL(item.url)}>
-                              <HStack space="sm" alignItems="center">
-                                   <Icon as={MaterialIcons} name="chevron-right" size="lg" color={textColor} />
-                                   <VStack width="$full">
-                                        <Text fontWeight="$medium" color={textColor}>{item.linkText}</Text>
+                         <Pressable key={index} style={{ paddingHorizontal: 8, paddingVertical: 12, borderRadius: 8 }} onPress={() => openURL(item.url)}>
+                             <HStack space="sm" style={{ alignItems: 'center' }}>
+                                  <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }} />
+                                  <VStack style={{ width: '100%' }}>
+                                       <Text style={{ fontWeight: '500', color: textColor }}>{item.linkText}</Text>
                                    </VStack>
                               </HStack>
                          </Pressable>

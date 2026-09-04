@@ -1,8 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DrawerActions } from '@react-navigation/native';
-import { HStack, Pressable, Text, VStack, useToken } from '@gluestack-ui/themed';
 import React from 'react';
+import { HStack } from '@/components/ui/hstack';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 import { useSelfCheckEnabled, useSelfCheckSettings } from '../../hooks/useLibraryBranchData';
 import { getTermFromDictionary } from '../../translations/TranslationService';
@@ -18,11 +21,10 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 
 const Tab = createBottomTabNavigator();
-
 export default function TabNavigator() {
      const enableSelfCheck = useSelfCheckEnabled();
      const selfCheckSettings = useSelfCheckSettings();
-     const { colorMode } = useTheme();
+     const { theme, colorMode } = useTheme();
 
      const settingsEnabledCandidates = [
           selfCheckSettings?.isEnabled,
@@ -34,9 +36,9 @@ export default function TabNavigator() {
      );
      const showSelfCheckTab = enableSelfCheck === true || settingsEnableSelfCheck;
 
-     const activeIcon = useToken('colors', colorMode === 'light' ? 'coolGray900' : 'coolGray100');
-     const inactiveIcon = useToken('colors', colorMode === 'light' ? 'coolGray500' : 'coolGray400');
-     const tabBarBackgroundColor = colorMode === 'light' ? '$coolGray50' : '$coolGray800';
+     const activeIcon = colorMode === 'light' ? theme.tokens.colors.ui.surface.dark : theme.tokens.colors.ui.textStrong.dark;
+     const inactiveIcon = colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark;
+     const tabBarBackgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.card.light : theme.tokens.colors.ui.card.dark;
 
      return (
           <Tab.Navigator
@@ -82,10 +84,9 @@ export default function TabNavigator() {
 export const TabItem = ({ state, descriptors, navigation }) => {
      const language = useActiveLanguage();
      const { colorMode } = useTheme();
-     const activeIconColor = useToken('colors', colorMode === 'light' ? 'coolGray900' : 'coolGray100');
-     const inactiveIconColor = useToken('colors', colorMode === 'light' ? 'coolGray500' : 'coolGray400');
-     const tabBarBackgroundColor = colorMode === 'light' ? '$coolGray50' : '$coolGray800';
-     const tabBarBorderColor = '$coolGray400';
+     const activeIconColor = colorMode === 'light' ? LIGHT_ICON_COLOR : DARK_ICON_COLOR;
+     const inactiveIconColor = colorMode === 'light' ? LIGHT_ICON_MUTED_COLOR : DARK_ICON_MUTED_COLOR;
+     const tabBarBackgroundColor = colorMode === 'light' ? LIGHT_TAB_BACKGROUND : DARK_TAB_BACKGROUND;
      const insets = useSafeAreaInsets();
 
      const [browseTabLabel, setBrowseTabLabel] = React.useState(getTermFromDictionary(language, 'nav_discover'));
@@ -108,15 +109,13 @@ export const TabItem = ({ state, descriptors, navigation }) => {
 
      return (
           <HStack
-               px="$7"
-               pt="$2"
-               pb={insets.bottom}
-               gap="$4"
-               alignItems="center"
-               justifyContent="space-between"
-               backgroundColor={tabBarBackgroundColor}
-               borderTopWidth="$1"
-               borderColor={tabBarBorderColor}>
+               space="lg"
+               className="px-7 pt-2 items-center justify-between border-t"
+               style={{
+                    paddingBottom: insets.bottom,
+                    backgroundColor: tabBarBackgroundColor,
+                    borderColor: TAB_BORDER_COLOR,
+               }}>
                {state.routes.map((route, index) => {
                     const { options } = descriptors[route.key];
                     const isFocused = state.index === index;
@@ -175,9 +174,9 @@ export const TabItem = ({ state, descriptors, navigation }) => {
                               testID={options.tabBarTestID}
                               onPress={onPress}
                               onLongPress={onLongPress}>
-                              <VStack gap="$1" alignItems="center">
+                              <VStack space="xs" className="items-center">
                                    <Ionicons name={iconName} size={22} color={iconColor} />
-                                   <Text size="2xs" color={iconColor} fontWeight="$normal">
+                                   <Text size="2xs" style={{ color: iconColor, fontWeight: '400' }}>
                                         {label}
                                    </Text>
                               </VStack>

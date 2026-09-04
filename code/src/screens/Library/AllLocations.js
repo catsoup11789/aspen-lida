@@ -6,8 +6,16 @@ import * as Location from 'expo-location';
 import * as SecureStore from 'expo-secure-store';
 import _ from 'lodash';
 import moment from 'moment';
-import { Box, ButtonGroup, Button, ButtonText, Divider, FlatList, HStack, Icon, Pressable, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Divider } from '@/components/ui/divider';
+import { FlatList } from '@/components/ui/flat-list';
+import { HStack } from '@/components/ui/hstack';
+import { Icon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 import { loadError } from '../../components/loadError';
 import { loadingSpinner } from '../../components/loadingSpinner';
 import { DisplaySystemMessage } from '../../components/Notifications';
@@ -121,11 +129,7 @@ export const AllLocations = () => {
      const getActionButtons = () => {
           return (
                <Box
-                    alignItems="center"
-                    p="$2"
-                    bgColor={colorMode === 'light' ? '$coolGray100' : '$coolGray700'}
-                    borderBottomWidth="$1"
-                    borderColor={colorMode === 'light' ? '$coolGray200' : '$coolGray600'}>
+                    style={{ alignItems: 'center', padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark, borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.iconMuted.light }}>
                     <ButtonGroup alignItems="center" isAttached>
                          <Button variant={sort === 'alphabetical' ? 'solid' : 'outline'} action="secondary" onPress={() => setSort('alphabetical')}>
                               <ButtonText>{getTermFromDictionary(language, 'a_to_z')}</ButtonText>
@@ -150,7 +154,7 @@ export const AllLocations = () => {
                     <FlatList
                          ListHeaderComponent={
                               <>
-                                   {_.size(systemMessages) > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
+                                   {_.size(systemMessages) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                                    {getActionButtons()}
                               </>
                          }
@@ -232,34 +236,34 @@ const DisplayLocation = (data) => {
      return (
           <>
                <Pressable onPress={goToLocation}>
-                    <HStack justifyContent="space-between" alignItems="center" p="$4">
+                    <HStack style={{ justifyContent: 'space-between', alignItems: 'center', padding: 16 }}>
                          {location.locationImage ? (
-                              <Box width="30%" mr="$2">
+                              <Box style={{ width: '30%', marginRight: 8 }}>
                                    <Image alt={location.displayName} source={location.locationImage} style={{ width: '100%', height: 90, borderRadius: 4 }} placeholder={blurhash} transition={1000} contentFit="cover" />
                               </Box>
                          ) : null}
-                         <VStack width={location.locationImage ? '60%' : '85%'}>
-                              <Text size="md" bold color={textColor}>{location.displayName}</Text>
-                              <Text size="xs" mb="$2" color={textColor}>
+                         <VStack style={{ width: location.locationImage ? '60%' : '85%' }}>
+                              <Text size="md" bold style={{ color: textColor }}>{location.displayName}</Text>
+                              <Text size="xs" style={{ marginBottom: 8, color: textColor }}>
                                    {location.address}
                               </Text>
                               {hasHours ? (
                                    <HStack alignItems="center" space="xs">
-                                        <Icon as={MaterialIcons} name="access-time" size="sm"  color={textColor}/>
-                                        <Text size="xs" color={textColor}>{hoursLabel}</Text>
+                                        <Icon as={MaterialIcons} name="access-time" size="sm"  style={{ color: textColor }}/>
+                                        <Text size="xs" style={{ color: textColor }}>{hoursLabel}</Text>
                                    </HStack>
                               ) : null}
                               {distanceText ? (
                                    <HStack alignItems="center" space="xs">
-                                        <Icon as={MaterialIcons} name="pin-drop" size="sm" color={textColor} />
-                                        <Text size="xs" color={textColor}>{distanceText}</Text>
+                                        <Icon as={MaterialIcons} name="pin-drop" size="sm" style={{ color: textColor }} />
+                                        <Text size="xs" style={{ color: textColor }}>{distanceText}</Text>
                                    </HStack>
                               ) : null}
                          </VStack>
-                         <Icon as={MaterialIcons} name="chevron-right" size="xl" color={textColor} />
+                         <Icon as={MaterialIcons} name="chevron-right" size="xl" style={{ color: textColor }} />
                     </HStack>
                </Pressable>
-               <Divider mt="$3" mb="$3" />
+               <Divider style={{ marginTop: 12, marginBottom: 12 }} />
           </>
      );
 };

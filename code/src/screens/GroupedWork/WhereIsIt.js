@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Text, HStack, FlatList, Box } from '@gluestack-ui/themed';
+import { FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
@@ -10,6 +10,9 @@ import { loadError } from '../../components/loadError';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { Box } from '@/components/ui/box';
+import { HStack } from '@/components/ui/hstack';
+import { Text } from '@/components/ui/text';
 
 export const WhereIsIt = () => {
      const route = useRoute();
@@ -30,26 +33,26 @@ export const WhereIsIt = () => {
           } });
 
 	 return (
-          <Box p="$5">
+          <Box style={{ padding: 20 }}>
                {isLoading || status === 'loading' || isFetching ? (
                     loadingSpinner()
                ) : status === 'error' ? (
                     loadError('Error', '')
                ) : (
                     <Box>
-                         <HStack space="md" justifyContent="space-between" pb="$2">
-                              <Text bold w="30%" size="xs" color={textColor}>
+                         <HStack space="md" style={{ justifyContent: 'space-between', paddingBottom: 8 }}>
+                              <Text bold size="xs" style={{ width: '30%', color: textColor }}>
                                    {getTermFromDictionary(language, 'available_copies')}
                               </Text>
-                              <Text bold w="30%" size="xs" color={textColor}>
+                              <Text bold size="xs" style={{ width: '30%', color: textColor }}>
                                    {getTermFromDictionary(language, 'location')}
                               </Text>
 							 {source === 'overdrive' ? (
-								 <Text bold w="30%" size="xs" color={textColor}>
+								 <Text bold size="xs" style={{ width: '30%', color: textColor }}>
 									 {getTermFromDictionary(language, 'holds')}
 								 </Text>
 							 ) : (
-                              <Text bold w="30%" size="xs" color={textColor}>
+                             <Text bold size="xs" style={{ width: '30%', color: textColor }}>
                                    {getTermFromDictionary(language, 'call_num')}
                               </Text>
 							 )}
@@ -66,19 +69,19 @@ const Details = (data) => {
      const manifestation = data.manifestation;
      const source = data.source;
      return (
-          <HStack space="md" justifyContent="space-between">
-               <Text w="30%" size="xs" color={textColor}>
+          <HStack space="md" style={{ justifyContent: 'space-between' }}>
+               <Text size="xs" style={{ width: '30%', color: textColor }}>
                     {manifestation.availableCopies} of {manifestation.totalCopies}
                </Text>
-               <Text w="30%" size="xs" color={textColor}>
+               <Text size="xs" style={{ width: '30%', color: textColor }}>
                     {manifestation.shelfLocation}
                </Text>
 			  {source === 'overdrive' ? (
-				  <Text w="30%" size="xs" color={textColor}>
+				  <Text size="xs" style={{ width: '30%', color: textColor }}>
 					  {manifestation.numHolds}
 				  </Text>
 			  ) : (
-               <Text w="30%" size="xs" color={textColor}>
+               <Text size="xs" style={{ width: '30%', color: textColor }}>
                     {manifestation.callNumber}
                </Text>
 			  )}

@@ -1,6 +1,12 @@
 import React from 'react';
-import { Button, ButtonText, Center, Heading, HStack, Icon, Text, ButtonIcon, AlertDialog, AlertDialogBackdrop, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, ButtonGroup } from '@gluestack-ui/themed';
 import { MaterialIcons } from '@expo/vector-icons';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { Icon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 
 // custom components and helper files
 import { getTermFromDictionary } from '../translations/TranslationHelper';
@@ -22,25 +28,25 @@ export const LoadError = (props) => {
      const { theme, textColor } = useTheme();
 
      return (
-          <Center flex={1}>
+          <Center style={{ flex: 1 }}>
                <HStack>
-                    <Icon as={MaterialIcons} name="error" size="md" mr="$1" color="$error500" />
-                    <Heading color="$error500" mb="$2">
+                    <Icon as={MaterialIcons} name="error" size="md" style={{ marginRight: 4, color: theme.tokens.colors.ui.danger }} />
+                    <Heading style={{ color: theme.tokens.colors.ui.danger, marginBottom: 8 }}>
                          {getTermFromDictionary('en', 'error')}
                     </Heading>
                </HStack>
-               <Text bold w="75%" textAlign="center" color={textColor}>
+               <Text bold style={{ width: '75%', textAlign: 'center', color: textColor }}>
                     {getTermFromDictionary('en', 'error_loading_results')}
                </Text>
                {reloadAction ? (
-                    <Button mt="$5" colorScheme="primary" onPress={reloadAction} bgColor={theme.tokens.colors.primary['500']}>
+                   <Button onPress={reloadAction} style={{ marginTop: 20, backgroundColor: theme.tokens.colors.primary['500'] }}>
                          <ButtonIcon>
-                              <Icon as={MaterialIcons} name="refresh" size="sm" color={theme.tokens.colors.primary['500-text']} />
+                              <Icon as={MaterialIcons} name="refresh" size="sm" style={{ color: theme.tokens.colors.primary['500-text'] }} />
                          </ButtonIcon>
-                         <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary('en', 'button_reload')}</ButtonText>
+                         <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary('en', 'button_reload')}</ButtonText>
                     </Button>
                ) : null}
-               <Text size="xs" w="75%" mt="$5" color="$trueGray500" textAlign="center">
+               <Text size="xs" style={{ width: '75%', marginTop: 20, color: theme.tokens.colors.ui.iconMuted.dark, textAlign: 'center' }}>
                     ERROR: {error}
                </Text>
           </Center>
@@ -64,17 +70,17 @@ export const DisplayErrorAlertDialog = (props) => {
           <Center>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceSoft.light : theme.tokens.colors.ui.surfaceSoft.dark }}>
                     <AlertDialogHeader>
-                        <Heading color={textColor}>{title}</Heading>
+                        <Heading style={{ color: textColor }}>{title}</Heading>
                     </AlertDialogHeader>
                     <AlertDialogBody>
-                        <Text color={textColor}>{message}</Text>
+                        <Text style={{ color: textColor }}>{message}</Text>
                     </AlertDialogBody>
                     <AlertDialogFooter>
                         <ButtonGroup space="md">
-                            <Button onPress={onClose} bgColor={theme.tokens.colors.primary['500']} ref={cancelRef}>
-                                <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                            <Button onPress={onClose} style={{ backgroundColor: theme.tokens.colors.primary['500'] }} ref={cancelRef}>
+                                <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                             </Button>
                         </ButtonGroup>
                     </AlertDialogFooter>

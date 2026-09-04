@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Button, ButtonText, Center, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, HStack, Text, Icon, FlatList, Heading} from '@gluestack-ui/themed';
+import { FlatList } from 'react-native';
 import {MaterialIcons} from '@expo/vector-icons';
 import {getItemDetails} from '../../util/api/item';
 import _ from 'lodash';
@@ -10,6 +10,13 @@ import {useQueryClient} from '@tanstack/react-query';
 import {getTermFromDictionary} from '../../translations/TranslationService';
 import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { DisplayErrorAlertDialog } from '../../components/loadError';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { Icon } from '@/components/ui/icon';
+import { HStack } from '@/components/ui/hstack';
+import { Modal, ModalBody, ModalContent, ModalHeader } from '@/components/ui/modal';
+import { Text } from '@/components/ui/text';
 
 /*const CopyDetails = (props) => {
  const library = useLibrary();
@@ -93,26 +100,27 @@ const ShowItemDetails = (props) => {
                                       }
                                  });
                             }}
-                            colorScheme="tertiary"
                             variant="ghost"
                             size="sm"
-                            leftIcon={<Icon as={MaterialIcons} name="location-pin" size="xs" mr="-1"/>}>
-                             {getTermFromDictionary(language, 'where_is_it')}
+                            action="secondary">
+                            <HStack space="xs" style={{ alignItems: 'center' }}>
+                                 <Icon as={MaterialIcons} name="location-pin" size="xs" style={{ marginRight: -4 }} />
+                                 <ButtonText>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
+                            </HStack>
                         </Button>
 
                         <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="full">
-                             <Modal.Content maxWidth="90%" bg="white" _dark={{bg: 'coolGray.800'}}>
-                                  <Modal.CloseButton/>
-                                  <Modal.Header>
-                                       <HStack>
-                                            <Icon as={MaterialIcons} name="location-pin" size="xs" mt=".5" pr={5}/>
+                             <ModalContent style={{ maxWidth: '90%' }}>
+                                  <ModalHeader>
+                                       <HStack style={{ alignItems: 'center' }}>
+                                            <Icon as={MaterialIcons} name="location-pin" size="xs" style={{ marginTop: 2, paddingRight: 5 }}/>
                                             <Heading size="sm">{getTermFromDictionary(language, 'where_is_it')}</Heading>
                                        </HStack>
-                                  </Modal.Header>
-                                  <Modal.Body>
+                                  </ModalHeader>
+                                  <ModalBody>
                                        <FlatList data={details} keyExtractor={(item) => item.description} ListHeaderComponent={renderHeader()} renderItem={({item}) => renderCopyDetails(item)}/>
-                                  </Modal.Body>
-                             </Modal.Content>
+                                  </ModalBody>
+                             </ModalContent>
                         </Modal>
                         {showErrorDialog && (
                              <DisplayErrorAlertDialog title={errorDetails.title} message={errorDetails.message} />
@@ -124,23 +132,25 @@ const ShowItemDetails = (props) => {
           return (
               <SafeAreaView>
                    <Center>
-                        <Button onPress={() => setShowModal(true)} colorScheme="tertiary" variant="ghost" size="sm" leftIcon={<Icon as={MaterialIcons} name="location-pin" size="xs" mr="-1"/>}>
-                            {getTermFromDictionary(language, 'where_is_it')}
+                        <Button onPress={() => setShowModal(true)} variant="ghost" size="sm" action="secondary">
+                            <HStack space="xs" style={{ alignItems: 'center' }}>
+                                 <Icon as={MaterialIcons} name="location-pin" size="xs" style={{ marginRight: -4 }}/>
+                                 <ButtonText>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
+                            </HStack>
                         </Button>
 
                         <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="full">
-                             <Modal.Content maxWidth="90%" bg="white" _dark={{bg: 'coolGray.800'}}>
-                                  <Modal.CloseButton/>
-                                  <Modal.Header>
-                                       <HStack>
-                                            <Icon as={MaterialIcons} name="location-pin" size="xs" mt=".5" pr={5}/>
+                             <ModalContent style={{ maxWidth: '90%' }}>
+                                  <ModalHeader>
+                                       <HStack style={{ alignItems: 'center' }}>
+                                            <Icon as={MaterialIcons} name="location-pin" size="xs" style={{ marginTop: 2, paddingRight: 5 }}/>
                                             <Heading size="sm">{getTermFromDictionary(language, 'where_is_it')}</Heading>
                                        </HStack>
-                                  </Modal.Header>
-                                  <Modal.Body>
+                                  </ModalHeader>
+                                  <ModalBody>
                                        <FlatList data={copies} ListHeaderComponent={renderHeader()} renderItem={({item}) => renderCopyDetails(item)} keyExtractor={(item, index) => index.toString()}/>
-                                  </Modal.Body>
-                             </Modal.Content>
+                                  </ModalBody>
+                             </ModalContent>
                         </Modal>
                    </Center>
               </SafeAreaView>
@@ -151,14 +161,14 @@ const ShowItemDetails = (props) => {
 const renderHeader = () => {
     const language = useActiveLanguage();
      return (
-         <HStack space={4} justifyContent="space-between" pb={2}>
-              <Text bold w="30%" fontSize="$xs">
+         <HStack space="md" style={{ justifyContent: 'space-between', paddingBottom: 8 }}>
+              <Text bold size="xs" style={{ width: '30%' }}>
                   {getTermFromDictionary(language, 'available_copies')}
               </Text>
-              <Text bold w="30%" fontSize="$xs">
+              <Text bold size="xs" style={{ width: '30%' }}>
                   {getTermFromDictionary(language, 'location')}
               </Text>
-              <Text bold w="30%" fontSize="$xs">
+              <Text bold size="xs" style={{ width: '30%' }}>
                   {getTermFromDictionary(language, 'call_num')}
               </Text>
          </HStack>
@@ -167,14 +177,14 @@ const renderHeader = () => {
 
 const renderCopyDetails = (item) => {
      return (
-         <HStack space={4} justifyContent="space-between">
-              <Text w="30%" fontSize="$xs">
+         <HStack space="md" style={{ justifyContent: 'space-between' }}>
+              <Text size="xs" style={{ width: '30%' }}>
                    {item.availableCopies} of {item.totalCopies}
               </Text>
-              <Text w="30%" fontSize="$xs">
+              <Text size="xs" style={{ width: '30%' }}>
                    {item.shelfLocation}
               </Text>
-              <Text w="30%" fontSize="$xs">
+              <Text size="xs" style={{ width: '30%' }}>
                    {item.callNumber}
               </Text>
          </HStack>

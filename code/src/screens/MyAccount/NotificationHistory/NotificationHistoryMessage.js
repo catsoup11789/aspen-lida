@@ -1,7 +1,11 @@
 import React from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { Heading, Box, ScrollView, Text, VStack } from '@gluestack-ui/themed';
 import { useTheme } from '../../../themes/theme';
+import { Box } from '@/components/ui/box';
+import { Heading } from '@/components/ui/heading';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 
 export const NotificationHistoryMessageModal = () => {
@@ -30,12 +34,12 @@ export const NotificationHistoryMessageModal = () => {
 
      return (
           <ScrollView>
-               <Box p="$5">
+               <Box style={{ padding: 20 }}>
                     <VStack space="md">
-                         <Heading size="lg" color={textColor}>{message.title}</Heading>
-                         <Text color={textColor}>{message.content}</Text>
+                         <Heading size="lg" style={{ color: textColor }}>{message.title}</Heading>
+                         <Text style={{ color: textColor }}>{message.content}</Text>
                          {message.dateSent && (
-                              <Text size="sm" opacity={0.7} color={textColor}>
+                              <Text size="sm" style={{ opacity: 0.7, color: textColor }}>
                                    {formatDate(message.dateSent)}
                               </Text>
                          )}

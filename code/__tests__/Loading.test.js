@@ -16,8 +16,7 @@ GLOBALS.logLevel = 1;
 
 import {render, screen, waitFor} from '@testing-library/react-native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {GluestackUIProvider, createConfig} from '@gluestack-ui/themed';
-import {config} from '@gluestack-ui/config';
+import {GluestackUIProvider} from '../components/ui/gluestack-ui-provider';
 
 // Import all contexts used by the component to mock them
 import {
@@ -53,10 +52,22 @@ const mockContextValues = {
      theme: {
           theme: {
                tokens: {
+                    ui: {
+                         border: {
+                              light: '#6b7280',
+                              dark: '#d6d3d1',
+                         },
+                    },
                     colors: {
                          primary: {
                               500: '#1d4ed8',
                               '500-text': '#ffffff',
+                         },
+                         ui: {
+                              border: {
+                                   light: '#6b7280',
+                                   dark: '#d6d3d1',
+                              },
                          },
                     },
                },
@@ -87,27 +98,49 @@ jest.mock('../src/hooks/useUserData', () => ({
 // Mock the API endpoints called by useQuery
 jest.mock('../src/themes/theme', () => {
      const {basicThemeObject} = require('../__mocks__/themes');
+     const uiColors = {
+          surface: { light: '#e7e5e4', dark: '#111827' },
+          surfaceMuted: { light: '#f9fafb', dark: '#374151' },
+          surfaceSoft: { light: '#fafaf9', dark: '#374151' },
+          text: { light: '#1f2937', dark: '#e5e7eb' },
+          textStrong: { light: '#1c1917', dark: '#f3f4f6' },
+          border: { light: '#6b7280', dark: '#d6d3d1' },
+          icon: { light: '#57534e', dark: '#e5e7eb' },
+          iconMuted: { light: '#6b7280', dark: '#9ca3af' },
+          card: { light: '#f9fafb', dark: '#1f2937' },
+          white: '#ffffff',
+          black: '#000000',
+          danger: '#ef4444',
+     };
      const themeColors = {
           primary: basicThemeObject.tokens.colors.primary,
           secondary: basicThemeObject.tokens.colors.secondary,
           tertiary: basicThemeObject.tokens.colors.tertiary,
      };
+     const compatibilityTheme = {
+          ...basicThemeObject,
+          tokens: {
+               ...basicThemeObject.tokens,
+               colors: themeColors,
+               ui: uiColors,
+          },
+     };
 
      return {
           buildThemeForLibrary: jest.fn(() => Promise.resolve({
-               theme: basicThemeObject,
+               theme: compatibilityTheme,
                themeColors,
                themeId: 1,
           })),
           useThemeForDisplay: jest.fn(() => ({
-               theme: basicThemeObject,
+               theme: compatibilityTheme,
                themeColors,
                themeId: 1,
                colorMode: 'light',
                textColor: '#000',
           })),
           useTheme: jest.fn(() => ({
-               theme: basicThemeObject,
+               theme: compatibilityTheme,
                themeColors,
                themeId: 1,
                colorMode: 'light',
@@ -117,6 +150,7 @@ jest.mock('../src/themes/theme', () => {
                updateTextColor: jest.fn(),
                resetTheme: jest.fn(),
           })),
+          useColorModeValue: jest.fn((lightValue) => lightValue),
      };
 });
 
@@ -275,22 +309,20 @@ jest.mock('react-native-safe-area-context', () => {
      };
 });
 
-const jestGluestackConfig = createConfig(config);
-
 const AllTheProviders = ({children}) => {
      const [testQueryClient] = React.useState(() => createTestQueryClient());
      const authValue = React.useMemo(() => ({ signOut: jest.fn(), signIn: jest.fn(), signUp: jest.fn(), state: {} }), []);
      // noinspection JSValidateTypes
        return (
-             <GluestackUIProvider config={jestGluestackConfig}>
-                  <QueryClientProvider client={testQueryClient}>
-                       <AuthContext.Provider value={authValue}>
-                            <SystemMessagesContext.Provider value={mockContextValues.messages}>
+            <GluestackUIProvider>
+                 <QueryClientProvider client={testQueryClient}>
+                      <AuthContext.Provider value={authValue}>
+                           <SystemMessagesContext.Provider value={mockContextValues.messages}>
                                  {children}
-                            </SystemMessagesContext.Provider>
-                       </AuthContext.Provider>
-                  </QueryClientProvider>
-             </GluestackUIProvider>
+                           </SystemMessagesContext.Provider>
+                      </AuthContext.Provider>
+                 </QueryClientProvider>
+            </GluestackUIProvider>
        );
 };
 
@@ -380,4 +412,3 @@ it('does not start loading side effects while the screen is not focused', async 
 
      await unmount();
 });
-

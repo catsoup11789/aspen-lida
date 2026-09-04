@@ -1,8 +1,10 @@
 import _ from 'lodash';
-import { Box, Divider, ScrollView } from '@gluestack-ui/themed';
 import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
+import { Box } from '@/components/ui/box';
+import { Divider } from '@/components/ui/divider';
+import { ScrollView } from '@/components/ui/scroll-view';
 
 // custom components and helper files
 import Profile_ContactInformation from './ContactInformation';
@@ -39,7 +41,7 @@ export const MyProfile = () => {
 
      const showSystemMessage = () => {
           if (_.isArray(systemMessages)) {
-               return systemMessages.map((obj, index, collection) => {
+               return systemMessages.map((obj, index) => {
                     if (obj.showOn === '0' || obj.showOn === '1' || obj.showOn === '5') {
                          return <DisplaySystemMessage key={obj.id || index} style={obj.style} message={obj.message} dismissable={obj.dismissable} id={obj.id} all={systemMessages} url={library.baseUrl} updateSystemMessages={updateSystemMessages} queryClient={queryClient} />;
                     }
@@ -49,8 +51,8 @@ export const MyProfile = () => {
      };
 
      return (
-          <ScrollView mt="$3" mx="$2">
-               <Box flex={1} safeArea={5}>
+          <ScrollView style={{ marginTop: 12, marginHorizontal: 8 }}>
+               <Box style={{ flex: 1 }}>
                     {showSystemMessage()}
                     <Profile_Identity firstName={firstname} lastName={lastname} />
                     <Divider />

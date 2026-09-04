@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, ScrollView } from '@gluestack-ui/themed';
 
 import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import { decodeHTML } from '../../../helpers/helpers';
 import { useLibrary } from '../../../hooks/useLibrarySystemData';
 import { useTheme } from '../../../themes/theme';
+import { Box } from '@/components/ui/box';
+import { ScrollView } from '@/components/ui/scroll-view';
 
 export const PalaceProjectInstructions = () => {
      const library = useLibrary();
@@ -33,7 +34,7 @@ export const PalaceProjectInstructions = () => {
 
      return (
           <ScrollView>
-               <Box p="$5">
+               <Box style={{ padding: 20 }}>
                     <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} />
                </Box>
           </ScrollView>

@@ -1,5 +1,9 @@
-import { Box, FlatList, HStack, Switch, Text } from '@gluestack-ui/themed';
 import React from 'react';
+import { Box } from '@/components/ui/box';
+import { FlatList } from '@/components/ui/flat-list';
+import { HStack } from '@/components/ui/hstack';
+import { Switch } from '@/components/ui/switch';
+import { Text } from '@/components/ui/text';
 import { LoadingSpinner } from '../../../components/loadingSpinner';
 import { DisplayErrorAlertDialog } from '../../../components/loadError';
 
@@ -202,14 +206,12 @@ const DisplayCategory = (data) => {
            });
      };
      return (
-          <Box borderBottomWidth="$1" _dark={{ borderColor: 'gray.600' }} borderColor="coolGray.200" pl="$4" pr="$5" py="$2">
-               <HStack space={3} alignItems="center" justifyContent="space-between" pb={1}>
+          <Box style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.iconMuted.light, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
+               <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}>
                     <Text
-                         flexWrap="wrap"
-                         flex={1}
-                         color={textColor}
                          bold
-                         fontSize="$lg">
+                         size="lg"
+                         style={{ flexWrap: 'wrap', flex: 1, color: textColor }}>
                          {category.title}
                     </Text>
                     <Switch
@@ -218,11 +220,11 @@ const DisplayCategory = (data) => {
                          onToggle={() => {
                               updateToggle(category);
                          }}
-                         value={isVisible}
                          isDisabled={isUpdating}
+                         isChecked={isVisible}
                          trackColor={{
                               true: theme.tokens.colors.primary['500'],
-                              false: colorMode === 'light' ? '$backgroundLight300' : '$backgroundLight700'
+                              false: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surfaceMuted.dark
                          }}
 
                     />

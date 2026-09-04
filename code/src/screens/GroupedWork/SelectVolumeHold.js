@@ -1,40 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import _ from 'lodash';
-import {
-     Button,
-     ButtonText,
-     ButtonGroup,
-     CheckIcon,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Heading,
-     Modal,
-     ModalBackdrop,
-     ModalContent,
-     ModalHeader,
-     ModalBody,
-     ModalFooter,
-     ModalCloseButton,
-     Radio,
-     RadioGroup,
-     RadioIndicator,
-     RadioIcon,
-     RadioLabel,
-     CircleIcon,
-     Select,
-     SelectTrigger,
-     SelectInput,
-     SelectPortal,
-     SelectBackdrop,
-     SelectContent,
-     SelectDragIndicatorWrapper,
-     SelectDragIndicator,
-     SelectItem,
-     SelectScrollView,
-     Icon,
-     ChevronDownIcon
-} from '@gluestack-ui/themed';
 import React, { useState } from 'react';
 import { loadError } from '../../components/loadError';
 import { loadingSpinner } from '../../components/loadingSpinner';
@@ -46,6 +11,13 @@ import { refreshProfile } from '../../util/api/user';
 import { completeAction } from '../../util/api/userHelper';
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
+import { Button, ButtonText, ButtonGroup } from '@/components/ui/button';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { ChevronDownIcon, CircleIcon, Icon } from '@/components/ui/icon';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
 const SelectVolumeHold = (props) => {
      const { id, title, action, volumeInfo, prevRoute, response, setResponse, responseIsOpen, setResponseIsOpen, onResponseClose, cancelResponseRef } = props;
@@ -117,9 +89,9 @@ const SelectVolumeHold = (props) => {
                </Button>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="lg">
                     <ModalBackdrop />
-                    <ModalContent maxWidth="90%">
-                         <ModalHeader borderBottomWidth="$0">
-                              <Heading size="$md">{isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}</Heading>
+                    <ModalContent style={{ maxWidth: '90%' }}>
+                         <ModalHeader style={{ borderBottomWidth: 0 }}>
+                              <Heading size="md">{isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}</Heading>
                               <ModalCloseButton />
                          </ModalHeader>
                          <ModalBody>
@@ -130,20 +102,20 @@ const SelectVolumeHold = (props) => {
                               ) : (
                                    <>
                                         {promptForHoldType ? (
-                                             <FormControl mb="$4">
+                                             <FormControl style={{ marginBottom: 16 }}>
                                                   <RadioGroup
                                                        value={holdType}
                                                        onChange={(nextValue) => {
                                                             setHoldType(nextValue);
                                                        }}>
-                                                       <Radio value="item" size="sm" mb="$2">
-                                                            <RadioIndicator mr="$2">
+                                                       <Radio value="item" size="sm" style={{ marginBottom: 8 }}>
+                                                            <RadioIndicator style={{ marginRight: 8 }}>
                                                                  <RadioIcon as={CircleIcon} />
                                                             </RadioIndicator>
                                                             <RadioLabel>{getTermFromDictionary(language, 'first_available')}</RadioLabel>
                                                        </Radio>
                                                        <Radio value="volume" size="sm">
-                                                            <RadioIndicator mr="$2">
+                                                            <RadioIndicator style={{ marginRight: 8 }}>
                                                                  <RadioIcon as={CircleIcon} />
                                                             </RadioIndicator>
                                                             <RadioLabel>{getTermFromDictionary(language, 'specific_volume')}</RadioLabel>
@@ -152,7 +124,7 @@ const SelectVolumeHold = (props) => {
                                              </FormControl>
                                         ) : null}
                                         {holdType === 'volume' ? (
-                                             <FormControl mb="$4">
+                                             <FormControl style={{ marginBottom: 16 }}>
                                                   <FormControlLabel>
                                                        <FormControlLabelText>{getTermFromDictionary(language, 'select_volume')}</FormControlLabelText>
                                                   </FormControlLabel>
@@ -160,8 +132,8 @@ const SelectVolumeHold = (props) => {
                                                        selectedValue={volume}
                                                        onValueChange={(itemValue) => setVolume(itemValue)}>
                                                        <SelectTrigger variant="outline" size="md">
-                                                            <SelectInput py={0} placeholder={getTermFromDictionary(language, 'select_volume')} />
-                                                            <Icon as={ChevronDownIcon} mr="$3" />
+                                                            <SelectInput style={{ paddingVertical: 0 }} placeholder={getTermFromDictionary(language, 'select_volume')} />
+                                                            <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
                                                        </SelectTrigger>
                                                        <SelectPortal>
                                                             <SelectBackdrop />
@@ -180,7 +152,7 @@ const SelectVolumeHold = (props) => {
                                              </FormControl>
                                         ) : null}
                                         {_.size(locations) > 1 ? (
-                                             <FormControl mb="$4">
+                                             <FormControl style={{ marginBottom: 16 }}>
                                                   <FormControlLabel>
                                                        <FormControlLabelText>{getTermFromDictionary(language, 'select_pickup_location')}</FormControlLabelText>
                                                   </FormControlLabel>
@@ -188,8 +160,8 @@ const SelectVolumeHold = (props) => {
                                                        selectedValue={location}
                                                        onValueChange={(itemValue) => setLocation(itemValue)}>
                                                        <SelectTrigger variant="outline" size="md">
-                                                            <SelectInput py={0} placeholder={getTermFromDictionary(language, 'select_pickup_location')} />
-                                                            <Icon as={ChevronDownIcon} mr="$3" />
+                                                            <SelectInput style={{ paddingVertical: 0 }} placeholder={getTermFromDictionary(language, 'select_pickup_location')} />
+                                                            <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
                                                        </SelectTrigger>
                                                        <SelectPortal>
                                                             <SelectBackdrop />
@@ -208,7 +180,7 @@ const SelectVolumeHold = (props) => {
                                              </FormControl>
                                         ) : null}
                                         {_.size(accounts) > 0 ? (
-                                             <FormControl mb="$4">
+                                             <FormControl style={{ marginBottom: 16 }}>
                                                   <FormControlLabel>
                                                        <FormControlLabelText>{isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')}</FormControlLabelText>
                                                   </FormControlLabel>
@@ -216,8 +188,8 @@ const SelectVolumeHold = (props) => {
                                                        selectedValue={activeAccount}
                                                        onValueChange={(itemValue) => setActiveAccount(itemValue)}>
                                                        <SelectTrigger variant="outline" size="md">
-                                                            <SelectInput py={0} placeholder={isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')} />
-                                                            <Icon as={ChevronDownIcon} mr="$3" />
+                                                            <SelectInput style={{ paddingVertical: 0 }} placeholder={isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')} />
+                                                            <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
                                                        </SelectTrigger>
                                                        <SelectPortal>
                                                             <SelectBackdrop />
@@ -239,7 +211,7 @@ const SelectVolumeHold = (props) => {
                                    </>
                               )}
                          </ModalBody>
-                         <ModalFooter borderTopWidth="$0">
+                         <ModalFooter style={{ borderTopWidth: 0 }}>
                               <ButtonGroup space="md" size="md">
                                    <Button
                                         action="secondary"

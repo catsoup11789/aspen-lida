@@ -1,6 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
-import { HStack, Icon, Pressable, Text, VStack } from '@gluestack-ui/themed';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import Stars from 'react-native-stars';
@@ -9,6 +8,11 @@ import Stars from 'react-native-stars';
 import { LoadingSpinner } from '../../../components/loadingSpinner';
 import { addAppliedFilter, removeAppliedFilter } from '../../../util/api/searchHelper';
 import { useTheme } from '../../../themes/theme';
+import { HStack } from '@/components/ui/hstack';
+import { Icon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 
 export const Facet_Rating = ({ data, category, updater }) => {
@@ -72,27 +76,26 @@ export const Facet_Rating = ({ data, category, updater }) => {
 
      return (
           <ScrollView>
-               <VStack space="$2">
+               <VStack space="sm">
                     {stars.map((star, index) => (
-                         <Pressable key={index} onPress={() => updateSearch(star.label)} p="$0.5" py="$2">
-                              <HStack space="sm" justifyContent="flex-start" alignItems="center">
+                        <Pressable key={index} onPress={() => updateSearch(star.label)} style={{ padding: 2, paddingVertical: 8 }}>
+                             <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
                                    {value === star.label ?
-                                        <Icon as={MaterialIcons} name="radio-button-checked" size="lg" color={theme.tokens.colors.primary['600']} /> :
-                                        <Icon as={MaterialIcons} name="radio-button-unchecked" size="lg" color={theme.tokens.colors.primary['200']} />
+                                       <Icon as={MaterialIcons} name="radio-button-checked" size="lg" style={{ color: theme.tokens.colors.primary['600'] }} /> :
+                                       <Icon as={MaterialIcons} name="radio-button-unchecked" size="lg" style={{ color: theme.tokens.colors.primary['200'] }} />
                                    }
                                    <Stars
                                         default={star.value}
                                         count={5}
                                         starSize={50}
                                         disabled
-                                        fullStar={<Icon as={MaterialIcons} name="star" size="lg" color={theme['tokens']['colors']['yellow']['500']} />}
-                                        emptyStar={<Icon as={MaterialIcons} name="star-border" size="lg" color={theme['tokens']['colors']['yellow']['500']} />}
+                                       fullStar={<Icon as={MaterialIcons} name="star" size="lg" style={{ color: theme.tokens.colors.yellow['500'] }} />}
+                                       emptyStar={<Icon as={MaterialIcons} name="star-border" size="lg" style={{ color: theme.tokens.colors.yellow['500'] }} />}
                                    />
                                    <Text
-                                        color={textColor}
-                                        ml="$2"
+                                       style={{ color: textColor, marginLeft: 8 }}
                                    >
-                                        ({getRatingCount(star.label)})
+                                       ({getRatingCount(star.label)})
                                    </Text>
                               </HStack>
                          </Pressable>

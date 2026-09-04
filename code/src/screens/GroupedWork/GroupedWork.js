@@ -1,17 +1,5 @@
 import { SearchIcon } from 'lucide-react-native';
 
-import {
-     Button,
-     ButtonGroup,
-     ButtonIcon,
-     ButtonText,
-     Box,
-     Center,
-     HStack,
-     Text,
-     SafeAreaView,
-     ScrollView
-} from '@gluestack-ui/themed';
 import { useRoute } from '@react-navigation/native';
 import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
@@ -40,6 +28,13 @@ import Variations from './Variations';
 import { logDebugMessage, getErrorMessage } from '../../util/logging.js';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { HStack } from '@/components/ui/hstack';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -113,10 +108,11 @@ export const GroupedWorkScreen = () => {
 
      const showSystemMessage = () => {
           if (_.isArray(systemMessages)) {
-               return systemMessages.map((obj, index, collection) => {
+              return systemMessages.map((obj, index) => {
                     if (obj.showOn === '0') {
                          return <DisplaySystemMessage key={obj.id || index} style={obj.style} message={obj.message} dismissable={obj.dismissable} id={obj.id} all={systemMessages} url={library.baseUrl} updateSystemMessages={updateSystemMessages} queryClient={queryClient} />;
                     }
+                    return null;
                });
           }
           return null;
@@ -130,8 +126,8 @@ export const GroupedWorkScreen = () => {
                     loadError(error, '')
                ) : (
                     <ScrollView>
-                         <Box sx={{ '@base': { height: 150 }, '@lg': { height: 200 } }} width="$full" bgColor={colorMode === 'light' ? "$warmGray200" : "$coolGray900"} zIndex={-1} position="absolute" left={0} top={0} />
-                         {_.size(systemMessages) > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
+                         <Box style={{ height: 150, width: '100%', backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.background.dark, zIndex: -1, position: 'absolute', left: 0, top: 0 }} />
+                         {_.size(systemMessages) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                          <DisplayGroupedWork data={data.results} initialFormat={data.format} updateFormat={data.format} />
                     </ScrollView>
                )}
@@ -167,8 +163,8 @@ const DisplayGroupedWork = (payload) => {
      const key = 'large_' + groupedWork.id;
 
      return (
-          <Box p="$5" width="$full">
-               <Center mt="$5" width="100%">
+          <Box style={{ padding: 20, width: '100%' }}>
+               <Center style={{ marginTop: 20, width: '100%' }}>
                     <Image alt={groupedWork.title} source={groupedWork.cover} style={{ width: 180, height: 250, borderRadius: 4 }} placeholder={blurhash} transition={1000} contentFit="cover" />
                     <Title title={groupedWork.title} />
                     <Author author={groupedWork.author} />
@@ -188,7 +184,7 @@ const Title = ({ title }) => {
      if (title) {
           return (
                <>
-                    <Text color={textColor} sx={{ '@base': { fontSize: 16, lineHeight: 19 }, '@lg': { fontSize: 24, lineHeight: 27 } }} bold pt="$5" alignText="center">
+                    <Text bold style={{ color: textColor, fontSize: 16, lineHeight: 19, paddingTop: 20, textAlign: 'center' }}>
                          {title}
                     </Text>
                </>
@@ -204,8 +200,8 @@ const Author = ({ author }) => {
      if (author) {
           return (
                <Button size="sm" variant="link" onPress={() => startSearch(author, 'SearchResults', library.baseUrl)}>
-                    <ButtonIcon as={SearchIcon} color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"} size="xs" mr="$1" />
-                    <ButtonText fontWeight="$normal" color={colorMode === 'light' ? "$coolGray700" : "$warmGray100"}>
+                    <ButtonIcon as={SearchIcon} size="xs" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, marginRight: 4 }} />
+                    <ButtonText style={{ fontWeight: '400', color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark }}>
                          {author}
                     </ButtonText>
                </Button>
@@ -223,8 +219,8 @@ const Format = (data) => {
      const { theme, colorMode } = useTheme();
 
      return (
-          <Button size="sm" bg={btnStyle === 'outline' ? 'transparent' : theme['tokens']['colors']['secondary']['400']} borderColor={colorMode === 'light' ? "$coolGray700" : "$warmGray100"} mb="$1" mr="$1" variant={btnStyle} onPress={() => updateFormat(key)}>
-               <ButtonText color={btnStyle === 'outline' ? (colorMode === 'light' ? "$coolGray700" : "$warmGray100") : theme['tokens']['colors']['secondary']['400-text']}>{format.label}</ButtonText>
+          <Button size="sm" variant={btnStyle} onPress={() => updateFormat(key)} style={{ backgroundColor: btnStyle === 'outline' ? 'transparent' : theme.tokens.colors.secondary['400'], borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark, marginBottom: 4, marginRight: 4 }}>
+               <ButtonText style={{ color: btnStyle === 'outline' ? (colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white.dark) : theme.tokens.colors.secondary['400-text'] }}>{format.label}</ButtonText>
           </Button>
      );
 };
@@ -233,7 +229,7 @@ const Description = ({ description }) => {
      const { theme, textColor } = useTheme();
      if (description) {
           return (
-               <Text mt="$5" mb="$5" sx={{ '@base': { fontSize: 14, lineHeight: 21 }, '@lg': { fontSize: 20, lineHeight: 27 } }} color={textColor}>
+               <Text style={{ marginTop: 20, marginBottom: 20, fontSize: 14, lineHeight: 21, color: textColor }}>
                     {decodeHTML(description)}
                </Text>
           );
@@ -247,11 +243,11 @@ const Language = ({ language }) => {
      const { theme, textColor } = useTheme();
      if (language) {
           return (
-               <HStack mt="$3" mb="$1">
-                    <Text sx={{ '@base': { fontSize: 12, lineHeight: 15 }, '@lg': { fontSize: 18, lineHeight: 21 } }} bold color={textColor}>
+               <HStack style={{ marginTop: 12, marginBottom: 4 }}>
+                    <Text bold style={{ fontSize: 12, lineHeight: 15, color: textColor }}>
                          {getTermFromDictionary(user_language, 'language')}:
                     </Text>
-                    <Text sx={{ '@base': { fontSize: 12, lineHeight: 15 }, '@lg': { fontSize: 18, lineHeight: 21 } }} ml="$1" color={textColor}>
+                    <Text style={{ fontSize: 12, lineHeight: 15, marginLeft: 4, color: textColor }}>
                          {' '}
                          {language}
                     </Text>
@@ -269,11 +265,11 @@ const Formats = ({ formats }) => {
      if (formats) {
           return (
                <>
-                    <Text sx={{ '@base': { fontSize: 12, lineHeight: 15 }, '@lg': { fontSize: 18, lineHeight: 21 } }} bold mt="$3" mb="$1" color={textColor}>
+                    <Text bold style={{ fontSize: 12, lineHeight: 15, marginTop: 12, marginBottom: 4, color: textColor }}>
                          {getTermFromDictionary(language, 'format')}:
                     </Text>
-                    <ButtonGroup flexDirection="row" flexWrap="wrap">
-                         {_.compact(_.map(_.keys(formats), function (item, index, array) {
+                    <ButtonGroup style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                         {_.compact(_.map(_.keys(formats), function (item, index) {
                               const formatData = formats[item];
                               if (!formatData || !formatData.label || formatData.label.trim() === '' || item.trim() === '') {
                                    return null;
@@ -294,8 +290,8 @@ const BibliographicInformationLink = ({ groupedWorkId }) => {
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const library = useLibrary();
-     const backgroundColor = colorMode === 'light' ? "$warmGray200" : "$coolGray900";
-     const textColor = colorMode === 'light' ? "$warmGray800" : "$coolGray200";
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.background.dark;
+     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.gray200;
 
      let showMoreInfoBtn = false;
      if(library?.showMoreInfoBtn) {
@@ -304,8 +300,8 @@ const BibliographicInformationLink = ({ groupedWorkId }) => {
 
      if (groupedWorkId && showMoreInfoBtn) {
           return (
-          <Button onPress={async () => await passUserToDiscovery(library.baseUrl, 'GroupedWork', user.id, backgroundColor, textColor, groupedWorkId)} bgColor={theme['tokens']['colors']['secondary']['500']}>
-               <ButtonText color={theme['tokens']['colors']['secondary']['500-text']}>
+          <Button onPress={async () => await passUserToDiscovery(library.baseUrl, 'GroupedWork', user.id, backgroundColor, textColor, groupedWorkId)} style={{ backgroundColor: theme.tokens.colors.secondary['500'] }}>
+              <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>
                     {getTermFromDictionary(language, 'more_information')}
                </ButtonText>
           </Button>

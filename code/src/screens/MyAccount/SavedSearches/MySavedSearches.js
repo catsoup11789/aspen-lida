@@ -1,6 +1,13 @@
-import { Badge, BadgeText, Box, Center, FlatList, Pressable, Text, HStack, VStack } from '@gluestack-ui/themed';
 import React from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { FlatList } from 'react-native';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Center } from '@/components/ui/center';
+import { HStack } from '@/components/ui/hstack';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 // custom components and helper files
 import { loadingSpinner } from '../../../components/loadingSpinner';
@@ -24,7 +31,8 @@ export const MySavedSearches = () => {
      const updateSavedSearches = useUpdateSavedSearches();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor } = useTheme();
+     const { textColor, theme, colorMode } = useTheme();
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
 
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
 
@@ -65,8 +73,8 @@ export const MySavedSearches = () => {
 
      const Empty = () => {
           return (
-               <Center mt={5} mb={5}>
-                    <Text bold fontSize="$lg" color={textColor}>
+               <Center style={{ marginTop: 20, marginBottom: 20 }}>
+                   <Text bold size="lg" style={{ color: textColor }}>
                          {getTermFromDictionary(language, 'saved_searches_empty')}
                     </Text>
                </Center>
@@ -106,6 +114,8 @@ const Item = (data) => {
      const language = useActiveLanguage();
      const item = data.data;
      const { textColor, colorMode } = useTheme();
+     const { theme } = useTheme();
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
 
      let hasNewResults = 0;
      if (item?.hasNewResults !== undefined) {
@@ -124,23 +134,20 @@ const Item = (data) => {
                onPress={() => {
                     openSavedSearch();
                }}
-               borderBottomWidth="$1"
-               borderColor={colorMode === 'light' ? "$coolGray200" : "$warmGray600"}
-               px="$1"
-               py="$2">
-               <HStack space="md" justifyContent="flex-start">
+               style={{ borderBottomWidth: 1, borderColor, paddingHorizontal: 4, paddingVertical: 8 }}>
+               <HStack space="md" style={{ justifyContent: 'flex-start' }}>
                     <VStack space="sm">{/*<Image source={{uri: item.cover}} alt={item.title} size="lg" resizeMode="contain" />*/}</VStack>
-                    <VStack space="sm" justifyContent="space-between" maxW="80%">
+                    <VStack space="sm" style={{ justifyContent: 'space-between', maxWidth: '80%' }}>
                          <Box>
-                              <Text bold fontSize="$md" color={textColor}>
+                              <Text bold size="md" style={{ color: textColor }}>
                                    {item.title}{' '}
                                    {hasNewResults === 1 ? (
-                                        <Badge mb="-0.5" colorScheme="warning">
+                                        <Badge action="warning" style={{ marginBottom: -2 }}>
                                              <BadgeText>{getTermFromDictionary(language, 'flag_updated')}</BadgeText>
                                         </Badge>
                                    ) : null}
                               </Text>
-                              <Text fontSize="$xs" italic color={textColor}>
+                              <Text size="xs" italic style={{ color: textColor }}>
                                    Created on {item.created}
                               </Text>
                          </Box>

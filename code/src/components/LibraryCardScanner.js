@@ -1,12 +1,13 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useCameraPermissions, CameraView } from 'expo-camera';
-import { Button, ButtonText, View } from '@gluestack-ui/themed';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import { navigate } from '../helpers/RootNavigator';
 import { LoadError } from './loadError';
 import { LoadingSpinner } from './loadingSpinner';
+import { Button, ButtonText } from '@/components/ui/button';
+import { View } from '@/components/ui/view';
 
 export default function LibraryCardScanner() {
      const navigation = useNavigation();
@@ -66,11 +67,11 @@ export default function LibraryCardScanner() {
                <CameraView onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]} barcodeScannerSettings={{ barcodeTypes: allowedBarcodes }}>
                     <BarcodeMask edgeColor="#62B1F6" showAnimatedLine={false} />
                     <View style={styles.buttonContainer}>
-                         <Button variant="outline" action="secondary" onPress={() => navigation.goBack()} bgColor="rgba(0,0,0,0.5)" borderColor="$white">
-                              <ButtonText color="$white">Cancel</ButtonText>
+                         <Button variant="outline" action="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: '#ffffff' }}>
+                              <ButtonText style={{ color: '#ffffff' }}>Cancel</ButtonText>
                          </Button>
                          {scanned && (
-                              <Button onPress={() => setScanned(false)} ml="$4">
+                              <Button onPress={() => setScanned(false)} style={{ marginLeft: 16 }}>
                                    <ButtonText>Scan Again</ButtonText>
                               </Button>
                          )}

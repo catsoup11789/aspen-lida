@@ -1,13 +1,13 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import {
-     Actionsheet,
-     ActionsheetContent,
-     ActionsheetItem,
-     ActionsheetItemText, ActionsheetBackdrop, HStack, Icon, Pressable, VStack, ActionsheetIcon } from '@gluestack-ui/themed';
 import React, { useState } from 'react';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetIcon, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
+import { HStack } from '@/components/ui/hstack';
+import { Icon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
+import { VStack } from '@/components/ui/vstack';
 
 // custom components and helper files
 
@@ -39,8 +39,10 @@ export const MyCheckout = (props) => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const version = formatDiscoveryVersion(library.discoveryVersion);
-     const { colorMode, textColor } = useTheme();
+     const { colorMode, textColor, theme } = useTheme();
      const insets = useSafeAreaInsets();
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const actionSheetBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
 
      const [access, setAccess] = useState(false);
      const [returning, setReturn] = useState(false);
@@ -120,15 +122,15 @@ export const MyCheckout = (props) => {
 
 
      return (
-          <Pressable onPress={toggle} borderBottomWidth="$1" borderBottomColor={colorMode === 'light' ? "$coolGray200" : "$coolGray500"} pl="$4" pr="$5" py="$2">
-               <HStack space="sm" w="75%">
+         <Pressable onPress={toggle} style={{ borderBottomWidth: 1, borderBottomColor: borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
+              <HStack space="sm" style={{ width: '75%' }}>
                     <Image
                          alt={checkout.title}
                          source={url}
                          style={{
                               width: 100,
                               height: 150,
-                              borderRadius: "$sm" }}
+                             borderRadius: 8 }}
                          placeholder={blurhash}
                          transition={1000}
                          contentFit="cover"
@@ -148,11 +150,10 @@ export const MyCheckout = (props) => {
                <Actionsheet isOpen={isOpen} onClose={toggle} size="full">
                     <ActionsheetBackdrop />
                     <ActionsheetContent
-                         bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-                         pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}
+                         style={{ backgroundColor: actionSheetBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
                     >
-                         <ActionsheetItem h={60} px="$4">
-                              <ActionsheetItemText bold color={textColor}>{checkout.title}</ActionsheetItemText>
+                         <ActionsheetItem style={{ height: 60, paddingHorizontal: 16 }}>
+                              <ActionsheetItemText style={{ color: textColor, fontWeight: '700' }}>{checkout.title}</ActionsheetItemText>
                          </ActionsheetItem>
                          {checkout.groupedWorkId ? (
                               <ActionsheetItem
@@ -162,9 +163,9 @@ export const MyCheckout = (props) => {
                                    }}
                                    >
                                    <ActionsheetIcon>
-                                        <Icon as={MaterialIcons} name="search" mr="$1" size="md" color={textColor}/>
+                                        <Icon as={MaterialIcons} name="search" size="md" style={{ marginRight: 4, color: textColor }} />
                                    </ActionsheetIcon>
-                                   <ActionsheetItemText color={textColor}>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
+                                   <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                               </ActionsheetItem>
                          ): null}
                          {renewMessage ? (
@@ -204,9 +205,9 @@ export const MyCheckout = (props) => {
                                    }}
                                    >
                                    <ActionsheetIcon>
-                                        <Icon as={MaterialIcons} name="autorenew" mr="$1" size="md" color={textColor}/>
+                                        <Icon as={MaterialIcons} name="autorenew" size="md" style={{ marginRight: 4, color: textColor }} />
                                    </ActionsheetIcon>
-                                   <ActionsheetItemText color={textColor}>{stripHTML(renewMessage)}</ActionsheetItemText>
+                                   <ActionsheetItemText style={{ color: textColor }}>{stripHTML(renewMessage)}</ActionsheetItemText>
                               </ActionsheetItem>
                          ) : null}
                          {checkout.source === 'overdrive' ? (
@@ -222,7 +223,7 @@ export const MyCheckout = (props) => {
                                    }}
                                    >
                                    <ActionsheetIcon>
-                                        <Icon as={MaterialIcons} name="book" mr="$1" size="md" color={textColor} />
+                                        <Icon as={MaterialIcons} name="book" size="md" style={{ marginRight: 4, color: textColor }} />
                                    </ActionsheetIcon>
                                    <CheckoutAccessLabel checkout={checkout} libbyReaderName={libbyReaderName} baseUrl={library.baseUrl} language={language} color={textColor}></CheckoutAccessLabel>
                               </ActionsheetItem>
@@ -230,9 +231,9 @@ export const MyCheckout = (props) => {
                          {checkout.source === 'palace_project' ? (
                               <ActionsheetItem onPress={() => handleOpenPalaceProjectInstructions()}>
                                    <ActionsheetIcon>
-                                        <Icon as={MaterialIcons} name="info" color="trueGray.400" mr="1" size="6" />
+                                        <Icon as={MaterialIcons} name="info" size="md" style={{ marginRight: 4, color: textColor }} />
                                    </ActionsheetIcon>
-                                   <ActionsheetItemText color={textColor}>{getTermFromDictionary(language, 'access_instructions')}</ActionsheetItemText>
+                                   <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'access_instructions')}</ActionsheetItemText>
                               </ActionsheetItem>
                          ) : null}
                          {checkout.accessOnlineUrl != null ? (
@@ -249,7 +250,7 @@ export const MyCheckout = (props) => {
                                         }}
                                         >
                                         <ActionsheetIcon>
-                                             <Icon as={MaterialIcons} name="book" mr="$1" size="md"  color={textColor}/>
+                                             <Icon as={MaterialIcons} name="book" size="md" style={{ marginRight: 4, color: textColor }} />
                                         </ActionsheetIcon>
                                         <CheckoutAccessLabel checkout={checkout} libbyReaderName={libbyReaderName} baseUrl={library.baseUrl} language={language} color={textColor}></CheckoutAccessLabel>
                                    </ActionsheetItem>
@@ -266,10 +267,10 @@ export const MyCheckout = (props) => {
                                         }}
                                         >
                                         <ActionsheetIcon>
-                                             <Icon as={MaterialIcons} name="logout" mr="$1" size="md"  color={textColor} />
+                                             <Icon as={MaterialIcons} name="logout" size="md" style={{ marginRight: 4, color: textColor }} />
                                         </ActionsheetIcon>
                                         <CheckoutAccessLabel checkout={checkout} libbyReaderName={libbyReaderName} baseUrl={library.baseUrl} language={language} color={textColor}></CheckoutAccessLabel>
-                                        <ActionsheetItemText  color={textColor}>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
+                                        <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
                                    </ActionsheetItem>
                               </>
                          ) : null}
@@ -288,9 +289,9 @@ export const MyCheckout = (props) => {
                                         }}
                                         >
                                         <ActionsheetIcon>
-                                             <Icon as={MaterialIcons} name="logout" mr="$1" size="md"  color={textColor}/>
+                                             <Icon as={MaterialIcons} name="logout" size="md" style={{ marginRight: 4, color: textColor }} />
                                         </ActionsheetIcon>
-                                        <ActionsheetItemText  color={textColor}>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
+                                        <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
                                    </ActionsheetItem>
                               </>
                          ) : null}

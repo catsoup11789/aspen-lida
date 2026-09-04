@@ -1,17 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
-import {
-     Box,
-     Button,
-     ButtonText,
-     Divider,
-     FlatList,
-     Heading,
-     HStack,
-     ScrollView,
-     Text
-} from '@gluestack-ui/themed';
 import React, { useContext, useLayoutEffect, useState } from 'react';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Divider } from '@/components/ui/divider';
+import { FlatList } from '@/components/ui/flat-list';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
 
 import { DisplayMessage, DisplaySystemMessage } from '../../../components/Notifications';
 import { SystemMessagesContext } from '../../../context/initialContext';
@@ -37,7 +34,7 @@ export const MyLinkedAccounts = () => {
      const { data: viewers } = useViewers();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor } = useTheme();
+     const { textColor, theme } = useTheme();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = useContext(SystemMessagesContext);
 
@@ -60,8 +57,8 @@ export const MyLinkedAccounts = () => {
 
      const Empty = () => {
           return (
-               <Box pt="$3" pb="$5">
-                    <Text bold color={textColor}>{getTermFromDictionary(language, 'none')}</Text>
+               <Box style={{ paddingTop: 12, paddingBottom: 20 }}>
+                    <Text bold style={{ color: textColor }}>{getTermFromDictionary(language, 'none')}</Text>
                </Box>
           );
      };
@@ -92,7 +89,7 @@ export const MyLinkedAccounts = () => {
 
      if (!canUserLinkAccounts) {
           return (
-               <ScrollView p="$5" flex={1}>
+               <ScrollView contentContainerStyle={{ padding: 20, flexGrow: 1 }}>
                     {showSystemMessage()}
                     {ptypeDisabledLinking ? (
                          <DisplayMessage type="info" message={getTermFromDictionary(language, 'linked_account_disabled_by_ptype')} />
@@ -107,16 +104,16 @@ export const MyLinkedAccounts = () => {
      }
 
      return (
-          <ScrollView p="$2" flex={1}>
+          <ScrollView contentContainerStyle={{ padding: 8, flexGrow: 1 }}>
                {showSystemMessage()}
                <DisplayMessage type="info" message={getTermFromDictionary(language, 'linked_info_message')} />
 
                {user.addLinkedAccountRule !== 1 ? (
                     <Box>
-                         <Heading size="lg" pb="$2" color={textColor}>
+                         <Heading size="lg" style={{ paddingBottom: 8, color: textColor }}>
                               {getTermFromDictionary(language, 'linked_additional_accounts')}
                          </Heading>
-                         <Text fontSize="$sm" color={textColor}>
+                         <Text size="sm" style={{ color: textColor }}>
                               {getTermFromDictionary(language, 'linked_following_accounts_can_manage')}
                          </Text>
                          <FlatList
@@ -126,16 +123,16 @@ export const MyLinkedAccounts = () => {
                               keyExtractor={(item, index) => index.toString()}
                          />
                          <AddLinkedAccount />
-                         <Divider my="$4" />
+                         <Divider style={{ marginVertical: 16 }} />
                     </Box>
                ) : null}
 
                {user.addLinkedAccountRule !== 2 ? (
                     <Box>
-                         <Heading size="lg" pb="$2" color={textColor}>
+                         <Heading size="lg" style={{ paddingBottom: 8, color: textColor }}>
                               {getTermFromDictionary(language, 'linked_other_accounts')}
                          </Heading>
-                         <Text fontSize="$sm" color={textColor}>
+                         <Text size="sm" style={{ color: textColor }}>
                               {getTermFromDictionary(language, 'linked_following_accounts_can_view')}
                          </Text>
                          <FlatList
@@ -148,8 +145,8 @@ export const MyLinkedAccounts = () => {
                ) : null}
 
                {user.addLinkedAccountRule !== 2 && user.removeLinkedAccountRule !== 0 ? (
-                    <Box pb="$5">
-                         <Divider my="$4" />
+                    <Box style={{ paddingBottom: 20 }}>
+                         <Divider style={{ marginVertical: 16 }} />
                          <DisableAccountLinking />
                     </Box>
                ) : null}
@@ -206,19 +203,19 @@ const Account = ({ account, type }) => {
      if (!account) return null;
 
      return (
-          <HStack justifyContent="space-around" pt="$2" pb="$2" alignItems="center" alignContent="flex-start">
-               <Text bold isTruncated w="60%" maxW="60%" color={textColor}>
+          <HStack justifyContent="space-around" style={{ paddingTop: 8, paddingBottom: 8, alignItems: 'center', alignContent: 'flex-start' }}>
+               <Text bold isTruncated style={{ width: '60%', maxWidth: '60%', color: textColor }}>
                     {account.displayName ? account.displayName : account.ils_barcode} - {account.homeLocation}
                </Text>
                {type === 'viewer' && user.removeLinkedAccountRule === 0 ? null : (
                     <Button
-                         bgColor="$warning500"
+                        style={{ backgroundColor: theme.tokens.colors.ui.danger }}
                          isLoading={isRemoving}
                          isLoadingText={getTermFromDictionary(language, 'removing', true)}
                          size="sm"
                          onPress={removeAccount}
                     >
-                         <ButtonText color="$white">{getTermFromDictionary(language, 'remove')}</ButtonText>
+                        <ButtonText style={{ color: '#ffffff' }}>{getTermFromDictionary(language, 'remove')}</ButtonText>
                     </Button>
                )}
           </HStack>

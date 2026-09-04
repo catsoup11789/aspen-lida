@@ -1,4 +1,3 @@
-import { FormControl, FormControlLabel, FormControlLabelText, Select, SelectTrigger, SelectInput, SelectPortal, SelectBackdrop, SelectContent, SelectDragIndicatorWrapper, SelectDragIndicator, SelectItem, Radio, RadioGroup, RadioIndicator, RadioIcon, RadioLabel, CircleIcon, Icon, ChevronDownIcon } from '@gluestack-ui/themed';
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
@@ -7,6 +6,10 @@ import { loadingSpinner } from '../../components/loadingSpinner';
 import { loadError } from '../../components/loadError';
 import _ from 'lodash';
 import { getTermFromDictionary } from '../../translations/TranslationService';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { ChevronDownIcon, CircleIcon, Icon } from '@/components/ui/icon';
+import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectTrigger } from '@/components/ui/select';
 
 export const SelectVolume = (props) => {
      const { language, id, holdType, setHoldType, volume, setVolume, shouldLoad, promptForHoldType } = props;
@@ -27,20 +30,20 @@ export const SelectVolume = (props) => {
                ) : (
                     <>
                          {promptForHoldType ? (
-                              <FormControl mb="$4">
+                              <FormControl style={{ marginBottom: 16 }}>
                                    <RadioGroup
                                         value={holdType}
                                         onChange={(nextValue) => {
                                              setHoldType(nextValue);
                                         }}>
-                                        <Radio value="item" size="sm" mb="$2">
-                                             <RadioIndicator mr="$2">
+                                        <Radio value="item" size="sm" style={{ marginBottom: 8 }}>
+                                             <RadioIndicator style={{ marginRight: 8 }}>
                                                   <RadioIcon as={CircleIcon} />
                                              </RadioIndicator>
                                              <RadioLabel>{getTermFromDictionary(language, 'first_available')}</RadioLabel>
                                         </Radio>
                                         <Radio value="volume" size="sm">
-                                             <RadioIndicator mr="$2">
+                                             <RadioIndicator style={{ marginRight: 8 }}>
                                                   <RadioIcon as={CircleIcon} />
                                              </RadioIndicator>
                                              <RadioLabel>{getTermFromDictionary(language, 'specific_volume')}</RadioLabel>
@@ -57,8 +60,8 @@ export const SelectVolume = (props) => {
                                         selectedValue={volume}
                                         onValueChange={(itemValue) => setVolume(itemValue)}>
                                         <SelectTrigger variant="outline" size="md">
-                                             <SelectInput py={0} placeholder={getTermFromDictionary(language, 'select_volume')} />
-                                             <Icon as={ChevronDownIcon} mr="$3" />
+                                             <SelectInput style={{ paddingVertical: 0 }} placeholder={getTermFromDictionary(language, 'select_volume')} />
+                                             <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />

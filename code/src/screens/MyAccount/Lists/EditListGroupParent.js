@@ -2,38 +2,6 @@ import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useUserState, useListGroups, useUpdateLists, useUpdateListGroups } from '../../../hooks/useUserData';
-import {
-     Center,
-     Button,
-     ButtonIcon,
-     ButtonText,
-     Modal,
-     ModalBackdrop,
-     ModalContent,
-     ModalHeader,
-     Heading,
-     ModalCloseButton,
-     Icon,
-     CloseIcon,
-     ModalBody,
-     ModalFooter,
-     ButtonGroup,
-     FormControlLabel,
-     FormControlLabelText,
-     Select,
-     SelectTrigger,
-     SelectInput,
-     SelectIcon,
-     ChevronDownIcon,
-     SelectPortal,
-     SelectBackdrop,
-     SelectContent,
-     SelectDragIndicatorWrapper,
-     SelectDragIndicator,
-     SelectItem,
-     SelectScrollView,
-     FormControl
-} from '@gluestack-ui/themed';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getTermFromDictionary } from '../../../translations/TranslationService';
 import { editListGroupParent, getLists, getListGroups } from '../../../util/api/list';
@@ -44,6 +12,13 @@ import { toArray } from '../../../helpers/helpers';
 import { useActiveLanguage } from '../../../hooks/useLanguageData';
 import { useTheme } from '../../../themes/theme';
 import { useLibrary } from '../../../hooks/useLibrarySystemData';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { ChevronDownIcon, CloseIcon, Icon } from '@/components/ui/icon';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
 export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
       const { data: userState } = useUserState();
@@ -60,6 +35,8 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
       const [newListGroupParentId, setNewListGroupParentId] = React.useState(parentId); // default state is current list group parent id
 
       const insets = useSafeAreaInsets();
+      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+      const tertiaryBg = theme.tokens.colors.tertiary['300'] ?? theme.tokens.colors.tertiary['500'];
 
       React.useEffect(() => {
            if (listGroups && listGroups.groups && parentId != null) {
@@ -82,23 +59,23 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
 
      return (
           <Center>
-               <Button onPress={toggle} size="xs" bgColor={theme.tokens.colors.primary['500']}>
-                    <ButtonIcon color={theme.tokens.colors.primary['500-text']} as={MaterialIcons} name="edit" mr="$1" />
-                    <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'move_list_group')}</ButtonText>
+               <Button onPress={toggle} size="xs" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                   <ButtonIcon as={MaterialIcons} name="edit" style={{ color: theme.tokens.colors.primary['500-text'], marginRight: 4 }} />
+                   <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'move_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
                     <ModalBackdrop />
-                    <ModalContent maxWidth="90%"  bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                    <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceBg }}>
                          <ModalHeader>
-                              <Heading size="md" color={textColor}>{getTermFromDictionary(language, 'move_list_group')}</Heading>
-                              <ModalCloseButton p="$3" onPress={toggle}>
-                                   <Icon as={CloseIcon} color={textColor} />
+                              <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'move_list_group')}</Heading>
+                              <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
+                                   <Icon as={CloseIcon} style={{ color: textColor }} />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
-                              <FormControl pb="$5">
+                              <FormControl style={{ paddingBottom: 20 }}>
                                    <FormControlLabel>
-                                        <FormControlLabelText color={textColor}>{getTermFromDictionary(language, 'move_list_group_to')}</FormControlLabelText>
+                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'move_list_group_to')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <Select
                                         name="newListGroupParent"
@@ -109,23 +86,24 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
                                               {selectedGroup === null && parentId !== null ? (
                                                         toArray(listGroups.groups).map((group) => {
                                                              if (group.id === parentId) {
-                                                                  return <SelectInput value={group.title} color={textColor} />;
+                                                                  return <SelectInput value={group.title} style={{ color: textColor }} />;
                                                              }
                                                         })
                                                    ) :
                                                    (selectedGroup === null && parentId === null ? (
-                                                        <SelectInput color={textColor} value={getTermFromDictionary(language, 'choose_existing_list_group')} />
+                                                        <SelectInput style={{ color: textColor }} value={getTermFromDictionary(language, 'choose_existing_list_group')} />
                                                    ) : (
-                                                        <SelectInput color={textColor} value={selectedGroup.title} />
+                                                        <SelectInput style={{ color: textColor }} value={selectedGroup.title} />
                                                    ))
                                               }
-                                            <SelectIcon mr="$3" as={ChevronDownIcon} color={textColor} />
+                                            <SelectIcon style={{ marginRight: 12 }}>
+                                                 <Icon as={ChevronDownIcon} style={{ color: textColor }} />
+                                            </SelectIcon>
                                          </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
                                              <SelectContent
-                                                  bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}
-                                                  pb={Platform.OS === 'android' ? insets.bottom + 16 : '$4'}
+                                                  style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
                                              >
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
@@ -135,7 +113,7 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
                                                              if(item.id === id || item.id === parentId || item.parentGroupId === id) {
                                                                   return null;
                                                              }
-                                                             return <SelectItem key={index} value={item.id} label={item.title} bgColor={newListGroupParentId === item.id ? theme.tokens.colors.tertiary['300'] : ''} sx={{ _text: { color: newListGroupParentId === item.id ? theme.tokens.colors.tertiary['500-text'] : textColor } }} />;
+                                                             return <SelectItem key={index} value={item.id} label={item.title} style={{ backgroundColor: newListGroupParentId === item.id ? tertiaryBg : 'transparent' }} />;
                                                         })}
                                                    </SelectScrollView>
                                              </SelectContent>
@@ -145,10 +123,10 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup>
-                                   <Button variant="outline" onPress={toggle} borderColor={theme.tokens.colors.primary['500']}>
-                                        <ButtonText color={theme.tokens.colors.primary['500']}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                   <Button variant="outline" onPress={toggle} style={{ borderColor: theme.tokens.colors.primary['500'] }}>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
-                                     <Button bgColor={theme.tokens.colors.primary['500']}
+                                     <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                              isLoading={loading}
                                              isDisabled={selectedGroup === null}
                                              isLoadingText={getTermFromDictionary(language, 'saving', true)}
@@ -181,7 +159,7 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
                                                       }
                                                  });
                                             }}>
-                                         <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'save')}</ButtonText>
+                                         <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'save')}</ButtonText>
                                     </Button>
                               </ButtonGroup>
                          </ModalFooter>

@@ -1,32 +1,4 @@
 import _ from 'lodash';
-import {
-     Button,
-     ButtonText,
-     ButtonGroup,
-     CheckIcon,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Heading,
-     Modal,
-     ModalBackdrop,
-     ModalContent,
-     ModalHeader,
-     ModalBody,
-     ModalFooter,
-     ModalCloseButton,
-     Select,
-     SelectTrigger,
-     SelectInput,
-     SelectPortal,
-     SelectBackdrop,
-     SelectContent,
-     SelectDragIndicatorWrapper,
-     SelectDragIndicator,
-     SelectItem,
-     Icon,
-     ChevronDownIcon
-} from '@gluestack-ui/themed';
 import React, { useState } from 'react';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { useUserState, useAccounts, useLocations, useUpdateUserProfile } from '../../hooks/useUserData';
@@ -35,6 +7,12 @@ import { refreshProfile } from '../../util/api/user';
 import { completeAction } from '../../util/api/userHelper';
 import { SelectVolume } from './SelectVolume';
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/logging';
+import { Button, ButtonText, ButtonGroup } from '@/components/ui/button';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal, SelectTrigger } from '@/components/ui/select';
 
 const SelectPickupLocation = (props) => {
      const { id, action, title, volumeInfo, prevRoute, response, setResponse, responseIsOpen, setResponseIsOpen, onResponseClose, cancelResponseRef, language } = props;
@@ -112,15 +90,15 @@ const SelectPickupLocation = (props) => {
                </Button>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="lg">
                     <ModalBackdrop />
-                    <ModalContent maxWidth="90%">
-                         <ModalHeader borderBottomWidth="$0">
-                              <Heading size="$md">{isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}</Heading>
+                    <ModalContent style={{ maxWidth: '90%' }}>
+                         <ModalHeader style={{ borderBottomWidth: 0 }}>
+                              <Heading size="md">{isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}</Heading>
                               <ModalCloseButton />
                          </ModalHeader>
                          <ModalBody>
                               {shouldDisplayVolumes ? <SelectVolume language={language} id={id} holdType={holdType} setHoldType={setHoldType} volume={volume} setVolume={setVolume} promptForHoldType={promptForHoldType} /> : null}
                               {_.size(accounts) > 1 ? (
-                                   <FormControl mb="$4">
+                                   <FormControl style={{ marginBottom: 16 }}>
                                         <FormControlLabel>
                                              <FormControlLabelText>{isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')}</FormControlLabelText>
                                         </FormControlLabel>
@@ -128,8 +106,8 @@ const SelectPickupLocation = (props) => {
                                              selectedValue={activeAccount}
                                              onValueChange={(itemValue) => setActiveAccount(itemValue)}>
                                              <SelectTrigger variant="outline" size="md">
-                                                  <SelectInput py={0} placeholder={isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')} />
-                                                  <Icon as={ChevronDownIcon} mr="$3" />
+                                                  <SelectInput style={{ paddingVertical: 0 }} placeholder={isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')} />
+                                                  <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
@@ -146,7 +124,7 @@ const SelectPickupLocation = (props) => {
                                         </Select>
                                    </FormControl>
                               ) : null}
-                              <FormControl mb="$2">
+                              <FormControl style={{ marginBottom: 8 }}>
                                    <FormControlLabel>
                                         <FormControlLabelText>{getTermFromDictionary(language, 'select_pickup_location')}</FormControlLabelText>
                                    </FormControlLabel>
@@ -154,8 +132,8 @@ const SelectPickupLocation = (props) => {
                                         selectedValue={location}
                                         onValueChange={(itemValue) => setLocation(itemValue)}>
                                         <SelectTrigger variant="outline" size="md">
-                                             <SelectInput py={0} placeholder={getTermFromDictionary(language, 'select_pickup_location')} />
-                                             <Icon as={ChevronDownIcon} mr="$3" />
+                                             <SelectInput style={{ paddingVertical: 0 }} placeholder={getTermFromDictionary(language, 'select_pickup_location')} />
+                                             <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
@@ -171,7 +149,7 @@ const SelectPickupLocation = (props) => {
                                    </Select>
                               </FormControl>
                          </ModalBody>
-                         <ModalFooter borderTopWidth="$0">
+                         <ModalFooter style={{ borderTopWidth: 0 }}>
                               <ButtonGroup space="md" size="md">
                                    <Button variant="outline" action="secondary" onPress={() => setShowModal(false)}>
                                         <ButtonText>{getTermFromDictionary(language, 'close_button')}</ButtonText>

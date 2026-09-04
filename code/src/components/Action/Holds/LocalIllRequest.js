@@ -1,4 +1,4 @@
-import {Button, ButtonText} from '@gluestack-ui/themed';
+import { Button, ButtonText } from '@/components/ui/button';
 import React from 'react';
 import {navigate} from '../../../helpers/RootNavigator';
 import { useTheme } from '../../../themes/theme';
@@ -21,12 +21,10 @@ export const StartLocalIllRequest = (props) => {
      return (
           <Button
                size="md"
-               bgColor={theme.tokens.colors.primary['500']}
                variant="solid"
-               minWidth="100%"
-               maxWidth="100%"
+               style={{ backgroundColor: theme.tokens.colors.primary['500'], minWidth: '100%', maxWidth: '100%' }}
                onPress={openLocalIllRequest}>
-               <ButtonText color={theme.tokens.colors.primary['500-text']} textAlign="center">
+               <ButtonText style={{ color: theme.tokens.colors.primary['500-text'], textAlign: 'center' }}>
                     {props.title}
                </ButtonText>
           </Button>

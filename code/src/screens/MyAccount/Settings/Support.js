@@ -1,10 +1,18 @@
 import * as Device from 'expo-device';
 import * as Linking from 'expo-linking';
 import _ from 'lodash';
-import { Alert, Box, Center, HStack, Pressable, Text, VStack, ScrollView, Button, ButtonText, Divider, AlertText, CloseIcon } from '@gluestack-ui/themed';
 import React from 'react';
 import { Platform } from 'react-native';
 import { checkVersion } from 'react-native-check-version';
+import { Alert, AlertText } from '@/components/ui/alert';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Divider } from '@/components/ui/divider';
+import { HStack } from '@/components/ui/hstack';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 import { useAccounts, useDebugMessages, useUserState } from '../../../hooks/useUserData';
 import { formatLinkedAccounts, formatNotificationHistory, formatPickupLocations } from '../../../util/api/userHelper';
@@ -23,7 +31,7 @@ import { fetchNotificationHistory, getAppPreferencesForUser, getLinkedAccounts, 
 import { getCatalogStatus, getLibraryInfo, getLibraryLanguages, getLibraryLinks, getLocationInfo, getSelfCheckSettings, normalizeLibraryLanguagesPayload } from '../../../util/api/system';
 import { getBrowseCategoriesAndHomeLinks } from '../../../util/api/search';
 import { saveAccounts, saveAllLibraryBranchData, saveAllBrowseCategoryData, saveAppPreferences, saveCards, saveCatalogStatus, saveLibrary, saveLocations, saveMenu, saveNotificationHistory, saveUserProfile, saveThemeState } from '../../../util/db';
-import { orderByFields, stripHTML } from '../../../helpers/helpers';
+import { stripHTML } from '../../../helpers/helpers';
 
 function formatCachedDateTime(updatedAt) {
      if (!updatedAt) {
@@ -50,6 +58,8 @@ export const SupportScreen = () => {
      const updateLanguages = useUpdateAvailableLanguages();
      const updateDictionary = useUpdateDictionary();
      const { theme, textColor, colorMode } = useTheme();
+     const mutedTextColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.iconMuted.light;
+     const cachePanelBorderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.iconMuted.light;
      const [refreshingCache, setRefreshingCache] = React.useState({});
      const isAnyCacheRefreshing = Object.values(refreshingCache).some(Boolean);
      const [status, setStatus] = React.useState({
@@ -272,82 +282,82 @@ export const SupportScreen = () => {
      const enableDebugPanel = false;
 
      return (
-          <Box safeArea={5} flex={1}>
+          <Box style={{ flex: 1, padding: 20 }}>
                <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
-                    <VStack space="sm" px="$4" py="$2">
-                         <VStack justifyContent="space-between" py="$1">
-                              <Text fontSize="$xs" bold color={textColor}>
+                    <VStack space="sm" style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
+                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                              <Text size="xs" bold style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'app_name')}
                               </Text>
-                              <Text color={colorMode === 'light' ? '$coolGray600' : '$warmGray400'}>
+                              <Text style={{ color: mutedTextColor }}>
                                    {GLOBALS.appVersion} {GLOBALS.appStage} b[{GLOBALS.appBuild}] p[{GLOBALS.appPatch}] c[{GLOBALS.releaseChannel}]
                               </Text>
                          </VStack>
-                         <VStack justifyContent="space-between" py="$1">
-                              <Text fontSize="$xs" bold color={textColor}>
+                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                              <Text size="xs" bold style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'aspen_discovery')}
                               </Text>
-                              <Text color={colorMode === 'light' ? '$coolGray600' : '$warmGray400'}>{library.discoveryVersion}</Text>
+                              <Text style={{ color: mutedTextColor }}>{library.discoveryVersion}</Text>
                          </VStack>
-                         <VStack justifyContent="space-between" py="$1">
-                              <Text fontSize="$xs" bold color={textColor}>
+                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                              <Text size="xs" bold style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'os_information')}
                               </Text>
-                              <Text color={colorMode === 'light' ? '$coolGray600' : '$warmGray400'}>
+                              <Text style={{ color: mutedTextColor }}>
                                    {Device.osName} {Device.osVersion}
                               </Text>
                          </VStack>
-                         <VStack justifyContent="space-between" py="$1">
-                              <Text fontSize="$xs" bold color={textColor}>
+                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                              <Text size="xs" bold style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'device_information')}
                               </Text>
-                              <Text color={colorMode === 'light' ? '$coolGray600' : '$warmGray400'}>
+                              <Text style={{ color: mutedTextColor }}>
                                    {Device.brand} {Device.modelName}, {Device.deviceYearClass}
                               </Text>
                          </VStack>
-                         <VStack justifyContent="space-between" py="$1">
-                              <Text fontSize="$xs" bold color={textColor}>
+                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                              <Text size="xs" bold style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'current_location')}
                               </Text>
-                              <Text color={colorMode === 'light' ? '$coolGray600' : '$warmGray400'}>{location?.displayName ?? '-'}</Text>
+                              <Text style={{ color: mutedTextColor }}>{location?.displayName ?? '-'}</Text>
                          </VStack>
-                         <VStack justifyContent="space-between" py="$1">
-                              <Text fontSize="$xs" bold color={textColor}>
+                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                              <Text size="xs" bold style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'current_library')}
                               </Text>
-                              <Text color={colorMode === 'light' ? '$coolGray600' : '$warmGray400'}>{library.displayName}</Text>
+                              <Text style={{ color: mutedTextColor }}>{library.displayName}</Text>
                          </VStack>
-                         <VStack justifyContent="space-between" py="$1">
-                              <Text fontSize="$xs" bold color={textColor}>
+                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                              <Text size="xs" bold style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'connected_to')}
                               </Text>
-                              <Text color={colorMode === 'light' ? '$coolGray600' : '$warmGray400'}>{library.baseUrl}</Text>
+                              <Text style={{ color: mutedTextColor }}>{library.baseUrl}</Text>
                          </VStack>
-                         <VStack justifyContent="space-between" py="$1">
-                              <Text fontSize="$xs" bold color={textColor}>
+                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                              <Text size="xs" bold style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'num_linked_accounts')}
                               </Text>
-                              <Text color={colorMode === 'light' ? '$coolGray600' : '$warmGray400'}>{numLinkedAccounts}</Text>
+                              <Text style={{ color: mutedTextColor }}>{numLinkedAccounts}</Text>
                          </VStack>
-                         <Divider my="$2" />
-                         <VStack justifyContent="space-between" py="$1">
-                              <Text bold color={textColor}>
+                         <Divider style={{ marginVertical: 8 }} />
+                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                              <Text bold style={{ color: textColor }}>
                                    Data Caches
                               </Text>
-                              <VStack space="$2" mt="$2">
+                              <VStack space="sm" style={{ marginTop: 8 }}>
                                    {cacheItems.map((cacheItem) => (
-                                        <Box key={cacheItem.key} py="$2">
-                                             <HStack justifyContent="space-between" alignItems="center" space="$2">
-                                                  <VStack flex={1}>
-                                                       <Text fontSize="$xs" bold color={textColor}>
+                                        <Box key={cacheItem.key} style={{ paddingVertical: 8 }}>
+                                             <HStack space="sm" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                                                  <VStack style={{ flex: 1 }}>
+                                                       <Text size="xs" bold style={{ color: textColor }}>
                                                             {cacheItem.label}
                                                        </Text>
-                                                       <Text fontSize="$2xs" color={colorMode === 'light' ? '$coolGray600' : '$warmGray400'}>
+                                                       <Text size="2xs" style={{ color: mutedTextColor }}>
                                                             Cached: {formatCachedDateTime(cacheItem.updatedAt)}
                                                        </Text>
                                                   </VStack>
-                                                  <Button size="sm" variant="outline" borderColor={colorMode === 'light' ? '$coolGray600' : '$warmGray400'} isDisabled={Boolean(refreshingCache[cacheItem.key]) || isAnyCacheRefreshing} onPress={() => refreshCache(cacheItem.key, cacheItem.refetch)}>
-                                                       <ButtonText color={colorMode === 'light' ? '$coolGray600' : '$warmGray400'}>{refreshingCache[cacheItem.key] ? 'Updating...' : 'Update'}</ButtonText>
+                                                  <Button size="sm" variant="outline" style={{ borderColor: cachePanelBorderColor }} isDisabled={Boolean(refreshingCache[cacheItem.key]) || isAnyCacheRefreshing} onPress={() => refreshCache(cacheItem.key, cacheItem.refetch)}>
+                                                       <ButtonText style={{ color: mutedTextColor }}>{refreshingCache[cacheItem.key] ? 'Updating...' : 'Update'}</ButtonText>
                                                   </Button>
                                              </HStack>
                                         </Box>
@@ -356,14 +366,14 @@ export const SupportScreen = () => {
                          </VStack>
                          {enableDebugPanel ? (
                               <>
-                                   <Divider my="$2" />
-                                   <VStack justifyContent="space-between" py="$1">
-                                        <Text fontSize="$xs" bold color={textColor}>
+                                   <Divider style={{ marginVertical: 8 }} />
+                                   <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                                        <Text size="xs" bold style={{ color: textColor }}>
                                              Support Log
                                         </Text>
                                         <ScrollView>
                                              <Box>
-                                                  <Text color={textColor} mt="$5" fontSize="$xs" mb="$5">
+                                                  <Text size="xs" style={{ color: textColor, marginTop: 20, marginBottom: 20 }}>
                                                        {userDebugMessage.join('\n')}
                                                   </Text>
                                              </Box>
@@ -372,20 +382,20 @@ export const SupportScreen = () => {
                               </>
                          ) : null}
                     </VStack>
-                    <Divider my="$2" />
-                    <Center pt={5} px="$4">
-                         <Button bg={theme.tokens.colors.secondary['500']} onPress={() => navigation.navigate('MyDevice_APIErrorLog')}>
-                              <ButtonText color={theme.tokens.colors.secondary['500-text']}>{getTermFromDictionary(language, 'open_api_error_log')}</ButtonText>
+                    <Divider style={{ marginVertical: 8 }} />
+                    <Center style={{ paddingTop: 20, paddingHorizontal: 16 }}>
+                         <Button style={{ backgroundColor: theme.tokens.colors.secondary['500'] }} onPress={() => navigation.navigate('MyDevice_APIErrorLog')}>
+                              <ButtonText style={{ color: theme.tokens.colors.secondary['500-text'] }}>{getTermFromDictionary(language, 'open_api_error_log')}</ButtonText>
                          </Button>
                     </Center>
                     {status.needsUpdate ? (
-                         <Center mt="$5" px="$4">
-                              <Alert action="warning" variant="solid" mb="$2" borderRadius="$sm">
-                                   <VStack space="sm" width="$full" p="$3">
-                                        <AlertText mr="$2" fontWeight="$bold">
+                         <Center style={{ marginTop: 20, paddingHorizontal: 16 }}>
+                              <Alert action="warning" variant="solid" style={{ marginBottom: 8, borderRadius: 4 }}>
+                                   <VStack space="sm" style={{ width: '100%', padding: 12 }}>
+                                        <AlertText bold style={{ marginRight: 8 }}>
                                              {status.latest} Is Available
                                         </AlertText>
-                                        <AlertText mr="$2">Please update your app for the latest features and fixes.</AlertText>
+                                        <AlertText style={{ marginRight: 8 }}>Please update your app for the latest features and fixes.</AlertText>
                                         {status.canOpenUrl ? (
                                              <Button action="secondary" onPress={() => openAppStore()}>
                                                   <ButtonText>Update now</ButtonText>
@@ -424,4 +434,3 @@ async function checkStoreVersion() {
           url: null,
           latest: GLOBALS.appVersion };
 }
-

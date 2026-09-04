@@ -1,29 +1,9 @@
 import {
-     Box,
      Button,
      ButtonSpinner,
      ButtonGroup,
-     ButtonIcon,
      ButtonText,
-     Text,
-     Heading,
-     Icon,
-     CloseIcon,
-     Modal,
-     ModalBackdrop,
-     ModalContent,
-     ModalHeader,
-     ModalCloseButton,
-     ModalBody,
-     ModalFooter,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Input,
-     InputField,
-     InputSlot,
-     InputIcon
-} from '@gluestack-ui/themed';
+} from '@/components/ui/button';
 import React from 'react';
 import _ from 'lodash';
 import { useQueryClient } from '@tanstack/react-query';
@@ -43,6 +23,12 @@ import { getTermFromDictionary } from '../../../translations/TranslationService'
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../../util/logging';
 import { useActiveLanguage } from '../../../hooks/useLanguageData';
 import { useTheme } from '../../../themes/theme';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { CloseIcon, Icon } from '@/components/ui/icon';
+import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { Text } from '@/components/ui/text';
 
 export const CheckOut = (props) => {
      const queryClient = useQueryClient();
@@ -154,61 +140,61 @@ export const CheckOut = (props) => {
           };
           return (
                <>
-                    <Button minWidth="100%" maxWidth="100%" bgColor={theme.tokens.colors.primary['500']} onPress={() => setShowAddAlternateLibraryCardModal(true)}>
-                         <ButtonText color={theme.tokens.colors.primary['500-text']}>{title}</ButtonText>
+                    <Button style={{ minWidth: '100%', maxWidth: '100%', backgroundColor: theme.tokens.colors.primary['500'] }} onPress={() => setShowAddAlternateLibraryCardModal(true)}>
+                         <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{title}</ButtonText>
                     </Button>
                     <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg">
                          <ModalBackdrop />
-                         <ModalContent maxWidth="90%" bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
-                              <ModalHeader borderBottomWidth="$1" borderBottomColor={colorMode === 'light' ? "$warmGray300" : "$coolGray500"}>
-                                   <Heading size="md" color={textColor}>
+                         <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
+                              <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                                   <Heading size="md" style={{ color: textColor }}>
                                         {getTermFromDictionary(language, 'add_alternate_library_card')}
                                    </Heading>
-                                   <ModalCloseButton p="$3" onPress={() => { setShowAddAlternateLibraryCardModal(false); }}>
-                                        <Icon as={CloseIcon} color={textColor} />
+                                   <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowAddAlternateLibraryCardModal(false); }}>
+                                        <Icon as={CloseIcon} style={{ color: textColor }} />
                                    </ModalCloseButton>
                               </ModalHeader>
-                              <ModalBody mt="$3">
+                              <ModalBody style={{ marginTop: 12 }}>
                                    {formMessage ? <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} /> : null}
-                                   <FormControl mb="$2">
+                                   <FormControl style={{ marginBottom: 8 }}>
                                         <FormControlLabel>
-                                             <FormControlLabelText color={textColor} size="sm">
+                                             <FormControlLabelText size="sm" style={{ color: textColor }}>
                                                   {cardLabel}
                                              </FormControlLabelText>
                                         </FormControlLabel>
-                                        <Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}>
-                                             <InputField textContentType="none" color={textColor} name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
+                                        <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                                             <InputField textContentType="none" style={{ color: textColor }} name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
                                         </Input>
                                    </FormControl>
                                    {showAlternateLibraryCardPassword ? (
-                                        <FormControl mb="$2">
+                                        <FormControl style={{ marginBottom: 8 }}>
                                              <FormControlLabel>
-                                                  <FormControlLabelText color={textColor} size="sm">
+                                                  <FormControlLabelText size="sm" style={{ color: textColor }}>
                                                        {passwordLabel}
                                                   </FormControlLabelText>
                                              </FormControlLabel>
-                                             <Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}>
-                                                  <InputField textContentType="none" type={showPassword ? 'text' : 'password'} color={textColor} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
+                                             <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                                                  <InputField textContentType="none" type={showPassword ? 'text' : 'password'} style={{ color: textColor }} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
                                                   <InputSlot onPress={toggleShowPassword}>
-                                                       <InputIcon as={showPassword ? Eye : EyeOff} mr="$2" color={textColor} />
+                                                       <InputIcon as={showPassword ? Eye : EyeOff} style={{ marginRight: 8, color: textColor }} />
                                                   </InputSlot>
                                              </Input>
                                         </FormControl>
                                    ) : null}
                               </ModalBody>
-                              <ModalFooter borderTopWidth="$1" borderTopColor={colorMode === 'light' ? "$warmGray300" : "$coolGray500"}>
+                              <ModalFooter style={{ borderTopWidth: 1, borderTopColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
                                    <ButtonGroup space="sm">
                                         <Button
                                              variant="outline"
-                                             borderColor={colorMode === 'light' ? "$warmGray300" : "$coolGray500"}
+                                             style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
                                              onPress={() => {
                                                   setShowAddAlternateLibraryCardModal(false);
                                                   setLoading(false);
                                              }}>
-                                             <ButtonText color={colorMode === 'light' ? "$warmGray500" : "$coolGray300"}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                             <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
-                                             bgColor={theme.tokens.colors.primary['500']}
+                                             style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                              isDisabled={loading}
                                              onPress={async () => {
                                                   setLoading(true);
@@ -225,7 +211,7 @@ export const CheckOut = (props) => {
                                                        setShowAddAlternateLibraryCardModal(false);
                                                   });
                                              }}>
-                                             {loading ? <ButtonSpinner color={theme.tokens.colors.primary['500-text']} /> : <ButtonText color={theme.tokens.colors.primary['500-text']}>{title}</ButtonText>}
+                                             {loading ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500-text'] }} /> : <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{title}</ButtonText>}
                                         </Button>
                                    </ButtonGroup>
                               </ModalFooter>
@@ -237,10 +223,8 @@ export const CheckOut = (props) => {
           return (
                <>
                     <Button
-                         minWidth="100%"
-                         maxWidth="100%"
-                         bgColor={theme.tokens.colors.primary['500']}
                          variant="solid"
+                         style={{ minWidth: '100%', maxWidth: '100%', backgroundColor: theme.tokens.colors.primary['500'] }}
                          onPress={async () => {
                               setLoading(true);
                               await completeAction(record, type, user.id, null, null, null, null, null, library.baseUrl).then(async (eContentResponse) => {
@@ -254,7 +238,7 @@ export const CheckOut = (props) => {
                                    setResponseIsOpen(true);
                               });
                          }}>
-                         {loading ? <ButtonSpinner color={theme.tokens.colors.primary['500-text']} pr={2} /> : <ButtonText color={theme.tokens.colors.primary['500-text']}>{title}</ButtonText>}
+                         {loading ? <ButtonSpinner style={{ color: theme.tokens.colors.primary['500-text'], paddingRight: 8 }} /> : <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{title}</ButtonText>}
                     </Button>
                </>
           );

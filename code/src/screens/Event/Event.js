@@ -7,26 +7,6 @@ import * as SecureStore from 'expo-secure-store';
 import * as WebBrowser from 'expo-web-browser';
 import _ from 'lodash';
 import moment from 'moment';
-import {
-     Box,
-     Divider,
-     Pressable,
-     ScrollView,
-     VStack,
-     Text,
-     Button,
-     ButtonGroup,
-     ButtonText,
-     Center,
-     Heading,
-     Icon,
-     Modal,
-     ModalContent,
-     ModalHeader,
-     ModalBody,
-     ModalFooter,
-     HStack,
-     CloseIcon, ModalCloseButton, ModalBackdrop } from '@gluestack-ui/themed';
 import React from 'react';
 import { Platform } from 'react-native';
 import { showLocation } from 'react-native-map-link';
@@ -48,6 +28,18 @@ import AddToList from '../Search/AddToList';
 import { logDebugMessage, logErrorMessage, logInfoMessage, getErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Divider } from '@/components/ui/divider';
+import { Heading } from '@/components/ui/heading';
+import { HStack } from '@/components/ui/hstack';
+import { CloseIcon, Icon } from '@/components/ui/icon';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { Pressable } from '@/components/ui/pressable';
+import { ScrollView } from '@/components/ui/scroll-view';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -133,7 +125,7 @@ const DisplayEvent = (payload) => {
      const source = route.params.source;
      const language = useActiveLanguage();
      const { textColor, theme, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? "$warmGray200" : "$coolGray900";
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
      const openLink = async () => {
           const browserParams = {
                enableDefaultShareMenuItem: false,
@@ -177,9 +169,9 @@ const DisplayEvent = (payload) => {
 
      return (
           <>
-               {event.cover ? <Box h={{ base: 125, lg: 200 }} width="$full" bgColor="warmGray.200" _dark={{ bgColor: 'coolGray.900' }} zIndex={-1} position="absolute" left={0} top={0} /> : null}
-               <Box p="$5" width="$full">
-                    <Center mt={event.cover ? 5 : 0} width="100%">
+               {event.cover ? <Box style={{ height: 125, width: '100%', backgroundColor, zIndex: -1, position: 'absolute', left: 0, top: 0 }} /> : null}
+               <Box style={{ padding: 20, width: '100%' }}>
+                    <Center style={{ marginTop: event.cover ? 20 : 0, width: '100%' }}>
                          {event.cover ? (
                               <Image
                                    alt={event.title}
@@ -187,7 +179,7 @@ const DisplayEvent = (payload) => {
                                    style={{
                                         width: '100%',
                                         height: 150,
-                                        borderRadius: "$sm" }}
+                                        borderRadius: 8 }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -201,14 +193,14 @@ const DisplayEvent = (payload) => {
                     </VStack>
                     {event.registrationRequired && event.registrationBody ? <RegistrationModal event={event} /> : null}
                     {event.inUserEvents ? <InYourEvents /> : <AddToYourEvents id={event.id} source={source} />}
-                    <HStack justifyContent="space-between" space="sm">
+                    <HStack space="sm" style={{ justifyContent: 'space-between' }}>
                          {event.canAddToList ? <AddToList source="Events" itemId={event.id} btnStyle="reg" btnWidth="48%" /> : null}
-                         <Button bgColor={"$coolGray200"} w={event.canAddToList ? '49%' : '100%'} onPress={() => openLink()}>
-                              <ButtonText color={"$coolGray800"}>{getTermFromDictionary(language, 'more_info')}</ButtonText>
+                         <Button style={{ backgroundColor: theme.tokens.colors.ui.surfaceMuted.light, width: event.canAddToList ? '49%' : '100%' }} onPress={() => openLink()}>
+                              <ButtonText style={{ color: theme.tokens.colors.ui.textStrong.light }}>{getTermFromDictionary(language, 'more_info')}</ButtonText>
                          </Button>
                     </HStack>
                     <EventDescription description={event.description} />
-                    <HStack justifyContent="space-between" space="lg" mt="$5" flexWrap="wrap">
+                    <HStack space="lg" style={{ justifyContent: 'space-between', marginTop: 20, flexWrap: 'wrap' }}>
                          <EventAudiences audiences={event.audiences} />
                          <EventCategories categories={event.categories} />
                          <EventProgramTypes programTypes={event.programTypes} />
@@ -223,7 +215,7 @@ const EventTitle = ({ title, hasCoverImage }) => {
      if (title) {
           return (
                <>
-                    <Heading pt={hasCoverImage ? 5 : 0} pb={3} alignText="center" color={textColor}>
+                    <Heading style={{ paddingTop: hasCoverImage ? 20 : 0, paddingBottom: 12, textAlign: 'center', color: textColor }}>
                          {title}
                     </Heading>
                </>
@@ -238,11 +230,11 @@ const EventDescription = ({ description }) => {
      const language = useActiveLanguage();
      if (description) {
           return (
-               <Box mt={5}>
-                    <Text size="lg" fontWeight="$bold" textAlign="center" color={textColor}>
+               <Box style={{ marginTop: 20 }}>
+                    <Text size="lg" bold style={{ textAlign: 'center', color: textColor }}>
                          {getTermFromDictionary(language, 'about')}
                     </Text>
-                    <Text size="md" color={textColor}>
+                    <Text size="md" style={{ color: textColor }}>
                          {decodeHTML(description)}
                     </Text>
                </Box>
@@ -258,11 +250,11 @@ const EventAudiences = ({ audiences }) => {
      if (audiences) {
           return (
                <Box>
-                    <Text size="lg" fontWeight="$bold" textAlign="center" color={textColor}>
+                    <Text size="lg" bold style={{ textAlign: 'center', color: textColor }}>
                          {getTermFromDictionary(language, 'audiences')}
                     </Text>
                     {_.map(audiences, function (item, index, array) {
-                         return <Text key={index} color={textColor}>{item}</Text>;
+                         return <Text key={index} style={{ color: textColor }}>{item}</Text>;
                     })}
                </Box>
           );
@@ -277,11 +269,11 @@ const EventCategories = ({ categories }) => {
      if (categories) {
           return (
                <Box>
-                    <Text size="lg" fontWeight="$bold" textAlign="center" color={textColor}>
+                    <Text size="lg" bold style={{ textAlign: 'center', color: textColor }}>
                          {getTermFromDictionary(language, 'categories')}
                     </Text>
                     {_.map(categories, function (item, index, array) {
-                         return <Text key={index} color={textColor}>{item}</Text>;
+                         return <Text key={index} style={{ color: textColor }}>{item}</Text>;
                     })}
                </Box>
           );
@@ -296,11 +288,11 @@ const EventProgramTypes = ({ programTypes }) => {
      if (programTypes) {
           return (
                <Box>
-                    <Text size="lg" fontWeight="$bold" textAlign="center" color={textColor}>
+                    <Text size="lg" bold style={{ textAlign: 'center', color: textColor }}>
                          {getTermFromDictionary(language, 'program_types')}
                     </Text>
                     {_.map(programTypes, function (item, index, array) {
-                         return <Text key={index} color={textColor}>{item}</Text>;
+                         return <Text key={index} style={{ color: textColor }}>{item}</Text>;
                     })}
                </Box>
           );
@@ -418,54 +410,55 @@ const AddToCalendar = ({ start, end, location, event }) => {
 
      return (
           <>
-               <Pressable py="$3" onPress={() => handleAddToCalendar()}>
-                    <HStack space="sm" alignItems="center" justifyContent="space-between">
-                         <HStack space="sm" alignItems="center">
-                              <Icon as={MaterialIcons} name="calendar-today" size="md" color={textColor}/>
+               <Pressable style={{ paddingVertical: 12 }} onPress={() => handleAddToCalendar()}>
+                    <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                         <HStack space="sm" style={{ alignItems: 'center' }}>
+                              <Icon as={MaterialIcons} name="calendar-today" size="md" style={{ color: textColor }}/>
                               <VStack>
-                                   <Text bold color={textColor}>{displayDay}</Text>
-                                   <Text color={textColor}>
+                                   <Text bold style={{ color: textColor }}>{displayDay}</Text>
+                                   <Text style={{ color: textColor }}>
                                         {displayStartTime} - {displayEndTime}
                                    </Text>
                               </VStack>
                          </HStack>
-                         <Icon as={MaterialIcons} name="chevron-right" size="lg" color={textColor}/>
+                         <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }}/>
                     </HStack>
                </Pressable>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} closeOnOverlayClick={false} size="md">
                     <ModalBackdrop />
-                    <ModalContent maxWidth="90%" bg="white" _dark={{ bg: 'coolGray.800' }}>
+                    <ModalContent style={{ maxWidth: '90%', backgroundColor: theme.tokens.colors.ui.surface.light }}>
                          <ModalHeader>
-                              <Heading size="$md">{modalBodyHeading}</Heading>
-                              <ModalCloseButton p="$3" onPress={() => { setShowModal(false); }}>
-                                   <Icon as={CloseIcon} color={textColor} />
+                              <Heading size="md" style={{ color: textColor }}>{modalBodyHeading}</Heading>
+                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
+                                   <Icon as={CloseIcon} style={{ color: textColor }} />
                               </ModalCloseButton>
                          </ModalHeader>
-                         <ModalBody><Text>{modalBodyText}</Text></ModalBody>
+                         <ModalBody><Text style={{ color: textColor }}>{modalBodyText}</Text></ModalBody>
                          <ModalFooter>
-                              <ButtonGroup space={2} size="md">
+                              <ButtonGroup space="sm" size="md">
                                    <Button
-                                        colorScheme="muted"
                                         variant="outline"
+                                        style={{ borderColor: theme.tokens.colors.primary['500'] }}
                                         onPress={() => {
                                              setShowModal(false);
                                              setConfirmAdd(false);
                                              setModalBodyText('');
                                              setModalBodyHeading('');
                                         }}>
-                                        <ButtonText>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    {confirmAdd ? (
                                         <Button
-                                             onPress={() =>
-                                                  createCalendarEvent().then((result) => {
-                                                       setShowModal(false);
+                                            style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
+                                            onPress={() =>
+                                                 createCalendarEvent().then((result) => {
+                                                      setShowModal(false);
                                                        setConfirmAdd(false);
                                                        setModalBodyText('');
                                                        setModalBodyHeading('');
                                                   })
                                              }>
-                                             <ButtonText>{getTermFromDictionary(language, 'add_event')}</ButtonText>
+                                            <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'add_event')}</ButtonText>
                                         </Button>
                                    ) : null}
                               </ButtonGroup>
@@ -509,17 +502,17 @@ const Directions = ({ location, room }) => {
 
      if (location) {
           return (
-               <Pressable py="$3" mb="$5" onPress={() => handleGetDirections()}>
-                    <HStack space="sm" alignItems="center" justifyContent="space-between">
-                         <HStack space="sm" alignItems="center">
-                              <Icon as={MaterialIcons} name="location-pin" size="md" color={textColor}/>
+               <Pressable style={{ paddingVertical: 12, marginBottom: 20 }} onPress={() => handleGetDirections()}>
+                    <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                         <HStack space="sm" style={{ alignItems: 'center' }}>
+                              <Icon as={MaterialIcons} name="location-pin" size="md" style={{ color: textColor }}/>
                               <VStack>
-                                   {location.name ? <Text bold color={textColor}>{location.name}</Text> : null}
-                                   {room ? <Text color={textColor}>{room}</Text> : null}
-                                   {location.address ? <Text color={textColor}>{location.address}</Text> : null}
+                                   {location.name ? <Text bold style={{ color: textColor }}>{location.name}</Text> : null}
+                                   {room ? <Text style={{ color: textColor }}>{room}</Text> : null}
+                                   {location.address ? <Text style={{ color: textColor }}>{location.address}</Text> : null}
                               </VStack>
                          </HStack>
-                         {hasCoordinates ? <Icon as={MaterialIcons} name="chevron-right" size="lg" color={textColor} /> : null}
+                         {hasCoordinates ? <Icon as={MaterialIcons} name="chevron-right" size="lg" style={{ color: textColor }} /> : null}
                     </HStack>
                </Pressable>
           );
@@ -559,8 +552,8 @@ const AddToYourEvents = ({ id, source }) => {
      };
 
      return (
-          <Button bgColor={theme['tokens']['colors']['tertiary']['500']} onPress={() => addToEvents()} mb="$2" isLoading={isLoading} isLoadingText={getTermFromDictionary(language, 'adding', true)}>
-               <ButtonText color={theme.tokens.colors.tertiary['500-text']}>{getTermFromDictionary(language, 'add_to_events')}</ButtonText>
+          <Button style={{ backgroundColor: theme['tokens']['colors']['tertiary']['500'], marginBottom: 8 }} onPress={() => addToEvents()} isLoading={isLoading} isLoadingText={getTermFromDictionary(language, 'adding', true)}>
+               <ButtonText style={{ color: theme.tokens.colors.tertiary['500-text'] }}>{getTermFromDictionary(language, 'add_to_events')}</ButtonText>
           </Button>
      );
 };
@@ -569,8 +562,8 @@ const InYourEvents = () => {
      const language = useActiveLanguage();
      const { theme } = useTheme();
      return (
-          <Button mb="$2" bgColor={theme['tokens']['colors']['tertiary']['500']} onPress={() => navigateStack('AccountScreenTab', 'MyEvents')}>
-               <ButtonText color={theme.tokens.colors.tertiary['500-text']}>{getTermFromDictionary(language, 'in_your_events')}</ButtonText>
+          <Button style={{ marginBottom: 8, backgroundColor: theme['tokens']['colors']['tertiary']['500'] }} onPress={() => navigateStack('AccountScreenTab', 'MyEvents')}>
+               <ButtonText style={{ color: theme.tokens.colors.tertiary['500-text'] }}>{getTermFromDictionary(language, 'in_your_events')}</ButtonText>
           </Button>
      );
 };
@@ -580,7 +573,7 @@ const RegistrationModal = ({ event }) => {
      const [showRegistrationModal, setShowRegistrationModal] = React.useState(false);
 
      const { textColor, theme, colorMode } = useTheme();
-     const backgroundColor= colorMode === 'light' ? "$warmGray200" : "$coolGray900";
+     const backgroundColor= colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
 
      const openLink = async () => {
           /* location.homeLink */
@@ -599,30 +592,30 @@ const RegistrationModal = ({ event }) => {
 
      return (
           <>
-               <Button bgColor={theme['tokens']['colors']['tertiary']['500']} onPress={() => setShowRegistrationModal(true)} mb="$2">
-                    <ButtonText color={theme.tokens.colors.tertiary['500-text']}>{getTermFromDictionary(language, 'registration_information')}</ButtonText>
+               <Button style={{ backgroundColor: theme['tokens']['colors']['tertiary']['500'], marginBottom: 8 }} onPress={() => setShowRegistrationModal(true)}>
+                   <ButtonText style={{ color: theme.tokens.colors.tertiary['500-text'] }}>{getTermFromDictionary(language, 'registration_information')}</ButtonText>
                </Button>
                <Modal isOpen={showRegistrationModal} onClose={() => setShowRegistrationModal(false)} closeOnOverlayClick={false} size="lg">
                     <ModalBackdrop />
-                    <ModalContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"} maxWidth="90%">
+                    <ModalContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, maxWidth: '90%' }}>
                          <ModalHeader>
-                              <Heading size="$md" color={textColor}>{getTermFromDictionary(language, 'registration_information')}</Heading>
-                              <ModalCloseButton p="$3" onPress={() => { setShowRegistrationModal(false); }}>
-                                   <Icon as={CloseIcon} color={textColor} />
+                              <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'registration_information')}</Heading>
+                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowRegistrationModal(false); }}>
+                                   <Icon as={CloseIcon} style={{ color: textColor }} />
                               </ModalCloseButton>
                          </ModalHeader>
-                         <ModalBody><Text color={textColor}>{stripHTML(decodeHTML(event.registrationBody))}</Text></ModalBody>
+                         <ModalBody><Text style={{ color: textColor }}>{stripHTML(decodeHTML(event.registrationBody))}</Text></ModalBody>
                          <ModalFooter>
                               <ButtonGroup space="sm" size="md">
                                    <Button
-                                        bgColor={"$coolGray200"}
                                         variant="outline"
+                                        style={{ borderColor: theme.tokens.colors.ui.border.light, backgroundColor: theme.tokens.colors.ui.surfaceMuted.light }}
                                         onPress={() => {
                                              setShowRegistrationModal(false);
                                         }}>
-                                        <ButtonText color={"$coolGray800"}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: theme.tokens.colors.ui.textStrong.light }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
-                                   <Button bgColor={theme.tokens.colors.primary['500']} onPress={() => openLink()}><ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'go_to_registration')}</ButtonText></Button>
+                                   <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={() => openLink()}><ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'go_to_registration')}</ButtonText></Button>
                               </ButtonGroup>
                          </ModalFooter>
                     </ModalContent>

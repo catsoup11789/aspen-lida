@@ -3,8 +3,13 @@ import { useNavigation } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import _ from 'lodash';
-import { Box, Divider, HStack, Icon, Pressable, Text, VStack, ChevronRightIcon } from '@gluestack-ui/themed';
 import React from 'react';
+import { Box } from '@/components/ui/box';
+import { Divider } from '@/components/ui/divider';
+import { HStack } from '@/components/ui/hstack';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
 
 import { useUserState, useUpdateExpoToken } from '../../../hooks/useUserData';
 
@@ -51,40 +56,40 @@ export const PreferencesScreen = () => {
      }, [navigation]);
 
      return (
-          <Box p="$3">
+         <Box style={{ padding: 12 }}>
                <VStack space="sm">
                     <VStack space="md">
                          <VStack space="sm">
-                              <Pressable py="$2" onPress={() => navigate('MyPreferences_ManageBrowseCategories', { prevRoute: 'Preferences' })}>
+                              <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('MyPreferences_ManageBrowseCategories', { prevRoute: 'Preferences' })}>
                                    <HStack space="xs" alignItems="center">
-                                        <Icon as={MaterialIcons} name="chevron-right" size="xl" color={textColor} />
-                                        <Text color={textColor} fontWeight="$medium">
+                                        <MaterialIcons name="chevron-right" size={24} color={textColor} />
+                                        <Text style={{ color: textColor, fontWeight: '500' }}>
                                              {getTermFromDictionary(language, 'manage_browse_categories')}
                                         </Text>
                                    </HStack>
                               </Pressable>
                               {library.allowPickupLocationUpdates ? (
-                                   <Pressable py="$2" onPress={() => navigate('MyPreferences_ManagePickupLocations')}>
+                                   <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('MyPreferences_ManagePickupLocations')}>
                                         <HStack space="xs" alignItems="center">
-                                             <Icon as={MaterialIcons} name="chevron-right" size="xl" color={textColor} />
-                                             <Text color={textColor} fontWeight="$medium">
+                                             <MaterialIcons name="chevron-right" size={24} color={textColor} />
+                                             <Text style={{ color: textColor, fontWeight: '500' }}>
                                                   {getTermFromDictionary(language, 'manage_pickup_locations')}
                                              </Text>
                                         </HStack>
                                    </Pressable>
                               ) : null}
-                              <Pressable py="$2" onPress={() => navigate('PermissionDashboard')}>
+                              <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('PermissionDashboard')}>
                                    <HStack space="xs" alignItems="center">
-                                        <Icon as={MaterialIcons} name="chevron-right" size="xl" color={textColor} />
-                                        <Text color={textColor} fontWeight="$medium">
+                                        <MaterialIcons name="chevron-right" size={24} color={textColor} />
+                                        <Text style={{ color: textColor, fontWeight: '500' }}>
                                              {getTermFromDictionary(language, 'device_permissions')}
                                         </Text>
                                    </HStack>
                               </Pressable>
-                              <Pressable py="$2" onPress={() => navigate('MyDevice_Support')}>
+                              <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('MyDevice_Support')}>
                                    <HStack space="xs" alignItems="center">
-                                        <Icon as={MaterialIcons} name="chevron-right" size="xl" color={textColor} />
-                                        <Text color={textColor} fontWeight="$medium">
+                                        <MaterialIcons name="chevron-right" size={24} color={textColor} />
+                                        <Text style={{ color: textColor, fontWeight: '500' }}>
                                              {getTermFromDictionary(language, 'support')}
                                         </Text>
                                    </HStack>
@@ -94,13 +99,13 @@ export const PreferencesScreen = () => {
                     <Divider/>
                     <VStack>
                          <HStack justifyContent="space-between" alignItems="center">
-                              <Text color={textColor} bold>
+                              <Text style={{ color: textColor }} bold>
                                    {getTermFromDictionary(language, 'language')}
                               </Text>
                               <LanguageSwitcher />
                          </HStack>
                          <HStack justifyContent="space-between" alignItems="center">
-                              <Text color={textColor} bold>
+                              <Text style={{ color: textColor }} bold>
                                    {getTermFromDictionary(language, 'appearance')}
                               </Text>
                               <UseColorMode showText={true} />

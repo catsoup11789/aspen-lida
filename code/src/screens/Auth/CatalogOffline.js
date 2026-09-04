@@ -1,4 +1,3 @@
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, AlertDialogBackdrop, Button, ButtonGroup, ButtonText, Center, Heading, Text } from '@gluestack-ui/themed';
 import React from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import _ from 'lodash';
@@ -8,12 +7,18 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import { logInfoMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { Text } from '@/components/ui/text';
 
 export const CatalogOffline = () => {
       const language = useActiveLanguage();
      const { status: catalogStatus, message: catalogStatusMessage } = useCatalogStatus();
      const { signOut } = React.useContext(AuthContext);
      const { theme, textColor, colorMode } = useTheme();
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => setIsOpen(false);
      const cancelRef = React.useRef(null);
@@ -26,17 +31,17 @@ export const CatalogOffline = () => {
                     <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                          <AlertDialogBackdrop />
 
-                         <AlertDialogContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                         <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                               <AlertDialogHeader>
-                                   <Heading color={textColor}>{getTermFromDictionary(language, 'catalog_offline')}</Heading>
+                                  <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'catalog_offline')}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
-                                   <Text color={textColor}>{catalogStatusMessage ? catalogStatusMessage : getTermFromDictionary(language, 'catalog_offline_message')}</Text>
+                                  <Text style={{ color: textColor }}>{catalogStatusMessage ? catalogStatusMessage : getTermFromDictionary(language, 'catalog_offline_message')}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">
-                                        <Button onPress={signOut} bgColor={theme.tokens.colors.primary['500']} ref={cancelRef}>
-                                             <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                       <Button onPress={signOut} style={{ backgroundColor: theme.tokens.colors.primary['500'] }} ref={cancelRef}>
+                                            <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </AlertDialogFooter>

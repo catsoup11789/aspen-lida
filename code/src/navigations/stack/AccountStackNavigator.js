@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ChevronLeftIcon, CloseIcon, Pressable } from '@gluestack-ui/themed';
 import React from 'react';
+import { ChevronLeftIcon, CloseIcon } from '@/components/ui/icon';
+import { Pressable } from '@/components/ui/pressable';
 import { PalaceProjectInstructions } from '../../components/Action/CheckOut/PalaceProjectInstructions';
 import { EventScreen } from '../../screens/Event/Event';
 import { CreateLocalIllRequest } from '../../screens/GroupedWork/CreateLocalIllRequest';

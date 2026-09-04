@@ -1,21 +1,3 @@
-import {
-     Button,
-     ButtonGroup,
-     ButtonIcon,
-     ButtonText,
-     Heading,
-     Box,
-     Center,
-     FlatList,
-     HStack,
-     Pressable,
-     Text,
-     SafeAreaView,
-     Badge,
-     BadgeText,
-     VStack,
-     Input, InputSlot, InputIcon, InputField, FormControl
-} from '@gluestack-ui/themed';
 import { CommonActions, useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
@@ -47,6 +29,20 @@ import { createApiClient } from '../../util/api/apiFactory';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonGroup, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FlatList } from '@/components/ui/flat-list';
+import { FormControl } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { Input, InputField, InputSlot } from '@/components/ui/input';
+import { InputIcon } from '@/components/ui/icon';
+import { HStack } from '@/components/ui/hstack';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
+import { VStack } from '@/components/ui/vstack';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -58,7 +54,7 @@ export const SearchResults = () => {
       const library = useLibrary();
       const language = useActiveLanguage();
       const scope = useLibraryScope();
-      const { currentIndex, currentSource, updateCurrentIndex, updateCurrentSource, updateIndexes, updateSources } = React.useContext(SearchContext);
+      const { currentIndex, currentSource } = React.useContext(SearchContext);
      const { theme, textColor, colorMode } = useTheme();
      const url = library.baseUrl;
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
@@ -72,8 +68,6 @@ export const SearchResults = () => {
      let isScannerSearch = useRoute().params.scannerSearch ?? false;
 
      let params = useRoute().params.pendingParams ?? [];
-
-     const prevRoute = useRoute().params.prevRoute ?? 'SearchHome';
 
      const type = useRoute().params.type ?? 'catalog';
      const id = useRoute().params.id ?? null;
@@ -98,7 +92,7 @@ export const SearchResults = () => {
 
      React.useEffect(() => {
           if (_.isArray(systemMessages)) {
-               systemMessages.map((obj, index, collection) => {
+               systemMessages.map((obj) => {
                     if (obj.showOn === '0') {
                          systemMessagesForScreen.push(obj);
                     }
@@ -160,9 +154,9 @@ export const SearchResults = () => {
                     label = num + ' ' + getTermFromDictionary(language, 'result');
                }
                return (
-                    <Box bgColor={colorMode === 'light' ? "$coolGray100" : "$coolGray700"} borderBottomWidth="$1" borderColor={colorMode === 'light' ? "$coolGray200" : "$warmGray600"}>
-                         <Box m="$2">
-                              <Text color={textColor}>{label}</Text>
+                    <Box style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray100 : theme.tokens.colors.ui.surface.dark, borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600 }}>
+                         <Box style={{ margin: 8 }}>
+                              <Text style={{ color: textColor }}>{label}</Text>
                          </Box>
                     </Box>
                );
@@ -174,14 +168,14 @@ export const SearchResults = () => {
      const Paging = () => {
           if (data.totalPages > 1) {
                return (
-                    <Box p="$2" bgColor={colorMode === 'light' ? "$coolGray100" : "$coolGray700"} borderTopWidth="$1" borderColor={colorMode === 'light' ? "$coolGray200" : "$warmGray600"} flexWrap="nowrap" alignItems="center">
+                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray100 : theme.tokens.colors.ui.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
-                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" bgColor={theme.tokens.colors.primary['500']}>
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'previous')}</ButtonText>
+                                   <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: theme.tokens.colors.primary['500'] }}>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'previous')}</ButtonText>
                                    </Button>
                                    <Button
-                                        bgColor={theme.tokens.colors.primary['500']}
+                                        style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                                         onPress={() => {
                                              if (!isPreviousData && data.hasMore) {
                                                   setPage(page + 1);
@@ -189,11 +183,11 @@ export const SearchResults = () => {
                                         }}
                                         isDisabled={isPreviousData || !data.hasMore}
                                         size="sm">
-                                        <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary(language, 'next')}</ButtonText>
+                                        <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary(language, 'next')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text mt="$2" fontSize="$2xs" color={textColor}>
+                         <Text style={{ marginTop: 8, fontSize: 10, color: textColor }}>
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -205,10 +199,11 @@ export const SearchResults = () => {
 
      const showSystemMessage = () => {
           if (_.isArray(systemMessages)) {
-               return systemMessages.map((obj, index, collection) => {
+               return systemMessages.map((obj, index) => {
                     if (obj.showOn === '0') {
                          return <DisplaySystemMessage key={obj.id || index} style={obj.style} message={obj.message} dismissable={obj.dismissable} id={obj.id} all={systemMessages} url={library.baseUrl} updateSystemMessages={updateSystemMessages} queryClient={queryClient} />;
                     }
+                    return null;
                });
           }
           return null;
@@ -217,12 +212,12 @@ export const SearchResults = () => {
      const NoResults = () => {
           return (
                <>
-                    {_.size(systemMessagesForScreen) > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
-                    <Center flex={1}>
-                         <Heading pt="$5" color={textColor}>
+                    {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+                    <Center style={{ flex: 1 }}>
+                         <Heading style={{ paddingTop: 20, color: textColor }}>
                               {getTermFromDictionary(language, 'no_results')}
                          </Heading>
-                         <Text bold w="75%" textAlign="center" color={textColor}>
+                         <Text bold style={{ width: '75%', textAlign: 'center', color: textColor }}>
                               {route.params?.term}
                          </Text>
                     </Center>
@@ -232,13 +227,13 @@ export const SearchResults = () => {
 
      return (
           <SafeAreaView style={{ flex: 1 }}>
-               {_.size(systemMessagesForScreen) > 0 ? <Box p="$2">{showSystemMessage()}</Box> : null}
+               {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                {status === 'loading' || isFetching ? (
                     <LoadingSpinner />
                ) : status === 'error' ? (
                     loadError('Error', '')
                ) : (
-                    <Box flex={1}>
+                    <Box style={{ flex: 1 }}>
                          {data.totalResults > 0 ? <FilterBar navigation={navigation} /> : null}
                          <SearchBox term={term} navigation={navigation} />
                          <FlatList data={data.results} ListHeaderComponent={Header} ListFooterComponent={Paging} ListEmptyComponent={NoResults} renderItem={({ item }) => <DisplayResult data={item} />} keyExtractor={(item, index) => index.toString()} />
@@ -254,7 +249,7 @@ const DisplayResult = (data) => {
      const language = useActiveLanguage();
      const { theme, textColor, colorMode } = useTheme();
      const { currentSource } = React.useContext(SearchContext);
-     const backgroundColor = colorMode === 'light' ? "$warmGray200" : "$coolGray900";
+     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.background.dark;
 
      const handlePressItem = () => {
           if (currentSource === 'events') {
@@ -294,8 +289,8 @@ const DisplayResult = (data) => {
           }
 
           return (
-               <Badge key={n.key} borderRadius="$sm" borderColor={theme.tokens.colors.primary['400']} variant="outline" bg="transparent">
-                    <BadgeText textTransform="none" color={theme.tokens.colors.primary['400']} fontSize="$xs">
+               <Badge key={n.key} variant="outline" style={{ borderRadius: 8, borderColor: theme.tokens.colors.primary['400'], backgroundColor: 'transparent' }}>
+                    <BadgeText textTransform="none" style={{ color: theme.tokens.colors.primary['400'], fontSize: 12 }}>
                          {n.name}
                     </BadgeText>
                </Badge>
@@ -384,10 +379,10 @@ const DisplayResult = (data) => {
           let roomData = item?.room ?? null;
 
           return (
-               <Pressable borderBottomWidth={1} borderColor={colorMode === 'light' ? '$warmGray400' : '$warmGray600'} pl="$4" pr="$5" py="$2" onPress={handlePressItem}>
+               <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray400 : theme.tokens.colors.ui.gray600, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                     <HStack space="md">
-                         <VStack sx={{ '@base': { width: 100 }, '@lg': { width: 180 } }}>
-                              <Box sx={{ '@base': { height: 150 }, '@lg': { height: 250 } }}>
+                         <VStack style={{ width: 100 }}>
+                              <Box style={{ height: 150 }}>
                                    <Image
                                         alt={item.title}
                                         source={url}
@@ -403,29 +398,29 @@ const DisplayResult = (data) => {
                               </Box>
                               {item.canAddToList ? <AddToList source="Events" itemId={item.key} btnStyle="sm" /> : null}
                          </VStack>
-                         <VStack w="65%" pt="$1">
-                              <Text color={textColor} bold fontSize="$sm" pb="$1">
+                         <VStack style={{ width: '65%', paddingTop: 4 }}>
+                              <Text bold style={{ color: textColor, fontSize: 14, paddingBottom: 4 }}>
                                    {decodeHTML(item.title)}
                               </Text>
                               {item.start_date && item.end_date ? (
                                    <>
-                                        <Text color={textColor} fontSize="$xs">
+                                        <Text style={{ color: textColor, fontSize: 12 }}>
                                              {displayDay}
                                         </Text>
-                                        <Text color={textColor} fontSize="$xs">
+                                        <Text style={{ color: textColor, fontSize: 12 }}>
                                              {displayStartTime} - {displayEndTime}
                                         </Text>
                                    </>
                               ) : null}
                               {locationData.name ? (
-                                   <Text color={textColor} fontSize="$xs">
+                                   <Text style={{ color: textColor, fontSize: 12 }}>
                                         {locationData.name}
                                    </Text>
                               ) : null}
                               {registrationRequired ? (
-                                   <HStack mt="$4" direction="row" space="xs" flexWrap="wrap">
-                                        <Badge key={0} borderRadius="$sm" borderColor={theme.tokens.colors.secondary['400']} variant="outline" bg="transparent">
-                                             <BadgeText textTransform="none" color={theme.tokens.colors.secondary['400']} fontSize="$xs">
+                                   <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
+                                        <Badge key={0} variant="outline" style={{ borderRadius: 8, borderColor: theme.tokens.colors.secondary['400'], backgroundColor: 'transparent' }}>
+                                             <BadgeText textTransform="none" style={{ color: theme.tokens.colors.secondary['400'], fontSize: 12 }}>
                                                   {getTermFromDictionary(language, 'registration_required')}
                                              </BadgeText>
                                         </Badge>
@@ -438,10 +433,10 @@ const DisplayResult = (data) => {
      }
 
      return (
-          <Pressable borderBottomWidth="$1" borderColor={colorMode === 'light' ? "$warmGray400" : "$warmGray600"} pl="$4" pr="$5" py="$2" onPress={handlePressItem}>
+          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray400 : theme.tokens.colors.ui.gray600, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
-                    <VStack sx={{ '@base': { width: 100 }, '@lg': { width: 180 } }}>
-                         <Box sx={{ '@base': { height: 150 }, '@lg': { height: 250 } }}>
+                    <VStack style={{ width: 100 }}>
+                         <Box style={{ height: 150 }}>
                               <Image
                                    alt={item.title}
                                    source={url}
@@ -455,15 +450,11 @@ const DisplayResult = (data) => {
                               />
                          </Box>
                          {item.language ? (
-                              <Center
-                                   mt="$1"
-                                   sx={{
-                                        bgColor: colorMode === 'light' ? "$warmGray200" : "$coolGray900" }}>
+                              <Center style={{ marginTop: 4 }}>
                                    <Badge
-                                        size="$sm"
-                                        sx={{
-                                             bgColor: colorMode === 'light' ? "$warmGray200" : "$coolGray900" }}>
-                                        <BadgeText textTransform="none" color={colorMode === 'light' ? "$coolGray600" : "$warmGray400"} sx={{ '@base': { fontSize: 10 }, '@lg': { fontSize: 16, padding: 4, textAlign: 'center' } }}>
+                                        size="sm"
+                                        style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.background.dark }}>
+                                        <BadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textMuted.light : theme.tokens.colors.ui.gray400, fontSize: 10, textAlign: 'center' }}>
                                              {item.language}
                                         </BadgeText>
                                    </Badge>
@@ -471,16 +462,16 @@ const DisplayResult = (data) => {
                          ) : null}
                          <AddToList itemId={item.key} btnStyle="sm" />
                     </VStack>
-                    <VStack w="65%" pt="$1">
-                         <Text color={textColor} bold fontSize="$sm" pb="$1">
+                    <VStack style={{ width: '65%', paddingTop: 4 }}>
+                         <Text bold style={{ color: textColor, fontSize: 14, paddingBottom: 4 }}>
                               {item.title}
                          </Text>
                          {item.author ? (
-                              <Text color={textColor} fontSize="$xs">
+                              <Text style={{ color: textColor, fontSize: 12 }}>
                                    {getTermFromDictionary(language, 'by')} {item.author}
                               </Text>
                          ) : null}
-                         <HStack mt="$4" direction="row" space="xs" flexWrap="wrap">
+                         <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
                               {_.compact(_.map(formats, getFormat))}
                          </HStack>
                     </VStack>
@@ -491,8 +482,7 @@ const DisplayResult = (data) => {
 
 const FilterBar = ({ navigation }) => {
      const language = useActiveLanguage();
-     const library = useLibrary();
-     const { theme, colorMode, textColor } = useTheme();
+     const { theme, colorMode } = useTheme();
      const type = useRoute().params.type ?? 'catalog';
 
      if (navigation === undefined) {
@@ -501,13 +491,12 @@ const FilterBar = ({ navigation }) => {
      }
      if (type === 'catalog') {
           return (
-               <Box padding="$2" paddingBottom="$0" bgColor={colorMode === 'light' ? '$coolGray100' : '$coolGray700'} borderColor={colorMode === 'light' ? '$coolGray200' : '$warmGray600'} flexWrap="nowrap">
+               <Box style={{ padding: 8, paddingBottom: 0, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray100 : theme.tokens.colors.ui.surface.dark, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, flexWrap: 'nowrap' }}>
                     <ScrollView horizontal>
                          <Button
                               size="sm"
                               variant="solid"
-                              mr="$1"
-                              bg={theme.tokens.colors.primary['600']}
+                              style={{ marginRight: 4, backgroundColor: theme.tokens.colors.primary['600'] }}
                               onPress={() => {
                                    navigation.push('modal', {
                                         screen: 'Filters',
@@ -516,8 +505,8 @@ const FilterBar = ({ navigation }) => {
                                         },
                                    });
                               }}>
-                              <ButtonIcon color={theme.tokens.colors.primary['600-text']} as={SlidersHorizontalIcon} mr="$1" />
-                              <ButtonText color={theme.tokens.colors.primary['600-text']}>{getTermFromDictionary(language, 'filters')}</ButtonText>
+                              <ButtonIcon as={SlidersHorizontalIcon} style={{ color: theme.tokens.colors.primary['600-text'], marginRight: 4 }} />
+                              <ButtonText style={{ color: theme.tokens.colors.primary['600-text'] }}>{getTermFromDictionary(language, 'filters')}</ButtonText>
                          </Button>
                          <CreateFilterButton navigation={navigation} />
                     </ScrollView>
@@ -545,20 +534,20 @@ const SearchBox = ({term, navigation}) => {
      };
 
      return (
-          <Box padding="$2" bgColor={colorMode === 'light' ? '$coolGray100' : '$coolGray700'} borderColor={colorMode === 'light' ? '$coolGray200' : '$warmGray600'} borderBottomWidth="$1">
-               <FormControl pb="$5">
-                    <Input borderColor={colorMode === 'light' ? '$coolGray500' : '$warmGray300'}>
+          <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.gray100 : theme.tokens.colors.ui.surface.dark, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray200 : theme.tokens.colors.ui.gray600, borderBottomWidth: 1 }}>
+               <FormControl style={{ paddingBottom: 20 }}>
+                    <Input style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.gray500 : theme.tokens.colors.ui.gray300 }}>
                          <InputSlot>
-                              <InputIcon as={SearchIcon} ml="$2" color={textColor} />
+                              <InputIcon as={SearchIcon} style={{ marginLeft: 8, color: textColor }} />
                          </InputSlot>
-                         <InputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} status="info" placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={updateSearch} value={searchTerm} size="$lg" sx={{ color: textColor, borderColor: textColor, ':focus': { borderColor: textColor } }} />
+                         <InputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={updateSearch} value={searchTerm} style={{ color: textColor }} />
                          {searchTerm ? (
                               <InputSlot onPress={() => clearSearch()}>
-                                   <InputIcon as={XIcon} mr="$2" color={textColor} />
+                                   <InputIcon as={XIcon} style={{ marginRight: 8, color: textColor }} />
                               </InputSlot>
                          ) : null}
                          <InputSlot onPress={() => openScanner()}>
-                              <InputIcon as={ScanBarcode} mr="$2" color={textColor} />
+                              <InputIcon as={ScanBarcode} style={{ marginRight: 8, color: textColor }} />
                          </InputSlot>
                     </Input>
                </FormControl>
@@ -610,7 +599,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
      }
 
      return (
-          <ButtonGroup space="sm" vertical>
+          <ButtonGroup space="sm" style={{ flexDirection: 'column' }}>
                {defaults.map((obj, index) => {
                     if (obj['field'] === 'availability_toggle') {
                          const label = obj['label'] + ': ' + defaultAvailabilityToggleLabel;
@@ -619,7 +608,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                                    key={index}
                                    size="sm"
                                    variant="outline"
-                                   borderColor={colorMode === 'light' ? '$trueGray300' : '$warmGray400'}
+                                   style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.trueGray300 : theme.tokens.colors.ui.gray400 }}
                                    onPress={() => {
                                         navigation.push('modal', {
                                              screen: 'Facet',
@@ -633,7 +622,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                                              },
                                         });
                                    }}>
-                                   <ButtonText color={textColor}>{label}</ButtonText>
+                                   <ButtonText style={{ color: textColor }}>{label}</ButtonText>
                               </Button>
                          );
                     }
@@ -643,7 +632,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                               key={index}
                               size="sm"
                               variant="outline"
-                              borderColor={colorMode === 'light' ? theme.tokens.colors.primary['400'] : '$warmGray400'}
+                              style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.primary['400'] : theme.tokens.colors.ui.gray400 }}
                               onPress={() => {
                                    navigation.push('modal', {
                                         screen: 'Facet',
@@ -657,7 +646,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                                         },
                                    });
                               }}>
-                              <ButtonText color={textColor}>{obj['label']}</ButtonText>
+                              <ButtonText style={{ color: textColor }}>{obj['label']}</ButtonText>
                          </Button>
                     );
                })}
@@ -676,11 +665,11 @@ const CreateFilterButton = ({navigation}) => {
      if ((_.size(appliedFacets) > 0 && _.size(sort) === 0) || (_.size(appliedFacets) >= 1 && _.size(sort) > 1) || (_.size(appliedFacets) >= 1 && currentSource === 'events')) {
           console.log("using applied filters bar")
           return (
-               <ButtonGroup space="sm" vertical>
-                    {_.map(appliedFacets, function (item, index, collection) {
+               <ButtonGroup space="sm" style={{ flexDirection: 'column' }}>
+                    {_.map(appliedFacets, function (item, index) {
                          const cluster = _.filter(SearchGlobal.availableFacets, ['field', item[0]['field']]);
                          let labels = '';
-                         _.forEach(item, function (value, key) {
+                         _.forEach(item, function (value) {
                               let label = value['display'];
                               if (item[0].field === 'sort_by') {
                                    label = getSortLabel(label);
@@ -697,7 +686,7 @@ const CreateFilterButton = ({navigation}) => {
                                    variant="outline"
                                    size="sm"
                                    key={index}
-                                   borderColor={colorMode === 'light' ? '$trueGray300' : '$warmGray400'}
+                                   style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.trueGray300 : theme.tokens.colors.ui.gray400 }}
                                    onPress={() => {
                                         navigation.push('modal', {
                                              screen: 'Facet',
@@ -713,7 +702,7 @@ const CreateFilterButton = ({navigation}) => {
                                              },
                                         });
                                    }}>
-                                   <ButtonText color={textColor}>{label}</ButtonText>
+                                   <ButtonText style={{ color: textColor }}>{label}</ButtonText>
                               </Button>
                          );
                     })}

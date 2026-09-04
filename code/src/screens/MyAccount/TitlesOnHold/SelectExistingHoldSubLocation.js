@@ -1,24 +1,24 @@
 import _ from 'lodash';
-import { Box, FormControl, FormControlLabel, FormControlLabelText, Select, SelectTrigger, SelectInput, SelectPortal, SelectBackdrop, SelectContent, SelectDragIndicatorWrapper, SelectDragIndicator, SelectItem, Icon, ChevronDownIcon, SelectScrollView } from '@gluestack-ui/themed';
-
 import React from 'react';
-import { Platform } from 'react-native';
+import { Box } from '@/components/ui/box';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Icon, ChevronDownIcon } from '@/components/ui/icon';
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectScrollView, SelectTrigger } from '@/components/ui/select';
 
 import { getTermFromDictionary } from '../../../translations/TranslationService';
 
 export const SelectExistingHoldSubLocation = (props) => {
-     const { locations, sublocations, language, location, activeSublocation, setActiveSublocation} = props;
-
+     const { sublocations, language, location, activeSublocation, setActiveSublocation, textColor, colorMode, theme } = props;
+     const selectBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
 
      const [locationId, locationCode] = location.split("_");
      if (sublocations !== undefined) {
           if (_.isObject(sublocations)) {
-               const objectSize = Object.keys(sublocations).length;
                const validSublocations = [];
 
                const sublocationValues = Object.values(sublocations);
                let activeSublocationNeedsToChange = true;
-               for (index in sublocationValues) {
+               for (const index in sublocationValues) {
                     let sublocation = sublocationValues[index];
                     if (sublocation.locationCode == locationCode) {
                          validSublocations.push(sublocation);
@@ -39,20 +39,21 @@ export const SelectExistingHoldSubLocation = (props) => {
                if (validSublocationSize > 1) {
                     return (
                          <>
-                              <Box pl="$4" pr="$4">
+                              <Box style={{ paddingLeft: 16, paddingRight: 16 }}>
                                    <FormControl>
                                         <FormControlLabel>
-                                             <FormControlLabelText>{getTermFromDictionary(language, 'select_new_pickup_area')}</FormControlLabelText>
+                                             <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'select_new_pickup_area')}</FormControlLabelText>
                                         </FormControlLabel>
                                         <Select
+                                             selectedValue={activeSublocation}
                                              onValueChange={(itemValue) => setActiveSublocation(itemValue)}>
                                              <SelectTrigger variant="outline" size="md">
-                                                  <SelectInput py={0} placeholder={getTermFromDictionary(language, 'select_new_pickup_area')} />
-                                                  <Icon as={ChevronDownIcon} mr="$3" />
+                                                  <SelectInput placeholder={getTermFromDictionary(language, 'select_new_pickup_area')} style={{ color: textColor, paddingVertical: 0 }} />
+                                                  <SelectIcon as={ChevronDownIcon} style={{ marginRight: 12, color: textColor }} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent>
+                                                  <SelectContent style={{ backgroundColor: selectBg }}>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
@@ -74,7 +75,7 @@ export const SelectExistingHoldSubLocation = (props) => {
           }else{
                return null;
           }
-     }else{
+     } else {
           return null;
      }
-}
+};

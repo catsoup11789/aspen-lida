@@ -1,23 +1,4 @@
 import _ from 'lodash';
-import {
-     Button,
-     ButtonGroup,
-     ButtonText,
-     Center,
-     FormControl,
-     FormControlLabel,
-     FormControlLabelText,
-     Heading,
-     Input,
-     InputField,
-     Modal,
-     ModalBackdrop,
-     ModalContent,
-     ModalHeader,
-     ModalBody,
-     ModalFooter,
-     Text,
-     Icon, CloseIcon, ModalCloseButton } from '@gluestack-ui/themed';
 import React from 'react';
 import { Platform } from 'react-native';
 
@@ -29,10 +10,20 @@ import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { forgotBarcode } from '../../util/api/user';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
+import { Button, ButtonGroup, ButtonText } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { Heading } from '@/components/ui/heading';
+import { CloseIcon, Icon } from '@/components/ui/icon';
+import { Input, InputField } from '@/components/ui/input';
+import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { Text } from '@/components/ui/text';
 
 export const ForgotBarcode = (props) => {
      const isKeyboardOpen = useKeyboard();
      const { theme, textColor, colorMode }= useTheme();
+     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
      const library = useLibrary();
      const { usernameLabel, showForgotBarcodeModal, setShowForgotBarcodeModal } = props;
      const [isProcessing, setIsProcessing] = React.useState(false);
@@ -109,42 +100,44 @@ export const ForgotBarcode = (props) => {
      }
 
      const ResultsMessage = showResults && !results.success ? (
-          <Text color={textColor}>{stripHTML(results.message || getTermFromDictionary('en', 'forgot_barcode_error_message'))}</Text>
+          <Text style={{ color: textColor }}>{stripHTML(results.message || getTermFromDictionary('en', 'forgot_barcode_error_message'))}</Text>
      ) : hasError ? (
-          <Text color={textColor}>{results}</Text>
+          <Text style={{ color: textColor }}>{results}</Text>
      ) : showResults ? (
-          <Text color={textColor}>{stripHTML(results.message || getTermFromDictionary('en', 'forgot_barcode_success_message'))}</Text>
+          <Text style={{ color: textColor }}>{stripHTML(results.message || getTermFromDictionary('en', 'forgot_barcode_success_message'))}</Text>
      ) : (
           <>
-               <Text color={textColor}>{modalBody}</Text>
+               <Text style={{ color: textColor }}>{modalBody}</Text>
                <FormControl>
                     <FormControlLabel>
-                         <FormControlLabelText fontSize="$sm" color={textColor}>{fieldLabel}</FormControlLabelText>
+                         <FormControlLabelText size="sm" style={{ color: textColor }}>{fieldLabel}</FormControlLabelText>
                     </FormControlLabel>
-                    <Input borderColor={colorMode === 'light' ? "$coolGray500" : "$warmGray300"}><InputField id="phoneNumber" variant="filled" size="$xl" returnKeyType="done" enterKeyHint="done" onChangeText={(text) => setPhoneNumber(text)} onSubmitEditing={() => initiateForgotBarcode()} color={textColor} textContentType="telephoneNumber"/></Input>
+                    <Input style={{ borderColor }}>
+                         <InputField id="phoneNumber" size="xl" returnKeyType="done" enterKeyHint="done" onChangeText={(text) => setPhoneNumber(text)} onSubmitEditing={() => initiateForgotBarcode()} style={{ color: textColor }} textContentType="telephoneNumber"/>
+                    </Input>
                </FormControl>
           </>
      );
 
      const FooterButtons = (showResults && !results.success) || hasError ? (
-          <Button bgColor={theme.tokens.colors.primary['500']} onPress={resetWindow}>
-               <ButtonText color={theme.tokens.colors.primary['500-text']}>{getTermFromDictionary('en', 'try_again')}</ButtonText>
+          <Button style={{ backgroundColor: theme.tokens.colors.primary['500'] }} onPress={resetWindow}>
+               <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{getTermFromDictionary('en', 'try_again')}</ButtonText>
           </Button>
      ) : showResults ? (
           <Button variant="link" onPress={closeWindow}>
-               <ButtonText color={textColor}>{getTermFromDictionary('en', 'button_ok')}</ButtonText>
+               <ButtonText style={{ color: textColor }}>{getTermFromDictionary('en', 'button_ok')}</ButtonText>
           </Button>
      ) : (
           <>
-               <Button variant="link" mr="$4" onPress={closeWindow}>
-                    <ButtonText color={textColor}>{getTermFromDictionary('en', 'cancel')}</ButtonText>
+               <Button variant="link" style={{ marginRight: 16 }} onPress={closeWindow}>
+                    <ButtonText style={{ color: textColor }}>{getTermFromDictionary('en', 'cancel')}</ButtonText>
                </Button>
                <Button
                     isLoading={isProcessing}
                     isLoadingText={getTermFromDictionary('en', 'button_processing', true)}
-                    bgColor={theme.tokens.colors.primary['500']}
+                    style={{ backgroundColor: theme.tokens.colors.primary['500'] }}
                     onPress={initiateForgotBarcode}>
-                    <ButtonText color={theme.tokens.colors.primary['500-text']}>{modalButtonLabel}</ButtonText>
+                    <ButtonText style={{ color: theme.tokens.colors.primary['500-text'] }}>{modalButtonLabel}</ButtonText>
                </Button>
           </>
      );
@@ -152,22 +145,22 @@ export const ForgotBarcode = (props) => {
      return (
           <Center>
                <Button variant="link" onPress={() => setShowForgotBarcodeModal(true)}>
-                    <ButtonText color={theme.tokens.colors.primary['500']}>{buttonLabel}</ButtonText>
+                    <ButtonText style={{ color: theme.tokens.colors.primary['500'] }}>{buttonLabel}</ButtonText>
                </Button>
-               <Modal isOpen={showForgotBarcodeModal} size="lg" avoidKeyboard onClose={() => setShowForgotBarcodeModal(false)} pb={Platform.OS === 'android' && isKeyboardOpen ? '50%' : '0'}>
+               <Modal isOpen={showForgotBarcodeModal} size="lg" avoidKeyboard onClose={() => setShowForgotBarcodeModal(false)} style={Platform.OS === 'android' && isKeyboardOpen ? { paddingBottom: '50%' } : undefined}>
                     <ModalBackdrop />
-                    <ModalContent bgColor={colorMode === 'light' ? "$warmGray50" : "$coolGray700"}>
+                    <ModalContent style={{ backgroundColor: surfaceBg }}>
                          <ModalHeader>
-                              <Heading size="md" color={textColor}>{modalTitle}</Heading>
-                              <ModalCloseButton p="$3" onPress={() => { setShowForgotBarcodeModal(false); }}>
-                                   <Icon as={CloseIcon} color={textColor} />
+                              <Heading size="md" style={{ color: textColor }}>{modalTitle}</Heading>
+                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowForgotBarcodeModal(false); }}>
+                                  <Icon as={CloseIcon} style={{ color: textColor }} />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
                               {ResultsMessage}
                          </ModalBody>
                          <ModalFooter>
-                              <ButtonGroup space="$4">
+                              <ButtonGroup space="lg">
                                    {FooterButtons}
                               </ButtonGroup>
                          </ModalFooter>

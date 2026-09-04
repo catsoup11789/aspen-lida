@@ -2,9 +2,15 @@ import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import _ from 'lodash';
-import { Alert, AlertIcon, AlertText, CloseIcon, HStack, Button, ButtonIcon, VStack, Pressable, Text } from '@gluestack-ui/themed';
 import React, {useContext} from 'react';
 import { Platform } from 'react-native';
+import { Alert, AlertIcon, AlertText } from '@/components/ui/alert';
+import { Button, ButtonIcon } from '@/components/ui/button';
+import { CloseIcon } from '@/components/ui/icon';
+import { HStack } from '@/components/ui/hstack';
+import { VStack } from '@/components/ui/vstack';
+import { Pressable } from '@/components/ui/pressable';
+import { Text } from '@/components/ui/text';
 import { getTermFromDictionary } from '../translations/TranslationService';
 import { dismissSystemMessage } from '../util/api/system';
 
@@ -151,9 +157,9 @@ export function showILSMessage(type, message, index = 0) {
      const formattedMessage = stripHTML(message);
      logDebugMessage("Showing ILS Message");
      return (
-          <Alert mx="$2" mb="$1" action={type} key={index}>
-               <AlertIcon mr="$3" />
-               <AlertText size="xs" fontWeight="$medium">
+          <Alert action={type} key={index} style={{ marginHorizontal: 8, marginBottom: 4 }}>
+               <AlertIcon style={{ marginRight: 12 }} />
+               <AlertText size="xs" bold>
                     {formattedMessage}
                </AlertText>
           </Alert>
@@ -167,8 +173,8 @@ export const DisplayMessage = (props) => {
      const displayMessage = safeMessage || fallbackMessage;
 
      return (
-          <Alert action={props.type} variant="solid" mb="$2" py="$3" px="$3" alignItems="flex-start" sx={{ height: 'auto', minHeight: 0 }}>
-               <Text color="$coolGray900" size="sm" fontWeight="$medium" flexShrink={1} style={{ flexWrap: 'wrap' }}>
+          <Alert action={props.type} variant="solid" style={{ marginBottom: 8, paddingVertical: 12, paddingHorizontal: 12, alignItems: 'flex-start', minHeight: 0, height: 'auto' }}>
+               <Text size="sm" style={{ color: '#111827', flexShrink: 1, flexWrap: 'wrap', fontWeight: '500' }}>
                     {displayMessage}
                </Text>
           </Alert>
@@ -192,8 +198,8 @@ export const DisplayAndroidEndOfSupportMessage = (props) => {
      const setIsOpen = props.setIsOpen;
      const language = props.language;
      return (
-          <Alert action="error" mb="$3">
-               <VStack space="xs" width="$full">
+          <Alert action="error" style={{ marginBottom: 12 }}>
+               <VStack space="xs" style={{ width: '100%' }}>
                     <HStack alignItems="flex-start" justifyContent="space-between">
                          <AlertText size="sm">
                               {getTermFromDictionary(language, 'android_end_of_life')}
@@ -221,10 +227,10 @@ export const DisplaySystemMessage = (props) => {
      logDebugMessage("System Message Style is " + style);
 
      return (
-          <Alert height="$50" action={style} variant="solid" mb="$2" borderRadius="$sm">
-               <VStack space="sm" width="$full" p="$3">
+          <Alert action={style} variant="solid" style={{ minHeight: 200, marginBottom: 8, borderRadius: 4 }}>
+               <VStack space="sm" style={{ width: '100%', padding: 12 }}>
                     <HStack alignItems="flex-start" justifyContent="space-between">
-                         <AlertText mr="$2">{props.message}</AlertText>
+                         <AlertText style={{ marginRight: 8 }}>{props.message}</AlertText>
                          <Pressable
                               onPress={async () => {
                                    await hideSystemMessage(props.all, props.id, props.dismissable, props.url).then((result) => {
@@ -232,7 +238,7 @@ export const DisplaySystemMessage = (props) => {
                                         updateSystemMessages(result);
                                    });
                               }}>
-                              <CloseIcon color="$black" />
+                              <CloseIcon style={{ color: '#000000' }} />
                          </Pressable>
                     </HStack>
                </VStack>

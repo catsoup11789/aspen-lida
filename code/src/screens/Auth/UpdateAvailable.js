@@ -1,8 +1,12 @@
-import { AlertDialog, AlertDialogBackdrop, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, Button, ButtonText, ButtonGroup, Center, Heading, Text } from '@gluestack-ui/themed';
 import React from 'react';
 import * as Linking from 'expo-linking';
 import {getTermFromDictionary} from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { Button, ButtonText, ButtonGroup } from '@/components/ui/button';
+import { Center } from '@/components/ui/center';
+import { Heading } from '@/components/ui/heading';
+import { Text } from '@/components/ui/text';
 
 export const UpdateAvailable = (props) => {
 	const language = useActiveLanguage();
