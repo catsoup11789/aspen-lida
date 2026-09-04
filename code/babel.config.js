@@ -6,7 +6,7 @@ module.exports = function (api) {
           ? ['babel-preset-expo']
           : [["babel-preset-expo", {
                jsxImportSource: "nativewind"
-          }], "nativewind/babel"];
+          }]];
 
      return {
           presets,
@@ -17,7 +17,8 @@ module.exports = function (api) {
                     moduleName: '@env',
                     path: '.env',
                },
-          ], 'transform-inline-environment-variables', '@babel/plugin-transform-class-static-block', 'react-native-reanimated/plugin', ["module-resolver", {
+    'react-native-worklets/plugin'
+  ], 'transform-inline-environment-variables', '@babel/plugin-transform-class-static-block', 'react-native-reanimated/plugin', ["module-resolver", {
                root: ["./"],
 
                alias: {
