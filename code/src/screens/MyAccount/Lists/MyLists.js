@@ -274,7 +274,7 @@ export const MyLists = () => {
      };
 
      const listEmptyComponent = () => (
-          <Center mt={5} mb={5}>
+          <Center style={{ marginTop: 5, marginBottom: 5 }}>
                <Text bold size="lg" style={{ color: textColor }}>
                     {getTermFromDictionary(language, 'no_lists_yet')}
                </Text>

@@ -154,7 +154,7 @@ export const Facet = ({ route, navigation }) => {
      };
 
      const searchBar = numFacets >= 0 ? (
-          <Box p="$5">
+          <Box style={{ padding: 20 }}>
                <ThemedInput
                     size="lg"
                     variant="outline"
@@ -173,7 +173,7 @@ export const Facet = ({ route, navigation }) => {
                </ThemedInput>
           </Box>
      ) : (
-          <Box pb="$5" />
+          <Box style={{ paddingBottom: 20 }} />
      );
 
      const updateSearch = (resetFacetGroup = false, toFilters = false) => {
@@ -278,7 +278,7 @@ export const Facet = ({ route, navigation }) => {
           return (
                <VStack flex={1}>
                     <ScrollView>
-                         <Box p="$5">
+                         <Box style={{ padding: 20 }}>
                               <Facet_Year category={category} updater={updateLocalValues} data={facets} language={language} />
                          </Box>
                     </ScrollView>
@@ -289,7 +289,7 @@ export const Facet = ({ route, navigation }) => {
           return (
                <VStack flex={1}>
                     <ScrollView>
-                         <Box p="$5">
+                         <Box style={{ padding: 20 }}>
                               <Facet_Date category={category} updater={updateLocalValues} data={facets} />
                          </Box>
                     </ScrollView>
@@ -300,7 +300,7 @@ export const Facet = ({ route, navigation }) => {
           return (
                <VStack flex={1}>
                     <ScrollView>
-                         <Box p="$5">
+                         <Box style={{ padding: 20 }}>
                               <Facet_Rating category={category} updater={updateLocalValues} data={facets} />
                          </Box>
                     </ScrollView>
@@ -311,7 +311,7 @@ export const Facet = ({ route, navigation }) => {
           return (
                <VStack flex={1}>
                     <ScrollView>
-                         <Box p="$5">
+                         <Box style={{ padding: 20 }}>
                               <Facet_Slider category={category} data={facets} updater={updateLocalValues} language={language} />
                          </Box>
                     </ScrollView>
@@ -323,7 +323,7 @@ export const Facet = ({ route, navigation }) => {
                <VStack flex={1}>
                     {searchBar}
                     <ScrollView>
-                         <Box px="$5">
+                         <Box style={{ paddingHorizontal: 20 }}>
                               <CheckboxGroup
                                    value={values}
                                    accessibilityLabel={getTermFromDictionary(language, 'filter_by')}
@@ -350,7 +350,7 @@ export const Facet = ({ route, navigation }) => {
           <VStack flex={1}>
                {searchBar}
                <ScrollView>
-                    <Box px="$5">
+                    <Box style={{ paddingHorizontal: 20 }}>
                          <Facet_RadioGroup data={facets} category={category} title={title} applied={values} updater={updateLocalValues} language={language} />
                     </Box>
                </ScrollView>

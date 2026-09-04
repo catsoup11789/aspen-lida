@@ -360,7 +360,7 @@ export const MyReadingHistory = () => {
                               <AlertDialogBackdrop />
                               <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                                    <AlertDialogHeader>
-                                        <Heading color={textColor} size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'reading_history_delete_all')}</Heading>
+                                        <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'reading_history_delete_all')}</Heading>
                                    </AlertDialogHeader>
                                    <AlertDialogBody>
                                         <Text style={{ color: textColor }}>{getTermFromDictionary(language, 'reading_history_delete_all_warning')}</Text>
