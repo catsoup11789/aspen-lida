@@ -2,7 +2,7 @@ import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { ThemedButton as Button, ThemedButtonIcon as ButtonIcon, ThemedButtonText as ButtonText } from './themed/ThemedButton';
-import { ButtonGroup } from '@/components/ui/button';
+import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';

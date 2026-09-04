@@ -2,7 +2,7 @@ import * as Linking from 'expo-linking';
 import React from 'react';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from './themed/ThemedButton';
-import { ButtonGroup } from '@/components/ui/button';
+import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { getTermFromDictionary } from '../translations/TranslationService';

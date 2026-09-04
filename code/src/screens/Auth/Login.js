@@ -26,7 +26,7 @@ import { logDebugMessage, logInfoMessage, getErrorMessage } from '../../util/log
 import { popAlert } from '../../components/feedback';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
-import { ButtonGroup } from '@/components/ui/button';
+import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { Image } from '@/components/ui/image';
 import { Modal, ModalBackdrop, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';

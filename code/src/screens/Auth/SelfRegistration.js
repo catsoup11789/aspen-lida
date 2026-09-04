@@ -10,7 +10,7 @@ import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
-import { ButtonGroup } from '@/components/ui/button';
+import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { FormControl, FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';

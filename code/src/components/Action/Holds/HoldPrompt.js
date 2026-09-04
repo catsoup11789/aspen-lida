@@ -19,7 +19,7 @@ import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedInput, ThemedInputFiel
 import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from '@/src/util/logging';
 import { useTheme } from '@/src/themes/theme';
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
-import { ButtonGroup } from '@/components/ui/button';
+import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../themed/ThemedCheckbox';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';

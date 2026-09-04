@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStyleContext } from '@gluestack-ui/utils/nativewind-utils';
-import { Button, ButtonIcon, ButtonSpinner, ButtonText } from '@/components/ui/button';
+import { Button, ButtonGroup, ButtonIcon, ButtonSpinner, ButtonText } from '@/components/ui/button';
 import { useTheme } from '../../themes/theme';
 
 const SCOPE = 'BUTTON';
@@ -86,7 +86,15 @@ export const ThemedButtonSpinner = React.forwardRef((props, ref) => {
      return <ButtonSpinner ref={ref} {...props} />;
 });
 
+// ButtonGroup's own base className is empty -- flexDirection only becomes 'flex-row' etc. if you
+// explicitly pass the flexDirection prop. Without it, it silently falls back to RN's View default
+// (column), which is exactly backwards from v1's implicit horizontal-row default. Restore that here.
+export const ThemedButtonGroup = React.forwardRef(({ flexDirection = 'row', ...props }, ref) => {
+     return <ButtonGroup ref={ref} flexDirection={flexDirection} {...props} />;
+});
+
 ThemedButton.displayName = 'ThemedButton';
 ThemedButtonText.displayName = 'ThemedButtonText';
 ThemedButtonIcon.displayName = 'ThemedButtonIcon';
 ThemedButtonSpinner.displayName = 'ThemedButtonSpinner';
+ThemedButtonGroup.displayName = 'ThemedButtonGroup';
