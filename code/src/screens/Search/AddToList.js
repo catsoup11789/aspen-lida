@@ -18,7 +18,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { CircleIcon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
@@ -142,7 +142,7 @@ const AddToList = (props) => {
                          ) : screen === 'add-new' && !_.isEmpty(lists) ? (
                               <>
                                    <ModalHeader>
-                                        <Heading style={{ color: textColor }}>
+                                        <Heading>
                                              {getTermFromDictionary(language, 'add_to_list')}
                                         </Heading>
                                         <ModalCloseButton style={{ padding: 12 }} onPress={closeModal}>
@@ -227,7 +227,7 @@ const AddToList = (props) => {
                          ) : (
                               <>
                                    <ModalHeader>
-                                        <Heading size="md" style={{ color: textColor }}>
+                                        <Heading size="md">
                                              {getTermFromDictionary(language, 'create_new_list_item')}
                                         </Heading>
                                         <ModalCloseButton style={{ padding: 12 }} onPress={closeModal}>

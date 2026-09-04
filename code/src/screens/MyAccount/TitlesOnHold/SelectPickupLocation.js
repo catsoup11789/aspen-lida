@@ -10,7 +10,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
@@ -70,7 +70,7 @@ export const SelectPickupLocation = (props) => {
                     <ModalBackdrop />
                     <ModalContent style={{ backgroundColor: modalBg }}>
                          <ModalHeader>
-                              <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'change_hold_location')}</Heading>
+                              <Heading size="md">{getTermFromDictionary(language, 'change_hold_location')}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
                                   <ThemedCloseIcon />
                               </ModalCloseButton>

@@ -14,7 +14,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
@@ -156,7 +156,7 @@ export const ForgotBarcode = (props) => {
                     <ModalBackdrop />
                     <ModalContent style={{ backgroundColor: surfaceBg }}>
                          <ModalHeader>
-                              <Heading size="md" style={{ color: textColor }}>{modalTitle}</Heading>
+                              <Heading size="md">{modalTitle}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowForgotBarcodeModal(false); }}>
                                   <ThemedCloseIcon />
                               </ModalCloseButton>

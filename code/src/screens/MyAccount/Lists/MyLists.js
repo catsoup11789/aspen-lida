@@ -8,7 +8,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
@@ -429,7 +429,7 @@ export const MyLists = () => {
                          {currentListGroupData ? (
                               <Box style={{ marginTop: 8 }}>
                                    <Box>
-                                        <Heading size="xl" style={{ color: textColor }}>{currentListGroupData.listGroupDetails?.title}</Heading>
+                                        <Heading size="xl">{currentListGroupData.listGroupDetails?.title}</Heading>
                                         {currentListGroup != '-1' && (
                                              <ScrollView horizontal>
                                                   <HStack space="sm">

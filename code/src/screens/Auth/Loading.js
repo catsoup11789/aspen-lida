@@ -75,7 +75,7 @@ import {isPlainObject, stripHTML, RemoveData} from '../../helpers/helpers';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Progress, ProgressFilledTrack } from '@/components/ui/progress';
 import { VStack } from '@/components/ui/vstack';
 
@@ -1545,7 +1545,7 @@ export const LoadingScreen = () => {
           <Center style={{ flex: 1, paddingHorizontal: 12, width: '100%' }}>
                <Box style={{ width: '90%', maxWidth: 400, paddingTop: insets.top, paddingBottom: insets.bottom, paddingLeft: insets.left, paddingRight: insets.right }}>
                     <VStack>
-                         <Heading size="md" style={{ paddingBottom: 20, color: textColor }}>
+                         <Heading size="md" style={{ paddingBottom: 20 }}>
                               {loadingText}
                          </Heading>
                          <Progress value={progress} size="md" testID="progress-bar" style={{ width: '100%', backgroundColor: borderColor }}>

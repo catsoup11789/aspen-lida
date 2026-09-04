@@ -19,7 +19,7 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { CheckIcon, ChevronLeftIcon, CircleIcon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
@@ -85,7 +85,7 @@ const EditList = (props) => {
                     <ModalBackdrop />
                     <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceBg }}>
                          <ModalHeader>
-                              <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'edit')} {data.title}</Heading>
+                              <Heading size="md">{getTermFromDictionary(language, 'edit')} {data.title}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
@@ -232,7 +232,7 @@ const DeleteList = (props) => {
                     <AlertDialogBackdrop />
                     <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                          <AlertDialogHeader>
-                              <Heading size="md" style={{ color: textColor }}>
+                              <Heading size="md">
                                    {getTermFromDictionary(language, 'delete_list')}
                               </Heading>
                               <AlertDialogCloseButton>

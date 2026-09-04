@@ -9,7 +9,7 @@ import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, 
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
@@ -21,7 +21,7 @@ export const CatalogOffline = () => {
       const language = useActiveLanguage();
      const { status: catalogStatus, message: catalogStatusMessage } = useCatalogStatus();
      const { signOut } = React.useContext(AuthContext);
-     const { uiColors, textColor, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => setIsOpen(false);
@@ -37,7 +37,7 @@ export const CatalogOffline = () => {
 
                          <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                               <AlertDialogHeader>
-                                  <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'catalog_offline')}</Heading>
+                                  <Heading>{getTermFromDictionary(language, 'catalog_offline')}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
                                   <Text>{catalogStatusMessage ? catalogStatusMessage : getTermFromDictionary(language, 'catalog_offline_message')}</Text>

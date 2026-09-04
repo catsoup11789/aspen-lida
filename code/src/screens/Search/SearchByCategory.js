@@ -18,7 +18,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -35,7 +35,7 @@ export const SearchResultsForBrowseCategory = () => {
      const [page, setPage] = React.useState(1);
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { uiColors, textColor, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
 
      const category = useRoute().params.id ?? '';
@@ -120,7 +120,7 @@ export const SearchResultsForBrowseCategory = () => {
                <>
                     {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                     <Center style={{ flex: 1 }}>
-                        <Heading style={{ paddingTop: 20, color: textColor }}>{getTermFromDictionary(language, 'no_results')}</Heading>
+                        <Heading style={{ paddingTop: 20 }}>{getTermFromDictionary(language, 'no_results')}</Heading>
                     </Center>
                </>
           );

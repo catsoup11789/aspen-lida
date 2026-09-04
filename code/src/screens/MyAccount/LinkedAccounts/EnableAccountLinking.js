@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { useUpdateUserProfile, useUpdateAccounts, useUpdateViewers } from '@/src/hooks/useUserData';
@@ -26,7 +26,7 @@ const EnableAccountLinking = () => {
      const updateUserProfile = useUpdateUserProfile();
      const updateAccounts = useUpdateAccounts();
      const updateViewers = useUpdateViewers();
-     const { textColor, uiColors, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const [loading, setLoading] = useState(false);
      const [showModal, setShowModal] = useState(false);
      const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
@@ -64,7 +64,7 @@ const EnableAccountLinking = () => {
                     <ModalBackdrop />
                     <ModalContent style={{ backgroundColor: modalBg, maxWidth: '95%' }}>
                          <ModalHeader>
-                              <Heading size="sm" style={{ color: textColor }}>{getTermFromDictionary(language, 'enable_linked_accounts_title')}</Heading>
+                              <Heading size="sm">{getTermFromDictionary(language, 'enable_linked_accounts_title')}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>

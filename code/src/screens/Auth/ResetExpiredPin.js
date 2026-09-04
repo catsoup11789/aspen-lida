@@ -23,7 +23,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlError, FormControlErrorIcon, FormControlErrorText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { AlertCircleIcon } from '@/components/ui/icon';
 import { InputSlot } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
@@ -173,7 +173,7 @@ export const ResetExpiredPin = (props) => {
                     <AlertDialogBackdrop />
                     <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                          <AlertDialogHeader>
-                              <Heading style={{ color: textColor }}>{resetSuccessful ? getTermFromDictionary(language, 'pin_updated') : getTermFromDictionary(language, 'reset_my_pin')}</Heading>
+                              <Heading>{resetSuccessful ? getTermFromDictionary(language, 'pin_updated') : getTermFromDictionary(language, 'reset_my_pin')}</Heading>
                               <AlertDialogCloseButton>
                                    <ThemedCloseIcon />
                               </AlertDialogCloseButton>

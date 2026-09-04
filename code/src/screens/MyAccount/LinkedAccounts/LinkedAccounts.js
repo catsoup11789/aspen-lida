@@ -5,7 +5,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Divider } from '@/components/ui/divider';
 import { FlatList } from '@/components/ui/flat-list';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -37,7 +37,7 @@ export const MyLinkedAccounts = () => {
      const { data: viewers } = useViewers();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor } = useTheme();
+     const {  } = useTheme();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = useContext(SystemMessagesContext);
 
@@ -113,7 +113,7 @@ export const MyLinkedAccounts = () => {
 
                {user.addLinkedAccountRule !== 1 ? (
                     <Box>
-                         <Heading size="lg" style={{ paddingBottom: 8, color: textColor }}>
+                         <Heading size="lg" style={{ paddingBottom: 8 }}>
                               {getTermFromDictionary(language, 'linked_additional_accounts')}
                          </Heading>
                          <Text size="sm">
@@ -132,7 +132,7 @@ export const MyLinkedAccounts = () => {
 
                {user.addLinkedAccountRule !== 2 ? (
                     <Box>
-                         <Heading size="lg" style={{ paddingBottom: 8, color: textColor }}>
+                         <Heading size="lg" style={{ paddingBottom: 8 }}>
                               {getTermFromDictionary(language, 'linked_other_accounts')}
                          </Heading>
                          <Text size="sm">
@@ -174,7 +174,7 @@ const Account = ({ account, type }) => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor, uiColors } = useTheme();
+     const { uiColors } = useTheme();
 
      const refreshLinkedAccounts = async () => {
           const linkedResponse = await getLinkedAccounts(library.baseUrl, language);

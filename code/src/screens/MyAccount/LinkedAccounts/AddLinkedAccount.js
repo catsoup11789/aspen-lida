@@ -4,7 +4,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { useUserState, useUpdateUserProfile, useUpdateAccounts, useUpdateViewers } from '@/src/hooks/useUserData';
@@ -77,7 +77,7 @@ const AddLinkedAccount = () => {
                     <ModalBackdrop />
                     <ModalContent style={{ backgroundColor: modalBg, maxWidth: '95%' }}>
                          <ModalHeader>
-                              <Heading size="sm" style={{ color: textColor }}>{getTermFromDictionary(language, 'linked_account_to_manage')}</Heading>
+                              <Heading size="sm">{getTermFromDictionary(language, 'linked_account_to_manage')}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>

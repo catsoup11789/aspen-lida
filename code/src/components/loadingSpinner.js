@@ -1,7 +1,7 @@
 import React from 'react';
 import {isEmpty, isUndefined} from 'lodash';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { Spinner } from '@/components/ui/spinner';
 import { VStack } from '@/components/ui/vstack';
@@ -27,14 +27,14 @@ export function loadingSpinner(message = '') {
  * @constructor
  */
 export const LoadingSpinner = (props) => {
-     const { runtimeColors, textColor } = useTheme();
+     const { runtimeColors } = useTheme();
      if (!isUndefined(props) && !isEmpty(props) && !isUndefined(props.message) && !isEmpty(props.message)) {
           logDebugMessage("Showing loading spinner with message: " + props.message);
           return (
                <Center style={{ flex: 1, paddingHorizontal: 12 }}>
                     <VStack space="md" style={{ alignItems: 'center' }}>
                          <Spinner size="large" color={runtimeColors.primary[500]} accessibilityLabel="Loading..." />
-                         <Heading size="md" style={{ color: textColor }}>
+                         <Heading size="md">
                               {props.message}
                          </Heading>
                     </VStack>

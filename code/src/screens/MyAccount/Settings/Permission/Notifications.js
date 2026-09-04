@@ -11,7 +11,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonIcon as ButtonIcon, ThemedButtonText as ButtonText } from '../../../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ChevronLeftIcon, Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
@@ -222,7 +222,7 @@ export const NotificationPermissionDescription = () => {
             <VStack alignItems="stretch">
                 <Box>
                     <Text>{getTermFromDictionary(language, 'device_set_to')}</Text>
-                    <Heading style={{ marginBottom: 4, color: textColor }}>
+                    <Heading style={{ marginBottom: 4 }}>
                         {permissionStatus ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                     </Heading>
                     <Text>
@@ -360,7 +360,7 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
                     style={{ backgroundColor: dialogBg }}
                 >
                     <AlertDialogHeader>
-                        <Heading style={{ color: textColor }}>
+                        <Heading>
                             {getTermFromDictionary(language, 'update_device_settings')}
                         </Heading>
                     </AlertDialogHeader>

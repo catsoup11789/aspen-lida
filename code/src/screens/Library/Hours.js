@@ -3,7 +3,7 @@ import moment from 'moment';
 import React from 'react';
 import { Box } from '@/components/ui/box';
 import { FlatList } from '@/components/ui/flat-list';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
@@ -28,7 +28,7 @@ const Hours = (data) => {
           if (_.isArrayLikeObject(location.hours)) {
                return (
                     <Box>
-                         <Heading style={{ color: textColor, marginBottom: 8, marginHorizontal: 8 }}>{getTermFromDictionary(language, 'library_hours')}</Heading>
+                         <Heading style={{ marginBottom: 8, marginHorizontal: 8 }}>{getTermFromDictionary(language, 'library_hours')}</Heading>
                          <FlatList data={location.hours} renderItem={({ item }) => <Day hours={item} textColor={textColor} />} />
                     </Box>
                );

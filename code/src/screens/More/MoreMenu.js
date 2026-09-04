@@ -21,7 +21,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Divider } from '@/components/ui/divider';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Pressable } from '@/components/ui/pressable';
@@ -132,7 +132,7 @@ export const MoreMenu = () => {
                          <ModalBackdrop />
                          <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <ModalHeader>
-                                   <Heading size="md" style={{ color: textColor }}>
+                                   <Heading size="md">
                                         {getTermFromDictionary(language, 'delete_account')}
                                    </Heading>
                                    <ModalCloseButton style={{ padding: 12 }} onPress={toggleDeleteConfirmationModal}>
@@ -167,7 +167,7 @@ export const MoreMenu = () => {
                          <ModalBackdrop />
                          <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <ModalHeader>
-                                   <Heading size="md" style={{ color: textColor }}>
+                                   <Heading size="md">
                                         {getTermFromDictionary(language, 'delete_account')}
                                    </Heading>
                                    <ModalCloseButton style={{ padding: 12 }} onPress={signOut}>

@@ -8,7 +8,7 @@ import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadg
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Divider } from '@/components/ui/divider';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
@@ -132,7 +132,7 @@ export const Location = () => {
                          ) : null}
                          <Box style={{ marginHorizontal: 16, zIndex: 200 }}>
                               {showSystemMessage()}
-                              {library.displayName !== location.displayName ? <Heading style={{ marginBottom: 8, color: textColor }}>{location.displayName}</Heading> : <Heading style={{ marginBottom: 4, color: textColor }}>{library.displayName}</Heading>}
+                              {library.displayName !== location.displayName ? <Heading style={{ marginBottom: 8 }}>{location.displayName}</Heading> : <Heading style={{ marginBottom: 4 }}>{library.displayName}</Heading>}
                               {location.address ? <Text>{location.address}</Text> : null}
                               {location.phone ? (
                                    <Text>

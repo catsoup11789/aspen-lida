@@ -7,7 +7,7 @@ import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, 
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
@@ -18,7 +18,7 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
  */
 export const ForceLogout = (props) => {
      const { title, reason } = props;
-	const { uiColors, colorMode, textColor } = useTheme();
+	const { uiColors, colorMode } = useTheme();
 	const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 	const language = useActiveLanguage();
 	const { signOut } = React.useContext(AuthContext);
@@ -31,7 +31,7 @@ export const ForceLogout = (props) => {
 			<AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
 				<AlertDialogBackdrop/>
 				<AlertDialogContent style={{ backgroundColor: surfaceBg }}>
-					<AlertDialogHeader><Heading style={{ color: textColor }}>{title ?? getTermFromDictionary(language, 'error')}</Heading></AlertDialogHeader>
+					<AlertDialogHeader><Heading>{title ?? getTermFromDictionary(language, 'error')}</Heading></AlertDialogHeader>
 					<AlertDialogBody><Text>{reason ?? getTermFromDictionary(language, 'error_invalid_session')}</Text></AlertDialogBody>
 					<AlertDialogFooter>
 						<ButtonGroup space="sm">

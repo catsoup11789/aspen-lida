@@ -11,7 +11,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
@@ -550,7 +550,7 @@ export const MyCheckouts = () => {
                          <AlertDialogBackdrop />
                          <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                               <AlertDialogHeader>
-                                   <Heading size="md" style={{ color: textColor }}>{renewConfirmationResponse?.title ? renewConfirmationResponse.title : 'Unknown Error'}</Heading>
+                                   <Heading size="md">{renewConfirmationResponse?.title ? renewConfirmationResponse.title : 'Unknown Error'}</Heading>
                                    <AlertDialogCloseButton>
                                         <ThemedCloseIcon />
                                    </AlertDialogCloseButton>

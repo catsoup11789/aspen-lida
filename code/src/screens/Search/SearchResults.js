@@ -34,7 +34,7 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { FormControl } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { InputSlot } from '@/components/ui/input';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
@@ -217,7 +217,7 @@ export const SearchResults = () => {
                <>
                     {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                     <Center style={{ flex: 1 }}>
-                         <Heading style={{ paddingTop: 20, color: textColor }}>
+                         <Heading style={{ paddingTop: 20 }}>
                               {getTermFromDictionary(language, 'no_results')}
                          </Heading>
                          <Text bold style={{ width: '75%', textAlign: 'center' }}>

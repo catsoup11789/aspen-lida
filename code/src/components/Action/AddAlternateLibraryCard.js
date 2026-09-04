@@ -16,7 +16,7 @@ import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedInput, ThemedInputFiel
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 
 /**
@@ -139,7 +139,7 @@ export const AddAlternateLibraryCard = (props) => {
                <ModalBackdrop />
                <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceColor }}>
                     <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: modalBorderColor }}>
-                         <Heading size="md" style={{ color: textColor }}>
+                         <Heading size="md">
                               {isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}
                          </Heading>
                          <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
@@ -13,7 +13,7 @@ import { VStack } from '@/components/ui/vstack';
  * @constructor
  */
 export const NotificationHistoryMessageModal = () => {
-     const { textColor } = useTheme();
+     const {  } = useTheme();
      const defaultMessage = {
           title: '',
           content: '',
@@ -40,7 +40,7 @@ export const NotificationHistoryMessageModal = () => {
           <ScrollView>
                <Box style={{ padding: 20 }}>
                     <VStack space="md">
-                         <Heading size="lg" style={{ color: textColor }}>{message.title}</Heading>
+                         <Heading size="lg">{message.title}</Heading>
                          <Text>{message.content}</Text>
                          {message.dateSent && (
                               <Text size="sm" style={{ opacity: 0.7 }}>

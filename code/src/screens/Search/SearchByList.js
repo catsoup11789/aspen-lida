@@ -17,7 +17,7 @@ import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -36,7 +36,7 @@ export const SearchResultsForList = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, colorMode } = useTheme();
+     const { colorMode } = useTheme();
      const queryClient = useQueryClient();
      const url = library.baseUrl;
 
@@ -83,7 +83,7 @@ export const SearchResultsForList = () => {
                <>
                    {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                    <Center style={{ flex: 1 }}>
-                        <Heading style={{ paddingTop: 20, color: textColor }}>{getTermFromDictionary(language, 'no_results')}</Heading>
+                        <Heading style={{ paddingTop: 20 }}>{getTermFromDictionary(language, 'no_results')}</Heading>
                     </Center>
                </>
           );

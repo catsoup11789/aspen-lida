@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@/components/ui/box';
 import { Divider } from '@/components/ui/divider';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { decodeHTML, stripHTML } from '../../helpers/helpers';
@@ -17,13 +17,13 @@ import { useTheme } from '../../themes/theme';
 const AdditionalInformation = (data) => {
      const location = data.data;
      const language = useActiveLanguage();
-     const { textColor } = useTheme();
+     const {  } = useTheme();
 
      if (location.description) {
           return (
                <Box>
                     <Divider style={{ marginBottom: 8 }} />
-                    <Heading style={{ color: textColor, marginBottom: 8 }}>{getTermFromDictionary(language, 'additional_information')}</Heading>
+                    <Heading style={{ marginBottom: 8 }}>{getTermFromDictionary(language, 'additional_information')}</Heading>
                     <Text>{stripHTML(decodeHTML(location.description))}</Text>
                </Box>
           );

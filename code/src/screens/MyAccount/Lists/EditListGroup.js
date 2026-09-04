@@ -11,7 +11,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 
 /**
@@ -48,7 +48,7 @@ export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
                     <ModalBackdrop />
                     <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceBg }}>
                          <ModalHeader>
-                              <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'rename_list_group')}</Heading>
+                              <Heading size="md">{getTermFromDictionary(language, 'rename_list_group')}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>

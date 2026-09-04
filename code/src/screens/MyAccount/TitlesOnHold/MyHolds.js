@@ -10,7 +10,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { Center } from '@/components/ui/center';
 import { ThemedCheckboxGroup as CheckboxGroup } from '../../../components/themed/ThemedCheckbox';
 import { FormControl } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { InfoIcon } from '@/components/ui/icon';
 import { ScrollView } from '@/components/ui/scroll-view';
@@ -576,7 +576,7 @@ export const MyHolds = () => {
           if (title === 'Pending') {
                return (
                    <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
-                        <Heading style={{ paddingBottom: 4, paddingTop: 12, color: textColor }}>
+                        <Heading style={{ paddingBottom: 4, paddingTop: 12 }}>
                               {getTermFromDictionary(language, 'pending_holds')}
                          </Heading>
                         <ThemedAlert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
@@ -591,7 +591,7 @@ export const MyHolds = () => {
           } else {
                return (
                    <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
-                        <Heading style={{ paddingBottom: 4, color: textColor }}>
+                        <Heading style={{ paddingBottom: 4 }}>
                               {getTermFromDictionary(language, 'holds_ready_for_pickup')}
                          </Heading>
                         <ThemedAlert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>

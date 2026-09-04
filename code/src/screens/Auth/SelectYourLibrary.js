@@ -10,7 +10,7 @@ import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '../../components
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { Image } from '@/components/ui/image';
 import { InputSlot } from '@/components/ui/input';
@@ -95,7 +95,7 @@ export const SelectYourLibrary = (payload) => {
                          }}
                     >
                          <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: borderColor }}>
-                              <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary('en', 'find_your_library')}</Heading>
+                              <Heading size="md">{getTermFromDictionary('en', 'find_your_library')}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>

@@ -4,7 +4,7 @@ import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, 
 import { ThemedButton as Button, ThemedButtonIcon as ButtonIcon, ThemedButtonText as ButtonText } from './themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { getTermFromDictionary } from '../translations/TranslationHelper';
@@ -21,7 +21,7 @@ import { useTheme } from '../themes/theme';
  **/
 export const LoadError = (props) => {
      const { error, reloadAction } = props;
-     const { uiColors, runtimeColors, textColor } = useTheme();
+     const { uiColors, runtimeColors } = useTheme();
 
      return (
           <Center style={{ flex: 1 }}>
@@ -68,7 +68,7 @@ export function loadError(error, reloadAction = '') {
 export const DisplayErrorAlertDialog = (props) => {
      const { title, message } = props;
      const language = useActiveLanguage();
-     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const { uiColors, runtimeColors, colorMode } = useTheme();
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => setIsOpen(false);
      const cancelRef = React.useRef(null);
@@ -79,7 +79,7 @@ export const DisplayErrorAlertDialog = (props) => {
                     <AlertDialogBackdrop />
                     <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark }}>
                     <AlertDialogHeader>
-                        <Heading style={{ color: textColor }}>{title}</Heading>
+                        <Heading>{title}</Heading>
                     </AlertDialogHeader>
                     <AlertDialogBody>
                         <Text>{message}</Text>

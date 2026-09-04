@@ -17,7 +17,7 @@ import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedInput, ThemedInputField } from '../../themed/ThemedFormControls';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 
 /**
@@ -143,7 +143,7 @@ export const CheckOut = (props) => {
                          <ModalBackdrop />
                          <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
-                                   <Heading size="md" style={{ color: textColor }}>
+                                   <Heading size="md">
                                         {getTermFromDictionary(language, 'add_alternate_library_card')}
                                    </Heading>
                                    <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowAddAlternateLibraryCardModal(false); }}>

@@ -23,7 +23,7 @@ import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -311,7 +311,7 @@ export const SelfCheckOut = () => {
                                    <ModalBackdrop />
                                    <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                                         <ModalHeader>
-                                            <Heading size="md" style={{ color: textColor }}>
+                                            <Heading size="md">
                                                   {getTermFromDictionary(language, 'add_new_item')}
                                              </Heading>
                                             <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
@@ -350,7 +350,7 @@ export const SelfCheckOut = () => {
                          </Center>
                     )}
                </Center>
-               <Heading size="md" style={{ paddingBottom: 8, color: textColor }}>
+               <Heading size="md" style={{ paddingBottom: 8 }}>
                     {getTermFromDictionary(language, 'checked_out_during_session')}
                </Heading>
                {isProcessingCheckout ? (
@@ -373,7 +373,7 @@ export const SelfCheckOut = () => {
                          <AlertDialogBackdrop />
                          <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'notice_about_item')}</Heading>
+                                   <Heading>{getTermFromDictionary(language, 'notice_about_item')}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
                                    <Text>{confirmMessage}</Text>
@@ -393,7 +393,7 @@ export const SelfCheckOut = () => {
                          <AlertDialogBackdrop />
                          <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading size="md" style={{ color: textColor }}>
+                                   <Heading size="md">
                                         {errorTitle}
                                    </Heading>
                               </AlertDialogHeader>
@@ -442,7 +442,7 @@ export const SelfCheckOut = () => {
                          <AlertDialogBackdrop />
                          <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'finish_checkout_session')}</Heading>
+                                   <Heading>{getTermFromDictionary(language, 'finish_checkout_session')}</Heading>
                                    <Button variant="link" onPress={() => setShowFinishModal(false)} style={{ position: 'absolute', right: 12, top: 4, backgroundColor: 'transparent' }}>
                                         <ThemedCloseIcon />
                                    </Button>

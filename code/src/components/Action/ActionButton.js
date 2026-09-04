@@ -15,7 +15,7 @@ import { useUserState } from '../../hooks/useUserData';
 import * as WebBrowser from 'expo-web-browser';
 import { useTheme } from '../../themes/theme';
 import { passUserToDiscovery } from '../../util/api/user';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalHeader } from '@/components/ui/modal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedCloseIcon } from '../themed/ThemedFormControls';
@@ -225,7 +225,7 @@ export const ActionButton = (data) => {
                               <ModalBackdrop />
                               <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                                    <ModalHeader>
-                                        <Heading size="md" style={{ color: textColor }}>{action.title}</Heading>
+                                        <Heading size="md">{action.title}</Heading>
                                         <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowIllUnavailableModal(false); }}>
                                              <ThemedCloseIcon />
                                         </ModalCloseButton>

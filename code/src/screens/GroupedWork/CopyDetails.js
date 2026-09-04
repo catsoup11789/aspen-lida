@@ -10,7 +10,7 @@ import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { DisplayErrorAlertDialog } from '../../components/loadError';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBody, ModalContent, ModalHeader } from '@/components/ui/modal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';

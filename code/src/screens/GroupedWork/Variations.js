@@ -4,7 +4,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -150,7 +150,7 @@ export const Variations = (props) => {
                                    <AlertDialogBackdrop />
                                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                                         <AlertDialogHeader>
-                                             <Heading style={{ color: textColor }}>{response?.title ? response.title : 'Unknown Error'}</Heading>
+                                             <Heading>{response?.title ? response.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
                                              <Text>{response?.message ? decodeMessage(response.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
@@ -173,7 +173,7 @@ export const Variations = (props) => {
                                    <AlertDialogBackdrop />
                                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                                         <AlertDialogHeader>
-                                             <Heading style={{ color: textColor }}>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
+                                             <Heading>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
                                              <Text>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
@@ -222,7 +222,7 @@ export const Variations = (props) => {
                                    <AlertDialogBackdrop />
                                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                                         <AlertDialogHeader>
-                                             <Heading style={{ color: textColor }}>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
+                                             <Heading>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
                                              <Text>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>

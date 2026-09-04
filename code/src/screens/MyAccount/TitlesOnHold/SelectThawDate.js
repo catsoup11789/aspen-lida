@@ -13,7 +13,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ButtonGroup } from '@/components/ui/button';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 
 /**
@@ -107,7 +107,7 @@ export const SelectThawDate = (props) => {
                         avoidKeyboard
                     >
                          <ModalHeader>
-                             <Heading size="sm" style={{ color: textColor }}>{actionLabel}</Heading>
+                             <Heading size="sm">{actionLabel}</Heading>
                              <ModalCloseButton style={{ padding: 12 }} onPress={hideDatePicker}>
                                   <ThemedCloseIcon />
                              </ModalCloseButton>

@@ -28,7 +28,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonIcon as ButtonIcon, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ScrollView } from '@/components/ui/scroll-view';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
@@ -198,7 +198,7 @@ export const Editions = () => {
                          <AlertDialogBackdrop />
                          <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading style={{ color: textColor }}>{response?.title}</Heading>
+                                   <Heading>{response?.title}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
                                    <Text>{response?.message}</Text>
@@ -221,7 +221,7 @@ export const Editions = () => {
                          <AlertDialogBackdrop />
                          <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading style={{ color: textColor }}>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
+                                   <Heading>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
                                    <Text>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
@@ -268,7 +268,7 @@ export const Editions = () => {
                          <AlertDialogBackdrop />
                          <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading style={{ color: textColor }}>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
+                                   <Heading>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                               </AlertDialogHeader>
                               <AlertDialogBody>
                                    <Text>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>

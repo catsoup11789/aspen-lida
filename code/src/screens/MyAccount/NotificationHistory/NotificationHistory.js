@@ -20,7 +20,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ScrollView } from '@/components/ui/scroll-view';
@@ -103,7 +103,7 @@ export const MyNotificationHistory = () => {
                <>
                    {systemMessagesForScreen.length > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                    <Center style={{ flex: 1, padding: 20 }}>
-                        <Heading style={{ paddingTop: 20, color: textColor }}>{getTermFromDictionary(language, 'notification_history_empty')}</Heading>
+                        <Heading style={{ paddingTop: 20 }}>{getTermFromDictionary(language, 'notification_history_empty')}</Heading>
                     </Center>
                </>
           );

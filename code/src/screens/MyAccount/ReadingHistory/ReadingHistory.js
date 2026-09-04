@@ -13,7 +13,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
 import { FormControl } from '@/components/ui/form-control';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ChevronDownIcon, ChevronUpIcon, InfoIcon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
@@ -334,7 +334,7 @@ export const MyReadingHistory = () => {
                               <AlertDialogBackdrop />
                               <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                                    <AlertDialogHeader>
-                                        <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'reading_history_opt_out')}</Heading>
+                                        <Heading size="md">{getTermFromDictionary(language, 'reading_history_opt_out')}</Heading>
                                    </AlertDialogHeader>
                                    <AlertDialogBody>
                                         <Text>{getTermFromDictionary(language, 'reading_history_opt_out_warning')}</Text>
@@ -358,7 +358,7 @@ export const MyReadingHistory = () => {
                               <AlertDialogBackdrop />
                               <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                                    <AlertDialogHeader>
-                                        <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'reading_history_delete_all')}</Heading>
+                                        <Heading size="md">{getTermFromDictionary(language, 'reading_history_delete_all')}</Heading>
                                    </AlertDialogHeader>
                                    <AlertDialogBody>
                                         <Text>{getTermFromDictionary(language, 'reading_history_delete_all_warning')}</Text>

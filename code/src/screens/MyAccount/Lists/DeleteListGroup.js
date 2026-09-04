@@ -13,7 +13,7 @@ import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ButtonGroup } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
-import { Heading } from '@/components/ui/heading';
+import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
@@ -32,7 +32,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
       const updateListGroups = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, uiColors, colorMode } = useTheme();
+      const { uiColors, colorMode } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
       const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
@@ -51,7 +51,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                     <ModalBackdrop />
                     <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceBg }}>
                          <ModalHeader>
-                              <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'delete_list_group')}</Heading>
+                              <Heading size="md">{getTermFromDictionary(language, 'delete_list_group')}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
