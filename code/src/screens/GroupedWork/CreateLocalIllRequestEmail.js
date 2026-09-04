@@ -11,7 +11,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ButtonGroup } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ScrollView } from '@/components/ui/scroll-view';
-import { Textarea, TextareaInput } from '@/components/ui/textarea';
+import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '../../components/themed/ThemedTextarea';
 import { VStack } from '@/components/ui/vstack';
 
 /**
@@ -130,10 +130,9 @@ const Request = (payload) => {
                          </FormControlLabel>
                          <Textarea
                               id="note"
-                              size="$lg"
+                              size="lg"
                          >
                               <TextareaInput
-                                   style={{ color: textColor }}
                                    value={userNote}
                                    defaultValue={userNote}
                                    onChangeText={(text) => {

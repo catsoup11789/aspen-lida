@@ -23,7 +23,7 @@ import { CircleIcon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ThemedRadio as Radio, ThemedRadioGroup as RadioGroup, ThemedRadioIcon as RadioIcon, ThemedRadioIndicator as RadioIndicator, ThemedRadioLabel as RadioLabel } from '../../../components/themed/ThemedRadio';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
-import { Textarea, TextareaInput } from '@/components/ui/textarea';
+import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '@/src/components/themed/ThemedTextarea';
 
 /**
  * CreateList component that allows users to create a new list. It displays a button that opens a modal where users can input the title, description, access level, and optionally add the list to a new or existing list group. The component handles API calls to create the list and provides feedback on the creation process, including refreshing the user's profile and updating the lists and list groups in the local state.
@@ -105,8 +105,8 @@ const CreateList = (props) => {
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'description')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <Textarea id="description" onChangeText={(text) => setDescription(text)} defaultValue={description} returnKeyType="next" style={{ borderColor }}>
-                                        <TextareaInput style={{ color: textColor }} />
+                                   <Textarea id="description" onChangeText={(text) => setDescription(text)} defaultValue={description} returnKeyType="next">
+                                        <TextareaInput />
                                    </Textarea>
                               </FormControl>
                               <FormControl style={{ paddingBottom: 20 }}>
