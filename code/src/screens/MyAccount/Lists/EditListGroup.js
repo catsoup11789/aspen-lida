@@ -25,13 +25,13 @@ import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalF
 export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, theme, runtimeColors, colorMode } = useTheme();
+      const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
 
       const [title, setTitle] = React.useState(currentTitle);
-      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      const toggle = () => {
           setShowModal(!showModal);

@@ -56,7 +56,7 @@ export const GroupedWorkScreen = () => {
      const library = useLibrary();
      const userLanguage = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { theme, runtimeColors, colorMode } = useTheme();
+     const { uiColors, runtimeColors, colorMode } = useTheme();
 
      const { status, data, error, isFetching } = useQuery(['groupedWork', id, userLanguage, library.baseUrl], () => getGroupedWork(route.params.id, userLanguage, library.baseUrl));
 
@@ -123,7 +123,7 @@ export const GroupedWorkScreen = () => {
                     loadError(error, '')
                ) : (
                     <ScrollView>
-                         <Box style={{ height: 150, width: '100%', backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark, zIndex: -1, position: 'absolute', left: 0, top: 0 }} />
+                         <Box style={{ height: 150, width: '100%', backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark, zIndex: -1, position: 'absolute', left: 0, top: 0 }} />
                          {_.size(systemMessages) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
                          <DisplayGroupedWork data={data.results} initialFormat={data.format} updateFormat={data.format} />
                     </ScrollView>
@@ -212,12 +212,12 @@ const Title = ({ title }) => {
  */
 const Author = ({ author }) => {
      const library = useLibrary();
-     const { theme, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      if (author) {
           return (
                <Button size="sm" variant="link" onPress={() => startSearch(author, 'SearchResults', library.baseUrl)}>
-                    <MaterialIcons name="search" size={16} color={colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
-                    <ButtonText style={{ fontWeight: '400', color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white }}>
+                    <MaterialIcons name="search" size={16} color={colorMode === 'light' ? uiColors.textStrong.light : uiColors.white} style={{ marginRight: 4 }} />
+                    <ButtonText style={{ fontWeight: '400', color: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white }}>
                          {author}
                     </ButtonText>
                </Button>
@@ -238,11 +238,11 @@ const Format = (data) => {
      const isSelected = data.isSelected;
      const updateFormat = data.updateFormat;
      const btnStyle = isSelected === key ? 'solid' : 'outline';
-     const { theme, colorMode } = useTheme();
+     const { uiColors, runtimeColors, colorMode } = useTheme();
 
      return (
-          <Button size="sm" variant={btnStyle} onPress={() => updateFormat(key)} style={{ backgroundColor: btnStyle === 'outline' ? 'transparent' : runtimeColors.secondary[400], borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white, marginBottom: 4, marginRight: 4 }}>
-               <ButtonText style={{ color: btnStyle === 'outline' ? (colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white) : runtimeColors.secondary['400-text'] }}>{format.label}</ButtonText>
+          <Button size="sm" variant={btnStyle} onPress={() => updateFormat(key)} style={{ backgroundColor: btnStyle === 'outline' ? 'transparent' : runtimeColors.secondary[400], borderColor: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white, marginBottom: 4, marginRight: 4 }}>
+               <ButtonText style={{ color: btnStyle === 'outline' ? (colorMode === 'light' ? uiColors.textStrong.light : uiColors.white) : runtimeColors.secondary['400-text'] }}>{format.label}</ButtonText>
           </Button>
      );
 };
@@ -336,12 +336,12 @@ const Formats = ({ formats }) => {
  */
 const BibliographicInformationLink = ({ groupedWorkId }) => {
      const language = useActiveLanguage();
-     const { theme, runtimeColors, colorMode } = useTheme();
+     const { uiColors, runtimeColors, colorMode } = useTheme();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const library = useLibrary();
-     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.text.dark;
+     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const textColor = colorMode === 'light' ? uiColors.textStrong.light : uiColors.text.dark;
 
      let showMoreInfoBtn = false;
      if(library?.showMoreInfoBtn) {

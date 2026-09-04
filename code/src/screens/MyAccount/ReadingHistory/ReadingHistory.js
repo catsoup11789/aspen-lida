@@ -66,12 +66,12 @@ export const MyReadingHistory = () => {
           return systemMessages.filter((obj) => obj.showOn === '0');
      }, [systemMessages]);
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
-     const { theme, runtimeColors, textColor, colorMode } = useTheme();
-     const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
-     const dangerColor = theme.tokens.colors.ui.danger;
+     const dangerColor = uiColors.danger;
      const pageHistory = React.useMemo(() => {
           if (!Array.isArray(readingHistory?.history)) return [];
           return readingHistory.history.slice(0, pageSize);
@@ -244,7 +244,7 @@ export const MyReadingHistory = () => {
      };
 
      const getActionButtons = () => {
-          const { theme, textColor, colorMode } = useTheme();
+          const { uiColors, textColor, colorMode } = useTheme();
 
           let sortLength = 8 * sortBy.last_used.length + 80;
           if (sort === 'author') {
@@ -321,10 +321,10 @@ export const MyReadingHistory = () => {
                                    </FormControl>
                                    <ButtonGroup size="sm" variant="solid">
                                         <Button style={{ backgroundColor: dangerColor }} onPress={() => setDeleteAllIsOpen(true)}>
-                                             <ButtonText style={{ color: theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'reading_history_delete_all')}</ButtonText>
+                                             <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'reading_history_delete_all')}</ButtonText>
                                         </Button>
                                         <Button style={{ backgroundColor: dangerColor }} onPress={() => setIsOpen(true)}>
-                                             <ButtonText style={{ color: theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'reading_history_opt_out')}</ButtonText>
+                                             <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'reading_history_opt_out')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </HStack>
@@ -347,7 +347,7 @@ export const MyReadingHistory = () => {
                                                   <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                              </Button>
                                              <Button style={{ backgroundColor: dangerColor }} isLoading={optingOut} isLoadingText={getTermFromDictionary(language, 'updating', true)} onPress={optOut} ref={cancelRef}>
-                                                  <ButtonText style={{ color: theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                                  <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
                                    </AlertDialogFooter>
@@ -371,7 +371,7 @@ export const MyReadingHistory = () => {
                                                   <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                              </Button>
                                              <Button style={{ backgroundColor: dangerColor }} isLoading={deleting} isLoadingText={getTermFromDictionary(language, 'deleting', true)} onPress={deleteAll} ref={cancelRef}>
-                                                  <ButtonText style={{ color: theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                                  <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
                                    </AlertDialogFooter>
@@ -509,10 +509,10 @@ const Item = React.memo(({ data: item, onDelete }) => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const {textColor, colorMode, theme } = useTheme();
+     const {textColor, colorMode, uiColors } = useTheme();
      const insets = useSafeAreaInsets();
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const actionSheetBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const actionSheetBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const [deleting, setDelete] = React.useState(false);
      const [isOpen, setIsOpen] = React.useState(false);

@@ -46,7 +46,7 @@ export const SelfCheckOut = () => {
      const { data: cards } = useCards();
      const { data: accounts } = useAccounts();
      const { checkouts, updateCheckouts } = React.useContext(CheckoutsContext);
-     const { textColor, colorMode, theme, runtimeColors } = useTheme();
+     const { textColor, colorMode, uiColors, runtimeColors } = useTheme();
 
      const passedItems = route.params?.items ?? [];
      const [items, setItems] = React.useState(passedItems);
@@ -308,7 +308,7 @@ export const SelfCheckOut = () => {
                               </FormControl>
                               <Modal isOpen={showModal} onClose={toggle} size="md" avoidKeyboard useRNModal={true}>
                                    <ModalBackdrop />
-                                   <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
+                                   <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                                         <ModalHeader>
                                             <Heading size="md" style={{ color: textColor }}>
                                                   {getTermFromDictionary(language, 'add_new_item')}
@@ -370,7 +370,7 @@ export const SelfCheckOut = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelRefConfirm} isOpen={openConfirmAlert} onClose={onCloseConfirm} closeOnOverlayClick={false} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
+                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <AlertDialogHeader>
                                    <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'notice_about_item')}</Heading>
                               </AlertDialogHeader>
@@ -390,7 +390,7 @@ export const SelfCheckOut = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
+                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <AlertDialogHeader>
                                    <Heading size="md" style={{ color: textColor }}>
                                         {errorTitle}
@@ -439,7 +439,7 @@ export const SelfCheckOut = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelRef} isOpen={showFinishModal} onClose={() => startNewSession()} size="lg" useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
+                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <AlertDialogHeader>
                                    <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'finish_checkout_session')}</Heading>
                                    <Button variant="link" onPress={() => setShowFinishModal(false)} style={{ position: 'absolute', right: 12, top: 4, backgroundColor: 'transparent' }}>

@@ -48,15 +48,15 @@ export const MyHold = (props) => {
      const library = useLibrary();
      const { updateHolds } = React.useContext(HoldsContext);
      const language = useActiveLanguage();
-     const { theme, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
      const insets = useSafeAreaInsets();
      const [cancelling, startCancelling] = React.useState(false);
      const [checkingOut, startCheckingOut] = React.useState(false);
      const [thawing, startThawing] = React.useState(false);
      const [freezing, startFreezing] = React.useState(false);
-     const actionSheetBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const separatorColor = colorMode === 'light' ? 'transparent' : theme.tokens.colors.ui.iconMuted.dark;
-     const checkboxBorderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const actionSheetBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const separatorColor = colorMode === 'light' ? 'transparent' : uiColors.iconMuted.dark;
+     const checkboxBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      let label, method, icon, canCancel;
      const [usesHoldPosition, setUsesHoldPosition] = React.useState(false);
      const [holdPosition, setHoldPosition] = React.useState(null);
@@ -296,7 +296,7 @@ export const MyHold = (props) => {
                     );
                } else {
                     if (library.showDateWhenSuspending) {
-                         return <SelectThawDate label={null} freezeLabel={freezeHoldLabel} freezingLabel={freezingHoldLabel} language={language} libraryContext={library} holdsContext={updateHolds} onClose={handleClose} freezeId={hold.cancelId} recordId={record} source={hold.source} libraryUrl={library.baseUrl} userId={hold.userId} resetGroup={resetGroup} theme={theme} textColor={textColor} colorMode={colorMode} />;
+                         return <SelectThawDate label={null} freezeLabel={freezeHoldLabel} freezingLabel={freezingHoldLabel} language={language} libraryContext={library} holdsContext={updateHolds} onClose={handleClose} freezeId={hold.cancelId} recordId={record} source={hold.source} libraryUrl={library.baseUrl} userId={hold.userId} resetGroup={resetGroup} textColor={textColor} colorMode={colorMode} />;
                     }else{
                          return (
                               <ActionsheetItem
@@ -325,7 +325,7 @@ export const MyHold = (props) => {
 
      const createUpdatePickupLocationAction = (canUpdate, available) => {
           if (canUpdate && !available) {
-               return <SelectPickupLocation isOpen={showActionsheet} language={language} libraryContext={library} holdsContext={updateHolds} locations={pickupLocations} sublocations={sublocations} onClose={handleClose} userId={hold.userId} currentPickupId={hold.pickupLocationId} holdId={hold.cancelId} resetGroup={resetGroup} textColor={textColor} colorMode={colorMode} theme={theme} />;
+               return <SelectPickupLocation isOpen={showActionsheet} language={language} libraryContext={library} holdsContext={updateHolds} locations={pickupLocations} sublocations={sublocations} onClose={handleClose} userId={hold.userId} currentPickupId={hold.pickupLocationId} holdId={hold.cancelId} resetGroup={resetGroup} textColor={textColor} colorMode={colorMode} uiColors={uiColors} runtimeColors={runtimeColors} />;
           } else {
                return null;
           }
@@ -383,9 +383,9 @@ export const ManageSelectedHolds = (props) => {
      const language = useActiveLanguage();
      const library = useLibrary();
      const { updateHolds } = React.useContext(HoldsContext);
-     const { theme, colorMode, textColor } = useTheme();
+     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
      const insets = useSafeAreaInsets();
-     const actionSheetBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const actionSheetBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const [showActionsheet, setShowActionsheet] = React.useState(false)
      const handleOpen = () => setShowActionsheet(true);
@@ -493,7 +493,7 @@ export const ManageSelectedHolds = (props) => {
      const freezeActionItem = () => {
           if (numToFreeze > 0) {
                if (library.showDateWhenSuspending) {
-                    return <SelectThawDate label={numToFreezeLabel} freezeLabel={freezeHoldLabel} freezingLabel={freezingHoldLabel} language={language} holdsContext={updateHolds} libraryContext={library} resetGroup={resetGroup} onClose={handleClose} count={numToFreeze} numSelected={numSelected} data={titlesToFreeze} theme={theme} textColor={textColor} colorMode={colorMode} />;
+                    return <SelectThawDate label={numToFreezeLabel} freezeLabel={freezeHoldLabel} freezingLabel={freezingHoldLabel} language={language} holdsContext={updateHolds} libraryContext={library} resetGroup={resetGroup} onClose={handleClose} count={numToFreeze} numSelected={numSelected} data={titlesToFreeze} textColor={textColor} colorMode={colorMode} />;
                }else{
                     return (
                          <ActionsheetItem
@@ -551,11 +551,11 @@ export const ManageAllHolds = (props) => {
      const language = useActiveLanguage();
      const { holds, updateHolds } = React.useContext(HoldsContext);
      const library = useLibrary();
-     const { theme, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const insets = useSafeAreaInsets();
-     const actionSheetBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const actionSheetBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const [showActionsheet, setShowActionsheet] = React.useState(false)
      const handleOpen = () => setShowActionsheet(true);
@@ -617,7 +617,7 @@ export const ManageAllHolds = (props) => {
      const freezeAllActionItem = () => {
           if (numToFreeze > 0) {
                if (library.showDateWhenSuspending) {
-                    return <SelectThawDate label={numToFreezeLabel} freezeLabel={freezeHoldLabel} freezingLabel={freezingHoldLabel} language={language} holdsContext={updateHolds} libraryContext={library} resetGroup={resetGroup} onClose={handleClose} count={numToFreeze} numSelected={numToManage} data={titlesToFreeze} theme={theme} textColor={textColor} colorMode={colorMode} />;
+                    return <SelectThawDate label={numToFreezeLabel} freezeLabel={freezeHoldLabel} freezingLabel={freezingHoldLabel} language={language} holdsContext={updateHolds} libraryContext={library} resetGroup={resetGroup} onClose={handleClose} count={numToFreeze} numSelected={numToManage} data={titlesToFreeze} textColor={textColor} colorMode={colorMode} />;
                }else{
                     return (
                          <ActionsheetItem

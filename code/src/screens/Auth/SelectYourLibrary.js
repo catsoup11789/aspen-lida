@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PermissionsPrompt } from '../../components/PermissionsPrompt';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useKeyboard } from '../../hooks/hooks';
-import { useTheme } from '../../themes/theme';
+import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
 import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
@@ -27,9 +27,9 @@ import { VStack } from '@/components/ui/vstack';
  */
 export const SelectYourLibrary = (payload) => {
      const isKeyboardOpen = useKeyboard();
-     const { theme, runtimeColors, textColor, colorMode } = useTheme();
-     const surfaceBg = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.surface?.light ?? '#FFFFFF') : (theme?.tokens?.colors?.ui?.surface?.dark ?? '#1F1F1F');
-     const borderColor = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.border?.light ?? '#6b7280') : (theme?.tokens?.colors?.ui?.border?.dark ?? '#d6d3d1');
+     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const surfaceBg = colorMode === 'light' ? (uiColors?.surface?.light ?? UI_COLOR_FALLBACKS.surface.light) : (uiColors?.surface?.dark ?? UI_COLOR_FALLBACKS.surface.dark);
+     const borderColor = colorMode === 'light' ? (uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light) : (uiColors?.border?.dark ?? UI_COLOR_FALLBACKS.border.dark);
      const { isCommunity, showModal, setShowModal, updateSelectedLibrary, selectedLibrary, shouldRequestPermissions, libraries, allLibraries, setShouldRequestPermissions } = payload;
      const [query, setQuery] = React.useState('');
      const insets = useSafeAreaInsets();
@@ -125,7 +125,7 @@ export const SelectYourLibrary = (payload) => {
                                              updateSelectedLibrary={updateSelectedLibrary}
                                              textColor={textColor}
                                              colorMode={colorMode}
-                                             theme={theme}
+                                             uiColors={uiColors}
                                         />
                                    ))}
                               </VStack>
@@ -139,7 +139,7 @@ export const SelectYourLibrary = (payload) => {
 const Item = (data) => {
      const library = data.data;
      const libraryIcon = library.favicon;
-     const { isCommunity, setShowModal, updateSelectedLibrary, textColor, colorMode, theme } = data;
+     const { isCommunity, setShowModal, updateSelectedLibrary, textColor, colorMode, uiColors } = data;
 
      const handleSelect = () => {
           updateSelectedLibrary(library);
@@ -147,7 +147,7 @@ const Item = (data) => {
      };
 
      return (
-          <Pressable style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? (theme?.tokens?.colors?.ui?.border?.light ?? '#6b7280') : (theme?.tokens?.colors?.ui?.border?.dark ?? '#d6d3d1'), paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handleSelect}>
+          <Pressable style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? (uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light) : (uiColors?.border?.dark ?? UI_COLOR_FALLBACKS.border.dark), paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handleSelect}>
                <HStack space="lg" style={{ alignItems: 'center' }}>
                     {libraryIcon ? (
                          <Image

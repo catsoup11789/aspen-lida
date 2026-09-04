@@ -18,7 +18,7 @@ import { Text } from '@/components/ui/text';
  * @constructor
  */
 export const HoldNotificationPreferences = (props) => {
-     const { textColor, theme, user, language, emailNotification, setEmailNotification, phoneNotification, setPhoneNotification, smsNotification, setSMSNotification, smsCarrier, setSMSCarrier, smsNumber, setSMSNumber, phoneNumber, setPhoneNumber, colorMode } = props;
+     const { textColor, uiColors, runtimeColors, user, language, emailNotification, setEmailNotification, phoneNotification, setPhoneNotification, smsNotification, setSMSNotification, smsCarrier, setSMSCarrier, smsNumber, setSMSNumber, phoneNumber, setPhoneNumber, colorMode } = props;
      const insets = useSafeAreaInsets();
 
      const holdNotificationInfo = user.holdNotificationInfo;
@@ -119,7 +119,7 @@ export const HoldNotificationPreferences = (props) => {
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>

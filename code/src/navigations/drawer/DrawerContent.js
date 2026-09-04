@@ -754,8 +754,8 @@ const UserProfileOverview = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
 
      const icon = library.logoApp ?? library.favicon ?? Constants.expoConfig.ios.icon;
 
@@ -794,8 +794,8 @@ const Checkouts = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
 
      return (
           <Pressable
@@ -828,8 +828,8 @@ const Checkouts = () => {
 const Holds = () => {
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
      const library = useLibrary();
      const language = useActiveLanguage();
 
@@ -866,8 +866,8 @@ const UserLists = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
 
      return (
           <Pressable
@@ -897,8 +897,8 @@ const SavedSearches = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
      const updatesCount = user.numSavedSearchesNew ?? 0;
      const { text: savedSearchSummary } = useTranslationWithValues('num_saved_searches_with_updates', updatesCount, { enabled: updatesCount > 0, addToDictionary: true });
 
@@ -935,8 +935,8 @@ const ReadingHistory = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
 
      return (
           <Pressable
@@ -964,8 +964,8 @@ const ReadingHistory = () => {
 const UserProfile = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
 
      return (
           <Pressable
@@ -986,8 +986,8 @@ const UserProfile = () => {
 const NotificationHistory = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
 
      if (library.displayIlsInbox === '1' || library.displayIlsInbox === 1 || library.displayIlsInbox === true) {
           return (
@@ -1013,8 +1013,8 @@ const LinkedAccounts = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
 
      if (library.allowLinkedAccounts === '1') {
           return (
@@ -1042,8 +1042,8 @@ const LinkedAccounts = () => {
 const AlternateLibraryCard = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
 
      const shouldShowAlternateLibraryCard = library.showAlternateLibraryCard ?? false;
 
@@ -1072,9 +1072,9 @@ const Fines = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor: themeTextColor, theme, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { textColor: themeTextColor, uiColors, colorMode } = useTheme();
+     const backgroundColor = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
 
      const shouldShowFines = library.showFines ?? true;
 
@@ -1112,8 +1112,8 @@ const Events = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
 
      if (library.hasEventSettings) {
           return (
@@ -1147,9 +1147,9 @@ const Events = () => {
 const YearInReview = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor: themeTextColor, theme, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { textColor: themeTextColor, uiColors, colorMode } = useTheme();
+     const backgroundColor = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const yearInReviewLabel = getTermFromDictionary(language, 'year_in_review');
@@ -1179,8 +1179,8 @@ const YearInReview = () => {
 const Campaigns = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, colorMode } = useTheme();
-     const textColor = colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark;
+     const { uiColors, colorMode } = useTheme();
+     const textColor = colorMode === 'light' ? uiColors.text.light : uiColors.text.dark;
      if (library.hasCommunityEngagementEnabled) {
           return(
                <Pressable

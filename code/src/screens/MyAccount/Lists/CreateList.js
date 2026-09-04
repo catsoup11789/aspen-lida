@@ -40,7 +40,7 @@ const CreateList = (props) => {
       const updateListGroups = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, theme, runtimeColors, colorMode } = useTheme();
+      const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
       const [loading, setAdding] = React.useState(false);
       const [showModal, setShowModal] = useState(false);
 
@@ -53,8 +53,8 @@ const CreateList = (props) => {
      const [nestedGroup, setNestedGroup] = React.useState('');
      const [existingGroupId, setExistingGroupId] = React.useState(user.lastListGroupAdded ? user.lastListGroupAdded : (listGroups?.groups[0] ? listGroups.groups[0].id : 0));
      const insets = useSafeAreaInsets();
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      let hasListGroups = false;

@@ -39,7 +39,7 @@ export const MyNotificationHistory = () => {
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, theme, runtimeColors, textColor } = useTheme();
+     const { colorMode, uiColors, runtimeColors, textColor } = useTheme();
      const { data: notificationHistory } = useNotificationHistory();
      const updateNotificationHistory = useUpdateNotificationHistory();
      const { data: inbox } = useInbox();
@@ -111,7 +111,7 @@ export const MyNotificationHistory = () => {
      const Paging = () => {
           if (notificationHistory?.totalResults > 0) {
                return (
-                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.iconMuted.light, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.light, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: runtimeColors.primary[500] }}>
@@ -169,13 +169,13 @@ export const MyNotificationHistory = () => {
  * @constructor
  */
 const Item = (data) => {
-     const { colorMode, textColor, theme } = useTheme();
+     const { colorMode, textColor, uiColors } = useTheme();
      const message = data.data;
      const handleOpenMyMessage = data.handleOpenMyMessage;
      let content = stripHTML(message.content);
      content = truncate(content, 35);
      return (
-          <Pressable onPress={() => handleOpenMyMessage(message)} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.dark : theme.tokens.colors.ui.iconMuted.light, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
+          <Pressable onPress={() => handleOpenMyMessage(message)} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.dark : uiColors.iconMuted.light, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
                <HStack style={{ alignItems: 'flex-start' }}>
                     {message.isRead === '0' ? (
                          <Box style={{ width: '7%' }}>

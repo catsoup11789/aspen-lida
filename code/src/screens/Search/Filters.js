@@ -40,7 +40,7 @@ export const FiltersScreen = () => {
      const location = useLibraryLocation();
      const language = useActiveLanguage();
      const { currentIndex, currentSource } = React.useContext(SearchContext);
-     const { theme, textColor, colorMode, runtimeColors } = useTheme();
+     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
      const pendingFiltersFromParams = useNavigationState((state) => state.routes[0]['params']['pendingFilters']);
      const [searchTerm, setSearchTerm] = React.useState(SearchGlobal.term ?? '');
 
@@ -58,7 +58,7 @@ export const FiltersScreen = () => {
 
      const renderFilter = (label, index) => {
           return (
-               <Pressable key={index} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingVertical: 20 }} onPress={() => openCluster(label)}>
+               <Pressable key={index} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingVertical: 20 }} onPress={() => openCluster(label)}>
                     <VStack style={{ alignContent: 'center' }}>
                          <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                               <VStack>
@@ -159,7 +159,7 @@ export const FiltersScreen = () => {
 
      const actionButtons = () => {
           return (
-               <Box style={{ padding: 12, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceSoft.light : theme.tokens.colors.ui.surface.dark, shadowOpacity: 0.2, shadowRadius: 1 }}>
+               <Box style={{ padding: 12, backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surface.dark, shadowOpacity: 0.2, shadowRadius: 1 }}>
                     <Center>
                          <ButtonGroup size="lg">
                               <Button variant="link" onPress={() => clearSelections()}>
@@ -311,7 +311,7 @@ export const FiltersScreen = () => {
 
                          {!isLoading ? (
                               <>
-                                   <Pressable key={0} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingVertical: 20 }} onPress={() => openSearchIndexes()}>
+                                   <Pressable key={0} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingVertical: 20 }} onPress={() => openSearchIndexes()}>
                                         <VStack style={{ alignContent: 'center' }}>
                                              <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                                                   <VStack>
@@ -326,7 +326,7 @@ export const FiltersScreen = () => {
                                              </HStack>
                                         </VStack>
                                    </Pressable>
-                                   <Pressable key={1} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingVertical: 20 }} onPress={() => openSearchSources()}>
+                                   <Pressable key={1} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingVertical: 20 }} onPress={() => openSearchSources()}>
                                         <VStack style={{ alignContent: 'center' }}>
                                              <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
                                                   <VStack>

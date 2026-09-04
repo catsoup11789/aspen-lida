@@ -56,7 +56,7 @@ export const MyList = ({ route }) => {
           recentlyAdded: 'Sort By Recently Added',
           custom: 'Sort By User Defined' });
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, theme, runtimeColors, colorMode } = useTheme();
+     const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const [isLoading, setIsLoading] = React.useState(true);
      const [fetchError, setFetchError] = React.useState(null);
@@ -70,10 +70,10 @@ export const MyList = ({ route }) => {
           message: null });
      const hasAppliedDefaultSort = React.useRef(false);
      const browserBackgroundColor = colorMode === 'light' ? '#ffffff' : '#111827';
-     const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const dangerColor = theme.tokens.colors.ui.danger;
+     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const dangerColor = uiColors.danger;
      const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
      const t = React.useCallback((key, ellipsis = false, forcedLanguage) => {
           const lang = forcedLanguage || language;

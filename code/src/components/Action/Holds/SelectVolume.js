@@ -19,7 +19,7 @@ import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragI
  * @constructor
  */
 export const SelectVolume = (props) => {
-     const { id, volume, setVolume, showModal, promptForHoldType, holdType, setHoldType, language, url, textColor, theme, colorMode, runtimeColors } = props;
+     const { id, volume, setVolume, showModal, promptForHoldType, holdType, setHoldType, language, url, textColor, uiColors, colorMode, runtimeColors } = props;
      const insets = useSafeAreaInsets();
 
      const { status, data, error, isFetching } = useQuery({
@@ -83,7 +83,7 @@ export const SelectVolume = (props) => {
                                         </SelectTrigger>
                                         <SelectPortal useRNModal={true}>
                                              <SelectBackdrop />
-                                             <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                             <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                                  <SelectDragIndicatorWrapper>
                                                       <SelectDragIndicator />
                                                  </SelectDragIndicatorWrapper>

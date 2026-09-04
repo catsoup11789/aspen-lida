@@ -15,7 +15,7 @@ import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragI
  * @constructor
  */
 export const SelectItemHold = (props) => {
-     const { id, data, item, setItem, setHoldType, showModal, holdTypeForFormat, language, url, textColor, theme, colorMode, runtimeColors } = props;
+     const { id, data, item, setItem, setHoldType, showModal, holdTypeForFormat, language, url, textColor, uiColors, colorMode, runtimeColors } = props;
      const insets = useSafeAreaInsets();
 
      let holdType = props.holdType;
@@ -77,7 +77,7 @@ export const SelectItemHold = (props) => {
                               </SelectTrigger>
                               <SelectPortal useRNModal={true}>
                                    <SelectBackdrop />
-                                   <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                   <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                         <SelectDragIndicatorWrapper>
                                              <SelectDragIndicator />
                                         </SelectDragIndicatorWrapper>

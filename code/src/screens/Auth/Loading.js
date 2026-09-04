@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import * as Sentry from '@sentry/react-native';
 import { SystemMessagesContext } from '../../context/initialContext';
-import { buildThemeForLibrary, useTheme } from '../../themes/theme';
+import { buildThemeForLibrary, useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
 import {
      getLanguageDisplayName,
      getTermFromDictionary,
@@ -193,8 +193,8 @@ export const LoadingScreen = () => {
         const hasResolvedLibraryContext = !!LIBRARY.url;
 
      const insets = useSafeAreaInsets();
-     const { theme } = useTheme();
-     const borderColor = theme.tokens.colors.ui?.border?.light ?? '#6b7280';
+     const { uiColors } = useTheme();
+     const borderColor = uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light;
 
      const numSteps = 14;
 

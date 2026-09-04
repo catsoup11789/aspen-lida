@@ -61,9 +61,9 @@ export const SupportScreen = () => {
      const activeLanguage = useActiveLanguage();
      const updateLanguages = useUpdateAvailableLanguages();
      const updateDictionary = useUpdateDictionary();
-     const { theme, textColor, colorMode, runtimeColors } = useTheme();
-     const mutedTextColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.iconMuted.light;
-     const cachePanelBorderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.iconMuted.light;
+     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const mutedTextColor = colorMode === 'light' ? uiColors.icon.light : uiColors.iconMuted.light;
+     const cachePanelBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.iconMuted.light;
      const [refreshingCache, setRefreshingCache] = React.useState({});
      const isAnyCacheRefreshing = Object.values(refreshingCache).some(Boolean);
      const [status, setStatus] = React.useState({

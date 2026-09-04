@@ -92,7 +92,7 @@ const DisplayCategory = (data) => {
      const [errorTitle, setErrorTitle] = React.useState('');
      const [errorMessage, setErrorMessage] = React.useState('');
      const library = useLibrary();
-     const { colorMode, textColor, theme, runtimeColors } = useTheme();
+     const { colorMode, textColor, uiColors, runtimeColors } = useTheme();
      const toggleCategoryVisibility = useToggleBrowseCategoryVisibility();
      const toggleCategoryVisibilityBatch = useToggleBrowseCategoryVisibilityBatch();
      const maxNum = useMaxCategories();
@@ -210,7 +210,7 @@ const DisplayCategory = (data) => {
            });
      };
      return (
-          <Box style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.iconMuted.light, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
+          <Box style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.light, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
                <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}>
                     <Text
                          bold
@@ -228,7 +228,7 @@ const DisplayCategory = (data) => {
                          isChecked={isVisible}
                          trackColor={{
                               true: runtimeColors.primary[500],
-                              false: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surfaceMuted.dark
+                              false: colorMode === 'light' ? uiColors.surface.light : uiColors.surfaceMuted.dark
                          }}
 
                     />

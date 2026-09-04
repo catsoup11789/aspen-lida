@@ -5,8 +5,8 @@ import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { useTheme } from '../../themes/theme';
 
 export const ThemedInput = React.forwardRef(({ style, ...props }, ref) => {
-     const { theme, colorMode } = useTheme();
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const { uiColors, colorMode } = useTheme();
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      return <Input ref={ref} style={[{ borderColor }, style]} {...props} />;
 });

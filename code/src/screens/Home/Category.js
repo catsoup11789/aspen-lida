@@ -31,7 +31,7 @@ const loggedEmptyCategoryKeys = new Set();
  * @constructor
  */
 const DisplayBrowseCategory = ({category}) => {
-     const { theme, runtimeColors, colorMode } = useTheme();
+     const { uiColors, runtimeColors, colorMode } = useTheme();
      const language = useActiveLanguage();
      const library = useLibrary();
      const maxNum = useMaxCategories();
@@ -130,14 +130,14 @@ const DisplayBrowseCategory = ({category}) => {
                     <HStack space="md" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 8 }}>
                          <DisplayBrowseCategoryTitle category={category.label} key={category.id} textId={id} source={category.source ?? 'GroupedWork'} />
                          {subCategories.length > 0 ? (
-                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
-                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
-                                  <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
+                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
+                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.textStrong.light : uiColors.white} style={{ marginRight: 4 }} />
+                                  <ButtonText style={{ color: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white }}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
                               </Button>
                          ) : (
-                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHide(category.textId)}>
-                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
-                                  <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'hide')}</ButtonText>
+                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHide(category.textId)}>
+                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.textStrong.light : uiColors.white} style={{ marginRight: 4 }} />
+                                  <ButtonText style={{ color: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white }}>{getTermFromDictionary(language, 'hide')}</ButtonText>
                               </Button>
                          )}
                     </HStack>
@@ -168,14 +168,14 @@ const DisplayBrowseCategory = ({category}) => {
  * @constructor
  */
 const DisplayBrowseCategoryTitle = ({category}) => {
-     const { colorMode, theme } = useTheme();
+     const { colorMode, uiColors } = useTheme();
 
      return (
           <Pressable style={{ maxWidth: '80%' }} /*onPress={() => onPressCategory(category, textId, source)}*/>
                <Text
                     bold
                     size="lg"
-                    style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark, marginBottom: 4 }}
+                    style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark, marginBottom: 4 }}
                     >
                     {category}
                </Text>
@@ -192,7 +192,7 @@ const DisplayBrowseCategoryTitle = ({category}) => {
  */
 const DisplayBrowseCategoryRecord = ({record}) => {
      const library = useLibrary();
-     const { theme } = useTheme();
+     const { uiColors } = useTheme();
      const language = useActiveLanguage();
 
      let type = 'grouped_work';
@@ -319,7 +319,7 @@ const DisplayBrowseCategoryRecord = ({record}) => {
                {isNew ? (
                     <Box style={{ zIndex: 1, alignItems: 'center' }}>
                          <ThemedBadge action="warning" style={{ backgroundColor: '#f59e0b', marginHorizontal: 20, marginTop: -8 }}>
-                              <ThemedBadgeText action="warning" bold style={{ color: theme.tokens.colors.ui.white, textTransform: 'none' }}>
+                              <ThemedBadgeText action="warning" bold style={{ color: uiColors.white, textTransform: 'none' }}>
                                    {getTermFromDictionary(language, 'flag_new')}
                               </ThemedBadgeText>
                          </ThemedBadge>
@@ -340,7 +340,7 @@ const DisplayBrowseCategoryRecord = ({record}) => {
  * @constructor
  */
 const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, isSystemBrowseCategory }) => {
-     const { theme } = useTheme();
+     const { runtimeColors } = useTheme();
      const library = useLibrary();
      const maxNum = useMaxCategories();
      const toggleCategoryVisibility = useToggleBrowseCategoryVisibility();

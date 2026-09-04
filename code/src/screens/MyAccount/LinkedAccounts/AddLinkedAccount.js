@@ -30,7 +30,7 @@ const AddLinkedAccount = () => {
      const updateUserProfile = useUpdateUserProfile();
      const updateAccounts = useUpdateAccounts();
      const updateViewers = useUpdateViewers();
-     const { textColor, theme, runtimeColors, colorMode } = useTheme();
+     const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
      const [loading, setLoading] = useState(false);
      const [showModal, setShowModal] = useState(false);
      const [showPassword, setShowPassword] = useState(false);
@@ -38,8 +38,8 @@ const AddLinkedAccount = () => {
      const [password, setPassword] = useState('');
 
      const passwordRef = useRef();
-     const modalBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const inputBorderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const inputBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      const toggle = () => {
           setShowModal(!showModal);

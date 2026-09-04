@@ -19,7 +19,7 @@ import { GetLoginForm } from './LoginForm';
 import { ResetPassword } from './ResetPassword';
 import { SelectYourLibrary } from './SelectYourLibrary';
 import { SplashScreen } from './Splash';
-import { useTheme } from '../../themes/theme';
+import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
 import { APIErrorLog } from '../MyAccount/Settings/Logs/APIErrorLog';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { logDebugMessage, logInfoMessage, getErrorMessage } from '../../util/logging';
@@ -67,11 +67,11 @@ export const LoginScreen = () => {
      const [showApiErrorModal, setShowApiErrorModal] = React.useState(false);
      const logoTapCountRef = React.useRef(0);
      const logoTapTimerRef = React.useRef(null);
-     const { theme, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
      const surfaceBg =
           colorMode === 'light'
-               ? theme?.tokens?.colors?.ui?.surface?.light ?? '#FFFFFF'
-               : theme?.tokens?.colors?.ui?.surface?.dark ?? '#1F1F1F';
+               ? uiColors?.surface?.light ?? UI_COLOR_FALLBACKS.surface.light
+               : uiColors?.surface?.dark ?? UI_COLOR_FALLBACKS.surface.dark;
 
      let isCommunity = true;
      if (!GLOBALS.slug.startsWith('aspen-lida') || GLOBALS.slug === 'aspen-lida-bws') {
@@ -292,7 +292,7 @@ export const LoginScreen = () => {
                          <ModalContent style={{ maxHeight: '75%', width: '95%', alignSelf: 'center', borderRadius: 12, backgroundColor: surfaceBg }}>
                               <ModalHeader></ModalHeader>
                               <ModalBody style={{ paddingHorizontal: 16 }}>
-                                   <APIErrorLog theme={theme} colorMode={colorMode} textColor={textColor} />
+                                   <APIErrorLog uiColors={uiColors} colorMode={colorMode} textColor={textColor} />
                               </ModalBody>
                               <ModalFooter style={{ paddingBottom: Math.max(insets.bottom, 8), paddingTop: 8, paddingHorizontal: 16 }}>
                                    <Button variant="outline" onPress={() => setShowApiErrorModal(false)}>

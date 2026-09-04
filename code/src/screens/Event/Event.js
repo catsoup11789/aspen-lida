@@ -54,7 +54,7 @@ export const EventScreen = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, theme, colorMode } = useTheme();
+     const { textColor, uiColors, colorMode } = useTheme();
      const [hasValidImage, setHasValidImage] = React.useState(false);
      const [eventData, setEventData] = React.useState([]);
      const [errorMessage, setErrorMessage] = React.useState('');
@@ -133,8 +133,8 @@ const DisplayEvent = (payload) => {
      const route = useRoute();
      const source = route.params.source;
      const language = useActiveLanguage();
-     const { textColor, theme, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const { textColor, uiColors, colorMode } = useTheme();
+     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
      const openLink = async () => {
           const browserParams = {
                enableDefaultShareMenuItem: false,
@@ -204,8 +204,8 @@ const DisplayEvent = (payload) => {
                     {event.inUserEvents ? <InYourEvents /> : <AddToYourEvents id={event.id} source={source} />}
                     <HStack space="sm" style={{ justifyContent: 'space-between' }}>
                          {event.canAddToList ? <AddToList source="Events" itemId={event.id} btnStyle="reg" btnWidth="48%" /> : null}
-                         <Button style={{ backgroundColor: theme.tokens.colors.ui.surfaceMuted.light, width: event.canAddToList ? '49%' : '100%' }} onPress={() => openLink()}>
-                              <ButtonText style={{ color: theme.tokens.colors.ui.textStrong.light }}>{getTermFromDictionary(language, 'more_info')}</ButtonText>
+                         <Button style={{ backgroundColor: uiColors.surfaceMuted.light, width: event.canAddToList ? '49%' : '100%' }} onPress={() => openLink()}>
+                              <ButtonText style={{ color: uiColors.textStrong.light }}>{getTermFromDictionary(language, 'more_info')}</ButtonText>
                          </Button>
                     </HStack>
                     <EventDescription description={event.description} />
@@ -363,7 +363,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
      const [modalBodyHeading, setModalBodyHeading] = React.useState('');
      const [calendarId, setCalendarId] = React.useState();
      const [confirmAdd, setConfirmAdd] = React.useState(false);
-     const { textColor } = useTheme();
+     const { textColor, uiColors, runtimeColors } = useTheme();
 
      let displayDay = false;
      let displayStartTime = false;
@@ -481,7 +481,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
                </Pressable>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} closeOnOverlayClick={false} size="md">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: theme.tokens.colors.ui.surface.light }}>
+                    <ModalContent style={{ maxWidth: '90%', backgroundColor: uiColors.surface.light }}>
                          <ModalHeader>
                               <Heading size="md" style={{ color: textColor }}>{modalBodyHeading}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
@@ -655,8 +655,8 @@ const RegistrationModal = ({ event }) => {
      const language = useActiveLanguage();
      const [showRegistrationModal, setShowRegistrationModal] = React.useState(false);
 
-     const { textColor, theme, runtimeColors, colorMode } = useTheme();
-     const backgroundColor= colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
+     const backgroundColor= colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
 
      const openLink = async () => {
           /* location.homeLink */
@@ -680,7 +680,7 @@ const RegistrationModal = ({ event }) => {
                </Button>
                <Modal isOpen={showRegistrationModal} onClose={() => setShowRegistrationModal(false)} closeOnOverlayClick={false} size="lg">
                     <ModalBackdrop />
-                    <ModalContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, maxWidth: '90%' }}>
+                    <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, maxWidth: '90%' }}>
                          <ModalHeader>
                               <Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'registration_information')}</Heading>
                               <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowRegistrationModal(false); }}>
@@ -692,11 +692,11 @@ const RegistrationModal = ({ event }) => {
                               <ButtonGroup space="sm" size="md">
                                    <Button
                                         variant="outline"
-                                        style={{ borderColor: theme.tokens.colors.ui.border.light, backgroundColor: theme.tokens.colors.ui.surfaceMuted.light }}
+                                        style={{ borderColor: uiColors.border.light, backgroundColor: uiColors.surfaceMuted.light }}
                                         onPress={() => {
                                              setShowRegistrationModal(false);
                                         }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.ui.textStrong.light }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: uiColors.textStrong.light }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button style={{ backgroundColor: runtimeColors.primary[500] }} onPress={() => openLink()}><ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'go_to_registration')}</ButtonText></Button>
                               </ButtonGroup>

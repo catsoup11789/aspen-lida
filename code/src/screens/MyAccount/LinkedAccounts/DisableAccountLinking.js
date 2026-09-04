@@ -22,7 +22,7 @@ import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
 const DisableAccountLinking = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor, theme, runtimeColors, colorMode } = useTheme();
+     const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
@@ -30,7 +30,7 @@ const DisableAccountLinking = () => {
      const updateViewers = useUpdateViewers();
      const [loading, setLoading] = useState(false);
      const [showModal, setShowModal] = useState(false);
-     const modalBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const toggle = () => {
           setShowModal(!showModal);

@@ -50,12 +50,12 @@ const EditList = (props) => {
       const [description, setDescription] = React.useState(data.description);
       const [isPublic, setPublic] = React.useState(data.public);
       const [listGroupId, setListGroupId] = React.useState(data.listGroupId);
-      const { theme, runtimeColors, textColor, colorMode } = useTheme();
+      const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
 
       const insets = useSafeAreaInsets();
       const user = userState?.user ?? {};
-      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-      const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
       const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      React.useLayoutEffect(() => {
@@ -210,7 +210,7 @@ const EditList = (props) => {
  */
 const DeleteList = (props) => {
       const { listId } = props;
-      const {textColor, colorMode, theme } = useTheme();
+      const {textColor, colorMode, uiColors, runtimeColors } = useTheme();
       const { data: userState } = useUserState();
       const library = useLibrary();
       const language = useActiveLanguage();
@@ -222,14 +222,14 @@ const DeleteList = (props) => {
       const onClose = () => setIsOpen(false);
       const cancelRef = React.useRef(null);
       const user = userState?.user ?? {};
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      return (
           <Center>
-               <Button style={{ backgroundColor: theme.tokens.colors.ui.danger }} onPress={() => setIsOpen(!isOpen)} size="sm">
-                    <MaterialIcons name="delete" size={18} color={theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
-                    <ButtonText style={{ color: theme.tokens.colors.ui.white }}>Delete List</ButtonText>
+               <Button style={{ backgroundColor: uiColors.danger }} onPress={() => setIsOpen(!isOpen)} size="sm">
+                    <MaterialIcons name="delete" size={18} color={uiColors.white} style={{ marginRight: 4 }} />
+                    <ButtonText style={{ color: uiColors.white }}>Delete List</ButtonText>
                </Button>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                     <AlertDialogBackdrop />
@@ -261,7 +261,7 @@ const DeleteList = (props) => {
                                         <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: theme.tokens.colors.ui.danger }}
+                                        style={{ backgroundColor: uiColors.danger }}
                                         isLoading={loading}
                                         isLoadingText={getTermFromDictionary(language, 'deleting', true)}
                                         onPress={() => {
@@ -291,7 +291,7 @@ const DeleteList = (props) => {
                                                   }
                                              });
                                         }}>
-                                        <ButtonText style={{ color: theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
+                                        <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

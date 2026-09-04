@@ -19,7 +19,7 @@ import { useTheme } from '../../themes/theme';
  */
 export const UnsavedChangesExit = (props) => {
      const { updateSearch, discardChanges, language, hasPendingChanges } = props;
-     const { theme, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
      const navigation = useNavigation();
      const [isOpen, setIsOpen] = React.useState(false);
      const onClose = () => setIsOpen(false);
@@ -62,7 +62,7 @@ export const UnsavedChangesExit = (props) => {
                </Pressable>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose} useRNModal={true}>
                     <AlertDialogBackdrop/>
-                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceSoft.light : theme.tokens.colors.ui.surfaceSoft.dark }}>
+                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark }}>
                          <AlertDialogHeader>
                               <Heading style={{ color: textColor }}>{getTermFromDictionary(language, 'discard_changes')}</Heading>
                          </AlertDialogHeader>
@@ -75,7 +75,7 @@ export const UnsavedChangesExit = (props) => {
                                         <ButtonText style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'save')}</ButtonText>
                                    </Button>
                                    <Button variant="link" onPress={forceClose}>
-                                        <ButtonText style={{ color: theme.tokens.colors.ui.danger }}>{getTermFromDictionary(language, 'discard')}</ButtonText>
+                                        <ButtonText style={{ color: uiColors.danger }}>{getTermFromDictionary(language, 'discard')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

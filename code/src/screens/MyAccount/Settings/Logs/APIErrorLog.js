@@ -26,13 +26,13 @@ function formatDate(ms) {
 /**
  * APIErrorLog component that displays a list of API error logs. It fetches the logs from the database, allows pagination, and provides an option to clear the logs. Each log entry can be expanded to view the response body if available.
  * @param param0
- * @param param0.theme
+ * @param param0.uiColors
  * @param param0.colorMode
  * @param param0.textColor
  * @returns {React.JSX.Element}
  * @constructor
  */
-export const APIErrorLog = ({ theme: themeProp, colorMode: colorModeProp, textColor: textColorProp } = {}) => {
+export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, textColor: textColorProp } = {}) => {
      const [loading, setLoading] = React.useState(false);
      const [page, setPage] = React.useState(1);
      const [rows, setRows] = React.useState([]);
@@ -45,13 +45,13 @@ export const APIErrorLog = ({ theme: themeProp, colorMode: colorModeProp, textCo
      const language = useActiveLanguage();
 
      const themeCtx = useTheme() ?? {};
-     const theme = themeProp ?? themeCtx.theme ?? {};
+     const uiColors = uiColorsProp ?? themeCtx.uiColors ?? {};
      const runtimeColors = themeCtx.runtimeColors ?? {};
      const colorMode = colorModeProp ?? themeCtx.colorMode ?? 'light';
      const textColor = textColorProp ?? themeCtx.textColor ?? '#111827';
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const panelBg = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      const loadPage = React.useCallback(async (nextPage = 1) => {
           setLoading(true);

@@ -25,9 +25,9 @@ import { Text } from '@/components/ui/text';
  */
 export const ForgotBarcode = (props) => {
      const isKeyboardOpen = useKeyboard();
-     const { theme, runtimeColors, textColor, colorMode }= useTheme();
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const { uiColors, runtimeColors, textColor, colorMode }= useTheme();
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const library = useLibrary();
      const { usernameLabel, showForgotBarcodeModal, setShowForgotBarcodeModal } = props;
      const [isProcessing, setIsProcessing] = React.useState(false);

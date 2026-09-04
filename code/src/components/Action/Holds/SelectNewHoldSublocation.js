@@ -16,9 +16,9 @@ import { Text } from '@/components/ui/text';
  * @constructor
  */
 export const SelectNewHoldSublocation = (props) => {
-     const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor, theme, colorMode, runtimeColors} = props;
+     const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor, uiColors, colorMode, runtimeColors} = props;
      const insets = useSafeAreaInsets();
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
      if (sublocations !== undefined) {

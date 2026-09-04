@@ -129,7 +129,7 @@ const GeolocationPermissionUsage = () => {
 };
 
 const GeolocationPermissionUpdate = (payload) => {
-     const { colorMode, theme, runtimeColors, textColor } = useTheme();
+     const { colorMode, uiColors, runtimeColors, textColor } = useTheme();
      const language = useActiveLanguage();
      const [showAlertDialog, setShowAlertDialog] = React.useState(false);
      const [manuallyPromptPermission, setManuallyPromptPermission] = React.useState(false);
@@ -154,7 +154,7 @@ const GeolocationPermissionUpdate = (payload) => {
           })();
      }, []);
 
-     const dialogBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const dialogBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      return (
           <Center>

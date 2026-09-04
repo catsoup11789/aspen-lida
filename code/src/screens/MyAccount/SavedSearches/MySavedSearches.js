@@ -34,7 +34,7 @@ export const MySavedSearches = () => {
      const updateSavedSearches = useUpdateSavedSearches();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor, theme, colorMode } = useTheme();
+     const { textColor, uiColors, colorMode } = useTheme();
 
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
 
@@ -122,8 +122,8 @@ const Item = (data) => {
      const language = useActiveLanguage();
      const item = data.data;
      const { textColor, colorMode } = useTheme();
-     const { theme } = useTheme();
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const { uiColors } = useTheme();
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      let hasNewResults = 0;
      if (item?.hasNewResults !== undefined) {

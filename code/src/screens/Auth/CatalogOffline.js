@@ -21,8 +21,8 @@ export const CatalogOffline = () => {
       const language = useActiveLanguage();
      const { status: catalogStatus, message: catalogStatusMessage } = useCatalogStatus();
      const { signOut } = React.useContext(AuthContext);
-     const { theme, textColor, colorMode, runtimeColors } = useTheme();
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const { theme, uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => setIsOpen(false);
      const cancelRef = React.useRef(null);

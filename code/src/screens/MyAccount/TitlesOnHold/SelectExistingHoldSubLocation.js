@@ -13,8 +13,8 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
  * @constructor
  */
 export const SelectExistingHoldSubLocation = (props) => {
-     const { sublocations, language, location, activeSublocation, setActiveSublocation, textColor, colorMode, theme } = props;
-     const selectBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const { sublocations, language, location, activeSublocation, setActiveSublocation, textColor, colorMode, uiColors } = props;
+     const selectBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const [locationId, locationCode] = location.split("_");
      if (sublocations !== undefined) {

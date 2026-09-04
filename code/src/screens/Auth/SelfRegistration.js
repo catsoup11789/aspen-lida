@@ -25,9 +25,9 @@ import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFor
  */
 export const SelfRegistration = () => {
 	const insets = useSafeAreaInsets();
-	const {theme, runtimeColors, textColor, colorMode} = useTheme();
-	const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-	const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+	const {uiColors, runtimeColors, textColor, colorMode} = useTheme();
+	const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+	const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 	const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 	const route = useRoute();
 	const navigation = useNavigation();

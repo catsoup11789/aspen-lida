@@ -31,10 +31,10 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
       const updateListGroups = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, theme, colorMode, runtimeColors } = useTheme();
+      const { textColor, uiColors, colorMode, runtimeColors } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
-      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const toggle = () => {
           setShowModal(!showModal);
@@ -42,9 +42,9 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
 
      return (
           <Center>
-               <Button onPress={toggle} size="xs" style={{ backgroundColor: theme.tokens.colors.ui.danger }}>
-                   <MaterialIcons name="delete" size={18} color={theme.tokens.colors.ui.white} style={{ marginRight: 4 }} />
-                   <ButtonText style={{ color: theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'delete_list_group')}</ButtonText>
+               <Button onPress={toggle} size="xs" style={{ backgroundColor: uiColors.danger }}>
+                   <MaterialIcons name="delete" size={18} color={uiColors.white} style={{ marginRight: 4 }} />
+                   <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'delete_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
                     <ModalBackdrop />
@@ -63,7 +63,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                                    <Button variant="outline" onPress={toggle} style={{ borderColor: runtimeColors.primary[500] }}>
                                        <ButtonText style={{ color: runtimeColors.primary[500] }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
-                                   <Button style={{ backgroundColor: theme.tokens.colors.ui.danger }}
+                                   <Button style={{ backgroundColor: uiColors.danger }}
                                            isLoading={loading}
                                            isLoadingText={getTermFromDictionary(language, 'deleting', true)}
                                             onPress={() => {
@@ -100,7 +100,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                                                  });
                                             }}
                                    >
-                                        <ButtonText style={{ color: theme.tokens.colors.ui.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
+                                        <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>

@@ -22,8 +22,7 @@ import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragI
  * @constructor
  */
 export const SelectPickupLocation = (props) => {
-     const { locations, sublocations, onClose, currentPickupId, holdId, userId, libraryContext, holdsContext, resetGroup, language, textColor, colorMode, theme } = props;
-     const { runtimeColors } = useTheme();
+     const { locations, sublocations, onClose, currentPickupId, holdId, userId, libraryContext, holdsContext, resetGroup, language, textColor, colorMode, uiColors, runtimeColors } = props;
      let pickupLocation = _.findIndex(locations, function (o) {
           return o.locationId === currentPickupId;
      });
@@ -48,7 +47,7 @@ export const SelectPickupLocation = (props) => {
      const [showModal, setShowModal] = React.useState(false);
      let [location, setLocation] = React.useState(pickupLocation);
      let [activeSublocation, setActiveSublocation] = React.useState(null);
-     const modalBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const tertiaryBg = runtimeColors?.tertiary?.[300] ?? runtimeColors?.tertiary?.[500];
 
      return (
@@ -127,7 +126,7 @@ export const SelectPickupLocation = (props) => {
                                         </Select>
                                    </FormControl>
                               </Box>
-                              <SelectExistingHoldSubLocation location={location} sublocations={sublocations} language={language} activeSublocation={activeSublocation} setActiveSublocation={setActiveSublocation} textColor={textColor} colorMode={colorMode} theme={theme} />
+                              <SelectExistingHoldSubLocation location={location} sublocations={sublocations} language={language} activeSublocation={activeSublocation} setActiveSublocation={setActiveSublocation} textColor={textColor} colorMode={colorMode} uiColors={uiColors} />
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup

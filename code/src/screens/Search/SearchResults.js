@@ -57,7 +57,7 @@ export const SearchResults = () => {
       const language = useActiveLanguage();
       const scope = useLibraryScope();
       const { currentIndex, currentSource } = React.useContext(SearchContext);
-     const { theme, runtimeColors, textColor, colorMode } = useTheme();
+     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
      const url = library.baseUrl;
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
 
@@ -156,7 +156,7 @@ export const SearchResults = () => {
                     label = num + ' ' + getTermFromDictionary(language, 'result');
                }
                return (
-                    <Box style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                    <Box style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surface.dark, borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
                          <Box style={{ margin: 8 }}>
                               <Text style={{ color: textColor }}>{label}</Text>
                          </Box>
@@ -170,7 +170,7 @@ export const SearchResults = () => {
      const Paging = () => {
           if (data.totalPages > 1) {
                return (
-                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" style={{ backgroundColor: runtimeColors.primary[500] }}>
@@ -249,9 +249,9 @@ const DisplayResult = (data) => {
      const item = data.data;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { theme, runtimeColors, textColor, colorMode } = useTheme();
+     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
      const { currentSource } = React.useContext(SearchContext);
-     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
 
      const handlePressItem = () => {
           if (currentSource === 'events') {
@@ -381,7 +381,7 @@ const DisplayResult = (data) => {
           let roomData = item?.room ?? null;
 
           return (
-               <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+               <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                     <HStack space="md">
                          <VStack style={{ width: 100 }}>
                               <Box style={{ height: 150 }}>
@@ -435,7 +435,7 @@ const DisplayResult = (data) => {
      }
 
      return (
-          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
                     <VStack style={{ width: 100 }}>
                          <Box style={{ height: 150 }}>
@@ -455,8 +455,8 @@ const DisplayResult = (data) => {
                               <Center style={{ marginTop: 4 }}>
                                    <ThemedBadge
                                         size="sm"
-                                        style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark }}>
-                                        <ThemedBadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
+                                        style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
+                                        <ThemedBadgeText textTransform="none" style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
                                              {item.language}
                                         </ThemedBadgeText>
                                    </ThemedBadge>
@@ -484,7 +484,7 @@ const DisplayResult = (data) => {
 
 const FilterBar = ({ navigation }) => {
      const language = useActiveLanguage();
-     const { theme, runtimeColors, colorMode } = useTheme();
+     const { uiColors, runtimeColors, colorMode } = useTheme();
      const type = useRoute().params.type ?? 'catalog';
 
      if (navigation === undefined) {
@@ -493,7 +493,7 @@ const FilterBar = ({ navigation }) => {
      }
      if (type === 'catalog') {
           return (
-               <Box style={{ padding: 8, paddingBottom: 0, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, flexWrap: 'nowrap' }}>
+               <Box style={{ padding: 8, paddingBottom: 0, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surface.dark, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, flexWrap: 'nowrap' }}>
                     <ScrollView horizontal>
                          <Button
                               size="sm"
@@ -519,7 +519,7 @@ const FilterBar = ({ navigation }) => {
 
 const SearchBox = ({term, navigation}) => {
      const language = useActiveLanguage();
-     const { colorMode, textColor } = useTheme();
+     const { uiColors, colorMode, textColor } = useTheme();
      const [searchTerm, setSearchTerm] = React.useState(term);
 
      const openScanner = async () => {
@@ -536,7 +536,7 @@ const SearchBox = ({term, navigation}) => {
      };
 
      return (
-          <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surface.dark, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, borderBottomWidth: 1 }}>
+          <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surface.dark, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, borderBottomWidth: 1 }}>
                <FormControl style={{ paddingBottom: 20 }}>
                     <ThemedInput>
                          <InputSlot>
@@ -561,7 +561,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
      const defaults = SearchGlobal.defaultFacets;
      const location = useLibraryLocation();
      const library = useLibrary();
-     const { theme, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
 
      const locationGroupedWorkDisplaySettings = location.groupedWorkDisplaySettings ?? [];
      const libraryGroupedWorkDisplaySettings = library.groupedWorkDisplaySettings ?? [];
@@ -610,7 +610,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                                    key={index}
                                    size="sm"
                                    variant="outline"
-                                   style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
+                                   style={{ borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}
                                    onPress={() => {
                                         navigation.push('modal', {
                                              screen: 'Facet',
@@ -634,7 +634,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
                               key={index}
                               size="sm"
                               variant="outline"
-                              style={{ borderColor: colorMode === 'light' ? runtimeColors.primary[400] : theme.tokens.colors.ui.border.dark }}
+                              style={{ borderColor: colorMode === 'light' ? runtimeColors.primary[400] : uiColors.border.dark }}
                               onPress={() => {
                                    navigation.push('modal', {
                                         screen: 'Facet',
@@ -658,7 +658,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
 
 const CreateFilterButton = ({navigation}) => {
      const { currentSource } = React.useContext(SearchContext);
-     const { theme, colorMode, textColor } = useTheme();
+     const { uiColors, colorMode, textColor } = useTheme();
      const appliedFacets = SearchGlobal.appliedFilters;
      const sort = _.find(appliedFacets['Sort By'], {
           field: 'sort_by',
@@ -688,7 +688,7 @@ const CreateFilterButton = ({navigation}) => {
                                    variant="outline"
                                    size="sm"
                                    key={index}
-                                   style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
+                                   style={{ borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}
                                    onPress={() => {
                                         navigation.push('modal', {
                                              screen: 'Facet',

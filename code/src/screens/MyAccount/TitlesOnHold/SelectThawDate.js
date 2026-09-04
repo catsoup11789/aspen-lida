@@ -25,12 +25,12 @@ export const SelectThawDate = (props) => {
      const { freezingLabel, freezeLabel, label, libraryContext, onClose, freezeId, recordId, source, userId, resetGroup } = props;
      let data = props.data;
      const language = useActiveLanguage();
-     const { theme, runtimeColors, textColor, colorMode } = useTheme();
+     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
      const [loading, setLoading] = React.useState(false);
      const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
      const [showIndefiniteWarning, setShowIndefiniteWarning] = React.useState(false);
      const [freezeIndefinite, setFreezeIndefinite] = React.useState(false);
-     const modalBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      let actionLabel = freezeLabel;
      if (label) {

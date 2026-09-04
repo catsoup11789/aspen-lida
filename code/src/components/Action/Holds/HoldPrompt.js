@@ -49,7 +49,7 @@ export const HoldPrompt = (props) => {
      const { data: sublocations } = useSublocations();
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
-     const { theme, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
 
      const {
           language,
@@ -325,8 +325,8 @@ export const HoldPrompt = (props) => {
                </Button>
                <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg" useRNModal={true}>
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
-                         <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                    <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                         <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
                               <Heading size="md" style={{ color: textColor }}>
                                    {getTermFromDictionary(language, 'add_alternate_library_card')}
                               </Heading>
@@ -364,16 +364,16 @@ export const HoldPrompt = (props) => {
                                    </FormControl>
                               ) : null}
                          </ModalBody>
-                         <ModalFooter style={{ borderTopWidth: 1, borderTopColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                         <ModalFooter style={{ borderTopWidth: 1, borderTopColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
                               <ButtonGroup space="sm">
                                    <Button
                                         variant="outline"
-                                        style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
+                                        style={{ borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}
                                         onPress={() => {
                                              setShowAddAlternateLibraryCardModal(false);
                                              setLoading(false);
                                         }}>
-                                        <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button
                                         style={{ backgroundColor: runtimeColors.primary[500] }}
@@ -439,8 +439,8 @@ export const HoldPrompt = (props) => {
                </Modal>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} closeOnOverlayClick={false} size="lg" useRNModal={true}>
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
-                         <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                    <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                         <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
                               <Heading size="md" style={{ color: textColor }}>
                                    {isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}
                               </Heading>
@@ -473,12 +473,13 @@ export const HoldPrompt = (props) => {
                                         setPhoneNumber={setPhoneNumber}
                                         url={library.baseUrl}
                                         textColor={textColor}
-                                        theme={theme}
+                                        uiColors={uiColors}
+                                        runtimeColors={runtimeColors}
                                         colorMode={colorMode}
                                    />
                               ) : null}
-                              {data !== undefined && !isFetching && _.isEmpty(volumeId) && (holdType === 'either' || holdType === 'item') ? <SelectItemHold theme={theme} colorMode={colorMode} id={id} item={item} setItem={setItem} language={language} data={data} holdType={holdType} setHoldType={setHoldType} holdTypeForFormat={holdTypeForFormat} url={library.baseUrl} showModal={showModal} textColor={textColor} /> : null}
-                              {promptForHoldType || (holdType === 'volume' && _.isEmpty(volumeId)) ? <SelectVolume theme={theme} id={id} language={language} volume={volume} setVolume={setVolume} promptForHoldType={promptForHoldType} holdType={holdType} setHoldType={setHoldType} showModal={showModal} url={library.baseUrl} textColor={textColor} colorMode={colorMode} /> : null}
+                              {data !== undefined && !isFetching && _.isEmpty(volumeId) && (holdType === 'either' || holdType === 'item') ? <SelectItemHold uiColors={uiColors} runtimeColors={runtimeColors} colorMode={colorMode} id={id} item={item} setItem={setItem} language={language} data={data} holdType={holdType} setHoldType={setHoldType} holdTypeForFormat={holdTypeForFormat} url={library.baseUrl} showModal={showModal} textColor={textColor} /> : null}
+                              {promptForHoldType || (holdType === 'volume' && _.isEmpty(volumeId)) ? <SelectVolume uiColors={uiColors} runtimeColors={runtimeColors} id={id} language={language} volume={volume} setVolume={setVolume} promptForHoldType={promptForHoldType} holdType={holdType} setHoldType={setHoldType} showModal={showModal} url={library.baseUrl} textColor={textColor} colorMode={colorMode} /> : null}
                               {(_.isArray(locations) && (_.size(locations) > 1 || !preferredPickupLocationIsValid) && !isEContent && !user.rememberHoldPickupLocation) || (_.isArray(locations) && _.size(locations) > 1 && !isEContent && _.size(accounts) > 0) ? (
                                    <FormControl style={{ marginTop: 4 }}>
                                         <FormControlLabel>
@@ -497,7 +498,7 @@ export const HoldPrompt = (props) => {
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
@@ -514,7 +515,7 @@ export const HoldPrompt = (props) => {
                                         </Select>
                                    </FormControl>
                               ) : null}
-                              {!user.rememberHoldPickupLocation ? <SelectNewHoldSublocation sublocations={sublocations ?? []} location={location} activeSublocation={sublocation} setActiveSublocation={setSublocation} language={language} textColor={textColor} theme={theme} colorMode={colorMode} /> : null}
+                              {!user.rememberHoldPickupLocation ? <SelectNewHoldSublocation sublocations={sublocations ?? []} location={location} activeSublocation={sublocation} setActiveSublocation={setSublocation} language={language} textColor={textColor} uiColors={uiColors} runtimeColors={runtimeColors} colorMode={colorMode} /> : null}
                               {_.size(locations) > 1 && _.size(accounts) === 0 && !isEContent && library.allowRememberPickupLocation && !user.rememberHoldPickupLocation ? (
                                    <FormControl style={{ marginBottom: 12 }}>
                                         <Checkbox
@@ -553,7 +554,7 @@ export const HoldPrompt = (props) => {
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
@@ -569,16 +570,16 @@ export const HoldPrompt = (props) => {
                                    </FormControl>
                               ) : null}
                          </ModalBody>
-                         <ModalFooter style={{ borderTopWidth: 1, borderTopColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}>
+                         <ModalFooter style={{ borderTopWidth: 1, borderTopColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
                               <ButtonGroup space="sm">
                                    <Button
                                         variant="outline"
-                                        style={{ borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark }}
+                                        style={{ borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}
                                         onPress={() => {
                                              setShowModal(false);
                                              setLoading(false);
                                         }}>
-                                        <ButtonText style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.text.light : theme.tokens.colors.ui.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    {promptAlternateLibraryCard && !userHasAlternateLibraryCard ? (
                                         <Button

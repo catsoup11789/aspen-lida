@@ -29,7 +29,7 @@ export const StartCheckOutSession = () => {
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const { data: accounts } = useAccounts();
-     const { textColor, colorMode, theme, runtimeColors } = useTheme();
+     const { textColor, colorMode, uiColors, runtimeColors } = useTheme();
      const insets = useSafeAreaInsets();
 
      let startNew = useRoute().params?.startNew ?? false;
@@ -94,7 +94,7 @@ export const StartCheckOutSession = () => {
           <Center>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={() => GoBackHome()}>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
+                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                          <AlertDialogHeader><Heading size="md" style={{ color: textColor }}>{getTermFromDictionary(language, 'start_checkout_session')}</Heading></AlertDialogHeader>
                          <AlertDialogBody>
                               <FormControl style={{ paddingBottom: 20 }}>
@@ -128,7 +128,7 @@ export const StartCheckOutSession = () => {
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                             <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>

@@ -35,7 +35,7 @@ export const DisplayListResult = (props) => {
      const library = useLibrary();
      const queryClient = useQueryClient();
 
-     const { runtimeColors, textColor, colorMode } = useTheme();
+     const { runtimeColors, textColor, colorMode, uiColors } = useTheme();
 
      let recordType = 'grouped_work';
      if (item.recordtype) {
@@ -62,7 +62,7 @@ export const DisplayListResult = (props) => {
      };
 
      return (
-          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
                     <VStack style={{ width: 100 }}>
                          <Box style={{ height: 150 }}>
@@ -82,8 +82,8 @@ export const DisplayListResult = (props) => {
                               <Center>
                                    <ThemedBadge
                                         size="sm"
-                                        style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark }}>
-                                        <ThemedBadgeText textTransform="none" style={{ color: colorMode === 'light' ? theme.tokens.colors.ui.iconMuted.light : theme.tokens.colors.ui.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
+                                        style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
+                                        <ThemedBadgeText textTransform="none" style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
                                             {item.language}
                                        </ThemedBadgeText>
                                    </ThemedBadge>
@@ -100,7 +100,7 @@ export const DisplayListResult = (props) => {
                                    colorScheme="danger"
                                    size="sm"
                                    variant="ghost">
-                                   <MaterialIcons name="delete" size={18} color={theme.tokens.colors.ui.danger} style={{ marginRight: 4 }} />
+                                   <MaterialIcons name="delete" size={18} color={uiColors.danger} style={{ marginRight: 4 }} />
                                    <ButtonText>{getTermFromDictionary(language, 'delete')}</ButtonText>
                               </Button>
                          ) : (

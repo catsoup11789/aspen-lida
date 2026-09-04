@@ -36,7 +36,7 @@ export const MySavedSearch = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { colorMode, theme, textColor } = useTheme();
+     const { colorMode, uiColors, textColor } = useTheme();
      const [status, setStatus] = React.useState('loading');
      const [data, setData] = React.useState([]);
 
@@ -103,10 +103,10 @@ const SavedSearch = (data) => {
      const item = data.data;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, theme, textColor } = useTheme();
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
-     const surfaceMuted = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
-     const subtitleColor = colorMode === 'light' ? theme.tokens.colors.ui.icon.light : theme.tokens.colors.ui.iconMuted.dark;
+     const { colorMode, uiColors, textColor } = useTheme();
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const surfaceMuted = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const subtitleColor = colorMode === 'light' ? uiColors.icon.light : uiColors.iconMuted.dark;
 
      const imageUrl = library.baseUrl + item.image;
 

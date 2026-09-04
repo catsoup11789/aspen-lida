@@ -19,7 +19,7 @@ import { ResetExpiredPin } from './ResetExpiredPin';
 import { saveAllLibraryBranchData } from '../../util/db';
 import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from '../../util/logging.js';
 import { createApiClient } from '../../util/api/apiFactory';
-import { useTheme } from '../../themes/theme';
+import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
 import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from '@/components/ui/center';
@@ -33,8 +33,8 @@ import { InputSlot } from '@/components/ui/input';
  * @constructor
  */
 export const GetLoginForm = (props) => {
-     const { theme, textColor, colorMode, forceRefreshTheme, runtimeColors } = useTheme();
-     const borderColor = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.border?.light ?? '#6b7280') : (theme?.tokens?.colors?.ui?.border?.dark ?? '#d6d3d1');
+     const { uiColors, textColor, colorMode, forceRefreshTheme, runtimeColors } = useTheme();
+     const borderColor = colorMode === 'light' ? (uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light) : (uiColors?.border?.dark ?? UI_COLOR_FALLBACKS.border.dark);
      const navigation = useNavigation();
      const barcode = useRoute().params?.barcode ?? null;
      const [loading, setLoading] = React.useState(false);

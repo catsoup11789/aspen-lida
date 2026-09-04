@@ -39,7 +39,7 @@ export const MoreMenu = () => {
      const library = useLibrary();
      const menu = useLibraryMenu();
      const updateMenu = useUpdateMenu();
-     const { theme, runtimeColors, textColor, colorMode } = useTheme();
+     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
 
      const { signOut } = React.useContext(AuthContext);
      const hasMenuItems = _.size(menu);
@@ -129,7 +129,7 @@ export const MoreMenu = () => {
                     </VStack>
                     <Modal isOpen={showDeleteConfirmationModal} onClose={toggleDeleteConfirmationModal}>
                          <ModalBackdrop />
-                         <ModalContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
+                         <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <ModalHeader>
                                    <Heading size="md" style={{ color: textColor }}>
                                         {getTermFromDictionary(language, 'delete_account')}
@@ -164,7 +164,7 @@ export const MoreMenu = () => {
                     </Modal>
                     <Modal isOpen={showDeleteResultsModal}>
                          <ModalBackdrop />
-                         <ModalContent style={{ backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark }}>
+                         <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <ModalHeader>
                                    <Heading size="md" style={{ color: textColor }}>
                                         {getTermFromDictionary(language, 'delete_account')}
@@ -310,8 +310,8 @@ const PrivacyPolicy = () => {
      const language = useActiveLanguage();
      const appSettings = useAppSettings();
 
-     const { textColor, theme, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const { textColor, uiColors, colorMode } = useTheme();
+     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
 
      const browserParams = {
           enableDefaultShareMenuItem: false,
@@ -386,8 +386,8 @@ const MenuLink = (payload) => {
      let categoryLabel = _.sample(categories);
      categoryLabel = categoryLabel.category;
 
-     const { textColor, theme, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark;
+     const { textColor, uiColors, colorMode } = useTheme();
+     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
 
      const [expanded, setExpanded] = React.useState(false);
 
@@ -492,7 +492,7 @@ const MenuLink = (payload) => {
                                              <Pressable
                                                   key={index}
                                                   onPress={() => openURL(item.url)}
-                                                  style={{ backgroundColor: 'transparent', borderBottomWidth: 1, borderBottomColor: theme.tokens.colors.ui.border.light, paddingVertical: 8 }}
+                                                  style={{ backgroundColor: 'transparent', borderBottomWidth: 1, borderBottomColor: uiColors.border.light, paddingVertical: 8 }}
                                              >
                                                   <HStack space="sm" style={{ alignItems: 'center', marginLeft: 16 }}>
                                                        <Icon

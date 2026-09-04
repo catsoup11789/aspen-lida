@@ -35,7 +35,7 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
       const updateListGroups = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, theme, runtimeColors, colorMode } = useTheme();
+      const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
 
@@ -43,7 +43,7 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
       const [newListGroupParentId, setNewListGroupParentId] = React.useState(parentId); // default state is current list group parent id
 
       const insets = useSafeAreaInsets();
-      const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
       const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
 
       React.useEffect(() => {

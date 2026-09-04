@@ -7,7 +7,7 @@ import { normalizeDisplayText } from '../../helpers/helpers';
 import { LIBRARY } from '../../util/globals';
 import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { resetPassword } from '../../util/api/user';
-import { useTheme } from '../../themes/theme';
+import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
 import { ThemedCloseIcon } from '../../components/themed/ThemedFormControls';
 import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Button, ButtonText, ButtonGroup } from '@/components/ui/button';
@@ -25,9 +25,9 @@ import { Text } from '@/components/ui/text';
  */
 export const ResetPassword = (props) => {
      const library = useLibrary();
-     const { theme, runtimeColors, textColor, colorMode } = useTheme();
-     const surfaceBg = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.surface?.light ?? '#FFFFFF') : (theme?.tokens?.colors?.ui?.surface?.dark ?? '#1F1F1F');
-     const borderColor = colorMode === 'light' ? (theme?.tokens?.colors?.ui?.border?.light ?? '#6b7280') : (theme?.tokens?.colors?.ui?.border?.dark ?? '#d6d3d1');
+     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const surfaceBg = colorMode === 'light' ? (uiColors?.surface?.light ?? UI_COLOR_FALLBACKS.surface.light) : (uiColors?.surface?.dark ?? UI_COLOR_FALLBACKS.surface.dark);
+     const borderColor = colorMode === 'light' ? (uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light) : (uiColors?.border?.dark ?? UI_COLOR_FALLBACKS.border.dark);
      const { ils, forgotPasswordType, usernameLabel, passwordLabel, showForgotPasswordModal, setShowForgotPasswordModal } = props;
      const [isProcessing, setIsProcessing] = React.useState(false);
      const [isLoading, setIsLoading] = React.useState(false);
@@ -77,7 +77,7 @@ export const ResetPassword = (props) => {
           setShowForgotPasswordModal,
           isProcessing,
           setIsProcessing,
-          theme,
+          runtimeColors,
           textColor,
           borderColor,
           colorMode,
@@ -354,7 +354,7 @@ function renderStandardResults({ results, showResults, hasError, textColor, clos
  * @constructor
  */
 function AspenResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, theme, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
      const [username, setUsername] = React.useState('');
      const { showResults, setShowResults, results, setResults, hasError, setHasError, closeWindow, resetWindow } = useResetPasswordState(setShowForgotPasswordModal, setIsProcessing);
 
@@ -402,7 +402,7 @@ function AspenResetPassword(props) {
  * @constructor
  */
 function KohaResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, theme, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
      const [email, setEmail] = React.useState('');
      const [username, setUsername] = React.useState('');
      const [resend, setResend] = React.useState(false);
@@ -458,7 +458,7 @@ function KohaResetPassword(props) {
  * @constructor
  */
 function SirsiResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, theme, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
      const [username, setUsername] = React.useState('');
      const { showResults, setShowResults, results, setResults, hasError, setHasError, closeWindow, resetWindow } = useResetPasswordState(setShowForgotPasswordModal, setIsProcessing);
 
@@ -515,7 +515,7 @@ const HorizonResetPassword = SirsiResetPassword;
  * @constructor
  */
 function EvergreenResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, theme, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
      const [email, setEmail] = React.useState('');
      const [username, setUsername] = React.useState('');
      const [resend, setResend] = React.useState(false);
@@ -571,7 +571,7 @@ function EvergreenResetPassword(props) {
  * @constructor
  */
 function SymphonyResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, theme, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
      const [username, setUsername] = React.useState('');
      const { showResults, setShowResults, results, setResults, hasError, setHasError, closeWindow, resetWindow } = useResetPasswordState(setShowForgotPasswordModal, setIsProcessing);
 
@@ -619,7 +619,7 @@ function SymphonyResetPassword(props) {
  * @constructor
  */
 function MillenniumResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, theme, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
      const [username, setUsername] = React.useState('');
      const { showResults, setShowResults, results, setResults, hasError, setHasError, closeWindow, resetWindow } = useResetPasswordState(setShowForgotPasswordModal, setIsProcessing);
 

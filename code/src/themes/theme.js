@@ -129,6 +129,11 @@ const UI_NEUTRAL_COLORS = {
      danger: '#ef4444',
 };
 
+// Hardcoded fallback for code that renders before ThemeProvider context is available
+// (e.g. pre-login Auth screens). Kept as a reference to UI_NEUTRAL_COLORS so the two
+// can never drift out of sync — change UI_NEUTRAL_COLORS and this updates automatically.
+export const UI_COLOR_FALLBACKS = UI_NEUTRAL_COLORS;
+
 function buildFallbackPalette() {
      return {
           primary: { ...DEFAULT_COLOR_SCALE },

@@ -56,11 +56,11 @@ const AddToList = (props) => {
      const [title, saveTitle] = useState();
      const [isPublic, saveIsPublic] = useState('1');
      const queryClient = useQueryClient();
-     const { theme, runtimeColors, textColor, colorMode } = useTheme();
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
-     const borderColor = colorMode === 'light' ? theme.tokens.colors.ui.border.light : theme.tokens.colors.ui.border.dark;
+     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const tertiaryBg = runtimeColors.tertiary[300] ?? runtimeColors.tertiary[500];
-     const cancelColor = colorMode === 'light' ? theme.tokens.colors.ui.textStrong.light : theme.tokens.colors.ui.textStrong.dark;
+     const cancelColor = colorMode === 'light' ? uiColors.textStrong.light : uiColors.textStrong.dark;
 
      const [addToGroup, setAddToGroup] = React.useState('no');
      const [newGroupName, setNewGroupName] = React.useState('');

@@ -61,7 +61,7 @@ const HomeScreenLinkGrid = ({links}) => {
  * @constructor
  */
 const Link = ({link}) => {
-     const { theme, textColor, colorMode } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const library = useLibrary();
      const language = useActiveLanguage();
      const { updateCurrentIndex } = React.useContext(SearchContext);
@@ -167,7 +167,7 @@ const Link = ({link}) => {
      const imgSource = link?.typeOfIcon === 'uploadIcon' && link?.uploadIcon ? library.baseUrl + '/files/original/' + link.uploadIcon : null;
 
      return (
-          <Pressable onPress={(link?.linkType !== 'deepLink') ? handleOpenLink : handleOpenScreen} style={{ alignItems: 'center', justifyContent: 'center', padding: 8, width: '100%', borderRadius: 12, backgroundColor: colorMode === 'light' ? theme.tokens.colors.ui.surfaceMuted.light : theme.tokens.colors.ui.surfaceMuted.dark }}>
+          <Pressable onPress={(link?.linkType !== 'deepLink') ? handleOpenLink : handleOpenScreen} style={{ alignItems: 'center', justifyContent: 'center', padding: 8, width: '100%', borderRadius: 12, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
                <VStack style={{ alignItems: 'center', justifyContent: 'center', minHeight: 100 }}>
                     {link?.typeOfIcon === 'uploadIcon' && imgSource ? (
                          <Image

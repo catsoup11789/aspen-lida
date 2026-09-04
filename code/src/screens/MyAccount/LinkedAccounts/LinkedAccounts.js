@@ -37,7 +37,7 @@ export const MyLinkedAccounts = () => {
      const { data: viewers } = useViewers();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor, theme } = useTheme();
+     const { textColor } = useTheme();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = useContext(SystemMessagesContext);
 
@@ -174,7 +174,7 @@ const Account = ({ account, type }) => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor, theme } = useTheme();
+     const { textColor, uiColors } = useTheme();
 
      const refreshLinkedAccounts = async () => {
           const linkedResponse = await getLinkedAccounts(library.baseUrl, language);
@@ -220,7 +220,7 @@ const Account = ({ account, type }) => {
                </Text>
                {type === 'viewer' && user.removeLinkedAccountRule === 0 ? null : (
                     <Button
-                        style={{ backgroundColor: theme.tokens.colors.ui.danger }}
+                        style={{ backgroundColor: uiColors.danger }}
                          isLoading={isRemoving}
                          isLoadingText={getTermFromDictionary(language, 'removing', true)}
                          size="sm"

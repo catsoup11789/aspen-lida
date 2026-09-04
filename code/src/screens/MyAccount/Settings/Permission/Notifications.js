@@ -308,11 +308,11 @@ const NotificationPermissionUsage = () => {
 };
 
 const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermissions, revokeNotificationPermissions }) => {
-    const { colorMode, theme, runtimeColors, textColor } = useTheme();
+    const { colorMode, uiColors, runtimeColors, textColor } = useTheme();
     const language = useActiveLanguage();
     const [isUpdating, setIsUpdating] = React.useState(false);
     const [showAlertDialog, setShowAlertDialog] = React.useState(false);
-    const dialogBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+    const dialogBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
     const handleUpdatePermissions = async () => {
         try {

@@ -16,8 +16,8 @@ import { Text } from '@/components/ui/text';
  * @constructor
  */
 export const InvalidCredentials = () => {
-     const { theme, runtimeColors, colorMode, textColor } = useTheme();
-     const surfaceBg = colorMode === 'light' ? theme.tokens.colors.ui.surface.light : theme.tokens.colors.ui.surface.dark;
+     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const language = useActiveLanguage();
      const { signOut } = React.useContext(AuthContext);
      const [isOpen, setIsOpen] = React.useState(true);
