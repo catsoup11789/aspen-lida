@@ -72,7 +72,6 @@ export const Settings_PickupLocations = () => {
 	const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
 	const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
     const locationsRef = React.useRef(locations);
 	const sublocationsRef = React.useRef(sublocations);
 
@@ -360,18 +359,16 @@ export const Settings_PickupLocations = () => {
                {library.allowRememberPickupLocation ? (
                     <FormControl style={{ marginBottom: 12 }}>
                          <Checkbox
-                              size="sm"
                               name="rememberHoldPickupLocation"
                               isChecked={rememberPickupLocation}
                               onChange={() => {
                                    setIsDirty(true);
                                    setRememberPickupLocation((prev) => !prev);
                               }}>
-                              <CheckboxIndicator
-                                   style={rememberPickupLocation ? { marginRight: 8, borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : { marginRight: 8, borderColor }}>
-                                   <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }} />
+                              <CheckboxIndicator>
+                                   <CheckboxIcon as={CheckIcon} />
                               </CheckboxIndicator>
-                              <CheckboxLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'bypass_pickup_location_prompt')}</CheckboxLabel>
+                              <CheckboxLabel>{getTermFromDictionary(language, 'bypass_pickup_location_prompt')}</CheckboxLabel>
                          </Checkbox>
                     </FormControl>
                ) : null}

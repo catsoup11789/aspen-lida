@@ -38,7 +38,6 @@ export const HoldNotificationPreferences = (props) => {
                {user.email ? (
                     <FormControl style={{ marginBottom: 8 }}>
                          <Checkbox
-                              size="sm"
                               name="emailNotification"
                               defaultIsChecked={emailNotification}
                               onChange={(value) => {
@@ -53,7 +52,6 @@ export const HoldNotificationPreferences = (props) => {
                ) : null}
                <FormControl style={{ marginBottom: 8 }}>
                     <Checkbox
-                         size="sm"
                          name="phoneNotification"
                          defaultIsChecked={phoneNotification}
                          onChange={(value) => {
@@ -83,7 +81,6 @@ export const HoldNotificationPreferences = (props) => {
                     <>
                          <FormControl style={{ marginBottom: 4 }}>
                               <Checkbox
-                                   size="sm"
                                    name="smsNotification"
                                    defaultIsChecked={smsNotification}
                                    onChange={(value) => {

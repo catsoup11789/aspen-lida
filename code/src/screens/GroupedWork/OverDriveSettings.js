@@ -31,7 +31,7 @@ export const GetOverDriveSettings = (props) => {
                                    <Input>
                                         <InputField autoCapitalize="none" autoCorrect={false} onChangeText={(text) => setEmail(text)} />
                                    </Input>
-                                   <Checkbox value="yes" size="md" onChange={(isSelected) => setRememberPrompt(isSelected)}>
+                                   <Checkbox value="yes" onChange={(isSelected) => setRememberPrompt(isSelected)}>
                                         <CheckboxIndicator style={{ marginRight: 8 }}>
                                              <CheckboxIcon as={CheckIcon} />
                                         </CheckboxIndicator>

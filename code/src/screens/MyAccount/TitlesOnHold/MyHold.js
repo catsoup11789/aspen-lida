@@ -161,7 +161,7 @@ export const MyHold = (props) => {
                          />
                          {(hold.allowFreezeHolds || canCancel) && allowLinkedAccountAction && section === 'Pending' ? (
                               <Center>
-                                   <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} size="md" accessibilityLabel="Check item" style={{ marginVertical: 12 }}>
+                                   <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} accessibilityLabel="Check item" style={{ marginVertical: 12 }}>
                                         <CheckboxIndicator>
                                              <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }} />
                                         </CheckboxIndicator>
@@ -174,7 +174,7 @@ export const MyHold = (props) => {
                if (section === 'Pending') {
                     return (
                          <Center>
-                              <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} size="md" accessibilityLabel="Check item" style={{ marginVertical: 12 }}>
+                              <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} accessibilityLabel="Check item" style={{ marginVertical: 12 }}>
                                    <CheckboxIndicator style={{ borderColor: checkboxBorderColor }}>
                                         <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }}/>
                                    </CheckboxIndicator>

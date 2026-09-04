@@ -519,7 +519,6 @@ export const HoldPrompt = (props) => {
                               {_.size(locations) > 1 && _.size(accounts) === 0 && !isEContent && library.allowRememberPickupLocation && !user.rememberHoldPickupLocation ? (
                                    <FormControl style={{ marginBottom: 12 }}>
                                         <Checkbox
-                                             size="sm"
                                              defaultIsChecked={rememberPickupLocation}
                                              accessibilityLabel={getTermFromDictionary(language, 'always_use_pickup_location')}
                                              onChange={(value) => {
