@@ -36,7 +36,7 @@ export const SearchResultsForList = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { theme, textColor, colorMode } = useTheme();
+     const { textColor, colorMode } = useTheme();
      const queryClient = useQueryClient();
      const url = library.baseUrl;
 

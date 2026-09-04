@@ -44,7 +44,7 @@ export const MyLibrary = () => {
      const language = useActiveLanguage();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, theme, colorMode, runtimeColors } = useTheme();
+     const { textColor, colorMode, runtimeColors } = useTheme();
 
      const bgColor = colorMode === 'light' ? '#f5f5f4' : '#111827';
 

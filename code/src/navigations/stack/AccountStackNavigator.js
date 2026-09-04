@@ -450,7 +450,7 @@ const MyNotificationHistoryMessageStack = createNativeStackNavigator();
  */
 export const MyNotificationHistoryMessageModal = () => {
      const language = useActiveLanguage();
-     const { theme } = useTheme();
+     const { runtimeColors } = useTheme();
      return (
           <MyNotificationHistoryMessageStack.Navigator
                id="MyNotificationHistoryMessageStack"
@@ -467,9 +467,9 @@ export const MyNotificationHistoryMessageModal = () => {
                          headerShown: true,
                          presentation: 'card',
                          headerStyle: {
-                              backgroundColor: theme['tokens']['colors']['primary']['500'],
+                              backgroundColor: runtimeColors.primary[500],
                          },
-                         headerTintColor: theme['tokens']['colors']['primary']['500-text'],
+                         headerTintColor: runtimeColors.primary['500-text'],
                     }}
                />
           </MyNotificationHistoryMessageStack.Navigator>

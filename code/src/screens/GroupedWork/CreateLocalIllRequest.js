@@ -106,7 +106,7 @@ const Request = (payload) => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { theme, colorMode, textColor, runtimeColors, uiColors } = useTheme();
+     const { colorMode, textColor, runtimeColors, uiColors } = useTheme();
      const navigation = useNavigation();
      const queryClient = useQueryClient();
      const insets = useSafeAreaInsets();
@@ -334,13 +334,13 @@ const Request = (payload) => {
           return (
                <HStack space="md" style={{ paddingTop: 12 }}>
                     <Button
-                         style={{ backgroundColor: theme['tokens']['colors']['secondary']['500'] }}
+                         style={{ backgroundColor: runtimeColors.secondary[500] }}
                          isDisabled={isSubmitting}
                          onPress={() => {
                               setIsSubmitting(true);
                               handleSubmission();
                          }}>
-                        <ButtonText style={{ color: theme['tokens']['colors']['secondary']['500-text'] }}>
+                        <ButtonText style={{ color: runtimeColors.secondary['500-text'] }}>
                               {isSubmitting ? (
                                    <>
                                         <ButtonSpinner style={{ marginRight: 8 }} />

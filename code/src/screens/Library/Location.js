@@ -41,7 +41,7 @@ export const Location = () => {
      const language = useActiveLanguage();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { colorMode, textColor, theme, runtimeColors } = useTheme();
+     const { colorMode, textColor, runtimeColors } = useTheme();
      const showSystemMessage = () => {
           if (_.isArray(systemMessages)) {
                return systemMessages.map((obj, index) => {

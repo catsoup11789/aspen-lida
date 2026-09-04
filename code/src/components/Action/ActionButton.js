@@ -30,7 +30,7 @@ import { ThemedCloseIcon } from '../themed/ThemedFormControls';
  * @constructor
  */
 export const ActionButton = (data) => {
-     const { theme, runtimeColors, uiColors, textColor, colorMode } = useTheme();
+     const { runtimeColors, uiColors, textColor, colorMode } = useTheme();
      const library = useLibrary();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};

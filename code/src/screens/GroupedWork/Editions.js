@@ -44,7 +44,7 @@ export const Editions = () => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { colorMode, theme, textColor, uiColors } = useTheme();
+     const { colorMode, textColor, uiColors } = useTheme();
      const insets = useSafeAreaInsets();
 
      const [isLoading] = useState(false);

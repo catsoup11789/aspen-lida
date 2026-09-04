@@ -142,6 +142,7 @@ jest.mock('../src/themes/theme', () => {
                themeId: 1,
                colorMode: 'light',
                textColor: '#000',
+               uiColors,
           })),
           useTheme: jest.fn(() => ({
                theme: compatibilityTheme,
@@ -149,12 +150,14 @@ jest.mock('../src/themes/theme', () => {
                themeId: 1,
                colorMode: 'light',
                textColor: '#000',
+               uiColors,
                updateTheme: jest.fn(),
                updateColorMode: jest.fn(),
                updateTextColor: jest.fn(),
                resetTheme: jest.fn(),
           })),
           useColorModeValue: jest.fn((lightValue) => lightValue),
+          UI_COLOR_FALLBACKS: uiColors,
      };
 });
 

@@ -89,7 +89,7 @@ export const NotificationPermissionDescription = () => {
     const route = useRoute();
     const prevRoute = route.params?.prevRoute ?? null;
 
-    const { theme, runtimeColors, textColor } = useTheme();
+    const { runtimeColors, textColor } = useTheme();
     const language = useActiveLanguage();
     const library = useLibrary();
     const { data: notifSettings } = useNotificationSettings();
@@ -131,7 +131,7 @@ export const NotificationPermissionDescription = () => {
                     </Button>
                 ) });
         }
-    }, [navigation, prevRoute, theme]);
+    }, [navigation, prevRoute]);
 
 
 

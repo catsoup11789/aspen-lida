@@ -43,7 +43,7 @@ export const Variations = (props) => {
       const insets = useSafeAreaInsets();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, theme, textColor, uiColors, runtimeColors } = useTheme();
+     const { colorMode, textColor, uiColors, runtimeColors } = useTheme();
 
      const [isLoading, setLoading] = React.useState(false);
      const [confirmingHold, setConfirmingHold] = React.useState(false);

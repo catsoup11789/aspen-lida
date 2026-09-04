@@ -32,7 +32,7 @@ export const PreferencesScreen = () => {
      const user = userState?.user ?? {};
      const expoToken = userState?.expoToken ?? false;
      const updateExpoToken = useUpdateExpoToken();
-     const { textColor, theme } = useTheme();
+     const { textColor } = useTheme();
 
      React.useEffect(() => {
           const updateTokens = navigation.addListener('focus', async () => {

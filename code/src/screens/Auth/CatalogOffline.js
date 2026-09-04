@@ -1,6 +1,5 @@
 import React from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import _ from 'lodash';
 import { useCatalogStatus } from '../../hooks/useLibrarySystemData';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { logInfoMessage } from '../../util/logging';
@@ -21,7 +20,7 @@ export const CatalogOffline = () => {
       const language = useActiveLanguage();
      const { status: catalogStatus, message: catalogStatusMessage } = useCatalogStatus();
      const { signOut } = React.useContext(AuthContext);
-     const { theme, uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => setIsOpen(false);
@@ -29,7 +28,7 @@ export const CatalogOffline = () => {
 
      logInfoMessage('CatalogOffline: ' + catalogStatus);
 
-     if (catalogStatus > 0 && !_.isUndefined(theme)) {
+     if (catalogStatus > 0) {
           return (
                <Center>
                     <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
