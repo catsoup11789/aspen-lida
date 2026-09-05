@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStyleContext } from '@gluestack-ui/utils/nativewind-utils';
 import {
@@ -22,12 +22,6 @@ import {
 import { ThemedMaterialIcons as MaterialIcons } from './ThemedMaterialIcons';
 import { useTheme } from '../../themes/theme';
 
-// Select's sizing already closely matches gluestack v1 -- same xl/lg/md/sm keys, matching
-// trigger heights (h-9 through h-12) and input text sizes. The one drift: the icon currently
-// uses the app's shared icon-size scale (18px for "md", 16px for "sm") instead of v1's own
-// SelectTrigger-specific icon sizes (packages/config/src/theme/SelectTrigger.ts: 16px for
-// "md", 14px for "sm"). Re-exported here mainly so Select has the same themed import surface
-// as Checkbox/Radio/Button for consistency and future custom styling.
 const SELECT_ICON_SIZE = {
      xl: 'h-6 w-6',
      lg: 'h-5 w-5',
@@ -35,8 +29,6 @@ const SELECT_ICON_SIZE = {
      sm: 'h-3.5 w-3.5',
 };
 
-// Exposes the enclosing Select's selectedValue to ThemedSelectItem so it can auto-highlight
-// the currently-selected item, matching the pattern every screen was hand-rolling.
 const SelectValueContext = React.createContext(undefined);
 
 export const ThemedSelect = React.forwardRef(({ selectedValue, ...props }, ref) => {
@@ -49,9 +41,6 @@ export const ThemedSelect = React.forwardRef(({ selectedValue, ...props }, ref) 
 
 ThemedSelect.displayName = 'ThemedSelect';
 
-// paddingVertical: 0 and color: textColor were already being passed manually at nearly every
-// call site -- baked in here as defaults so new Selects get them for free, while callers can
-// still override via their own style prop.
 export const ThemedSelectInput = React.forwardRef(({ style, ...props }, ref) => {
      const { textColor } = useTheme();
 
@@ -60,16 +49,6 @@ export const ThemedSelectInput = React.forwardRef(({ style, ...props }, ref) => 
 
 ThemedSelectInput.displayName = 'ThemedSelectInput';
 
-// Standardized on src/screens/GroupedWork/SelectPickupLocation.js: variant="outline"
-// size="md" (already the underlying primitive's own defaults, but explicit here so every
-// Select gets them without repeating at the call site), plus the trigger chevron -- a plain
-// (full-opacity) Icon rather than the dimmed SelectIcon, with marginRight: 12. Every call site
-// used to render this icon manually with drifting spacing/color -- it's now built into the
-// trigger itself so all Selects render it identically.
-//
-// The primitive's own className border (border-border) is the same unreliable/too-faint
-// className-driven border ThemedInput already works around -- explicit borderColor here so a
-// closed Select reads as a normal input field, matching ThemedInput's own borderColor override.
 export const ThemedSelectTrigger = React.forwardRef(({ children, variant = 'outline', size = 'md', className, style, ...props }, ref) => {
      const { uiColors, colorMode } = useTheme();
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
@@ -95,16 +74,14 @@ export const ThemedSelectIcon = React.forwardRef(({ size, className, ...props },
 export const ThemedSelectPortal = SelectPortal;
 export const ThemedSelectBackdrop = SelectBackdrop;
 
-// backgroundColor: surfaceBg (matching the app's theme surface) and a bottom-safe-area-aware
-// paddingBottom were already being passed manually at nearly every call site -- baked in here
-// as defaults, overridable via the caller's own style prop.
 export const ThemedSelectContent = React.forwardRef(({ style, ...props }, ref) => {
      const { uiColors, colorMode } = useTheme();
      const insets = useSafeAreaInsets();
+     const { height: windowHeight } = useWindowDimensions();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const paddingBottom = Platform.OS === 'android' ? insets.bottom + 16 : 16;
 
-     return <SelectContent ref={ref} style={[{ backgroundColor: surfaceBg, paddingBottom }, style]} {...props} />;
+     return <SelectContent ref={ref} style={[{ backgroundColor: surfaceBg, paddingBottom, maxHeight: windowHeight * 0.8 }, style]} {...props} />;
 });
 
 ThemedSelectContent.displayName = 'ThemedSelectContent';
@@ -112,14 +89,6 @@ ThemedSelectContent.displayName = 'ThemedSelectContent';
 export const ThemedSelectDragIndicator = SelectDragIndicator;
 export const ThemedSelectDragIndicatorWrapper = SelectDragIndicatorWrapper;
 
-// Auto-highlights the item matching the enclosing Select's selectedValue, using the same
-// runtimeColors.tertiary[300]/[500] highlight every screen was already computing by hand.
-// selectedValue is accepted as an explicit prop rather than read purely from
-// SelectValueContext -- gluestack's Select renders its dropdown through an Actionsheet/Overlay
-// portal that doesn't reliably preserve React context across the boundary, so context is kept
-// only as a fallback. Loose equality since selectedValue/value pairs are sometimes a string on
-// one side and a number on the other (e.g. value="-1" vs a numeric -1 selectedValue) in
-// existing usage. Callers can still override via their own style prop.
 export const ThemedSelectItem = React.forwardRef(({ value, selectedValue: selectedValueProp, style, ...props }, ref) => {
      const selectedValueFromContext = React.useContext(SelectValueContext);
      const selectedValue = selectedValueProp !== undefined ? selectedValueProp : selectedValueFromContext;
