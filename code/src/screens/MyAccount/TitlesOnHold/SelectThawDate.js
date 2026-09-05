@@ -135,7 +135,7 @@ export const SelectThawDate = (props) => {
                                                   size="sm"
                                              />
                                         </CheckboxIndicator>
-                                        <CheckboxLabel style={{ paddingLeft: 8, color: textColor }}>
+                                        <CheckboxLabel style={{ paddingLeft: 8 }}>
                                              {getTermFromDictionary("en", "freeze_indefinite_checkbox")}
                                         </CheckboxLabel>
                                    </Checkbox>

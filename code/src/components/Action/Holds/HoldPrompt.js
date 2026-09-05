@@ -525,7 +525,7 @@ export const HoldPrompt = (props) => {
                                              <CheckboxIndicator style={{ marginRight: 8 }}>
                                                   <CheckboxIcon as={CheckIcon} style={{ color: textColor }} />
                                              </CheckboxIndicator>
-                                             <CheckboxLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'always_use_pickup_location')}</CheckboxLabel>
+                                             <CheckboxLabel>{getTermFromDictionary(language, 'always_use_pickup_location')}</CheckboxLabel>
                                         </Checkbox>
                                    </FormControl>
                               ) : null}

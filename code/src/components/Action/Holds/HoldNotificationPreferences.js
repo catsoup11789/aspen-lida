@@ -43,7 +43,7 @@ export const HoldNotificationPreferences = (props) => {
                               <CheckboxIndicator style={{ marginRight: 8 }}>
                                    <CheckboxIcon as={CheckIcon} />
                               </CheckboxIndicator>
-                              <CheckboxLabel style={{ color: textColor }}>{emailNotificationLabel}</CheckboxLabel>
+                              <CheckboxLabel>{emailNotificationLabel}</CheckboxLabel>
                          </Checkbox>
                     </FormControl>
                ) : null}
@@ -57,7 +57,7 @@ export const HoldNotificationPreferences = (props) => {
                          <CheckboxIndicator style={{ marginRight: 8 }}>
                               <CheckboxIcon as={CheckIcon} />
                          </CheckboxIndicator>
-                         <CheckboxLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'hold_phone_notification')}</CheckboxLabel>
+                         <CheckboxLabel>{getTermFromDictionary(language, 'hold_phone_notification')}</CheckboxLabel>
                     </Checkbox>
                </FormControl>
                {phoneNotification ? (
@@ -86,7 +86,7 @@ export const HoldNotificationPreferences = (props) => {
                                    <CheckboxIndicator style={{ marginRight: 8 }}>
                                         <CheckboxIcon as={CheckIcon} />
                                    </CheckboxIndicator>
-                                   <CheckboxLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'hold_sms_notification')}</CheckboxLabel>
+                                   <CheckboxLabel>{getTermFromDictionary(language, 'hold_sms_notification')}</CheckboxLabel>
                               </Checkbox>
                          </FormControl>
                          {smsNotification ? (

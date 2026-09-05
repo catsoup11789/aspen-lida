@@ -242,7 +242,7 @@ const DeleteList = (props) => {
                                              <CheckboxIndicator style={optOutOfSoftDeletion ? { borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : { borderColor }}>
                                                   <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }} />
                                              </CheckboxIndicator>
-                                             <CheckboxLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'opt_out_soft_deletion')}</CheckboxLabel>
+                                             <CheckboxLabel>{getTermFromDictionary(language, 'opt_out_soft_deletion')}</CheckboxLabel>
                                         </Checkbox>
                                    </FormControl>
                               )}
