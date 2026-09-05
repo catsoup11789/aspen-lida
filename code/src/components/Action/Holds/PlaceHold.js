@@ -62,9 +62,9 @@ export const PlaceHold = (props = {}) => {
       const [loading, setLoading] = React.useState(false);
      const holdsContext = React.useContext(HoldsContext) ?? {};
      const holds = holdsContext.holds ?? [];
-     const { runtimeColors } = useTheme();
-     const primary500 = runtimeColors.primary[500];
-     const primary500Text = runtimeColors.primary['500-text'];
+     const { brand } = useTheme();
+     const primary500 = brand.primary[500];
+     const primary500Text = brand.primary['500-text'];
       const safeLocations = _.isArray(locations) ? locations : [];
       const safeAccounts = _.isArray(accounts) ? accounts : [];
       const numItemsWithVolumes = _.toNumber(volumeInfo?.numItemsWithVolumes ?? 0);

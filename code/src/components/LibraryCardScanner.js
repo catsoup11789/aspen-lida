@@ -8,6 +8,7 @@ import { LoadError } from './loadError';
 import { LoadingSpinner } from './loadingSpinner';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from './themed/ThemedButton';
 import { View } from '@/components/ui/view';
+import { TOKENS } from '../themes/theme';
 
 /**
  * LibraryCardScanner component for scanning library cards using the device camera.
@@ -72,8 +73,8 @@ export default function LibraryCardScanner() {
                <CameraView onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]} barcodeScannerSettings={{ barcodeTypes: allowedBarcodes }}>
                     <BarcodeMask edgeColor="#62B1F6" showAnimatedLine={false} />
                     <View style={styles.buttonContainer}>
-                         <Button variant="outline" colorScheme="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: '#ffffff' }}>
-                              <ButtonText style={{ color: '#ffffff' }}>Cancel</ButtonText>
+                         <Button variant="outline" colorScheme="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: TOKENS.primitives.singletons.white }}>
+                              <ButtonText style={{ color: TOKENS.primitives.singletons.white }}>Cancel</ButtonText>
                          </Button>
                          {scanned && (
                               <Button onPress={() => setScanned(false)} className="ml-4">

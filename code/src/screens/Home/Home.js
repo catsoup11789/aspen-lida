@@ -26,8 +26,7 @@ import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedBut
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
-import { InputSlot } from '@/components/ui/input';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedInputSlot as InputSlot } from '../../components/themed/ThemedFormControls';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -42,7 +41,6 @@ export const DiscoverHomeScreen = () => {
      const [loading, setLoading] = React.useState(false);
      const insets = useSafeAreaInsets();
 
-     const { colorMode } = useTheme();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const { updateIndexes, updateSources, updateCurrentIndex, updateCurrentSource } = React.useContext(SearchContext);
      const { data: userState } = useUserState();
@@ -313,11 +311,11 @@ export const DiscoverHomeScreen = () => {
                               {androidEndSupportMessage()}
                               {showSystemMessage()}
                               <FormControl>
-                                   <ThemedInput>
+                                   <Input>
                                         <InputSlot>
                                              <MaterialIcons name="search" size={20} className="ml-2" />
                                         </InputSlot>
-                                        <ThemedInputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} />
+                                        <InputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
                                                   <MaterialIcons name="close" size={20} className="mr-2" />
@@ -326,7 +324,7 @@ export const DiscoverHomeScreen = () => {
                                         <InputSlot onPress={() => openScanner()}>
                                              <MaterialCommunityIcons name="barcode-scan" size={20} className="mr-2" />
                                         </InputSlot>
-                                   </ThemedInput>
+                                   </Input>
                               </FormControl>
                               {homeScreenLinks && homeScreenLinks.length > 0 ? (
                                    <HomeScreenLinkGrid links={homeScreenLinks} />
@@ -362,7 +360,7 @@ export const DiscoverHomeScreen = () => {
  * @constructor
  */
 const ButtonOptions = (props) => {
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
      const [loading, setLoading] = React.useState(false);
      const [refreshing, setRefreshing] = React.useState(false);
      const { language, showManageCategories, onRefreshCategories, onLoadAllCategories } = props;
@@ -384,13 +382,13 @@ const ButtonOptions = (props) => {
                               }
                          }}>
                          {loading ? (
-                          <ButtonSpinner key="spinner" style={{ color: runtimeColors.primary['500-text'], marginRight: 4 }} />
+                          <ButtonSpinner key="spinner" className="mr-1" style={{ color: brand.primary['500-text'] }} />
                          ) : (
                              <MaterialIcons
                                   key="icon"
                                   name="schedule"
                                   size={16}
-                                  color={runtimeColors.primary['500-text']}
+                                  color={brand.primary['500-text']}
                                   className="mr-1"
                              />
                          )}
@@ -410,7 +408,7 @@ const ButtonOptions = (props) => {
                          <MaterialIcons
                              name="settings"
                              size={16}
-                             color={runtimeColors.primary['500-text']}
+                             color={brand.primary['500-text']}
                              className="mr-1"
                          />
                          <ButtonText
@@ -432,7 +430,7 @@ const ButtonOptions = (props) => {
                                    setRefreshing(false);
                               }
                          }}>
-                         {refreshing ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <MaterialIcons name="refresh" size={16} color={runtimeColors.primary['500-text']} className="mr-1" />}
+                         {refreshing ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <MaterialIcons name="refresh" size={16} color={brand.primary['500-text']} className="mr-1" />}
 
                          <ButtonText size="sm" className="font-medium">
                               {getTermFromDictionary(language, 'browse_categories_refresh')}

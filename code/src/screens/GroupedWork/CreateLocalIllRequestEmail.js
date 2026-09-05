@@ -6,10 +6,9 @@ import { popAlert } from '../../components/feedback';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '../../components/themed/ThemedTextarea';
 import { VStack } from '@/components/ui/vstack';
@@ -41,7 +40,7 @@ const Request = (payload) => {
      const { workTitle, author, volumeName, recordId} = payload;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const {theme, colorMode} = useTheme();
+     const {theme} = useTheme();
 
      const [userVolumeName, setUserVolumeName] = React.useState(volumeName);
      const [userNote, setUserNote] = React.useState('');
@@ -79,15 +78,15 @@ const Request = (payload) => {
                                    {getTermFromDictionary(language, 'title')}
                               </FormControlLabelText>
                          </FormControlLabel>
-                         <ThemedInput isReadOnly={true}>
-                              <ThemedInputField
+                         <Input isReadOnly={true}>
+                              <InputField
                                    id="title"
                                    size="$lg"
                                    value={workTitle}
                                    defaultValue={workTitle}
                                    isReadOnly={true}
                               />
-                         </ThemedInput>
+                         </Input>
                     </FormControl>
                     <FormControl className="my-2">
                          <FormControlLabel>
@@ -95,14 +94,14 @@ const Request = (payload) => {
                                    {getTermFromDictionary(language, 'author')}
                               </FormControlLabelText>
                          </FormControlLabel>
-                         <ThemedInput isReadOnly={true}>
-                              <ThemedInputField
+                         <Input isReadOnly={true}>
+                              <InputField
                                    id="author"
                                    size="$lg"
                                    value={author}
                                    defaultValue={author}
                               />
-                         </ThemedInput>
+                         </Input>
                     </FormControl>
                     <FormControl className="my-2">
                          <FormControlLabel>
@@ -110,8 +109,8 @@ const Request = (payload) => {
                                    {getTermFromDictionary(language, 'volume')}
                               </FormControlLabelText>
                          </FormControlLabel>
-                         <ThemedInput>
-                              <ThemedInputField
+                         <Input>
+                              <InputField
                                    id="volume"
                                    size="$lg"
                                    value={userVolumeName}
@@ -120,7 +119,7 @@ const Request = (payload) => {
                                         setUserVolumeName(text);
                                    }}
                               />
-                         </ThemedInput>
+                         </Input>
                     </FormControl>
                     <FormControl className="my-2">
                          <FormControlLabel>

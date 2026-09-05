@@ -21,8 +21,8 @@ function normalizeBadgeColorScheme(colorScheme) {
      return colorScheme || 'default';
 }
 
-function resolveBrandBadgeColors(runtimeColors, colorScheme, variant) {
-     const scale = runtimeColors?.[colorScheme];
+function resolveBrandBadgeColors(brand, colorScheme, variant) {
+     const scale = brand?.[colorScheme];
      if (!scale) {
           return null;
      }
@@ -32,12 +32,12 @@ function resolveBrandBadgeColors(runtimeColors, colorScheme, variant) {
      return { backgroundColor: scale[500], textColor: scale['500-text'] };
 }
 
-function resolveStatusBadgeColors(runtimeColors, colorScheme, variant) {
+function resolveStatusBadgeColors(brand, colorScheme, variant) {
      const normalized = normalizeBadgeColorScheme(colorScheme);
      const status = BADGE_STATUS_COLORS[normalized];
 
      if (!status) {
-          return resolveBrandBadgeColors(runtimeColors, 'primary', variant) ?? { backgroundColor: 'transparent', textColor: undefined };
+          return resolveBrandBadgeColors(brand, 'primary', variant) ?? { backgroundColor: 'transparent', textColor: undefined };
      }
      if (variant === 'outline') {
           return { borderColor: status.text, textColor: status.text, backgroundColor: 'transparent' };
@@ -45,10 +45,18 @@ function resolveStatusBadgeColors(runtimeColors, colorScheme, variant) {
      return { backgroundColor: status.bg, textColor: status.text };
 }
 
+/**
+ * Wraps gluestack's Badge. `colorScheme` selects colors: a brand scale name (e.g.
+ * "primary") uses that brand color, a status name (`error`/`danger`, `warning`,
+ * `success`, `info`, `muted`, `none`) uses a fixed status palette, and anything else
+ * falls back to the brand's primary color. `variant` is `'solid'` (default, filled
+ * background) or `'outline'` (transparent background, colored border/text). The
+ * resolved colorScheme/variant are provided to descendant ThemedBadgeText via context.
+ */
 export const ThemedBadge = React.forwardRef(({ colorScheme, variant = 'solid', className, style, ...props }, ref) => {
-     const { runtimeColors } = useTheme();
-     const brandColors = resolveBrandBadgeColors(runtimeColors, colorScheme, variant);
-     const colors = brandColors ?? resolveStatusBadgeColors(runtimeColors, colorScheme, variant);
+     const { brand } = useTheme();
+     const brandColors = resolveBrandBadgeColors(brand, colorScheme, variant);
+     const colors = brandColors ?? resolveStatusBadgeColors(brand, colorScheme, variant);
 
      return (
           <BadgeActionContext.Provider value={{ colorScheme, variant }}>
@@ -63,11 +71,16 @@ export const ThemedBadge = React.forwardRef(({ colorScheme, variant = 'solid', c
      );
 });
 
+/**
+ * Wraps gluestack's BadgeText. Reads colorScheme/variant from the nearest ThemedBadge
+ * (via context) to color its text to match, and resets textTransform to `'none'`
+ * (overriding the primitive's default uppercase transform).
+ */
 export const ThemedBadgeText = React.forwardRef(({ className, style, ...props }, ref) => {
      const { colorScheme, variant } = React.useContext(BadgeActionContext);
-     const { runtimeColors } = useTheme();
-     const brandColors = resolveBrandBadgeColors(runtimeColors, colorScheme, variant);
-     const colors = brandColors ?? resolveStatusBadgeColors(runtimeColors, colorScheme, variant);
+     const { brand } = useTheme();
+     const brandColors = resolveBrandBadgeColors(brand, colorScheme, variant);
+     const colors = brandColors ?? resolveStatusBadgeColors(brand, colorScheme, variant);
 
      return (
           <BadgeText

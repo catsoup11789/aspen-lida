@@ -15,7 +15,6 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
@@ -24,7 +23,7 @@ import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedS
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '@/src/components/themed/ThemedTextarea';
 import { VStack } from '@/components/ui/vstack';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../components/themed/ThemedFormControls';
 /**
  * AddToList component that displays a button to add an item to a list. When clicked, it opens a modal that allows the user to select an existing list or create a new one, and optionally add the list to a group. It handles the state of the modal, form fields, and API calls for adding items to lists and creating new lists.
  * @param props
@@ -52,9 +51,9 @@ const AddToList = (props) => {
      const [title, saveTitle] = useState();
      const [isPublic, saveIsPublic] = useState('1');
      const queryClient = useQueryClient();
-     const { resolvedUiColors, runtimeColors } = useTheme();
-     const borderColor = resolvedUiColors.border;
-     const cancelColor = resolvedUiColors.text;
+     const { neutrals, brand } = useTheme();
+     const borderColor = neutrals.border;
+     const cancelColor = neutrals.textMain;
 
      const [addToGroup, setAddToGroup] = React.useState('no');
      const [newGroupName, setNewGroupName] = React.useState('');
@@ -101,7 +100,7 @@ const AddToList = (props) => {
      const RenderLargeButton = () => (
           <Center>
                <Button colorScheme="tertiary" className="mt-3" onPress={toggleModal}>
-                    <MaterialIcons name="bookmark" size={18} color={runtimeColors.tertiary['500-text']} className="mr-1" />
+                    <MaterialIcons name="bookmark" size={18} color={brand.tertiary['500-text']} className="mr-1" />
                     <ButtonText>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
                </Button>
           </Center>
@@ -109,7 +108,7 @@ const AddToList = (props) => {
 
      const RenderSmallButton = () => (
           <Button colorScheme="tertiary" size="xs" variant="link" className="mt-1" onPress={toggleModal}>
-               <MaterialIcons name="bookmark" size={18} color={runtimeColors.tertiary[500]} className="mr-1" />
+               <MaterialIcons name="bookmark" size={18} color={brand.tertiary[500]} className="mr-1" />
                <ButtonText>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
           </Button>
      );
@@ -139,7 +138,7 @@ const AddToList = (props) => {
                                              {getTermFromDictionary(language, 'add_to_list')}
                                         </Heading>
                                         <ModalCloseButton onPress={closeModal}>
-                                             <ThemedCloseIcon />
+                                             <CloseIcon />
                                         </ModalCloseButton>
                                    </ModalHeader>
                                    <ModalBody>
@@ -224,7 +223,7 @@ const AddToList = (props) => {
                                              {getTermFromDictionary(language, 'create_new_list_item')}
                                         </Heading>
                                         <ModalCloseButton onPress={closeModal}>
-                                             <ThemedCloseIcon />
+                                             <CloseIcon />
                                         </ModalCloseButton>
                                    </ModalHeader>
                                    <ModalBody>
@@ -234,9 +233,9 @@ const AddToList = (props) => {
                                                        <FormControlLabel>
                                                             <FormControlLabelText>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                                        </FormControlLabel>
-                                                       <ThemedInput style={{ borderColor }}>
-                                                            <ThemedInputField id="title" onChangeText={(text) => saveTitle(text)} returnKeyType="next" />
-                                                       </ThemedInput>
+                                                       <Input style={{ borderColor }}>
+                                                            <InputField id="title" onChangeText={(text) => saveTitle(text)} returnKeyType="next" />
+                                                       </Input>
                                                   </FormControl>
                                                   <FormControl>
                                                        <FormControlLabel>
@@ -257,13 +256,13 @@ const AddToList = (props) => {
                                                             }}>
                                                             <HStack space="md" className="flex-row items-center w-[75%] max-w-75">
                                                                  <Radio value="1" className="my-1">
-                                                                      <RadioIndicator style={{ marginRight: 8, borderColor }}>
+                                                                      <RadioIndicator className="mr-2" style={{ borderColor }}>
                                                                            <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                                       </RadioIndicator>
                                                                       <RadioLabel>{getTermFromDictionary(language, 'private')}</RadioLabel>
                                                                  </Radio>
                                                                  <Radio value="0" className="my-1">
-                                                                      <RadioIndicator style={{ marginRight: 8, borderColor }}>
+                                                                      <RadioIndicator className="mr-2" style={{ borderColor }}>
                                                                            <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                                       </RadioIndicator>
                                                                       <RadioLabel>{getTermFromDictionary(language, 'public')}</RadioLabel>
@@ -306,9 +305,9 @@ const AddToList = (props) => {
                                                                  <FormControlLabel>
                                                                       <FormControlLabelText>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
                                                                  </FormControlLabel>
-                                                                 <ThemedInput style={{ borderColor }}>
-                                                                      <ThemedInputField id="newGroupName" onChangeText={(text) => setNewGroupName(text)} defaultValue={newGroupName} />
-                                                                 </ThemedInput>
+                                                                 <Input style={{ borderColor }}>
+                                                                      <InputField id="newGroupName" onChangeText={(text) => setNewGroupName(text)} defaultValue={newGroupName} />
+                                                                 </Input>
                                                             </FormControl>
                                                             {hasListGroups && (
                                                                  <FormControl className="pb-2">

@@ -7,8 +7,7 @@ import { Dimensions } from 'react-native';
 import Barcode from 'react-native-barcode-expo';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
-import { Actionsheet, ActionsheetBackdrop, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper } from '@/components/ui/actionsheet';
-import { ThemedActionsheetContent as ActionsheetContent } from '@/src/components/themed/ThemedActionsheet';
+import { ThemedActionsheet as Actionsheet, ThemedActionsheetBackdrop as ActionsheetBackdrop, ThemedActionsheetDragIndicator as ActionsheetDragIndicator, ThemedActionsheetDragIndicatorWrapper as ActionsheetDragIndicatorWrapper, ThemedActionsheetContent as ActionsheetContent } from '@/src/components/themed/ThemedActionsheet';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -53,8 +52,6 @@ export const MyLibraryCard = () => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { uiColors } = useTheme();
-
      let autoRotate = library.generalSettings?.autoRotateCard ?? 0;
 
 
@@ -192,7 +189,7 @@ export const MyLibraryCard = () => {
           await ScreenOrientation.unlockAsync();
      };
 
-     const { textColor, runtimeColors } = useTheme();
+     const { textColor, brand, neutrals } = useTheme();
 
      return (
           <>
@@ -211,9 +208,9 @@ export const MyLibraryCard = () => {
                     </Box>
 
                     {isLandscape && cards.length > 1 && (
-                        <Box style={{ position: 'absolute', bottom: 0, left: 0, right: 0, alignItems: 'center', paddingBottom: 8 }}>
+                        <Box className="pb-2" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, alignItems: 'center' }}>
                               <Button variant="link" onPress={() => setShowDrawer(true)} size="sm">
-                                  <MaterialCommunityIcons name="chevron-up" size={24} />
+                                  <MaterialCommunityIcons name="chevron-up" size={24} color={neutrals.actionableIndicator} />
                               </Button>
                          </Box>
                     )}
@@ -301,7 +298,7 @@ const CreateLibraryCard = (data) => {
      const card = data.card ?? [];
      const { numCards, hasOpenModalRef, openBarcodeModal } = data ?? 0;
 
-     const { textColor, runtimeColors, resolvedUiColors } = useTheme();
+     const { textColor, brand, neutrals } = useTheme();
 
      const library = useLibrary();
      const language = data.language || useActiveLanguage();
@@ -394,11 +391,11 @@ const CreateLibraryCard = (data) => {
           );
      }
 
-     let cardBg = resolvedUiColors.surface;
-     const barcodeBg = resolvedUiColors.surface;
+     let cardBg = neutrals.surface;
+     const barcodeBg = neutrals.surfaceMuted;
 
      return (
-          <VStack style={{ backgroundColor: cardBg, paddingHorizontal: 32, paddingVertical: 20, borderRadius: 12 }}>
+          <VStack className="px-8 py-5 rounded-xl" style={{ backgroundColor: cardBg }}>
                {numCards > 1 ? (
                     <>
                          <Center>
@@ -420,12 +417,12 @@ const CreateLibraryCard = (data) => {
                     {showExpirationDate && expirationDate && !neverExpires && numCards > 1 ? <Text>{expirationText}</Text> : null}
                     {numCards > 1 ? (
                          <Button colorScheme="primary" variant="link" onPress={() => openBarcodeModal && openBarcodeModal(card)}>
-                              <MaterialCommunityIcons name="barcode-scan" size={20} color={runtimeColors.primary[500]} className="mr-1" />
+                              <MaterialCommunityIcons name="barcode-scan" size={20} color={brand.primary[500]} className="mr-1" />
                               <ButtonText>{getTermFromDictionary(language, 'open_barcode')}</ButtonText>
                          </Button>
                     ) : (
                          <VStack alignItems="center" space="sm">
-                              <Box style={{ backgroundColor: barcodeBg, padding: 12, borderRadius: 8 }}>
+                              <Box className="p-3 rounded-lg" style={{ backgroundColor: barcodeBg }}>
                                    <Barcode
                                         value={barcodeValue}
                                         format={barcodeStyle}
@@ -453,7 +450,7 @@ const CreateLibraryCard = (data) => {
  * @constructor
  */
 const CardCarousel = (data) => {
-     const { textColor, runtimeColors } = useTheme();
+     const { textColor, brand } = useTheme();
      const language = useActiveLanguage();
      const [internalIndex, setInternalIndex] = React.useState(0);
      const cards = orderByFields(data.cards ?? [], ['key']);
@@ -505,8 +502,8 @@ const CardCarousel = (data) => {
           const card = cards[0];
           return (
                <Box
+                    className="p-5"
                     style={{
-                         padding: 20,
                          flex: 1,
                          alignItems: 'center',
                          transform: [{ scale: 0.9 }] }}>
@@ -563,7 +560,7 @@ const CardCarousel = (data) => {
  * @constructor
  */
 const BarcodeModal = ({ card, showModal, closeModal, language }) => {
-     const { textColor, runtimeColors, resolvedUiColors } = useTheme();
+     const { textColor, brand, neutrals } = useTheme();
      const library = useLibrary();
      const [orientation, setOrientation] = React.useState('portrait');
      const [screenDimensions, setScreenDimensions] = React.useState(Dimensions.get('window'));
@@ -650,14 +647,14 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
           }
      };
 
-     const modalBg = resolvedUiColors.surface;
-     const barcodeBg = resolvedUiColors.surface;
+     const modalBg = neutrals.surface;
+     const barcodeBg = neutrals.surfaceMuted;
 
      return (
           <Modal isOpen={showModal} onClose={closeModal} size="full">
                     <ModalBackdrop style={{ opacity: 0.85 }} />
                     <ModalContent>
-                         <ModalBody style={{ margin: 20, padding: 16, backgroundColor: modalBg }}>
+                         <ModalBody className="m-5 p-4" style={{ backgroundColor: modalBg }}>
                               {/* Always render barcode to measure it, but hide if showing warning. */}
                               <Box style={{ opacity: showRotateWarning ? 0 : 1, position: showRotateWarning ? 'absolute' : 'relative' }}>
                                    <Center className="p-2">
@@ -684,7 +681,7 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                                              colorScheme="primary" className="mt-2"
                                              onPress={rotateToLandscape}
                                         >
-                                             <MaterialCommunityIcons name="phone-rotate-landscape" size={18} color={runtimeColors.primary['500-text']} className="mr-2" />
+                                             <MaterialCommunityIcons name="phone-rotate-landscape" size={18} color={brand.primary['500-text']} className="mr-2" />
                                              <ButtonText>
                                                   {getTermFromDictionary(language, 'rotate_to_landscape') || 'Rotate to Landscape'}
                                              </ButtonText>
@@ -698,7 +695,7 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                                              size="md"
                                              colorScheme="primary"
                                              onPress={rotateToPortrait}>
-                                             <MaterialCommunityIcons name="phone-rotate-portrait" size={18} color={runtimeColors.primary['500-text']} className="mr-2" />
+                                             <MaterialCommunityIcons name="phone-rotate-portrait" size={18} color={brand.primary['500-text']} className="mr-2" />
                                              <ButtonText>
                                                   {getTermFromDictionary(language, 'rotate_to_portrait') || 'Rotate to Portrait'}
                                              </ButtonText>

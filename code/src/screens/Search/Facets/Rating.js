@@ -43,7 +43,7 @@ export const Facet_Rating = ({ data, category, updater }) => {
                label: 'Unrated',
                value: '0' },
      ]);
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
      const starColor = '#eab308';
 
      React.useEffect(() => {
@@ -87,8 +87,8 @@ export const Facet_Rating = ({ data, category, updater }) => {
                         <Pressable key={index} onPress={() => updateSearch(star.label)} className="p-[2px] py-2">
                              <HStack space="sm" className="justify-start items-center">
                                    {value === star.label ?
-                                       <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} /> :
-                                       <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
+                                       <MaterialIcons name="radio-button-checked" size={20} color={brand.primary[600]} /> :
+                                       <MaterialIcons name="radio-button-unchecked" size={20} color={brand.primary[200]} />
                                    }
                                    <Stars
                                         default={star.value}

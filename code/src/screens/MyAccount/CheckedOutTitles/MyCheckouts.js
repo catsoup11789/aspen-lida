@@ -4,7 +4,7 @@ import { useIsFetching, useQuery, useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import React from 'react';
 import { FlatList } from 'react-native';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogCloseButton as AlertDialogCloseButton, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -28,7 +28,7 @@ import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/lo
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedFormControl as FormControl } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl } from '@/src/components/themed/ThemedFormControls';
 
 /**
  * MyCheckouts component that displays the user's checked out items. It allows users to filter checkouts by source, sort them by various criteria, and renew all checkouts. The component fetches the user's checkouts from the API and updates the state accordingly. It also handles displaying system messages and managing the loading state.
@@ -59,10 +59,9 @@ export const MyCheckouts = () => {
      const renewConfirmationRef = React.useRef(null);
      const [renewConfirmationResponse, setRenewConfirmationResponse] = React.useState('');
      const [confirmingRenewal, setConfirmingRenewal] = React.useState(false);
-     const { runtimeColors, textColor, resolvedUiColors } = useTheme();
-     const panelBg = resolvedUiColors.surface;
-     const surfaceBg = resolvedUiColors.surface;
-     const borderColor = resolvedUiColors.border;
+     const { brand, textColor, neutrals } = useTheme();
+     const panelBg = neutrals.surface;
+     const borderColor = neutrals.border;
 
      const [checkoutsBy, setCheckoutBy] = React.useState({
           ils: 'Checked Out Titles for Physical Materials',
@@ -418,7 +417,7 @@ export const MyCheckouts = () => {
                                              setRenewAll(false);
                                         });
                                    }}>
-                                   {!renewAll && <MaterialIcons name="autorenew" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />}
+                                   {!renewAll && <MaterialIcons name="autorenew" size={18} color={brand.primary['500-text']} className="mr-1" />}
                                    <ButtonText>{renewAll ? getTermFromDictionary(language, 'renewing_all', true) : getTermFromDictionary(language, 'checkout_renew_all')}</ButtonText>
                               </Button>
                               <Button
@@ -523,18 +522,18 @@ export const MyCheckouts = () => {
 
      return (
           <Box className="flex-1">
-               <Box style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
+               <Box style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }} className="p-2">
                     {showSystemMessage()}
                     <ScrollView horizontal>{actionButtons()}</ScrollView>
                </Box>
                <Center>
                     <AlertDialog leastDestructiveRef={renewConfirmationRef} isOpen={renewConfirmationIsOpen} onClose={onRenewConfirmationClose}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
+                         <AlertDialogContent>
                               <AlertDialogHeader>
                                    <Heading>{renewConfirmationResponse?.title ? renewConfirmationResponse.title : 'Unknown Error'}</Heading>
                                    <AlertDialogCloseButton>
-                                        <ThemedCloseIcon />
+                                        <CloseIcon />
                                    </AlertDialogCloseButton>
                               </AlertDialogHeader>
                               <AlertDialogBody><Text>{renewConfirmationResponse?.message ? decodeMessage(renewConfirmationResponse.message) : 'Unable to renew checkout for unknown error. Please contact the library.'}</Text></AlertDialogBody>

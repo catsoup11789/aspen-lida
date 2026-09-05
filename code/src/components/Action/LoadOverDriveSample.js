@@ -17,7 +17,7 @@ export const LoadOverDriveSample = (props) => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const [loading, setLoading] = React.useState(false);
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
 
      logDebugMessage("Showing overdrive sample, properties are");
      logDebugMessage(props);
@@ -26,14 +26,15 @@ export const LoadOverDriveSample = (props) => {
           <Button colorScheme="primary"
                size="xs"
                variant="link"
-               style={{ width: '100%', marginBottom: 4, borderWidth: 1, borderColor: runtimeColors.primary[500] }}
+               className="mb-1"
+               style={{ width: '100%', borderWidth: 1, borderColor: brand.primary[500] }}
                onPress={() => {
                    setLoading(true);
                    completeAction(props.id, props.type, user.id, props.formatId, props.sampleNumber, '', '', '', library?.baseUrl ?? '', '', '', '', '').then((r) => {
                         setLoading(false);
                    });
                }}>
-               {loading ? <ButtonSpinner style={{ color: runtimeColors.primary[500] }} /> : <ButtonText>{props.title}</ButtonText>}
+               {loading ? <ButtonSpinner style={{ color: brand.primary[500] }} /> : <ButtonText>{props.title}</ButtonText>}
           </Button>
      );
 };

@@ -1,8 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
-import { FormControlLabel } from '@/components/ui/form-control';
-import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../themed/ThemedFormControls';
 import { ThemedMaterialIcons as MaterialIcons } from '../../themed/ThemedMaterialIcons';
 import { ThemedRadio as Radio, ThemedRadioGroup as RadioGroup, ThemedRadioIcon as RadioIcon, ThemedRadioIndicator as RadioIndicator, ThemedRadioLabel as RadioLabel } from '../../themed/ThemedRadio';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
@@ -14,7 +13,7 @@ import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedS
  * @constructor
  */
 export const SelectItemHold = (props) => {
-     const { id, data, item, setItem, setHoldType, showModal, holdTypeForFormat, language, url, textColor, runtimeColors } = props;
+     const { id, data, item, setItem, setHoldType, showModal, holdTypeForFormat, language, url, textColor, brand } = props;
 
      let holdType = props.holdType;
      let copies = data.copies;
@@ -82,7 +81,7 @@ export const SelectItemHold = (props) => {
                                              {_.map(Object.keys(copies), function (item, index, array) {
                                                   let copy = copies[item];
                                                   if (copy.id === defaultItem) {
-                                                       return <SelectItem label={copy.location} value={copy.id} key={copy.id} style={{ backgroundColor: runtimeColors.tertiary[300] }} textStyle={{ color: runtimeColors.tertiary['500-text'] }} />;
+                                                       return <SelectItem label={copy.location} value={copy.id} key={copy.id} style={{ backgroundColor: brand.tertiary[300] }} textStyle={{ color: brand.tertiary['500-text'] }} />;
                                                   }
                                                   return <SelectItem label={copy.location} value={copy.id} key={copy.id} textStyle={{ color: textColor }} />;
                                              })}

@@ -12,7 +12,7 @@ import { formatLinkedAccounts } from '@/src/util/api/userHelper';
 import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon } from '@/src/components/themed/ThemedFormControls';
 
 /**
  * DisableAccountLinking component that allows users to disable account linking. It displays a button that opens a modal where users can confirm disabling account linking. The component handles API calls to disable account linking and refreshes the linked accounts, viewer accounts, and user profile upon successful completion.
@@ -65,7 +65,7 @@ const DisableAccountLinking = () => {
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'disable_linked_accounts_title')}</Heading>
                               <ModalCloseButton onPress={toggle}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>

@@ -92,7 +92,7 @@ const DisplayCategory = (data) => {
      const [errorTitle, setErrorTitle] = React.useState('');
      const [errorMessage, setErrorMessage] = React.useState('');
      const library = useLibrary();
-     const { colorMode, uiColors, runtimeColors } = useTheme();
+     const { colorMode, neutralPairs, brand } = useTheme();
      const toggleCategoryVisibility = useToggleBrowseCategoryVisibility();
      const toggleCategoryVisibilityBatch = useToggleBrowseCategoryVisibilityBatch();
      const maxNum = useMaxCategories();
@@ -210,7 +210,7 @@ const DisplayCategory = (data) => {
            });
      };
      return (
-          <Box style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
+          <Box className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? neutralPairs.surfaceMuted.light : neutralPairs.iconMuted.dark }}>
                <HStack space="sm" className="items-center justify-between pb-1">
                     <Text bold size="lg" className="flex-wrap flex-1">
                          {category.title}
@@ -218,14 +218,14 @@ const DisplayCategory = (data) => {
                     <Switch
                          size="md"
                          name={category.key}
-                         onToggle={() => {
+                         onValueChange={() => {
                               updateToggle(category);
                          }}
                          isDisabled={isUpdating}
-                         isChecked={isVisible}
+                         value={isVisible}
                          trackColor={{
-                              true: runtimeColors.primary[500],
-                              false: uiColors.surface,
+                              true: brand.primary[500],
+                              false: neutralPairs.surface,
                          }}
                     />
                </HStack>

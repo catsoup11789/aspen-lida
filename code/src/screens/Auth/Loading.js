@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import * as Sentry from '@sentry/react-native';
 import { SystemMessagesContext } from '../../context/initialContext';
-import { buildThemeForLibrary, runExclusiveThemeInit, useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
+import { buildThemeForLibrary, runExclusiveThemeInit, useTheme, TOKENS } from '../../themes/theme';
 import {
      getLanguageDisplayName,
      getTermFromDictionary,
@@ -193,8 +193,8 @@ export const LoadingScreen = () => {
         const hasResolvedLibraryContext = !!LIBRARY.url;
 
      const insets = useSafeAreaInsets();
-     const { uiColors } = useTheme();
-     const borderColor = uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light;
+     const { neutralPairs, brand } = useTheme();
+     const borderColor = neutralPairs?.border?.light ?? TOKENS.semanticTokens.light.border;
 
      const numSteps = 14;
 
@@ -1551,7 +1551,7 @@ export const LoadingScreen = () => {
                               {loadingText}
                          </Heading>
                          <Progress value={progress} size="md" testID="progress-bar" style={{ width: '100%', backgroundColor: borderColor }}>
-                              <ProgressFilledTrack />
+                              <ProgressFilledTrack style={{ backgroundColor: brand.primary[500] }} />
                          </Progress>
                     </VStack>
                </Box>

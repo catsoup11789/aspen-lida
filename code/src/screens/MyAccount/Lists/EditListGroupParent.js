@@ -9,11 +9,10 @@ import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '@/src/components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
@@ -33,7 +32,7 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
       const updateListGroups = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { uiColors, runtimeColors, colorMode } = useTheme();
+      const { brand } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
 
@@ -63,7 +62,7 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
      return (
           <Center>
                <Button onPress={toggle} size="xs" colorScheme="primary">
-                   <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />
+                   <MaterialIcons name="edit" size={18} color={brand.primary['500-text']} className="mr-1" />
                    <ButtonText>{getTermFromDictionary(language, 'move_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full">
@@ -72,7 +71,7 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'move_list_group')}</Heading>
                               <ModalCloseButton onPress={toggle}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>

@@ -27,13 +27,13 @@ export function loadingSpinner(message = '') {
  * @constructor
  */
 export const LoadingSpinner = (props) => {
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
      if (!isUndefined(props) && !isEmpty(props) && !isUndefined(props.message) && !isEmpty(props.message)) {
           logDebugMessage("Showing loading spinner with message: " + props.message);
           return (
                <Center className="flex-1 px-3">
                     <VStack space="md" className="items-center">
-                         <Spinner size="large" color={runtimeColors.primary[500]} accessibilityLabel="Loading..." />
+                         <Spinner size="large" color={brand.primary[500]} accessibilityLabel="Loading..." />
                          <Heading size="md">
                               {props.message}
                          </Heading>
@@ -45,7 +45,7 @@ export const LoadingSpinner = (props) => {
      return (
           <Center className="flex-1">
                <HStack>
-                    <Spinner color={runtimeColors.primary[500]} size="large" accessibilityLabel="Loading..." />
+                    <Spinner color={brand.primary[500]} size="large" accessibilityLabel="Loading..." />
                </HStack>
           </Center>
      );

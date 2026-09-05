@@ -9,11 +9,10 @@ import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { forgotBarcode } from '../../util/api/user';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -26,8 +25,8 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
  */
 export const ForgotBarcode = (props) => {
      const isKeyboardOpen = useKeyboard();
-     const { resolvedUiColors, textColor } = useTheme();
-     const borderColor = resolvedUiColors.border;
+     const { neutrals, textColor } = useTheme();
+     const borderColor = neutrals.border;
      const library = useLibrary();
      const { usernameLabel, showForgotBarcodeModal, setShowForgotBarcodeModal } = props;
      const [isProcessing, setIsProcessing] = React.useState(false);
@@ -116,9 +115,9 @@ export const ForgotBarcode = (props) => {
                     <FormControlLabel>
                          <FormControlLabelText size="sm">{fieldLabel}</FormControlLabelText>
                     </FormControlLabel>
-                    <ThemedInput style={{ borderColor }}>
-                         <ThemedInputField id="phoneNumber" size="xl" returnKeyType="done" enterKeyHint="done" onChangeText={(text) => setPhoneNumber(text)} onSubmitEditing={() => initiateForgotBarcode()} textContentType="telephoneNumber"/>
-                    </ThemedInput>
+                    <Input style={{ borderColor }}>
+                         <InputField id="phoneNumber" size="xl" returnKeyType="done" enterKeyHint="done" onChangeText={(text) => setPhoneNumber(text)} onSubmitEditing={() => initiateForgotBarcode()} textContentType="telephoneNumber"/>
+                    </Input>
                </FormControl>
           </>
      );
@@ -157,7 +156,7 @@ export const ForgotBarcode = (props) => {
                          <ModalHeader>
                               <Heading>{modalTitle}</Heading>
                               <ModalCloseButton onPress={() => { setShowForgotBarcodeModal(false); }}>
-                                  <ThemedCloseIcon />
+                                  <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>

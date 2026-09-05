@@ -3,8 +3,8 @@ import React from 'react';
 import * as Brightness from 'expo-brightness';
 import * as Linking from 'expo-linking';
 import { AppState, Platform } from 'react-native';
-import { Accordion, AccordionContent, AccordionContentText, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedAccordion as Accordion, ThemedAccordionContent as AccordionContent, ThemedAccordionHeader as AccordionHeader, ThemedAccordionItem as AccordionItem, ThemedAccordionTrigger as AccordionTrigger, ThemedAccordionTitleText as AccordionTitleText, ThemedAccordionContentText as AccordionContentText, ThemedAccordionIcon as AccordionIcon } from '@/src/components/themed/ThemedAccordion';
+import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -28,6 +28,7 @@ import { useTheme } from '@/src/themes/theme';
  * @constructor
  */
 export const ScreenBrightnessPermissionStatus = () => {
+     const { neutrals } = useTheme();
      const language = useActiveLanguage();
      const [permissionStatus, setPermissionStatus] = React.useState(false);
 
@@ -63,7 +64,7 @@ export const ScreenBrightnessPermissionStatus = () => {
                     </Text>
                     <HStack alignItems="center">
                          <Text>{permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}</Text>
-                         <MaterialIcons name="chevron-right" size={20} className="ml-1" />
+                         <MaterialIcons name="chevron-right" size={20} className="ml-1" style={{ color: neutrals.actionableIndicator }} />
                     </HStack>
                </HStack>
           </Pressable>
@@ -103,7 +104,6 @@ export const ScreenBrightnessPermissionDescription = () => {
 
 const ScreenBrightnessPermissionUsage = () => {
      const language = useActiveLanguage();
-     const { textColor } = useTheme();
 
      return (
           <Accordion variant="unfilled" width="$full" size="sm">
@@ -113,15 +113,15 @@ const ScreenBrightnessPermissionUsage = () => {
                               {({ isExpanded }) => {
                                    return (
                                         <>
-                                             <AccordionTitleText style={{ color: textColor }}>{getTermFromDictionary(language, 'how_we_use_screen_brightness_title')}</AccordionTitleText>
-                                             {isExpanded ? <AccordionIcon as={MaterialIcons} name="keyboard-arrow-up" style={{ marginLeft: 12, color: textColor }} /> : <AccordionIcon as={MaterialIcons} name="keyboard-arrow-down" style={{ marginLeft: 12, color: textColor }} />}
+                                             <AccordionTitleText>{getTermFromDictionary(language, 'how_we_use_screen_brightness_title')}</AccordionTitleText>
+                                             {isExpanded ? <AccordionIcon as={MaterialIcons} name="keyboard-arrow-up" className="ml-3" /> : <AccordionIcon as={MaterialIcons} name="keyboard-arrow-down" className="ml-3" />}
                                         </>
                                    );
                               }}
                          </AccordionTrigger>
                     </AccordionHeader>
                     <AccordionContent className="px-0">
-                         <AccordionContentText style={{ color: textColor }}>
+                         <AccordionContentText>
                               {Constants.expoConfig.name} {getTermFromDictionary(language, 'how_we_use_screen_brightness_body')}
                          </AccordionContentText>
                     </AccordionContent>
@@ -131,7 +131,7 @@ const ScreenBrightnessPermissionUsage = () => {
 };
 
 const ScreenBrightnessPermissionUpdate = (payload) => {
-     const { resolvedUiColors, textColor } = useTheme();
+     const { neutrals, textColor } = useTheme();
      const language = useActiveLanguage();
      const [showAlertDialog, setShowAlertDialog] = React.useState(false);
      const [manuallyPromptPermission, setManuallyPromptPermission] = React.useState(false);
@@ -156,8 +156,6 @@ const ScreenBrightnessPermissionUpdate = (payload) => {
           })();
      }, []);
 
-     const dialogBg = resolvedUiColors.surface;
-
      return (
           <Center>
                <Button
@@ -177,7 +175,7 @@ const ScreenBrightnessPermissionUpdate = (payload) => {
                          setShowAlertDialog(false);
                     }}>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent style={{ backgroundColor: dialogBg }}>
+                    <AlertDialogContent>
                          <AlertDialogHeader>
                               <Heading>{getTermFromDictionary(language, 'update_device_settings')}</Heading>
                          </AlertDialogHeader>

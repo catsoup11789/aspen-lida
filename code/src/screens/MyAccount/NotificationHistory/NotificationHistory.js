@@ -40,7 +40,7 @@ export const MyNotificationHistory = () => {
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, uiColors, textColor, resolvedUiColors } = useTheme();
+     const { colorMode, neutralPairs, neutrals } = useTheme();
      const { data: notificationHistory } = useNotificationHistory();
      const updateNotificationHistory = useUpdateNotificationHistory();
      const { data: inbox } = useInbox();
@@ -112,7 +112,7 @@ export const MyNotificationHistory = () => {
      const Paging = () => {
           if (notificationHistory?.totalResults > 0) {
                return (
-                    <Box style={{ padding: 8, backgroundColor: resolvedUiColors.surface, borderTopWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    <Box className="p-2" style={{ backgroundColor: neutrals.surface, borderTopWidth: 1, borderColor: colorMode === 'light' ? neutralPairs.surface.light : neutralPairs.iconMuted.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" colorScheme="primary">
@@ -170,13 +170,13 @@ export const MyNotificationHistory = () => {
  * @constructor
  */
 const Item = (data) => {
-     const { colorMode, uiColors } = useTheme();
+     const { colorMode, neutralPairs } = useTheme();
      const message = data.data;
      const handleOpenMyMessage = data.handleOpenMyMessage;
      let content = stripHTML(message.content);
      content = truncate(content, 35);
      return (
-          <Pressable onPress={() => handleOpenMyMessage(message)} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.iconMuted.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
+          <Pressable onPress={() => handleOpenMyMessage(message)} className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? neutralPairs.border.light : neutralPairs.iconMuted.dark }}>
                <HStack className="items-start">
                     {message.isRead === '0' ? (
                          <Box className="w-[7%]">
@@ -200,7 +200,7 @@ const Item = (data) => {
                          </Text>
                     </VStack>
                     <Box className="w-[7%]">
-                         <MaterialIcons name="chevron-right" size={20} />
+                         <MaterialIcons name="chevron-right" size={20} color={colorMode === 'light' ? neutralPairs.actionableIndicator.light : neutralPairs.actionableIndicator.dark} />
                     </Box>
                </HStack>
           </Pressable>

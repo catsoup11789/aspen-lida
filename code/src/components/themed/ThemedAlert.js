@@ -14,31 +14,38 @@ const ALERT_ICON_NAMES = {
      none: 'info',
 };
 
-// variant is destructured (not used) only to keep it out of ...props -- otherwise it'd override
-// the explicit variant="default" below via prop-spread order, changing Alert's own base classes.
+/**
+ * Wraps gluestack's Alert. `action` selects a status (`error`, `warning`, `success`,
+ * `info`, `muted`, `none`, or `default`) whose background/border colors come from the
+ * current theme. Always renders with variant="default"; `variant` is accepted but ignored.
+ */
 export const ThemedAlert = React.forwardRef(({ action, variant, className, style, ...props }, ref) => {
-     const { runtimeColors, resolvedUiColors } = useTheme();
-     const colors = resolveAlertColors(action, runtimeColors, resolvedUiColors);
+     const { brand, neutrals } = useTheme();
+     const colors = resolveAlertColors(action, brand, neutrals);
 
      return <Alert ref={ref} variant="default" className={className} style={[{ backgroundColor: colors.bg, borderColor: colors.border }, style]} {...props} />;
 });
 
+/**
+ * Wraps gluestack's AlertText. `action` selects the same status colors as
+ * ThemedAlert and tints the text color to match; `variant` is accepted but ignored.
+ */
 export const ThemedAlertText = React.forwardRef(({ action, variant, className, style, ...props }, ref) => {
-     const { runtimeColors, resolvedUiColors } = useTheme();
-     const colors = resolveAlertColors(action, runtimeColors, resolvedUiColors);
+     const { brand, neutrals } = useTheme();
+     const colors = resolveAlertColors(action, brand, neutrals);
 
      return <AlertText ref={ref} className={className} style={[{ color: colors.text }, style]} {...props} />;
 });
 
-// Color goes through style, not the color prop -- gluestack's PrimitiveIcon (the thing that
-// actually renders the `as` component) destructures color out and turns it into an SVG `stroke`
-// prop instead of forwarding it, so a vector-icon `as` component like MaterialIcons never sees it.
-// style passes through untouched, and the vendored icon merges style after its own color default,
-// so this is the only path that actually reaches the rendered icon.
+/**
+ * Wraps gluestack's AlertIcon. `action` selects the status icon name (defaulting per
+ * status, e.g. "error" -> error icon, "success" -> check-circle) and its color, unless
+ * `name`/`color`/`as` are explicitly provided. Renders MaterialIcons by default via `as`.
+ */
 export const ThemedAlertIcon = React.forwardRef(({ action, variant, as, name, className, color, style, ...props }, ref) => {
      const normalizedAction = normalizeStatusAction(action);
-     const { runtimeColors, resolvedUiColors } = useTheme();
-     const colors = resolveAlertColors(action, runtimeColors, resolvedUiColors);
+     const { brand, neutrals } = useTheme();
+     const colors = resolveAlertColors(action, brand, neutrals);
 
      return <AlertIcon ref={ref} as={as ?? MaterialIcons} name={name ?? ALERT_ICON_NAMES[normalizedAction]} style={[{ color: color ?? colors.icon }, style]} className={className} {...props} />;
 });

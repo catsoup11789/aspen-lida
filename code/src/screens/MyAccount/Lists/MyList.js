@@ -54,7 +54,7 @@ export const MyList = ({ route }) => {
           recentlyAdded: 'Sort By Recently Added',
           custom: 'Sort By User Defined' });
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, uiColors, colorMode, resolvedUiColors } = useTheme();
+     const { textColor, neutralPairs, neutrals } = useTheme();
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const [isLoading, setIsLoading] = React.useState(true);
      const [fetchError, setFetchError] = React.useState(null);
@@ -67,10 +67,10 @@ export const MyList = ({ route }) => {
           sort,
           message: null });
      const hasAppliedDefaultSort = React.useRef(false);
-     const browserBackgroundColor = colorMode === 'light' ? '#ffffff' : '#111827';
-     const panelBg = resolvedUiColors.surface;
-     const borderColor = resolvedUiColors.border;
-     const dangerColor = uiColors.danger;
+     const browserBackgroundColor = neutrals.surface;
+     const panelBg = neutrals.surfaceMuted;
+     const borderColor = neutrals.border;
+     const dangerColor = neutralPairs.danger;
      const t = React.useCallback((key, ellipsis = false, forcedLanguage) => {
           const lang = forcedLanguage || language;
           return getTermFromDictionaryHelper(lang, key, ellipsis, dictionary);
@@ -230,7 +230,7 @@ export const MyList = ({ route }) => {
                const displayEndTime = endDate ? timeFormatter.format(endDate) : '';
 
                return (
-                    <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={() => handleOpenEvent(item)}>
+                    <Pressable className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor }} onPress={() => handleOpenEvent(item)}>
                          <HStack space="sm">
                               <VStack className="max-w-[35%]">
                                    <Image
@@ -279,7 +279,7 @@ export const MyList = ({ route }) => {
           }
 
           return (
-               <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={() => handleOpenItem(item.id, item.title)}>
+               <Pressable className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor }} onPress={() => handleOpenItem(item.id, item.title)}>
                     <HStack space="sm">
                          <VStack className="max-w-[35%]">
                               <Image
@@ -324,7 +324,8 @@ export const MyList = ({ route }) => {
      const Paging = () => {
           return (
                <Box
-                    style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    className="p-2"
+                    style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                     <ScrollView horizontal>
                          <ButtonGroup size="sm">
                               <Button colorScheme="primary" onPress={() => setPage(page - 1)} isDisabled={page === 1}>
@@ -379,7 +380,8 @@ export const MyList = ({ route }) => {
 
           return (
                <Box
-                    style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
+                    className="p-2"
+                    style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
                     <ScrollView horizontal>
                          <HStack space="sm">
                               <Box style={{ width: sortLength }}>

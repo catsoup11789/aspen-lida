@@ -32,9 +32,9 @@ export const DisplayEventResult = (props) => {
      const item = props.data;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors, textColor } = useTheme();
+     const { neutrals, textColor } = useTheme();
 
-     const backgroundColor = resolvedUiColors.surface;
+     const backgroundColor = neutrals.surface;
 
      const id = item.key ?? item.id;
      const keyParts = item.key.split('_');
@@ -138,14 +138,15 @@ export const DisplayEventResult = (props) => {
      };
 
      return (
-         <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+         <Pressable className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor: neutrals.border }} onPress={handlePressItem}>
                <HStack space="md">
                     <VStack className="w-25">
                          <Box className="h-[150px]">
                               <Image
                                    alt={item.title}
                                    source={url}
-                                   style={{ width: '100%', height: '100%', borderRadius: 8 }}
+                                   className="rounded-lg"
+                                   style={{ width: '100%', height: '100%' }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -154,7 +155,7 @@ export const DisplayEventResult = (props) => {
                          {item.canAddToList ? <AddToList source="Events" itemId={item.key} btnStyle="sm" /> : null}
                     </VStack>
                     <VStack className="w-[65%] pt-1">
-                         <Text bold style={{ lineHeight: 17, paddingBottom: 4 }} size="sm">
+                         <Text bold className="pb-1" style={{ lineHeight: 17 }} size="sm">
                               {decodeHTML(item.title)}
                          </Text>
                          {item.start_date && item.end_date ? (

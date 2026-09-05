@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import React, { useContext, useLayoutEffect, useState } from 'react';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
-import { Divider } from '@/components/ui/divider';
+import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { FlatList } from '@/components/ui/flat-list';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
@@ -174,7 +174,7 @@ const Account = ({ account, type }) => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { uiColors } = useTheme();
+     const { neutralPairs } = useTheme();
 
      const refreshLinkedAccounts = async () => {
           const linkedResponse = await getLinkedAccounts(library.baseUrl, language);
@@ -214,13 +214,13 @@ const Account = ({ account, type }) => {
      if (!account) return null;
 
      return (
-          <HStack justifyContent="space-around" style={{ paddingTop: 8, paddingBottom: 8, alignItems: 'center', alignContent: 'flex-start' }}>
+          <HStack justifyContent="space-around" className="pt-2 pb-2" style={{ alignItems: 'center', alignContent: 'flex-start' }}>
                <Text bold isTruncated className="w-[60%] max-w-[60%]">
                     {account.displayName ? account.displayName : account.ils_barcode} - {account.homeLocation}
                </Text>
                {type === 'viewer' && user.removeLinkedAccountRule === 0 ? null : (
                     <Button
-                        style={{ backgroundColor: uiColors.danger }}
+                        style={{ backgroundColor: neutralPairs.danger }}
                          isLoading={isRemoving}
                          isLoadingText={getTermFromDictionary(language, 'removing', true)}
                          size="sm"

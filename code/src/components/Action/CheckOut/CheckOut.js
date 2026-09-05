@@ -15,8 +15,7 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '@/src/util/logging';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
-import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
-import { FormControlLabel } from '@/components/ui/form-control';
+import { PasswordVisibilityToggle, ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../themed/ThemedFormControls';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 
@@ -36,7 +35,7 @@ export const CheckOut = (props) => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const [loading, setLoading] = React.useState(false);
-     const { resolvedUiColors, runtimeColors, textColor } = useTheme();
+     const { neutrals, brand, textColor } = useTheme();
 
      const volumeInfo = {
           numItemsWithVolumes: 0,
@@ -142,12 +141,12 @@ export const CheckOut = (props) => {
                     <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg">
                          <ModalBackdrop />
                          <ModalContent className="max-w-[90%]">
-                              <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: resolvedUiColors.border }}>
+                              <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: neutrals.border }}>
                                    <Heading>
                                         {getTermFromDictionary(language, 'add_alternate_library_card')}
                                    </Heading>
                                    <ModalCloseButton onPress={() => { setShowAddAlternateLibraryCardModal(false); }}>
-                                        <ThemedCloseIcon />
+                                        <CloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>
                               <ModalBody className="mt-3">
@@ -158,9 +157,9 @@ export const CheckOut = (props) => {
                                                   {cardLabel}
                                              </FormControlLabelText>
                                         </FormControlLabel>
-                                        <ThemedInput>
-                                             <ThemedInputField textContentType="none" name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
-                                        </ThemedInput>
+                                        <Input>
+                                             <InputField textContentType="none" name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
+                                        </Input>
                                    </FormControl>
                                    {showAlternateLibraryCardPassword ? (
                                         <FormControl className="mb-2">
@@ -169,23 +168,23 @@ export const CheckOut = (props) => {
                                                        {passwordLabel}
                                                   </FormControlLabelText>
                                              </FormControlLabel>
-                                             <ThemedInput>
-                                                  <ThemedInputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
+                                             <Input>
+                                                  <InputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
                                                   <PasswordVisibilityToggle showPassword={showPassword} onPress={toggleShowPassword} />
-                                             </ThemedInput>
+                                             </Input>
                                         </FormControl>
                                    ) : null}
                               </ModalBody>
-                              <ModalFooter style={{ borderTopWidth: 1, borderTopColor: resolvedUiColors.border }}>
+                              <ModalFooter style={{ borderTopWidth: 1, borderTopColor: neutrals.border }}>
                                    <ButtonGroup space="sm">
                                         <Button
                                              variant="outline"
-                                             style={{ borderColor: resolvedUiColors.border }}
+                                             style={{ borderColor: neutrals.border }}
                                              onPress={() => {
                                                   setShowAddAlternateLibraryCardModal(false);
                                                   setLoading(false);
                                              }}>
-                                             <ButtonText style={{ color: resolvedUiColors.text }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                             <ButtonText style={{ color: neutrals.textMain }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
                                              colorScheme="primary"
@@ -205,7 +204,7 @@ export const CheckOut = (props) => {
                                                        setShowAddAlternateLibraryCardModal(false);
                                                   });
                                              }}>
-                                             {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
+                                             {loading ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
                                         </Button>
                                    </ButtonGroup>
                               </ModalFooter>
@@ -232,7 +231,7 @@ export const CheckOut = (props) => {
                                    setResponseIsOpen(true);
                               });
                          }}>
-                        {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'], paddingRight: 8 }} /> : <ButtonText>{title}</ButtonText>}
+                        {loading ? <ButtonSpinner className="pr-2" style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
                     </Button>
                </>
           );

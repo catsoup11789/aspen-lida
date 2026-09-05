@@ -10,13 +10,12 @@ import { refreshProfile } from '@/src/util/api/user';
 import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '@/src/components/themed/ThemedFormControls';
+import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogCloseButton as AlertDialogCloseButton, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
@@ -48,10 +47,10 @@ const EditList = (props) => {
       const [description, setDescription] = React.useState(data.description);
       const [isPublic, setPublic] = React.useState(data.public);
       const [listGroupId, setListGroupId] = React.useState(data.listGroupId);
-      const { runtimeColors, textColor, resolvedUiColors } = useTheme();
+      const { brand, textColor, neutrals } = useTheme();
 
       const user = userState?.user ?? {};
-      const borderColor = resolvedUiColors.border;
+      const borderColor = neutrals.border;
 
      React.useLayoutEffect(() => {
           navigation.setOptions({
@@ -62,7 +61,7 @@ const EditList = (props) => {
                                    hasPendingChanges: true });
                          }}
                         className="mr-3 p-1">
-                        <MaterialIcons name="chevron-left" size={20} style={{ color: textColor }} />
+                        <MaterialIcons name="chevron-left" size={20} style={{ color: neutrals.actionableIndicator }} />
                     </Pressable>
                ) });
      }, [navigation]);
@@ -71,7 +70,7 @@ const EditList = (props) => {
           <>
                <ButtonGroup size="sm" className="justify-center" >
                     <Button onPress={() => setShowModal(true)} colorScheme="primary">
-                         <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />
+                         <MaterialIcons name="edit" size={18} color={brand.primary['500-text']} className="mr-1" />
                          <ButtonText>{getTermFromDictionary(language, 'edit')}</ButtonText>
                     </Button>
                     <DeleteList listId={listId} />
@@ -82,7 +81,7 @@ const EditList = (props) => {
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'edit')} {data.title}</Heading>
                               <ModalCloseButton onPress={() => { setShowModal(false); }}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
@@ -90,7 +89,7 @@ const EditList = (props) => {
                                    <FormControlLabel>
                                         <FormControlLabelText>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <ThemedInput style={{ borderColor }}><ThemedInputField id="title" defaultValue={data.title} autoComplete="off" onChangeText={(text) => setTitle(text)} /></ThemedInput>
+                                   <Input style={{ borderColor }}><InputField id="title" defaultValue={data.title} autoComplete="off" onChangeText={(text) => setTitle(text)} /></Input>
                               </FormControl>
                               <FormControl>
                                    <FormControlLabel><FormControlLabelText>{getTermFromDictionary(language, 'description')}</FormControlLabelText></FormControlLabel>
@@ -107,13 +106,13 @@ const EditList = (props) => {
                                         }}>
                                         <HStack className="flex-row items-center w-[75%] max-w-75" space="md">
                                              <Radio value="false" className="my-1">
-                                                  <RadioIndicator style={{ marginRight: 8, borderColor }}>
+                                                  <RadioIndicator className="mr-2" style={{ borderColor }}>
                                                        <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                   </RadioIndicator>
                                                   <RadioLabel>{getTermFromDictionary(language, 'private')}</RadioLabel>
                                              </Radio>
                                              <Radio value="true" className="my-1">
-                                                  <RadioIndicator style={{ marginRight: 8, borderColor }}>
+                                                  <RadioIndicator className="mr-2" style={{ borderColor }}>
                                                        <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                   </RadioIndicator>
                                                   <RadioLabel>{getTermFromDictionary(language, 'public')}</RadioLabel>
@@ -200,7 +199,7 @@ const EditList = (props) => {
  */
 const DeleteList = (props) => {
       const { listId } = props;
-      const {textColor, uiColors, resolvedUiColors } = useTheme();
+      const {textColor, neutralPairs, neutrals } = useTheme();
       const { data: userState } = useUserState();
       const library = useLibrary();
       const language = useActiveLanguage();
@@ -212,23 +211,22 @@ const DeleteList = (props) => {
       const onClose = () => setIsOpen(false);
       const cancelRef = React.useRef(null);
       const user = userState?.user ?? {};
-     const surfaceBg = resolvedUiColors.surface;
 
      return (
           <Center>
-               <Button style={{ backgroundColor: uiColors.danger }} onPress={() => setIsOpen(!isOpen)} size="sm">
-                    <MaterialIcons name="delete" size={18} color={uiColors.white} className="mr-1" />
-                    <ButtonText style={{ color: uiColors.white }}>Delete List</ButtonText>
+               <Button style={{ backgroundColor: neutralPairs.danger }} onPress={() => setIsOpen(!isOpen)} size="sm">
+                    <MaterialIcons name="delete" size={18} color={neutralPairs.white} className="mr-1" />
+                    <ButtonText style={{ color: neutralPairs.white }}>Delete List</ButtonText>
                </Button>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
+                    <AlertDialogContent>
                          <AlertDialogHeader>
                               <Heading>
                                    {getTermFromDictionary(language, 'delete_list')}
                               </Heading>
                               <AlertDialogCloseButton>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </AlertDialogCloseButton>
                          </AlertDialogHeader>
                          <AlertDialogBody>
@@ -250,7 +248,7 @@ const DeleteList = (props) => {
                                         <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: uiColors.danger }}
+                                        style={{ backgroundColor: neutralPairs.danger }}
                                         isLoading={loading}
                                         isLoadingText={getTermFromDictionary(language, 'deleting', true)}
                                         onPress={() => {
@@ -280,7 +278,7 @@ const DeleteList = (props) => {
                                                   }
                                              });
                                         }}>
-                                        <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
+                                        <ButtonText style={{ color: neutralPairs.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

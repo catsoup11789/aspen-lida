@@ -11,7 +11,7 @@ import { useTheme } from '../../themes/theme';
  */
 export const OpenSideLoad = (props) => {
      const [loading, setLoading] = React.useState(false);
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
 
      return (
           <Button
@@ -22,7 +22,7 @@ export const OpenSideLoad = (props) => {
                    setLoading(true);
                    await openSideLoad(props.url).then((r) => setLoading(false));
                }}>
-               {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText>{props.title}</ButtonText>}
+               {loading ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{props.title}</ButtonText>}
           </Button>
      );
 };

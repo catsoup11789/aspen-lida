@@ -19,7 +19,7 @@ import { VStack } from '@/components/ui/vstack';
  */
 export const SearchIndexScreen = () => {
      const navigation = useNavigation();
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
      const { currentIndex, indexes, updateCurrentSource, updateIndexes, updateCurrentIndex } = React.useContext(SearchContext);
 
      logDebugMessage('currentIndex: ' + currentIndex);
@@ -43,14 +43,14 @@ export const SearchIndexScreen = () => {
                                    <Pressable key={index} className="p-[2px] py-2" onPress={() => updateIndex(index)}>
                                         {currentIndex === index ? (
                                             <HStack space="sm" className="justify-start items-center">
-                                                 <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} />
+                                                 <MaterialIcons name="radio-button-checked" size={20} color={brand.primary[600]} />
                                                  <Text className="ml-2">
                                                        {obj}
                                                   </Text>
                                              </HStack>
                                         ) : (
                                             <HStack space="sm" className="justify-start items-center">
-                                                 <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
+                                                 <MaterialIcons name="radio-button-unchecked" size={20} color={brand.primary[200]} />
                                                  <Text className="ml-2">
                                                        {obj}
                                                   </Text>

@@ -6,11 +6,10 @@ import { navigateStack } from '@/src/helpers/RootNavigator';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '@/src/components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 
@@ -26,12 +25,12 @@ import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModal
 export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { runtimeColors, resolvedUiColors } = useTheme();
+      const { brand, neutrals } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
 
       const [title, setTitle] = React.useState(currentTitle);
-      const borderColor = resolvedUiColors.border;
+      const borderColor = neutrals.border;
 
      const toggle = () => {
           setShowModal(!showModal);
@@ -40,7 +39,7 @@ export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
      return (
           <Center>
                <Button onPress={toggle} size="xs" colorScheme="primary">
-                   <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />
+                   <MaterialIcons name="edit" size={18} color={brand.primary['500-text']} className="mr-1" />
                    <ButtonText>{getTermFromDictionary(language, 'rename_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full">
@@ -49,7 +48,7 @@ export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'rename_list_group')}</Heading>
                               <ModalCloseButton onPress={toggle}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
@@ -57,7 +56,7 @@ export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
                                    <FormControlLabel>
                                         <FormControlLabelText>{getTermFromDictionary(language, 'rename_list_group_to')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <ThemedInput style={{ borderColor }}><ThemedInputField id="title" defaultValue={currentTitle} autoComplete="off" onChangeText={(text) => setTitle(text)} /></ThemedInput>
+                                   <Input style={{ borderColor }}><InputField id="title" defaultValue={currentTitle} autoComplete="off" onChangeText={(text) => setTitle(text)} /></Input>
                               </FormControl>
                          </ModalBody>
                          <ModalFooter>

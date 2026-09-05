@@ -1,27 +1,25 @@
 import React from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Modal, ScrollView, StyleSheet, View } from 'react-native';
 import { Uniwind } from 'uniwind';
-import { Box } from '@/components/ui/box';
-import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../components/themed/ThemedButton';
-import { HStack } from '@/components/ui/hstack';
-import { Spinner } from '@/components/ui/spinner';
-import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { GLOBALS } from '../util/globals';
 import {
      useThemeState,
      useUpdateThemeColorMode,
      useUpdateThemeColors,
-     useUpdateThemeColorMode as usePersistThemeColorMode,
      useResetThemeState,
-     useAvailableThemes,
 } from '../hooks/useThemeData';
-import { useLibraryLocation } from '../hooks/useLibraryBranchData';
-import { logDebugMessage } from '../util/logging.js';
 import { getThemeInfo } from '../util/api/system';
 import { loadThemeCatalog } from '../util/db';
 import { buildSwatchFromThemeTokens } from '../helpers/helpers';
+import { TOKENS } from './tokens';
 
+export { TOKENS };
+
+/**
+ * Builds the Uniwind CSS-variable map (`--color-primary-500`, etc.) for a brand palette, applied
+ * to the app's root View style so className-based color utilities resolve to the current theme.
+ * @param themeColors {{primary, secondary, tertiary}} brand palette, or a fallback if incomplete
+ * @returns {Object} map of `--color-*` variable name to hex value
+ */
 function buildThemeVars(themeColors) {
      const palette = themeColors?.primary && themeColors?.secondary && themeColors?.tertiary
           ? themeColors
@@ -86,41 +84,11 @@ const DEFAULT_COLOR_SCALE = {
      baseContrast: '#ffffff',
 };
 
-const UI_NEUTRAL_COLORS = {
-     surface: {
-          light: '#e7e5e4',
-          dark: '#111827',
-     },
-     text: {
-          light: '#1f2937',
-          dark: '#e5e7eb',
-     },
-     border: {
-          light: '#6b7280',
-          dark: '#d6d3d1',
-     },
-     icon: {
-          light: '#57534e',
-          dark: '#e5e7eb',
-     },
-     iconMuted: {
-          light: '#6b7280',
-          dark: '#9ca3af',
-     },
-     card: {
-          light: '#f9fafb',
-          dark: '#1f2937',
-     },
-     white: '#ffffff',
-     black: '#000000',
-     danger: '#ef4444',
-};
-
-// Hardcoded fallback for code that renders before ThemeProvider context is available
-// (e.g. pre-login Auth screens). Kept as a reference to UI_NEUTRAL_COLORS so the two
-// can never drift out of sync — change UI_NEUTRAL_COLORS and this updates automatically.
-export const UI_COLOR_FALLBACKS = UI_NEUTRAL_COLORS;
-
+/**
+ * A neutral gray brand palette (primary/secondary/tertiary, all built from the same gray scale),
+ * used whenever a real brand `themeColors` value isn't available yet.
+ * @returns {{primary, secondary, tertiary}}
+ */
 function buildFallbackPalette() {
      return {
           primary: { ...DEFAULT_COLOR_SCALE },
@@ -129,6 +97,12 @@ function buildFallbackPalette() {
      };
 }
 
+/**
+ * Builds the `theme` object: the current brand palette (or its fallback) plus a snapshot of the
+ * neutral color map, in the shape `updateTheme()` and other consumers expect.
+ * @param themeColors {{primary, secondary, tertiary}} brand palette, or a fallback if incomplete
+ * @returns {{colors, ui, tokens: {colors}}}
+ */
 function buildThemeRuntime(themeColors) {
      const palette = themeColors?.primary && themeColors?.secondary && themeColors?.tertiary
           ? themeColors
@@ -136,33 +110,53 @@ function buildThemeRuntime(themeColors) {
 
      return {
           colors: palette,
-          ui: UI_NEUTRAL_COLORS,
-          // updateTheme() only ever reads tokens.colors.{primary,secondary,tertiary} -- this shape
-          // exists solely as its input contract, not a general theme surface, so it carries the
-          // palette only (no ui, no top-level duplication).
+          ui: buildUiColorMap(),
+          // Mirrors the palette at tokens.colors for callers that read colors this way.
           tokens: {
                colors: palette,
           },
      };
 }
 
+/**
+ * Builds the neutralPairs map: per-key {light, dark} color pairs from TOKENS.semanticTokens, plus
+ * the mode-independent values from TOKENS.primitives.singletons.
+ * @returns {Object}
+ */
 function buildUiColorMap() {
-     return UI_NEUTRAL_COLORS;
+     return {
+          ...Object.fromEntries(
+               Object.keys(TOKENS.semanticTokens.light).map((key) => [
+                    key,
+                    { light: TOKENS.semanticTokens.light[key], dark: TOKENS.semanticTokens.dark[key] },
+               ])
+          ),
+          ...TOKENS.primitives.singletons,
+     };
 }
 
-// Every uiColors entry is either a {light, dark} pair (surface, text, border, icon, card, ...) or
-// a mode-independent flat value (white, black, danger). Resolving the whole map once per colorMode
-// replaces the `colorMode === 'light' ? uiColors.x.light : uiColors.x.dark` ternary that had been
-// hand-written at ~175 call sites across the app with a single `resolvedUiColors.x` lookup.
-export function resolveUiColorMap(uiColors, colorMode) {
+/**
+ * Resolves a neutralPairs map (each entry either a {light, dark} pair or a mode-independent flat
+ * value) down to a single value per key for the given colorMode.
+ * @param neutralPairs map of key -> {light, dark} pair or flat value
+ * @param colorMode 'light' or 'dark'
+ * @returns {Object} map of key -> resolved color value
+ */
+export function resolveUiColorMap(neutralPairs, colorMode) {
      return Object.fromEntries(
-          Object.entries(uiColors).map(([key, value]) => {
+          Object.entries(neutralPairs).map(([key, value]) => {
                const isModePair = value && typeof value === 'object' && ('light' in value || 'dark' in value);
                return [key, isModePair ? value[colorMode === 'light' ? 'light' : 'dark'] : value];
           })
      );
 }
 
+/**
+ * Builds the `brand` map: full primary/secondary/tertiary color scales (50-900, `base`,
+ * `baseContrast`, `500-text`, and the original `raw` swatch) from a brand palette.
+ * @param themeColors {{primary, secondary, tertiary}} brand palette, or a fallback if incomplete
+ * @returns {{primary, secondary, tertiary}} each a full color scale
+ */
 function buildRuntimeColorMap(themeColors) {
      const palette = themeColors?.primary && themeColors?.secondary && themeColors?.tertiary
           ? themeColors
@@ -220,16 +214,22 @@ function buildRuntimeColorMap(themeColors) {
      };
 }
 
+/**
+ * Returns `darkValue` when the current theme color mode is dark, otherwise `lightValue`.
+ * @param lightValue
+ * @param darkValue
+ */
 export function useColorModeValue(lightValue, darkValue) {
      const { colorMode } = useThemeState();
      return colorMode === 'dark' ? darkValue : lightValue;
 }
 
-export const BackIcon = (props) => {
-     const { runtimeColors } = useThemeForDisplay();
-     return <MaterialIcons name="chevron-left" size={24} className="ml-[1px]" {...props} color={runtimeColors.primary.baseContrast} />;
-};
-
+/**
+ * Converts a [primary, secondary, tertiary] palette array (as returned by the theme API) into a
+ * keyed {primary, secondary, tertiary} object.
+ * @param response array of up to 3 color swatches
+ * @returns {{primary, secondary, tertiary}}
+ */
 function normalizeThemeColors(response = []) {
      return {
           primary: response?.[0] ?? null,
@@ -238,23 +238,34 @@ function normalizeThemeColors(response = []) {
      };
 }
 
-// App.js, Splash.js, and Loading.js each independently read the current theme_state/location,
-// decide whether a refetch is needed, and (if so) persist a freshly-resolved theme, with no
-// coordination between them -- Splash's own fetch-and-save isn't even cancelled on unmount, so it
-// can still be mid-flight when Loading's runs right after. If two of these cycles overlap, one can
-// read theme_state before the other's write has landed, see a locationId that looks stale/
-// mismatched, and (via getThemeInfo's own themes[0] fallback) overwrite a just-saved correct theme
-// with whichever theme happens to be first in the catalog. Funneling every read-decide-persist
-// cycle through this queue makes them run strictly one at a time, so each one's initial read
-// always reflects the previous one's completed write instead of a stale mid-flight snapshot.
+// App.js, Splash.js, and Loading.js each independently read theme_state/location, decide whether a
+// refetch is needed, and persist a freshly-resolved theme, with no coordination between them --
+// Splash's fetch-and-save is never cancelled on unmount, so it can still be mid-flight when
+// Loading's runs right after. If two of these cycles overlap, one can read theme_state before the
+// other's write has landed, see a stale/mismatched locationId, and (via getThemeInfo's own
+// themes[0] fallback) overwrite a just-saved correct theme with whichever theme happens to be
+// first in the catalog. Routing every read-decide-persist cycle through this queue serializes
+// them, so each cycle's initial read always reflects the previous cycle's completed write.
 let themeInitQueue = Promise.resolve();
 
+/**
+ * Runs `fn` only after any previously queued theme-init cycle has settled, so concurrent
+ * init cycles (from App.js/Splash.js/Loading.js) never interleave.
+ * @param fn function (may be async) to run exclusively
+ * @returns {Promise} the result of `fn`
+ */
 export function runExclusiveThemeInit(fn) {
      const run = themeInitQueue.then(fn);
      themeInitQueue = run.catch(() => {});
      return run;
 }
 
+/**
+ * Fetches theme info for a library/location and builds a ready-to-apply theme runtime from it.
+ * @param url library base URL (optional)
+ * @param locationId library location id (optional)
+ * @returns {Promise<{theme, themeColors, themeId, locationId, header}>}
+ */
 export async function buildThemeForLibrary(url = null, locationId = null) {
      const response = await getThemeInfo(url, locationId);
      const themeColors = normalizeThemeColors(response?.palettes);
@@ -269,10 +280,8 @@ export async function buildThemeForLibrary(url = null, locationId = null) {
 }
 
 /**
- * Build a themeColors + gluestack config pair from a single theme_catalog entry
- * ({id, themeId, name, baseMode, logo, header, primary, secondary, tertiary}). Goes through
- * buildConfigFromColors so Alert/Badge/etc. component theming stays consistent with the
- * single-theme flow.
+ * Builds a themeColors + theme runtime pair from a single theme_catalog entry
+ * ({id, themeId, name, baseMode, logo, header, primary, secondary, tertiary}).
  * @param themeEntry
  * @returns {{id, themeId, name, baseMode, logo, header, themeColors, theme}}
  */
@@ -296,8 +305,8 @@ export function buildThemeConfigFromCatalogEntry(themeEntry = {}) {
 }
 
 /**
- * Build a ready-to-apply gluestack config for every theme available at a location (from the
- * locally stored theme catalog), so the app can switch between them without a network round trip.
+ * Builds a ready-to-apply theme config for every theme available at a location, from the locally
+ * stored theme catalog.
  * @param locationId
  * @returns {Promise<Array>}
  */
@@ -306,30 +315,50 @@ export async function loadThemeConfigsForLocation(locationId) {
      return themes.map(buildThemeConfigFromCatalogEntry);
 }
 
+/**
+ * Read-only theme accessor. Derives the current theme runtime, CSS variables, brand color scales,
+ * and resolved neutral colors from theme state.
+ * @returns {{theme, themeVars, brand, neutralPairs, neutrals, themeColors, themeId, colorMode, textColor, header, tokens}}
+ */
 export function useThemeForDisplay() {
      const { themeColors, colorMode, textColor, themeId, header } = useThemeState();
      const theme = React.useMemo(() => buildThemeRuntime(themeColors), [themeColors]);
      const themeVars = React.useMemo(() => buildThemeVars(themeColors), [themeColors]);
-     const runtimeColors = React.useMemo(() => buildRuntimeColorMap(themeColors), [themeColors]);
-     const uiColors = React.useMemo(() => buildUiColorMap(), []);
-     const resolvedUiColors = React.useMemo(() => resolveUiColorMap(uiColors, colorMode), [uiColors, colorMode]);
+     const brand = React.useMemo(() => buildRuntimeColorMap(themeColors), [themeColors]);
+     const neutralPairs = React.useMemo(() => buildUiColorMap(), []);
+     const neutrals = React.useMemo(() => resolveUiColorMap(neutralPairs, colorMode), [neutralPairs, colorMode]);
+     // Full token tree: static primitives/semanticTokens/componentTokens plus the current brand
+     // palette under dynamicBrandPalette.
+     const tokens = React.useMemo(() => ({
+          primitives: TOKENS.primitives,
+          dynamicBrandPalette: brand,
+          semanticTokens: TOKENS.semanticTokens,
+          componentTokens: TOKENS.componentTokens,
+     }), [brand]);
 
      return {
           theme,
           themeVars,
-          runtimeColors,
-          uiColors,
-          resolvedUiColors,
+          brand,
+          neutralPairs,
+          neutrals,
           themeColors,
           themeId,
           colorMode,
           textColor,
           header,
+          tokens,
      };
 }
 
+/**
+ * Theme accessor with mutators. Extends useThemeForDisplay's fields with updateTheme (apply new
+ * brand colors), updateColorMode (switch light/dark), resetTheme, and forceRefreshTheme (re-fetch
+ * the theme from the library and persist it, serialized via runExclusiveThemeInit).
+ * @returns {{theme, themeVars, brand, neutralPairs, neutrals, themeColors, themeId, colorMode, textColor, header, tokens, updateTheme, updateColorMode, resetTheme, forceRefreshTheme}}
+ */
 export function useTheme() {
-     const { theme, themeVars, runtimeColors, uiColors, resolvedUiColors, themeColors, themeId, colorMode, textColor, header } = useThemeForDisplay();
+     const { theme, themeVars, brand, neutralPairs, neutrals, themeColors, themeId, colorMode, textColor, header, tokens } = useThemeForDisplay();
      const updateThemeColors = useUpdateThemeColors();
      const updateColorModeValue = useUpdateThemeColorMode();
      const resetThemeState = useResetThemeState();
@@ -341,9 +370,8 @@ export function useTheme() {
           if (!primary || !secondary || !tertiary) {
                return;
           }
-          // themeId/locationId/header are optional: omit them to preserve whatever is already
-          // stored (e.g. when the caller already persisted the correct values itself, or is just
-          // re-applying cached colors) rather than stamping a static fallback over real values.
+          // themeId/locationId/header are optional; any omitted value leaves the already-stored
+          // value untouched.
           await updateThemeColors(
                { primary, secondary, tertiary },
                themeId,
@@ -372,14 +400,15 @@ export function useTheme() {
      return {
           theme,
           themeVars,
-          runtimeColors,
-          uiColors,
-          resolvedUiColors,
+          brand,
+          neutralPairs,
+          neutrals,
           themeColors,
           themeId,
           colorMode,
           textColor,
           header,
+          tokens,
           updateTheme,
           updateColorMode,
           resetTheme,
@@ -387,188 +416,5 @@ export function useTheme() {
      };
 }
 
-export function UseColorMode(props) {
-     const { showText } = props;
-     const { colorMode, runtimeColors, uiColors } = useThemeForDisplay();
-     const location = useLibraryLocation();
-     const themes = useAvailableThemes(location?.locationId);
-     const persistThemeColorMode = usePersistThemeColorMode();
-     const currentMode = colorMode === 'dark' ? 'wb-sunny' : 'nightlight-round';
-     const currentColorMode = colorMode === 'dark' ? 'Dark' : 'Light';
-     const currentModeB = colorMode === 'dark' ? 'nightlight-round' : 'wb-sunny';
-     const iconColor = colorMode === 'dark' ? uiColors.text.dark : uiColors.icon.light;
-
-     // If Aspen LiDA Themes are present and 2 or more exist, then display ThemeSwitcher
-     if (Array.isArray(themes) && themes.length > 1) {
-          return <ThemeSwitcher showText={showText} />;
-     }
-
-     // if Aspen LiDA Themes are present, but only 1 exists, we display nothing.
-     if (Array.isArray(themes) && themes.length === 1) {
-          return null;
-     }
-
-     const switchColorMode = async () => {
-          let newColorMode;
-          if (colorMode === 'light') {
-               newColorMode = 'dark';
-          }else{
-               newColorMode = 'light';
-          }
-
-          logDebugMessage("Switching color mode to: " + newColorMode);
-          Uniwind.setTheme(newColorMode);
-         await persistThemeColorMode(newColorMode);
-     };
-
-     if (showText) {
-          return (
-               <HStack alignItems="center">
-                    <Button onPress={switchColorMode} size="sm" style={{ backgroundColor: 'transparent', borderRadius: 9999 }}>
-                         <MaterialIcons name={currentModeB} size={18} color={runtimeColors.primary[500]} />
-                         <ButtonText style={{ fontSize: 14, color: iconColor }}> {currentColorMode}</ButtonText>
-                    </Button>
-               </HStack>
-          );
-     }
-
-     return (
-          <Box alignItems="center">
-               <Button onPress={switchColorMode} size="sm" style={{ backgroundColor: 'transparent', borderRadius: 9999 }}>
-                   <MaterialIcons name={currentMode} size={18} color={runtimeColors.primary[500]} />
-               </Button>
-          </Box>
-     );
-}
-
-/**
- * Lets the user switch between the themes available at their location (from the locally
- * stored theme catalog), applying the selected theme's colors and baseMode immediately.
- * Mirrors LanguageSwitcher's menu + switching-overlay pattern.
- * @param showText whether to show the active theme's name next to the trigger icon, mirroring UseColorMode's prop
- */
-export const ThemeSwitcher = ({ showText = true } = {}) => {
-     const { runtimeColors, uiColors, resolvedUiColors, themeId, colorMode, textColor } = useTheme();
-     const location = useLibraryLocation();
-     const themes = useAvailableThemes(location?.locationId);
-     const updateThemeColors = useUpdateThemeColors();
-     const updateColorMode = useUpdateThemeColorMode();
-
-     const [isThemeMenuOpen, setIsThemeMenuOpen] = React.useState(false);
-     const [isSwitchingTheme, setIsSwitchingTheme] = React.useState(false);
-
-     const activeTheme = themes.find((entry) => entry.id === themeId);
-     const activeThemeName = activeTheme?.name ?? '';
-
-     const changeTheme = async (themeEntry) => {
-          if (isSwitchingTheme) return;
-          setIsSwitchingTheme(true);
-          try {
-               logDebugMessage('Switching theme to ' + themeEntry?.id);
-               const builtTheme = buildThemeConfigFromCatalogEntry(themeEntry);
-               await updateThemeColors(builtTheme.themeColors, builtTheme.themeId, location?.locationId, builtTheme.header);
-               if (builtTheme.baseMode === 'dark' || builtTheme.baseMode === 'light') {
-                    await updateColorMode(builtTheme.baseMode);
-               }
-          } catch (error) {
-               logDebugMessage('Theme switch failed');
-               logDebugMessage(error);
-          } finally {
-               setIsSwitchingTheme(false);
-          }
-     };
-
-     if (!Array.isArray(themes) || themes.length === 0) {
-          return null;
-     }
-
-     return (
-          <>
-               <Box alignItems="center">
-                    <Button
-                         size="sm"
-                         variant="ghost"
-                         colorScheme="primary"
-                         isDisabled={isSwitchingTheme}
-                         onPress={() => {
-                              setIsThemeMenuOpen(true);
-                         }}
-                         className="rounded-full">
-                         <MaterialIcons name="palette" size={18} color={runtimeColors.primary[500]} />
-                         {showText ? <ButtonText> {activeThemeName}</ButtonText> : null}
-                    </Button>
-               </Box>
-               <Modal transparent animationType="fade" visible={isThemeMenuOpen || isSwitchingTheme}>
-                    {isSwitchingTheme ? (
-                         <View style={[themeSwitcherStyles.overlay, colorMode === 'dark' ? themeSwitcherStyles.overlayDark : themeSwitcherStyles.overlayLight]}>
-                              <Box
-                                   style={{
-                                        backgroundColor: colorMode === 'dark' ? uiColors.card.dark : uiColors.surface.light,
-                                        borderRadius: 16,
-                                        paddingHorizontal: 24,
-                                        paddingVertical: 20,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                   }}>
-                                   <Spinner size="large" color={runtimeColors.primary[500]} />
-                                   <Text className="mt-3">
-                                        Switching theme...
-                                   </Text>
-                              </Box>
-                         </View>
-                    ) : (
-                         <View
-                              className="flex-1"
-                              onTouchEnd={() => setIsThemeMenuOpen(false)}>
-                              <Box className="flex-1 justify-end items-start pb-12 pl-10">
-                                   <Box
-                                        style={{
-                                             backgroundColor: resolvedUiColors.surface,
-                                             borderRadius: 6,
-                                             padding: 4,
-                                             height: themes.length > 4 ? 150 : undefined,
-                                             width: 200,
-                                        }}>
-                                        <ScrollView nestedScrollEnabled={true} scrollEnabled={true}>
-                                             {themes.map((themeEntry) => {
-                                                  const isActive = themeEntry.id === themeId;
-                                                  return (
-                                                       <Box
-                                                            key={themeEntry.id}
-                                                            className="px-4 py-3"
-                                                            onTouchEnd={() => {
-                                                                 setIsThemeMenuOpen(false);
-                                                                 changeTheme(themeEntry);
-                                                            }}>
-                                                            <HStack space="md" alignItems="center">
-                                                                 <Text>{themeEntry.name}</Text>
-                                                                 {isActive ? <MaterialIcons name="check" size={18} color={textColor} /> : null}
-                                                            </HStack>
-                                                       </Box>
-                                                  );
-                                             })}
-                                        </ScrollView>
-                                   </Box>
-                              </Box>
-                         </View>
-                    )}
-               </Modal>
-          </>
-     );
-};
-
-const themeSwitcherStyles = StyleSheet.create({
-     overlay: {
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-     },
-     overlayLight: {
-          backgroundColor: 'rgba(15, 23, 42, 0.35)',
-     },
-     overlayDark: {
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
-     },
-});
-
+/** Theme cache staleness threshold, in milliseconds (12 hours). */
 export const THEME_STALE_MS = 12 * 60 * 60 * 1000;

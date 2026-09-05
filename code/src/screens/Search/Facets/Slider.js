@@ -6,7 +6,7 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { addAppliedFilter } from '@/src/util/api/searchHelper';
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField } from '@/src/components/themed/ThemedFormControls';
 
 /**
  * Facet_Slider component that renders a slider input for filtering search results based on a numeric range facet. It manages the start and end values of the range, updates the applied filters, and triggers an update to the parent component when the values change.
@@ -78,11 +78,11 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
                <Box className="p-5">
                     <FormControl className="mb-2">
                          <HStack space="sm" className="justify-center">
-                              <ThemedInput
+                              <Input
                                    size="lg"
                                    className="flex-1"
                               >
-                                   <ThemedInputField
+                                   <InputField
                                         placeholder={getTermFromDictionary(language, 'from')}
                                         accessibilityLabel={getTermFromDictionary(language, 'from')}
                                         defaultValue={startValue}
@@ -91,12 +91,12 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
                                              updateValue('startValue', value);
                                         }}
                                    />
-                              </ThemedInput>
-                              <ThemedInput
+                              </Input>
+                              <Input
                                    size="lg"
                                    className="flex-1"
                               >
-                                   <ThemedInputField
+                                   <InputField
                                         placeholder={getTermFromDictionary(language, 'to')}
                                         accessibilityLabel={getTermFromDictionary(language, 'to')}
                                         defaultValue={endValue}
@@ -105,7 +105,7 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
                                              updateValue('endValue', value);
                                         }}
                                    />
-                              </ThemedInput>
+                              </Input>
                          </HStack>
                     </FormControl>
                </Box>

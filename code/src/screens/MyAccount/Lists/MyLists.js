@@ -56,9 +56,9 @@ export const MyLists = () => {
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const [loading, setLoading] = React.useState(false);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { resolvedUiColors } = useTheme();
-     const panelBg = resolvedUiColors.surface;
-     const borderColor = resolvedUiColors.border;
+     const { neutrals } = useTheme();
+     const panelBg = neutrals.surface;
+     const borderColor = neutrals.border;
 
      const [currentListGroup, setCurrentListGroup] = React.useState(-1);
      const [currentListGroupData, setCurrentListGroupData] = React.useState({
@@ -291,8 +291,8 @@ export const MyLists = () => {
                          <HStack space={3} className="mt-2 mb-2 justify-start">
                               <VStack space={1}>
                                    <Image alt={item.title} source={imageUrl} style={{ width: 100.0, height: 150.0, borderRadius: 8 }} placeholder={blurhash} transition={1000} contentFit="cover" />
-                                   <Badge style={{ marginTop: 4, backgroundColor: resolvedUiColors.surface }}>
-                                        <BadgeText style={{ color: resolvedUiColors.iconMuted, fontSize: 10, textAlign: 'center' }}>{privacy}</BadgeText>
+                                   <Badge className="mt-1" style={{ backgroundColor: neutrals.surfaceMuted }}>
+                                        <BadgeText style={{ color: neutrals.iconMuted, fontSize: 10, textAlign: 'center' }}>{privacy}</BadgeText>
                                    </Badge>
                               </VStack>
                               <VStack space={1} className="justify-between max-w-[80%] pl-2">
@@ -334,7 +334,8 @@ export const MyLists = () => {
           const $type = type === 'lists' ? lists : currentListGroupData;
           return (
                <Box
-                    style={{ padding: 8, borderTopWidth: 1, backgroundColor: panelBg, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    className="p-2"
+                    style={{ borderTopWidth: 1, backgroundColor: panelBg, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                     <ScrollView horizontal>
                          <ButtonGroup size="sm">
                               <Button
@@ -371,7 +372,7 @@ export const MyLists = () => {
 
      return (
           <Box className="flex-1">
-               <Box className="pt-2 px-5 flex-nowrap">
+               <Box className="pt-2 px-5 flex-nowrap" style={{ backgroundColor: panelBg }}>
                     {showSystemMessage()}
                     <ScrollView horizontal>
                          <ButtonGroup space="sm">
@@ -405,21 +406,9 @@ export const MyLists = () => {
                                         </SelectDragIndicatorWrapper>
                                         <SelectScrollView>
                                              {Object.values(listGroups.groups).map((item, index) => (
-                                                  <SelectItem
-                                                       key={index}
-                                                       value={item.id}
-                                                       label={item.title}
-                                                       selectedValue={currentListGroup}
-                                                  />
+                                                  <SelectItem key={index} value={item.id} label={item.title} selectedValue={currentListGroup} />
                                              ))}
-                                             {listGroups.unassigned > 0 ? (
-                                                  <SelectItem
-                                                       key={-1}
-                                                       value="-1"
-                                                       label={getTermFromDictionary(language, 'unassigned_lists')}
-                                                       selectedValue={currentListGroup}
-                                                  />
-                                             ) : null}
+                                             {listGroups.unassigned > 0 ? <SelectItem key={-1} value="-1" label={getTermFromDictionary(language, 'unassigned_lists')} selectedValue={currentListGroup} /> : null}
                                         </SelectScrollView>
                                    </SelectContent>
                               </SelectPortal>
@@ -438,27 +427,12 @@ export const MyLists = () => {
                                              </ScrollView>
                                         )}
                                    </Box>
-                                   <FlatList
-                                        contentContainerStyle={{ paddingBottom: 200 }}
-                                        className="mt-2"
-                                        data={currentListGroupData.listsInGroup}
-                                        renderItem={({ item }) => renderList(item)}
-                                        keyExtractor={(item, index) => item.id ? String(item.id) : index.toString()}
-                                        ListEmptyComponent={listEmptyComponent}
-                                        ListFooterComponent={Paging('listGroup')}
-                                   />
+                                   <FlatList contentContainerStyle={{ paddingBottom: 200 }} className="mt-2" data={currentListGroupData.listsInGroup} renderItem={({ item }) => renderList(item)} keyExtractor={(item, index) => (item.id ? String(item.id) : index.toString())} ListEmptyComponent={listEmptyComponent} ListFooterComponent={Paging('listGroup')} />
                               </Box>
                          ) : null}
                     </Box>
                ) : (
-                    <FlatList
-                         contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 32 }}
-                         data={sortedLists}
-                         ListEmptyComponent={listEmptyComponent}
-                         renderItem={({ item }) => renderList(item)}
-                         keyExtractor={(item, index) => item.id ? String(item.id) : index.toString()}
-                         ListFooterComponent={Paging('lists')}
-                    />
+                    <FlatList contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 32 }} data={sortedLists} ListEmptyComponent={listEmptyComponent} renderItem={({ item }) => renderList(item)} keyExtractor={(item, index) => (item.id ? String(item.id) : index.toString())} ListFooterComponent={Paging('lists')} />
                )}
           </Box>
      );

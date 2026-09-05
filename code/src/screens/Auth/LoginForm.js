@@ -19,12 +19,10 @@ import { ResetExpiredPin } from './ResetExpiredPin';
 import { saveAllLibraryBranchData } from '../../util/db';
 import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from '../../util/logging.js';
 import { createApiClient } from '../../util/api/apiFactory';
-import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
+import { useTheme, TOKENS } from '../../themes/theme';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel, ThemedInputSlot as InputSlot } from '../../components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel } from '@/components/ui/form-control';
-import { InputSlot } from '@/components/ui/input';
 
 /**
  * GetLoginForm component that displays the login form for users to enter their username and password, handles login validation, and manages state for expired PINs and login errors.
@@ -33,8 +31,8 @@ import { InputSlot } from '@/components/ui/input';
  * @constructor
  */
 export const GetLoginForm = (props) => {
-     const { uiColors, colorMode, forceRefreshTheme } = useTheme();
-     const borderColor = colorMode === 'light' ? (uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light) : (uiColors?.border?.dark ?? UI_COLOR_FALLBACKS.border.dark);
+     const { neutralPairs, colorMode, forceRefreshTheme } = useTheme();
+     const borderColor = colorMode === 'light' ? (neutralPairs?.border?.light ?? TOKENS.semanticTokens.light.border) : (neutralPairs?.border?.dark ?? TOKENS.semanticTokens.dark.border);
      const navigation = useNavigation();
      const barcode = useRoute().params?.barcode ?? null;
      const [loading, setLoading] = React.useState(false);
@@ -351,8 +349,8 @@ export const GetLoginForm = (props) => {
                     <FormControlLabel>
                          <FormControlLabelText size="sm">{usernameLabel}</FormControlLabelText>
                     </FormControlLabel>
-                    <ThemedInput style={{ borderColor }}>
-                         <ThemedInputField autoCapitalize="none"
+                    <Input style={{ borderColor }}>
+                         <InputField autoCapitalize="none"
                               autoCorrect={false}
                               size="xl"
                               id="barcode"
@@ -371,14 +369,14 @@ export const GetLoginForm = (props) => {
                               <InputSlot onPress={() => openScanner()}>
                              <MaterialCommunityIcons name="barcode" size={20} className="mr-2" />
                         </InputSlot> : null}
-                    </ThemedInput>
+                    </Input>
                </FormControl>
                <FormControl className="mt-3">
                     <FormControlLabel>
                         <FormControlLabelText size="sm">{passwordLabel}</FormControlLabelText>
                     </FormControlLabel>
-                   <ThemedInput style={{ borderColor }}>
-                        <ThemedInputField
+                   <Input style={{ borderColor }}>
+                        <InputField
                              size="xl"
                               type={showPassword ? 'text' : 'password'}
                               returnKeyType="go"
@@ -394,7 +392,7 @@ export const GetLoginForm = (props) => {
                         <InputSlot onPress={toggleShowPassword}>
                              <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} className="mr-2" />
                         </InputSlot>
-                   </ThemedInput>
+                   </Input>
                </FormControl>
 
                <Center>

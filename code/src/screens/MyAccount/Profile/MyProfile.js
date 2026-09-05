@@ -3,7 +3,7 @@ import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 import { Box } from '@/components/ui/box';
-import { Divider } from '@/components/ui/divider';
+import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import Profile_ContactInformation from './ContactInformation';
 import Profile_Identity from './Identity';

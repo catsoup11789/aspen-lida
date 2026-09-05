@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedAlertDialogContent as AlertDialogContent, ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader } from '@/src/components/themed/ThemedAlertDialog';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon } from '@/src/components/themed/ThemedFormControls';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -20,7 +20,7 @@ import { useTheme } from '../../themes/theme';
  */
 export const UnsavedChangesExit = (props) => {
      const { updateSearch, discardChanges, language, hasPendingChanges } = props;
-     const { uiColors, resolvedUiColors } = useTheme();
+     const { neutralPairs } = useTheme();
      const navigation = useNavigation();
      const [isOpen, setIsOpen] = React.useState(false);
      const onClose = () => setIsOpen(false);
@@ -59,11 +59,11 @@ export const UnsavedChangesExit = (props) => {
      return (
           <Center>
                <Pressable onPress={() => getStatus()}>
-                    <ThemedCloseIcon size={20} />
+                    <CloseIcon size={20} />
                </Pressable>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose} useRNModal={true}>
                     <AlertDialogBackdrop/>
-                    <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                    <AlertDialogContent>
                          <AlertDialogHeader>
                               <Heading>{getTermFromDictionary(language, 'discard_changes')}</Heading>
                          </AlertDialogHeader>
@@ -76,7 +76,7 @@ export const UnsavedChangesExit = (props) => {
                                         <ButtonText>{getTermFromDictionary(language, 'save')}</ButtonText>
                                    </Button>
                                    <Button variant="link" onPress={forceClose}>
-                                        <ButtonText style={{ color: uiColors.danger }}>{getTermFromDictionary(language, 'discard')}</ButtonText>
+                                        <ButtonText style={{ color: neutralPairs.danger }}>{getTermFromDictionary(language, 'discard')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </AlertDialogFooter>

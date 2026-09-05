@@ -20,7 +20,6 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 
 const loggedEmptyCategoryKeys = new Set();
@@ -33,7 +32,7 @@ const loggedEmptyCategoryKeys = new Set();
  * @constructor
  */
 const DisplayBrowseCategory = ({category}) => {
-     const { uiColors, colorMode } = useTheme();
+     const { neutralPairs, colorMode } = useTheme();
      const language = useActiveLanguage();
      const library = useLibrary();
      const maxNum = useMaxCategories();
@@ -127,19 +126,18 @@ const DisplayBrowseCategory = ({category}) => {
      }
 
      return (
-          <SafeAreaView>
-               <View>
-                    <HStack space="md" className="items-center justify-between pb-2">
+          <View className="pb-12">
+               <HStack space="md" className="items-center justify-between pb-2">
                          <DisplayBrowseCategoryTitle category={category.label} key={category.id} textId={id} source={category.source ?? 'GroupedWork'} />
                          {subCategories.length > 0 ? (
-                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? uiColors.text.light : uiColors.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
-                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} className="mr-1" />
-                                  <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
+                             <Button variant="outline" size="xs" className="py-0" style={{ borderColor: colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white, paddingHorizontal: 6, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
+                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white} className="mr-1" />
+                                  <ButtonText style={{ color: colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white }}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
                               </Button>
                          ) : (
-                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? uiColors.text.light : uiColors.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHide(category.textId)}>
-                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} className="mr-1" />
-                                  <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'hide')}</ButtonText>
+                             <Button variant="outline" size="xs" className="py-0" style={{ borderColor: colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white, paddingHorizontal: 6, height: 24 }} onPress={() => onPressHide(category.textId)}>
+                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white} className="mr-1" />
+                                  <ButtonText style={{ color: colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white }}>{getTermFromDictionary(language, 'hide')}</ButtonText>
                               </Button>
                          )}
                     </HStack>
@@ -157,8 +155,7 @@ const DisplayBrowseCategory = ({category}) => {
                     ) : records.length > 0 ? (
                          <FlatList contentContainerStyle={{ paddingBottom: 5 }} data={displayedData} keyExtractor={(item, index) => item.id?.toString() ?? item.key?.toString() ?? `record-${index}`} horizontal renderItem={({ item }) => <DisplayBrowseCategoryRecord record={item} />} ListFooterComponent={hasMore ? <DisplayMoreResultsButton category={category} /> : null} />
                     ) : null}
-               </View>
-          </SafeAreaView>
+          </View>
      );
 };
 
@@ -170,14 +167,15 @@ const DisplayBrowseCategory = ({category}) => {
  * @constructor
  */
 const DisplayBrowseCategoryTitle = ({category}) => {
-     const { resolvedUiColors } = useTheme();
+     const { neutrals } = useTheme();
 
      return (
           <Pressable className="max-w-[80%]" /*onPress={() => onPressCategory(category, textId, source)}*/>
                <Text
                     bold
                     size="lg"
-                    style={{ color: resolvedUiColors.text, marginBottom: 4 }}
+                    className="mb-1"
+                    style={{ color: neutrals.textMain }}
                     >
                     {category}
                </Text>
@@ -194,7 +192,7 @@ const DisplayBrowseCategoryTitle = ({category}) => {
  */
 const DisplayBrowseCategoryRecord = ({record}) => {
      const library = useLibrary();
-     const { uiColors } = useTheme();
+     const { neutralPairs } = useTheme();
      const language = useActiveLanguage();
 
      let type = 'grouped_work';
@@ -309,7 +307,8 @@ const DisplayBrowseCategoryRecord = ({record}) => {
                <Image
                     alt={getTitle}
                     source={imageUrl}
-                    style={{ width: '100%', height: '100%', borderRadius: 8 }}
+                    className="rounded-lg"
+                    style={{ width: '100%', height: '100%' }}
                     placeholder={blurhash}
                     transition={0}
                     cachePolicy="memory-disk"
@@ -317,8 +316,8 @@ const DisplayBrowseCategoryRecord = ({record}) => {
                />
                {isNew ? (
                     <Box style={{ zIndex: 1, alignItems: 'center' }}>
-                         <Badge colorScheme="warning" style={{ backgroundColor: '#f59e0b', marginHorizontal: 20, marginTop: -8 }}>
-                              <BadgeText colorScheme="warning" bold style={{ color: uiColors.white, textTransform: 'none' }}>
+                         <Badge colorScheme="warning" className="mx-5" style={{ backgroundColor: '#f59e0b', marginTop: -8 }}>
+                              <BadgeText colorScheme="warning" bold style={{ color: neutralPairs.white, textTransform: 'none' }}>
                                    {getTermFromDictionary(language, 'flag_new')}
                               </BadgeText>
                          </Badge>
@@ -339,7 +338,7 @@ const DisplayBrowseCategoryRecord = ({record}) => {
  * @constructor
  */
 const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, isSystemBrowseCategory }) => {
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
      const library = useLibrary();
      const maxNum = useMaxCategories();
      const toggleCategoryVisibility = useToggleBrowseCategoryVisibility();
@@ -373,11 +372,11 @@ const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, isSyste
      return (
           <ButtonGroup space="sm" className="flex-row items-center pb-2">
                {subCategories.map((subCategory, index) => (
-                   <Button key={(subCategory?.id ?? subCategory?.textId ?? subCategory?.label ?? `subcategory-${index}`).toString()} colorScheme="primary" variant="solid" style={{ paddingHorizontal: 12, height: 34, opacity: selectedIndex === index ? 1 : 0.75 }} onPress={() => onSelect(index)}>
+                   <Button key={(subCategory?.id ?? subCategory?.textId ?? subCategory?.label ?? `subcategory-${index}`).toString()} colorScheme="primary" variant="solid" className="px-3" style={{ height: 34, opacity: selectedIndex === index ? 1 : 0.75 }} onPress={() => onSelect(index)}>
                         <ButtonText className="font-medium">
                               {subCategory.label}
                          </ButtonText>
-                        {!isSystemBrowseCategory && <MaterialIcons name="close" size={14} color={runtimeColors.primary['500-text']} className="ml-4" onPress={() => onPressHideSubCategory(index)} />}
+                        {!isSystemBrowseCategory && <MaterialIcons name="close" size={14} color={brand.primary['500-text']} className="ml-4" onPress={() => onPressHideSubCategory(index)} />}
                     </Button>
                ))}
           </ButtonGroup>
@@ -392,7 +391,7 @@ const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, isSyste
  * @constructor
  */
 const DisplayMoreResultsButton = ({ category }) => {
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
      const language = useActiveLanguage();
 
      const isListSource = category.source === 'List';
@@ -413,16 +412,14 @@ const DisplayMoreResultsButton = ({ category }) => {
      return (
           <Pressable
                onPress={() => onPressMoreResults(category.label, isListSource ? category.sourceListId : category.textId, category.source ?? 'GroupedWork')}
+               className="ml-1 mr-3 rounded-lg"
                style={{
-                    marginLeft: 4,
-                    marginRight: 12,
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: runtimeColors.primary[500],
-                    borderRadius: 8,
+                    backgroundColor: brand.primary[500],
                     width: 100,
                     height: 150 }}>
-               <Text bold style={{ color: runtimeColors.primary['500-text'] }}>{getTermFromDictionary(language, 'view_more')}</Text>
+               <Text bold style={{ color: brand.primary['500-text'] }}>{getTermFromDictionary(language, 'view_more')}</Text>
           </Pressable>
      )
 }

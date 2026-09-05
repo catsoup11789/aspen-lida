@@ -8,8 +8,7 @@ import { Image } from 'expo-image';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
 import { FlatList } from 'react-native';
-import { Actionsheet, ActionsheetBackdrop, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper, ActionsheetItem } from '@/components/ui/actionsheet';
-import { ThemedActionsheetContent as ActionsheetContent, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
+import { ThemedActionsheet as Actionsheet, ThemedActionsheetBackdrop as ActionsheetBackdrop, ThemedActionsheetDragIndicator as ActionsheetDragIndicator, ThemedActionsheetDragIndicatorWrapper as ActionsheetDragIndicatorWrapper, ThemedActionsheetItem as ActionsheetItem, ThemedActionsheetContent as ActionsheetContent, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -56,9 +55,9 @@ export const MyCampaigns = () => {
 	const queryClient = useQueryClient();
 	const library = useLibrary();
 	const language = useActiveLanguage();
-	const { resolvedUiColors } = useTheme();
-	const panelBg = resolvedUiColors.surface;
-	const borderColor = resolvedUiColors.border;
+	const { neutrals } = useTheme();
+	const panelBg = neutrals.surfaceMuted;
+	const borderColor = neutrals.border;
 
 	React.useEffect(() => {
 		queryClient.invalidateQueries(['all_campaigns']);
@@ -345,7 +344,7 @@ export const MyCampaigns = () => {
 					{title}
 				</Text>
 				<VStack space="md">
-     <HStack style={{ justifyContent: 'space-between', paddingBottom: 4, borderBottomWidth: 1, borderColor }}>
+     <HStack style={{ justifyContent: 'space-between', borderBottomWidth: 1, borderColor }} className="pb-1">
 						<Text bold className="flex-[3]">{getTermFromDictionary(language, 'activity_name')}</Text>
 						<Text bold className="flex-[2]">{getTermFromDictionary(language, 'activity_goal')}</Text>
 						<Text bold className="flex-[2]">{getTermFromDictionary(language, 'activity_reward')}</Text>
@@ -363,7 +362,8 @@ export const MyCampaigns = () => {
 							<HStack
 								key={i}
 								space="md"
-								style={{ justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}
+								style={{ justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: borderColor }}
+								className="pl-4 pr-5 py-2"
 							>
 								<Text className="flex-[2]">
 									{String(item.name || '')}
@@ -384,7 +384,8 @@ export const MyCampaigns = () => {
 											size="sm"
 											onPress={() => handleAddProgress(item)}
 											isDisabled={isDisabled}
-											style={{ opacity: isDisabled ? 0.5 : 1, width: '100%', paddingHorizontal: 8 }}
+											style={{ opacity: isDisabled ? 0.5 : 1, width: '100%' }}
+											className="px-2"
 										>
 											<ButtonText size="xs" className="text-center">
 												{getTermFromDictionary(language, 'add_progress')}
@@ -414,7 +415,7 @@ export const MyCampaigns = () => {
 
 		return (
 			<VStack space="md" className="px-4 py-3" key={item.id}>
-    <HStack style={{ justifyContent: 'space-between', borderBottomWidth: 1, borderColor, paddingBottom: 8 }}>
+    <HStack style={{ justifyContent: 'space-between', borderBottomWidth: 1, borderColor }} className="pb-2">
 					<Text bold className="flex-[2]">{getTermFromDictionary(language, 'campaign_name_header')}</Text>
 					<Text bold className="flex-[3]">{getTermFromDictionary(language, 'campaign_reward')}</Text>
 					<Text bold className="flex-[2]">{getTermFromDictionary(language, 'campaign_dates')}</Text>
@@ -423,7 +424,8 @@ export const MyCampaigns = () => {
 				</HStack>
 
 				<HStack
-					style={{ justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8, borderBottomWidth: 0.5, borderColor }}
+					style={{ justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 0.5, borderColor }}
+					className="py-2"
 				>
 					<Text className="flex-[2]">
 						{String(item.name || '')}
@@ -456,7 +458,7 @@ export const MyCampaigns = () => {
 				</HStack>
 
 				{expanded && (
-					<Box style={{ paddingHorizontal: 8, paddingVertical: 8, backgroundColor: panelBg, borderRadius: 12 }}>
+					<Box style={{ backgroundColor: panelBg }} className="px-2 py-2 rounded-xl">
 						{(!Array.isArray(item.milestones) || item.milestones.length === 0) && (!Array.isArray(item.extraCreditActivities) || item.extraCreditActivities.length === 0) ? (
 							<Text italic>
 								{getTermFromDictionary(language, 'no_activities_available')}
@@ -554,7 +556,7 @@ export const MyCampaigns = () => {
 
 	return (
 		<SafeAreaView className="flex-1">
-			<Box style={{ paddingHorizontal: 16, paddingVertical: 12, backgroundColor: panelBg, borderBottomWidth: 1, borderColor }}>
+			<Box style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor }} className="px-4 py-3">
 				<Select
 					onValueChange={(itemValue) => setFilterBy(itemValue)}
 				>
@@ -598,7 +600,7 @@ export const MyCampaigns = () => {
 				<ScrollView>
 					{Object.entries(groupedCampaigns).map(([userName, { userId, campaigns: groupedCampaignsList}]) => (
 						<Box key={String(userId)} className="mb-6">
-							<Box style={{ paddingHorizontal: 16, paddingVertical: 8, backgroundColor: panelBg }}>
+							<Box style={{ backgroundColor: panelBg }} className="px-4 py-2">
 								<Text size="lg" bold>
 									{getTermFromDictionary(language, 'campaigns_for_linked_user')}: {String(userName)}
 								</Text>

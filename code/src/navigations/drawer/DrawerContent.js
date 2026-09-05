@@ -5,7 +5,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as SecureStore from 'expo-secure-store';
-import { UseColorMode, useTheme } from '../../themes/theme';
+import { useTheme } from '../../themes/theme';
+import { UseColorMode } from '../../themes/ThemeSwitcher';
 import React from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { AppState, Platform, View } from 'react-native';
@@ -13,7 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
-import { Divider } from '@/components/ui/divider';
+import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { HStack } from '@/components/ui/hstack';
 import { Image } from 'expo-image';
 import { Pressable } from '@/components/ui/pressable';
@@ -754,15 +755,15 @@ const UserProfileOverview = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const textColor = neutrals.textMain;
 
      const icon = library.logoApp ?? library.favicon ?? Constants.expoConfig.ios.icon;
 
      return (
           <Box className="px-3">
                <HStack space="md" alignItems="center">
-                    <Image source={icon} alt={getTermFromDictionary(language, 'library_card')} style={{ width: 42, height: 42, borderRadius: 6 }} />
+                    <Image source={icon} alt={getTermFromDictionary(language, 'library_card')} className="rounded-md" style={{ width: 42, height: 42 }} />
                     <Box className="ml-3">
                          {user.displayName ? (
                               <Text numberOfLines={1} className="max-w-[175px] font-bold" size="md">
@@ -794,8 +795,8 @@ const Checkouts = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const textColor = neutrals.textMain;
 
      return (
           <Pressable
@@ -806,7 +807,7 @@ const Checkouts = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} />
+                    <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
                               <Text className="font-medium">
@@ -828,8 +829,8 @@ const Checkouts = () => {
 const Holds = () => {
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const textColor = neutrals.textMain;
      const library = useLibrary();
      const language = useActiveLanguage();
 
@@ -842,7 +843,7 @@ const Holds = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} />
+                    <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
                               <Text className="font-medium">
@@ -866,8 +867,8 @@ const UserLists = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const textColor = neutrals.textMain;
 
      return (
           <Pressable
@@ -878,7 +879,7 @@ const UserLists = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} />
+                    <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
                               <Text className="font-medium">
@@ -897,8 +898,8 @@ const SavedSearches = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const textColor = neutrals.textMain;
      const updatesCount = user.numSavedSearchesNew ?? 0;
      const { text: savedSearchSummary } = useTranslationWithValues('num_saved_searches_with_updates', updatesCount, { enabled: updatesCount > 0, addToDictionary: true });
 
@@ -911,7 +912,7 @@ const SavedSearches = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} />
+                    <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
                               <Text className="font-medium">
@@ -935,8 +936,8 @@ const ReadingHistory = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const textColor = neutrals.textMain;
 
      return (
           <Pressable
@@ -947,7 +948,7 @@ const ReadingHistory = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} />
+                    <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
                               <Text className="font-medium">
@@ -964,8 +965,8 @@ const ReadingHistory = () => {
 const UserProfile = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const textColor = neutrals.textMain;
 
      return (
           <Pressable
@@ -976,7 +977,7 @@ const UserProfile = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} />
+                    <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     <Text className="font-medium">{getTermFromDictionary(language, 'contact_information')}</Text>
                </HStack>
           </Pressable>
@@ -986,8 +987,8 @@ const UserProfile = () => {
 const NotificationHistory = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const textColor = neutrals.textMain;
 
      if (library.displayIlsInbox === '1' || library.displayIlsInbox === 1 || library.displayIlsInbox === true) {
           return (
@@ -998,7 +999,7 @@ const NotificationHistory = () => {
                               hasPendingChanges: false });
                     }}>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} />
+                         <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                          <Text className="font-medium">{getTermFromDictionary(language, 'notification_history')}</Text>
                     </HStack>
                </Pressable>
@@ -1013,8 +1014,8 @@ const LinkedAccounts = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const textColor = neutrals.textMain;
 
      if (library.allowLinkedAccounts === '1') {
           return (
@@ -1026,7 +1027,7 @@ const LinkedAccounts = () => {
                               hasPendingChanges: false })
                     }>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} />
+                         <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                          <Text className="font-medium">
                               {getTermFromDictionary(language, 'linked_accounts')}
                          </Text>
@@ -1042,8 +1043,8 @@ const LinkedAccounts = () => {
 const AlternateLibraryCard = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const textColor = neutrals.textMain;
 
      const shouldShowAlternateLibraryCard = library.showAlternateLibraryCard ?? false;
 
@@ -1057,7 +1058,7 @@ const AlternateLibraryCard = () => {
                               hasPendingChanges: false });
                     }}>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} />
+                         <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                          <Text className="font-medium">{getTermFromDictionary(language, 'alternate_library_card')}</Text>
                     </HStack>
                </Pressable>
@@ -1072,9 +1073,9 @@ const Fines = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor: themeTextColor, resolvedUiColors } = useTheme();
-     const backgroundColor = resolvedUiColors.surface;
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const backgroundColor = neutrals.surface;
+     const textColor = neutrals.textMain;
 
      const shouldShowFines = library.showFines ?? true;
 
@@ -1092,7 +1093,7 @@ const Fines = () => {
           return (
                <Pressable className="px-2 py-2 rounded-md" onPress={async () => await passUserToDiscovery(library.baseUrl, 'Fines', user.id, backgroundColor, textColor)}>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} />
+                         <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                          <VStack>
                               <Text className="font-medium">{getTermFromDictionary(language, 'fines')}</Text>
                               <Badge colorScheme={hasFines ? 'error' : 'info'} className="mt-1 rounded self-start">
@@ -1114,6 +1115,7 @@ const Events = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
+     const { neutrals } = useTheme();
 
      if (library.hasEventSettings) {
           return (
@@ -1125,7 +1127,7 @@ const Events = () => {
                               hasPendingChanges: false });
                     }}>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} />
+                         <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                          <VStack>
                               <Text className="font-medium">
                                    {getTermFromDictionary(language, 'events')}
@@ -1147,9 +1149,9 @@ const Events = () => {
 const YearInReview = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const backgroundColor = resolvedUiColors.surface;
-     const textColor = resolvedUiColors.text;
+     const { neutrals } = useTheme();
+     const backgroundColor = neutrals.surface;
+     const textColor = neutrals.textMain;
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const yearInReviewLabel = getTermFromDictionary(language, 'year_in_review');
@@ -1161,7 +1163,7 @@ const YearInReview = () => {
           return (
                <Pressable className="px-2 py-2 rounded-md" onPress={async () => await passUserToDiscovery(library.baseUrl, 'YearInReview', user.id, backgroundColor, textColor)}>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} />
+                         <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                          <VStack>
                               <Text className="font-medium">{user.yearInReviewName ?? yearInReviewLabel}</Text>
                               <Badge colorScheme="info" className="mt-1 rounded self-start">
@@ -1181,6 +1183,7 @@ const YearInReview = () => {
 const Campaigns = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
+     const { neutrals } = useTheme();
      if (library.hasCommunityEngagementEnabled) {
           return(
                <Pressable
@@ -1191,7 +1194,7 @@ const Campaigns = () => {
                               hasPendingChanges: false })
                     }>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} />
+                         <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                          <VStack>
                               <Text className="font-medium">
                                    {getTermFromDictionary(language, 'campaigns')}
@@ -1243,11 +1246,11 @@ async function addStoredNotification(message) {
 function LogOutButton() {
      const language = useActiveLanguage();
      const { signOut } = React.useContext(AuthContext);
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
 
      return (
           <Button size="md" onPress={signOut} colorScheme="primary">
-               <MaterialIcons name="logout" size={14} color={runtimeColors.primary['500-text']} className="mr-1" />
+               <MaterialIcons name="logout" size={14} color={brand.primary['500-text']} className="mr-1" />
                <ButtonText> {getTermFromDictionary(language, 'logout')}</ButtonText>
           </Button>
      );

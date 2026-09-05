@@ -7,13 +7,12 @@ import { normalizeDisplayText } from '../../helpers/helpers';
 import { LIBRARY } from '../../util/globals';
 import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { resetPassword } from '../../util/api/user';
-import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
-import { ThemedCloseIcon, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { useTheme, TOKENS } from '../../themes/theme';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField } from '../../components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -26,9 +25,9 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
  */
 export const ResetPassword = (props) => {
      const library = useLibrary();
-     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
-     const surfaceBg = colorMode === 'light' ? (uiColors?.surface?.light ?? UI_COLOR_FALLBACKS.surface.light) : (uiColors?.surface?.dark ?? UI_COLOR_FALLBACKS.surface.dark);
-     const borderColor = colorMode === 'light' ? (uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light) : (uiColors?.border?.dark ?? UI_COLOR_FALLBACKS.border.dark);
+     const { neutralPairs, brand, textColor, colorMode } = useTheme();
+     const surfaceBg = colorMode === 'light' ? (neutralPairs?.surface?.light ?? TOKENS.semanticTokens.light.surface) : (neutralPairs?.surface?.dark ?? TOKENS.semanticTokens.dark.surface);
+     const borderColor = colorMode === 'light' ? (neutralPairs?.border?.light ?? TOKENS.semanticTokens.light.border) : (neutralPairs?.border?.dark ?? TOKENS.semanticTokens.dark.border);
      const { ils, forgotPasswordType, usernameLabel, passwordLabel, showForgotPasswordModal, setShowForgotPasswordModal } = props;
      const [isProcessing, setIsProcessing] = React.useState(false);
      const [isLoading, setIsLoading] = React.useState(false);
@@ -78,7 +77,7 @@ export const ResetPassword = (props) => {
           setShowForgotPasswordModal,
           isProcessing,
           setIsProcessing,
-          runtimeColors,
+          brand,
           textColor,
           borderColor,
           colorMode,
@@ -105,7 +104,7 @@ export const ResetPassword = (props) => {
                          <ModalHeader>
                               <Heading>{modalTitle}</Heading>
                               <ModalCloseButton onPress={() => { setShowForgotPasswordModal(false); }}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
 
@@ -184,8 +183,8 @@ function ResetForm({ resetBody, usernameLabel, emailLabel, username, setUsername
                                    {usernameLabel}
                               </FormControlLabelText>
                          </FormControlLabel>
-                         <ThemedInput style={{ borderColor }}>
-                              <ThemedInputField
+                         <Input style={{ borderColor }}>
+                              <InputField
                                    id="username"
                                    autoCorrect={false}
                                    autoCapitalize="none"
@@ -204,7 +203,7 @@ function ResetForm({ resetBody, usernameLabel, emailLabel, username, setUsername
                                    textContentType="username"
                                    value={username}
                               />
-                         </ThemedInput>
+                         </Input>
                     </FormControl>
                     {emailLabel ? (
                          <FormControl>
@@ -213,9 +212,9 @@ function ResetForm({ resetBody, usernameLabel, emailLabel, username, setUsername
                                         {emailLabel}
                                    </FormControlLabelText>
                               </FormControlLabel>
-                              <ThemedInput style={{ borderColor }}>
-                                   <ThemedInputField id="email" autoCorrect={false} autoCapitalize="none" size="xl" enterKeyHint="done" returnKeyType="done" onChangeText={(text) => setEmail(text)} textContentType="emailAddress" ref={fieldRef} onSubmitEditing={onSubmit} value={email} />
-                              </ThemedInput>
+                              <Input style={{ borderColor }}>
+                                   <InputField id="email" autoCorrect={false} autoCapitalize="none" size="xl" enterKeyHint="done" returnKeyType="done" onChangeText={(text) => setEmail(text)} textContentType="emailAddress" ref={fieldRef} onSubmitEditing={onSubmit} value={email} />
+                              </Input>
                          </FormControl>
                     ) : null}
                </ModalBody>
@@ -305,7 +304,7 @@ function renderStandardResults({ results, showResults, hasError, textColor, clos
                               <Text>{normalizeDisplayText(results.message)}</Text>
                               {successHasResend ? (
                                    <Center>
-                                        <Button size="sm" style={{ backgroundColor: primaryColor, marginTop: 12 }} onPress={onResend}>
+                                        <Button size="sm" className="mt-3" style={{ backgroundColor: primaryColor }} onPress={onResend}>
                                              <ButtonText style={{ color: primaryTextColor }}>{getTermFromDictionary('en', 'resend_email')}</ButtonText>
                                         </Button>
                                    </Center>
@@ -323,7 +322,7 @@ function renderStandardResults({ results, showResults, hasError, textColor, clos
                          <Text>{getTermFromDictionary('en', 'password_reset_success_body_2')}</Text>
                          {successHasResend ? (
                               <Center>
-                                   <Button size="sm" style={{ backgroundColor: primaryColor, marginTop: 12 }} onPress={onResend}>
+                                   <Button size="sm" className="mt-3" style={{ backgroundColor: primaryColor }} onPress={onResend}>
                                         <ButtonText style={{ color: primaryTextColor }}>{getTermFromDictionary('en', 'resend_email')}</ButtonText>
                                    </Button>
                               </Center>
@@ -355,7 +354,7 @@ function renderStandardResults({ results, showResults, hasError, textColor, clos
  * @constructor
  */
 function AspenResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, brand, borderColor } = props;
      const [username, setUsername] = React.useState('');
      const { showResults, setShowResults, results, setResults, hasError, setHasError, closeWindow, resetWindow } = useResetPasswordState(setShowForgotPasswordModal, setIsProcessing);
 
@@ -385,15 +384,15 @@ function AspenResetPassword(props) {
           textColor,
           closeWindow,
           resetWindow,
-          primaryColor: runtimeColors.primary[500],
-          primaryTextColor: runtimeColors.primary['500-text'],
+          primaryColor: brand.primary[500],
+          primaryTextColor: brand.primary['500-text'],
      });
 
      if (renderedResults) {
           return renderedResults;
      }
 
-     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} username={username} setUsername={setUsername} onSubmit={initiateResetPassword} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={runtimeColors.primary[500]} primaryTextColor={runtimeColors.primary['500-text']} onClose={closeWindow} />;
+     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} username={username} setUsername={setUsername} onSubmit={initiateResetPassword} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={brand.primary[500]} primaryTextColor={brand.primary['500-text']} onClose={closeWindow} />;
 }
 
 /**
@@ -403,7 +402,7 @@ function AspenResetPassword(props) {
  * @constructor
  */
 function KohaResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, brand, borderColor } = props;
      const [email, setEmail] = React.useState('');
      const [username, setUsername] = React.useState('');
      const [resend, setResend] = React.useState(false);
@@ -436,8 +435,8 @@ function KohaResetPassword(props) {
           textColor,
           closeWindow,
           resetWindow,
-          primaryColor: runtimeColors.primary[500],
-          primaryTextColor: runtimeColors.primary['500-text'],
+          primaryColor: brand.primary[500],
+          primaryTextColor: brand.primary['500-text'],
           successHasResend: true,
           onResend: () => {
                setResend(true);
@@ -449,7 +448,7 @@ function KohaResetPassword(props) {
           return renderedResults;
      }
 
-     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} emailLabel={getTermFromDictionary('en', 'patron_email')} username={username} setUsername={setUsername} email={email} setEmail={setEmail} onSubmit={initiateResetPassword} fieldRef={fieldRef} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={runtimeColors.primary[500]} primaryTextColor={runtimeColors.primary['500-text']} onClose={closeWindow} />;
+     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} emailLabel={getTermFromDictionary('en', 'patron_email')} username={username} setUsername={setUsername} email={email} setEmail={setEmail} onSubmit={initiateResetPassword} fieldRef={fieldRef} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={brand.primary[500]} primaryTextColor={brand.primary['500-text']} onClose={closeWindow} />;
 }
 
 /**
@@ -459,7 +458,7 @@ function KohaResetPassword(props) {
  * @constructor
  */
 function SirsiResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, brand, borderColor } = props;
      const [username, setUsername] = React.useState('');
      const { showResults, setShowResults, results, setResults, hasError, setHasError, closeWindow, resetWindow } = useResetPasswordState(setShowForgotPasswordModal, setIsProcessing);
 
@@ -489,15 +488,15 @@ function SirsiResetPassword(props) {
           textColor,
           closeWindow,
           resetWindow,
-          primaryColor: runtimeColors.primary[500],
-          primaryTextColor: runtimeColors.primary['500-text'],
+          primaryColor: brand.primary[500],
+          primaryTextColor: brand.primary['500-text'],
      });
 
      if (renderedResults) {
           return renderedResults;
      }
 
-     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} username={username} setUsername={setUsername} onSubmit={initiateResetPassword} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={runtimeColors.primary[500]} primaryTextColor={runtimeColors.primary['500-text']} onClose={closeWindow} />;
+     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} username={username} setUsername={setUsername} onSubmit={initiateResetPassword} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={brand.primary[500]} primaryTextColor={brand.primary['500-text']} onClose={closeWindow} />;
 }
 
 /**
@@ -516,7 +515,7 @@ const HorizonResetPassword = SirsiResetPassword;
  * @constructor
  */
 function EvergreenResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, brand, borderColor } = props;
      const [email, setEmail] = React.useState('');
      const [username, setUsername] = React.useState('');
      const [resend, setResend] = React.useState(false);
@@ -549,8 +548,8 @@ function EvergreenResetPassword(props) {
           textColor,
           closeWindow,
           resetWindow,
-          primaryColor: runtimeColors.primary[500],
-          primaryTextColor: runtimeColors.primary['500-text'],
+          primaryColor: brand.primary[500],
+          primaryTextColor: brand.primary['500-text'],
           successHasResend: true,
           onResend: () => {
                setResend(true);
@@ -562,7 +561,7 @@ function EvergreenResetPassword(props) {
           return renderedResults;
      }
 
-     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} emailLabel={getTermFromDictionary('en', 'patron_email')} username={username} setUsername={setUsername} email={email} setEmail={setEmail} onSubmit={initiateResetPassword} fieldRef={fieldRef} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={runtimeColors.primary[500]} primaryTextColor={runtimeColors.primary['500-text']} onClose={closeWindow} />;
+     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} emailLabel={getTermFromDictionary('en', 'patron_email')} username={username} setUsername={setUsername} email={email} setEmail={setEmail} onSubmit={initiateResetPassword} fieldRef={fieldRef} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={brand.primary[500]} primaryTextColor={brand.primary['500-text']} onClose={closeWindow} />;
 }
 
 /**
@@ -572,7 +571,7 @@ function EvergreenResetPassword(props) {
  * @constructor
  */
 function SymphonyResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, brand, borderColor } = props;
      const [username, setUsername] = React.useState('');
      const { showResults, setShowResults, results, setResults, hasError, setHasError, closeWindow, resetWindow } = useResetPasswordState(setShowForgotPasswordModal, setIsProcessing);
 
@@ -602,15 +601,15 @@ function SymphonyResetPassword(props) {
           textColor,
           closeWindow,
           resetWindow,
-          primaryColor: runtimeColors.primary[500],
-          primaryTextColor: runtimeColors.primary['500-text'],
+          primaryColor: brand.primary[500],
+          primaryTextColor: brand.primary['500-text'],
      });
 
      if (renderedResults) {
           return renderedResults;
      }
 
-     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} username={username} setUsername={setUsername} onSubmit={initiateResetPassword} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={runtimeColors.primary[500]} primaryTextColor={runtimeColors.primary['500-text']} onClose={closeWindow} />;
+     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} username={username} setUsername={setUsername} onSubmit={initiateResetPassword} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={brand.primary[500]} primaryTextColor={brand.primary['500-text']} onClose={closeWindow} />;
 }
 
 /**
@@ -620,7 +619,7 @@ function SymphonyResetPassword(props) {
  * @constructor
  */
 function MillenniumResetPassword(props) {
-     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, runtimeColors, borderColor } = props;
+     const { usernameLabel, setShowForgotPasswordModal, isProcessing, setIsProcessing, modalButtonLabel, resetBody, libraryUrl, textColor, brand, borderColor } = props;
      const [username, setUsername] = React.useState('');
      const { showResults, setShowResults, results, setResults, hasError, setHasError, closeWindow, resetWindow } = useResetPasswordState(setShowForgotPasswordModal, setIsProcessing);
 
@@ -671,10 +670,10 @@ function MillenniumResetPassword(props) {
                     <ModalBody>
                          <Text>{normalizeDisplayText(results)}</Text>
                     </ModalBody>
-                    <ResultFooter textColor={textColor} onClose={closeWindow} okLabel="cancel" primaryColor={runtimeColors.primary[500]} primaryTextColor={runtimeColors.primary['500-text']} />
+                    <ResultFooter textColor={textColor} onClose={closeWindow} okLabel="cancel" primaryColor={brand.primary[500]} primaryTextColor={brand.primary['500-text']} />
                </>
           );
      }
 
-     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} username={username} setUsername={setUsername} onSubmit={initiateResetPassword} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={runtimeColors.primary[500]} primaryTextColor={runtimeColors.primary['500-text']} onClose={closeWindow} />;
+     return <ResetForm resetBody={resetBody} usernameLabel={usernameLabel} username={username} setUsername={setUsername} onSubmit={initiateResetPassword} textColor={textColor} borderColor={borderColor} submitLabel={modalButtonLabel} isProcessing={isProcessing} primaryColor={brand.primary[500]} primaryTextColor={brand.primary['500-text']} onClose={closeWindow} />;
 }

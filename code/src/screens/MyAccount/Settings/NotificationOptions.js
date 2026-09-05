@@ -83,7 +83,7 @@ export const Settings_NotificationOptions = () => {
                          <Text bold>{getTermFromDictionary(language, 'notifications_allow')}</Text>
                          <Switch
                               isDisabled={true}
-                              isChecked={isNotificationsEnabled}
+                              value={isNotificationsEnabled}
                          />
                     </HStack>
                     {/* Show options whenever an expoToken is present and settings object exists */}
@@ -171,14 +171,14 @@ const EnableAllNotifications = (data) => {
           <HStack space="sm" className="items-center justify-between pb-1">
                <Text bold>{getTermFromDictionary(language, 'notifications_enable_all')}</Text>
                <Switch
-                    onToggle={() => {
+                    onValueChange={() => {
                          toggleSwitch();
                          enableAllNotifications(!toggled).then((r) => {
                               logDebugMessage(r);
                          });
                     }}
                     defaultValue={toggled}
-                    isChecked={toggled}
+                    value={toggled}
                />
           </HStack>
      );
@@ -244,8 +244,8 @@ const DisplayPreference = ({ data, notifySavedSearch, setNotifySavedSearch, noti
           <HStack space="sm" className="items-center justify-between pb-1">
                <Text>{preference.label}</Text>
                <Switch
-                    onToggle={() => updatePreference(preference.option, isChecked)}
-                    isChecked={isChecked}
+                    onValueChange={() => updatePreference(preference.option, isChecked)}
+                    value={isChecked}
                />
           </HStack>
      );

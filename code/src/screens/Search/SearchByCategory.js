@@ -35,7 +35,7 @@ export const SearchResultsForBrowseCategory = () => {
      const [page, setPage] = React.useState(1);
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
+     const { neutrals } = useTheme();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
 
      const category = useRoute().params.id ?? '';
@@ -75,7 +75,7 @@ export const SearchResultsForBrowseCategory = () => {
      const Paging = () => {
           if (data.totalPages > 1) {
                return (
-                    <Box style={{ padding: 8, backgroundColor: resolvedUiColors.surface, borderTopWidth: 1, borderColor: resolvedUiColors.border, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    <Box className="p-2" style={{ backgroundColor: neutrals.surface, borderTopWidth: 1, borderColor: neutrals.border, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" colorScheme="primary">

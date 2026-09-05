@@ -15,7 +15,7 @@ import MoreStackNavigator from '../stack/MoreStackNavigator';
 import SelfCheckOutStackNavigator from '../stack/SelfCheckOutStackNavigator';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
-import { useTheme } from '../../themes/theme';
+import { TOKENS, useTheme } from '../../themes/theme';
 
 const Tab = createBottomTabNavigator();
 /**
@@ -26,7 +26,8 @@ const Tab = createBottomTabNavigator();
 export default function TabNavigator() {
      const enableSelfCheck = useSelfCheckEnabled();
      const selfCheckSettings = useSelfCheckSettings();
-     const { uiColors, resolvedUiColors, colorMode } = useTheme();
+     const { brand, colorMode } = useTheme();
+     const tabColors = TOKENS.componentTokens.tabNavigator[colorMode === 'dark' ? 'dark' : 'light'];
 
      const settingsEnabledCandidates = [
           selfCheckSettings?.isEnabled,
@@ -38,9 +39,9 @@ export default function TabNavigator() {
      );
      const showSelfCheckTab = enableSelfCheck === true || settingsEnableSelfCheck;
 
-     const activeIcon = colorMode === 'light' ? uiColors.surface.dark : uiColors.text.dark;
-     const inactiveIcon = resolvedUiColors.iconMuted;
-     const tabBarBackgroundColor = resolvedUiColors.card;
+     const activeTint = brand.primary[500];
+     const inactiveTint = tabColors.inactiveTint;
+     const tabBarBackgroundColor = tabColors.background;
 
      return (
           <Tab.Navigator
@@ -50,10 +51,10 @@ export default function TabNavigator() {
                     headerShown: false,
                     backBehavior: 'none',
                     tabBarHideOnKeyboard: true,
-                    tabBarActiveTintColor: activeIcon,
-                    tabBarInactiveTintColor: inactiveIcon,
+                    tabBarActiveTintColor: activeTint,
+                    tabBarInactiveTintColor: inactiveTint,
                     tabBarLabelStyle: { fontWeight: '400' },
-                    tabBarStyle: { backgroundColor: tabBarBackgroundColor, elevation: 0 },
+                    tabBarStyle: { backgroundColor: tabBarBackgroundColor, borderTopColor: tabColors.borderTop, elevation: 0 },
                }}>
                <Tab.Screen name="BrowseTab" component={BrowseStackNavigator} />
                <Tab.Screen name="LibraryCardTab" component={LibraryCardStackNavigator} />
@@ -94,11 +95,12 @@ export default function TabNavigator() {
  */
 export const TabItem = ({ state, descriptors, navigation }) => {
      const language = useActiveLanguage();
-     const { uiColors, resolvedUiColors, colorMode } = useTheme();
-     const activeIconColor = colorMode === 'light' ? uiColors.surface.dark : uiColors.text.dark;
-     const inactiveIconColor = resolvedUiColors.iconMuted;
-     const tabBarBackgroundColor = resolvedUiColors.card;
-     const tabBorderColor = resolvedUiColors.border;
+     const { brand, colorMode } = useTheme();
+     const tabColors = TOKENS.componentTokens.tabNavigator[colorMode === 'dark' ? 'dark' : 'light'];
+     const activeIconColor = brand.primary[500];
+     const inactiveIconColor = tabColors.inactiveTint;
+     const tabBarBackgroundColor = tabColors.background;
+     const tabBorderColor = tabColors.borderTop;
      const insets = useSafeAreaInsets();
 
      const [browseTabLabel, setBrowseTabLabel] = React.useState(getTermFromDictionary(language, 'nav_discover'));

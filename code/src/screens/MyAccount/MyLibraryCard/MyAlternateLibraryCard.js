@@ -7,7 +7,6 @@ import { useRoute, useNavigation, CommonActions, StackActions } from '@react-nav
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { SystemMessagesContext } from '@/src/context/initialContext';
@@ -20,7 +19,7 @@ import { logDebugMessage, logWarnMessage, getErrorMessage } from '@/src/util/log
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
-import { PasswordVisibilityToggle, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
+import { PasswordVisibilityToggle, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '@/src/components/themed/ThemedFormControls';
 /**
  * MyAlternateLibraryCard component that allows users to manage their alternate library card information. It provides input fields for the alternate library card number and password, and buttons to update or delete the card information. The component also handles system messages, loading states, and updates the user profile upon changes.
  * @returns {React.JSX.Element}
@@ -34,9 +33,9 @@ export const MyAlternateLibraryCard = () => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { uiColors, textColor, resolvedUiColors } = useTheme();
+     const { neutralPairs, textColor, neutrals } = useTheme();
      const queryClient = useQueryClient();
-     const inputBorderColor = resolvedUiColors.border;
+     const inputBorderColor = neutrals.border;
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const { width } = useWindowDimensions();
      const [card, setCard] = React.useState(user?.alternateLibraryCard ?? '');
@@ -147,9 +146,9 @@ export const MyAlternateLibraryCard = () => {
                                              {cardLabel}
                                         </FormControlLabelText>
                                    </FormControlLabel>
-                                   <ThemedInput style={{ borderColor: inputBorderColor }}>
-                                        <ThemedInputField textContentType="none" name="card" value={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
-                                   </ThemedInput>
+                                   <Input style={{ borderColor: inputBorderColor }}>
+                                        <InputField textContentType="none" name="card" value={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
+                                   </Input>
                               </FormControl>
                               {showAlternateLibraryCardPassword ? (
                                    <FormControl className="mb-2">
@@ -158,10 +157,10 @@ export const MyAlternateLibraryCard = () => {
                                                   {passwordLabel}
                                              </FormControlLabelText>
                                         </FormControlLabel>
-                                        <ThemedInput style={{ borderColor: inputBorderColor }}>
-                                             <ThemedInputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" value={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
+                                        <Input style={{ borderColor: inputBorderColor }}>
+                                             <InputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" value={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
                                              <PasswordVisibilityToggle showPassword={showPassword} onPress={toggleShowPassword} />
-                                        </ThemedInput>
+                                        </Input>
                                    </FormControl>
                               ) : null}
                               <ButtonGroup>
@@ -176,14 +175,14 @@ export const MyAlternateLibraryCard = () => {
                                         <ButtonText>{getTermFromDictionary(language, 'update')}</ButtonText>
                                    </Button>
                                    <Button
-                                        style={{ backgroundColor: uiColors.danger }}
+                                        style={{ backgroundColor: neutralPairs.danger }}
                                         onPress={() => {
                                              setIsLoading(true);
                                              deleteCard().then(() => {
                                                   setIsLoading(false);
                                              });
                                         }}>
-                                        <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
+                                        <ButtonText style={{ color: neutralPairs.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </Box>

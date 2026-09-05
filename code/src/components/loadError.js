@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { ThemedButton as Button, ThemedButtonIcon as ButtonIcon, ThemedButtonText as ButtonText } from './themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -21,13 +21,13 @@ import { useTheme } from '../themes/theme';
  **/
 export const LoadError = (props) => {
      const { error, reloadAction } = props;
-     const { uiColors, runtimeColors } = useTheme();
+     const { neutralPairs, brand } = useTheme();
 
      return (
           <Center className="flex-1">
                <HStack>
-                    <MaterialIcons name="error" size={18} color={uiColors.danger} className="mr-1" />
-                    <Heading style={{ color: uiColors.danger, marginBottom: 8 }}>
+                    <MaterialIcons name="error" size={18} color={neutralPairs.danger} className="mr-1" />
+                    <Heading className="mb-2" style={{ color: neutralPairs.danger }}>
                          {getTermFromDictionary('en', 'error')}
                     </Heading>
                </HStack>
@@ -37,12 +37,12 @@ export const LoadError = (props) => {
                {reloadAction ? (
                    <Button onPress={reloadAction} colorScheme="primary" className="mt-5">
                          <ButtonIcon>
-                              <MaterialIcons name="refresh" size={16} color={runtimeColors.primary['500-text']} />
+                              <MaterialIcons name="refresh" size={16} color={brand.primary['500-text']} />
                          </ButtonIcon>
                          <ButtonText>{getTermFromDictionary('en', 'button_reload')}</ButtonText>
                     </Button>
                ) : null}
-               <Text size="xs" style={{ width: '75%', marginTop: 20, color: uiColors.iconMuted.dark, textAlign: 'center' }}>
+               <Text size="xs" className="mt-5" style={{ width: '75%', color: neutralPairs.iconMuted.dark, textAlign: 'center' }}>
                     ERROR: {error}
                </Text>
           </Center>
@@ -68,7 +68,7 @@ export function loadError(error, reloadAction = '') {
 export const DisplayErrorAlertDialog = (props) => {
      const { title, message } = props;
      const language = useActiveLanguage();
-     const { uiColors, resolvedUiColors, runtimeColors } = useTheme();
+     const { neutralPairs, brand } = useTheme();
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => setIsOpen(false);
      const cancelRef = React.useRef(null);
@@ -77,7 +77,7 @@ export const DisplayErrorAlertDialog = (props) => {
           <Center>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                    <AlertDialogContent>
                     <AlertDialogHeader>
                         <Heading>{title}</Heading>
                     </AlertDialogHeader>

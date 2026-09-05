@@ -11,12 +11,11 @@ import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControlHelper, FormControlHelperText, FormControlLabel } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlHelper as FormControlHelper, ThemedFormControlHelperText as FormControlHelperText, ThemedFormControlLabel as FormControlLabel } from '../../components/themed/ThemedFormControls';
 /**
  * SelfRegistration component that handles the self-registration process for a library, including form rendering, input handling, and submission.
  * @returns {React.JSX.Element}
@@ -24,9 +23,9 @@ import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField, Themed
  */
 export const SelfRegistration = () => {
 	const insets = useSafeAreaInsets();
-	const { resolvedUiColors } = useTheme();
-	const surfaceBg = resolvedUiColors.surface;
-	const borderColor = resolvedUiColors.border;
+	const { neutrals } = useTheme();
+	const surfaceBg = neutrals.surface;
+	const borderColor = neutrals.border;
 	const route = useRoute();
 	const navigation = useNavigation();
 	const libraryUrl = route?.params?.libraryUrl ?? '';
@@ -91,7 +90,7 @@ export const SelfRegistration = () => {
 								return (
 									<FormControl className="my-2" isRequired={required}>
 										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
-										<ThemedInput style={{ borderColor }}><ThemedInputField type='text'
+										<Input style={{ borderColor }}><InputField type='text'
 										                   key={key}
 										                   name={property}
 										                   maxLength={maxLength ? parseInt(maxLength) : undefined}
@@ -99,7 +98,7 @@ export const SelfRegistration = () => {
 										                   returnKeyType="next"
 										                   onChangeText={(value) => {
 											                   handleInputChange(property, value);
-										                   }}/></ThemedInput>
+										                   }}/></Input>
 										{!_.isEmpty(description) ? (
 											<FormControlHelper>
 												<FormControlHelperText>
@@ -113,7 +112,7 @@ export const SelfRegistration = () => {
 								return (
 									<FormControl className="my-2" isRequired={required}>
 										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
-										<ThemedInput style={{ borderColor }}><ThemedInputField type='password'
+										<Input style={{ borderColor }}><InputField type='password'
 										                   key={property}
 										                   name={property}
 										                   maxLength={maxLength ? parseInt(maxLength) : undefined}
@@ -121,7 +120,7 @@ export const SelfRegistration = () => {
 										                   onChangeText={(value) => {
 											                   handleInputChange(property, value);
 										                   }}/>
-										</ThemedInput>
+										</Input>
 										{!_.isEmpty(description) ? (
 											<FormControlHelper>
 												<FormControlHelperText>
@@ -135,14 +134,14 @@ export const SelfRegistration = () => {
 								return (
 									<FormControl className="my-2" isRequired={required}>
 										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
-										<ThemedInput style={{ borderColor }}><ThemedInputField type='email'
+										<Input style={{ borderColor }}><InputField type='email'
 										                   key={property}
 										                   name={property}
 										                   maxLength={maxLength ? parseInt(maxLength) : undefined}
 										                   accessibilityLabel={description}
 										                   onChangeText={(value) => {
 											                   handleInputChange(property, value);
-										                   }} /></ThemedInput>
+										                   }} /></Input>
 										{!_.isEmpty(description) ? (
 											<FormControlHelper>
 												<FormControlHelperText>

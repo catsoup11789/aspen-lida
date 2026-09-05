@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
-import { ActionsheetItemText } from '@/components/ui/actionsheet';
+import { ThemedActionsheetItemText as ActionsheetItemText } from '../components/themed/ThemedActionsheet';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { useUserState } from '../hooks/useUserData';
 import { useLibrary } from '../hooks/useLibrarySystemData';

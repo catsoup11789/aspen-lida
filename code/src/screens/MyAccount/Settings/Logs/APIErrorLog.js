@@ -4,7 +4,7 @@ import { clearApiErrorLogs, getApiErrorLogsPage } from '@/src/util/db';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { resolveUiColorMap, useTheme } from '@/src/themes/theme';
-import { Accordion, AccordionContent, AccordionContentText, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
+import { ThemedAccordion as Accordion, ThemedAccordionContent as AccordionContent, ThemedAccordionHeader as AccordionHeader, ThemedAccordionItem as AccordionItem, ThemedAccordionTrigger as AccordionTrigger, ThemedAccordionTitleText as AccordionTitleText, ThemedAccordionContentText as AccordionContentText, ThemedAccordionIcon as AccordionIcon } from '@/src/components/themed/ThemedAccordion';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../../components/themed/ThemedButton';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
@@ -26,13 +26,13 @@ function formatDate(ms) {
 /**
  * APIErrorLog component that displays a list of API error logs. It fetches the logs from the database, allows pagination, and provides an option to clear the logs. Each log entry can be expanded to view the response body if available.
  * @param param0
- * @param param0.uiColors
+ * @param param0.neutralPairs
  * @param param0.colorMode
  * @param param0.textColor
  * @returns {React.JSX.Element}
  * @constructor
  */
-export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, textColor: textColorProp } = {}) => {
+export const APIErrorLog = ({ neutralPairs: uiColorsProp, colorMode: colorModeProp, textColor: textColorProp } = {}) => {
      const [loading, setLoading] = React.useState(false);
      const [page, setPage] = React.useState(1);
      const [rows, setRows] = React.useState([]);
@@ -45,13 +45,12 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
      const language = useActiveLanguage();
 
      const themeCtx = useTheme() ?? {};
-     const uiColors = uiColorsProp ?? themeCtx.uiColors ?? {};
+     const neutralPairs = uiColorsProp ?? themeCtx.neutralPairs ?? {};
      const colorMode = colorModeProp ?? themeCtx.colorMode ?? 'light';
      const textColor = textColorProp ?? themeCtx.textColor ?? '#111827';
-     const resolvedUiColors = React.useMemo(() => resolveUiColorMap(uiColors, colorMode), [uiColors, colorMode]);
-     const surfaceBg = resolvedUiColors.surface;
-     const panelBg = resolvedUiColors.surface;
-     const borderColor = resolvedUiColors.border;
+     const neutrals = React.useMemo(() => resolveUiColorMap(neutralPairs, colorMode), [neutralPairs, colorMode]);
+     const panelBg = neutrals.surface;
+     const borderColor = neutrals.border;
 
      const loadPage = React.useCallback(async (nextPage = 1) => {
           setLoading(true);
@@ -88,7 +87,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
      };
 
      const renderEntry = ({ item }) => (
-          <Box style={{ borderBottomWidth: 1, borderColor, paddingHorizontal: 12, paddingVertical: 12 }}>
+          <Box className="px-3 py-3" style={{ borderBottomWidth: 1, borderColor }}>
                <VStack space="xs">
                     <Text size="xs">
                          {formatDate(item.created_at)}
@@ -117,7 +116,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
                                                   return (
                                                        <>
                                                             <AccordionTitleText style={{ color: textColor }}>Response</AccordionTitleText>
-                                                            {isExpanded ? <AccordionIcon as={MaterialIcons} name="expand-less" style={{ marginLeft: 12, color: textColor }} /> : <AccordionIcon as={MaterialIcons} name="expand-more" style={{ marginLeft: 12, color: textColor }} />}
+                                                            {isExpanded ? <AccordionIcon as={MaterialIcons} name="expand-less" className="ml-3" style={{ color: neutrals.actionableIndicator }} /> : <AccordionIcon as={MaterialIcons} name="expand-more" className="ml-3" style={{ color: neutrals.actionableIndicator }} />}
                                                        </>
                                                   );
                                              }}
@@ -147,7 +146,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
 
      return (
           <Box className="flex-1">
-               <Box style={{ paddingHorizontal: 12, paddingVertical: 12, borderBottomWidth: 1, borderColor }}>
+               <Box className="px-3 py-3" style={{ borderBottomWidth: 1, borderColor }}>
                    <Heading size="sm">
                          {getTermFromDictionary(language, 'api_error_log')}
                     </Heading>
@@ -173,7 +172,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
                     />
                )}
 
-               <HStack style={{ paddingHorizontal: 12, paddingVertical: 12, justifyContent: 'space-between', alignItems: 'center', borderTopWidth: 1, borderColor }}>
+               <HStack className="px-3 py-3" style={{ justifyContent: 'space-between', alignItems: 'center', borderTopWidth: 1, borderColor }}>
                     <Button colorScheme="secondary" onPress={() => loadPage(page - 1)} isDisabled={loading || !meta.hasPrevious}>
                         <ButtonText>{getTermFromDictionary(language, 'previous')}</ButtonText>
                     </Button>

@@ -14,13 +14,12 @@ import { HoldNotificationPreferences } from './HoldNotificationPreferences';
 import { SelectItemHold } from './SelectItem';
 import { SelectVolume } from './SelectVolume';
 import { SelectNewHoldSublocation } from './SelectNewHoldSublocation';
-import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
+import { PasswordVisibilityToggle, ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../themed/ThemedFormControls';
 import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from '@/src/util/logging';
 import { useTheme } from '@/src/themes/theme';
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../themed/ThemedCheckbox';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
@@ -47,7 +46,7 @@ export const HoldPrompt = (props) => {
      const { data: sublocations } = useSublocations();
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
-     const { uiColors, resolvedUiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { neutralPairs, neutrals, brand, colorMode, textColor } = useTheme();
 
      const {
           language,
@@ -332,7 +331,7 @@ export const HoldPrompt = (props) => {
                                    onPress={() => {
                                         setShowAddAlternateLibraryCardModal(false);
                                    }}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody className="mt-3">
@@ -343,9 +342,9 @@ export const HoldPrompt = (props) => {
                                              {cardLabel}
                                         </FormControlLabelText>
                                    </FormControlLabel>
-                                   <ThemedInput>
-                                        <ThemedInputField textContentType="none" name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
-                                   </ThemedInput>
+                                   <Input>
+                                        <InputField textContentType="none" name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
+                                   </Input>
                               </FormControl>
                               {showAlternateLibraryCardPassword ? (
                                    <FormControl className="mb-2">
@@ -354,10 +353,10 @@ export const HoldPrompt = (props) => {
                                                   {passwordLabel}
                                              </FormControlLabelText>
                                         </FormControlLabel>
-                                        <ThemedInput>
-                                             <ThemedInputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
+                                        <Input>
+                                             <InputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
                                              <PasswordVisibilityToggle showPassword={showPassword} onPress={toggleShowPassword} />
-                                        </ThemedInput>
+                                        </Input>
                                    </FormControl>
                               ) : null}
                          </ModalBody>
@@ -365,12 +364,12 @@ export const HoldPrompt = (props) => {
                               <ButtonGroup space="sm">
                                    <Button
                                         variant="outline"
-                                        style={{ borderColor: resolvedUiColors.border }}
+                                        style={{ borderColor: neutrals.border }}
                                         onPress={() => {
                                              setShowAddAlternateLibraryCardModal(false);
                                              setLoading(false);
                                         }}>
-                                        <ButtonText style={{ color: resolvedUiColors.text }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: neutrals.textMain }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button
                                         colorScheme="primary"
@@ -428,7 +427,7 @@ export const HoldPrompt = (props) => {
                                                   }
                                              });
                                         }}>
-                                       {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
+                                       {loading ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>
@@ -445,7 +444,7 @@ export const HoldPrompt = (props) => {
                                    onPress={() => {
                                         setShowModal(false);
                                    }}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody className="mt-3">
@@ -469,13 +468,13 @@ export const HoldPrompt = (props) => {
                                         setPhoneNumber={setPhoneNumber}
                                         url={library.baseUrl}
                                         textColor={textColor}
-                                        uiColors={uiColors}
-                                        runtimeColors={runtimeColors}
+                                        neutralPairs={neutralPairs}
+                                        brand={brand}
                                         colorMode={colorMode}
                                    />
                               ) : null}
-                              {data !== undefined && !isFetching && _.isEmpty(volumeId) && (holdType === 'either' || holdType === 'item') ? <SelectItemHold uiColors={uiColors} runtimeColors={runtimeColors} colorMode={colorMode} id={id} item={item} setItem={setItem} language={language} data={data} holdType={holdType} setHoldType={setHoldType} holdTypeForFormat={holdTypeForFormat} url={library.baseUrl} showModal={showModal} textColor={textColor} /> : null}
-                              {promptForHoldType || (holdType === 'volume' && _.isEmpty(volumeId)) ? <SelectVolume uiColors={uiColors} runtimeColors={runtimeColors} id={id} language={language} volume={volume} setVolume={setVolume} promptForHoldType={promptForHoldType} holdType={holdType} setHoldType={setHoldType} showModal={showModal} url={library.baseUrl} textColor={textColor} colorMode={colorMode} /> : null}
+                              {data !== undefined && !isFetching && _.isEmpty(volumeId) && (holdType === 'either' || holdType === 'item') ? <SelectItemHold neutralPairs={neutralPairs} brand={brand} colorMode={colorMode} id={id} item={item} setItem={setItem} language={language} data={data} holdType={holdType} setHoldType={setHoldType} holdTypeForFormat={holdTypeForFormat} url={library.baseUrl} showModal={showModal} textColor={textColor} /> : null}
+                              {promptForHoldType || (holdType === 'volume' && _.isEmpty(volumeId)) ? <SelectVolume neutralPairs={neutralPairs} brand={brand} id={id} language={language} volume={volume} setVolume={setVolume} promptForHoldType={promptForHoldType} holdType={holdType} setHoldType={setHoldType} showModal={showModal} url={library.baseUrl} textColor={textColor} colorMode={colorMode} /> : null}
                               {(_.isArray(locations) && (_.size(locations) > 1 || !preferredPickupLocationIsValid) && !isEContent && !user.rememberHoldPickupLocation) || (_.isArray(locations) && _.size(locations) > 1 && !isEContent && _.size(accounts) > 0) ? (
                                    <FormControl className="mt-1">
                                         <FormControlLabel>
@@ -500,9 +499,9 @@ export const HoldPrompt = (props) => {
                                                        <SelectScrollView>
                                                             {locations.map((availableLocations, index) => {
                                                                  if (availableLocations.code === location) {
-                                                                    return <SelectItem label={availableLocations.name} value={availableLocations.code} key={index} style={{ backgroundColor: runtimeColors.tertiary[300] }} textStyle={{ color: runtimeColors.tertiary['500-text'] }} />;
+                                                                    return <SelectItem label={availableLocations.name} value={availableLocations.code} key={index} style={{ backgroundColor: brand.tertiary[300] }} textStyle={{ color: brand.tertiary['500-text'] }} />;
                                                                  }
-                                                                 return <SelectItem label={availableLocations.name} value={availableLocations.code} key={index} style={{ backgroundColor: location === availableLocations.code ? runtimeColors.tertiary[300] : 'transparent' }} textStyle={{ color: location === availableLocations.code ? runtimeColors.tertiary['500-text'] : textColor }} />;
+                                                                 return <SelectItem label={availableLocations.name} value={availableLocations.code} key={index} style={{ backgroundColor: location === availableLocations.code ? brand.tertiary[300] : 'transparent' }} textStyle={{ color: location === availableLocations.code ? brand.tertiary['500-text'] : textColor }} />;
                                                             })}
                                                        </SelectScrollView>
                                                   </SelectContent>
@@ -510,7 +509,7 @@ export const HoldPrompt = (props) => {
                                         </Select>
                                    </FormControl>
                               ) : null}
-                              {!user.rememberHoldPickupLocation ? <SelectNewHoldSublocation sublocations={sublocations ?? []} location={location} activeSublocation={sublocation} setActiveSublocation={setSublocation} language={language} textColor={textColor} uiColors={uiColors} runtimeColors={runtimeColors} colorMode={colorMode} /> : null}
+                              {!user.rememberHoldPickupLocation ? <SelectNewHoldSublocation sublocations={sublocations ?? []} location={location} activeSublocation={sublocation} setActiveSublocation={setSublocation} language={language} textColor={textColor} neutralPairs={neutralPairs} brand={brand} colorMode={colorMode} /> : null}
                               {_.size(locations) > 1 && _.size(accounts) === 0 && !isEContent && library.allowRememberPickupLocation && !user.rememberHoldPickupLocation ? (
                                    <FormControl className="mb-3">
                                         <Checkbox
@@ -551,9 +550,9 @@ export const HoldPrompt = (props) => {
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
                                                        <SelectScrollView>
-                                                            <SelectItem label={user.displayName} value={user.id} style={{ backgroundColor: activeAccount === user.id ? runtimeColors.tertiary[300] : 'transparent' }} textStyle={{ color: activeAccount === user.id ? runtimeColors.tertiary['500-text'] : textColor }} />
+                                                            <SelectItem label={user.displayName} value={user.id} style={{ backgroundColor: activeAccount === user.id ? brand.tertiary[300] : 'transparent' }} textStyle={{ color: activeAccount === user.id ? brand.tertiary['500-text'] : textColor }} />
                                                             {accounts.map((item, index) => {
-                                                                 return <SelectItem label={item.displayName} value={item.id} key={index} style={{ backgroundColor: activeAccount === item.id ? runtimeColors.tertiary[300] : 'transparent' }} textStyle={{ color: activeAccount === item.id ? runtimeColors.tertiary['500-text'] : textColor }} />;
+                                                                 return <SelectItem label={item.displayName} value={item.id} key={index} style={{ backgroundColor: activeAccount === item.id ? brand.tertiary[300] : 'transparent' }} textStyle={{ color: activeAccount === item.id ? brand.tertiary['500-text'] : textColor }} />;
                                                             })}
                                                        </SelectScrollView>
                                                   </SelectContent>
@@ -566,12 +565,12 @@ export const HoldPrompt = (props) => {
                               <ButtonGroup space="sm">
                                    <Button
                                         variant="outline"
-                                        style={{ borderColor: resolvedUiColors.border }}
+                                        style={{ borderColor: neutrals.border }}
                                         onPress={() => {
                                              setShowModal(false);
                                              setLoading(false);
                                         }}>
-                                        <ButtonText style={{ color: resolvedUiColors.text }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: neutrals.textMain }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    {promptAlternateLibraryCard && !userHasAlternateLibraryCard ? (
                                         <Button
@@ -662,7 +661,7 @@ export const HoldPrompt = (props) => {
                                                        }
                                                   });
                                              }}>
-                                            {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
+                                            {loading ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
                                         </Button>
                                    )}
                               </ButtonGroup>

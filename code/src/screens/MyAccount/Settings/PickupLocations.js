@@ -12,8 +12,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
-import { FormControlLabel } from '@/components/ui/form-control';
-import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../../components/themed/ThemedFormControls';
+import { ThemedFormControlLabel as FormControlLabel, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../../components/themed/ThemedFormControls';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 
 /**
@@ -67,7 +66,7 @@ export const Settings_PickupLocations = () => {
 	const updateLocations = useUpdateLocations();
 	const updateSublocations = useUpdateSublocations();
     const updateUserProfile = useUpdateUserProfile();
-	const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+	const { neutralPairs, brand, textColor, colorMode } = useTheme();
     const locationsRef = React.useRef(locations);
 	const sublocationsRef = React.useRef(sublocations);
 
@@ -348,8 +347,8 @@ export const Settings_PickupLocations = () => {
                     }}
                     language={language}
                     textColor={textColor}
-                    uiColors={uiColors}
-                    runtimeColors={runtimeColors}
+                    neutralPairs={neutralPairs}
+                    brand={brand}
                     colorMode={colorMode}
                />
                {library.allowRememberPickupLocation ? (
@@ -392,7 +391,7 @@ export const Settings_PickupLocations = () => {
                               }
                          }}
                          isDisabled={loading || !hasChanges}>
-                        {loading ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <ButtonText>{getTermFromDictionary(language, 'update')}</ButtonText>}
+                        {loading ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{getTermFromDictionary(language, 'update')}</ButtonText>}
                     </Button>
                </ButtonGroup>
           </Box>

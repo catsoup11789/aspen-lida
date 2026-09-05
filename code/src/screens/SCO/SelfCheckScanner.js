@@ -11,6 +11,7 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { View } from '@/components/ui/view';
+import { TOKENS } from '../../themes/theme';
 
 /**
  * SelfCheckScanner component that provides a camera view for scanning barcodes in a self-checkout process. It handles camera permissions, barcode scanning, and navigation to the self-checkout screen with the scanned barcode data.
@@ -96,8 +97,8 @@ export default function SelfCheckScanner() {
                          <CameraView onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]} barcodeScannerSettings={{ barcodeTypes: allowedBarcodes }}>
                               <BarcodeMask edgeColor="#62B1F6" showAnimatedLine={false} />
                               <View style={styles.buttonContainer}>
-                                   <Button variant="outline" colorScheme="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: '#ffffff' }}>
-                                       <ButtonText style={{ color: '#ffffff' }}>Cancel</ButtonText>
+                                   <Button variant="outline" colorScheme="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: TOKENS.primitives.singletons.white }}>
+                                       <ButtonText style={{ color: TOKENS.primitives.singletons.white }}>Cancel</ButtonText>
                                    </Button>
                                    {scanned && (
                                        <Button onPress={() => setScanned(false)} className="ml-4">

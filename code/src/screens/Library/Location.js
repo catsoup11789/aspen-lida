@@ -7,7 +7,7 @@ import React from 'react';
 import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
-import { Divider } from '@/components/ui/divider';
+import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -41,7 +41,7 @@ export const Location = () => {
      const language = useActiveLanguage();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { colorMode, textColor } = useTheme();
+     const { textColor } = useTheme();
      const showSystemMessage = () => {
           if (_.isArray(systemMessages)) {
                return systemMessages.map((obj, index) => {
@@ -130,7 +130,7 @@ export const Location = () => {
                                    />
                               </>
                          ) : null}
-                         <Box style={{ marginHorizontal: 16, zIndex: 200 }}>
+                         <Box style={{ zIndex: 200 }} className="mx-4">
                               {showSystemMessage()}
                               {library.displayName !== location.displayName ? <Heading className="mb-2">{location.displayName}</Heading> : <Heading className="mb-1">{library.displayName}</Heading>}
                               {location.address ? <Text>{location.address}</Text> : null}

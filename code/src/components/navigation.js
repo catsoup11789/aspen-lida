@@ -44,7 +44,7 @@ try {
 
 import { AuthContext } from '../context/AuthContext';
 import { useActiveLanguage } from '../hooks/useLanguageData';
-import { useTheme } from '../themes/theme';
+import { useTheme, TOKENS } from '../themes/theme';
 import { Spinner } from '@/components/ui/spinner';
 export { AuthContext };
 
@@ -343,18 +343,18 @@ function AppContent({state}) {
           ...DefaultTheme,
           colors: {
                ...DefaultTheme.colors,
-               background: '#f3f4f6', //coolGray.100
-               card: '#f9fafb', //coolGray.50
-               text: '#1c1917', //coolGray.900
+               background: TOKENS.semanticTokens.light.canvas,
+               card: TOKENS.semanticTokens.light.surface,
+               text: TOKENS.semanticTokens.light.textMain,
           },
      };
      const darkTheme = {
           ...DarkTheme,
           colors: {
                ...DarkTheme.colors,
-               background: '#111827', //coolGray.900
-               card: '#1f2937', //coolGray.800
-               text: '#f3f4f6', //coolGray.100
+               background: TOKENS.semanticTokens.dark.canvas,
+               card: TOKENS.semanticTokens.dark.surface,
+               text: TOKENS.semanticTokens.dark.textMain,
           },
      };
 

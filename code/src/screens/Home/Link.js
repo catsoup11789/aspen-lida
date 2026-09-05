@@ -43,7 +43,8 @@ const HomeScreenLinkGrid = ({links}) => {
                     return (
                          <Box
                              key={item.id || index}
-                             style={{ width, alignItems: 'center', marginBottom: 16, paddingHorizontal: 8 }}
+                             style={{ width, alignItems: 'center' }}
+                             className="mb-4 px-2"
                          >
                               <Link link={item} />
                          </Box>
@@ -61,14 +62,14 @@ const HomeScreenLinkGrid = ({links}) => {
  * @constructor
  */
 const Link = ({link}) => {
-     const { colorMode, resolvedUiColors } = useTheme();
+     const { neutrals } = useTheme();
      const library = useLibrary();
      const language = useActiveLanguage();
      const { updateCurrentIndex } = React.useContext(SearchContext);
 
      const navigation = useNavigation();
 
-     const iconColor = colorMode === 'light' ? '#4b5563' : '#d1d5db';
+     const iconColor = neutrals.iconMuted;
 
      const handleOpenLink = () => {
           // Open external link in web browser based on link.linkUrl
@@ -167,12 +168,13 @@ const Link = ({link}) => {
      const imgSource = link?.typeOfIcon === 'uploadIcon' && link?.uploadIcon ? library.baseUrl + '/files/original/' + link.uploadIcon : null;
 
      return (
-          <Pressable onPress={(link?.linkType !== 'deepLink') ? handleOpenLink : handleOpenScreen} style={{ alignItems: 'center', justifyContent: 'center', padding: 8, width: '100%', borderRadius: 12, backgroundColor: resolvedUiColors.surface }}>
+          <Pressable onPress={(link?.linkType !== 'deepLink') ? handleOpenLink : handleOpenScreen} style={{ alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: neutrals.surface }} className="p-2 rounded-xl">
                <VStack className="items-center justify-center min-h-25">
                     {link?.typeOfIcon === 'uploadIcon' && imgSource ? (
                          <Image
                               source={{ uri: imgSource }}
-                              style={{ width: 52.0, height: 52.0, marginBottom: 8.0 }}
+                              style={{ width: 52.0, height: 52.0 }}
+                              className="mb-2"
                               contentFit="contain"
                          />
                     ) : (

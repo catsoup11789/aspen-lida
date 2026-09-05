@@ -3,9 +3,7 @@ import React, { useState, useRef } from 'react';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { InputSlot } from '@/components/ui/input';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { useUserState, useUpdateUserProfile, useUpdateAccounts, useUpdateViewers } from '@/src/hooks/useUserData';
 import { addLinkedAccount, refreshProfile, getLinkedAccounts, getViewerAccounts } from '@/src/util/api/user';
@@ -16,7 +14,7 @@ import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel, ThemedInputSlot as InputSlot } from '@/src/components/themed/ThemedFormControls';
 /**
  * AddLinkedAccount component that allows users to add a linked account. It displays a button that opens a modal where users can input the username and password of the account they want to link. The component handles API calls to add the linked account and refreshes the linked accounts, viewer accounts, and user profile upon successful completion.
  * @returns {React.JSX.Element}
@@ -30,7 +28,7 @@ const AddLinkedAccount = () => {
      const updateUserProfile = useUpdateUserProfile();
      const updateAccounts = useUpdateAccounts();
      const updateViewers = useUpdateViewers();
-     const { resolvedUiColors } = useTheme();
+     const { neutrals } = useTheme();
      const [loading, setLoading] = useState(false);
      const [showModal, setShowModal] = useState(false);
      const [showPassword, setShowPassword] = useState(false);
@@ -38,7 +36,7 @@ const AddLinkedAccount = () => {
      const [password, setPassword] = useState('');
 
      const passwordRef = useRef();
-     const inputBorderColor = resolvedUiColors.border;
+     const inputBorderColor = neutrals.border;
 
      const toggle = () => {
           setShowModal(!showModal);
@@ -77,14 +75,14 @@ const AddLinkedAccount = () => {
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'linked_account_to_manage')}</Heading>
                               <ModalCloseButton onPress={toggle}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
                               <FormControl>
                                    <FormControlLabel><FormControlLabelText>{getTermFromDictionary(language, 'username')}</FormControlLabelText></FormControlLabel>
-                                   <ThemedInput style={{ borderColor: inputBorderColor }}>
-                                        <ThemedInputField onChangeText={(text) => setNewUser(text)}
+                                   <Input style={{ borderColor: inputBorderColor }}>
+                                        <InputField onChangeText={(text) => setNewUser(text)}
                                                       autoCorrect={false}
                                                       autoCapitalize="none"
                                                       id="username"
@@ -95,21 +93,21 @@ const AddLinkedAccount = () => {
                                                           passwordRef.current.focus();
                                                       }}
                                                      value={newUser}/>
-                                   </ThemedInput>
+                                   </Input>
                               </FormControl>
                               <FormControl className="mt-3">
                                    <FormControlLabel>
                                         <FormControlLabelText>{getTermFromDictionary(language, 'password')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <ThemedInput style={{ borderColor: inputBorderColor }}>
-                                        <ThemedInputField onChangeText={(text) => setPassword(text)} value={password} autoCorrect={false}
+                                   <Input style={{ borderColor: inputBorderColor }}>
+                                        <InputField onChangeText={(text) => setPassword(text)} value={password} autoCorrect={false}
                                                     autoCapitalize="none" id="password" returnKeyType="next"
                                                     textContentType="password" required type={showPassword ? 'text' : 'password'} ref={passwordRef}
                                         />
                                         <InputSlot onPress={() => setShowPassword(!showPassword)}>
                                              <MaterialCommunityIcons name={showPassword ? 'eye' : 'eye-off'} size={20} className="mr-2" />
                                         </InputSlot>
-                                   </ThemedInput>
+                                   </Input>
                               </FormControl>
                          </ModalBody>
                          <ModalFooter>

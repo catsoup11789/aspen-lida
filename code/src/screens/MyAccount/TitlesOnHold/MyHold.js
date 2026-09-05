@@ -2,8 +2,7 @@ import { ThemedMaterialCommunityIcons as MaterialCommunityIcons, ThemedMaterialI
 import { Image } from 'expo-image';
 import _ from 'lodash';
 import React from 'react';
-import { Actionsheet, ActionsheetBackdrop, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper, ActionsheetIcon, ActionsheetItem } from '@/components/ui/actionsheet';
-import { ThemedActionsheetContent as ActionsheetContent, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
+import { ThemedActionsheet as Actionsheet, ThemedActionsheetBackdrop as ActionsheetBackdrop, ThemedActionsheetDragIndicator as ActionsheetDragIndicator, ThemedActionsheetDragIndicatorWrapper as ActionsheetDragIndicatorWrapper, ThemedActionsheetItem as ActionsheetItem, ThemedActionsheetContent as ActionsheetContent, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator } from '../../../components/themed/ThemedCheckbox';
@@ -46,12 +45,12 @@ export const MyHold = (props) => {
      const library = useLibrary();
      const { updateHolds } = React.useContext(HoldsContext);
      const language = useActiveLanguage();
-     const { uiColors, resolvedUiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { neutralPairs, neutrals, brand, colorMode, textColor } = useTheme();
      const [cancelling, startCancelling] = React.useState(false);
      const [checkingOut, startCheckingOut] = React.useState(false);
      const [thawing, startThawing] = React.useState(false);
      const [freezing, startFreezing] = React.useState(false);
-     const separatorColor = colorMode === 'light' ? 'transparent' : uiColors.iconMuted.dark;
+     const separatorColor = colorMode === 'light' ? 'transparent' : neutralPairs.iconMuted.dark;
      let label, method, icon, canCancel;
      const [usesHoldPosition, setUsesHoldPosition] = React.useState(false);
      const [holdPosition, setHoldPosition] = React.useState(null);
@@ -148,7 +147,8 @@ export const MyHold = (props) => {
                              placeholder={blurhash}
                              transition={1000}
                              contentFit="cover"
-                             style={{ width: 100.0, height: 150.0, borderRadius: 8 }}
+                             className="rounded-lg"
+                             style={{ width: 100.0, height: 150.0 }}
                          />
                          {(hold.allowFreezeHolds || canCancel) && allowLinkedAccountAction && section === 'Pending' ? (
                               <Center>
@@ -186,9 +186,7 @@ export const MyHold = (props) => {
                               openGroupedWork(hold.groupedWorkId, hold.title);
                               handleClose();
                          }}>
-                         <ActionsheetIcon>
-                             <MaterialIcons name="search" size={18} className="mr-1" />
-                         </ActionsheetIcon>
+                         <MaterialIcons name="search" size={18} className="mr-1" />
                          <ActionsheetItemText>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                     </ActionsheetItem>
                );
@@ -212,9 +210,7 @@ export const MyHold = (props) => {
                                    startCheckingOut(false);
                               });
                          }}>
-                         <ActionsheetIcon>
-                             <MaterialIcons name="book" size={18} className="mr-1" />
-                         </ActionsheetIcon>
+                         <MaterialIcons name="book" size={18} className="mr-1" />
                          <ActionsheetItemText>{getTermFromDictionary(language, 'checkout_title')}</ActionsheetItemText>
                     </ActionsheetItem>
                );
@@ -247,9 +243,7 @@ export const MyHold = (props) => {
                                    startCancelling(false);
                               });
                          }}>
-                         <ActionsheetIcon>
-                             <MaterialIcons name="cancel" size={18} className="mr-1" />
-                         </ActionsheetIcon>
+                         <MaterialIcons name="cancel" size={18} className="mr-1" />
                          <ActionsheetItemText>{label}</ActionsheetItemText>
                     </ActionsheetItem>
                );
@@ -279,9 +273,7 @@ export const MyHold = (props) => {
                                         startThawing(false);
                                    });
                               }}>
-                              <ActionsheetIcon>
-                                   <MaterialCommunityIcons name={icon} size={18} className="mr-1" />
-                              </ActionsheetIcon>
+                              <MaterialCommunityIcons name={icon} size={18} className="mr-1" />
                               <ActionsheetItemText>{label}</ActionsheetItemText>
                          </ActionsheetItem>
                     );
@@ -301,9 +293,7 @@ export const MyHold = (props) => {
                                              startFreezing(false);
                                         });
                                    }}>
-                                   <ActionsheetIcon>
-                                       <MaterialCommunityIcons name={icon} size={18} className="mr-1" />
-                                   </ActionsheetIcon>
+                                   <MaterialCommunityIcons name={icon} size={18} className="mr-1" />
                                    <ActionsheetItemText>{label}</ActionsheetItemText>
                               </ActionsheetItem>
                          );
@@ -316,7 +306,7 @@ export const MyHold = (props) => {
 
      const createUpdatePickupLocationAction = (canUpdate, available) => {
           if (canUpdate && !available) {
-               return <SelectPickupLocation isOpen={showActionsheet} language={language} libraryContext={library} holdsContext={updateHolds} locations={pickupLocations} sublocations={sublocations} onClose={handleClose} userId={hold.userId} currentPickupId={hold.pickupLocationId} holdId={hold.cancelId} resetGroup={resetGroup} textColor={textColor} colorMode={colorMode} uiColors={uiColors} runtimeColors={runtimeColors} />;
+               return <SelectPickupLocation isOpen={showActionsheet} language={language} libraryContext={library} holdsContext={updateHolds} locations={pickupLocations} sublocations={sublocations} onClose={handleClose} userId={hold.userId} currentPickupId={hold.pickupLocationId} holdId={hold.cancelId} resetGroup={resetGroup} textColor={textColor} colorMode={colorMode} neutralPairs={neutralPairs} brand={brand} />;
           } else {
                return null;
           }
@@ -324,7 +314,7 @@ export const MyHold = (props) => {
 
      return (
           <>
-               <Pressable onPress={handleOpen} style={{ borderBottomWidth: 1, borderColor: separatorColor, paddingLeft: 16, paddingRight: 80, paddingVertical: 8 }}>
+               <Pressable onPress={handleOpen} className="pl-4 py-2" style={{ borderBottomWidth: 1, borderColor: separatorColor, paddingRight: 80 }}>
                     <HStack space="sm" className="max-w-[95%]">
                          {initializeLeftColumn()}
                          <VStack>
@@ -372,7 +362,7 @@ export const ManageSelectedHolds = (props) => {
      const language = useActiveLanguage();
      const library = useLibrary();
      const { updateHolds } = React.useContext(HoldsContext);
-     const { resolvedUiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { neutrals, brand, colorMode, textColor } = useTheme();
 
      const [showActionsheet, setShowActionsheet] = React.useState(false)
      const handleOpen = () => setShowActionsheet(true);
@@ -537,7 +527,7 @@ export const ManageAllHolds = (props) => {
      const language = useActiveLanguage();
      const { holds, updateHolds } = React.useContext(HoldsContext);
      const library = useLibrary();
-     const { resolvedUiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { neutrals, brand, colorMode, textColor } = useTheme();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
 

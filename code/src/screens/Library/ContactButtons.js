@@ -23,10 +23,10 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 const ContactButtons = (data) => {
      const location = data.data;
      const language = useActiveLanguage();
-     const { uiColors, textColor } = useTheme();
+     const { neutralPairs, textColor } = useTheme();
 
-     const backgroundColor = useColorModeValue(uiColors.surface.light, uiColors.surface.dark);
-     const iconBorderColor = useColorModeValue(uiColors.icon.light, uiColors.surface.light);
+     const backgroundColor = useColorModeValue(neutralPairs.surface.light, neutralPairs.surface.dark);
+     const iconBorderColor = useColorModeValue(neutralPairs.icon.light, neutralPairs.surface.light);
 
      const callLibrary = () => {
           /* location.phone */

@@ -19,7 +19,7 @@ import { GetLoginForm } from './LoginForm';
 import { ResetPassword } from './ResetPassword';
 import { SelectYourLibrary } from './SelectYourLibrary';
 import { SplashScreen } from './Splash';
-import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
+import { useTheme, TOKENS } from '../../themes/theme';
 import { APIErrorLog } from '../MyAccount/Settings/Logs/APIErrorLog';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { logDebugMessage, logInfoMessage, getErrorMessage } from '../../util/logging';
@@ -68,11 +68,11 @@ export const LoginScreen = () => {
      const [showApiErrorModal, setShowApiErrorModal] = React.useState(false);
      const logoTapCountRef = React.useRef(0);
      const logoTapTimerRef = React.useRef(null);
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { neutralPairs, brand, colorMode, textColor } = useTheme();
      const surfaceBg =
           colorMode === 'light'
-               ? uiColors?.surface?.light ?? UI_COLOR_FALLBACKS.surface.light
-               : uiColors?.surface?.dark ?? UI_COLOR_FALLBACKS.surface.dark;
+               ? neutralPairs?.surface?.light ?? TOKENS.semanticTokens.light.surface
+               : neutralPairs?.surface?.dark ?? TOKENS.semanticTokens.dark.surface;
 
      let isCommunity = true;
      if (!GLOBALS.slug.startsWith('aspen-lida') || GLOBALS.slug === 'aspen-lida-bws') {
@@ -273,7 +273,7 @@ export const LoginScreen = () => {
                          ) : null}
                          {isCommunity && Platform.OS !== 'android' ? (
                               <Button colorScheme="tertiary" className="mt-5" size="xs" variant="link">
-                                   <MaterialIcons name="near-me" size={18} color={runtimeColors.tertiary[500]} className="mr-1" />
+                                   <MaterialIcons name="near-me" size={18} color={brand.tertiary[500]} className="mr-1" />
                                    <ButtonText>{getTermFromDictionary('en', 'reset_geolocation')}</ButtonText>
                               </Button>
                          ) : null}
@@ -290,12 +290,12 @@ export const LoginScreen = () => {
                     </KeyboardAvoidingView>
                     <Modal isOpen={showApiErrorModal} onClose={() => setShowApiErrorModal(false)}>
                          <ModalBackdrop />
-                         <ModalContent style={{ maxHeight: '75%', width: '95%', alignSelf: 'center', borderRadius: 12, backgroundColor: surfaceBg }}>
+                         <ModalContent className="rounded-xl" style={{ maxHeight: '75%', width: '95%', alignSelf: 'center', backgroundColor: surfaceBg }}>
                               <ModalHeader></ModalHeader>
                               <ModalBody className="px-4">
-                                   <APIErrorLog uiColors={uiColors} colorMode={colorMode} textColor={textColor} />
+                                   <APIErrorLog neutralPairs={neutralPairs} colorMode={colorMode} textColor={textColor} />
                               </ModalBody>
-                              <ModalFooter style={{ paddingBottom: Math.max(insets.bottom, 8), paddingTop: 8, paddingHorizontal: 16 }}>
+                              <ModalFooter className="pt-2 px-4" style={{ paddingBottom: Math.max(insets.bottom, 8) }}>
                                    <Button variant="outline" onPress={() => setShowApiErrorModal(false)}>
                                         <ButtonText>Close</ButtonText>
                                    </Button>

@@ -16,11 +16,11 @@ import { GLOBALS } from '../../util/globals';
 import { logDebugMessage, logErrorMessage, logInfoMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { Accordion, AccordionContent, AccordionHeader, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { ThemedAccordion as Accordion, ThemedAccordionContent as AccordionContent, ThemedAccordionHeader as AccordionHeader, ThemedAccordionItem as AccordionItem, ThemedAccordionTrigger as AccordionTrigger } from '@/src/components/themed/ThemedAccordion';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { Divider } from '@/components/ui/divider';
+import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
@@ -28,7 +28,7 @@ import { Pressable } from '@/components/ui/pressable';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
-import { ThemedCloseIcon } from '../../components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon } from '../../components/themed/ThemedFormControls';
 
 /**
  * MoreMenu component that displays a scrollable menu with library information, settings, and additional links. It fetches library menu links from the API and allows users to delete their account if self-registration is enabled. The component also handles modals for delete confirmation and results.
@@ -40,7 +40,7 @@ export const MoreMenu = () => {
      const library = useLibrary();
      const menu = useLibraryMenu();
      const updateMenu = useUpdateMenu();
-     const { runtimeColors, textColor } = useTheme();
+     const { brand, textColor, neutrals } = useTheme();
 
      const { signOut } = React.useContext(AuthContext);
      const hasMenuItems = _.size(menu);
@@ -118,7 +118,7 @@ export const MoreMenu = () => {
                                    {library.catalogRegistrationCapabilities?.enableSelfRegistration === '1' && library.catalogRegistrationCapabilities.enableSelfRegistrationInApp === '1' ? (
                                         <Pressable className="px-2 py-3" onPress={toggleDeleteConfirmationModal}>
                                              <HStack space="sm" className="items-center">
-                                                  <MaterialIcons name="chevron-right" size={20} />
+                                                  <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                                                   <Text className="font-medium">
                                                        {getTermFromDictionary(language, 'delete_account')}
                                                   </Text>
@@ -136,7 +136,7 @@ export const MoreMenu = () => {
                                         {getTermFromDictionary(language, 'delete_account')}
                                    </Heading>
                                    <ModalCloseButton onPress={toggleDeleteConfirmationModal}>
-                                        <ThemedCloseIcon />
+                                        <CloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>
                               <ModalBody>
@@ -171,7 +171,7 @@ export const MoreMenu = () => {
                                         {getTermFromDictionary(language, 'delete_account')}
                                    </Heading>
                                    <ModalCloseButton onPress={signOut}>
-                                        <ThemedCloseIcon />
+                                        <CloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>
                               <ModalBody>{deleteResults?.message ? <Text>{deleteResults.message}</Text> : <Text>{getTermFromDictionary(language, 'error_deleting_account')}</Text>}</ModalBody>
@@ -203,7 +203,7 @@ const MyLibrary = () => {
      const location = useLibraryLocation();
      const language = useActiveLanguage();
 
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
 
      let hoursLabel = '';
      if (location?.hours) {
@@ -240,20 +240,20 @@ const MyLibrary = () => {
      }
 
      return (
-          <Box style={{ margin: 16, backgroundColor: runtimeColors.primary[500], padding: 24, borderRadius: 16 }}>
+          <Box style={{ backgroundColor: brand.primary[500], borderRadius: 16 }} className="m-4 p-6">
                <Pressable className="flex-row items-center justify-between" onPress={() => navigate('MyLibrary')}>
                     <VStack>
-                        <Text bold size="md" style={{ color: runtimeColors.primary['500-text'] }}>
+                        <Text bold size="md" style={{ color: brand.primary['500-text'] }}>
                               {library.displayName}
                          </Text>
                          {library.displayName !== location?.displayName ? (
-                             <Text bold style={{ color: runtimeColors.primary['500-text'] }}>
+                             <Text bold style={{ color: brand.primary['500-text'] }}>
                                    {location?.displayName}
                               </Text>
                          ) : null}
-                        {hoursLabel ? <Text style={{ color: runtimeColors.primary['500-text'] }}>{hoursLabel}</Text> : null}
+                        {hoursLabel ? <Text style={{ color: brand.primary['500-text'] }}>{hoursLabel}</Text> : null}
                     </VStack>
-                    <MaterialIcons name="chevron-right" size={20} color={runtimeColors.primary['500-text']} />
+                    <MaterialIcons name="chevron-right" size={20} color={brand.primary['500-text']} />
                </Pressable>
           </Box>
      );
@@ -267,13 +267,13 @@ const MyLibrary = () => {
 const ViewAllLocations = () => {
      const language = useActiveLanguage();
      const locations = useAvailableLocations();
-     const { textColor } = useTheme();
+     const { textColor, neutrals } = useTheme();
 
      if (_.size(locations) > 1) {
           return (
                <Pressable className="px-2 py-3" onPress={() => navigate('AllLocations')}>
                     <HStack space="sm" className="items-center">
-                         <MaterialIcons name="chevron-right" size={20} />
+                         <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                          <Text className="font-medium">{getTermFromDictionary(language, 'view_all_locations')}</Text>
                     </HStack>
                </Pressable>
@@ -290,12 +290,12 @@ const ViewAllLocations = () => {
  */
 const Settings = () => {
      const language = useActiveLanguage();
-     const { textColor } = useTheme();
+     const { textColor, neutrals } = useTheme();
 
      return (
           <Pressable className="px-2 py-3" onPress={() => navigate('MyPreferences')}>
                <HStack space="sm" className="items-center">
-                    <MaterialIcons name="chevron-right" size={20} />
+                    <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     <Text className="font-medium">{getTermFromDictionary(language, 'preferences')}</Text>
                </HStack>
           </Pressable>
@@ -311,8 +311,8 @@ const PrivacyPolicy = () => {
      const language = useActiveLanguage();
      const appSettings = useAppSettings();
 
-     const { textColor, resolvedUiColors } = useTheme();
-     const backgroundColor = resolvedUiColors.surface;
+     const { textColor, neutrals } = useTheme();
+     const backgroundColor = neutrals.surface;
 
      const browserParams = {
           enableDefaultShareMenuItem: false,
@@ -364,7 +364,7 @@ const PrivacyPolicy = () => {
      return (
           <Pressable className="px-2 py-3" onPress={() => openURL()}>
                <HStack space="sm" className="items-center">
-                    <MaterialIcons name="chevron-right" size={20} />
+                    <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     <Text className="font-medium">{getTermFromDictionary(language, 'privacy_policy')}</Text>
                </HStack>
           </Pressable>
@@ -387,8 +387,8 @@ const MenuLink = (payload) => {
      let categoryLabel = _.sample(categories);
      categoryLabel = categoryLabel.category;
 
-     const { textColor, uiColors, resolvedUiColors } = useTheme();
-     const backgroundColor = resolvedUiColors.surface;
+     const { textColor, neutralPairs, neutrals } = useTheme();
+     const backgroundColor = neutrals.surface;
 
      const [expanded, setExpanded] = React.useState(false);
 
@@ -475,7 +475,7 @@ const MenuLink = (payload) => {
                                                        as={MaterialIcons}
                                                        name={isExpanded ? 'expand-more' : 'chevron-right'}
                                                        size="lg"
-                                                       style={{ color: textColor }}
+                                                       style={{ color: neutrals.actionableIndicator }}
                                                   />
                                                   <VStack className="w-full">
                                                        <Text className="font-medium">
@@ -493,14 +493,15 @@ const MenuLink = (payload) => {
                                              <Pressable
                                                   key={index}
                                                   onPress={() => openURL(item.url)}
-                                                  style={{ backgroundColor: 'transparent', borderBottomWidth: 1, borderBottomColor: uiColors.border.light, paddingVertical: 8 }}
+                                                  style={{ backgroundColor: 'transparent', borderBottomWidth: 1, borderBottomColor: neutralPairs.border.light }}
+                                                  className="py-2"
                                              >
                                                   <HStack space="sm" className="items-center ml-4">
                                                        <Icon
                                                             as={MaterialIcons}
                                                             name="chevron-right"
                                                             size="lg"
-                                                            style={{ color: textColor }}
+                                                            style={{ color: neutrals.actionableIndicator }}
                                                        />
                                                        <VStack className="w-full">
                                                             <Text className="font-medium">
@@ -524,7 +525,7 @@ const MenuLink = (payload) => {
                     return (
                          <Pressable key={index} className="px-2 py-3 rounded-lg" onPress={() => openURL(item.url)}>
                              <HStack space="sm" className="items-center">
-                                  <MaterialIcons name="chevron-right" size={20} />
+                                  <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                                   <VStack className="w-full">
                                        <Text className="font-medium">{item.linkText}</Text>
                                    </VStack>

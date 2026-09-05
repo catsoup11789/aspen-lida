@@ -21,7 +21,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
-import { Divider } from '@/components/ui/divider';
+import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -44,9 +44,9 @@ export const MyLibrary = () => {
      const language = useActiveLanguage();
      const queryClient = useQueryClient();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { colorMode } = useTheme();
+     const { neutrals } = useTheme();
 
-     const bgColor = colorMode === 'light' ? '#f5f5f4' : '#111827';
+     const bgColor = neutrals.canvas;
 
      if (isLoadingLocation || !location) {
           return <LoadingSpinner />;
@@ -139,12 +139,12 @@ export const MyLibrary = () => {
                               style={{
                                    width: '100%',
                                    height: 200,
-                                   borderRadius: 4,
                                    zIndex: -1,
                                    position: 'absolute',
                                    left: 0,
                                    top: 0,
                               }}
+                              className="rounded"
                               placeholder={blurhash}
                               transition={1000}
                               contentFit="cover"
@@ -153,7 +153,7 @@ export const MyLibrary = () => {
                     </>
                ) : null}
                <SafeAreaView>
-                    <Box style={{ marginTop: location.locationImage ? 160 : 0, marginHorizontal: 8, zIndex: 200 }}>
+                    <Box style={{ marginTop: location.locationImage ? 160 : 0, zIndex: 200 }} className="mx-2">
                          {showSystemMessage()}
                          {library.displayName !== location.displayName ? <Heading className="mb-2">{location.displayName}</Heading> : <Heading className="mb-4">{library.displayName}</Heading>}
                          {location.address ? <Text>{location.address}</Text> : null}

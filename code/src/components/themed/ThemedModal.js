@@ -1,4 +1,5 @@
 import React from 'react';
+import { useWindowDimensions } from 'react-native';
 import {
      Modal,
      ModalBackdrop,
@@ -8,43 +9,43 @@ import {
      ModalFooter,
      ModalHeader,
 } from '@/components/ui/modal';
-import { useTheme } from '../../themes/theme';
+import { useTheme, TOKENS } from '../../themes/theme';
 
+/** Re-export of gluestack's ModalBackdrop, unmodified. */
 export const ThemedModalBackdrop = ModalBackdrop;
+/** Re-export of gluestack's ModalHeader, unmodified. */
 export const ThemedModalHeader = ModalHeader;
+/** Re-export of gluestack's ModalBody, unmodified. */
 export const ThemedModalBody = ModalBody;
+/** Re-export of gluestack's ModalFooter, unmodified. */
 export const ThemedModalFooter = ModalFooter;
 
-// avoidKeyboard was inconsistently forgotten at many call sites (leaving inputs covered by the
-// keyboard in some modals but not others) -- defaulted on here, still overridable by an explicit
-// avoidKeyboard prop.
+/**
+ * Wraps gluestack's Modal. `avoidKeyboard` defaults to true so the modal repositions to keep
+ * focused inputs visible above the keyboard; pass `avoidKeyboard={false}` to opt out.
+ */
 export const ThemedModal = React.forwardRef(({ avoidKeyboard = true, ...props }, ref) => {
      return <Modal ref={ref} avoidKeyboard={avoidKeyboard} {...props} />;
 });
 
 ThemedModal.displayName = 'ThemedModal';
 
-// maxWidth: '90%' and backgroundColor: surfaceBg (matching the app's theme surface, since the
-// primitive's own className background -- bg-background -- is the same unreliable className-driven
-// color every other Themed* component already works around) were already being passed manually at
-// nearly every call site -- baked in here as defaults, overridable via the caller's own style prop.
-//
-// padding: 16 overrides the primitive's own base className (p-6, i.e. 24px all around) -- new in
-// the v5 primitive; gluestack v1's ModalContent (packages/config/src/theme/ModalContent.ts) had no
-// outer padding at all, relying on Header/Body/Footer's own spacing instead, which is why this read
-// as noticeably excessive padding after the v5 upgrade. 16 keeps some breathing room for call sites
-// that don't add their own horizontal padding around header/body content.
+/**
+ * Wraps gluestack's ModalContent. Caps width at 90% of the screen and height at 80% of the window,
+ * fills the background with the theme's surface color, applies 16px padding on all sides, and
+ * casts an elevated shadow. Pass `style` to override any of these.
+ */
 export const ThemedModalContent = React.forwardRef(({ style, ...props }, ref) => {
-     const { resolvedUiColors } = useTheme();
-     const surfaceBg = resolvedUiColors.surface;
+     const { neutrals } = useTheme();
+     const { height: windowHeight } = useWindowDimensions();
+     const surfaceBg = neutrals.surface;
 
-     return <ModalContent ref={ref} style={[{ maxWidth: '90%', backgroundColor: surfaceBg, padding: 16 }, style]} {...props} />;
+     return <ModalContent ref={ref} style={[{ maxWidth: '90%', maxHeight: windowHeight * 0.8, backgroundColor: surfaceBg, padding: 16, boxShadow: TOKENS.primitives.shadows.elevated }, style]} {...props} />;
 });
 
 ThemedModalContent.displayName = 'ThemedModalContent';
 
-// padding: 12 was already being passed manually at nearly every call site -- baked in here as a
-// default, overridable via the caller's own style prop.
+/** Wraps gluestack's ModalCloseButton, adding 12px of padding by default. Pass `style` to override. */
 export const ThemedModalCloseButton = React.forwardRef(({ style, ...props }, ref) => {
      return <ModalCloseButton ref={ref} style={[{ padding: 12 }, style]} {...props} />;
 });

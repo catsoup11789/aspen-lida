@@ -5,14 +5,15 @@ import * as Notifications from 'expo-notifications';
 import _ from 'lodash';
 import React from 'react';
 import { Box } from '@/components/ui/box';
-import { Divider } from '@/components/ui/divider';
+import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { useUserState, useUpdateExpoToken } from '@/src/hooks/useUserData';
 import { navigate } from '@/src/helpers/RootNavigator';
-import { UseColorMode } from '@/src/themes/theme';
+import { useTheme } from '@/src/themes/theme';
+import { UseColorMode } from '@/src/themes/ThemeSwitcher';
 import { getTermFromDictionary, LanguageSwitcher } from '@/src/translations/TranslationService';
 import { logErrorMessage } from '@/src/util/logging';
 import * as Device from "expo-device";
@@ -25,6 +26,7 @@ import { useLibrary } from '@/src/hooks/useLibrarySystemData';
  * @constructor
  */
 export const PreferencesScreen = () => {
+      const { neutrals } = useTheme();
       const navigation = useNavigation();
       const library = useLibrary();
       const language = useActiveLanguage();
@@ -62,7 +64,7 @@ export const PreferencesScreen = () => {
                          <VStack space="sm">
                               <Pressable className="py-2" onPress={() => navigate('MyPreferences_ManageBrowseCategories', { prevRoute: 'Preferences' })}>
                                    <HStack space="xs" alignItems="center">
-                                        <MaterialIcons name="chevron-right" size={24} />
+                                        <MaterialIcons name="chevron-right" size={24} style={{ color: neutrals.actionableIndicator }} />
                                         <Text className="font-medium">
                                              {getTermFromDictionary(language, 'manage_browse_categories')}
                                         </Text>
@@ -71,7 +73,7 @@ export const PreferencesScreen = () => {
                               {library.allowPickupLocationUpdates ? (
                                    <Pressable className="py-2" onPress={() => navigate('MyPreferences_ManagePickupLocations')}>
                                         <HStack space="xs" alignItems="center">
-                                             <MaterialIcons name="chevron-right" size={24} />
+                                             <MaterialIcons name="chevron-right" size={24} style={{ color: neutrals.actionableIndicator }} />
                                              <Text className="font-medium">
                                                   {getTermFromDictionary(language, 'manage_pickup_locations')}
                                              </Text>
@@ -80,7 +82,7 @@ export const PreferencesScreen = () => {
                               ) : null}
                               <Pressable className="py-2" onPress={() => navigate('PermissionDashboard')}>
                                    <HStack space="xs" alignItems="center">
-                                        <MaterialIcons name="chevron-right" size={24} />
+                                        <MaterialIcons name="chevron-right" size={24} style={{ color: neutrals.actionableIndicator }} />
                                         <Text className="font-medium">
                                              {getTermFromDictionary(language, 'device_permissions')}
                                         </Text>
@@ -88,7 +90,7 @@ export const PreferencesScreen = () => {
                               </Pressable>
                               <Pressable className="py-2" onPress={() => navigate('MyDevice_Support')}>
                                    <HStack space="xs" alignItems="center">
-                                        <MaterialIcons name="chevron-right" size={24} />
+                                        <MaterialIcons name="chevron-right" size={24} style={{ color: neutrals.actionableIndicator }} />
                                         <Text className="font-medium">
                                              {getTermFromDictionary(language, 'support')}
                                         </Text>

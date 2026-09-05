@@ -7,13 +7,11 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import {logWarnMessage} from '@/src/util/logging';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
-import { ActionsheetIcon, ActionsheetItem } from '@/components/ui/actionsheet';
-import { ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '@/src/components/themed/ThemedFormControls';
+import { ThemedActionsheetItem as ActionsheetItem, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 
@@ -27,7 +25,7 @@ export const SelectThawDate = (props) => {
      const { freezingLabel, freezeLabel, label, libraryContext, onClose, freezeId, recordId, source, userId, resetGroup } = props;
      let data = props.data;
      const language = useActiveLanguage();
-     const { colorMode } = useTheme();
+     const { colorMode, neutrals } = useTheme();
      const [loading, setLoading] = React.useState(false);
      const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
      const [showIndefiniteWarning, setShowIndefiniteWarning] = React.useState(false);
@@ -44,7 +42,7 @@ export const SelectThawDate = (props) => {
      const pickerThemeProps = Platform.OS === 'ios'
           ? {
                themeVariant: colorMode === 'dark' ? 'dark' : 'light',
-               textColor: colorMode === 'dark' ? '#ffffff' : undefined,
+               textColor: colorMode === 'dark' ? neutrals.white : undefined,
           }
           : {};
 
@@ -92,9 +90,7 @@ export const SelectThawDate = (props) => {
           <>
                <ActionsheetItem onPress={showDatePicker}>
                     {data ? null : (
-                         <ActionsheetIcon>
-                              <MaterialIcons name="pause" size={18} className="mr-1" />
-                         </ActionsheetIcon>
+                         <MaterialIcons name="pause" size={18} className="mr-1" />
                     )}
                     <ActionsheetItemText>{actionLabel}</ActionsheetItemText>
                </ActionsheetItem>
@@ -109,7 +105,7 @@ export const SelectThawDate = (props) => {
                          <ModalHeader>
                              <Heading>{actionLabel}</Heading>
                              <ModalCloseButton onPress={hideDatePicker}>
-                                  <ThemedCloseIcon />
+                                  <CloseIcon />
                              </ModalCloseButton>
                          </ModalHeader>
 

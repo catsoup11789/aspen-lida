@@ -12,7 +12,7 @@ import { formatLinkedAccounts } from '@/src/util/api/userHelper';
 import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon } from '@/src/components/themed/ThemedFormControls';
 
 /**
  * EnableAccountLinking component that allows users to enable account linking. It displays a button that opens a modal where users can confirm enabling account linking. The component handles API calls to enable account linking and refreshes the linked accounts, viewer accounts, and user profile upon successful completion.
@@ -63,7 +63,7 @@ const EnableAccountLinking = () => {
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'enable_linked_accounts_title')}</Heading>
                               <ModalCloseButton onPress={toggle}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>

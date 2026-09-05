@@ -36,7 +36,7 @@ export const MySavedSearch = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { colorMode, uiColors, textColor } = useTheme();
+     const { colorMode, neutralPairs, textColor } = useTheme();
      const [status, setStatus] = React.useState('loading');
      const [data, setData] = React.useState([]);
 
@@ -103,10 +103,10 @@ const SavedSearch = (data) => {
      const item = data.data;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, uiColors, textColor, resolvedUiColors } = useTheme();
-     const borderColor = resolvedUiColors.border;
-     const surfaceColor = resolvedUiColors.surface;
-     const subtitleColor = colorMode === 'light' ? uiColors.icon.light : uiColors.iconMuted.dark;
+     const { colorMode, neutralPairs, textColor, neutrals } = useTheme();
+     const borderColor = neutrals.border;
+     const surfaceColor = neutrals.surfaceMuted;
+     const subtitleColor = colorMode === 'light' ? neutralPairs.icon.light : neutralPairs.iconMuted.dark;
 
      const imageUrl = library.baseUrl + item.image;
 
@@ -126,7 +126,7 @@ const SavedSearch = (data) => {
      };
 
      return (
-          <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={() => openGroupedWork()}>
+          <Pressable className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor }} onPress={() => openGroupedWork()}>
                <HStack space={3}>
                     <VStack className="max-w-[35%]">
                          {isNew ? (
@@ -141,13 +141,15 @@ const SavedSearch = (data) => {
                          <Image
                               alt={item.title}
                              source={imageUrl}
-                             style={{ width: 100.0, height: 150.0, borderRadius: 8 }}
+                             className="rounded-lg"
+                             style={{ width: 100.0, height: 150.0 }}
                              placeholder={blurhash}
                              transition={1000}
                              contentFit="cover"
                         />
                          <Badge
-                              style={{ marginTop: 4, backgroundColor: surfaceColor }}
+                              className="mt-1"
+                              style={{ backgroundColor: surfaceColor }}
                          >
                               <BadgeText
                                    size="sm"

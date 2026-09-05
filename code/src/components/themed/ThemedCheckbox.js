@@ -1,18 +1,13 @@
 import React from 'react';
 import { Checkbox, CheckboxGroup, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
-// gluestack's own checked-state source of truth (also used internally by its CheckboxIcon
-// visibility wrapper) -- not part of the package's public entry, but it's the only thing that
-// correctly reflects isChecked for EVERY control mode (controlled isChecked, uncontrolled
-// defaultIsChecked, and CheckboxGroup value-membership), unlike a prop-driven context of our own.
+// Reads the checkbox's current checked state, reflecting controlled `isChecked`, uncontrolled
+// `defaultIsChecked`, and CheckboxGroup value-membership alike.
 import { useCheckbox } from '@gluestack-ui/core/lib/esm/checkbox/creator/CheckboxProvider';
 import { ThemedMaterialIcons as MaterialIcons } from './ThemedMaterialIcons';
 import { useTheme } from '../../themes/theme';
 
-// Checkbox's underlying gluestack v5 primitive has no size variant at all -- the indicator,
-// icon, and label are all fixed (16px / 14px / text-sm) regardless of the size prop. Restoring
-// gluestack v1's actual per-size values here (v1.0.48, packages/config/src/theme/Checkbox.ts
-// + CheckboxIndicator.ts) via a local context, since the underlying primitive doesn't
-// propagate size through context the way Button/Radio do.
+// Per-size Tailwind classes for the indicator box, its check icon, and the label text,
+// keyed by the `size` prop ('sm' | 'md' | 'lg').
 const CHECKBOX_SIZE_STYLES = {
      sm: { indicator: 'w-4 h-4 border-2', icon: 'h-3 w-3', label: 'text-sm' },
      md: { indicator: 'w-5 h-5 border-2', icon: 'h-4 w-4', label: 'text-base' },
@@ -25,6 +20,10 @@ function resolveCheckboxSizeStyle(size) {
 
 const CheckboxSizeContext = React.createContext('sm');
 
+/**
+ * Wraps gluestack's Checkbox. `size` is `'sm'` (default), `'md'`, or `'lg'`, provided
+ * to descendant ThemedCheckboxIndicator/ThemedCheckboxIcon/ThemedCheckboxLabel via context.
+ */
 export const ThemedCheckbox = React.forwardRef(({ size = 'sm', isChecked, ...props }, ref) => {
      return (
           <CheckboxSizeContext.Provider value={size}>
@@ -33,38 +32,46 @@ export const ThemedCheckbox = React.forwardRef(({ size = 'sm', isChecked, ...pro
      );
 });
 
-// gluestack's own checkboxIndicatorStyle bakes in color classes at two levels: an unconditional
-// border-input/dark:bg-input/30 (governs the unchecked state) and data-[checked=true]:bg-primary/
-// border-primary (governs checked) -- both use ITS generic theme --primary/--input, not ours, and
-// both win over our inline checkedStyle below. Neutralizing all of them via matching-shape
-// transparent classes so our style-based runtimeColors is the only thing actually setting color.
+// Classes that force the indicator's border/background to transparent in both checked and
+// unchecked states, so the brand colors applied via `style` below are what's actually visible.
 const CHECKED_COLOR_NEUTRALIZER =
      'border-transparent dark:bg-transparent ' +
      'data-[checked=true]:bg-transparent data-[checked=true]:border-transparent dark:data-[checked=true]:bg-transparent dark:data-[checked=true]:border-transparent';
 
+/**
+ * Wraps gluestack's CheckboxIndicator. Sizes itself from the enclosing ThemedCheckbox's
+ * `size`, and colors its border/background from the theme's brand primary color
+ * (filled when checked, outlined when unchecked).
+ */
 export const ThemedCheckboxIndicator = React.forwardRef(({ className, style, ...props }, ref) => {
      const size = React.useContext(CheckboxSizeContext);
      const { isChecked } = useCheckbox('CheckboxContext');
      const sizeStyle = resolveCheckboxSizeStyle(size);
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
      const checkedStyle = isChecked
-          ? { borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] }
-          : { borderColor: runtimeColors.primary[500] };
+          ? { borderColor: brand.primary[500], backgroundColor: brand.primary[500] }
+          : { borderColor: brand.primary[500] };
 
      return <CheckboxIndicator ref={ref} className={[sizeStyle.indicator, CHECKED_COLOR_NEUTRALIZER, className].filter(Boolean).join(' ')} style={[{ marginRight: 8 }, checkedStyle, style]} {...props} />;
 });
 
-// Same issue as the indicator -- checkboxIconStyle bakes in text-primary-foreground (gluestack's
-// generic theme color, not ours), so it's neutralized the same way and the real color comes
-// entirely from style below.
+/**
+ * Wraps gluestack's CheckboxIcon. Renders MaterialIcons' "check" glyph by default
+ * (override via `as`/`name`), sized from the enclosing ThemedCheckbox's `size` and
+ * colored from the theme's brand primary color.
+ */
 export const ThemedCheckboxIcon = React.forwardRef(({ as, name, className, style, ...props }, ref) => {
      const size = React.useContext(CheckboxSizeContext);
      const sizeStyle = resolveCheckboxSizeStyle(size);
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
 
-     return <CheckboxIcon ref={ref} as={as ?? MaterialIcons} name={name ?? 'check'} className={[sizeStyle.icon, 'text-transparent', className].filter(Boolean).join(' ')} style={[{ color: runtimeColors.primary['500-text'] }, style]} {...props} />;
+     return <CheckboxIcon ref={ref} as={as ?? MaterialIcons} name={name ?? 'check'} className={[sizeStyle.icon, 'text-transparent', className].filter(Boolean).join(' ')} style={[{ color: brand.primary['500-text'] }, style]} {...props} />;
 });
 
+/**
+ * Wraps gluestack's CheckboxLabel. Sizes its text from the enclosing ThemedCheckbox's
+ * `size` and colors it with the theme's default text color.
+ */
 export const ThemedCheckboxLabel = React.forwardRef(({ className, style, ...props }, ref) => {
      const size = React.useContext(CheckboxSizeContext);
      const sizeStyle = resolveCheckboxSizeStyle(size);
@@ -73,6 +80,7 @@ export const ThemedCheckboxLabel = React.forwardRef(({ className, style, ...prop
      return <CheckboxLabel ref={ref} className={[sizeStyle.label, className].filter(Boolean).join(' ')} style={[{ color: textColor }, style]} {...props} />;
 });
 
+/** Plain re-export of gluestack's CheckboxGroup with no theming applied. */
 export const ThemedCheckboxGroup = CheckboxGroup;
 
 ThemedCheckbox.displayName = 'ThemedCheckbox';

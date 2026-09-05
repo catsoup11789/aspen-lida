@@ -19,9 +19,9 @@ import { useTheme } from '../../themes/theme';
  * @constructor
  */
 export const ModalHeader = ({ title, onBack, onClose, showBack = true, showClose = true, centerTitle = true }) => {
-     const { runtimeColors } = useTheme();
-     const iconColor = runtimeColors.primary['500-text'];
-     const bg = runtimeColors.primary[500];
+     const { brand } = useTheme();
+     const iconColor = brand.primary['500-text'];
+     const bg = brand.primary[500];
 
      return (
           <Box className="px-3 py-3" style={{ backgroundColor: bg }}>

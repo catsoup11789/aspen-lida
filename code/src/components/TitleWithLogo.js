@@ -11,7 +11,7 @@ import { Pressable } from '@/components/ui/pressable';
 import { ThemedMaterialIcons as MaterialIcons } from './themed/ThemedMaterialIcons';
 import { decodeHTML, isValidUrl } from '../helpers/helpers';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from '../themes/theme';
+import { useTheme, TOKENS } from '../themes/theme';
 
 /**
  * Resolves the library's logo header bar (logo/backgroundColor/alignment), preferring the active
@@ -24,7 +24,7 @@ import { useTheme } from '../themes/theme';
 function resolveHeaderLogoBar({ header, library, width }) {
      if (header?.logo) {
           const localBrandingLogoUri = isValidUrl(header.logo) ? header.logo : library.baseUrl + '/files/original/' + header.logo;
-          const backgroundColor = header.backgroundColor ?? '#FFFFFF';
+          const backgroundColor = header.backgroundColor ?? TOKENS.primitives.singletons.white;
           let headerLogoAlignment = 'center';
           if (header.alignment == 1) {
                headerLogoAlignment = 'flex-start';
@@ -40,7 +40,7 @@ function resolveHeaderLogoBar({ header, library, width }) {
           return {
                backgroundColor,
                content: (
-                    <HStack style={{ backgroundColor, justifyContent: headerLogoAlignment, flexDirection: 'row', height: dims.height + 10, paddingTop: 4, paddingBottom: 4 }}>
+                    <HStack className="pt-1 pb-1" style={{ backgroundColor, justifyContent: headerLogoAlignment, flexDirection: 'row', height: dims.height + 10 }}>
                               <Image source={localBrandingLogoUri} alt={library.displayName ?? ''} contentFit='contain' style={{ width: dims.width, height: dims.height }} />
                     </HStack>
                ),
@@ -51,7 +51,7 @@ function resolveHeaderLogoBar({ header, library, width }) {
           const localBrandingLogoUri = library.headerLogoApp;
 
           //Assume an image that is 1536 x 200
-          let backgroundColor = '#FFFFFF';
+          let backgroundColor = TOKENS.primitives.singletons.white;
           if (library.headerLogoBackgroundColorApp !== undefined) {
                backgroundColor = library.headerLogoBackgroundColorApp;
           }
@@ -77,7 +77,7 @@ function resolveHeaderLogoBar({ header, library, width }) {
           return {
                backgroundColor,
                content: (
-                    <HStack style={{ backgroundColor, justifyContent: headerLogoAlignment, flexDirection: 'row', height: scaledImageHeight, paddingTop: 4, paddingBottom: 4 }}>
+                    <HStack className="pt-1 pb-1" style={{ backgroundColor, justifyContent: headerLogoAlignment, flexDirection: 'row', height: scaledImageHeight }}>
                               <Image source={localBrandingLogoUri} alt={library.displayName ?? ''} contentFit='contain' style={{ width: scaledImageWidth, height: scaledImageHeight }} />
                     </HStack>
                ),
@@ -88,9 +88,9 @@ function resolveHeaderLogoBar({ header, library, width }) {
 }
 
 export default function TitleWithLogo(props) {
-     const { runtimeColors, header } = useTheme();
-     const textColor = runtimeColors.primary['500-text'];
-     const bg = runtimeColors.primary[500];
+     const { brand, header } = useTheme();
+     const textColor = brand.primary['500-text'];
+     const bg = brand.primary[500];
      const navigation = useNavigation();
      const hideBack = props.hideBack ?? false;
      const insets = useSafeAreaInsets();
@@ -102,7 +102,7 @@ export default function TitleWithLogo(props) {
      return (
           <VStack style={{ paddingTop: insets.top, paddingLeft: insets.left, paddingRight: insets.right, backgroundColor: safeAreaBackgroundColor }}>
                {headerLogoBar?.content}
-               <HStack style={{ paddingHorizontal: 4, paddingVertical: 8, alignItems: 'center', justifyContent: 'space-between', backgroundColor: bg }}>
+               <HStack className="px-1 py-2" style={{ alignItems: 'center', justifyContent: 'space-between', backgroundColor: bg }}>
                     {navigation.canGoBack() && !hideBack ? (
                        <Pressable onPress={() => navigation.goBack()} className="pl-1">
                             <MaterialIcons name="chevron-left" size={24} style={{ color: textColor }} />
@@ -110,7 +110,7 @@ export default function TitleWithLogo(props) {
                     ) : (
                        <Box className="w-6" />
                     )}
-                    <Text style={{ paddingLeft: 8, flex: 1, textAlign: 'left', color: textColor, fontWeight: 'bold' }} size="lg" numberOfLines={1} ellipsizeMode="tail">{decodeHTML(props.title)}</Text>
+                    <Text className="pl-2" style={{ flex: 1, textAlign: 'left', color: textColor, fontWeight: 'bold' }} size="lg" numberOfLines={1} ellipsizeMode="tail">{decodeHTML(props.title)}</Text>
                     <Box className="w-6" />
                </HStack>
           </VStack>

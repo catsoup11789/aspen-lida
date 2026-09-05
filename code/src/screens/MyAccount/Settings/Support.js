@@ -4,11 +4,11 @@ import _ from 'lodash';
 import React from 'react';
 import { Platform } from 'react-native';
 import { checkVersion } from 'react-native-check-version';
-import { ThemedAlert, ThemedAlertText } from '@/src/components/themed/ThemedAlert';
+import { ThemedAlert as Alert, ThemedAlertText as AlertText } from '@/src/components/themed/ThemedAlert';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { Divider } from '@/components/ui/divider';
+import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -61,8 +61,8 @@ export const SupportScreen = () => {
      const activeLanguage = useActiveLanguage();
      const updateLanguages = useUpdateAvailableLanguages();
      const updateDictionary = useUpdateDictionary();
-     const { uiColors, textColor, colorMode } = useTheme();
-     const mutedTextColor = colorMode === 'light' ? uiColors.icon.light : uiColors.iconMuted.dark;
+     const { neutralPairs, textColor, colorMode } = useTheme();
+     const mutedTextColor = colorMode === 'light' ? neutralPairs.icon.light : neutralPairs.iconMuted.dark;
      const [refreshingCache, setRefreshingCache] = React.useState({});
      const isAnyCacheRefreshing = Object.values(refreshingCache).some(Boolean);
      const [status, setStatus] = React.useState({
@@ -393,19 +393,19 @@ export const SupportScreen = () => {
                     </Center>
                     {status.needsUpdate ? (
                          <Center className="mt-5 px-4">
-                              <ThemedAlert action="warning" variant="solid" className="mb-2 rounded">
+                              <Alert action="warning" variant="solid" className="mb-2 rounded">
                                    <VStack space="sm" className="w-full p-3">
-                                        <ThemedAlertText action="warning" variant="solid" bold className="mr-2">
+                                        <AlertText action="warning" variant="solid" bold className="mr-2">
                                              {status.latest} Is Available
-                                        </ThemedAlertText>
-                                        <ThemedAlertText action="warning" variant="solid" className="mr-2">Please update your app for the latest features and fixes.</ThemedAlertText>
+                                        </AlertText>
+                                        <AlertText action="warning" variant="solid" className="mr-2">Please update your app for the latest features and fixes.</AlertText>
                                         {status.canOpenUrl ? (
                                              <Button colorScheme="secondary" onPress={() => openAppStore()}>
                                                   <ButtonText>Update now</ButtonText>
                                              </Button>
                                         ) : null}
                                    </VStack>
-                              </ThemedAlert>
+                              </Alert>
                          </Center>
                     ) : null}
                </ScrollView>

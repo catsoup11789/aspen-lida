@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { BackIcon } from '../../themes/theme';
+import { BackIcon } from '../../themes/ThemeSwitcher';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import TitleWithLogo from '../../components/TitleWithLogo';
 import { AllLocations } from '../../screens/Library/AllLocations';

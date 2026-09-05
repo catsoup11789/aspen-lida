@@ -57,7 +57,7 @@ export const GroupedWorkScreen = () => {
      const library = useLibrary();
      const userLanguage = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { resolvedUiColors } = useTheme();
+     const { neutrals } = useTheme();
 
      const { status, data, error, isFetching } = useQuery(['groupedWork', id, userLanguage, library.baseUrl], () => getGroupedWork(route.params.id, userLanguage, library.baseUrl));
 
@@ -124,7 +124,7 @@ export const GroupedWorkScreen = () => {
                     loadError(error, '')
                ) : (
                     <ScrollView>
-                         <Box style={{ height: 150, width: '100%', backgroundColor: resolvedUiColors.surface, zIndex: -1, position: 'absolute', left: 0, top: 0 }} />
+                         <Box style={{ height: 150, width: '100%', backgroundColor: neutrals.canvas, zIndex: -1, position: 'absolute', left: 0, top: 0 }} />
                          {_.size(systemMessages) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                          <DisplayGroupedWork data={data.results} initialFormat={data.format} updateFormat={data.format} />
                     </ScrollView>
@@ -168,7 +168,7 @@ const DisplayGroupedWork = (payload) => {
      return (
           <Box className="p-[10px] w-full">
                <Center className="mt-5 w-full">
-                    <Image alt={groupedWork.title} source={groupedWork.cover} style={{ width: 180.0, height: 250.0, borderRadius: 4 }} placeholder={blurhash} transition={1000} contentFit="cover" />
+                    <Image alt={groupedWork.title} source={groupedWork.cover} className="rounded" style={{ width: 180.0, height: 250.0 }} placeholder={blurhash} transition={1000} contentFit="cover" />
                     <Title title={groupedWork.title} />
                     <Author author={groupedWork.author} />
                </Center>
@@ -190,11 +190,10 @@ const DisplayGroupedWork = (payload) => {
  * @constructor
  */
 const Title = ({ title }) => {
-     const { textColor } = useTheme();
      if (title) {
           return (
                <>
-                    <Text bold style={{ lineHeight: 19, paddingTop: 20, textAlign: 'center' }} size="md">
+                    <Text bold className="pt-5" style={{ lineHeight: 19, textAlign: 'center' }} size="md">
                          {title}
                     </Text>
                </>
@@ -213,12 +212,12 @@ const Title = ({ title }) => {
  */
 const Author = ({ author }) => {
      const library = useLibrary();
-     const { uiColors, colorMode } = useTheme();
+     const { neutralPairs, colorMode } = useTheme();
      if (author) {
           return (
                <Button size="sm" variant="link" onPress={() => startSearch(author, 'SearchResults', library.baseUrl)}>
-                    <MaterialIcons name="search" size={16} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} className="mr-1" />
-                    <ButtonText style={{ fontWeight: '400', color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>
+                    <MaterialIcons name="search" size={16} color={colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white} className="mr-1" />
+                    <ButtonText style={{ fontWeight: '400', color: colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white }}>
                          {author}
                     </ButtonText>
                </Button>
@@ -240,8 +239,6 @@ const Format = (data) => {
      const updateFormat = data.updateFormat;
      const isSelectedFormat = isSelected === key;
      const btnStyle = isSelectedFormat ? 'solid' : 'outline';
-     const { uiColors, colorMode } = useTheme();
-     const neutralColor = colorMode === 'light' ? uiColors.text.light : uiColors.white;
 
      return (
           <Button
@@ -263,10 +260,9 @@ const Format = (data) => {
  * @constructor
  */
 const Description = ({ description }) => {
-     const { textColor } = useTheme();
      if (description) {
           return (
-               <Text style={{ marginTop: 20, marginBottom: 20, lineHeight: 21 }} size="sm">
+               <Text className="mt-5 mb-5" style={{ lineHeight: 21 }} size="sm">
                     {decodeHTML(description)}
                </Text>
           );
@@ -284,14 +280,13 @@ const Description = ({ description }) => {
  */
 const Language = ({ language }) => {
      const user_language = useActiveLanguage();
-     const { textColor } = useTheme();
      if (language) {
           return (
                <HStack className="mt-3 mb-1">
                     <Text bold style={{ lineHeight: 15 }} size="xs">
                          {getTermFromDictionary(user_language, 'language')}:
                     </Text>
-                    <Text style={{ lineHeight: 15, marginLeft: 4 }} size="xs">
+                    <Text className="ml-1" style={{ lineHeight: 15 }} size="xs">
                          {' '}
                          {language}
                     </Text>
@@ -312,11 +307,10 @@ const Language = ({ language }) => {
 const Formats = ({ formats }) => {
      const language = useActiveLanguage();
      const { format, updateFormat } = React.useContext(GroupedWorkContext);
-     const { textColor } = useTheme();
      if (formats) {
           return (
                <>
-                    <Text bold style={{ lineHeight: 15, marginTop: 12, marginBottom: 4 }} size="xs">
+                    <Text bold className="mt-3 mb-1" style={{ lineHeight: 15 }} size="xs">
                          {getTermFromDictionary(language, 'format')}:
                     </Text>
                     <ButtonGroup className="flex-row flex-wrap">
@@ -344,12 +338,12 @@ const Formats = ({ formats }) => {
  */
 const BibliographicInformationLink = ({ groupedWorkId }) => {
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
+     const { neutrals } = useTheme();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const library = useLibrary();
-     const backgroundColor = resolvedUiColors.surface;
-     const textColor = resolvedUiColors.text;
+     const backgroundColor = neutrals.surface;
+     const textColor = neutrals.textMain;
 
      let showMoreInfoBtn = false;
      if(library?.showMoreInfoBtn) {

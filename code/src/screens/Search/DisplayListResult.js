@@ -35,7 +35,7 @@ export const DisplayListResult = (props) => {
      const library = useLibrary();
      const queryClient = useQueryClient();
 
-     const { uiColors, resolvedUiColors } = useTheme();
+     const { neutralPairs, neutrals } = useTheme();
 
      let recordType = 'grouped_work';
      if (item.recordtype) {
@@ -62,14 +62,15 @@ export const DisplayListResult = (props) => {
      };
 
      return (
-          <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+          <Pressable className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor: neutrals.border }} onPress={handlePressItem}>
                <HStack space="md">
                     <VStack className="w-25">
                          <Box className="h-[150px]">
                               <Image
                                    alt={item.title_display}
                                    source={imageUrl}
-                                   style={{ width: '100%', height: '100%', borderRadius: 8 }}
+                                   className="rounded-lg"
+                                   style={{ width: '100%', height: '100%' }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -79,8 +80,8 @@ export const DisplayListResult = (props) => {
                               <Center>
                                    <Badge
                                         size="sm"
-                                        style={{ backgroundColor: resolvedUiColors.surface }}>
-                                        <BadgeText style={{ color: resolvedUiColors.iconMuted, fontSize: 10, textAlign: 'center' }}>
+                                        style={{ backgroundColor: neutrals.surfaceMuted }}>
+                                        <BadgeText style={{ color: neutrals.iconMuted, fontSize: 10, textAlign: 'center' }}>
                                             {item.language}
                                        </BadgeText>
                                    </Badge>
@@ -97,7 +98,7 @@ export const DisplayListResult = (props) => {
                                    colorScheme="danger"
                                    size="sm"
                                    variant="ghost">
-                                   <MaterialIcons name="delete" size={18} color={uiColors.danger} className="mr-1" />
+                                   <MaterialIcons name="delete" size={18} color={neutralPairs.danger} className="mr-1" />
                                    <ButtonText>{getTermFromDictionary(language, 'delete')}</ButtonText>
                               </Button>
                          ) : (
@@ -105,7 +106,7 @@ export const DisplayListResult = (props) => {
                          )}
                     </VStack>
                     <VStack className="w-[65%] pt-1">
-                         <Text bold style={{ lineHeight: 17, paddingBottom: 4 }} size="sm">
+                         <Text bold className="pb-1" style={{ lineHeight: 17 }} size="sm">
                               {item.title_display}
                          </Text>
                          {item.author_display ? (

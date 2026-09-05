@@ -26,7 +26,7 @@ export const SearchSourceScreen = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { currentSource, sources, updateCurrentSource, updateIndexes, updateCurrentIndex } = React.useContext(SearchContext);
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
      logDebugMessage('currentSource: ' + currentSource);
 
      const search = async () => {
@@ -64,14 +64,14 @@ export const SearchSourceScreen = () => {
                                        <Pressable key={index} className="p-[2px] py-2" onPress={() => updateSource(index)}>
                                              {currentSource === index ? (
                                                  <HStack space="sm" className="justify-start items-center">
-                                                      <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} />
+                                                      <MaterialIcons name="radio-button-checked" size={20} color={brand.primary[600]} />
                                                       <Text className="ml-2">
                                                             {source.name}
                                                        </Text>
                                                   </HStack>
                                              ) : (
                                                  <HStack space="sm" className="justify-start items-center">
-                                                      <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
+                                                      <MaterialIcons name="radio-button-unchecked" size={20} color={brand.primary[200]} />
                                                       <Text className="ml-2">
                                                             {source.name}
                                                        </Text>

@@ -9,7 +9,7 @@ import { Center } from '@/components/ui/center';
 import { ThemedCheckboxGroup as CheckboxGroup } from '../../components/themed/ThemedCheckbox';
 import { Pressable } from '@/components/ui/pressable';
 import { VStack } from '@/components/ui/vstack';
-import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedInput as Input, ThemedInputField as InputField } from '../../components/themed/ThemedFormControls';
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import { useTheme } from '../../themes/theme';
 import { getTermFromDictionary } from '../../translations/TranslationService';
@@ -46,9 +46,9 @@ export const Facet = ({ route, navigation }) => {
      const [values, setValues] = React.useState([]);
      const [valuesDefault, setValuesDefault] = React.useState([]);
      const [language] = React.useState(route.params?.language ?? 'en');
-     const { resolvedUiColors, textColor } = useTheme();
-     const headerIconColor = resolvedUiColors.icon;
-     const actionBarBackgroundColor = resolvedUiColors.surface;
+     const { neutrals } = useTheme();
+     const headerIconColor = neutrals.actionableIndicator;
+     const actionBarBackgroundColor = neutrals.surface;
 
      const preselectValues = () => {
           let newValues = [];
@@ -156,11 +156,11 @@ export const Facet = ({ route, navigation }) => {
 
      const searchBar = numFacets >= 0 ? (
           <Box className="p-5">
-               <ThemedInput
+               <Input
                     size="lg"
                     variant="outline"
                >
-                    <ThemedInputField
+                    <InputField
                          value={filterByQuery}
                          onChangeText={(text) => setFilterByQuery(text)}
                          autoCorrect={false}
@@ -171,7 +171,7 @@ export const Facet = ({ route, navigation }) => {
                               await filterFacets();
                          }}
                     />
-               </ThemedInput>
+               </Input>
           </Box>
      ) : (
           <Box className="pb-5" />
@@ -249,7 +249,7 @@ export const Facet = ({ route, navigation }) => {
      };
 
      const actionButtons = (
-          <Box style={{ padding: 12, backgroundColor: actionBarBackgroundColor, shadowOpacity: 0.1, shadowRadius: 1 }}>
+          <Box className="p-3" style={{ backgroundColor: actionBarBackgroundColor, shadowOpacity: 0.1, shadowRadius: 1 }}>
                <Center>
                     <ButtonGroup size="lg">
                          <Button colorScheme="primary" variant="link" onPress={resetCluster}>

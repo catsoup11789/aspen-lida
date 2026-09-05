@@ -2,8 +2,7 @@ import React from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import {getTermFromDictionary} from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
-import { useTheme } from '../../themes/theme';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -18,8 +17,6 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
  */
 export const ForceLogout = (props) => {
      const { title, reason } = props;
-	const { resolvedUiColors } = useTheme();
-	const surfaceBg = resolvedUiColors.surface;
 	const language = useActiveLanguage();
 	const { signOut } = React.useContext(AuthContext);
 	const [isOpen, setIsOpen] = React.useState(true);
@@ -30,7 +27,7 @@ export const ForceLogout = (props) => {
 		<Center>
 			<AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
 				<AlertDialogBackdrop/>
-				<AlertDialogContent style={{ backgroundColor: surfaceBg }}>
+				<AlertDialogContent>
 					<AlertDialogHeader><Heading>{title ?? getTermFromDictionary(language, 'error')}</Heading></AlertDialogHeader>
 					<AlertDialogBody><Text>{reason ?? getTermFromDictionary(language, 'error_invalid_session')}</Text></AlertDialogBody>
 					<AlertDialogFooter>

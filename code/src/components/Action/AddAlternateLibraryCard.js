@@ -12,10 +12,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../themed/ThemedFormControls';
+import { PasswordVisibilityToggle, ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 
@@ -66,16 +65,16 @@ export const AddAlternateLibraryCard = (props) => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { resolvedUiColors, textColor, runtimeColors } = useTheme();
+     const { neutrals, textColor, brand } = useTheme();
      const queryClient = useQueryClient();
      const { width } = useWindowDimensions();
      const [card, setCard] = React.useState(user?.alternateLibraryCard ?? '');
      const [password, setPassword] = React.useState(user?.alternateLibraryCardPassword ?? '');
      const [showModal, setShowModal] = React.useState(true);
      const [loading, setLoading] = React.useState(false);
-     const inputBorderColor = resolvedUiColors.border;
-     const surfaceColor = resolvedUiColors.surface;
-     const modalBorderColor = resolvedUiColors.border;
+     const inputBorderColor = neutrals.border;
+     const surfaceColor = neutrals.surface;
+     const modalBorderColor = neutrals.border;
 
      const [showPassword, setShowPassword] = React.useState(false);
      const toggleShowPassword = () => setShowPassword(!showPassword);
@@ -143,7 +142,7 @@ export const AddAlternateLibraryCard = (props) => {
                               {isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}
                          </Heading>
                          <ModalCloseButton onPress={() => { setShowModal(false); }}>
-                              <ThemedCloseIcon />
+                              <CloseIcon />
                          </ModalCloseButton>
                     </ModalHeader>
                     <ModalBody className="mt-3">
@@ -154,9 +153,9 @@ export const AddAlternateLibraryCard = (props) => {
                                         {cardLabel}
                                    </FormControlLabelText>
                               </FormControlLabel>
-                              <ThemedInput style={{ borderColor: inputBorderColor }}>
-                                   <ThemedInputField textContentType="none" name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
-                              </ThemedInput>
+                              <Input style={{ borderColor: inputBorderColor }}>
+                                   <InputField textContentType="none" name="card" defaultValue={card} accessibilityLabel={cardLabel} onChangeText={(value) => setCard(value)} />
+                              </Input>
                          </FormControl>
                          {showAlternateLibraryCardPassword ? (
                               <FormControl className="mb-2">
@@ -165,10 +164,10 @@ export const AddAlternateLibraryCard = (props) => {
                                              {passwordLabel}
                                         </FormControlLabelText>
                                    </FormControlLabel>
-                                   <ThemedInput style={{ borderColor: inputBorderColor }}>
-                                        <ThemedInputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
+                                   <Input style={{ borderColor: inputBorderColor }}>
+                                        <InputField textContentType="none" type={showPassword ? 'text' : 'password'} name="password" defaultValue={password} accessibilityLabel={passwordLabel} onChangeText={(value) => setPassword(value)} />
                                         <PasswordVisibilityToggle showPassword={showPassword} onPress={toggleShowPassword} />
-                                   </ThemedInput>
+                                   </Input>
                               </FormControl>
                          ) : null}
                     </ModalBody>
@@ -236,7 +235,7 @@ export const AddAlternateLibraryCard = (props) => {
                                              }
                                         });
                                    }}>
-                                  {loading ? <ButtonSpinner color={runtimeColors.primary['500-text']} /> : <ButtonText>{title}</ButtonText>}
+                                  {loading ? <ButtonSpinner color={brand.primary['500-text']} /> : <ButtonText>{title}</ButtonText>}
                               </Button>
                          </ButtonGroup>
                     </ModalFooter>

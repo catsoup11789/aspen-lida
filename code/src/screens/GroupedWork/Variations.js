@@ -1,4 +1,4 @@
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
@@ -40,7 +40,7 @@ export const Variations = (props) => {
      const route = useRoute();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor, resolvedUiColors } = useTheme();
+     const { textColor } = useTheme();
 
      const [isLoading, setLoading] = React.useState(false);
      const [confirmingHold, setConfirmingHold] = React.useState(false);
@@ -145,7 +145,7 @@ export const Variations = (props) => {
                          <Center>
                               <AlertDialog leastDestructiveRef={cancelResponseRef} isOpen={responseIsOpen} onClose={onResponseClose}>
                                    <AlertDialogBackdrop />
-                                   <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                                   <AlertDialogContent>
                                         <AlertDialogHeader>
                                              <Heading>{response?.title ? response.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
@@ -168,7 +168,7 @@ export const Variations = (props) => {
                               </AlertDialog>
                               <AlertDialog leastDestructiveRef={cancelHoldConfirmationRef} isOpen={holdConfirmationIsOpen} onClose={onHoldConfirmationClose}>
                                    <AlertDialogBackdrop />
-                                   <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                                   <AlertDialogContent>
                                         <AlertDialogHeader>
                                              <Heading>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
@@ -217,7 +217,7 @@ export const Variations = (props) => {
                               </AlertDialog>
                               <AlertDialog leastDestructiveRef={cancelHoldItemSelectRef} isOpen={holdItemSelectIsOpen} onClose={onHoldItemSelectClose}>
                                    <AlertDialogBackdrop />
-                                   <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                                   <AlertDialogContent>
                                         <AlertDialogHeader>
                                              <Heading>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
@@ -308,7 +308,7 @@ const Variation = (props) => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor, colorMode, uiColors, resolvedUiColors } = useTheme();
+     const { textColor, colorMode, neutralPairs, neutrals } = useTheme();
 
      // 2. Props Destructuring
      const {
@@ -401,7 +401,7 @@ const Variation = (props) => {
 
      return (
           <Box className="mt-5 mb-0">
-               <Center style={{ margin: 4, padding: 12, backgroundColor: resolvedUiColors.surface, borderRadius: 8, alignSelf: 'center', width: '100%' }}>
+               <Center className="m-1 p-3 rounded-lg" style={{ backgroundColor: neutrals.surface, alignSelf: 'center', width: '100%' }}>
                     <VStack space="md" className="mb-3 w-full">
                          <HStack space="sm" className="w-full justify-around items-center">
                               <Badge variant="solid" colorScheme={status.indicator} className="rounded-lg p-1">
@@ -411,8 +411,8 @@ const Variation = (props) => {
                               </Badge>
                               {source === 'ils' || statusIndicator.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
-                                        <MaterialCommunityIcons name="map-marker" size={16} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} className="mr-1" />
-                                        <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
+                                        <MaterialCommunityIcons name="map-marker" size={16} color={colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white} className="mr-1" />
+                                        <ButtonText style={{ color: colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                                    </Button>
                               ) : null}
                          </HStack>
@@ -464,8 +464,8 @@ const Variation = (props) => {
                               />
                          ))}
                     </ButtonGroup>
-                    <Button size="xs" variant="solid" onPress={handleOpenEditions} style={{ width: '100%', marginTop: 8, backgroundColor: uiColors.surface.light }}>
-                         <ButtonText style={{ color: uiColors.text.light }}>{getTermFromDictionary(language, 'show_editions')}</ButtonText>
+                    <Button size="xs" variant="solid" onPress={handleOpenEditions} className="mt-2" style={{ width: '100%', backgroundColor: neutralPairs.surface.light }}>
+                         <ButtonText style={{ color: neutralPairs.textMain.light }}>{getTermFromDictionary(language, 'show_editions')}</ButtonText>
                     </Button>
                </Center>
           </Box>

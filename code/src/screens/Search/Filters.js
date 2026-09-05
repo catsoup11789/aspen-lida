@@ -19,13 +19,12 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
-import { InputSlot } from '@/components/ui/input';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { View } from '@/components/ui/view';
 import { VStack } from '@/components/ui/vstack';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedInputSlot as InputSlot } from '../../components/themed/ThemedFormControls';
 
 /**
  * FiltersScreen component that displays the search filters and allows users to modify their search criteria. It provides options to select search indexes, sources, and various facets, as well as buttons to update or reset the search.
@@ -40,7 +39,7 @@ export const FiltersScreen = () => {
      const location = useLibraryLocation();
      const language = useActiveLanguage();
      const { currentIndex, currentSource } = React.useContext(SearchContext);
-     const { uiColors, colorMode } = useTheme();
+     const { neutralPairs, colorMode } = useTheme();
      const insets = useSafeAreaInsets();
      const pendingFiltersFromParams = useNavigationState((state) => state.routes[0]['params']['pendingFilters']);
      const [searchTerm, setSearchTerm] = React.useState(SearchGlobal.term ?? '');
@@ -59,14 +58,14 @@ export const FiltersScreen = () => {
 
      const renderFilter = (label, index) => {
           return (
-               <Pressable key={index} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? 'rgba(107, 114, 128, 0.25)' : 'rgba(214, 211, 209, 0.25)', paddingVertical: 20 }} onPress={() => openCluster(label)}>
+               <Pressable key={index} className="py-5" style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? 'rgba(107, 114, 128, 0.25)' : 'rgba(214, 211, 209, 0.25)' }} onPress={() => openCluster(label)}>
                     <VStack style={{ alignContent: 'center' }}>
                          <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center', width: '100%' }}>
                               <VStack>
                                    <Text bold>{label}</Text>
                                    {appliedFacet(label)}
                               </VStack>
-                              <MaterialIcons name="chevron-right" size={26} />
+                              <MaterialIcons name="chevron-right" size={26} color={colorMode === 'light' ? neutralPairs.actionableIndicator.light : neutralPairs.actionableIndicator.dark} />
                          </HStack>
                     </VStack>
                </Pressable>
@@ -293,11 +292,11 @@ export const FiltersScreen = () => {
                     <Box className="p-5">
                          <VStack space="md">
                               <FormControl>
-                                   <ThemedInput variant="outline">
+                                   <Input variant="outline">
                                         <InputSlot>
                                              <MaterialIcons name="search" size={20} className="ml-2" />
                                         </InputSlot>
-                                        <ThemedInputField returnKeyType="search" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} />
+                                        <InputField returnKeyType="search" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
                                                   <MaterialIcons name="close" size={20} className="mr-2" />
@@ -306,13 +305,13 @@ export const FiltersScreen = () => {
                                         <InputSlot onPress={() => openScanner()}>
                                              <MaterialCommunityIcons name="barcode-scan" size={20} className="mr-2" />
                                         </InputSlot>
-                                   </ThemedInput>
+                                   </Input>
                               </FormControl>
                          </VStack>
 
                          {!isLoading ? (
                               <>
-                                   <Pressable key={0} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? 'rgba(107, 114, 128, 0.25)' : 'rgba(214, 211, 209, 0.25)', paddingVertical: 20 }} onPress={() => openSearchIndexes()}>
+                                   <Pressable key={0} className="py-5" style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? 'rgba(107, 114, 128, 0.25)' : 'rgba(214, 211, 209, 0.25)' }} onPress={() => openSearchIndexes()}>
                                         <VStack style={{ alignContent: 'center' }}>
                                              <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center', width: '100%' }}>
                                                   <VStack>
@@ -323,11 +322,11 @@ export const FiltersScreen = () => {
                                                             {getSearchIndexLabel()}
                                                        </Text>
                                                   </VStack>
-                                                  <MaterialIcons name="chevron-right" size={26} />
+                                                  <MaterialIcons name="chevron-right" size={26} color={colorMode === 'light' ? neutralPairs.actionableIndicator.light : neutralPairs.actionableIndicator.dark} />
                                              </HStack>
                                         </VStack>
                                    </Pressable>
-                                   <Pressable key={1} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? 'rgba(107, 114, 128, 0.25)' : 'rgba(214, 211, 209, 0.25)', paddingVertical: 20 }} onPress={() => openSearchSources()}>
+                                   <Pressable key={1} className="py-5" style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? 'rgba(107, 114, 128, 0.25)' : 'rgba(214, 211, 209, 0.25)' }} onPress={() => openSearchSources()}>
                                         <VStack style={{ alignContent: 'center' }}>
                                              <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center', width: '100%' }}>
                                                   <VStack>
@@ -338,7 +337,7 @@ export const FiltersScreen = () => {
                                                             {getSearchSourceLabel()}
                                                        </Text>
                                                   </VStack>
-                                                  <MaterialIcons name="chevron-right" size={26} />
+                                                  <MaterialIcons name="chevron-right" size={26} color={colorMode === 'light' ? neutralPairs.actionableIndicator.light : neutralPairs.actionableIndicator.dark} />
                                              </HStack>
                                         </VStack>
                                    </Pressable>

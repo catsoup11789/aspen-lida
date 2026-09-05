@@ -10,6 +10,7 @@ import { getTermFromDictionary } from '../translations/TranslationService';
 import { LoadError } from './loadError';
 import { LoadingSpinner } from './loadingSpinner';
 import { useActiveLanguage } from '../hooks/useLanguageData';
+import { TOKENS } from '../themes/theme';
 
 /**
  * Scanner component for scanning barcodes using the device camera.
@@ -72,8 +73,8 @@ export default function Scanner() {
                          <CameraView onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]} barcodeScannerSettings={{ barcodeTypes: allowedBarcodes }}>
                               <BarcodeMask edgeColor="#62B1F6" showAnimatedLine={false} />
                               <View style={styles.buttonContainer}>
-                                   <Button variant="outline" colorScheme="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: '#ffffff' }}>
-                                       <ButtonText style={{ color: '#ffffff' }}>Cancel</ButtonText>
+                                   <Button variant="outline" colorScheme="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: TOKENS.primitives.singletons.white }}>
+                                       <ButtonText style={{ color: TOKENS.primitives.singletons.white }}>Cancel</ButtonText>
                                    </Button>
                                    {scanned && (
                                        <Button onPress={() => setScanned(false)} className="ml-4">

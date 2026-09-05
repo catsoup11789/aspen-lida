@@ -10,8 +10,8 @@ const ButtonActionContext = React.createContext({ colorScheme: undefined, varian
 
 const ButtonGroupSizeContext = React.createContext(undefined);
 
-function resolveActionColors(runtimeColors, colorScheme, variant) {
-     const scale = runtimeColors?.[colorScheme];
+function resolveActionColors(brand, colorScheme, variant) {
+     const scale = brand?.[colorScheme];
      if (!scale) {
           return null;
      }
@@ -24,16 +24,9 @@ function resolveActionColors(runtimeColors, colorScheme, variant) {
      return { backgroundColor: scale[500], textColor: scale['500-text'] };
 }
 
-// container is a real style object, not a className, because gluestack's own Button already
-// carries a "size" variant (its own px-*/min-h-* classes, e.g. "sm" -> px-3 min-h-8) that
-// competes with ours -- Uniwind resolves className through the actual compiled Tailwind
-// stylesheet, so which one wins is governed by real CSS cascade order, not by where each class
-// appears in the className string. That's not reliably controllable from here, so container
-// sizing goes through style instead, which always wins over any className-derived style.
-// min-height (not a hard height), so a button with long, wrapped ButtonText can grow taller
-// instead of the text getting clipped -- paddingVertical is set independently of that, since
-// minHeight only guarantees the single-line height and wrapped text needs breathing room above/
-// below once it exceeds that.
+// Per-size padding/minHeight for the button container, plus the matching text size class and
+// icon size for ThemedButtonText/ThemedButtonIcon. minHeight (rather than a fixed height) lets
+// the button grow taller when its text wraps onto multiple lines.
 const BUTTON_SIZE_STYLES = {
      xs: { container: { paddingHorizontal: 14, paddingVertical: 4, minHeight: 32 }, text: 'text-2xs', icon: '2xs' },
      sm: { container: { paddingHorizontal: 16, paddingVertical: 6, minHeight: 36 }, text: 'text-xs', icon: 'sm' },
@@ -46,15 +39,20 @@ function resolveButtonSizeStyle(size) {
      return BUTTON_SIZE_STYLES[size] ?? BUTTON_SIZE_STYLES.md;
 }
 
+/**
+ * Wraps gluestack's Button. `size` is one of `'xs'|'sm'|'md'|'lg'|'xl'` (default `'md'`,
+ * or inherited from an enclosing ThemedButtonGroup) and controls padding/minHeight plus
+ * the text/icon size used by ThemedButtonText/ThemedButtonIcon. `colorScheme` is a brand
+ * scale name (e.g. `'primary'`) whose color is applied per `variant`: `'outline'` colors
+ * the border/text, `'link'`/`'ghost'` color only the text, otherwise the background/text
+ * are filled. Resolved colorScheme/variant are provided to descendants via context.
+ */
 export const ThemedButton = React.forwardRef(({ size, colorScheme, variant, className, style, ...props }, ref) => {
      const groupSize = React.useContext(ButtonGroupSizeContext);
      const resolvedSize = size ?? groupSize ?? 'md';
      const sizeStyle = resolveButtonSizeStyle(resolvedSize);
-     const { runtimeColors } = useTheme();
-     const actionColors = resolveActionColors(runtimeColors, colorScheme, variant);
-     // Flat object, not a [container, actionColors, style] array -- a caller-provided style array
-     // here ends up nested inside Uniwind's own className-derived style array on the underlying
-     // Pressable, and the override doesn't reliably win once that happens.
+     const { brand } = useTheme();
+     const actionColors = resolveActionColors(brand, colorScheme, variant);
      const mergedStyle = Array.isArray(style)
           ? Object.assign({}, sizeStyle.container, actionColors ? { backgroundColor: actionColors.backgroundColor, borderColor: actionColors.borderColor } : null, ...style.filter(Boolean))
           : { ...sizeStyle.container, ...(actionColors ? { backgroundColor: actionColors.backgroundColor, borderColor: actionColors.borderColor } : null), ...style };
@@ -73,18 +71,19 @@ export const ThemedButton = React.forwardRef(({ size, colorScheme, variant, clas
      );
 });
 
+/**
+ * Wraps gluestack's ButtonText. Inherits size from the enclosing ThemedButton to pick
+ * a matching text size class, and colorScheme/variant to color the text. Sets
+ * flexShrink so long text wraps instead of pushing the button wider, and centers
+ * wrapped lines via textAlign.
+ */
 export const ThemedButtonText = React.forwardRef(({ className, style, ...props }, ref) => {
      const { size: parentSize } = useStyleContext(SCOPE);
      const sizeStyle = resolveButtonSizeStyle(parentSize);
      const { colorScheme, variant } = React.useContext(ButtonActionContext);
-     const { runtimeColors } = useTheme();
-     const actionColors = resolveActionColors(runtimeColors, colorScheme, variant);
+     const { brand } = useTheme();
+     const actionColors = resolveActionColors(brand, colorScheme, variant);
 
-     // flexShrink so long text actually wraps within the button's row layout instead of just
-     // pushing it wider forever; textAlign keeps multi-line text centered like the single-line
-     // case already was via the button's own items-center. Flat object for the same reason as
-     // ThemedButton's own style above -- an array here nests inside Uniwind's className-derived
-     // style array and the override doesn't reliably win.
      const mergedTextStyle = Array.isArray(style)
           ? Object.assign({ flexShrink: 1, textAlign: 'center' }, actionColors ? { color: actionColors.textColor } : null, ...style.filter(Boolean))
           : { flexShrink: 1, textAlign: 'center', ...(actionColors ? { color: actionColors.textColor } : null), ...style };
@@ -92,6 +91,10 @@ export const ThemedButtonText = React.forwardRef(({ className, style, ...props }
      return <ButtonText ref={ref} className={[sizeStyle.text, className].filter(Boolean).join(' ')} style={mergedTextStyle} {...props} />;
 });
 
+/**
+ * Wraps gluestack's ButtonIcon. Inherits size from the enclosing ThemedButton to pick
+ * a matching icon size, unless `size` is passed explicitly.
+ */
 export const ThemedButtonIcon = React.forwardRef(({ size, ...props }, ref) => {
      const { size: parentSize } = useStyleContext(SCOPE);
      const sizeStyle = resolveButtonSizeStyle(parentSize);
@@ -99,12 +102,15 @@ export const ThemedButtonIcon = React.forwardRef(({ size, ...props }, ref) => {
      return <ButtonIcon ref={ref} size={size ?? sizeStyle.icon} {...props} />;
 });
 
+/** Wraps gluestack's ButtonSpinner with no theming applied. */
 export const ThemedButtonSpinner = React.forwardRef((props, ref) => {
      return <ButtonSpinner ref={ref} {...props} />;
 });
 
 const BUTTON_BORDER_RADIUS = 6;
 
+// Rounds only the outer corners of a row/column of buttons (first child's leading corners,
+// last child's trailing corners) so an attached ButtonGroup reads as one continuous shape.
 function applyAttachedCorners(children, flexDirection) {
      const items = React.Children.toArray(children);
      if (items.length < 2) {
@@ -130,6 +136,11 @@ function applyAttachedCorners(children, flexDirection) {
      });
 }
 
+/**
+ * Wraps gluestack's ButtonGroup. Provides `size` to child ThemedButtons that don't set
+ * their own size. When `isAttached` is set, rounds only the group's outer corners
+ * (per `flexDirection`, default `'row'`) so the buttons appear joined into one shape.
+ */
 export const ThemedButtonGroup = React.forwardRef(({ flexDirection = 'row', size, space, isAttached, children, ...props }, ref) => {
      return (
           <ButtonGroupSizeContext.Provider value={size}>

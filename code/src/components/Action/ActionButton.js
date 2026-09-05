@@ -18,7 +18,7 @@ import { passUserToDiscovery } from '../../util/api/user';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
-import { ThemedCloseIcon } from '../themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon } from '../themed/ThemedFormControls';
 
 /**
  * ActionButton component for rendering different types of action buttons based on the provided data.
@@ -27,7 +27,7 @@ import { ThemedCloseIcon } from '../themed/ThemedFormControls';
  * @constructor
  */
 export const ActionButton = (data) => {
-     const { uiColors, textColor, colorMode } = useTheme();
+     const { textColor } = useTheme();
      const library = useLibrary();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
@@ -227,7 +227,7 @@ export const ActionButton = (data) => {
                                    <ModalHeader>
                                         <Heading>{action.title}</Heading>
                                         <ModalCloseButton onPress={() => { setShowIllUnavailableModal(false); }}>
-                                             <ThemedCloseIcon />
+                                             <CloseIcon />
                                         </ModalCloseButton>
                                    </ModalHeader>
 

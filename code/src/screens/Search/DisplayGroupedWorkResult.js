@@ -31,7 +31,7 @@ export const DisplayGroupedWorkResult = (props) => {
      let params = useRoute();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
+     const { neutrals } = useTheme();
 
      let formats = item?.itemList ?? [];
      const id = item.key ?? item.id;
@@ -92,14 +92,15 @@ export const DisplayGroupedWorkResult = (props) => {
      let url = library.baseUrl + '/bookcover.php?id=' + id + '&size=medium';
 
      return (
-          <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+          <Pressable className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor: neutrals.border }} onPress={handlePressItem}>
                <HStack space="md">
                     <VStack className="w-25">
                          <Box className="h-[150px]">
                               <Image
                                    alt={item.title}
                                    source={url}
-                                   style={{ width: '100%', height: '100%', borderRadius: 8 }}
+                                   className="rounded-lg"
+                                   style={{ width: '100%', height: '100%' }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -109,8 +110,8 @@ export const DisplayGroupedWorkResult = (props) => {
                               <Center className="mt-1">
                                    <Badge
                                         size="sm"
-                                        style={{ backgroundColor: resolvedUiColors.surface }}>
-                                        <BadgeText style={{ color: resolvedUiColors.iconMuted, fontSize: 12, textAlign: 'center' }}>
+                                        style={{ backgroundColor: neutrals.surfaceMuted }}>
+                                        <BadgeText style={{ color: neutrals.iconMuted, fontSize: 12, textAlign: 'center' }}>
                                             {item.language}
                                        </BadgeText>
                                    </Badge>

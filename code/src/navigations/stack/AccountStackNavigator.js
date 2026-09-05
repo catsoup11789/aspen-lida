@@ -20,7 +20,8 @@ import { MyLinkedAccounts } from '../../screens/MyAccount/LinkedAccounts/LinkedA
 import { Settings_NotificationOptions } from '../../screens/MyAccount/Settings/NotificationOptions';
 import { PreferencesScreen } from '../../screens/MyAccount/Settings/Preferences';
 import { MyHolds } from '../../screens/MyAccount/TitlesOnHold/MyHolds';
-import { BackIcon, useTheme } from '../../themes/theme';
+import { useTheme } from '../../themes/theme';
+import { BackIcon } from '../../themes/ThemeSwitcher';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { EditionsModal } from './BrowseStackNavigator';
 import { MyCampaigns } from '../../screens/MyAccount/Campaigns/Campaigns';
@@ -450,7 +451,7 @@ const MyNotificationHistoryMessageStack = createNativeStackNavigator();
  */
 export const MyNotificationHistoryMessageModal = () => {
      const language = useActiveLanguage();
-     const { runtimeColors } = useTheme();
+     const { brand } = useTheme();
      return (
           <MyNotificationHistoryMessageStack.Navigator
                id="MyNotificationHistoryMessageStack"
@@ -467,9 +468,9 @@ export const MyNotificationHistoryMessageModal = () => {
                          headerShown: true,
                          presentation: 'card',
                          headerStyle: {
-                              backgroundColor: runtimeColors.primary[500],
+                              backgroundColor: brand.primary[500],
                          },
-                         headerTintColor: runtimeColors.primary['500-text'],
+                         headerTintColor: brand.primary['500-text'],
                     }}
                />
           </MyNotificationHistoryMessageStack.Navigator>

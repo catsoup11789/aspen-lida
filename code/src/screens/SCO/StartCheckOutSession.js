@@ -7,13 +7,12 @@ import _ from 'lodash';
 import {logDebugMessage} from "../../util/logging";
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedAlertDialogContent as AlertDialogContent, ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader } from '@/src/components/themed/ThemedAlertDialog';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel } from '@/components/ui/form-control';
-import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../components/themed/ThemedFormControls';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 
@@ -28,7 +27,7 @@ export const StartCheckOutSession = () => {
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const { data: accounts } = useAccounts();
-     const { textColor, resolvedUiColors, runtimeColors } = useTheme();
+     const { textColor, brand } = useTheme();
 
      let startNew = useRoute().params?.startNew ?? false;
 
@@ -92,7 +91,7 @@ export const StartCheckOutSession = () => {
           <Center>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={() => GoBackHome()}>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                    <AlertDialogContent>
                          <AlertDialogHeader><Heading>{getTermFromDictionary(language, 'start_checkout_session')}</Heading></AlertDialogHeader>
                          <AlertDialogBody>
                               <FormControl>
@@ -129,9 +128,9 @@ export const StartCheckOutSession = () => {
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
                                                   <SelectScrollView>
-                                                       <SelectItem label={user.displayName} value={user.ils_barcode ?? user.cat_username} style={activeAccount === (user.ils_barcode ?? user.cat_username) ? { backgroundColor: runtimeColors.tertiary[300] } : undefined} textStyle={{ color: activeAccount === (user.ils_barcode ?? user.cat_username) ? runtimeColors.tertiary['500-text'] : textColor }} />
+                                                       <SelectItem label={user.displayName} value={user.ils_barcode ?? user.cat_username} style={activeAccount === (user.ils_barcode ?? user.cat_username) ? { backgroundColor: brand.tertiary[300] } : undefined} textStyle={{ color: activeAccount === (user.ils_barcode ?? user.cat_username) ? brand.tertiary['500-text'] : textColor }} />
                                                        {availableAccounts.map((item, index) => {
-                                                            return <SelectItem label={item.displayName} value={item.ils_barcode ?? item.cat_username} key={index} style={activeAccount === (item.ils_barcode || item.cat_username) ? { backgroundColor: runtimeColors.tertiary[300] } : undefined} textStyle={{ color: activeAccount === (item.ils_barcode || item.cat_username) ? runtimeColors.tertiary['500-text'] : textColor }} />;
+                                                            return <SelectItem label={item.displayName} value={item.ils_barcode ?? item.cat_username} key={index} style={activeAccount === (item.ils_barcode || item.cat_username) ? { backgroundColor: brand.tertiary[300] } : undefined} textStyle={{ color: activeAccount === (item.ils_barcode || item.cat_username) ? brand.tertiary['500-text'] : textColor }} />;
                                                        })}
                                                   </SelectScrollView>
                                              </SelectContent>

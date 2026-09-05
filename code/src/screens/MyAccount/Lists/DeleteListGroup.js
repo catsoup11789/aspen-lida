@@ -9,7 +9,7 @@ import { navigateStack } from '@/src/helpers/RootNavigator';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon } from '@/src/components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -32,7 +32,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
       const updateListGroups = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { uiColors, colorMode } = useTheme();
+      const { neutralPairs } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
 
@@ -42,9 +42,9 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
 
      return (
           <Center>
-               <Button onPress={toggle} size="xs" style={{ backgroundColor: uiColors.danger }}>
-                   <MaterialIcons name="delete" size={18} color={uiColors.white} className="mr-1" />
-                   <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'delete_list_group')}</ButtonText>
+               <Button onPress={toggle} size="xs" style={{ backgroundColor: neutralPairs.danger }}>
+                   <MaterialIcons name="delete" size={18} color={neutralPairs.white} className="mr-1" />
+                   <ButtonText style={{ color: neutralPairs.white }}>{getTermFromDictionary(language, 'delete_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full">
                     <ModalBackdrop />
@@ -52,7 +52,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'delete_list_group')}</Heading>
                               <ModalCloseButton onPress={toggle}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
@@ -63,7 +63,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                                    <Button colorScheme="primary" variant="outline" onPress={toggle}>
                                        <ButtonText>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                    </Button>
-                                   <Button style={{ backgroundColor: uiColors.danger }}
+                                   <Button style={{ backgroundColor: neutralPairs.danger }}
                                            isLoading={loading}
                                            isLoadingText={getTermFromDictionary(language, 'deleting', true)}
                                             onPress={() => {
@@ -100,7 +100,7 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                                                  });
                                             }}
                                    >
-                                        <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
+                                        <ButtonText style={{ color: neutralPairs.white }}>{getTermFromDictionary(language, 'delete')}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>

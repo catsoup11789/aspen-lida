@@ -52,12 +52,11 @@ export const MyEvents = () => {
      const { data: savedEvents } = useSavedEvents();
      const updateSavedEvents = useUpdateSavedEvents();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, resolvedUiColors } = useTheme();
+     const { textColor, neutrals } = useTheme();
      const pageSize = 25;
      const systemMessagesForScreen = [];
-     const panelBg = resolvedUiColors.surface;
-     const surfaceBg = resolvedUiColors.surface;
-     const borderColor = resolvedUiColors.border;
+     const surfaceBg = neutrals.surfaceMuted;
+     const borderColor = neutrals.border;
 
      const [filterBy, setFilterBy] = React.useState('upcoming');
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
@@ -124,7 +123,8 @@ export const MyEvents = () => {
      const getActionButtons = () => {
           return (
                <Box
-                   style={{ alignItems: 'center', padding: 8, borderBottomWidth: 1, backgroundColor: panelBg, borderColor }}
+                   className="p-2"
+                   style={{ alignItems: 'center', borderBottomWidth: 1, backgroundColor: surfaceBg, borderColor }}
                >
                    <ButtonGroup alignItems="center" space="md" isAttached size="sm" className="pb-1">
                         <Button
@@ -167,7 +167,8 @@ export const MyEvents = () => {
           if (savedEvents?.totalResults > 0) {
                return (
                     <Box
-                         style={{ padding: 8, backgroundColor: panelBg, borderTopWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
+                         className="p-2"
+                         style={{ backgroundColor: surfaceBg, borderTopWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup size="sm" space="md">
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} colorScheme="primary">
@@ -241,9 +242,9 @@ const Item = (data) => {
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
      const library = useLibrary();
-     const { textColor, resolvedUiColors } = useTheme();
-     const backgroundColor = resolvedUiColors.surface;
-     const borderColor = resolvedUiColors.border;
+     const { textColor, neutrals } = useTheme();
+     const backgroundColor = neutrals.surface;
+     const borderColor = neutrals.border;
 
      const refreshAndSaveUserProfile = React.useCallback(async () => {
           const profileResponse = await refreshProfile(library.baseUrl);
@@ -379,7 +380,7 @@ const Item = (data) => {
      };
 
      return (
-         <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={openEvent}>
+         <Pressable className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor }} onPress={openEvent}>
                <HStack space="md">
                     {event.cover ? (
                         <VStack className="max-w-[35%]">

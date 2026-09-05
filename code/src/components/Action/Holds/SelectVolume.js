@@ -5,8 +5,7 @@ import { loadingSpinner } from '../../loadingSpinner';
 import { loadError } from '../../loadError';
 import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
-import { FormControlLabel } from '@/components/ui/form-control';
-import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../themed/ThemedFormControls';
 import { ThemedMaterialIcons as MaterialIcons } from '../../themed/ThemedMaterialIcons';
 import { ThemedRadio as Radio, ThemedRadioGroup as RadioGroup, ThemedRadioIcon as RadioIcon, ThemedRadioIndicator as RadioIndicator, ThemedRadioLabel as RadioLabel } from '../../themed/ThemedRadio';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
@@ -18,7 +17,7 @@ import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedS
  * @constructor
  */
 export const SelectVolume = (props) => {
-     const { id, volume, setVolume, showModal, promptForHoldType, holdType, setHoldType, language, url, textColor, runtimeColors } = props;
+     const { id, volume, setVolume, showModal, promptForHoldType, holdType, setHoldType, language, url, textColor, brand } = props;
 
      const { status, data, error, isFetching } = useQuery({
           queryKey: ['volumes', id, url],
@@ -87,7 +86,7 @@ export const SelectVolume = (props) => {
                                                  <SelectScrollView>
                                                       {_.map(data, function (item, index, array) {
                                                            if (item.volumeId === volume) {
-                                                                return <SelectItem label={item.label} value={item.volumeId} key={index} style={{ backgroundColor: runtimeColors.tertiary[300] }} textStyle={{ color: runtimeColors.tertiary['500-text'] }} />;
+                                                                return <SelectItem label={item.label} value={item.volumeId} key={index} style={{ backgroundColor: brand.tertiary[300] }} textStyle={{ color: brand.tertiary['500-text'] }} />;
                                                             }
                                                             return <SelectItem label={item.label} value={item.volumeId} key={index} textStyle={{ color: textColor }} />;
                                                        })}

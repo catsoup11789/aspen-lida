@@ -35,7 +35,7 @@ import { useTheme } from '../themes/theme';
  * @constructor
  */
 export const LanguageSwitcher = () => {
-     const { uiColors, runtimeColors, resolvedUiColors, colorMode, textColor } = useTheme();
+     const { neutralPairs, brand, neutrals, colorMode, textColor } = useTheme();
      const library = useLibrary();
      const language = useActiveLanguage();
      const languages = useAvailableLanguages();
@@ -92,7 +92,7 @@ export const LanguageSwitcher = () => {
                <>
                     <Box>
                          <Menu
-                         style={{ backgroundColor: resolvedUiColors.surface }}
+                         style={{ backgroundColor: neutrals.surface, borderColor: neutrals.border }}
                          isOpen={isLanguageMenuOpen}
                          onClose={() => setIsLanguageMenuOpen(false)}
                          onOpen={() => setIsLanguageMenuOpen(true)}
@@ -114,7 +114,7 @@ export const LanguageSwitcher = () => {
                                         }}
                                         className="rounded-full"
                                    >
-                                        <MaterialIcons name="language" size={18} color={runtimeColors.primary[500]} />
+                                        <MaterialIcons name="language" size={18} color={brand.primary[500]} />
                                         <ButtonText> {languageDisplayName}</ButtonText>
                                    </Button>
                               );
@@ -149,7 +149,7 @@ export const LanguageSwitcher = () => {
                          >
                               <Box
                                    style={{
-                                        backgroundColor: colorMode === 'dark' ? uiColors.card.dark : uiColors.surface.light,
+                                        backgroundColor: colorMode === 'dark' ? neutralPairs.surface.dark : neutralPairs.surface.light,
                                         borderRadius: 16,
                                         paddingHorizontal: 24,
                                         paddingVertical: 20,
@@ -157,7 +157,7 @@ export const LanguageSwitcher = () => {
                                         justifyContent: 'center',
                                    }}
                               >
-                                   <Spinner size="large" color={runtimeColors.primary[500]} />
+                                   <Spinner size="large" color={brand.primary[500]} />
                                     <Text className="mt-3">Switching language...</Text>
                               </Box>
                          </View>

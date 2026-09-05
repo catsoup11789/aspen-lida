@@ -4,13 +4,11 @@ import React from 'react';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { changeHoldPickUpLocation } from '@/src/util/api/user';
 import {SelectExistingHoldSubLocation} from './SelectExistingHoldSubLocation';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
-import { ActionsheetIcon, ActionsheetItem } from '@/components/ui/actionsheet';
-import { ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '@/src/components/themed/ThemedFormControls';
+import { ThemedActionsheetItem as ActionsheetItem, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
@@ -23,7 +21,7 @@ import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedS
  * @constructor
  */
 export const SelectPickupLocation = (props) => {
-     const { locations, sublocations, onClose, currentPickupId, holdId, userId, libraryContext, holdsContext, resetGroup, language, textColor, colorMode, uiColors } = props;
+     const { locations, sublocations, onClose, currentPickupId, holdId, userId, libraryContext, holdsContext, resetGroup, language, textColor, colorMode, neutralPairs } = props;
      let pickupLocation = _.findIndex(locations, function (o) {
           return o.locationId === currentPickupId;
      });
@@ -55,9 +53,7 @@ export const SelectPickupLocation = (props) => {
                     onPress={() => {
                          setShowModal(true);
                     }}>
-                    <ActionsheetIcon>
-                        <MaterialIcons name="location-on" size={18} className="mr-1" />
-                    </ActionsheetIcon>
+                    <MaterialIcons name="location-on" size={18} className="mr-1" />
                    <ActionsheetItemText>{getTermFromDictionary(language, 'change_location')}</ActionsheetItemText>
                </ActionsheetItem>
                <Modal
@@ -70,7 +66,7 @@ export const SelectPickupLocation = (props) => {
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'change_hold_location')}</Heading>
                               <ModalCloseButton onPress={() => { setShowModal(false); }}>
-                                  <ThemedCloseIcon />
+                                  <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
@@ -122,7 +118,7 @@ export const SelectPickupLocation = (props) => {
                                         </Select>
                                    </FormControl>
                               </Box>
-                              <SelectExistingHoldSubLocation location={location} sublocations={sublocations} language={language} activeSublocation={activeSublocation} setActiveSublocation={setActiveSublocation} textColor={textColor} colorMode={colorMode} uiColors={uiColors} />
+                              <SelectExistingHoldSubLocation location={location} sublocations={sublocations} language={language} activeSublocation={activeSublocation} setActiveSublocation={setActiveSublocation} textColor={textColor} colorMode={colorMode} neutralPairs={neutralPairs} />
                          </ModalBody>
                          <ModalFooter>
                               <ButtonGroup

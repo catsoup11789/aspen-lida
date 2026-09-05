@@ -18,7 +18,7 @@ import { SearchResultsForBrowseCategory } from '../../screens/Search/SearchByCat
 import { SearchResultsForList } from '../../screens/Search/SearchByList';
 import { SearchResultsForSavedSearch } from '../../screens/Search/SearchBySavedSearch';
 import { SearchResults } from '../../screens/Search/SearchResults';
-import { BackIcon } from '../../themes/theme';
+import { BackIcon } from '../../themes/ThemeSwitcher';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { ModalHeader } from '../../components/Headers/ModalHeader';
@@ -335,8 +335,8 @@ const FilterModalStack = createNativeStackNavigator();
  */
 const FilterModal = () => {
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const iconColor = resolvedUiColors.icon;
+     const { neutrals } = useTheme();
+     const iconColor = neutrals.icon;
      return (
           <FilterModalStack.Navigator
                id="SearchFilters"

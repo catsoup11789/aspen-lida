@@ -12,7 +12,6 @@ import { DisplaySystemMessage } from '../../components/Notifications';
 import { fetchSearchResultsForList } from '../../util/api/search';
 import { logDebugMessage, logErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
-import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
@@ -36,7 +35,6 @@ export const SearchResultsForList = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { colorMode } = useTheme();
      const queryClient = useQueryClient();
      const url = library.baseUrl;
 

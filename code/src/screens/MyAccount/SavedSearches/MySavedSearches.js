@@ -34,7 +34,6 @@ export const MySavedSearches = () => {
      const updateSavedSearches = useUpdateSavedSearches();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { uiColors, colorMode } = useTheme();
 
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
 
@@ -121,8 +120,8 @@ export const MySavedSearches = () => {
 const Item = (data) => {
      const language = useActiveLanguage();
      const item = data.data;
-     const { resolvedUiColors } = useTheme();
-     const borderColor = resolvedUiColors.border;
+     const { neutrals } = useTheme();
+     const borderColor = neutrals.border;
 
      let hasNewResults = 0;
      if (item?.hasNewResults !== undefined) {
@@ -141,7 +140,8 @@ const Item = (data) => {
                onPress={() => {
                     openSavedSearch();
                }}
-               style={{ borderBottomWidth: 1, borderColor, paddingHorizontal: 4, paddingVertical: 8 }}>
+               className="px-1 py-2"
+               style={{ borderBottomWidth: 1, borderColor }}>
                <HStack space="md" className="justify-start">
                     <VStack space="sm">{/*<Image source={{uri: item.cover}} alt={item.title} size="lg" resizeMode="contain" />*/}</VStack>
                     <VStack space="sm" className="justify-between max-w-[80%]">

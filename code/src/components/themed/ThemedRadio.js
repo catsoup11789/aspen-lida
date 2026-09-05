@@ -2,16 +2,20 @@ import React from 'react';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
 import { useTheme } from '../../themes/theme';
 
-// Radio's current sm/md/lg indicator sizes (16/20/24px) already match gluestack v1 exactly.
-// The one drift: v1's RadioIndicator used a flat 2px border regardless of size
-// (packages/config/src/theme/RadioIndicator.ts), vs the current primitive's plain `border`
-// (1px) default -- restoring that here. Everything else re-exports unchanged.
+/** Re-export of gluestack's Radio, unmodified. Supports the `sm`/`md`/`lg` sizes (16/20/24px indicator). */
 export const ThemedRadio = Radio;
+/** Re-export of gluestack's RadioGroup, unmodified. */
 export const ThemedRadioGroup = RadioGroup;
-export const ThemedRadioIcon = RadioIcon;
+/** Wraps gluestack's RadioIcon (the selected-state dot), filling it with the theme's brand primary color. */
+export const ThemedRadioIcon = React.forwardRef(({ className, style, ...props }, ref) => {
+     const { brand } = useTheme();
 
-// color: textColor was already being passed manually at nearly every call site -- baked in
-// here as a default, overridable via the caller's own style prop.
+     return <RadioIcon ref={ref} className={['fill-transparent', className].filter(Boolean).join(' ')} style={[{ color: brand.primary[500] }, style]} {...props} />;
+});
+
+ThemedRadioIcon.displayName = 'ThemedRadioIcon';
+
+/** Wraps gluestack's RadioLabel, coloring the label text with the theme's default text color by default. */
 export const ThemedRadioLabel = React.forwardRef(({ style, ...props }, ref) => {
      const { textColor } = useTheme();
 
@@ -20,8 +24,11 @@ export const ThemedRadioLabel = React.forwardRef(({ style, ...props }, ref) => {
 
 ThemedRadioLabel.displayName = 'ThemedRadioLabel';
 
-export const ThemedRadioIndicator = React.forwardRef(({ className, ...props }, ref) => {
-     return <RadioIndicator ref={ref} className={['border-2', className].filter(Boolean).join(' ')} {...props} />;
+/** Wraps gluestack's RadioIndicator, giving it a 2px border colored with the theme's border color. */
+export const ThemedRadioIndicator = React.forwardRef(({ className, style, ...props }, ref) => {
+     const { neutrals } = useTheme();
+
+     return <RadioIndicator ref={ref} className={['border-2', className].filter(Boolean).join(' ')} style={[{ borderColor: neutrals.border }, style]} {...props} />;
 });
 
 ThemedRadioIndicator.displayName = 'ThemedRadioIndicator';

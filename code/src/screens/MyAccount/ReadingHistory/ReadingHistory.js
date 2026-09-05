@@ -3,11 +3,10 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import React from 'react';
 import { FlatList, Platform } from 'react-native';
-import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
-import { Actionsheet, ActionsheetBackdrop, ActionsheetIcon, ActionsheetItem } from '@/components/ui/actionsheet';
-import { ThemedActionsheetContent as ActionsheetContent, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
-import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from '@/src/components/themed/ThemedAlert';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedAccordion as Accordion, ThemedAccordionContent as AccordionContent, ThemedAccordionHeader as AccordionHeader, ThemedAccordionItem as AccordionItem, ThemedAccordionTrigger as AccordionTrigger, ThemedAccordionTitleText as AccordionTitleText, ThemedAccordionIcon as AccordionIcon } from '@/src/components/themed/ThemedAccordion';
+import { ThemedActionsheet as Actionsheet, ThemedActionsheetBackdrop as ActionsheetBackdrop, ThemedActionsheetItem as ActionsheetItem, ThemedActionsheetContent as ActionsheetContent, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
+import { ThemedAlert as Alert, ThemedAlertIcon as AlertIcon, ThemedAlertText as AlertText } from '@/src/components/themed/ThemedAlert';
+import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -34,7 +33,7 @@ import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/lo
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField } from '@/src/components/themed/ThemedFormControls';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -65,11 +64,10 @@ export const MyReadingHistory = () => {
           return systemMessages.filter((obj) => obj.showOn === '0');
      }, [systemMessages]);
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
-     const { uiColors, textColor, resolvedUiColors } = useTheme();
-     const panelBg = resolvedUiColors.surface;
-     const surfaceBg = resolvedUiColors.surface;
-     const borderColor = resolvedUiColors.border;
-     const dangerColor = uiColors.danger;
+     const { neutralPairs, textColor, neutrals } = useTheme();
+     const panelBg = neutrals.surface;
+     const borderColor = neutrals.border;
+     const dangerColor = neutralPairs.danger;
      const pageHistory = React.useMemo(() => {
           if (!Array.isArray(readingHistory?.history)) return [];
           return readingHistory.history.slice(0, pageSize);
@@ -213,30 +211,29 @@ export const MyReadingHistory = () => {
                    isCollapsible={true}
                >
                    <AccordionItem value="disclaimer-item" style={{ borderBottomWidth: 0, backgroundColor: panelBg }}>
-                        <AccordionHeader style={{ backgroundColor: surfaceBg }}>
+                        <AccordionHeader style={{ backgroundColor: panelBg }}>
                              <AccordionTrigger className="px-5 py-1">
                                    {({ isExpanded }) => (
                                         <>
-                                             <AccordionTitleText size="xs" style={{ color: textColor, flex: 1 }}>
+                                             <AccordionTitleText size="xs" style={{ flex: 1 }}>
                                                   {getTermFromDictionary(language, 'reading_history_privacy_notice')}
                                              </AccordionTitleText>
                                              <AccordionIcon
                                                   as={MaterialIcons}
                                                   name='expand-more'
-                                                  style={{ color: textColor }}
                                                   size={20}
                                              />
                                         </>
                                    )}
                              </AccordionTrigger>
                         </AccordionHeader>
-                        <AccordionContent style={{ backgroundColor: 'transparent', padding: 0, paddingTop: 8, paddingHorizontal: 20 }}>
-                              <ThemedAlert action="info">
-                                   <ThemedAlertIcon action="info" className="mr-3" />
-                                   <ThemedAlertText action="info" size="xs">
+                        <AccordionContent className="p-0 pt-2 px-5" style={{ backgroundColor: 'transparent' }}>
+                              <Alert action="info">
+                                   <AlertIcon action="info" className="mr-3" />
+                                   <AlertText action="info" size="xs">
                                         {getTermFromDictionary(language, 'reading_history_disclaimer')}
-                                   </ThemedAlertText>
-                              </ThemedAlert>
+                                   </AlertText>
+                              </Alert>
                          </AccordionContent>
                     </AccordionItem>
                </Accordion>
@@ -244,7 +241,7 @@ export const MyReadingHistory = () => {
      };
 
      const getActionButtons = () => {
-          const { uiColors, textColor, colorMode } = useTheme();
+          const { neutralPairs, textColor, colorMode } = useTheme();
 
           let sortLength = 8 * sortBy.last_used.length + 80;
           if (sort === 'author') {
@@ -274,10 +271,11 @@ export const MyReadingHistory = () => {
 
           return (
                <Box
-                   style={{ padding: 20, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
+                   className="p-5"
+                   style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
                    <VStack space="sm">
-                        <ThemedInput style={{ borderColor: colorMode === 'light' ? 'transparent' : borderColor }}>
-                             <ThemedInputField
+                        <Input style={{ borderColor: colorMode === 'light' ? 'transparent' : borderColor }}>
+                             <InputField
                                    returnKeyType="search"
                                    autoCapitalize="none"
                                    onChangeText={(term) => setFilter(term)}
@@ -285,7 +283,7 @@ export const MyReadingHistory = () => {
                                    value={filter}
                                    placeholder={getTermFromDictionary(language, 'search')}
                                    onSubmitEditing={search} />
-                        </ThemedInput>
+                        </Input>
                         <ScrollView horizontal>
                              <HStack space="sm">
                                    <Box style={{ width: sortLength }}>
@@ -316,10 +314,10 @@ export const MyReadingHistory = () => {
                                    </Box>
                                    <ButtonGroup size="sm" variant="solid">
                                         <Button style={{ backgroundColor: dangerColor }} onPress={() => setDeleteAllIsOpen(true)}>
-                                             <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'reading_history_delete_all')}</ButtonText>
+                                             <ButtonText style={{ color: neutralPairs.white }}>{getTermFromDictionary(language, 'reading_history_delete_all')}</ButtonText>
                                         </Button>
                                         <Button style={{ backgroundColor: dangerColor }} onPress={() => setIsOpen(true)}>
-                                             <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'reading_history_opt_out')}</ButtonText>
+                                             <ButtonText style={{ color: neutralPairs.white }}>{getTermFromDictionary(language, 'reading_history_opt_out')}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </HStack>
@@ -329,7 +327,7 @@ export const MyReadingHistory = () => {
                     <Center>
                          <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                               <AlertDialogBackdrop />
-                              <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
+                              <AlertDialogContent>
                                    <AlertDialogHeader>
                                         <Heading>{getTermFromDictionary(language, 'reading_history_opt_out')}</Heading>
                                    </AlertDialogHeader>
@@ -342,7 +340,7 @@ export const MyReadingHistory = () => {
                                                   <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                              </Button>
                                              <Button style={{ backgroundColor: dangerColor }} isLoading={optingOut} isLoadingText={getTermFromDictionary(language, 'updating', true)} onPress={optOut} ref={cancelRef}>
-                                                  <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                                  <ButtonText style={{ color: neutralPairs.white }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
                                    </AlertDialogFooter>
@@ -353,7 +351,7 @@ export const MyReadingHistory = () => {
                     <Center>
                          <AlertDialog leastDestructiveRef={deleteAllCancelRef} isOpen={deleteAllIsOpen} onClose={onCloseDeleteAll}>
                               <AlertDialogBackdrop />
-                              <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
+                              <AlertDialogContent>
                                    <AlertDialogHeader>
                                         <Heading>{getTermFromDictionary(language, 'reading_history_delete_all')}</Heading>
                                    </AlertDialogHeader>
@@ -366,7 +364,7 @@ export const MyReadingHistory = () => {
                                                   <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'cancel')}</ButtonText>
                                              </Button>
                                              <Button style={{ backgroundColor: dangerColor }} isLoading={deleting} isLoadingText={getTermFromDictionary(language, 'deleting', true)} onPress={deleteAll} ref={cancelRef}>
-                                                  <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
+                                                  <ButtonText style={{ color: neutralPairs.white }}>{getTermFromDictionary(language, 'button_ok')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
                                    </AlertDialogFooter>
@@ -391,7 +389,8 @@ export const MyReadingHistory = () => {
           if (readingHistory?.totalResults > 0) {
                return (
                     <Box
-                         style={{ padding: 8, borderTopWidth: 1, backgroundColor: panelBg, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
+                         className="p-2"
+                         style={{ borderTopWidth: 1, backgroundColor: panelBg, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup size="sm">
                                    <Button
@@ -504,8 +503,8 @@ const Item = React.memo(({ data: item, onDelete }) => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const borderColor = resolvedUiColors.border;
+     const { neutrals } = useTheme();
+     const borderColor = neutrals.border;
 
      const [deleting, setDelete] = React.useState(false);
      const [isOpen, setIsOpen] = React.useState(false);
@@ -543,13 +542,14 @@ const Item = React.memo(({ data: item, onDelete }) => {
      let url = library.baseUrl + '/bookcover.php?id=' + item.permanentId + '&size=medium';
      if (item.title) {
           return (
-              <Pressable onPress={toggle} style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
+              <Pressable onPress={toggle} className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor }}>
                     <HStack space="md">
                         <VStack className="max-w-[30%]">
                               <Image
                                    alt={item.title}
                                    source={url}
-                                   style={{ width: 100.0, height: 150.0, borderRadius: 8 }}
+                                   className="rounded-lg"
+                                   style={{ width: 100.0, height: 150.0 }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -579,9 +579,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                                              openGroupedWork(item.permanentId, item.title);
                                              toggle();
                                         }}>
-                                        <ActionsheetIcon>
-                                            <MaterialIcons name="search" size={18} className="mr-1" />
-                                        </ActionsheetIcon>
+                                        <MaterialIcons name="search" size={18} className="mr-1" />
                                        <ActionsheetItemText>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                                    </ActionsheetItem>
                               ) : null}
@@ -595,9 +593,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                                         });
                                         toggle();
                                    }}>
-                                   <ActionsheetIcon>
-                                       <MaterialIcons name="delete" size={18} className="mr-1" />
-                                   </ActionsheetIcon>
+                                   <MaterialIcons name="delete" size={18} className="mr-1" />
                                    <ActionsheetItemText>
                                         {getTermFromDictionary(language, 'reading_history_delete')}
                                    </ActionsheetItemText>

@@ -12,13 +12,13 @@ import {passUserToDiscovery} from '../../util/api/user';
  * @constructor
  */
 export const MoreInfo = (props) => {
-    const { uiColors } = useTheme();
+    const { neutralPairs } = useTheme();
     const { data: userState } = useUserState();
     const user = userState?.user ?? {};
     const library = useLibrary();
 
-    const backgroundColor = useColorModeValue(uiColors.surface.light, uiColors.surface.dark);
-    const textColor = useColorModeValue(uiColors.text.light, uiColors.text.dark);
+    const backgroundColor = useColorModeValue(neutralPairs.surface.light, neutralPairs.surface.dark);
+    const textColor = useColorModeValue(neutralPairs.textMain.light, neutralPairs.textMain.dark);
 
     return (
         <Button

@@ -30,7 +30,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { Divider } from '@/components/ui/divider';
+import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
@@ -38,7 +38,7 @@ import { Pressable } from '@/components/ui/pressable';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
-import { ThemedCloseIcon } from '../../components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon } from '../../components/themed/ThemedFormControls';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -55,7 +55,7 @@ export const EventScreen = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, uiColors, resolvedUiColors } = useTheme();
+     const { textColor, neutralPairs, neutrals } = useTheme();
      const [hasValidImage, setHasValidImage] = React.useState(false);
      const [eventData, setEventData] = React.useState([]);
      const [errorMessage, setErrorMessage] = React.useState('');
@@ -134,8 +134,8 @@ const DisplayEvent = (payload) => {
      const route = useRoute();
      const source = route.params.source;
      const language = useActiveLanguage();
-     const { textColor, uiColors, resolvedUiColors } = useTheme();
-     const backgroundColor = resolvedUiColors.surface;
+     const { textColor, neutralPairs, neutrals } = useTheme();
+     const backgroundColor = neutrals.surface;
      const openLink = async () => {
           const browserParams = {
                enableDefaultShareMenuItem: false,
@@ -186,7 +186,8 @@ const DisplayEvent = (payload) => {
                               <Image
                                    alt={event.title}
                                    source={event.cover}
-                                   style={{ width: '100%', height: 150.0, borderRadius: 8 }}
+                                   className="rounded-lg"
+                                   style={{ width: '100%', height: 150.0 }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -202,8 +203,8 @@ const DisplayEvent = (payload) => {
                     {event.inUserEvents ? <InYourEvents /> : <AddToYourEvents id={event.id} source={source} />}
                     <HStack space="sm" className="justify-between">
                          {event.canAddToList ? <AddToList source="Events" itemId={event.id} btnStyle="reg" btnWidth="48%" /> : null}
-                         <Button style={{ backgroundColor: uiColors.surface.light, width: event.canAddToList ? '49%' : '100%' }} onPress={() => openLink()}>
-                              <ButtonText style={{ color: uiColors.text.light }}>{getTermFromDictionary(language, 'more_info')}</ButtonText>
+                         <Button style={{ backgroundColor: neutralPairs.surface.light, width: event.canAddToList ? '49%' : '100%' }} onPress={() => openLink()}>
+                              <ButtonText style={{ color: neutralPairs.textMain.light }}>{getTermFromDictionary(language, 'more_info')}</ButtonText>
                          </Button>
                     </HStack>
                     <EventDescription description={event.description} />
@@ -230,7 +231,7 @@ const EventTitle = ({ title, hasCoverImage }) => {
      if (title) {
           return (
                <>
-                    <Heading style={{ paddingTop: hasCoverImage ? 20 : 0, paddingBottom: 12, textAlign: 'center' }}>
+                    <Heading className="pb-3" style={{ paddingTop: hasCoverImage ? 20 : 0, textAlign: 'center' }}>
                          {title}
                     </Heading>
                </>
@@ -361,7 +362,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
      const [modalBodyHeading, setModalBodyHeading] = React.useState('');
      const [calendarId, setCalendarId] = React.useState();
      const [confirmAdd, setConfirmAdd] = React.useState(false);
-     const { uiColors } = useTheme();
+     const { neutralPairs, neutrals } = useTheme();
 
      let displayDay = false;
      let displayStartTime = false;
@@ -474,16 +475,16 @@ const AddToCalendar = ({ start, end, location, event }) => {
                                    </Text>
                               </VStack>
                          </HStack>
-                         <MaterialIcons name="chevron-right" size={20} />
+                         <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     </HStack>
                </Pressable>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} closeOnOverlayClick={false} size="md">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: uiColors.surface.light }}>
+                    <ModalContent style={{ maxWidth: '90%', backgroundColor: neutralPairs.surface.light }}>
                          <ModalHeader>
                               <Heading>{modalBodyHeading}</Heading>
                               <ModalCloseButton onPress={() => { setShowModal(false); }}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody><Text>{modalBodyText}</Text></ModalBody>
@@ -531,6 +532,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
  * @constructor
  */
 const Directions = ({ location, room }) => {
+     const { neutrals } = useTheme();
      let hasCoordinates = false;
      if (location) {
           if (!_.isUndefined(location.coordinates) && _.isObject(location.coordinates)) {
@@ -572,7 +574,7 @@ const Directions = ({ location, room }) => {
                                    {location.address ? <Text>{location.address}</Text> : null}
                               </VStack>
                          </HStack>
-                         {hasCoordinates ? <MaterialIcons name="chevron-right" size={20} /> : null}
+                         {hasCoordinates ? <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} /> : null}
                     </HStack>
                </Pressable>
           );
@@ -652,8 +654,8 @@ const RegistrationModal = ({ event }) => {
      const language = useActiveLanguage();
      const [showRegistrationModal, setShowRegistrationModal] = React.useState(false);
 
-     const { textColor, uiColors, resolvedUiColors } = useTheme();
-     const backgroundColor= resolvedUiColors.surface;
+     const { textColor, neutralPairs, neutrals } = useTheme();
+     const backgroundColor= neutrals.surface;
 
      const openLink = async () => {
           /* location.homeLink */
@@ -681,7 +683,7 @@ const RegistrationModal = ({ event }) => {
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'registration_information')}</Heading>
                               <ModalCloseButton onPress={() => { setShowRegistrationModal(false); }}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody><Text>{stripHTML(decodeHTML(event.registrationBody))}</Text></ModalBody>
@@ -689,11 +691,11 @@ const RegistrationModal = ({ event }) => {
                               <ButtonGroup space="sm" size="md">
                                    <Button
                                         variant="outline"
-                                        style={{ borderColor: uiColors.border.light, backgroundColor: uiColors.surface.light }}
+                                        style={{ borderColor: neutralPairs.border.light, backgroundColor: neutralPairs.surface.light }}
                                         onPress={() => {
                                              setShowRegistrationModal(false);
                                         }}>
-                                        <ButtonText style={{ color: uiColors.text.light }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: neutralPairs.textMain.light }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button colorScheme="primary" onPress={() => openLink()}><ButtonText>{getTermFromDictionary(language, 'go_to_registration')}</ButtonText></Button>
                               </ButtonGroup>

@@ -3,7 +3,7 @@ import { useIsFetching, useQuery, useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import React from 'react';
 import { SectionList } from 'react-native';
-import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from '@/src/components/themed/ThemedAlert';
+import { ThemedAlert as Alert, ThemedAlertIcon as AlertIcon, ThemedAlertText as AlertText } from '@/src/components/themed/ThemedAlert';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -55,10 +55,9 @@ export const MyHolds = () => {
      const [date, setNewDate] = React.useState();
      const [pickupLocations] = React.useState([]);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { resolvedUiColors, textColor } = useTheme();
-     const panelBg = resolvedUiColors.surface;
-     const surfaceBg = resolvedUiColors.surface;
-     const borderColor = resolvedUiColors.border;
+     const { neutrals, textColor } = useTheme();
+     const surfaceBg = neutrals.surface;
+     const borderColor = neutrals.border;
 
      const [sortBy, setSortBy] = React.useState({
           title: 'Sort by Title',
@@ -367,7 +366,7 @@ export const MyHolds = () => {
                                              </Select>
                                         </Box>
                                         <ManageSelectedHolds language={language} selectedValues={values} onAllDateChange={handleDateChange} selectedReactivationDate={date} resetGroup={resetGroup} />
-                                        <Button size="sm" variant="outline" style={{ marginRight: 4, borderColor }} onPress={() => clearGroupValue()}>
+                                        <Button size="sm" variant="outline" className="mr-1" style={{ borderColor }} onPress={() => clearGroupValue()}>
                                              <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'holds_clear_selections')}</ButtonText>
                                         </Button>
                                    </HStack>
@@ -521,7 +520,7 @@ export const MyHolds = () => {
           };
 
           return (
-               <Box style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
+               <Box className="p-2" style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
                     {showSystemMessage()}
                     <ScrollView horizontal>
                          <HStack space="sm" className="items-center">
@@ -565,31 +564,31 @@ export const MyHolds = () => {
      const displaySectionHeader = (title) => {
           if (title === 'Pending') {
                return (
-                    <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
+                    <Box className="p-2" style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%' }}>
                          <Heading className="pb-1 pt-3">{getTermFromDictionary(language, 'pending_holds')}</Heading>
-                         <ThemedAlert action="info">
+                         <Alert action="info">
                               <HStack>
-                                   <ThemedAlertIcon action="info" />
-                                   <ThemedAlertText action="info" size="xs">
+                                   <AlertIcon action="info" />
+                                   <AlertText action="info" size="xs">
                                         {getTermFromDictionary(language, 'pending_holds_message')}
-                                   </ThemedAlertText>
+                                   </AlertText>
                               </HStack>
-                         </ThemedAlert>
+                         </Alert>
                          {actionButtons('pending')}
                     </Box>
                );
           } else {
                return (
-                    <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
+                    <Box className="p-2" style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%' }}>
                          <Heading className="pb-1">{getTermFromDictionary(language, 'holds_ready_for_pickup')}</Heading>
-                         <ThemedAlert action="info">
+                         <Alert action="info">
                               <HStack>
-                                   <ThemedAlertIcon action="info" />
-                                   <ThemedAlertText action="info" size="xs">
+                                   <AlertIcon action="info" />
+                                   <AlertText action="info" size="xs">
                                         {getTermFromDictionary(language, 'holds_ready_for_pickup_message')}
-                                   </ThemedAlertText>
+                                   </AlertText>
                               </HStack>
-                         </ThemedAlert>
+                         </Alert>
                          {actionButtons('ready')}
                     </Box>
                );
@@ -655,14 +654,13 @@ export const MyHolds = () => {
                          {actionButtons('none')}
                          <Box>
                               <CheckboxGroup
+                                   className="p-0 m-0"
                                    style={{
                                         maxWidth: '100%',
                                         alignItems: 'center',
                                         _text: {
                                              textAlign: 'left',
                                         },
-                                        padding: 0,
-                                        margin: 0,
                                         paddingBottom: _.size(systemMessages) >= 2 ? 300 : 30,
                                    }}
                                    name="Holds"

@@ -10,11 +10,10 @@ import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '@/src/components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
@@ -38,7 +37,7 @@ const CreateList = (props) => {
       const updateListGroups = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, runtimeColors, resolvedUiColors } = useTheme();
+      const { textColor, brand, neutrals } = useTheme();
       const [loading, setAdding] = React.useState(false);
       const [showModal, setShowModal] = useState(false);
 
@@ -50,7 +49,7 @@ const CreateList = (props) => {
      const [newGroupName, setNewGroupName] = React.useState('');
      const [nestedGroup, setNestedGroup] = React.useState('');
      const [existingGroupId, setExistingGroupId] = React.useState(user.lastListGroupAdded ? user.lastListGroupAdded : (listGroups?.groups[0] ? listGroups.groups[0].id : 0));
-     const borderColor = resolvedUiColors.border;
+     const borderColor = neutrals.border;
 
      let hasListGroups = false;
      if(user.numListGroups) {
@@ -73,7 +72,7 @@ const CreateList = (props) => {
      return (
           <Center>
                <Button onPress={toggle} size="sm" colorScheme="primary">
-                   <MaterialIcons name="add" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />
+                   <MaterialIcons name="add" size={18} color={brand.primary['500-text']} className="mr-1" />
                    <ButtonText>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full">
@@ -84,7 +83,7 @@ const CreateList = (props) => {
                                    {getTermFromDictionary(language, 'create_new_list')}
                               </Heading>
                               <ModalCloseButton onPress={toggle}>
-                                   <ThemedCloseIcon />
+                                   <CloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
@@ -92,9 +91,9 @@ const CreateList = (props) => {
                                    <FormControlLabel>
                                         <FormControlLabelText>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <ThemedInput style={{ borderColor }}>
-                                        <ThemedInputField id="title" onChangeText={(text) => setTitle(text)} returnKeyType="next" defaultValue={title} />
-                                   </ThemedInput>
+                                   <Input style={{ borderColor }}>
+                                        <InputField id="title" onChangeText={(text) => setTitle(text)} returnKeyType="next" defaultValue={title} />
+                                   </Input>
                               </FormControl>
                               <FormControl>
                                    <FormControlLabel>
@@ -116,13 +115,13 @@ const CreateList = (props) => {
                                         }}>
                                        <HStack className="flex-row items-center w-[75%] max-w-75" space="md">
                                             <Radio value="false" className="my-1">
-                                                 <RadioIndicator style={{ marginRight: 8, borderColor }}>
+                                                 <RadioIndicator className="mr-2" style={{ borderColor }}>
                                                       <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                   </RadioIndicator>
                                                  <RadioLabel>{getTermFromDictionary(language, 'private')}</RadioLabel>
                                              </Radio>
                                             <Radio value="true" className="my-1">
-                                                 <RadioIndicator style={{ marginRight: 8, borderColor }}>
+                                                 <RadioIndicator className="mr-2" style={{ borderColor }}>
                                                       <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                   </RadioIndicator>
                                                  <RadioLabel>{getTermFromDictionary(language, 'public')}</RadioLabel>
@@ -159,9 +158,9 @@ const CreateList = (props) => {
                                              <FormControlLabel>
                                                   <FormControlLabelText>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
                                              </FormControlLabel>
-                                             <ThemedInput style={{ borderColor }}>
-                                                  <ThemedInputField id="newGroupName" onChangeText={(text) => setNewGroupName(text)} defaultValue={newGroupName} />
-                                             </ThemedInput>
+                                             <Input style={{ borderColor }}>
+                                                  <InputField id="newGroupName" onChangeText={(text) => setNewGroupName(text)} defaultValue={newGroupName} />
+                                             </Input>
                                         </FormControl>
                                         {hasListGroups && (
                                              <FormControl className="pb-2">

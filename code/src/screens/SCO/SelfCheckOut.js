@@ -14,15 +14,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import { logDebugMessage, logErrorMessage, logInfoMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { ThemedAlert, ThemedAlertText } from '../../components/themed/ThemedAlert';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedAlert as Alert, ThemedAlertText as AlertText } from '../../components/themed/ThemedAlert';
+import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../components/themed/ThemedFormControls';
+import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
@@ -47,7 +46,7 @@ export const SelfCheckOut = () => {
      const { data: cards } = useCards();
      const { data: accounts } = useAccounts();
      const { checkouts, updateCheckouts } = React.useContext(CheckoutsContext);
-     const { resolvedUiColors, runtimeColors } = useTheme();
+     const { brand } = useTheme();
 
      const passedItems = route.params?.items ?? [];
      const [items, setItems] = React.useState(passedItems);
@@ -259,11 +258,11 @@ export const SelfCheckOut = () => {
      const DisplayCompletionMessage = (message) => {
           if (message && !mustConfirm) {
                return (
-                    <ThemedAlert action="warning" variant="solid" className="w-full max-w-full">
-                         <ThemedAlertText action="warning" variant="solid" bold className="text-xs">
+                    <Alert action="warning" variant="solid" className="w-full max-w-full">
+                         <AlertText action="warning" variant="solid" bold className="text-xs">
                               {message}
-                         </ThemedAlertText>
-                    </ThemedAlert>
+                         </AlertText>
+                    </Alert>
                );
           }
           return null;
@@ -285,7 +284,7 @@ export const SelfCheckOut = () => {
                     ) : null}
                     {keyboardType === 0 ? (
                          <Button onPress={() => openScanner()} colorScheme="secondary">
-                              <MaterialCommunityIcons name="barcode" size={18} color={runtimeColors.secondary['500-text']} />
+                              <MaterialCommunityIcons name="barcode" size={18} color={brand.secondary['500-text']} />
                               <ButtonText>{getTermFromDictionary(language, 'add_new_item')}</ButtonText>
                          </Button>
                     ) : (
@@ -297,11 +296,11 @@ export const SelfCheckOut = () => {
                                         </FormControlLabel>
                                        <ButtonGroup space="md">
                                             <Button onPress={() => openScanner()} colorScheme="secondary">
-                                                 <MaterialCommunityIcons name="barcode" size={18} color={runtimeColors.secondary['500-text']} />
+                                                 <MaterialCommunityIcons name="barcode" size={18} color={brand.secondary['500-text']} />
                                                  <ButtonText>{getTermFromDictionary(language, 'scan')}</ButtonText>
                                              </Button>
                                             <Button onPress={toggle} colorScheme="secondary">
-                                                 <MaterialIcons name="dialpad" size={18} color={runtimeColors.secondary['500-text']} />
+                                                 <MaterialIcons name="dialpad" size={18} color={brand.secondary['500-text']} />
                                                  <ButtonText>{getTermFromDictionary(language, 'type')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>
@@ -315,14 +314,14 @@ export const SelfCheckOut = () => {
                                                   {getTermFromDictionary(language, 'add_new_item')}
                                              </Heading>
                                             <ModalCloseButton onPress={toggle}>
-                                                 <ThemedCloseIcon />
+                                                 <CloseIcon />
                                              </ModalCloseButton>
                                         </ModalHeader>
                                         <ModalBody>
                                             <FormControl>
-                                                 <ThemedInput>
-                                                      <ThemedInputField keyboardType={keyboardType === 1 ? 'number-pad' : 'default'} variant="outline" autoCapitalize="none" placeholder={getTermFromDictionary(language, 'enter_barcode')} size="$lg" defaultValue={newBarcode} onChangeText={(text) => setNewBarcode(text)} />
-                                                  </ThemedInput>
+                                                 <Input>
+                                                      <InputField keyboardType={keyboardType === 1 ? 'number-pad' : 'default'} variant="outline" autoCapitalize="none" placeholder={getTermFromDictionary(language, 'enter_barcode')} size="$lg" defaultValue={newBarcode} onChangeText={(text) => setNewBarcode(text)} />
+                                                  </Input>
                                              </FormControl>
                                         </ModalBody>
                                         <ModalFooter>
@@ -371,7 +370,7 @@ export const SelfCheckOut = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelRefConfirm} isOpen={openConfirmAlert} onClose={onCloseConfirm} closeOnOverlayClick={false} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                         <AlertDialogContent>
                               <AlertDialogHeader>
                                    <Heading>{getTermFromDictionary(language, 'notice_about_item')}</Heading>
                               </AlertDialogHeader>
@@ -391,7 +390,7 @@ export const SelfCheckOut = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                         <AlertDialogContent>
                               <AlertDialogHeader>
                                    <Heading>
                                         {errorTitle}
@@ -405,9 +404,9 @@ export const SelfCheckOut = () => {
                                                   <FormControlLabel>
                                                        <FormControlLabelText>{getTermFromDictionary(language, 'does_barcode_match_item')}</FormControlLabelText>
                                                   </FormControlLabel>
-                                                  <ThemedInput>
-                                                       <ThemedInputField id="barcode" autoCapitalize="none" autoCorrect={false} onChangeText={(text) => setTempBarcode(text)} defaultValue={tempBarcode} />
-                                                  </ThemedInput>
+                                                  <Input>
+                                                       <InputField id="barcode" autoCapitalize="none" autoCorrect={false} onChangeText={(text) => setTempBarcode(text)} defaultValue={tempBarcode} />
+                                                  </Input>
                                              </FormControl>
                                         </>
                                    ) : null}
@@ -440,11 +439,11 @@ export const SelfCheckOut = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelRef} isOpen={showFinishModal} onClose={() => startNewSession()} size="lg" useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                         <AlertDialogContent>
                               <AlertDialogHeader>
                                    <Heading>{getTermFromDictionary(language, 'finish_checkout_session')}</Heading>
                                    <Button variant="link" onPress={() => setShowFinishModal(false)} style={{ position: 'absolute', right: 12, top: 4, backgroundColor: 'transparent' }}>
-                                        <ThemedCloseIcon />
+                                        <CloseIcon />
                                    </Button>
                               </AlertDialogHeader>
                               <AlertDialogBody>

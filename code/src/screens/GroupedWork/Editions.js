@@ -21,7 +21,7 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/logging.js';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonIcon as ButtonIcon, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
@@ -43,7 +43,7 @@ export const Editions = () => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { textColor, resolvedUiColors } = useTheme();
+     const { textColor } = useTheme();
      const insets = useSafeAreaInsets();
 
      const [isLoading] = useState(false);
@@ -195,7 +195,7 @@ export const Editions = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelResponseRef} isOpen={responseIsOpen} onClose={onResponseClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                         <AlertDialogContent>
                               <AlertDialogHeader>
                                    <Heading>{response?.title}</Heading>
                               </AlertDialogHeader>
@@ -218,7 +218,7 @@ export const Editions = () => {
                     </AlertDialog>
                     <AlertDialog leastDestructiveRef={cancelHoldConfirmationRef} isOpen={holdConfirmationIsOpen} onClose={onHoldConfirmationClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                         <AlertDialogContent>
                               <AlertDialogHeader>
                                    <Heading>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                               </AlertDialogHeader>
@@ -265,7 +265,7 @@ export const Editions = () => {
                     </AlertDialog>
                     <AlertDialog leastDestructiveRef={cancelHoldItemSelectRef} isOpen={holdItemSelectIsOpen} onClose={onHoldItemSelectClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
+                         <AlertDialogContent>
                               <AlertDialogHeader>
                                    <Heading>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                               </AlertDialogHeader>
@@ -345,7 +345,7 @@ export const Editions = () => {
 const Edition = (props) => {
      // 1. Hooks
      const language = useActiveLanguage();
-     const { colorMode, uiColors } = useTheme();
+     const { colorMode, neutralPairs } = useTheme();
 
      // 2. Props
      const {
@@ -398,7 +398,7 @@ const Edition = (props) => {
      const statusIndicator = getStatusIndicator(status, language);
 
      return (
-          <Box style={{ marginTop: 0, marginBottom: 0, padding: 12, borderBottomWidth: 1, borderColor: uiColors.border.light }}>
+          <Box className="mt-0 mb-0 p-3" style={{ borderBottomWidth: 1, borderColor: neutralPairs.border.light }}>
                <HStack space="sm" className="justify-between items-center flex-1">
                     <VStack space="sm" className="max-w-[40%] flex-1 justify-center">
                          <HStack space="xs" className="flex-wrap">
@@ -417,8 +417,8 @@ const Edition = (props) => {
                               </Center>
                               {records.source === 'ils' || status.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
-                                        <MaterialIcons name="location-pin" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} className="mr-1" />
-                                        <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
+                                        <MaterialIcons name="location-pin" size={14} color={colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white} className="mr-1" />
+                                        <ButtonText style={{ color: colorMode === 'light' ? neutralPairs.textMuted.light : neutralPairs.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                                    </Button>
                               ) : null}
                          </VStack>

@@ -10,7 +10,7 @@ import React from 'react';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { Divider } from '@/components/ui/divider';
+import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { FlatList } from '@/components/ui/flat-list';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
@@ -39,7 +39,7 @@ const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 export const AllLocations = () => {
      const library = useLibrary();
      const locations = useAvailableLocations();
-     const { textColor, colorMode, uiColors, resolvedUiColors } = useTheme();
+     const { colorMode, neutralPairs, neutrals } = useTheme();
      const updateAvailableLocations = useUpdateAvailableLocations();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
@@ -134,7 +134,8 @@ export const AllLocations = () => {
      const getActionButtons = () => {
           return (
                <Box
-                    style={{ alignItems: 'center', padding: 8, backgroundColor: resolvedUiColors.surface, borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.dark }}>
+                    style={{ alignItems: 'center', backgroundColor: neutrals.surfaceMuted, borderBottomWidth: 1, borderColor: colorMode === 'light' ? neutralPairs.surfaceMuted.light : neutralPairs.iconMuted.dark }}
+                    className="p-2">
                     <ButtonGroup alignItems="center" isAttached>
                          <Button variant={sort === 'alphabetical' ? 'solid' : 'outline'} colorScheme="secondary" onPress={() => setSort('alphabetical')}>
                               <ButtonText>{getTermFromDictionary(language, 'a_to_z')}</ButtonText>
@@ -183,6 +184,7 @@ export const AllLocations = () => {
  */
 const DisplayLocation = (data) => {
      const language = useActiveLanguage();
+     const { neutrals } = useTheme();
      const location = data.data;
 
      let units = false;
@@ -249,7 +251,7 @@ const DisplayLocation = (data) => {
                     <HStack className="justify-between items-center p-4">
                          {location.locationImage ? (
                               <Box className="w-[30%] mr-2">
-                                   <Image alt={location.displayName} source={location.locationImage} style={{ width: '100%', height: 90.0, borderRadius: 4 }} placeholder={blurhash} transition={1000} contentFit="cover" />
+                                   <Image alt={location.displayName} source={location.locationImage} style={{ width: '100%', height: 90.0 }} className="rounded" placeholder={blurhash} transition={1000} contentFit="cover" />
                               </Box>
                          ) : null}
                          <VStack style={{ width: location.locationImage ? '60%' : '85%' }}>
@@ -270,7 +272,7 @@ const DisplayLocation = (data) => {
                                    </HStack>
                               ) : null}
                          </VStack>
-                         <MaterialIcons name="chevron-right" size={24} />
+                         <MaterialIcons name="chevron-right" size={24} color={neutrals.actionableIndicator} />
                     </HStack>
                </Pressable>
                <Divider className="mt-3 mb-3" />

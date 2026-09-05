@@ -12,13 +12,12 @@ import { logDebugMessage, logErrorMessage, logInfoMessage, getErrorMessage } fro
 import { stripHTML } from '../../helpers/helpers';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { ThemedAlert, ThemedAlertText } from '../../components/themed/ThemedAlert';
+import { ThemedAlert as Alert, ThemedAlertText as AlertText } from '../../components/themed/ThemedAlert';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../components/themed/ThemedCheckbox';
-import { FormControlLabel } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
-import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../components/themed/ThemedFormControls';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -103,7 +102,7 @@ const Request = (payload) => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { textColor, runtimeColors, resolvedUiColors } = useTheme();
+     const { textColor, brand, neutrals } = useTheme();
      const navigation = useNavigation();
      const queryClient = useQueryClient();
 
@@ -277,7 +276,7 @@ const Request = (payload) => {
                                         </SelectDragIndicatorWrapper>
                                         <SelectScrollView>
                                              {locations.map((location, index) => {
-                                                  return <SelectItem key={index} label={location.displayName} value={location.code} style={{ backgroundColor: pickupLocation === location.code ? runtimeColors.tertiary[300] : 'transparent' }} textStyle={{ color: pickupLocation === location.code ? runtimeColors.tertiary['500-text'] : textColor }} />;
+                                                  return <SelectItem key={index} label={location.displayName} value={location.code} style={{ backgroundColor: pickupLocation === location.code ? brand.tertiary[300] : 'transparent' }} textStyle={{ color: pickupLocation === location.code ? brand.tertiary['500-text'] : textColor }} />;
                                              })}
                                         </SelectScrollView>
                                    </SelectContent>
@@ -344,8 +343,8 @@ const Request = (payload) => {
                               )}
                          </ButtonText>
                     </Button>
-                    <Button variant="outline" onPress={() => navigation.goBack()} style={{ borderColor: resolvedUiColors.border }}>
-                         <ButtonText style={{ color: resolvedUiColors.text }}>Cancel</ButtonText>
+                    <Button variant="outline" onPress={() => navigation.goBack()} style={{ borderColor: neutrals.border }}>
+                         <ButtonText style={{ color: neutrals.textMain }}>Cancel</ButtonText>
                     </Button>
                </HStack>
           );
@@ -354,11 +353,11 @@ const Request = (payload) => {
      const getErrorMessage = () => {
           if (errorMessage) {
                return (
-                    <ThemedAlert className="w-full" action="warning" variant="solid">
-                         <ThemedAlertText action="warning" variant="solid" size="xs" bold>
+                    <Alert className="w-full" action="warning" variant="solid">
+                         <AlertText action="warning" variant="solid" size="xs" bold>
                               {errorMessage}
-                         </ThemedAlertText>
-                    </ThemedAlert>
+                         </AlertText>
+                    </Alert>
                );
           }
           return null;
