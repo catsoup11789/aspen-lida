@@ -15,7 +15,7 @@ import App from './src/components/navigation';
 import { AuthProvider } from './src/context/AuthContext';
 import { CheckoutsProvider, GroupedWorkProvider, HoldsProvider, SearchProvider, SystemMessagesProvider } from './src/context/initialContext';
 import { SplashScreenNative } from './src/screens/Auth/SplashNative';
-import { buildThemeForLibrary, THEME_STALE_MS, useThemeForDisplay } from './src/themes/theme';
+import { buildThemeForLibrary, runExclusiveThemeInit, THEME_STALE_MS, useThemeForDisplay } from './src/themes/theme';
 import { ToastRegistrar } from '@/src/components/feedback';
 import { logDebugMessage, logErrorMessage } from './src/util/logging.js';
 import { initDatabase } from './src/util/db';
@@ -158,34 +158,36 @@ export default function AppContainer() {
                }
                logDebugMessage('3 Running buildThemeForLibrary...');
                try {
-                    const current = await loadThemeState();
                     await restorePersistedQueries();
-                    const mode = current?.colorMode === 'dark' ? 'dark' : 'light';
-                    const hasStoredTheme = Boolean(current?.themeColors?.primary && current?.themeColors?.secondary && current?.themeColors?.tertiary);
-                    const hasMatchingThemeId = await isStoredThemeIdMatch(GLOBALS.themeId ?? 1);
-                    const themeAgeMs = current?.updatedAt ? Date.now() - current.updatedAt : Number.POSITIVE_INFINITY;
-                    const isThemeStale = themeAgeMs > THEME_STALE_MS;
+                    await runExclusiveThemeInit(async () => {
+                         const current = await loadThemeState();
+                         const mode = current?.colorMode === 'dark' ? 'dark' : 'light';
+                         const hasStoredTheme = Boolean(current?.themeColors?.primary && current?.themeColors?.secondary && current?.themeColors?.tertiary);
+                         const hasMatchingThemeId = await isStoredThemeIdMatch(GLOBALS.themeId ?? 1);
+                         const themeAgeMs = current?.updatedAt ? Date.now() - current.updatedAt : Number.POSITIVE_INFINITY;
+                         const isThemeStale = themeAgeMs > THEME_STALE_MS;
 
-                    if (!hasStoredTheme || !hasMatchingThemeId || isThemeStale) {
-                         const persistedLibraryUrl = await loadLibraryUrl();
-                         const themeUrl = persistedLibraryUrl || GLOBALS.url || Constants.expoConfig.extra.apiUrl;
-                         logDebugMessage(`4 Building theme for current themeId using url=${themeUrl ?? 'none'} stale=${isThemeStale} ageMs=${themeAgeMs}`);
-                         if (!themeUrl) {
-                              logDebugMessage('4 Skipping startup theme fetch because no library URL is available yet');
-                         } else {
-                              const builtTheme = await buildThemeForLibrary(themeUrl);
-                             await saveThemeState({
-                                  themeId: builtTheme.themeId,
-                                  colorMode: mode,
-                                  themeColors: builtTheme.themeColors,
-                             });
-                        }
-                    } else if (!current?.colorMode) {
-                         await saveThemeState({
-                              ...current,
-                              colorMode: mode,
-                         });
-                    }
+                         if (!hasStoredTheme || !hasMatchingThemeId || isThemeStale) {
+                              const persistedLibraryUrl = await loadLibraryUrl();
+                              const themeUrl = persistedLibraryUrl || GLOBALS.url || Constants.expoConfig.extra.apiUrl;
+                              logDebugMessage(`4 Building theme for current themeId using url=${themeUrl ?? 'none'} stale=${isThemeStale} ageMs=${themeAgeMs}`);
+                              if (!themeUrl) {
+                                   logDebugMessage('4 Skipping startup theme fetch because no library URL is available yet');
+                              } else {
+                                   const builtTheme = await buildThemeForLibrary(themeUrl);
+                                  await saveThemeState({
+                                       themeId: builtTheme.themeId,
+                                       colorMode: mode,
+                                       themeColors: builtTheme.themeColors,
+                                  });
+                             }
+                         } else if (!current?.colorMode) {
+                              await saveThemeState({
+                                   ...current,
+                                   colorMode: mode,
+                              });
+                         }
+                    });
                } catch (e) {
                     logErrorMessage('4 Could not load or build theme ' + e);
                } finally {

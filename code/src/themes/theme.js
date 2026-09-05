@@ -238,6 +238,23 @@ function normalizeThemeColors(response = []) {
      };
 }
 
+// App.js, Splash.js, and Loading.js each independently read the current theme_state/location,
+// decide whether a refetch is needed, and (if so) persist a freshly-resolved theme, with no
+// coordination between them -- Splash's own fetch-and-save isn't even cancelled on unmount, so it
+// can still be mid-flight when Loading's runs right after. If two of these cycles overlap, one can
+// read theme_state before the other's write has landed, see a locationId that looks stale/
+// mismatched, and (via getThemeInfo's own themes[0] fallback) overwrite a just-saved correct theme
+// with whichever theme happens to be first in the catalog. Funneling every read-decide-persist
+// cycle through this queue makes them run strictly one at a time, so each one's initial read
+// always reflects the previous one's completed write instead of a stale mid-flight snapshot.
+let themeInitQueue = Promise.resolve();
+
+export function runExclusiveThemeInit(fn) {
+     const run = themeInitQueue.then(fn);
+     themeInitQueue = run.catch(() => {});
+     return run;
+}
+
 export async function buildThemeForLibrary(url = null, locationId = null) {
      const response = await getThemeInfo(url, locationId);
      const themeColors = normalizeThemeColors(response?.palettes);
@@ -345,9 +362,11 @@ export function useTheme() {
      }, [resetThemeState]);
 
      const forceRefreshTheme = React.useCallback(async (url = null, locationId = null) => {
-          const builtTheme = await buildThemeForLibrary(url, locationId);
-          await updateTheme(builtTheme.theme, builtTheme.themeId, builtTheme.locationId, builtTheme.header);
-          return builtTheme;
+          return runExclusiveThemeInit(async () => {
+               const builtTheme = await buildThemeForLibrary(url, locationId);
+               await updateTheme(builtTheme.theme, builtTheme.themeId, builtTheme.locationId, builtTheme.header);
+               return builtTheme;
+          });
      }, [updateTheme]);
 
      return {
