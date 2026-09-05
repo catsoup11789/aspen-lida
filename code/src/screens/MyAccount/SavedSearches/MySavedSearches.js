@@ -121,9 +121,8 @@ export const MySavedSearches = () => {
 const Item = (data) => {
      const language = useActiveLanguage();
      const item = data.data;
-     const { colorMode } = useTheme();
-     const { uiColors } = useTheme();
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { resolvedUiColors } = useTheme();
+     const borderColor = resolvedUiColors.border;
 
      let hasNewResults = 0;
      if (item?.hasNewResults !== undefined) {

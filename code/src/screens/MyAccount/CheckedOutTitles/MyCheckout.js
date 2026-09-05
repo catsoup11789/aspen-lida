@@ -40,8 +40,8 @@ export const MyCheckout = (props) => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const version = formatDiscoveryVersion(library.discoveryVersion);
-     const { colorMode, textColor, uiColors } = useTheme();
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { textColor, resolvedUiColors } = useTheme();
+     const borderColor = resolvedUiColors.border;
 
      const [access, setAccess] = useState(false);
      const [returning, setReturn] = useState(false);

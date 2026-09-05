@@ -17,7 +17,7 @@ import { useTheme } from '../themes/theme';
  */
 export const PermissionsPrompt = (data) => {
      const { promptTitle, promptBody, setShouldRequestPermissions, updateStatus } = data;
-     const { uiColors, colorMode } = useTheme();
+     const { uiColors, resolvedUiColors } = useTheme();
      const language = useActiveLanguage();
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => {
@@ -29,7 +29,7 @@ export const PermissionsPrompt = (data) => {
      return (
           <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                <AlertDialogBackdrop />
-               <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark }}>
+               <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
                     <AlertDialogHeader><Heading>{getTermFromDictionary(language, promptTitle)}</Heading></AlertDialogHeader>
                     <AlertDialogBody><Text>{getTermFromDictionary(language, promptBody)}</Text></AlertDialogBody>
                     <AlertDialogFooter>

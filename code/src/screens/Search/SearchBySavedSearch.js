@@ -32,7 +32,7 @@ export const SearchResultsForSavedSearch = () => {
      const [page, setPage] = React.useState(1);
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { uiColors, colorMode } = useTheme();
+     const { resolvedUiColors } = useTheme();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const searchId = useRoute().params.id ?? '';
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
@@ -67,7 +67,7 @@ export const SearchResultsForSavedSearch = () => {
      const Paging = () => {
           if (data.totalPages > 1) {
                return (
-                    <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surface.dark, borderTopWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    <Box style={{ padding: 8, backgroundColor: resolvedUiColors.surface, borderTopWidth: 1, borderColor: resolvedUiColors.border, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" colorScheme="primary">

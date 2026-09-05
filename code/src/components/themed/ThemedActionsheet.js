@@ -34,9 +34,9 @@ export const ThemedActionsheetVirtualizedList = ActionsheetVirtualizedList;
 // paddingBottom were already being passed manually at nearly every call site -- baked in here
 // as defaults, overridable via the caller's own style prop.
 export const ThemedActionsheetContent = React.forwardRef(({ style, ...props }, ref) => {
-     const { uiColors, colorMode } = useTheme();
+     const { resolvedUiColors } = useTheme();
      const insets = useSafeAreaInsets();
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const surfaceBg = resolvedUiColors.surface;
      const paddingBottom = Platform.OS === 'android' ? insets.bottom + 16 : 16;
 
      return <ActionsheetContent ref={ref} style={[{ backgroundColor: surfaceBg, paddingBottom }, style]} {...props} />;

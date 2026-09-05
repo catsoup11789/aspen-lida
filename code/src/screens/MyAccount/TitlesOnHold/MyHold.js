@@ -47,15 +47,15 @@ export const MyHold = (props) => {
      const library = useLibrary();
      const { updateHolds } = React.useContext(HoldsContext);
      const language = useActiveLanguage();
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, resolvedUiColors, runtimeColors, colorMode, textColor } = useTheme();
      const insets = useSafeAreaInsets();
      const [cancelling, startCancelling] = React.useState(false);
      const [checkingOut, startCheckingOut] = React.useState(false);
      const [thawing, startThawing] = React.useState(false);
      const [freezing, startFreezing] = React.useState(false);
-     const actionSheetBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const actionSheetBg = resolvedUiColors.surface;
      const separatorColor = colorMode === 'light' ? 'transparent' : uiColors.iconMuted.dark;
-     const checkboxBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const checkboxBorderColor = resolvedUiColors.border;
      let label, method, icon, canCancel;
      const [usesHoldPosition, setUsesHoldPosition] = React.useState(false);
      const [holdPosition, setHoldPosition] = React.useState(null);
@@ -382,9 +382,9 @@ export const ManageSelectedHolds = (props) => {
      const language = useActiveLanguage();
      const library = useLibrary();
      const { updateHolds } = React.useContext(HoldsContext);
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { resolvedUiColors, runtimeColors, colorMode, textColor } = useTheme();
      const insets = useSafeAreaInsets();
-     const actionSheetBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const actionSheetBg = resolvedUiColors.surface;
 
      const [showActionsheet, setShowActionsheet] = React.useState(false)
      const handleOpen = () => setShowActionsheet(true);
@@ -550,11 +550,11 @@ export const ManageAllHolds = (props) => {
      const language = useActiveLanguage();
      const { holds, updateHolds } = React.useContext(HoldsContext);
      const library = useLibrary();
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { resolvedUiColors, runtimeColors, colorMode, textColor } = useTheme();
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const insets = useSafeAreaInsets();
-     const actionSheetBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const actionSheetBg = resolvedUiColors.surface;
 
      const [showActionsheet, setShowActionsheet] = React.useState(false)
      const handleOpen = () => setShowActionsheet(true);

@@ -103,7 +103,7 @@ const Request = (payload) => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { colorMode, textColor, runtimeColors, uiColors } = useTheme();
+     const { textColor, runtimeColors, resolvedUiColors } = useTheme();
      const navigation = useNavigation();
      const queryClient = useQueryClient();
 
@@ -344,8 +344,8 @@ const Request = (payload) => {
                               )}
                          </ButtonText>
                     </Button>
-                    <Button variant="outline" onPress={() => navigation.goBack()} style={{ borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
-                         <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark }}>Cancel</ButtonText>
+                    <Button variant="outline" onPress={() => navigation.goBack()} style={{ borderColor: resolvedUiColors.border }}>
+                         <ButtonText style={{ color: resolvedUiColors.text }}>Cancel</ButtonText>
                     </Button>
                </HStack>
           );

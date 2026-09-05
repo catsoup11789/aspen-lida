@@ -7,8 +7,8 @@ import { useTheme } from '../../themes/theme';
 // (green on iOS) instead of the library's brand color. v1.0.48 drove this via real RN Switch props
 // (trackColor/ios_backgroundColor), so restore that here using runtimeColors.primary.
 export const ThemedSwitch = React.forwardRef(({ trackColor, ...props }, ref) => {
-     const { runtimeColors, uiColors, colorMode } = useTheme();
-     const offColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { runtimeColors, resolvedUiColors } = useTheme();
+     const offColor = resolvedUiColors.border;
      const resolvedTrackColor = trackColor ?? { false: offColor, true: runtimeColors.primary[500] };
 
      return <Switch ref={ref} trackColor={resolvedTrackColor} ios_backgroundColor={resolvedTrackColor.false} {...props} />;

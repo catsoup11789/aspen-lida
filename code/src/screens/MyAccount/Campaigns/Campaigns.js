@@ -56,9 +56,9 @@ export const MyCampaigns = () => {
 	const queryClient = useQueryClient();
 	const library = useLibrary();
 	const language = useActiveLanguage();
-	const { uiColors, colorMode } = useTheme();
-	const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-	const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+	const { resolvedUiColors } = useTheme();
+	const panelBg = resolvedUiColors.surface;
+	const borderColor = resolvedUiColors.border;
 
 	React.useEffect(() => {
 		queryClient.invalidateQueries(['all_campaigns']);

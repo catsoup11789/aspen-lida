@@ -18,8 +18,8 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
  */
 export const ForceLogout = (props) => {
      const { title, reason } = props;
-	const { uiColors, colorMode } = useTheme();
-	const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+	const { resolvedUiColors } = useTheme();
+	const surfaceBg = resolvedUiColors.surface;
 	const language = useActiveLanguage();
 	const { signOut } = React.useContext(AuthContext);
 	const [isOpen, setIsOpen] = React.useState(true);

@@ -54,7 +54,7 @@ export const MyList = ({ route }) => {
           recentlyAdded: 'Sort By Recently Added',
           custom: 'Sort By User Defined' });
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, uiColors, colorMode } = useTheme();
+     const { textColor, uiColors, colorMode, resolvedUiColors } = useTheme();
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const [isLoading, setIsLoading] = React.useState(true);
      const [fetchError, setFetchError] = React.useState(null);
@@ -68,8 +68,8 @@ export const MyList = ({ route }) => {
           message: null });
      const hasAppliedDefaultSort = React.useRef(false);
      const browserBackgroundColor = colorMode === 'light' ? '#ffffff' : '#111827';
-     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const panelBg = resolvedUiColors.surface;
+     const borderColor = resolvedUiColors.border;
      const dangerColor = uiColors.danger;
      const t = React.useCallback((key, ellipsis = false, forcedLanguage) => {
           const lang = forcedLanguage || language;

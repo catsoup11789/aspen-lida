@@ -46,9 +46,9 @@ export const Facet = ({ route, navigation }) => {
      const [values, setValues] = React.useState([]);
      const [valuesDefault, setValuesDefault] = React.useState([]);
      const [language] = React.useState(route.params?.language ?? 'en');
-     const { uiColors, textColor, colorMode } = useTheme();
-     const headerIconColor = colorMode === 'light' ? uiColors.icon.light : uiColors.icon.dark;
-     const actionBarBackgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const { resolvedUiColors, textColor } = useTheme();
+     const headerIconColor = resolvedUiColors.icon;
+     const actionBarBackgroundColor = resolvedUiColors.surface;
 
      const preselectValues = () => {
           let newValues = [];

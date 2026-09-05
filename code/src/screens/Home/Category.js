@@ -132,14 +132,14 @@ const DisplayBrowseCategory = ({category}) => {
                     <HStack space="md" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 8 }}>
                          <DisplayBrowseCategoryTitle category={category.label} key={category.id} textId={id} source={category.source ?? 'GroupedWork'} />
                          {subCategories.length > 0 ? (
-                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
-                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.textStrong.light : uiColors.white} style={{ marginRight: 4 }} />
-                                  <ButtonText style={{ color: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white }}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
+                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? uiColors.text.light : uiColors.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
+                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} style={{ marginRight: 4 }} />
+                                  <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
                               </Button>
                          ) : (
-                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHide(category.textId)}>
-                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.textStrong.light : uiColors.white} style={{ marginRight: 4 }} />
-                                  <ButtonText style={{ color: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white }}>{getTermFromDictionary(language, 'hide')}</ButtonText>
+                             <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? uiColors.text.light : uiColors.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHide(category.textId)}>
+                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} style={{ marginRight: 4 }} />
+                                  <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'hide')}</ButtonText>
                               </Button>
                          )}
                     </HStack>
@@ -170,14 +170,14 @@ const DisplayBrowseCategory = ({category}) => {
  * @constructor
  */
 const DisplayBrowseCategoryTitle = ({category}) => {
-     const { colorMode, uiColors } = useTheme();
+     const { resolvedUiColors } = useTheme();
 
      return (
           <Pressable style={{ maxWidth: '80%' }} /*onPress={() => onPressCategory(category, textId, source)}*/>
                <Text
                     bold
                     size="lg"
-                    style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark, marginBottom: 4 }}
+                    style={{ color: resolvedUiColors.text, marginBottom: 4 }}
                     >
                     {category}
                </Text>

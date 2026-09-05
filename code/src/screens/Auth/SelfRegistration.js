@@ -24,9 +24,9 @@ import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField, Themed
  */
 export const SelfRegistration = () => {
 	const insets = useSafeAreaInsets();
-	const {uiColors, colorMode} = useTheme();
-	const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-	const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+	const { resolvedUiColors } = useTheme();
+	const surfaceBg = resolvedUiColors.surface;
+	const borderColor = resolvedUiColors.border;
 	const route = useRoute();
 	const navigation = useNavigation();
 	const libraryUrl = route?.params?.libraryUrl ?? '';

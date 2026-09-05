@@ -3,8 +3,8 @@ import { Textarea, TextareaInput } from '@/components/ui/textarea';
 import { useTheme } from '../../themes/theme';
 
 export const ThemedTextarea = React.forwardRef(({ style, ...props }, ref) => {
-     const { uiColors, colorMode } = useTheme();
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { resolvedUiColors } = useTheme();
+     const borderColor = resolvedUiColors.border;
 
      return <Textarea ref={ref} style={[{ borderColor }, style]} {...props} />;
 });

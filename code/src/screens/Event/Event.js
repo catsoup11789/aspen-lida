@@ -55,7 +55,7 @@ export const EventScreen = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, uiColors, colorMode } = useTheme();
+     const { textColor, uiColors, resolvedUiColors } = useTheme();
      const [hasValidImage, setHasValidImage] = React.useState(false);
      const [eventData, setEventData] = React.useState([]);
      const [errorMessage, setErrorMessage] = React.useState('');
@@ -134,8 +134,8 @@ const DisplayEvent = (payload) => {
      const route = useRoute();
      const source = route.params.source;
      const language = useActiveLanguage();
-     const { textColor, uiColors, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const { textColor, uiColors, resolvedUiColors } = useTheme();
+     const backgroundColor = resolvedUiColors.surface;
      const openLink = async () => {
           const browserParams = {
                enableDefaultShareMenuItem: false,
@@ -205,8 +205,8 @@ const DisplayEvent = (payload) => {
                     {event.inUserEvents ? <InYourEvents /> : <AddToYourEvents id={event.id} source={source} />}
                     <HStack space="sm" style={{ justifyContent: 'space-between' }}>
                          {event.canAddToList ? <AddToList source="Events" itemId={event.id} btnStyle="reg" btnWidth="48%" /> : null}
-                         <Button style={{ backgroundColor: uiColors.surfaceMuted.light, width: event.canAddToList ? '49%' : '100%' }} onPress={() => openLink()}>
-                              <ButtonText style={{ color: uiColors.textStrong.light }}>{getTermFromDictionary(language, 'more_info')}</ButtonText>
+                         <Button style={{ backgroundColor: uiColors.surface.light, width: event.canAddToList ? '49%' : '100%' }} onPress={() => openLink()}>
+                              <ButtonText style={{ color: uiColors.text.light }}>{getTermFromDictionary(language, 'more_info')}</ButtonText>
                          </Button>
                     </HStack>
                     <EventDescription description={event.description} />
@@ -655,8 +655,8 @@ const RegistrationModal = ({ event }) => {
      const language = useActiveLanguage();
      const [showRegistrationModal, setShowRegistrationModal] = React.useState(false);
 
-     const { textColor, uiColors, colorMode } = useTheme();
-     const backgroundColor= colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const { textColor, uiColors, resolvedUiColors } = useTheme();
+     const backgroundColor= resolvedUiColors.surface;
 
      const openLink = async () => {
           /* location.homeLink */
@@ -692,11 +692,11 @@ const RegistrationModal = ({ event }) => {
                               <ButtonGroup space="sm" size="md">
                                    <Button
                                         variant="outline"
-                                        style={{ borderColor: uiColors.border.light, backgroundColor: uiColors.surfaceMuted.light }}
+                                        style={{ borderColor: uiColors.border.light, backgroundColor: uiColors.surface.light }}
                                         onPress={() => {
                                              setShowRegistrationModal(false);
                                         }}>
-                                        <ButtonText style={{ color: uiColors.textStrong.light }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: uiColors.text.light }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button colorScheme="primary" onPress={() => openLink()}><ButtonText>{getTermFromDictionary(language, 'go_to_registration')}</ButtonText></Button>
                               </ButtonGroup>

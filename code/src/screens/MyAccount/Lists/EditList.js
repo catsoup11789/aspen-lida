@@ -48,10 +48,10 @@ const EditList = (props) => {
       const [description, setDescription] = React.useState(data.description);
       const [isPublic, setPublic] = React.useState(data.public);
       const [listGroupId, setListGroupId] = React.useState(data.listGroupId);
-      const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+      const { runtimeColors, textColor, resolvedUiColors } = useTheme();
 
       const user = userState?.user ?? {};
-      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+      const borderColor = resolvedUiColors.border;
 
      React.useLayoutEffect(() => {
           navigation.setOptions({
@@ -200,7 +200,7 @@ const EditList = (props) => {
  */
 const DeleteList = (props) => {
       const { listId } = props;
-      const {textColor, colorMode, uiColors, runtimeColors } = useTheme();
+      const {textColor, uiColors, runtimeColors, resolvedUiColors } = useTheme();
       const { data: userState } = useUserState();
       const library = useLibrary();
       const language = useActiveLanguage();
@@ -212,8 +212,8 @@ const DeleteList = (props) => {
       const onClose = () => setIsOpen(false);
       const cancelRef = React.useRef(null);
       const user = userState?.user ?? {};
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const surfaceBg = resolvedUiColors.surface;
+     const borderColor = resolvedUiColors.border;
 
      return (
           <Center>

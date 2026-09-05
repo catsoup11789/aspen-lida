@@ -28,7 +28,7 @@ export const StartCheckOutSession = () => {
      const { data: userState } = useUserState();
      const user = userState?.user ?? {};
      const { data: accounts } = useAccounts();
-     const { textColor, colorMode, uiColors, runtimeColors } = useTheme();
+     const { textColor, resolvedUiColors, runtimeColors } = useTheme();
 
      let startNew = useRoute().params?.startNew ?? false;
 
@@ -92,7 +92,7 @@ export const StartCheckOutSession = () => {
           <Center>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={() => GoBackHome()}>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                    <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
                          <AlertDialogHeader><Heading>{getTermFromDictionary(language, 'start_checkout_session')}</Heading></AlertDialogHeader>
                          <AlertDialogBody>
                               <FormControl>

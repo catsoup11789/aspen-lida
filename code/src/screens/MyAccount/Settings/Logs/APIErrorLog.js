@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { clearApiErrorLogs, getApiErrorLogsPage } from '@/src/util/db';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
-import { useTheme } from '@/src/themes/theme';
+import { resolveUiColorMap, useTheme } from '@/src/themes/theme';
 import { Accordion, AccordionContent, AccordionContentText, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../../components/themed/ThemedButton';
@@ -48,9 +48,10 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
      const uiColors = uiColorsProp ?? themeCtx.uiColors ?? {};
      const colorMode = colorModeProp ?? themeCtx.colorMode ?? 'light';
      const textColor = textColorProp ?? themeCtx.textColor ?? '#111827';
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const resolvedUiColors = React.useMemo(() => resolveUiColorMap(uiColors, colorMode), [uiColors, colorMode]);
+     const surfaceBg = resolvedUiColors.surface;
+     const panelBg = resolvedUiColors.surface;
+     const borderColor = resolvedUiColors.border;
 
      const loadPage = React.useCallback(async (nextPage = 1) => {
           setLoading(true);

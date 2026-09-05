@@ -62,8 +62,7 @@ export const SupportScreen = () => {
      const updateLanguages = useUpdateAvailableLanguages();
      const updateDictionary = useUpdateDictionary();
      const { uiColors, textColor, colorMode } = useTheme();
-     const mutedTextColor = colorMode === 'light' ? uiColors.icon.light : uiColors.iconMuted.light;
-     const cachePanelBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.iconMuted.light;
+     const mutedTextColor = colorMode === 'light' ? uiColors.icon.light : uiColors.iconMuted.dark;
      const [refreshingCache, setRefreshingCache] = React.useState({});
      const isAnyCacheRefreshing = Object.values(refreshingCache).some(Boolean);
      const [status, setStatus] = React.useState({
@@ -360,8 +359,8 @@ export const SupportScreen = () => {
                                                             Cached: {formatCachedDateTime(cacheItem.updatedAt)}
                                                        </Text>
                                                   </VStack>
-                                                  <Button size="sm" variant="outline" style={{ borderColor: cachePanelBorderColor }} isDisabled={Boolean(refreshingCache[cacheItem.key]) || isAnyCacheRefreshing} onPress={() => refreshCache(cacheItem.key, cacheItem.refetch)}>
-                                                       <ButtonText style={{ color: mutedTextColor }}>{refreshingCache[cacheItem.key] ? 'Updating...' : 'Update'}</ButtonText>
+                                                  <Button size="sm" variant="outline" colorScheme="tertiary" isDisabled={Boolean(refreshingCache[cacheItem.key]) || isAnyCacheRefreshing} onPress={() => refreshCache(cacheItem.key, cacheItem.refetch)}>
+                                                       <ButtonText>{refreshingCache[cacheItem.key] ? 'Updating...' : 'Update'}</ButtonText>
                                                   </Button>
                                              </HStack>
                                         </Box>

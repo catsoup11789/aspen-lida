@@ -301,7 +301,7 @@ const CreateLibraryCard = (data) => {
      const card = data.card ?? [];
      const { numCards, hasOpenModalRef, openBarcodeModal } = data ?? 0;
 
-     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const { textColor, runtimeColors, resolvedUiColors } = useTheme();
 
      const library = useLibrary();
      const language = data.language || useActiveLanguage();
@@ -394,8 +394,8 @@ const CreateLibraryCard = (data) => {
           );
      }
 
-     let cardBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const barcodeBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     let cardBg = resolvedUiColors.surface;
+     const barcodeBg = resolvedUiColors.surface;
 
      return (
           <VStack style={{ backgroundColor: cardBg, paddingHorizontal: 32, paddingVertical: 20, borderRadius: 12 }}>
@@ -563,7 +563,7 @@ const CardCarousel = (data) => {
  * @constructor
  */
 const BarcodeModal = ({ card, showModal, closeModal, language }) => {
-     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const { textColor, runtimeColors, resolvedUiColors } = useTheme();
      const library = useLibrary();
      const [orientation, setOrientation] = React.useState('portrait');
      const [screenDimensions, setScreenDimensions] = React.useState(Dimensions.get('window'));
@@ -650,8 +650,8 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
           }
      };
 
-     const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const barcodeBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const modalBg = resolvedUiColors.surface;
+     const barcodeBg = resolvedUiColors.surface;
 
      return (
           <Modal isOpen={showModal} onClose={closeModal} size="full">

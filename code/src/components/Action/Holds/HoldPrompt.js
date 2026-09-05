@@ -47,7 +47,7 @@ export const HoldPrompt = (props) => {
      const { data: sublocations } = useSublocations();
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, resolvedUiColors, runtimeColors, colorMode, textColor } = useTheme();
 
      const {
           language,
@@ -365,12 +365,12 @@ export const HoldPrompt = (props) => {
                               <ButtonGroup space="sm">
                                    <Button
                                         variant="outline"
-                                        style={{ borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}
+                                        style={{ borderColor: resolvedUiColors.border }}
                                         onPress={() => {
                                              setShowAddAlternateLibraryCardModal(false);
                                              setLoading(false);
                                         }}>
-                                        <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: resolvedUiColors.text }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button
                                         colorScheme="primary"
@@ -566,12 +566,12 @@ export const HoldPrompt = (props) => {
                               <ButtonGroup space="sm">
                                    <Button
                                         variant="outline"
-                                        style={{ borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}
+                                        style={{ borderColor: resolvedUiColors.border }}
                                         onPress={() => {
                                              setShowModal(false);
                                              setLoading(false);
                                         }}>
-                                        <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                        <ButtonText style={{ color: resolvedUiColors.text }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    {promptAlternateLibraryCard && !userHasAlternateLibraryCard ? (
                                         <Button

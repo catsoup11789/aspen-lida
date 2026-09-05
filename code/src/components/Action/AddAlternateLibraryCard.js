@@ -66,16 +66,16 @@ export const AddAlternateLibraryCard = (props) => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { uiColors, textColor, colorMode, runtimeColors } = useTheme();
+     const { resolvedUiColors, textColor, runtimeColors } = useTheme();
      const queryClient = useQueryClient();
      const { width } = useWindowDimensions();
      const [card, setCard] = React.useState(user?.alternateLibraryCard ?? '');
      const [password, setPassword] = React.useState(user?.alternateLibraryCardPassword ?? '');
      const [showModal, setShowModal] = React.useState(true);
      const [loading, setLoading] = React.useState(false);
-     const inputBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const surfaceColor = colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark;
-     const modalBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const inputBorderColor = resolvedUiColors.border;
+     const surfaceColor = resolvedUiColors.surface;
+     const modalBorderColor = resolvedUiColors.border;
 
      const [showPassword, setShowPassword] = React.useState(false);
      const toggleShowPassword = () => setShowPassword(!showPassword);

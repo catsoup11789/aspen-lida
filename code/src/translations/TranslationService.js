@@ -35,7 +35,7 @@ import { useTheme } from '../themes/theme';
  * @constructor
  */
 export const LanguageSwitcher = () => {
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, runtimeColors, resolvedUiColors, colorMode, textColor } = useTheme();
      const library = useLibrary();
      const language = useActiveLanguage();
      const languages = useAvailableLanguages();
@@ -92,7 +92,7 @@ export const LanguageSwitcher = () => {
                <>
                     <Box>
                          <Menu
-                         style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark }}
+                         style={{ backgroundColor: resolvedUiColors.surface }}
                          isOpen={isLanguageMenuOpen}
                          onClose={() => setIsLanguageMenuOpen(false)}
                          onOpen={() => setIsLanguageMenuOpen(true)}
@@ -149,7 +149,7 @@ export const LanguageSwitcher = () => {
                          >
                               <Box
                                    style={{
-                                        backgroundColor: colorMode === 'dark' ? uiColors.card.dark : uiColors.surfaceSoft.light,
+                                        backgroundColor: colorMode === 'dark' ? uiColors.card.dark : uiColors.surface.light,
                                         borderRadius: 16,
                                         paddingHorizontal: 24,
                                         paddingVertical: 20,

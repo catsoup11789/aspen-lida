@@ -43,12 +43,12 @@ export const ResetExpiredPin = (props) => {
      const updateLibraryLocation = useUpdateLibraryLocation();
      const updateHomeScreenLinks = useUpdateHomeScreenLinks();
      const updateUserProfile = useUpdateUserProfile();
-     const { uiColors, runtimeColors, colorMode } = useTheme();
+     const { resolvedUiColors, runtimeColors } = useTheme();
      const updateBrowseCategories = useUpdateBrowseCategories();
      const language = useActiveLanguage();
      const { username, resetToken, url, pinValidationRules, setExpiredPin, patronsLibrary } = props;
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const surfaceBg = resolvedUiColors.surface;
+     const borderColor = resolvedUiColors.border;
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => {
           setExpiredPin(false);

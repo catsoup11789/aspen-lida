@@ -56,9 +56,9 @@ export const MyLists = () => {
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const [loading, setLoading] = React.useState(false);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { uiColors, colorMode } = useTheme();
-     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { resolvedUiColors } = useTheme();
+     const panelBg = resolvedUiColors.surface;
+     const borderColor = resolvedUiColors.border;
 
      const [currentListGroup, setCurrentListGroup] = React.useState(-1);
      const [currentListGroupData, setCurrentListGroupData] = React.useState({
@@ -291,8 +291,8 @@ export const MyLists = () => {
                          <HStack space={3} style={{ marginTop: 8, marginBottom: 8, justifyContent: 'flex-start' }}>
                               <VStack space={1}>
                                    <Image alt={item.title} source={imageUrl} style={{ width: 100, height: 150, borderRadius: 8 }} placeholder={blurhash} transition={1000} contentFit="cover" />
-                                   <Badge style={{ marginTop: 4, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
-                                        <BadgeText style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>{privacy}</BadgeText>
+                                   <Badge style={{ marginTop: 4, backgroundColor: resolvedUiColors.surface }}>
+                                        <BadgeText style={{ color: resolvedUiColors.iconMuted, fontSize: 10, textAlign: 'center' }}>{privacy}</BadgeText>
                                    </Badge>
                               </VStack>
                               <VStack space={1} style={{ justifyContent: 'space-between', maxWidth: '80%', paddingLeft: 8 }}>

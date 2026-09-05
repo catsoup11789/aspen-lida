@@ -26,8 +26,8 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
  */
 export const ForgotBarcode = (props) => {
      const isKeyboardOpen = useKeyboard();
-     const { uiColors, textColor, colorMode }= useTheme();
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { resolvedUiColors, textColor } = useTheme();
+     const borderColor = resolvedUiColors.border;
      const library = useLibrary();
      const { usernameLabel, showForgotBarcodeModal, setShowForgotBarcodeModal } = props;
      const [isProcessing, setIsProcessing] = React.useState(false);

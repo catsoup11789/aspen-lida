@@ -26,7 +26,7 @@ const Tab = createBottomTabNavigator();
 export default function TabNavigator() {
      const enableSelfCheck = useSelfCheckEnabled();
      const selfCheckSettings = useSelfCheckSettings();
-     const { uiColors, colorMode } = useTheme();
+     const { uiColors, resolvedUiColors, colorMode } = useTheme();
 
      const settingsEnabledCandidates = [
           selfCheckSettings?.isEnabled,
@@ -38,9 +38,9 @@ export default function TabNavigator() {
      );
      const showSelfCheckTab = enableSelfCheck === true || settingsEnableSelfCheck;
 
-     const activeIcon = colorMode === 'light' ? uiColors.surface.dark : uiColors.textStrong.dark;
-     const inactiveIcon = colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark;
-     const tabBarBackgroundColor = colorMode === 'light' ? uiColors.card.light : uiColors.card.dark;
+     const activeIcon = colorMode === 'light' ? uiColors.surface.dark : uiColors.text.dark;
+     const inactiveIcon = resolvedUiColors.iconMuted;
+     const tabBarBackgroundColor = resolvedUiColors.card;
 
      return (
           <Tab.Navigator
@@ -94,11 +94,11 @@ export default function TabNavigator() {
  */
 export const TabItem = ({ state, descriptors, navigation }) => {
      const language = useActiveLanguage();
-     const { uiColors, colorMode } = useTheme();
-     const activeIconColor = colorMode === 'light' ? uiColors.surface.dark : uiColors.textStrong.dark;
-     const inactiveIconColor = colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark;
-     const tabBarBackgroundColor = colorMode === 'light' ? uiColors.card.light : uiColors.card.dark;
-     const tabBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { uiColors, resolvedUiColors, colorMode } = useTheme();
+     const activeIconColor = colorMode === 'light' ? uiColors.surface.dark : uiColors.text.dark;
+     const inactiveIconColor = resolvedUiColors.iconMuted;
+     const tabBarBackgroundColor = resolvedUiColors.card;
+     const tabBorderColor = resolvedUiColors.border;
      const insets = useSafeAreaInsets();
 
      const [browseTabLabel, setBrowseTabLabel] = React.useState(getTermFromDictionary(language, 'nav_discover'));

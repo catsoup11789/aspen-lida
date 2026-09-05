@@ -52,9 +52,9 @@ const AddToList = (props) => {
      const [title, saveTitle] = useState();
      const [isPublic, saveIsPublic] = useState('1');
      const queryClient = useQueryClient();
-     const { uiColors, runtimeColors, colorMode } = useTheme();
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const cancelColor = colorMode === 'light' ? uiColors.textStrong.light : uiColors.textStrong.dark;
+     const { resolvedUiColors, runtimeColors } = useTheme();
+     const borderColor = resolvedUiColors.border;
+     const cancelColor = resolvedUiColors.text;
 
      const [addToGroup, setAddToGroup] = React.useState('no');
      const [newGroupName, setNewGroupName] = React.useState('');

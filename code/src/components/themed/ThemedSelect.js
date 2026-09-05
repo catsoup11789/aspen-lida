@@ -50,8 +50,8 @@ export const ThemedSelectInput = React.forwardRef(({ style, ...props }, ref) => 
 ThemedSelectInput.displayName = 'ThemedSelectInput';
 
 export const ThemedSelectTrigger = React.forwardRef(({ children, variant = 'outline', size = 'md', className, style, ...props }, ref) => {
-     const { uiColors, colorMode } = useTheme();
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { resolvedUiColors } = useTheme();
+     const borderColor = resolvedUiColors.border;
 
      return (
           <SelectTrigger variant="outline" ref={ref} size={size} className={['justify-between', className].filter(Boolean).join(' ')} style={[{ borderColor }, style]} {...props}>
@@ -75,10 +75,10 @@ export const ThemedSelectPortal = SelectPortal;
 export const ThemedSelectBackdrop = SelectBackdrop;
 
 export const ThemedSelectContent = React.forwardRef(({ style, ...props }, ref) => {
-     const { uiColors, colorMode } = useTheme();
+     const { resolvedUiColors } = useTheme();
      const insets = useSafeAreaInsets();
      const { height: windowHeight } = useWindowDimensions();
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const surfaceBg = resolvedUiColors.surface;
      const paddingBottom = Platform.OS === 'android' ? insets.bottom + 16 : 16;
 
      return <SelectContent ref={ref} style={[{ backgroundColor: surfaceBg, paddingBottom, maxHeight: windowHeight * 0.8 }, style]} {...props} />;

@@ -91,21 +91,9 @@ const UI_NEUTRAL_COLORS = {
           light: '#e7e5e4',
           dark: '#111827',
      },
-     surfaceMuted: {
-          light: '#f9fafb',
-          dark: '#374151',
-     },
-     surfaceSoft: {
-          light: '#fafaf9',
-          dark: '#374151',
-     },
      text: {
           light: '#1f2937',
           dark: '#e5e7eb',
-     },
-     textStrong: {
-          light: '#1c1917',
-          dark: '#f3f4f6',
      },
      border: {
           light: '#6b7280',
@@ -160,6 +148,19 @@ function buildThemeRuntime(themeColors) {
 
 function buildUiColorMap() {
      return UI_NEUTRAL_COLORS;
+}
+
+// Every uiColors entry is either a {light, dark} pair (surface, text, border, icon, card, ...) or
+// a mode-independent flat value (white, black, danger). Resolving the whole map once per colorMode
+// replaces the `colorMode === 'light' ? uiColors.x.light : uiColors.x.dark` ternary that had been
+// hand-written at ~175 call sites across the app with a single `resolvedUiColors.x` lookup.
+export function resolveUiColorMap(uiColors, colorMode) {
+     return Object.fromEntries(
+          Object.entries(uiColors).map(([key, value]) => {
+               const isModePair = value && typeof value === 'object' && ('light' in value || 'dark' in value);
+               return [key, isModePair ? value[colorMode === 'light' ? 'light' : 'dark'] : value];
+          })
+     );
 }
 
 function buildRuntimeColorMap(themeColors) {
@@ -294,12 +295,14 @@ export function useThemeForDisplay() {
      const themeVars = React.useMemo(() => buildThemeVars(themeColors), [themeColors]);
      const runtimeColors = React.useMemo(() => buildRuntimeColorMap(themeColors), [themeColors]);
      const uiColors = React.useMemo(() => buildUiColorMap(), []);
+     const resolvedUiColors = React.useMemo(() => resolveUiColorMap(uiColors, colorMode), [uiColors, colorMode]);
 
      return {
           theme,
           themeVars,
           runtimeColors,
           uiColors,
+          resolvedUiColors,
           themeColors,
           themeId,
           colorMode,
@@ -309,7 +312,7 @@ export function useThemeForDisplay() {
 }
 
 export function useTheme() {
-     const { theme, themeVars, runtimeColors, uiColors, themeColors, themeId, colorMode, textColor, header } = useThemeForDisplay();
+     const { theme, themeVars, runtimeColors, uiColors, resolvedUiColors, themeColors, themeId, colorMode, textColor, header } = useThemeForDisplay();
      const updateThemeColors = useUpdateThemeColors();
      const updateColorModeValue = useUpdateThemeColorMode();
      const resetThemeState = useResetThemeState();
@@ -352,6 +355,7 @@ export function useTheme() {
           themeVars,
           runtimeColors,
           uiColors,
+          resolvedUiColors,
           themeColors,
           themeId,
           colorMode,
@@ -425,7 +429,7 @@ export function UseColorMode(props) {
  * @param showText whether to show the active theme's name next to the trigger icon, mirroring UseColorMode's prop
  */
 export const ThemeSwitcher = ({ showText = true } = {}) => {
-     const { runtimeColors, uiColors, themeId, colorMode, textColor } = useTheme();
+     const { runtimeColors, uiColors, resolvedUiColors, themeId, colorMode, textColor } = useTheme();
      const location = useLibraryLocation();
      const themes = useAvailableThemes(location?.locationId);
      const updateThemeColors = useUpdateThemeColors();
@@ -471,7 +475,7 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                               <Box style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-start', paddingBottom: 48, paddingLeft: 40 }}>
                                    <Box
                                         style={{
-                                             backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark,
+                                             backgroundColor: resolvedUiColors.surface,
                                              borderRadius: 6,
                                              padding: 4,
                                              height: themes.length > 4 ? 150 : undefined,
@@ -519,7 +523,7 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                     <View style={[themeSwitcherStyles.overlay, colorMode === 'dark' ? themeSwitcherStyles.overlayDark : themeSwitcherStyles.overlayLight]}>
                          <Box
                               style={{
-                                   backgroundColor: colorMode === 'dark' ? uiColors.card.dark : uiColors.surfaceSoft.light,
+                                   backgroundColor: colorMode === 'dark' ? uiColors.card.dark : uiColors.surface.light,
                                    borderRadius: 16,
                                    paddingHorizontal: 24,
                                    paddingVertical: 20,

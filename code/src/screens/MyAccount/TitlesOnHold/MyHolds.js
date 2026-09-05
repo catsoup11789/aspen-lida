@@ -56,10 +56,10 @@ export const MyHolds = () => {
      const [date, setNewDate] = React.useState();
      const [pickupLocations] = React.useState([]);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { uiColors, textColor, colorMode } = useTheme();
-     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { resolvedUiColors, textColor } = useTheme();
+     const panelBg = resolvedUiColors.surface;
+     const surfaceBg = resolvedUiColors.surface;
+     const borderColor = resolvedUiColors.border;
 
      const [sortBy, setSortBy] = React.useState({
           title: 'Sort by Title',

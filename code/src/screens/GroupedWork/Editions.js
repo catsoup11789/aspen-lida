@@ -43,7 +43,7 @@ export const Editions = () => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { colorMode, textColor, uiColors } = useTheme();
+     const { textColor, resolvedUiColors } = useTheme();
      const insets = useSafeAreaInsets();
 
      const [isLoading] = useState(false);
@@ -195,7 +195,7 @@ export const Editions = () => {
                <Center>
                     <AlertDialog leastDestructiveRef={cancelResponseRef} isOpen={responseIsOpen} onClose={onResponseClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                         <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
                               <AlertDialogHeader>
                                    <Heading>{response?.title}</Heading>
                               </AlertDialogHeader>
@@ -218,7 +218,7 @@ export const Editions = () => {
                     </AlertDialog>
                     <AlertDialog leastDestructiveRef={cancelHoldConfirmationRef} isOpen={holdConfirmationIsOpen} onClose={onHoldConfirmationClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                         <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
                               <AlertDialogHeader>
                                    <Heading>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                               </AlertDialogHeader>
@@ -265,7 +265,7 @@ export const Editions = () => {
                     </AlertDialog>
                     <AlertDialog leastDestructiveRef={cancelHoldItemSelectRef} isOpen={holdItemSelectIsOpen} onClose={onHoldItemSelectClose} useRNModal={true}>
                          <AlertDialogBackdrop />
-                         <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                         <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
                               <AlertDialogHeader>
                                    <Heading>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                               </AlertDialogHeader>
@@ -417,8 +417,8 @@ const Edition = (props) => {
                               </Center>
                               {records.source === 'ils' || status.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
-                                        <MaterialIcons name="location-pin" size={14} color={colorMode === 'light' ? uiColors.textStrong.light : uiColors.white} style={{ marginRight: 4 }} />
-                                        <ButtonText style={{ color: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
+                                        <MaterialIcons name="location-pin" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} style={{ marginRight: 4 }} />
+                                        <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                                    </Button>
                               ) : null}
                          </VStack>

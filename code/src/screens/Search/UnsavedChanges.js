@@ -20,7 +20,7 @@ import { useTheme } from '../../themes/theme';
  */
 export const UnsavedChangesExit = (props) => {
      const { updateSearch, discardChanges, language, hasPendingChanges } = props;
-     const { uiColors, colorMode } = useTheme();
+     const { uiColors, resolvedUiColors } = useTheme();
      const navigation = useNavigation();
      const [isOpen, setIsOpen] = React.useState(false);
      const onClose = () => setIsOpen(false);
@@ -63,7 +63,7 @@ export const UnsavedChangesExit = (props) => {
                </Pressable>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose} useRNModal={true}>
                     <AlertDialogBackdrop/>
-                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark }}>
+                    <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
                          <AlertDialogHeader>
                               <Heading>{getTermFromDictionary(language, 'discard_changes')}</Heading>
                          </AlertDialogHeader>

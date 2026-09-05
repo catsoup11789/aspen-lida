@@ -103,9 +103,9 @@ const SavedSearch = (data) => {
      const item = data.data;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, uiColors, textColor } = useTheme();
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const surfaceMuted = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const { colorMode, uiColors, textColor, resolvedUiColors } = useTheme();
+     const borderColor = resolvedUiColors.border;
+     const surfaceColor = resolvedUiColors.surface;
      const subtitleColor = colorMode === 'light' ? uiColors.icon.light : uiColors.iconMuted.dark;
 
      const imageUrl = library.baseUrl + item.image;
@@ -150,7 +150,7 @@ const SavedSearch = (data) => {
                              contentFit="cover"
                         />
                          <Badge
-                              style={{ marginTop: 4, backgroundColor: surfaceMuted }}
+                              style={{ marginTop: 4, backgroundColor: surfaceColor }}
                          >
                               <BadgeText
                                    size="sm"

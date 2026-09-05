@@ -32,9 +32,9 @@ export const DisplayEventResult = (props) => {
      const item = props.data;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { uiColors, textColor, colorMode } = useTheme();
+     const { resolvedUiColors, textColor } = useTheme();
 
-     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const backgroundColor = resolvedUiColors.surface;
 
      const id = item.key ?? item.id;
      const keyParts = item.key.split('_');
@@ -138,7 +138,7 @@ export const DisplayEventResult = (props) => {
      };
 
      return (
-         <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+         <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
                     <VStack style={{ width: 100 }}>
                          <Box style={{ height: 150 }}>

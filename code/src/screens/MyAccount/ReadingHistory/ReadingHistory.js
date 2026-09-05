@@ -65,10 +65,10 @@ export const MyReadingHistory = () => {
           return systemMessages.filter((obj) => obj.showOn === '0');
      }, [systemMessages]);
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
-     const { uiColors, textColor, colorMode } = useTheme();
-     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { uiColors, textColor, resolvedUiColors } = useTheme();
+     const panelBg = resolvedUiColors.surface;
+     const surfaceBg = resolvedUiColors.surface;
+     const borderColor = resolvedUiColors.border;
      const dangerColor = uiColors.danger;
      const pageHistory = React.useMemo(() => {
           if (!Array.isArray(readingHistory?.history)) return [];
@@ -503,8 +503,8 @@ const Item = React.memo(({ data: item, onDelete }) => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const {colorMode, uiColors } = useTheme();
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { resolvedUiColors } = useTheme();
+     const borderColor = resolvedUiColors.border;
 
      const [deleting, setDelete] = React.useState(false);
      const [isOpen, setIsOpen] = React.useState(false);

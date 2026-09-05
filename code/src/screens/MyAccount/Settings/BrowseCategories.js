@@ -210,7 +210,7 @@ const DisplayCategory = (data) => {
            });
      };
      return (
-          <Box style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.light, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
+          <Box style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
                <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}>
                     <Text
                          bold
@@ -228,7 +228,7 @@ const DisplayCategory = (data) => {
                          isChecked={isVisible}
                          trackColor={{
                               true: runtimeColors.primary[500],
-                              false: colorMode === 'light' ? uiColors.surface.light : uiColors.surfaceMuted.dark
+                              false: resolvedUiColors.surface
                          }}
 
                     />

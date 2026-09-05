@@ -335,8 +335,8 @@ const FilterModalStack = createNativeStackNavigator();
  */
 const FilterModal = () => {
      const language = useActiveLanguage();
-     const { uiColors, colorMode } = useTheme();
-     const iconColor = colorMode === 'light' ? uiColors.icon.light : uiColors.icon.dark;
+     const { resolvedUiColors } = useTheme();
+     const iconColor = resolvedUiColors.icon;
      return (
           <FilterModalStack.Navigator
                id="SearchFilters"

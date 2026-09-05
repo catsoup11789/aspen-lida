@@ -34,9 +34,9 @@ export const MyAlternateLibraryCard = () => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { uiColors, textColor, colorMode } = useTheme();
+     const { uiColors, textColor, resolvedUiColors } = useTheme();
      const queryClient = useQueryClient();
-     const inputBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const inputBorderColor = resolvedUiColors.border;
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const { width } = useWindowDimensions();
      const [card, setCard] = React.useState(user?.alternateLibraryCard ?? '');

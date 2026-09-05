@@ -39,7 +39,7 @@ const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 export const AllLocations = () => {
      const library = useLibrary();
      const locations = useAvailableLocations();
-     const { textColor, colorMode, uiColors } = useTheme();
+     const { textColor, colorMode, uiColors, resolvedUiColors } = useTheme();
      const updateAvailableLocations = useUpdateAvailableLocations();
      const language = useActiveLanguage();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
@@ -134,7 +134,7 @@ export const AllLocations = () => {
      const getActionButtons = () => {
           return (
                <Box
-                    style={{ alignItems: 'center', padding: 8, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark, borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.light }}>
+                    style={{ alignItems: 'center', padding: 8, backgroundColor: resolvedUiColors.surface, borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.dark }}>
                     <ButtonGroup alignItems="center" isAttached>
                          <Button variant={sort === 'alphabetical' ? 'solid' : 'outline'} colorScheme="secondary" onPress={() => setSort('alphabetical')}>
                               <ButtonText>{getTermFromDictionary(language, 'a_to_z')}</ButtonText>

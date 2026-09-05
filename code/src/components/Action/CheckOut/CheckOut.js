@@ -36,7 +36,7 @@ export const CheckOut = (props) => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const [loading, setLoading] = React.useState(false);
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { resolvedUiColors, runtimeColors, textColor } = useTheme();
 
      const volumeInfo = {
           numItemsWithVolumes: 0,
@@ -142,7 +142,7 @@ export const CheckOut = (props) => {
                     <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg">
                          <ModalBackdrop />
                          <ModalContent style={{ maxWidth: '90%' }}>
-                              <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
+                              <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: resolvedUiColors.border }}>
                                    <Heading>
                                         {getTermFromDictionary(language, 'add_alternate_library_card')}
                                    </Heading>
@@ -176,16 +176,16 @@ export const CheckOut = (props) => {
                                         </FormControl>
                                    ) : null}
                               </ModalBody>
-                              <ModalFooter style={{ borderTopWidth: 1, borderTopColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
+                              <ModalFooter style={{ borderTopWidth: 1, borderTopColor: resolvedUiColors.border }}>
                                    <ButtonGroup space="sm">
                                         <Button
                                              variant="outline"
-                                             style={{ borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}
+                                             style={{ borderColor: resolvedUiColors.border }}
                                              onPress={() => {
                                                   setShowAddAlternateLibraryCardModal(false);
                                                   setLoading(false);
                                              }}>
-                                             <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.text.dark }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
+                                             <ButtonText style={{ color: resolvedUiColors.text }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
                                              colorScheme="primary"

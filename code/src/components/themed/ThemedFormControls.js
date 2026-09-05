@@ -35,8 +35,8 @@ const INPUT_SIZE_STYLES = {
 };
 
 export const ThemedInput = React.forwardRef(({ size = 'md', style, ...props }, ref) => {
-     const { uiColors, colorMode } = useTheme();
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { resolvedUiColors } = useTheme();
+     const borderColor = resolvedUiColors.border;
      const sizeStyle = INPUT_SIZE_STYLES[size] ?? INPUT_SIZE_STYLES.md;
 
      return (

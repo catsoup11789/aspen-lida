@@ -31,7 +31,7 @@ export const DisplayGroupedWorkResult = (props) => {
      let params = useRoute();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, uiColors } = useTheme();
+     const { resolvedUiColors } = useTheme();
 
      let formats = item?.itemList ?? [];
      const id = item.key ?? item.id;
@@ -92,7 +92,7 @@ export const DisplayGroupedWorkResult = (props) => {
      let url = library.baseUrl + '/bookcover.php?id=' + id + '&size=medium';
 
      return (
-          <Pressable style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
+          <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
                     <VStack style={{ width: 100 }}>
                          <Box style={{ height: 150 }}>
@@ -112,8 +112,8 @@ export const DisplayGroupedWorkResult = (props) => {
                               <Center style={{ marginTop: 4 }}>
                                    <Badge
                                         size="sm"
-                                        style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
-                                        <BadgeText style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 12, textAlign: 'center' }}>
+                                        style={{ backgroundColor: resolvedUiColors.surface }}>
+                                        <BadgeText style={{ color: resolvedUiColors.iconMuted, fontSize: 12, textAlign: 'center' }}>
                                             {item.language}
                                        </BadgeText>
                                    </Badge>

@@ -311,8 +311,8 @@ const PrivacyPolicy = () => {
      const language = useActiveLanguage();
      const appSettings = useAppSettings();
 
-     const { textColor, uiColors, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const { textColor, resolvedUiColors } = useTheme();
+     const backgroundColor = resolvedUiColors.surface;
 
      const browserParams = {
           enableDefaultShareMenuItem: false,
@@ -387,8 +387,8 @@ const MenuLink = (payload) => {
      let categoryLabel = _.sample(categories);
      categoryLabel = categoryLabel.category;
 
-     const { textColor, uiColors, colorMode } = useTheme();
-     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
+     const { textColor, uiColors, resolvedUiColors } = useTheme();
+     const backgroundColor = resolvedUiColors.surface;
 
      const [expanded, setExpanded] = React.useState(false);
 

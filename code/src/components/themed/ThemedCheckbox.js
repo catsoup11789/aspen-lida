@@ -37,8 +37,8 @@ export const ThemedCheckboxIndicator = React.forwardRef(({ className, style, ...
      const size = React.useContext(CheckboxSizeContext);
      const isChecked = React.useContext(CheckboxCheckedContext);
      const sizeStyle = resolveCheckboxSizeStyle(size);
-     const { runtimeColors, uiColors, colorMode } = useTheme();
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { runtimeColors, resolvedUiColors } = useTheme();
+     const borderColor = resolvedUiColors.border;
      const checkedStyle = isChecked ? { borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : { borderColor };
 
      return <CheckboxIndicator ref={ref} className={[sizeStyle.indicator, className].filter(Boolean).join(' ')} style={[{ marginRight: 8 }, checkedStyle, style]} {...props} />;

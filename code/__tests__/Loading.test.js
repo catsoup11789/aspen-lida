@@ -101,10 +101,7 @@ jest.mock('../src/themes/theme', () => {
      const {basicThemeObject} = require('../__mocks__/themes');
      const uiColors = {
           surface: { light: '#e7e5e4', dark: '#111827' },
-          surfaceMuted: { light: '#f9fafb', dark: '#374151' },
-          surfaceSoft: { light: '#fafaf9', dark: '#374151' },
           text: { light: '#1f2937', dark: '#e5e7eb' },
-          textStrong: { light: '#1c1917', dark: '#f3f4f6' },
           border: { light: '#6b7280', dark: '#d6d3d1' },
           icon: { light: '#57534e', dark: '#e5e7eb' },
           iconMuted: { light: '#6b7280', dark: '#9ca3af' },

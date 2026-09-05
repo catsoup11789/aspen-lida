@@ -33,14 +33,14 @@ const CreateListGroup = (props) => {
       const updateListGroupsData = useUpdateListGroups();
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
+      const { textColor, runtimeColors, resolvedUiColors } = useTheme();
       const [loading, setAdding] = React.useState(false);
       const [showModal, setShowModal] = useState(false);
 
      const [title, setTitle] = useState('');
      const [nestedGroupId, setNestedGroupId] = useState("no");
 
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const borderColor = resolvedUiColors.border;
 
      let hasListGroups = false;
      if(user.numListGroups) {

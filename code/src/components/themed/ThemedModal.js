@@ -35,8 +35,8 @@ ThemedModal.displayName = 'ThemedModal';
 // as noticeably excessive padding after the v5 upgrade. 16 keeps some breathing room for call sites
 // that don't add their own horizontal padding around header/body content.
 export const ThemedModalContent = React.forwardRef(({ style, ...props }, ref) => {
-     const { uiColors, colorMode } = useTheme();
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const { resolvedUiColors } = useTheme();
+     const surfaceBg = resolvedUiColors.surface;
 
      return <ModalContent ref={ref} style={[{ maxWidth: '90%', backgroundColor: surfaceBg, padding: 16 }, style]} {...props} />;
 });

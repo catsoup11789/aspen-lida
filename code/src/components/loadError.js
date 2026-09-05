@@ -68,7 +68,7 @@ export function loadError(error, reloadAction = '') {
 export const DisplayErrorAlertDialog = (props) => {
      const { title, message } = props;
      const language = useActiveLanguage();
-     const { uiColors, runtimeColors, colorMode } = useTheme();
+     const { uiColors, resolvedUiColors, runtimeColors } = useTheme();
      const [isOpen, setIsOpen] = React.useState(true);
      const onClose = () => setIsOpen(false);
      const cancelRef = React.useRef(null);
@@ -77,7 +77,7 @@ export const DisplayErrorAlertDialog = (props) => {
           <Center>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                     <AlertDialogBackdrop />
-                    <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark }}>
+                    <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
                     <AlertDialogHeader>
                         <Heading>{title}</Heading>
                     </AlertDialogHeader>

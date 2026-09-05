@@ -40,7 +40,7 @@ export const Variations = (props) => {
      const route = useRoute();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, textColor, uiColors } = useTheme();
+     const { textColor, resolvedUiColors } = useTheme();
 
      const [isLoading, setLoading] = React.useState(false);
      const [confirmingHold, setConfirmingHold] = React.useState(false);
@@ -145,7 +145,7 @@ export const Variations = (props) => {
                          <Center>
                               <AlertDialog leastDestructiveRef={cancelResponseRef} isOpen={responseIsOpen} onClose={onResponseClose}>
                                    <AlertDialogBackdrop />
-                                   <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                                   <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
                                         <AlertDialogHeader>
                                              <Heading>{response?.title ? response.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
@@ -168,7 +168,7 @@ export const Variations = (props) => {
                               </AlertDialog>
                               <AlertDialog leastDestructiveRef={cancelHoldConfirmationRef} isOpen={holdConfirmationIsOpen} onClose={onHoldConfirmationClose}>
                                    <AlertDialogBackdrop />
-                                   <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                                   <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
                                         <AlertDialogHeader>
                                              <Heading>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
@@ -217,7 +217,7 @@ export const Variations = (props) => {
                               </AlertDialog>
                               <AlertDialog leastDestructiveRef={cancelHoldItemSelectRef} isOpen={holdItemSelectIsOpen} onClose={onHoldItemSelectClose}>
                                    <AlertDialogBackdrop />
-                                   <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                                   <AlertDialogContent style={{ backgroundColor: resolvedUiColors.surface }}>
                                         <AlertDialogHeader>
                                              <Heading>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
@@ -308,7 +308,7 @@ const Variation = (props) => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor, colorMode, uiColors } = useTheme();
+     const { textColor, colorMode, uiColors, resolvedUiColors } = useTheme();
 
      // 2. Props Destructuring
      const {
@@ -401,7 +401,7 @@ const Variation = (props) => {
 
      return (
           <Box style={{ marginTop: 20, marginBottom: 0 }}>
-               <Center style={{ margin: 4, padding: 12, backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark, borderRadius: 8, alignSelf: 'center', width: '100%' }}>
+               <Center style={{ margin: 4, padding: 12, backgroundColor: resolvedUiColors.surface, borderRadius: 8, alignSelf: 'center', width: '100%' }}>
                     <VStack space="md" style={{ marginBottom: 12, width: '100%' }}>
                          <HStack space="sm" style={{ width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
                               <Badge variant="solid" colorScheme={status.indicator} style={{ borderRadius: 8, padding: 4 }}>
@@ -411,8 +411,8 @@ const Variation = (props) => {
                               </Badge>
                               {source === 'ils' || statusIndicator.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
-                                        <MaterialCommunityIcons name="map-marker" size={16} color={colorMode === 'light' ? uiColors.textStrong.light : uiColors.white} style={{ marginRight: 4 }} />
-                                        <ButtonText style={{ color: colorMode === 'light' ? uiColors.textStrong.light : uiColors.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
+                                        <MaterialCommunityIcons name="map-marker" size={16} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} style={{ marginRight: 4 }} />
+                                        <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                                    </Button>
                               ) : null}
                          </HStack>
@@ -464,8 +464,8 @@ const Variation = (props) => {
                               />
                          ))}
                     </ButtonGroup>
-                    <Button size="xs" variant="solid" onPress={handleOpenEditions} style={{ width: '100%', marginTop: 8, backgroundColor: uiColors.surfaceMuted.light }}>
-                         <ButtonText style={{ color: uiColors.textStrong.light }}>{getTermFromDictionary(language, 'show_editions')}</ButtonText>
+                    <Button size="xs" variant="solid" onPress={handleOpenEditions} style={{ width: '100%', marginTop: 8, backgroundColor: uiColors.surface.light }}>
+                         <ButtonText style={{ color: uiColors.text.light }}>{getTermFromDictionary(language, 'show_editions')}</ButtonText>
                     </Button>
                </Center>
           </Box>

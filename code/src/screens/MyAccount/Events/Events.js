@@ -52,12 +52,12 @@ export const MyEvents = () => {
      const { data: savedEvents } = useSavedEvents();
      const updateSavedEvents = useUpdateSavedEvents();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { uiColors, colorMode, textColor } = useTheme();
+     const { textColor, resolvedUiColors } = useTheme();
      const pageSize = 25;
      const systemMessagesForScreen = [];
-     const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const panelBg = resolvedUiColors.surface;
+     const surfaceBg = resolvedUiColors.surface;
+     const borderColor = resolvedUiColors.border;
 
      const [filterBy, setFilterBy] = React.useState('upcoming');
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
@@ -241,9 +241,9 @@ const Item = (data) => {
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
      const library = useLibrary();
-     const { colorMode, uiColors, textColor } = useTheme();
-     const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+     const { textColor, resolvedUiColors } = useTheme();
+     const backgroundColor = resolvedUiColors.surface;
+     const borderColor = resolvedUiColors.border;
 
      const refreshAndSaveUserProfile = React.useCallback(async () => {
           const profileResponse = await refreshProfile(library.baseUrl);
