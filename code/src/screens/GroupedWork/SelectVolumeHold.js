@@ -13,7 +13,8 @@ import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/log
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { ThemedFormControl as FormControl } from '../../components/themed/ThemedFormControls';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { CircleIcon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';

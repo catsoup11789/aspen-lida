@@ -9,7 +9,6 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControl } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
@@ -29,7 +28,7 @@ import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/lo
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl } from '@/src/components/themed/ThemedFormControls';
 
 /**
  * MyCheckouts component that displays the user's checked out items. It allows users to filter checkouts by source, sort them by various criteria, and renew all checkouts. The component fetches the user's checkouts from the API and updates the state accordingly. It also handles displaying system messages and managing the loading state.

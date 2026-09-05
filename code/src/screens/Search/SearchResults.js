@@ -27,13 +27,12 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { ThemedBadge, ThemedBadgeText, buildBrandOutlineBadgeStyle, buildBrandOutlineBadgeTextStyle } from '../../components/themed/ThemedBadge';
-import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
-import { FormControl } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { InputSlot } from '@/components/ui/input';
 import { HStack } from '@/components/ui/hstack';
@@ -539,7 +538,7 @@ const SearchBox = ({term, navigation}) => {
 
      return (
           <Box style={{ padding: 8, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surface.dark, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, borderBottomWidth: 1 }}>
-               <FormControl style={{ paddingBottom: 20 }}>
+               <FormControl>
                     <ThemedInput>
                          <InputSlot>
                               <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />

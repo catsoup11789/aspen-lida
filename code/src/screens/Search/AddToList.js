@@ -15,7 +15,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { CircleIcon } from '@/components/ui/icon';
@@ -25,7 +25,7 @@ import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedS
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '@/src/components/themed/ThemedTextarea';
 import { VStack } from '@/components/ui/vstack';
-import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 
 /**
  * AddToList component that displays a button to add an item to a list. When clicked, it opens a modal that allows the user to select an existing list or create a new one, and optionally add the list to a group. It handles the state of the modal, form fields, and API calls for adding items to lists and creating new lists.
@@ -352,7 +352,7 @@ const AddToList = (props) => {
                                                        </>
                                                   )}
                                                   {addToGroup === 'existing' && hasListGroups && (
-                                                       <FormControl style={{ paddingBottom: 20 }}>
+                                                       <FormControl>
                                                             <FormControlLabel>
                                                                  <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'choose_existing_list_group')}</FormControlLabelText>
                                                             </FormControlLabel>

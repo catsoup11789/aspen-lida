@@ -9,11 +9,11 @@ import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
@@ -70,7 +70,7 @@ const CreateListGroup = (props) => {
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
-                              <FormControl style={{ paddingBottom: 20 }}>
+                              <FormControl>
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
                                    </FormControlLabel>
@@ -79,7 +79,7 @@ const CreateListGroup = (props) => {
                                    </ThemedInput>
                               </FormControl>
                               {hasListGroups && (
-                                   <FormControl style={{ paddingBottom: 20 }}>
+                                   <FormControl>
                                         <FormControlLabel>
                                              <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'should_nest_list_group')}</FormControlLabelText>
                                         </FormControlLabel>

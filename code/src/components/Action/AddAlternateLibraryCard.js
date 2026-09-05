@@ -12,10 +12,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedInput, ThemedInputField } from '../themed/ThemedFormControls';
+import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 

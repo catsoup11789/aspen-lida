@@ -8,7 +8,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { ThemedCheckboxGroup as CheckboxGroup } from '../../../components/themed/ThemedCheckbox';
-import { FormControl } from '@/components/ui/form-control';
+import { ThemedFormControl as FormControl } from '@/src/components/themed/ThemedFormControls';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { InfoIcon } from '@/components/ui/icon';

@@ -5,9 +5,8 @@ import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { addAppliedFilter } from '@/src/util/api/searchHelper';
 import { Box } from '@/components/ui/box';
-import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
-import { ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 
 /**
  * Facet_Slider component that renders a slider input for filtering search results based on a numeric range facet. It manages the start and end values of the range, updates the applied filters, and triggers an update to the parent component when the values change.

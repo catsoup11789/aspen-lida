@@ -18,7 +18,6 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { InputSlot } from '@/components/ui/input';
 import { Pressable } from '@/components/ui/pressable';
@@ -26,7 +25,7 @@ import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedSc
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { View } from '@/components/ui/view';
 import { VStack } from '@/components/ui/vstack';
-import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 
 /**
  * FiltersScreen component that displays the search filters and allows users to modify their search criteria. It provides options to select search indexes, sources, and various facets, as well as buttons to update or reset the search.

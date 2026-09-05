@@ -20,10 +20,10 @@ import { saveAllLibraryBranchData } from '../../util/db';
 import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from '../../util/logging.js';
 import { createApiClient } from '../../util/api/apiFactory';
 import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
-import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { InputSlot } from '@/components/ui/input';
 
 /**

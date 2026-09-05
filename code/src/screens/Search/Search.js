@@ -12,8 +12,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
-import { FormControl } from '@/components/ui/form-control';
-import { ThemedInput as Input, ThemedInputField as InputField } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField } from '../../components/themed/ThemedFormControls';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**

@@ -7,7 +7,7 @@ import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadg
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControl } from '@/components/ui/form-control';
+import { ThemedFormControl as FormControl } from '@/src/components/themed/ThemedFormControls';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';

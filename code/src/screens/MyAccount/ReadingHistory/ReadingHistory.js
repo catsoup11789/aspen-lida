@@ -12,7 +12,6 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControl } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ChevronDownIcon, ChevronUpIcon, InfoIcon } from '@/components/ui/icon';
@@ -36,7 +35,7 @@ import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/lo
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 

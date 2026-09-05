@@ -10,13 +10,13 @@ import { refreshProfile } from '@/src/util/api/user';
 import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
-import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
-import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { CheckIcon, ChevronLeftIcon, CircleIcon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
@@ -88,17 +88,17 @@ const EditList = (props) => {
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
-                              <FormControl style={{ paddingBottom: 20 }}>
+                              <FormControl>
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <ThemedInput style={{ borderColor }}><ThemedInputField id="title" defaultValue={data.title} autoComplete="off" onChangeText={(text) => setTitle(text)} /></ThemedInput>
                               </FormControl>
-                              <FormControl style={{ paddingBottom: 20 }}>
+                              <FormControl>
                                    <FormControlLabel><FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'description')}</FormControlLabelText></FormControlLabel>
                                    <Textarea id="description" defaultValue={data.description} autoComplete="off" onChangeText={(text) => setDescription(text)}><TextareaInput /></Textarea>
                               </FormControl>
-                              <FormControl style={{ paddingBottom: 20 }}>
+                              <FormControl>
                                    <FormControlLabel>
                                      <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'access')}</FormControlLabelText>
                                    </FormControlLabel>

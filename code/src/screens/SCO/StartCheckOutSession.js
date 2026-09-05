@@ -12,7 +12,8 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { ThemedFormControl as FormControl } from '../../components/themed/ThemedFormControls';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 
@@ -94,7 +95,7 @@ export const StartCheckOutSession = () => {
                     <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                          <AlertDialogHeader><Heading size="md">{getTermFromDictionary(language, 'start_checkout_session')}</Heading></AlertDialogHeader>
                          <AlertDialogBody>
-                              <FormControl style={{ paddingBottom: 20 }}>
+                              <FormControl>
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'select_an_account')}</FormControlLabelText>
                                    </FormControlLabel>

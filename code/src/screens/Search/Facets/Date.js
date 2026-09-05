@@ -10,7 +10,7 @@ import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
-import { FormControl } from '@/components/ui/form-control';
+import { ThemedFormControl as FormControl } from '@/src/components/themed/ThemedFormControls';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 

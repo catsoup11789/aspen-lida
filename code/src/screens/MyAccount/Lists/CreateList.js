@@ -10,11 +10,11 @@ import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { CircleIcon } from '@/components/ui/icon';
@@ -90,7 +90,7 @@ const CreateList = (props) => {
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
-                              <FormControl style={{ paddingBottom: 20 }}>
+                              <FormControl>
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                    </FormControlLabel>
@@ -98,7 +98,7 @@ const CreateList = (props) => {
                                         <ThemedInputField id="title" onChangeText={(text) => setTitle(text)} returnKeyType="next" defaultValue={title} />
                                    </ThemedInput>
                               </FormControl>
-                              <FormControl style={{ paddingBottom: 20 }}>
+                              <FormControl>
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'description')}</FormControlLabelText>
                                    </FormControlLabel>
@@ -106,7 +106,7 @@ const CreateList = (props) => {
                                         <TextareaInput />
                                    </Textarea>
                               </FormControl>
-                              <FormControl style={{ paddingBottom: 20 }}>
+                              <FormControl>
                                    <FormControlLabel>
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'access')}</FormControlLabelText>
                                    </FormControlLabel>
@@ -202,7 +202,7 @@ const CreateList = (props) => {
                                    </>
                               )}
                               {addToGroup === 'existing' && hasListGroups && (
-                                   <FormControl style={{ paddingBottom: 20 }}>
+                                   <FormControl>
                                         <FormControlLabel>
                                              <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'choose_existing_list_group')}</FormControlLabelText>
                                         </FormControlLabel>

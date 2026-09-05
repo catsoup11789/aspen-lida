@@ -26,9 +26,8 @@ import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedBut
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
-import { FormControl } from '@/components/ui/form-control';
 import { InputSlot } from '@/components/ui/input';
-import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -313,7 +312,7 @@ export const DiscoverHomeScreen = () => {
                          <Box style={{ padding: 20 }}>
                               {androidEndSupportMessage()}
                               {showSystemMessage()}
-                              <FormControl style={{ paddingBottom: 20 }}>
+                              <FormControl>
                                    <ThemedInput>
                                         <InputSlot>
                                              <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />

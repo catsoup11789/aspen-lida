@@ -9,11 +9,10 @@ import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
-import { ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
 
 /**
  * Facet_Slider component that renders a slider input for filtering search results based on a numeric range facet. It manages the start and end values of the range, updates the applied filters, and triggers an update to the parent component when the values change.
