@@ -46,13 +46,13 @@ export const SelectItemHold = (props) => {
                                    <RadioIndicator style={{ marginRight: 4 }}>
                                         <RadioIcon as={CircleIcon} strokeWidth={1} />
                                    </RadioIndicator>
-                                   <RadioLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'first_available')}</RadioLabel>
+                                   <RadioLabel>{getTermFromDictionary(language, 'first_available')}</RadioLabel>
                               </Radio>
                               <Radio value="item" size="sm" style={{ marginVertical: 4 }}>
                                    <RadioIndicator style={{ marginRight: 4 }}>
                                         <RadioIcon as={CircleIcon} strokeWidth={1} />
                                    </RadioIndicator>
-                                   <RadioLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'specific_item')}</RadioLabel>
+                                   <RadioLabel>{getTermFromDictionary(language, 'specific_item')}</RadioLabel>
                               </Radio>
                          </RadioGroup>
                     </FormControl>

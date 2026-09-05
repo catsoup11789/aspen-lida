@@ -264,13 +264,13 @@ const AddToList = (props) => {
                                                                       <RadioIndicator style={{ marginRight: 8, borderColor }}>
                                                                            <RadioIcon as={CircleIcon} style={{ color: borderColor }} />
                                                                       </RadioIndicator>
-                                                                      <RadioLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'private')}</RadioLabel>
+                                                                      <RadioLabel>{getTermFromDictionary(language, 'private')}</RadioLabel>
                                                                  </Radio>
                                                                  <Radio value="0" style={{ marginVertical: 4 }}>
                                                                       <RadioIndicator style={{ marginRight: 8, borderColor }}>
                                                                            <RadioIcon as={CircleIcon} style={{ color: borderColor }} />
                                                                       </RadioIndicator>
-                                                                      <RadioLabel style={{ color: textColor }}>{getTermFromDictionary(language, 'public')}</RadioLabel>
+                                                                      <RadioLabel>{getTermFromDictionary(language, 'public')}</RadioLabel>
                                                                  </Radio>
                                                             </HStack>
                                                        </RadioGroup>
