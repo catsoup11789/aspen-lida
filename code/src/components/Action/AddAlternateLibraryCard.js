@@ -13,7 +13,7 @@ import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/log
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { PasswordVisibilityToggle, ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../themed/ThemedFormControls';
-import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
@@ -65,13 +65,12 @@ export const AddAlternateLibraryCard = (props) => {
      const user = userState?.user ?? {};
      const updateUserProfile = useUpdateUserProfile();
      const language = useActiveLanguage();
-     const { neutrals, textColor, brand } = useTheme();
+     const { neutrals, textColor } = useTheme();
      const queryClient = useQueryClient();
      const { width } = useWindowDimensions();
      const [card, setCard] = React.useState(user?.alternateLibraryCard ?? '');
      const [password, setPassword] = React.useState(user?.alternateLibraryCardPassword ?? '');
      const [showModal, setShowModal] = React.useState(true);
-     const [loading, setLoading] = React.useState(false);
      const inputBorderColor = neutrals.border;
      const surfaceColor = neutrals.surface;
      const modalBorderColor = neutrals.border;
@@ -178,15 +177,12 @@ export const AddAlternateLibraryCard = (props) => {
                                    style={{ borderColor: modalBorderColor }}
                                    onPress={() => {
                                         setShowModal(false);
-                                        setLoading(false);
                                    }}>
                                    <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                               </Button>
                               <Button
                                    colorScheme="primary"
-                                   isDisabled={loading}
                                    onPress={async () => {
-                                        setLoading(true);
                                         await completeAction(id, action, activeAccount, '', '', location, null, null, library.baseUrl, volume, holdType, holdNotificationPreferences, item).then(async (result) => {
                                              setResponse(result);
                                              logDebugMessage("Completed Action after add alternate library card");
@@ -223,7 +219,6 @@ export const AddAlternateLibraryCard = (props) => {
                                                        setHoldSelectItemResponse(tmp);
                                                   }
 
-                                                  setLoading(false);
                                                   setShowModal(false);
                                                   if (result?.confirmationNeeded && result.confirmationNeeded) {
                                                        setHoldConfirmationIsOpen(true);
@@ -235,7 +230,7 @@ export const AddAlternateLibraryCard = (props) => {
                                              }
                                         });
                                    }}>
-                                  {loading ? <ButtonSpinner color={brand.primary['500-text']} /> : <ButtonText>{title}</ButtonText>}
+                                  <ButtonText>{title}</ButtonText>
                               </Button>
                          </ButtonGroup>
                     </ModalFooter>

@@ -370,6 +370,7 @@ const ButtonOptions = (props) => {
                <ButtonGroup
                     className="flex-col">
                     <Button
+                         autoLoading={false}
                          isDisabled={loading}
                          colorScheme="primary"
                          size="md"
@@ -420,6 +421,7 @@ const ButtonOptions = (props) => {
                     </Button>
 
                     <Button
+                         autoLoading={false}
                          isDisabled={refreshing}
                          colorScheme="primary"
                          onPress={async () => {

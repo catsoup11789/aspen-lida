@@ -1,4 +1,4 @@
-import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import React from 'react';
 import _ from 'lodash';
@@ -34,7 +34,6 @@ export const CheckOut = (props) => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const [loading, setLoading] = React.useState(false);
      const { neutrals, brand, textColor } = useTheme();
 
      const volumeInfo = {
@@ -182,15 +181,12 @@ export const CheckOut = (props) => {
                                              style={{ borderColor: neutrals.border }}
                                              onPress={() => {
                                                   setShowAddAlternateLibraryCardModal(false);
-                                                  setLoading(false);
                                              }}>
                                              <ButtonText style={{ color: neutrals.textMain }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                         </Button>
                                         <Button
                                              colorScheme="primary"
-                                             isDisabled={loading}
                                              onPress={async () => {
-                                                  setLoading(true);
                                                   await updateCard();
                                                   await completeAction(record, type, user.id, null, null, null, null, null, library.baseUrl).then(async (response) => {
                                                        logDebugMessage("Completed Action - Checkout with alternate card");
@@ -199,12 +195,11 @@ export const CheckOut = (props) => {
                                                             queryClient.invalidateQueries({ queryKey: ['checkouts', user.id, library.baseUrl, language] });
                                                             await refreshAndSaveUserProfile();
                                                        }
-                                                       setLoading(false);
                                                        setResponseIsOpen(true);
                                                        setShowAddAlternateLibraryCardModal(false);
                                                   });
                                              }}>
-                                             {loading ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
+                                             <ButtonText>{title}</ButtonText>
                                         </Button>
                                    </ButtonGroup>
                               </ModalFooter>
@@ -219,7 +214,6 @@ export const CheckOut = (props) => {
                          variant="solid"
                          colorScheme="primary" className="min-w-full max-w-full"
                          onPress={async () => {
-                              setLoading(true);
                               await completeAction(record, type, user.id, null, null, null, null, null, library.baseUrl).then(async (eContentResponse) => {
                                    setResponse(eContentResponse);
                                    logDebugMessage("Completed Action - Checkout");
@@ -227,11 +221,10 @@ export const CheckOut = (props) => {
                                         queryClient.invalidateQueries({ queryKey: ['checkouts', user.id, library.baseUrl, language] });
                                         await refreshAndSaveUserProfile();
                                    }
-                                   setLoading(false);
                                    setResponseIsOpen(true);
                               });
                          }}>
-                        {loading ? <ButtonSpinner className="pr-2" style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
+                        <ButtonText>{title}</ButtonText>
                     </Button>
                </>
           );

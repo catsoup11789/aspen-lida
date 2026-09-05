@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import React from 'react';
-import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
 import { HoldsContext } from '@/src/context/initialContext';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { useUserState, useAccounts, useLocations, useUpdateUserProfile } from '@/src/hooks/useUserData';
@@ -59,7 +59,6 @@ export const PlaceHold = (props = {}) => {
      const { data: accounts } = useAccounts();
      const { data: locations } = useLocations();
       const library = useLibrary();
-      const [loading, setLoading] = React.useState(false);
      const holdsContext = React.useContext(HoldsContext) ?? {};
      const holds = holdsContext.holds ?? [];
      const { brand } = useTheme();
@@ -216,7 +215,6 @@ export const PlaceHold = (props = {}) => {
                          variant="solid"
                          style={{ backgroundColor: primary500, minWidth: '100%', maxWidth: '100%' }}
                          onPress={async () => {
-                              setLoading(true);
                               await completeAction(record, type, user.id, '', '', pickupLocation, sublocation, user.rememberHoldPickupLocation, library.baseUrl, volumeId, holdType).then(async (ilsResponse) => {
                                    setResponse(ilsResponse);
 
@@ -250,7 +248,6 @@ export const PlaceHold = (props = {}) => {
                                         }, 45 * 1000);
                                    }
 
-                                   setLoading(false);
                                    if (ilsResponse?.confirmationNeeded && ilsResponse.confirmationNeeded) {
                                         setHoldConfirmationIsOpen(true);
                                    } else if (ilsResponse?.shouldBeItemHold && ilsResponse.shouldBeItemHold) {
@@ -260,13 +257,9 @@ export const PlaceHold = (props = {}) => {
                                    }
                               });
                          }}>
-                         {loading ? (
-                              <ButtonSpinner style={{ color: primary500Text }} />
-                         ) : (
-                              <ButtonText style={{ color: primary500Text, textAlign: 'center' }}>
-                                   {title}
-                              </ButtonText>
-                         )}
+                         <ButtonText style={{ color: primary500Text, textAlign: 'center' }}>
+                              {title}
+                         </ButtonText>
                     </Button>
                </>
           );

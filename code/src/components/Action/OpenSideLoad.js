@@ -1,7 +1,6 @@
 import React from 'react';
-import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../themed/ThemedButton';
 import { openSideLoad } from '../../util/api/userHelper';
-import { useTheme } from '../../themes/theme';
 
 /**
  * OpenSideLoad component for displaying a button that opens a side load URL.
@@ -10,19 +9,15 @@ import { useTheme } from '../../themes/theme';
  * @constructor
  */
 export const OpenSideLoad = (props) => {
-     const [loading, setLoading] = React.useState(false);
-     const { brand } = useTheme();
-
      return (
           <Button
                size="md"
                variant="solid"
                colorScheme="primary" className="w-full"
                onPress={async () => {
-                   setLoading(true);
-                   await openSideLoad(props.url).then((r) => setLoading(false));
+                   await openSideLoad(props.url);
                }}>
-               {loading ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{props.title}</ButtonText>}
+               <ButtonText>{props.title}</ButtonText>
           </Button>
      );
 };

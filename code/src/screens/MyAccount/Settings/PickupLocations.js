@@ -9,7 +9,7 @@ import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { Box } from '@/components/ui/box';
-import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
 import { ThemedFormControlLabel as FormControlLabel, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../../components/themed/ThemedFormControls';
@@ -54,7 +54,6 @@ export const Settings_PickupLocations = () => {
     return false;
   }, []);
 
-	const [loading, setLoading] = React.useState(false);
 	const library = useLibrary();
 	const language = useActiveLanguage();
 	const { data: userState } = useUserState();
@@ -375,23 +374,18 @@ export const Settings_PickupLocations = () => {
                                    return;
                               }
 
-                              setLoading(true);
-                              try {
-                                   await updateHoldPickupPreferences(location, location1Id, location2Id, sublocation, rememberPickupLocation, language, library.baseUrl);
-                                   const profileResponse = await refreshProfile(library.baseUrl);
-                                   const refreshedProfile = profileResponse?.data?.result?.profile;
-                                   if (profileResponse?.ok && refreshedProfile) {
-                                        await updateUserProfile(refreshedProfile);
-                                   } else {
-                                        logDebugMessage('Refresh profile did not return a valid profile after updating pickup preferences.');
-                                   }
-                                   setIsDirty(false);
-                              } finally {
-                                   setLoading(false);
+                              await updateHoldPickupPreferences(location, location1Id, location2Id, sublocation, rememberPickupLocation, language, library.baseUrl);
+                              const profileResponse = await refreshProfile(library.baseUrl);
+                              const refreshedProfile = profileResponse?.data?.result?.profile;
+                              if (profileResponse?.ok && refreshedProfile) {
+                                   await updateUserProfile(refreshedProfile);
+                              } else {
+                                   logDebugMessage('Refresh profile did not return a valid profile after updating pickup preferences.');
                               }
+                              setIsDirty(false);
                          }}
-                         isDisabled={loading || !hasChanges}>
-                        {loading ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{getTermFromDictionary(language, 'update')}</ButtonText>}
+                         isDisabled={!hasChanges}>
+                        <ButtonText>{getTermFromDictionary(language, 'update')}</ButtonText>
                     </Button>
                </ButtonGroup>
           </Box>

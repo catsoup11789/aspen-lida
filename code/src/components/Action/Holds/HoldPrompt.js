@@ -17,7 +17,7 @@ import { SelectNewHoldSublocation } from './SelectNewHoldSublocation';
 import { PasswordVisibilityToggle, ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../themed/ThemedFormControls';
 import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from '@/src/util/logging';
 import { useTheme } from '@/src/themes/theme';
-import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
+import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../themed/ThemedCheckbox';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
@@ -86,7 +86,6 @@ export const HoldPrompt = (props) => {
      // Basic State Hooks
      const [userHasAlternateLibraryCard, setUserHasAlternateLibraryCard] = React.useState(props.userHasAlternateLibraryCard ?? false);
      const [promptAlternateLibraryCard, setPromptAlternateLibraryCard] = React.useState(props.shouldPromptAlternateLibraryCard ?? false);
-     const [loading, setLoading] = React.useState(false);
      const [showModal, setShowModal] = React.useState(false);
      const [showAddAlternateLibraryCardModal, setShowAddAlternateLibraryCardModal] = React.useState(false);
      const [activeAccount, setActiveAccount] = React.useState(user.id ?? '');
@@ -367,15 +366,12 @@ export const HoldPrompt = (props) => {
                                         style={{ borderColor: neutrals.border }}
                                         onPress={() => {
                                              setShowAddAlternateLibraryCardModal(false);
-                                             setLoading(false);
                                         }}>
                                         <ButtonText style={{ color: neutrals.textMain }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
                                    <Button
                                         colorScheme="primary"
-                                        isDisabled={loading}
                                         onPress={async () => {
-                                             setLoading(true);
                                              await updateCard();
                                              await completeAction(id, action, activeAccount, '', '', location, sublocation, rememberHoldPickupLocation, library.baseUrl, volume, holdType, holdNotificationPreferences, item).then(async (result) => {
                                                   logDebugMessage('Completed Action - Hold Prompt footer');
@@ -415,7 +411,6 @@ export const HoldPrompt = (props) => {
                                                             setHoldSelectItemResponse(tmp);
                                                        }
 
-                                                       setLoading(false);
                                                        setShowAddAlternateLibraryCardModal(false);
                                                        if (result?.confirmationNeeded && result.confirmationNeeded) {
                                                             setHoldConfirmationIsOpen(true);
@@ -427,7 +422,7 @@ export const HoldPrompt = (props) => {
                                                   }
                                              });
                                         }}>
-                                       {loading ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
+                                       <ButtonText>{title}</ButtonText>
                                    </Button>
                               </ButtonGroup>
                          </ModalFooter>
@@ -568,7 +563,6 @@ export const HoldPrompt = (props) => {
                                         style={{ borderColor: neutrals.border }}
                                         onPress={() => {
                                              setShowModal(false);
-                                             setLoading(false);
                                         }}>
                                         <ButtonText style={{ color: neutrals.textMain }}>{getTermFromDictionary(language, 'close_window')}</ButtonText>
                                    </Button>
@@ -584,9 +578,7 @@ export const HoldPrompt = (props) => {
                                    ) : (
                                         <Button
                                              colorScheme="primary"
-                                             isDisabled={loading}
                                              onPress={async () => {
-                                                  setLoading(true);
                                                   await completeAction(id, action, activeAccount, '', '', location, sublocation, rememberPickupLocation, library.baseUrl, volumeId ?? volume, holdType, holdNotificationPreferences, item).then(async (result) => {
                                                        setResponse(result);
                                                        logDebugMessage('Completed Action Hold Prompt Alternate Library Card');
@@ -643,7 +635,6 @@ export const HoldPrompt = (props) => {
                                                                  setResponse(result);
                                                             }
 
-                                                            setLoading(false);
                                                             setShowModal(false);
                                                             if (result?.confirmationNeeded && result.confirmationNeeded) {
                                                                  setHoldConfirmationIsOpen(true);
@@ -661,7 +652,7 @@ export const HoldPrompt = (props) => {
                                                        }
                                                   });
                                              }}>
-                                            {loading ? <ButtonSpinner style={{ color: brand.primary['500-text'] }} /> : <ButtonText>{title}</ButtonText>}
+                                            <ButtonText>{title}</ButtonText>
                                         </Button>
                                    )}
                               </ButtonGroup>

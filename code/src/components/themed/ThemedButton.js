@@ -46,8 +46,14 @@ function resolveButtonSizeStyle(size) {
  * scale name (e.g. `'primary'`) whose color is applied per `variant`: `'outline'` colors
  * the border/text, `'link'`/`'ghost'` color only the text, otherwise the background/text
  * are filled. Resolved colorScheme/variant are provided to descendants via context.
+ *
+ * If `onPress` returns a Promise (e.g. an `async () => {...}` handler), a ButtonSpinner is
+ * automatically rendered before `children` and the button is disabled for the duration —
+ * callers don't need to track their own loading state or place a ButtonSpinner themselves.
+ * Pass `autoLoading={false}` to opt out (e.g. a fire-and-forget onPress that happens to
+ * return a Promise it doesn't want reflected in the UI).
  */
-export const ThemedButton = React.forwardRef(({ size, colorScheme, variant, className, style, ...props }, ref) => {
+export const ThemedButton = React.forwardRef(({ size, colorScheme, variant, className, style, onPress, children, autoLoading = true, disabled, isDisabled, ...props }, ref) => {
      const groupSize = React.useContext(ButtonGroupSizeContext);
      const resolvedSize = size ?? groupSize ?? 'md';
      const sizeStyle = resolveButtonSizeStyle(resolvedSize);
@@ -57,6 +63,20 @@ export const ThemedButton = React.forwardRef(({ size, colorScheme, variant, clas
           ? Object.assign({}, sizeStyle.container, actionColors ? { backgroundColor: actionColors.backgroundColor, borderColor: actionColors.borderColor } : null, ...style.filter(Boolean))
           : { ...sizeStyle.container, ...(actionColors ? { backgroundColor: actionColors.backgroundColor, borderColor: actionColors.borderColor } : null), ...style };
 
+     const [isPending, setIsPending] = React.useState(false);
+     const isMountedRef = React.useRef(true);
+     React.useEffect(() => () => { isMountedRef.current = false; }, []);
+
+     const handlePress = (...args) => {
+          const result = onPress?.(...args);
+          if (autoLoading && result && typeof result.then === 'function') {
+               setIsPending(true);
+               const stopPending = () => { if (isMountedRef.current) setIsPending(false); };
+               result.then(stopPending, stopPending);
+          }
+          return result;
+     };
+
      return (
           <ButtonActionContext.Provider value={{ colorScheme, variant }}>
                <Button
@@ -65,8 +85,14 @@ export const ThemedButton = React.forwardRef(({ size, colorScheme, variant, clas
                     variant={variant}
                     className={className}
                     style={mergedStyle}
+                    onPress={handlePress}
+                    disabled={isPending || disabled}
+                    isDisabled={isPending || isDisabled}
                     {...props}
-               />
+               >
+                    {isPending ? <ButtonSpinner className="mr-2" style={{ color: actionColors?.textColor }} /> : null}
+                    {children}
+               </Button>
           </ButtonActionContext.Provider>
      );
 });
