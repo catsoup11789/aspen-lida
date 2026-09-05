@@ -16,7 +16,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { useTheme } from '../../themes/theme';
 import { passUserToDiscovery } from '../../util/api/user';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedCloseIcon } from '../themed/ThemedFormControls';
 
@@ -221,12 +221,12 @@ export const ActionButton = (data) => {
                          >
                               <ButtonText>{action.title}</ButtonText>
                          </Button>
-                         <Modal isOpen={showIllUnavailableModal} size="lg" avoidKeyboard={true} onClose={() => setShowIllUnavailableModal(false)}>
+                         <Modal isOpen={showIllUnavailableModal} size="lg" onClose={() => setShowIllUnavailableModal(false)}>
                               <ModalBackdrop />
-                              <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                              <ModalContent>
                                    <ModalHeader>
-                                        <Heading size="md">{action.title}</Heading>
-                                        <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowIllUnavailableModal(false); }}>
+                                        <Heading>{action.title}</Heading>
+                                        <ModalCloseButton onPress={() => { setShowIllUnavailableModal(false); }}>
                                              <ThemedCloseIcon />
                                         </ModalCloseButton>
                                    </ModalHeader>

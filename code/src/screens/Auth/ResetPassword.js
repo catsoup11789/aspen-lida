@@ -15,7 +15,7 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { Center } from '@/components/ui/center';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
@@ -99,12 +99,12 @@ export const ResetPassword = (props) => {
                <Button colorScheme="primary" variant="link" onPress={() => setShowForgotPasswordModal(true)}>
                     <ButtonText size={buttonLabel.length > 80 ? 'sm' : undefined}>{buttonLabel}</ButtonText>
                </Button>
-               <Modal isOpen={showForgotPasswordModal} size="lg" avoidKeyboard onClose={() => setShowForgotPasswordModal(false)}>
+               <Modal isOpen={showForgotPasswordModal} size="lg" onClose={() => setShowForgotPasswordModal(false)}>
                     <ModalBackdrop />
                     <ModalContent style={{ backgroundColor: surfaceBg }}>
                          <ModalHeader>
-                              <Heading size="md">{modalTitle}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowForgotPasswordModal(false); }}>
+                              <Heading>{modalTitle}</Heading>
+                              <ModalCloseButton onPress={() => { setShowForgotPasswordModal(false); }}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>

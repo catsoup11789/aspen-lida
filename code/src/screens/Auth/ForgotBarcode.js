@@ -15,7 +15,7 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { Center } from '@/components/ui/center';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
@@ -27,7 +27,6 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 export const ForgotBarcode = (props) => {
      const isKeyboardOpen = useKeyboard();
      const { uiColors, textColor, colorMode }= useTheme();
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const library = useLibrary();
      const { usernameLabel, showForgotBarcodeModal, setShowForgotBarcodeModal } = props;
@@ -152,12 +151,12 @@ export const ForgotBarcode = (props) => {
                <Button colorScheme="primary" variant="link" onPress={() => setShowForgotBarcodeModal(true)}>
                    <ButtonText>{buttonLabel}</ButtonText>
                </Button>
-               <Modal isOpen={showForgotBarcodeModal} size="lg" avoidKeyboard onClose={() => setShowForgotBarcodeModal(false)} style={Platform.OS === 'android' && isKeyboardOpen ? { paddingBottom: '50%' } : undefined}>
+               <Modal isOpen={showForgotBarcodeModal} size="lg" onClose={() => setShowForgotBarcodeModal(false)} style={Platform.OS === 'android' && isKeyboardOpen ? { paddingBottom: '50%' } : undefined}>
                     <ModalBackdrop />
-                    <ModalContent style={{ backgroundColor: surfaceBg }}>
+                    <ModalContent>
                          <ModalHeader>
-                              <Heading size="md">{modalTitle}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowForgotBarcodeModal(false); }}>
+                              <Heading>{modalTitle}</Heading>
+                              <ModalCloseButton onPress={() => { setShowForgotBarcodeModal(false); }}>
                                   <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>

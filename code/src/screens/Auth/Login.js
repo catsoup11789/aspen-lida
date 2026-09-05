@@ -29,7 +29,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { Image } from '@/components/ui/image';
-import { Modal, ModalBackdrop, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 

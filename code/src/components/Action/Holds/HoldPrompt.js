@@ -23,7 +23,7 @@ import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedC
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { CheckIcon } from '@/components/ui/icon';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
@@ -324,13 +324,12 @@ export const HoldPrompt = (props) => {
                </Button>
                <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg" useRNModal={true}>
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
-                         <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
-                              <Heading size="md">
+                    <ModalContent style={{ maxWidth: '90%' }}>
+                         <ModalHeader>
+                              <Heading>
                                    {getTermFromDictionary(language, 'add_alternate_library_card')}
                               </Heading>
                               <ModalCloseButton
-                                   style={{ padding: 12 }}
                                    onPress={() => {
                                         setShowAddAlternateLibraryCardModal(false);
                                    }}>
@@ -363,7 +362,7 @@ export const HoldPrompt = (props) => {
                                    </FormControl>
                               ) : null}
                          </ModalBody>
-                         <ModalFooter style={{ borderTopWidth: 1, borderTopColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
+                         <ModalFooter>
                               <ButtonGroup space="sm">
                                    <Button
                                         variant="outline"
@@ -438,13 +437,12 @@ export const HoldPrompt = (props) => {
                </Modal>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} closeOnOverlayClick={false} size="lg" useRNModal={true}>
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
-                         <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
-                              <Heading size="md">
+                    <ModalContent style={{ maxWidth: '90%' }}>
+                         <ModalHeader>
+                              <Heading>
                                    {isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}
                               </Heading>
                               <ModalCloseButton
-                                   style={{ padding: 12 }}
                                    onPress={() => {
                                         setShowModal(false);
                                    }}>
@@ -565,7 +563,7 @@ export const HoldPrompt = (props) => {
                                    </FormControl>
                               ) : null}
                          </ModalBody>
-                         <ModalFooter style={{ borderTopWidth: 1, borderTopColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
+                         <ModalFooter>
                               <ButtonGroup space="sm">
                                    <Button
                                         variant="outline"

@@ -12,7 +12,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 
@@ -48,7 +48,6 @@ export const SelectPickupLocation = (props) => {
      const [showModal, setShowModal] = React.useState(false);
      let [location, setLocation] = React.useState(pickupLocation);
      let [activeSublocation, setActiveSublocation] = React.useState(null);
-     const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      return (
           <>
@@ -62,17 +61,15 @@ export const SelectPickupLocation = (props) => {
                    <ActionsheetItemText>{getTermFromDictionary(language, 'change_location')}</ActionsheetItemText>
                </ActionsheetItem>
                <Modal
-
                     isOpen={showModal}
-                    avoidKeyboard={true}
                     onBackdropPress={() => {
                          setShowModal(false);
                     }}>
                     <ModalBackdrop />
-                    <ModalContent style={{ backgroundColor: modalBg }}>
+                    <ModalContent>
                          <ModalHeader>
-                              <Heading size="md">{getTermFromDictionary(language, 'change_hold_location')}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
+                              <Heading>{getTermFromDictionary(language, 'change_hold_location')}</Heading>
+                              <ModalCloseButton onPress={() => { setShowModal(false); }}>
                                   <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>

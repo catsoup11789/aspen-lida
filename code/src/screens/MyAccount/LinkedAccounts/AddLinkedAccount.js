@@ -6,7 +6,7 @@ import { Center } from '@/components/ui/center';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { InputSlot } from '@/components/ui/input';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { useUserState, useUpdateUserProfile, useUpdateAccounts, useUpdateViewers } from '@/src/hooks/useUserData';
 import { addLinkedAccount, refreshProfile, getLinkedAccounts, getViewerAccounts } from '@/src/util/api/user';
 import { formatLinkedAccounts } from '@/src/util/api/userHelper';
@@ -38,7 +38,6 @@ const AddLinkedAccount = () => {
      const [password, setPassword] = useState('');
 
      const passwordRef = useRef();
-     const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const inputBorderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      const toggle = () => {
@@ -72,12 +71,12 @@ const AddLinkedAccount = () => {
                <Button onPress={toggle} colorScheme="primary">
                     <ButtonText>{getTermFromDictionary(language, 'linked_add_an_account')}</ButtonText>
                </Button>
-               <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
+               <Modal isOpen={showModal} onClose={toggle} size="full">
                     <ModalBackdrop />
-                    <ModalContent style={{ backgroundColor: modalBg, maxWidth: '95%' }}>
+                    <ModalContent style={{ maxWidth: '95%' }}>
                          <ModalHeader>
-                              <Heading size="sm">{getTermFromDictionary(language, 'linked_account_to_manage')}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
+                              <Heading>{getTermFromDictionary(language, 'linked_account_to_manage')}</Heading>
+                              <ModalCloseButton onPress={toggle}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>

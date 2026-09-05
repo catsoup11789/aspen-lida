@@ -12,7 +12,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { Center } from '@/components/ui/center';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { Modal, ModalBody, ModalContent, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBody as ModalBody, ThemedModalContent as ModalContent, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
@@ -102,11 +102,11 @@ const ShowItemDetails = (props) => {
                         </Button>
 
                         <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="full">
-                             <ModalContent style={{ maxWidth: '90%' }}>
+                             <ModalContent>
                                   <ModalHeader>
                                        <HStack style={{ alignItems: 'center' }}>
                                             <MaterialIcons name="location-pin" size={14} style={{ marginTop: 2, paddingRight: 5 }} />
-                                            <Heading size="sm">{getTermFromDictionary(language, 'where_is_it')}</Heading>
+                                            <Heading>{getTermFromDictionary(language, 'where_is_it')}</Heading>
                                        </HStack>
                                   </ModalHeader>
                                   <ModalBody>
@@ -132,11 +132,11 @@ const ShowItemDetails = (props) => {
                         </Button>
 
                         <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="full">
-                             <ModalContent style={{ maxWidth: '90%' }}>
+                             <ModalContent>
                                   <ModalHeader>
                                        <HStack style={{ alignItems: 'center' }}>
                                             <MaterialIcons name="location-pin" size={14} style={{ marginTop: 2, paddingRight: 5 }} />
-                                            <Heading size="sm">{getTermFromDictionary(language, 'where_is_it')}</Heading>
+                                            <Heading>{getTermFromDictionary(language, 'where_is_it')}</Heading>
                                        </HStack>
                                   </ModalHeader>
                                   <ModalBody>

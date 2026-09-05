@@ -3,7 +3,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { useUpdateUserProfile, useUpdateAccounts, useUpdateViewers } from '@/src/hooks/useUserData';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
@@ -11,7 +11,6 @@ import { enableAccountLinking, refreshProfile, getLinkedAccounts, getViewerAccou
 import { formatLinkedAccounts } from '@/src/util/api/userHelper';
 import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
-import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
 
@@ -26,10 +25,8 @@ const EnableAccountLinking = () => {
      const updateUserProfile = useUpdateUserProfile();
      const updateAccounts = useUpdateAccounts();
      const updateViewers = useUpdateViewers();
-     const { uiColors, colorMode } = useTheme();
      const [loading, setLoading] = useState(false);
      const [showModal, setShowModal] = useState(false);
-     const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const toggle = () => {
           setShowModal(!showModal);
@@ -62,10 +59,10 @@ const EnableAccountLinking = () => {
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="lg">
                     <ModalBackdrop />
-                    <ModalContent style={{ backgroundColor: modalBg, maxWidth: '95%' }}>
+                    <ModalContent style={{ maxWidth: '95%' }}>
                          <ModalHeader>
-                              <Heading size="sm">{getTermFromDictionary(language, 'enable_linked_accounts_title')}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
+                              <Heading>{getTermFromDictionary(language, 'enable_linked_accounts_title')}</Heading>
+                              <ModalCloseButton onPress={toggle}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>

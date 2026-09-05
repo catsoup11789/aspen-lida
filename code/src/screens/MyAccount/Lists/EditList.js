@@ -20,7 +20,7 @@ import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { CheckIcon, ChevronLeftIcon, CircleIcon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedRadio as Radio, ThemedRadioGroup as RadioGroup, ThemedRadioIcon as RadioIcon, ThemedRadioIndicator as RadioIndicator, ThemedRadioLabel as RadioLabel } from '../../../components/themed/ThemedRadio';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
@@ -52,7 +52,6 @@ const EditList = (props) => {
       const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
 
       const user = userState?.user ?? {};
-      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
       const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      React.useLayoutEffect(() => {
@@ -78,12 +77,12 @@ const EditList = (props) => {
                     </Button>
                     <DeleteList listId={listId} />
                </ButtonGroup>
-               <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="full" avoidKeyboard>
+               <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="full">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceBg }}>
+                    <ModalContent style={{ maxWidth: '90%' }}>
                          <ModalHeader>
-                              <Heading size="md">{getTermFromDictionary(language, 'edit')} {data.title}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
+                              <Heading>{getTermFromDictionary(language, 'edit')} {data.title}</Heading>
+                              <ModalCloseButton onPress={() => { setShowModal(false); }}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
@@ -227,7 +226,7 @@ const DeleteList = (props) => {
                     <AlertDialogBackdrop />
                     <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                          <AlertDialogHeader>
-                              <Heading size="md">
+                              <Heading>
                                    {getTermFromDictionary(language, 'delete_list')}
                               </Heading>
                               <AlertDialogCloseButton>

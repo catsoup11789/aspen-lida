@@ -30,7 +30,7 @@ export const PermissionsPrompt = (data) => {
           <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                <AlertDialogBackdrop />
                <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark }}>
-                    <AlertDialogHeader><Heading size="md">{getTermFromDictionary(language, promptTitle)}</Heading></AlertDialogHeader>
+                    <AlertDialogHeader><Heading>{getTermFromDictionary(language, promptTitle)}</Heading></AlertDialogHeader>
                     <AlertDialogBody><Text>{getTermFromDictionary(language, promptBody)}</Text></AlertDialogBody>
                     <AlertDialogFooter>
                          <ButtonGroup space="md">

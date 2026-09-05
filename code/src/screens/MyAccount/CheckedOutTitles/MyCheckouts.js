@@ -543,7 +543,7 @@ export const MyCheckouts = () => {
                          <AlertDialogBackdrop />
                          <AlertDialogContent style={{ backgroundColor: surfaceBg }}>
                               <AlertDialogHeader>
-                                   <Heading size="md">{renewConfirmationResponse?.title ? renewConfirmationResponse.title : 'Unknown Error'}</Heading>
+                                   <Heading>{renewConfirmationResponse?.title ? renewConfirmationResponse.title : 'Unknown Error'}</Heading>
                                    <AlertDialogCloseButton>
                                         <ThemedCloseIcon />
                                    </AlertDialogCloseButton>

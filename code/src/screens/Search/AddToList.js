@@ -19,7 +19,7 @@ import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { CircleIcon } from '@/components/ui/icon';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedRadio as Radio, ThemedRadioGroup as RadioGroup, ThemedRadioIcon as RadioIcon, ThemedRadioIndicator as RadioIndicator, ThemedRadioLabel as RadioLabel } from '../../components/themed/ThemedRadio';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -54,7 +54,6 @@ const AddToList = (props) => {
      const [isPublic, saveIsPublic] = useState('1');
      const queryClient = useQueryClient();
      const { uiColors, runtimeColors, colorMode } = useTheme();
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const cancelColor = colorMode === 'light' ? uiColors.textStrong.light : uiColors.textStrong.dark;
 
@@ -129,10 +128,9 @@ const AddToList = (props) => {
                     onClose={closeModal}
                     onBackdropPress={closeModal}
                     size="full"
-                    avoidKeyboard
                >
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceBg }}>
+                    <ModalContent>
                          {isLoading ? (
                               <LoadingSpinner />
                          ) : screen === 'add-new' && !_.isEmpty(lists) ? (
@@ -141,7 +139,7 @@ const AddToList = (props) => {
                                         <Heading>
                                              {getTermFromDictionary(language, 'add_to_list')}
                                         </Heading>
-                                        <ModalCloseButton style={{ padding: 12 }} onPress={closeModal}>
+                                        <ModalCloseButton onPress={closeModal}>
                                              <ThemedCloseIcon />
                                         </ModalCloseButton>
                                    </ModalHeader>
@@ -223,10 +221,10 @@ const AddToList = (props) => {
                          ) : (
                               <>
                                    <ModalHeader>
-                                        <Heading size="md">
+                                        <Heading>
                                              {getTermFromDictionary(language, 'create_new_list_item')}
                                         </Heading>
-                                        <ModalCloseButton style={{ padding: 12 }} onPress={closeModal}>
+                                        <ModalCloseButton onPress={closeModal}>
                                              <ThemedCloseIcon />
                                         </ModalCloseButton>
                                    </ModalHeader>

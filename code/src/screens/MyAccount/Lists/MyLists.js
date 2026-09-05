@@ -427,7 +427,7 @@ export const MyLists = () => {
                          {currentListGroupData ? (
                               <Box style={{ marginTop: 8 }}>
                                    <Box>
-                                        <Heading size="xl">{currentListGroupData.listGroupDetails?.title}</Heading>
+                                        <Heading style={{ paddingVertical: 10 }}>{currentListGroupData.listGroupDetails?.title}</Heading>
                                         {currentListGroup != '-1' && (
                                              <ScrollView horizontal>
                                                   <HStack space="sm">

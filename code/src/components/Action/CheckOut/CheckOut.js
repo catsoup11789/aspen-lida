@@ -18,7 +18,7 @@ import { useTheme } from '@/src/themes/theme';
 import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 
 /**
  * CheckOut component for handling the checkout process of an item, including alternate library card handling and response management.
@@ -141,12 +141,12 @@ export const CheckOut = (props) => {
                     </Button>
                     <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg">
                          <ModalBackdrop />
-                         <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                         <ModalContent style={{ maxWidth: '90%' }}>
                               <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark }}>
-                                   <Heading size="md">
+                                   <Heading>
                                         {getTermFromDictionary(language, 'add_alternate_library_card')}
                                    </Heading>
-                                   <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowAddAlternateLibraryCardModal(false); }}>
+                                   <ModalCloseButton onPress={() => { setShowAddAlternateLibraryCardModal(false); }}>
                                         <ThemedCloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>

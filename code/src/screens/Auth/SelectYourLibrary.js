@@ -14,7 +14,7 @@ import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading'
 import { HStack } from '@/components/ui/hstack';
 import { Image } from '@/components/ui/image';
 import { InputSlot } from '@/components/ui/input';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
@@ -84,7 +84,7 @@ export const SelectYourLibrary = (payload) => {
                     <MaterialIcons name="place" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
                     <ButtonText>{selectedLibrary?.name ? selectedLibrary.name : getTermFromDictionary('en', 'select_your_library')}</ButtonText>
                </Button>
-               <Modal isOpen={showModal} size="lg" avoidKeyboard onClose={() => setShowModal(false)}>
+               <Modal isOpen={showModal} size="lg" onClose={() => setShowModal(false)}>
                     <ModalBackdrop />
                     <ModalContent
                          style={{
@@ -95,8 +95,8 @@ export const SelectYourLibrary = (payload) => {
                          }}
                     >
                          <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: borderColor }}>
-                              <Heading size="md">{getTermFromDictionary('en', 'find_your_library')}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
+                              <Heading>{getTermFromDictionary('en', 'find_your_library')}</Heading>
+                              <ModalCloseButton onPress={() => { setShowModal(false); }}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>

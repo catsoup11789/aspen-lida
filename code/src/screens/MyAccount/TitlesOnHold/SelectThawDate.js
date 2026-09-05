@@ -15,7 +15,7 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 
 /**
  * SelectThawDate component that allows users to select a date for thawing a frozen hold. It manages the visibility of the date picker modal, handles the selection of a date, and triggers the freezing of holds based on the selected date. It also provides an option for freezing holds indefinitely.
@@ -27,12 +27,11 @@ export const SelectThawDate = (props) => {
      const { freezingLabel, freezeLabel, label, libraryContext, onClose, freezeId, recordId, source, userId, resetGroup } = props;
      let data = props.data;
      const language = useActiveLanguage();
-     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const { runtimeColors, textColor, colorMode } = useTheme();
      const [loading, setLoading] = React.useState(false);
      const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
      const [showIndefiniteWarning, setShowIndefiniteWarning] = React.useState(false);
      const [freezeIndefinite, setFreezeIndefinite] = React.useState(false);
-     const modalBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      let actionLabel = freezeLabel;
      if (label) {
@@ -104,12 +103,12 @@ export const SelectThawDate = (props) => {
                <Modal isOpen={showIndefiniteWarning} onClose={hideDatePicker} size="full">
                     <ModalBackdrop />
                     <ModalContent
-                        style={{ backgroundColor: modalBg, maxWidth: '95%' }}
+                        style={{ maxWidth: '95%' }}
                         avoidKeyboard
                     >
                          <ModalHeader>
-                             <Heading size="sm">{actionLabel}</Heading>
-                             <ModalCloseButton style={{ padding: 12 }} onPress={hideDatePicker}>
+                             <Heading>{actionLabel}</Heading>
+                             <ModalCloseButton onPress={hideDatePicker}>
                                   <ThemedCloseIcon />
                              </ModalCloseButton>
                          </ModalHeader>

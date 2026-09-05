@@ -15,7 +15,7 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { Center } from '@/components/ui/center';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 
 /**
@@ -40,7 +40,6 @@ const CreateListGroup = (props) => {
      const [title, setTitle] = useState('');
      const [nestedGroupId, setNestedGroupId] = useState("no");
 
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      let hasListGroups = false;
@@ -58,14 +57,14 @@ const CreateListGroup = (props) => {
                    <MaterialIcons name="add" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
                    <ButtonText>{getTermFromDictionary(language, 'create_new_list_group')}</ButtonText>
                </Button>
-               <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
+               <Modal isOpen={showModal} onClose={toggle} size="full">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceBg }}>
+                    <ModalContent style={{ maxWidth: '90%' }}>
                          <ModalHeader>
-                              <Heading size="md">
+                              <Heading>
                                    {getTermFromDictionary(language, 'create_new_list_group')}
                               </Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
+                              <ModalCloseButton onPress={toggle}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>

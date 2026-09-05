@@ -36,7 +36,7 @@ export const UpdateAvailable = (props) => {
 				<AlertDialogBackdrop />
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<Heading size="lg">{getTermFromDictionary(language, 'update_available')}</Heading>
+						<Heading>{getTermFromDictionary(language, 'update_available')}</Heading>
 					</AlertDialogHeader>
 					<AlertDialogBody>
 						<Text size="sm">{getTermFromDictionary(language, 'update_message')}</Text>

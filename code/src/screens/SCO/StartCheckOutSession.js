@@ -93,7 +93,7 @@ export const StartCheckOutSession = () => {
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={() => GoBackHome()}>
                     <AlertDialogBackdrop />
                     <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
-                         <AlertDialogHeader><Heading size="md">{getTermFromDictionary(language, 'start_checkout_session')}</Heading></AlertDialogHeader>
+                         <AlertDialogHeader><Heading>{getTermFromDictionary(language, 'start_checkout_session')}</Heading></AlertDialogHeader>
                          <AlertDialogBody>
                               <FormControl>
                                    <FormControlLabel>

@@ -23,7 +23,7 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { Divider } from '@/components/ui/divider';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -40,7 +40,7 @@ export const MoreMenu = () => {
      const library = useLibrary();
      const menu = useLibraryMenu();
      const updateMenu = useUpdateMenu();
-     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const { runtimeColors, textColor } = useTheme();
 
      const { signOut } = React.useContext(AuthContext);
      const hasMenuItems = _.size(menu);
@@ -130,12 +130,12 @@ export const MoreMenu = () => {
                     </VStack>
                     <Modal isOpen={showDeleteConfirmationModal} onClose={toggleDeleteConfirmationModal}>
                          <ModalBackdrop />
-                         <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                         <ModalContent>
                               <ModalHeader>
-                                   <Heading size="md">
+                                   <Heading>
                                         {getTermFromDictionary(language, 'delete_account')}
                                    </Heading>
-                                   <ModalCloseButton style={{ padding: 12 }} onPress={toggleDeleteConfirmationModal}>
+                                   <ModalCloseButton onPress={toggleDeleteConfirmationModal}>
                                         <ThemedCloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>
@@ -165,12 +165,12 @@ export const MoreMenu = () => {
                     </Modal>
                     <Modal isOpen={showDeleteResultsModal}>
                          <ModalBackdrop />
-                         <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                         <ModalContent>
                               <ModalHeader>
-                                   <Heading size="md">
+                                   <Heading>
                                         {getTermFromDictionary(language, 'delete_account')}
                                    </Heading>
-                                   <ModalCloseButton style={{ padding: 12 }} onPress={signOut}>
+                                   <ModalCloseButton onPress={signOut}>
                                         <ThemedCloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>

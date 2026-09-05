@@ -12,7 +12,7 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { Center } from '@/components/ui/center';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 
 /**
  * EditListGroup component that allows users to edit the title of a list group. It displays a button that opens a modal where users can input a new title and save the changes. The component handles API calls to update the list group title and provides feedback on the saving process.
@@ -31,7 +31,6 @@ export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
       const [loading, setLoading] = React.useState(false);
 
       const [title, setTitle] = React.useState(currentTitle);
-      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
       const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      const toggle = () => {
@@ -44,12 +43,12 @@ export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
                    <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
                    <ButtonText>{getTermFromDictionary(language, 'rename_list_group')}</ButtonText>
                </Button>
-               <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
+               <Modal isOpen={showModal} onClose={toggle} size="full">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceBg }}>
+                    <ModalContent style={{ maxWidth: '90%' }}>
                          <ModalHeader>
-                              <Heading size="md">{getTermFromDictionary(language, 'rename_list_group')}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
+                              <Heading>{getTermFromDictionary(language, 'rename_list_group')}</Heading>
+                              <ModalCloseButton onPress={toggle}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>

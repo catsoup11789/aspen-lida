@@ -25,7 +25,7 @@ import { FlatList } from '@/components/ui/flat-list';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
@@ -307,14 +307,14 @@ export const SelfCheckOut = () => {
                                         </ButtonGroup>
                                    </Center>
                               </FormControl>
-                              <Modal isOpen={showModal} onClose={toggle} size="md" avoidKeyboard useRNModal={true}>
+                              <Modal isOpen={showModal} onClose={toggle} size="md" useRNModal={true}>
                                    <ModalBackdrop />
-                                   <ModalContent style={{ maxWidth: '90%', backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
+                                   <ModalContent style={{ maxWidth: '90%' }}>
                                         <ModalHeader>
-                                            <Heading size="md">
+                                            <Heading>
                                                   {getTermFromDictionary(language, 'add_new_item')}
                                              </Heading>
-                                            <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
+                                            <ModalCloseButton onPress={toggle}>
                                                  <ThemedCloseIcon />
                                              </ModalCloseButton>
                                         </ModalHeader>
@@ -393,7 +393,7 @@ export const SelfCheckOut = () => {
                          <AlertDialogBackdrop />
                          <AlertDialogContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark }}>
                               <AlertDialogHeader>
-                                   <Heading size="md">
+                                   <Heading>
                                         {errorTitle}
                                    </Heading>
                               </AlertDialogHeader>

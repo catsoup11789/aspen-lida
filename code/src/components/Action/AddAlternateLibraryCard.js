@@ -17,7 +17,7 @@ import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedBut
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 
 /**
  * AddAlternateLibraryCard component for adding an alternate library card and password.
@@ -139,10 +139,10 @@ export const AddAlternateLibraryCard = (props) => {
                <ModalBackdrop />
                <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceColor }}>
                     <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: modalBorderColor }}>
-                         <Heading size="md">
+                         <Heading>
                               {isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}
                          </Heading>
-                         <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
+                         <ModalCloseButton onPress={() => { setShowModal(false); }}>
                               <ThemedCloseIcon />
                          </ModalCloseButton>
                     </ModalHeader>

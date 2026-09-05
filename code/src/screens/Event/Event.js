@@ -33,7 +33,7 @@ import { Center } from '@/components/ui/center';
 import { Divider } from '@/components/ui/divider';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -484,8 +484,8 @@ const AddToCalendar = ({ start, end, location, event }) => {
                     <ModalBackdrop />
                     <ModalContent style={{ maxWidth: '90%', backgroundColor: uiColors.surface.light }}>
                          <ModalHeader>
-                              <Heading size="md">{modalBodyHeading}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowModal(false); }}>
+                              <Heading>{modalBodyHeading}</Heading>
+                              <ModalCloseButton onPress={() => { setShowModal(false); }}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
@@ -681,10 +681,10 @@ const RegistrationModal = ({ event }) => {
                </Button>
                <Modal isOpen={showRegistrationModal} onClose={() => setShowRegistrationModal(false)} closeOnOverlayClick={false} size="lg">
                     <ModalBackdrop />
-                    <ModalContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, maxWidth: '90%' }}>
+                    <ModalContent>
                          <ModalHeader>
-                              <Heading size="md">{getTermFromDictionary(language, 'registration_information')}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={() => { setShowRegistrationModal(false); }}>
+                              <Heading>{getTermFromDictionary(language, 'registration_information')}</Heading>
+                              <ModalCloseButton onPress={() => { setShowRegistrationModal(false); }}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>

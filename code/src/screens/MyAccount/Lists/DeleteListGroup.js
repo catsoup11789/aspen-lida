@@ -14,7 +14,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
 /**
@@ -35,7 +35,6 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
       const { uiColors, colorMode } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
-      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const toggle = () => {
           setShowModal(!showModal);
@@ -47,12 +46,12 @@ export const DeleteListGroup = ({id, handleUpdate}) => {
                    <MaterialIcons name="delete" size={18} color={uiColors.white} style={{ marginRight: 4 }} />
                    <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'delete_list_group')}</ButtonText>
                </Button>
-               <Modal isOpen={showModal} onClose={toggle} size="full" avoidKeyboard>
+               <Modal isOpen={showModal} onClose={toggle} size="full">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%', backgroundColor: surfaceBg }}>
+                    <ModalContent style={{ maxWidth: '90%' }}>
                          <ModalHeader>
-                              <Heading size="md">{getTermFromDictionary(language, 'delete_list_group')}</Heading>
-                              <ModalCloseButton style={{ padding: 12 }} onPress={toggle}>
+                              <Heading>{getTermFromDictionary(language, 'delete_list_group')}</Heading>
+                              <ModalCloseButton onPress={toggle}>
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>

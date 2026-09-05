@@ -14,7 +14,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../..
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { Image } from '@/components/ui/image';
-import { Modal, ModalBackdrop, ModalBody, ModalContent } from '@/components/ui/modal';
+import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalContent as ModalContent } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { PermissionsPrompt } from '@/src/components/PermissionsPrompt';
@@ -656,7 +656,7 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
      return (
           <Modal isOpen={showModal} onClose={closeModal} size="full">
                     <ModalBackdrop style={{ opacity: 0.85 }} />
-                    <ModalContent style={{ backgroundColor: modalBg }}>
+                    <ModalContent>
                          <ModalBody style={{ margin: 20, padding: 16, backgroundColor: modalBg }}>
                               {/* Always render barcode to measure it, but hide if showing warning. */}
                               <Box style={{ opacity: showRotateWarning ? 0 : 1, position: showRotateWarning ? 'absolute' : 'relative' }}>
