@@ -8,6 +8,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { loadingSpinner } from '@/src/components/loadingSpinner';
 import { SystemMessagesContext } from '@/src/context/initialContext';
 import { useSavedSearches, useUpdateSavedSearches } from '@/src/hooks/useUserData';
@@ -94,7 +95,7 @@ export const MySavedSearches = () => {
      };
 
      return (
-          <Box className="flex-1">
+          <ScreenContainer>
                <Box>
                     {showSystemMessage()}
                     {isFetching && (!savedSearches || savedSearches.length === 0) ? (
@@ -107,7 +108,7 @@ export const MySavedSearches = () => {
                          </>
                     )}
                </Box>
-          </Box>
+          </ScreenContainer>
      );
 };
 

@@ -6,6 +6,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogCloseButton as AlertDialogCloseButton, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { Box } from '@/components/ui/box';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -521,8 +522,8 @@ export const MyCheckouts = () => {
      }
 
      return (
-          <Box className="flex-1">
-               <Box style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }} className="p-2">
+          <>
+               <Box style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }} className="px-2 py-2">
                     {showSystemMessage()}
                     <ScrollView horizontal>{actionButtons()}</ScrollView>
                </Box>
@@ -584,9 +585,9 @@ export const MyCheckouts = () => {
                          />
                     }
                     keyExtractor={(item, index) => index.toString()}
-                    contentContainerStyle={{ paddingBottom: 30 }}
+                    contentContainerStyle={{ paddingBottom: 30, ...screenContentContainerStyle }}
 
                />
-          </Box>
+          </>
      );
 };

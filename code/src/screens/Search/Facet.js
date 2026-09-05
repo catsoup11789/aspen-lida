@@ -8,7 +8,7 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { Center } from '@/components/ui/center';
 import { ThemedCheckboxGroup as CheckboxGroup } from '../../components/themed/ThemedCheckbox';
 import { Pressable } from '@/components/ui/pressable';
-import { VStack } from '@/components/ui/vstack';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { ThemedInput as Input, ThemedInputField as InputField } from '../../components/themed/ThemedFormControls';
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import { useTheme } from '../../themes/theme';
@@ -155,7 +155,7 @@ export const Facet = ({ route, navigation }) => {
      };
 
      const searchBar = numFacets >= 0 ? (
-          <Box className="p-5">
+          <Box className="py-5">
                <Input
                     size="lg"
                     variant="outline"
@@ -249,7 +249,7 @@ export const Facet = ({ route, navigation }) => {
      };
 
      const actionButtons = (
-          <Box className="p-3" style={{ backgroundColor: actionBarBackgroundColor, shadowOpacity: 0.1, shadowRadius: 1 }}>
+          <Box className="py-3" style={{ backgroundColor: actionBarBackgroundColor, shadowOpacity: 0.1, shadowRadius: 1 }}>
                <Center>
                     <ButtonGroup size="lg">
                          <Button colorScheme="primary" variant="link" onPress={resetCluster}>
@@ -277,54 +277,54 @@ export const Facet = ({ route, navigation }) => {
 
      if (category === 'publishDate' || category === 'birthYear' || category === 'deathYear' || category === 'publishDateSort') {
           return (
-               <VStack flex={1}>
+               <ScreenContainer flex={1}>
                     <ScrollView>
-                         <Box className="p-5">
+                         <Box className="py-5">
                               <Facet_Year category={category} updater={updateLocalValues} data={facets} language={language} />
                          </Box>
                     </ScrollView>
                     {actionButtons}
-               </VStack>
+               </ScreenContainer>
           );
      } else if (category === 'start_date') {
           return (
-               <VStack flex={1}>
+               <ScreenContainer flex={1}>
                     <ScrollView>
-                         <Box className="p-5">
+                         <Box className="py-5">
                               <Facet_Date category={category} updater={updateLocalValues} data={facets} />
                          </Box>
                     </ScrollView>
                     {actionButtons}
-               </VStack>
+               </ScreenContainer>
           );
      } else if (category === 'rating_facet') {
           return (
-               <VStack flex={1}>
+               <ScreenContainer flex={1}>
                     <ScrollView>
-                         <Box className="p-5">
+                         <Box className="py-5">
                               <Facet_Rating category={category} updater={updateLocalValues} data={facets} />
                          </Box>
                     </ScrollView>
                     {actionButtons}
-               </VStack>
+               </ScreenContainer>
           );
      } else if (category === 'lexile_score' || category === 'accelerated_reader_point_value' || category === 'accelerated_reader_reading_level') {
           return (
-               <VStack flex={1}>
+               <ScreenContainer flex={1}>
                     <ScrollView>
-                         <Box className="p-5">
+                         <Box className="py-5">
                               <Facet_Slider category={category} data={facets} updater={updateLocalValues} language={language} />
                          </Box>
                     </ScrollView>
                     {actionButtons}
-               </VStack>
+               </ScreenContainer>
           );
      } else if (multiSelect) {
           return (
-               <VStack flex={1}>
+               <ScreenContainer flex={1}>
                     {searchBar}
                     <ScrollView>
-                         <Box className="px-5">
+                         <Box>
                               <CheckboxGroup
                                    value={values}
                                    accessibilityLabel={getTermFromDictionary(language, 'filter_by')}
@@ -343,19 +343,19 @@ export const Facet = ({ route, navigation }) => {
                          </Box>
                     </ScrollView>
                     {actionButtons}
-               </VStack>
+               </ScreenContainer>
           );
      }
 
      return (
-          <VStack flex={1}>
+          <ScreenContainer flex={1}>
                {searchBar}
                <ScrollView>
-                    <Box className="px-5">
+                    <Box>
                          <Facet_RadioGroup data={facets} category={category} title={title} applied={values} updater={updateLocalValues} language={language} />
                     </Box>
                </ScrollView>
                {actionButtons}
-          </VStack>
+          </ScreenContainer>
      );
 };

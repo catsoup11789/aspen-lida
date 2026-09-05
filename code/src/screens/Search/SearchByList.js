@@ -2,7 +2,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { loadError } from '../../components/loadError';
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import { SystemMessagesContext } from '../../context/initialContext';
@@ -17,6 +16,7 @@ import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -88,7 +88,7 @@ export const SearchResultsForList = () => {
      };
 
      return (
-          <SafeAreaView style={{ flex: 1 }}>
+          <ScreenContainer safeArea style={{ flex: 1 }}>
                {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {status === 'loading' || isFetching ? (
                     <LoadingSpinner />
@@ -99,6 +99,6 @@ export const SearchResultsForList = () => {
                          <FlatList data={data.items} ListEmptyComponent={NoResults} renderItem={({ item }) => <DisplayResult data={item} />} keyExtractor={(item, index) => index.toString()} />
                     </Box>
                )}
-          </SafeAreaView>
+          </ScreenContainer>
      );
 };

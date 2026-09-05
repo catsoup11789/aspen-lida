@@ -2,6 +2,7 @@ import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -37,8 +38,8 @@ export const NotificationHistoryMessageModal = () => {
      };
 
      return (
-          <ScrollView>
-               <Box className="p-5">
+          <ScrollView contentContainerStyle={screenContentContainerStyle}>
+               <Box className="py-5">
                     <VStack space="md">
                          <Heading size="lg">{message.title}</Heading>
                          <Text>{message.content}</Text>

@@ -18,6 +18,7 @@ import { ThemedAlert as Alert, ThemedAlertText as AlertText } from '../../compon
 import { ThemedCloseIcon as CloseIcon, ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText, ThemedFormControlLabel as FormControlLabel } from '../../components/themed/ThemedFormControls';
 import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { Box } from '@/components/ui/box';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -275,7 +276,7 @@ export const SelfCheckOut = () => {
      const currentCheckOutFooter = () => {};
 
      return (
-          <Box className="flex-1 p-5 w-full">
+          <ScreenContainer className="py-5 w-full">
                <Center className="pb-5">
                     {activeAccount?.displayName ? (
                          <Text className="pb-3">
@@ -462,6 +463,6 @@ export const SelfCheckOut = () => {
                          </AlertDialogContent>
                     </AlertDialog>
                </Center>
-          </Box>
+          </ScreenContainer>
      );
 };

@@ -5,6 +5,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
+import { ScreenContainer, screenContentContainerStyle } from '@/src/components/ScreenContainer';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedFormControl as FormControl } from '@/src/components/themed/ThemedFormControls';
@@ -230,7 +231,7 @@ export const MyList = ({ route }) => {
                const displayEndTime = endDate ? timeFormatter.format(endDate) : '';
 
                return (
-                    <Pressable className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor }} onPress={() => handleOpenEvent(item)}>
+                    <Pressable className="py-2" style={{ borderBottomWidth: 1, borderColor }} onPress={() => handleOpenEvent(item)}>
                          <HStack space="sm">
                               <VStack className="max-w-[35%]">
                                    <Image
@@ -279,7 +280,7 @@ export const MyList = ({ route }) => {
           }
 
           return (
-               <Pressable className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor }} onPress={() => handleOpenItem(item.id, item.title)}>
+               <Pressable className="py-2" style={{ borderBottomWidth: 1, borderColor }} onPress={() => handleOpenItem(item.id, item.title)}>
                     <HStack space="sm">
                          <VStack className="max-w-[35%]">
                               <Image
@@ -324,8 +325,8 @@ export const MyList = ({ route }) => {
      const Paging = () => {
           return (
                <Box
-                    className="p-2"
-                    style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    className="px-4 py-2"
+                    style={{ flexWrap: 'nowrap', alignItems: 'center' }}>
                     <ScrollView horizontal>
                          <ButtonGroup size="sm">
                               <Button colorScheme="primary" onPress={() => setPage(page - 1)} isDisabled={page === 1}>
@@ -380,7 +381,7 @@ export const MyList = ({ route }) => {
 
           return (
                <Box
-                    className="p-2"
+                    className="px-4 py-2"
                     style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
                     <ScrollView horizontal>
                          <HStack space="sm">
@@ -430,20 +431,16 @@ export const MyList = ({ route }) => {
      };
 
      return (
-          <Box className="flex-1">
-               {systemMessagesForScreen.length > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
+          <>
+               {!isLoading && !fetchError ? getActionButtons() : null}
+               {systemMessagesForScreen.length > 0 ? <ScreenContainer><Box className="p-2">{showSystemMessage()}</Box></ScreenContainer> : null}
                {isLoading ? (
-                    loadingSpinner()
+                    <ScreenContainer>{loadingSpinner()}</ScreenContainer>
                ) : fetchError ? (
-                    loadError('Error', '')
+                    <ScreenContainer>{loadError('Error', '')}</ScreenContainer>
                ) : (
-                    <>
-                         <Box className="pb-25">
-                              {getActionButtons()}
-                              <FlatList data={listData.listTitles} ListFooterComponent={Paging} renderItem={({ item }) => renderItem(item, library.baseUrl)} keyExtractor={(item, index) => index.toString()} />
-                         </Box>
-                    </>
+                    <FlatList className="pb-25" contentContainerStyle={screenContentContainerStyle} data={listData.listTitles} ListFooterComponent={Paging} renderItem={({ item }) => renderItem(item, library.baseUrl)} keyExtractor={(item, index) => index.toString()} />
                )}
-          </Box>
+          </>
      );
 };

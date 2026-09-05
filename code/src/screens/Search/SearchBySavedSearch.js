@@ -21,7 +21,7 @@ import { FlatList } from '@/components/ui/flat-list';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 
 /**
  * SearchResultsForSavedSearch component that displays search results for a specific saved search. It fetches data from the API based on the provided saved search ID and page number, and renders a list of results with pagination controls. It also handles system messages and error states.
@@ -67,7 +67,7 @@ export const SearchResultsForSavedSearch = () => {
      const Paging = () => {
           if (data.totalPages > 1) {
                return (
-                    <Box className="p-2" style={{ backgroundColor: neutrals.surface, borderTopWidth: 1, borderColor: neutrals.border, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    <Box className="px-4 py-2" style={{ borderTopWidth: 1, borderColor: neutrals.border, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" colorScheme="primary">
@@ -119,7 +119,7 @@ export const SearchResultsForSavedSearch = () => {
      };
 
      return (
-          <SafeAreaView style={{ flex: 1 }}>
+          <ScreenContainer safeArea style={{ flex: 1 }}>
                {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {status === 'loading' || isFetching ? (
                     loadingSpinner('Fetching results...')
@@ -130,6 +130,6 @@ export const SearchResultsForSavedSearch = () => {
                          <FlatList data={data.results} ListFooterComponent={Paging} ListEmptyComponent={NoResults} renderItem={({ item }) => <DisplayResult data={item} />} keyExtractor={(item, index) => index.toString()} />
                     </Box>
                )}
-          </SafeAreaView>
+          </ScreenContainer>
      );
 };

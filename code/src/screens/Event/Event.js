@@ -39,6 +39,7 @@ import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedSc
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { ThemedCloseIcon as CloseIcon } from '../../components/themed/ThemedFormControls';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -105,7 +106,7 @@ export const EventScreen = () => {
      };
 
      return (
-          <ScrollView>
+          <ScrollView contentContainerStyle={screenContentContainerStyle}>
                {(eventData.length === 0 || status === 'loading' || isFetching) && errorMessage === ''? (
                     <Box className="pt-[50px]"><LoadingSpinner message="Fetching data..." /></Box>
                ) : status === 'error' ? (
@@ -180,7 +181,7 @@ const DisplayEvent = (payload) => {
      return (
           <>
                {event.cover ? <Box style={{ height: 125, width: '100%', backgroundColor, zIndex: -1, position: 'absolute', left: 0, top: 0 }} /> : null}
-               <Box className="p-5 w-full">
+               <Box className="py-5 w-full">
                     <Center style={{ marginTop: event.cover ? 20 : 0, width: '100%' }}>
                          {event.cover ? (
                               <Image

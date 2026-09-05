@@ -31,7 +31,7 @@ import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -117,7 +117,7 @@ export const GroupedWorkScreen = () => {
      };
 
      return (
-          <SafeAreaView style={{ flex: 1 }}>
+          <ScreenContainer safeArea style={{ flex: 1 }}>
                {status === 'loading' || isFetching ? (
                     <LoadingSpinner message="Fetching data..." />
                ) : status === 'error' ? (
@@ -129,7 +129,7 @@ export const GroupedWorkScreen = () => {
                          <DisplayGroupedWork data={data.results} initialFormat={data.format} updateFormat={data.format} />
                     </ScrollView>
                )}
-          </SafeAreaView>
+          </ScreenContainer>
      );
 };
 
@@ -166,18 +166,20 @@ const DisplayGroupedWork = (payload) => {
      const key = 'large_' + groupedWork.id;
 
      return (
-          <Box className="p-[10px] w-full">
-               <Center className="mt-5 w-full">
+          <Box className="py-[10px] w-full">
+               <Center className="w-full">
                     <Image alt={groupedWork.title} source={groupedWork.cover} className="rounded" style={{ width: 180.0, height: 250.0 }} placeholder={blurhash} transition={1000} contentFit="cover" />
                     <Title title={groupedWork.title} />
                     <Author author={groupedWork.author} />
                </Center>
-               <Language language={groupedWork.language} />
-               <Formats formats={groupedWork.formats} />
-               <Variations format={format} data={groupedWork} />
-               <AddToList itemId={groupedWork.id} btnStyle="lg" />
-               <Description description={groupedWork.description} />
-               <BibliographicInformationLink groupedWorkId={groupedWork.id} />
+               <Box className="px-4">
+                    <Language language={groupedWork.language} />
+                    <Formats formats={groupedWork.formats} />
+                    <Variations format={format} data={groupedWork} />
+                    <AddToList itemId={groupedWork.id} btnStyle="lg" />
+                    <Description description={groupedWork.description} />
+                    <BibliographicInformationLink groupedWorkId={groupedWork.id} />
+               </Box>
           </Box>
      );
 };

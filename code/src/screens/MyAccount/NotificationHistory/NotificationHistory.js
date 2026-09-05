@@ -16,6 +16,7 @@ import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { Box } from '@/components/ui/box';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -40,7 +41,7 @@ export const MyNotificationHistory = () => {
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { colorMode, neutralPairs, neutrals } = useTheme();
+     const { colorMode, neutralPairs } = useTheme();
      const { data: notificationHistory } = useNotificationHistory();
      const updateNotificationHistory = useUpdateNotificationHistory();
      const { data: inbox } = useInbox();
@@ -112,7 +113,7 @@ export const MyNotificationHistory = () => {
      const Paging = () => {
           if (notificationHistory?.totalResults > 0) {
                return (
-                    <Box className="p-2" style={{ backgroundColor: neutrals.surface, borderTopWidth: 1, borderColor: colorMode === 'light' ? neutralPairs.surface.light : neutralPairs.iconMuted.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    <Box className="px-4 py-2" style={{ borderTopWidth: 1, borderColor: colorMode === 'light' ? neutralPairs.surface.light : neutralPairs.iconMuted.dark, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup>
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} size="sm" colorScheme="primary">
@@ -148,7 +149,7 @@ export const MyNotificationHistory = () => {
      };
 
      return (
-          <Box className="flex-1">
+          <ScreenContainer>
                {systemMessagesForScreen.length > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {isFetching && !inbox?.length ? (
                     loadingSpinner()
@@ -159,7 +160,7 @@ export const MyNotificationHistory = () => {
                          <FlatList data={inbox} ListEmptyComponent={Empty} ListFooterComponent={Paging} renderItem={({ item }) => <Item data={item} handleOpenMyMessage={handleOpenMyMessage} />} keyExtractor={(item, index) => index.toString()} contentContainerStyle={{ paddingBottom: 30 }} />
                     </>
                )}
-          </Box>
+          </ScreenContainer>
      );
 };
 

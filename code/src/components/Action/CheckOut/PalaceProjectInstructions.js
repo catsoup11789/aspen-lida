@@ -5,6 +5,7 @@ import { decodeHTML } from '@/src/helpers/helpers';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 
 /**
@@ -37,8 +38,8 @@ export const PalaceProjectInstructions = () => {
                textDecorationColor: textColor } };
 
      return (
-          <ScrollView>
-               <Box className="p-5">
+          <ScrollView contentContainerStyle={screenContentContainerStyle}>
+               <Box className="py-5">
                     <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} />
                </Box>
           </ScrollView>

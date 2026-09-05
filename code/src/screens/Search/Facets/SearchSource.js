@@ -14,7 +14,7 @@ import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
-import { VStack } from '@/components/ui/vstack';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 
 /**
  * SearchSourceScreen component that displays a list of search sources for the user to select from. It manages the current source state and updates the search results when a new source is selected.
@@ -55,9 +55,9 @@ export const SearchSourceScreen = () => {
      };
 
      return (
-          <VStack className="pt-5 flex-1">
+          <ScreenContainer className="pt-5">
                <ScrollView>
-                    <Box className="px-5">
+                    <Box>
                          {_.map(sources, function (source, index, array) {
                               if (index === 'events' || index === 'local') {
                                    return (
@@ -83,6 +83,6 @@ export const SearchSourceScreen = () => {
                          })}
                     </Box>
                </ScrollView>
-          </VStack>
+          </ScreenContainer>
      );
 };

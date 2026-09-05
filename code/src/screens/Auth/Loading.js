@@ -74,10 +74,10 @@ import {getErrorMessage, logDebugMessage, logErrorMessage, logWarnMessage} from 
 import {isPlainObject, stripHTML, RemoveData} from '../../helpers/helpers';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Box } from '@/components/ui/box';
-import { Center } from '@/components/ui/center';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Progress, ProgressFilledTrack } from '@/components/ui/progress';
 import { VStack } from '@/components/ui/vstack';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 
 const USER_DATA_STALE_MS = 24 * 60 * 60 * 1000;         // 24 hours
 const LANGUAGE_DATA_STALE_MS = 24 * 60 * 60 * 1000;     // 24 hours
@@ -1544,7 +1544,7 @@ export const LoadingScreen = () => {
      }
 
      return (
-          <Center className="flex-1 px-3 w-full">
+          <ScreenContainer className="items-center justify-center w-full">
                <Box style={{ width: '90%', maxWidth: 400, paddingTop: insets.top, paddingBottom: insets.bottom, paddingLeft: insets.left, paddingRight: insets.right }}>
                     <VStack>
                          <Heading size="md" className="pb-5">
@@ -1555,6 +1555,6 @@ export const LoadingScreen = () => {
                          </Progress>
                     </VStack>
                </Box>
-          </Center>
+          </ScreenContainer>
      );
 };

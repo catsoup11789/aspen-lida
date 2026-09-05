@@ -9,6 +9,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { loadError } from '@/src/components/loadError';
 import { DisplaySystemMessage } from '@/src/components/Notifications';
 import { SystemMessagesContext } from '@/src/context/initialContext';
@@ -86,10 +87,10 @@ export const MySavedSearch = () => {
      };
 
      return (
-          <Box className="flex-1">
+          <ScreenContainer>
               {(systemMessages?.length ?? 0) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
               <Box className="flex-1">{status === 'error' ? loadError('Error', '') : <FlatList data={data} ListEmptyComponent={Empty} renderItem={({ item }) => <SavedSearch data={item} />} keyExtractor={(item, index) => index.toString()} contentContainerStyle={{ paddingBottom: 30 }} />}</Box>
-          </Box>
+          </ScreenContainer>
      );
 };
 

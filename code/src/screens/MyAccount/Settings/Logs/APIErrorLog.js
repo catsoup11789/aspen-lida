@@ -87,7 +87,7 @@ export const APIErrorLog = ({ neutralPairs: uiColorsProp, colorMode: colorModePr
      };
 
      const renderEntry = ({ item }) => (
-          <Box className="px-3 py-3" style={{ borderBottomWidth: 1, borderColor }}>
+          <Box className="px-4 py-3" style={{ borderBottomWidth: 1, borderColor }}>
                <VStack space="xs">
                     <Text size="xs">
                          {formatDate(item.created_at)}
@@ -146,7 +146,7 @@ export const APIErrorLog = ({ neutralPairs: uiColorsProp, colorMode: colorModePr
 
      return (
           <Box className="flex-1">
-               <Box className="px-3 py-3" style={{ borderBottomWidth: 1, borderColor }}>
+               <Box className="px-4 py-3" style={{ borderBottomWidth: 1, borderColor }}>
                    <Heading size="sm">
                          {getTermFromDictionary(language, 'api_error_log')}
                     </Heading>
@@ -165,14 +165,14 @@ export const APIErrorLog = ({ neutralPairs: uiColorsProp, colorMode: colorModePr
                          keyExtractor={(item) => String(item.id)}
                          renderItem={renderEntry}
                          ListEmptyComponent={
-                              <Box className="px-3 py-6 items-center">
+                              <Box className="px-4 py-6 items-center">
                                    <Text>{getTermFromDictionary(language, 'api_error_log_empty')}</Text>
                               </Box>
                          }
                     />
                )}
 
-               <HStack className="px-3 py-3" style={{ justifyContent: 'space-between', alignItems: 'center', borderTopWidth: 1, borderColor }}>
+               <HStack className="px-4 py-3" style={{ justifyContent: 'space-between', alignItems: 'center', borderTopWidth: 1, borderColor }}>
                     <Button colorScheme="secondary" onPress={() => loadPage(page - 1)} isDisabled={loading || !meta.hasPrevious}>
                         <ButtonText>{getTermFromDictionary(language, 'previous')}</ButtonText>
                     </Button>
@@ -184,7 +184,7 @@ export const APIErrorLog = ({ neutralPairs: uiColorsProp, colorMode: colorModePr
                     </Button>
                </HStack>
 
-               <Box className="px-3 pb-3">
+               <Box className="px-4 pb-3">
                     <Button variant="outline" colorScheme="tertiary" onPress={onClear} isDisabled={loading}>
                         <ButtonText>{getTermFromDictionary(language, 'clear_api_error_log')}</ButtonText>
                     </Button>

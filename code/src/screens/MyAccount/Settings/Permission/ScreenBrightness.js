@@ -21,6 +21,7 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import Constants from 'expo-constants';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 
 /**
  * ScreenBrightnessPermissionStatus component that displays the current permission status for screen brightness control and allows the user to navigate to a description screen for more information. It manages the permission status state and updates it when the app state changes.
@@ -77,7 +78,7 @@ export const ScreenBrightnessPermissionDescription = () => {
      const language = useActiveLanguage();
 
      return (
-          <ScrollView contentContainerStyle={{ padding: 20 }}>
+          <ScrollView contentContainerStyle={{ paddingVertical: 20, ...screenContentContainerStyle }}>
                <VStack alignItems="stretch">
                     <Box>
                          <Text>{getTermFromDictionary(language, 'device_set_to')}</Text>

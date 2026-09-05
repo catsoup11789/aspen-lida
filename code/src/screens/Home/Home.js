@@ -27,6 +27,7 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedInputSlot as InputSlot } from '../../components/themed/ThemedFormControls';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -303,14 +304,14 @@ export const DiscoverHomeScreen = () => {
      const listBottomPadding = insets.bottom + 96;
 
      return (
-          <Box>
+          <ScreenContainer safeArea>
                <FlatList
                     contentContainerStyle={{ paddingBottom: listBottomPadding }}
                     ListHeaderComponent={
-                         <Box className="p-[10px]">
+                         <Box className="py-[10px]">
                               {androidEndSupportMessage()}
                               {showSystemMessage()}
-                              <FormControl>
+                              <FormControl className="px-2">
                                    <Input>
                                         <InputSlot>
                                              <MaterialIcons name="search" size={20} className="ml-2" />
@@ -336,12 +337,12 @@ export const DiscoverHomeScreen = () => {
                          return `${item?.id ?? item?.textId ?? item?.sourceListId ?? item?.label ?? `${item?.source ?? 'browse'}-${item?.sourceListId ?? 'category'}`}-${index}`;
                     }}
                     renderItem={({ item }) => (
-                         <Box className="px-[10px]">
+                         <Box className="px-2">
                               <DisplayBrowseCategory category={item} />
                          </Box>
                     )}
                     ListFooterComponent={
-                         <Box className="p-5">
+                         <Box className="py-5">
                               <ButtonOptions language={language} showManageCategories={showManageCategories} onRefreshCategories={onRefreshCategories} discoveryVersion={library.discoveryVersion} onLoadAllCategories={onLoadAllCategories} />
                               {showErrorDialog && (
                                    <DisplayErrorAlertDialog title={errorTitle} message={errorMessage} />
@@ -349,7 +350,7 @@ export const DiscoverHomeScreen = () => {
                          </Box>
                     }
                />
-          </Box>
+          </ScreenContainer>
      );
 };
 

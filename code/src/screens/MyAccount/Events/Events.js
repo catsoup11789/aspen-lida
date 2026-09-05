@@ -9,6 +9,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
+import { ScreenContainer, screenContentContainerStyle } from '@/src/components/ScreenContainer';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -52,10 +53,10 @@ export const MyEvents = () => {
      const { data: savedEvents } = useSavedEvents();
      const updateSavedEvents = useUpdateSavedEvents();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { textColor, neutrals } = useTheme();
+     const { neutrals } = useTheme();
      const pageSize = 25;
      const systemMessagesForScreen = [];
-     const surfaceBg = neutrals.surfaceMuted;
+     const surfaceBg = neutrals.surface;
      const borderColor = neutrals.border;
 
      const [filterBy, setFilterBy] = React.useState('upcoming');
@@ -123,7 +124,7 @@ export const MyEvents = () => {
      const getActionButtons = () => {
           return (
                <Box
-                   className="p-2"
+                   className="px-2 py-2"
                    style={{ alignItems: 'center', borderBottomWidth: 1, backgroundColor: surfaceBg, borderColor }}
                >
                    <ButtonGroup alignItems="center" space="md" isAttached size="sm" className="pb-1">
@@ -167,8 +168,8 @@ export const MyEvents = () => {
           if (savedEvents?.totalResults > 0) {
                return (
                     <Box
-                         className="p-2"
-                         style={{ backgroundColor: surfaceBg, borderTopWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
+                         className="px-4 py-2"
+                         style={{ borderTopWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup size="sm" space="md">
                                    <Button onPress={() => setPage(page - 1)} isDisabled={page === 1} colorScheme="primary">
@@ -210,19 +211,20 @@ export const MyEvents = () => {
      const savedEventKeys = Object.keys(savedEvents ?? {});
 
      return (
-          <Box className="flex-1">
-               {_.size(systemMessagesForScreen) > 0 ? <Box safeArea={2}>{showSystemMessage()}</Box> : null}
+          <>
                {getActionButtons()}
-               {events.length === 0 || status === 'loading' || isFetching ? (
-                    loadingSpinner()
-               ) : status === 'error' ? (
-                    loadError('Error', '')
+               {events.length === 0 || status === 'loading' || isFetching || status === 'error' ? (
+                    <ScreenContainer>
+                         {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
+                         {status === 'error' ? loadError('Error', '') : loadingSpinner()}
+                    </ScreenContainer>
                ) : (
                     <>
-                         <FlatList data={savedEventKeys} ListEmptyComponent={Empty} ListFooterComponent={Paging} renderItem={({ item }) => <Item data={savedEvents[item]} filterBy={filterBy} setLoading={setLoading} />} keyExtractor={(item, index) => index.toString()} contentContainerStyle={{ paddingBottom: 30 }} />
+                         {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2 px-4">{showSystemMessage()}</Box> : null}
+                         <FlatList data={savedEventKeys} ListEmptyComponent={Empty} ListFooterComponent={Paging} renderItem={({ item }) => <Item data={savedEvents[item]} filterBy={filterBy} setLoading={setLoading} />} keyExtractor={(item, index) => index.toString()} contentContainerStyle={{ paddingBottom: 30, ...screenContentContainerStyle }} />
                     </>
                )}
-          </Box>
+          </>
      );
 };
 
@@ -380,7 +382,7 @@ const Item = (data) => {
      };
 
      return (
-         <Pressable className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor }} onPress={openEvent}>
+         <Pressable className="py-2" style={{ borderBottomWidth: 1, borderColor }} onPress={openEvent}>
                <HStack space="md">
                     {event.cover ? (
                         <VStack className="max-w-[35%]">

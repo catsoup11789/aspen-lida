@@ -33,6 +33,7 @@ import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedSc
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 
 export const Editions = () => {
      // 1. Hooks
@@ -144,9 +145,9 @@ export const Editions = () => {
      const records = data?.records ? (Array.isArray(data.records) ? data.records : Object.values(data.records)) : [];
 
      return (
-          <Box className="flex-1">
+          <ScreenContainer>
                <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}>
-                    <Box className="p-3">
+                    <Box className="py-3">
                          {isFetching ? (
                               loadingSpinner()
                          ) : status === 'error' ? (
@@ -338,7 +339,7 @@ export const Editions = () => {
                          </AlertDialogContent>
                     </AlertDialog>
                </Center>
-          </Box>
+          </ScreenContainer>
      );
 };
 

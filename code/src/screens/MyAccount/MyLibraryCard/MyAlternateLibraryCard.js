@@ -8,6 +8,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { SystemMessagesContext } from '@/src/context/initialContext';
 import { useUserState, useUpdateUserProfile } from '@/src/hooks/useUserData';
@@ -132,11 +133,11 @@ export const MyAlternateLibraryCard = () => {
      };
 
      return (
-          <ScrollView>
+          <ScrollView contentContainerStyle={screenContentContainerStyle}>
                {isLoading ? (
                     <LoadingSpinner />
                ) : (
-                    <Box className="p-5">
+                    <Box className="py-5">
                          {showSystemMessage()}
                          <Box>
                               {formMessage ? <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} /> : null}

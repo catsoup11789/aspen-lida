@@ -11,6 +11,7 @@ import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { View } from '@/components/ui/view';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { TOKENS } from '../../themes/theme';
 
 /**
@@ -61,32 +62,32 @@ export default function SelfCheckScanner() {
 
      if (!permission) {
           return (
-               <View className="flex-1">
+               <ScreenContainer>
                     <LoadingSpinner message="Requesting for camera permissions" />
-               </View>
+               </ScreenContainer>
           );
      }
 
      if (!permission.granted) {
           if (permission.canAskAgain) {
                return (
-                    <View className="flex-1">
+                    <ScreenContainer>
                          <LoadingSpinner message="Requesting for camera permissions" />
-                    </View>
+                    </ScreenContainer>
                );
           }
           return (
-               <View className="flex-1">
+               <ScreenContainer>
                     <LoadError error="No access to camera" />
-               </View>
+               </ScreenContainer>
           );
      }
 
      if (isLoading) {
           return (
-               <View className="flex-1">
+               <ScreenContainer>
                     <LoadingSpinner />
-               </View>
+               </ScreenContainer>
           );
      }
 

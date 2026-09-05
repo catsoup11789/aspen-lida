@@ -22,8 +22,8 @@ import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
-import { View } from '@/components/ui/view';
 import { VStack } from '@/components/ui/vstack';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedInputSlot as InputSlot } from '../../components/themed/ThemedFormControls';
 
 /**
@@ -287,9 +287,9 @@ export const FiltersScreen = () => {
      };
 
      return (
-          <View className="flex-1">
+          <ScreenContainer>
                <ScrollView>
-                    <Box className="p-5">
+                    <Box className="py-5">
                          <VStack space="md">
                               <FormControl>
                                    <Input variant="outline">
@@ -353,6 +353,6 @@ export const FiltersScreen = () => {
                     </Box>
                </ScrollView>
                {actionButtons()}
-          </View>
+          </ScreenContainer>
      );
 };

@@ -21,6 +21,7 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import Constants from 'expo-constants';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 
 /**
  * CalendarPermissionStatus component that displays the current calendar permission status and allows users to navigate to a detailed description of the permission settings. It checks the calendar permission status and updates it when the app state changes.
@@ -77,7 +78,7 @@ export const CalendarPermissionDescription = () => {
      const language = useActiveLanguage();
 
      return (
-          <ScrollView contentContainerStyle={{ padding: 20 }}>
+          <ScrollView contentContainerStyle={{ paddingVertical: 20, ...screenContentContainerStyle }}>
                <VStack alignItems="stretch">
                     <Box>
                          <Text>{getTermFromDictionary(language, 'device_set_to')}</Text>

@@ -12,6 +12,7 @@ import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 
 /**
  * WhereIsIt component that displays the availability and location of a specific item or manifestation. It fetches data from the API based on the provided parameters and renders a list of available copies, locations, and call numbers or holds.
@@ -37,7 +38,7 @@ export const WhereIsIt = () => {
           } });
 
 	 return (
-          <Box className="p-5">
+          <ScreenContainer className="py-5">
                {isLoading || status === 'loading' || isFetching ? (
                     loadingSpinner()
                ) : status === 'error' ? (
@@ -64,7 +65,7 @@ export const WhereIsIt = () => {
                          <FlatList data={Object.keys(data.manifestation)} renderItem={({ item }) => <Details manifestation={data.manifestation[item]} source={source} />} />
                     </Box>
                )}
-          </Box>
+          </ScreenContainer>
      );
 };
 

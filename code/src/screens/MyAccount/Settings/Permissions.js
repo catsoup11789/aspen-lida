@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 import { CalendarPermissionStatus } from './Permission/Calendar';
 import { CameraPermissionStatus } from './Permission/Camera';
 import { GeolocationPermissionStatus } from './Permission/Geolocation';
@@ -13,7 +14,7 @@ import { ScreenBrightnessPermissionStatus } from './Permission/ScreenBrightness'
  */
 export const PermissionsDashboard = () => {
      return (
-          <ScrollView contentContainerStyle={{ padding: 20 }}>
+          <ScrollView contentContainerStyle={{ paddingVertical: 20, ...screenContentContainerStyle }}>
                <CameraPermissionStatus />
                <CalendarPermissionStatus />
                <GeolocationPermissionStatus />

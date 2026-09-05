@@ -8,6 +8,7 @@ import { ThemedActionsheet as Actionsheet, ThemedActionsheetBackdrop as Actionsh
 import { ThemedAlert as Alert, ThemedAlertIcon as AlertIcon, ThemedAlertText as AlertText } from '@/src/components/themed/ThemedAlert';
 import { ThemedAlertDialog as AlertDialog, ThemedAlertDialogBackdrop as AlertDialogBackdrop, ThemedAlertDialogBody as AlertDialogBody, ThemedAlertDialogFooter as AlertDialogFooter, ThemedAlertDialogHeader as AlertDialogHeader, ThemedAlertDialogContent as AlertDialogContent } from '@/src/components/themed/ThemedAlertDialog';
 import { Box } from '@/components/ui/box';
+import { ScreenContainer, screenContentContainerStyle } from '@/src/components/ScreenContainer';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -206,28 +207,21 @@ export const MyReadingHistory = () => {
 
      const getDisclaimer = () => {
           return (
-               <Accordion
-                   type="single"
-                   isCollapsible={true}
-               >
-                   <AccordionItem value="disclaimer-item" style={{ borderBottomWidth: 0, backgroundColor: panelBg }}>
-                        <AccordionHeader style={{ backgroundColor: panelBg }}>
-                             <AccordionTrigger className="px-5 py-1">
+               <Accordion type="single" isCollapsible={true}>
+                    <AccordionItem value="disclaimer-item" style={{ borderBottomWidth: 0, backgroundColor: panelBg }}>
+                         <AccordionHeader style={{ backgroundColor: panelBg }}>
+                              <AccordionTrigger className="px-5 py-1">
                                    {({ isExpanded }) => (
                                         <>
                                              <AccordionTitleText size="xs" style={{ flex: 1 }}>
                                                   {getTermFromDictionary(language, 'reading_history_privacy_notice')}
                                              </AccordionTitleText>
-                                             <AccordionIcon
-                                                  as={MaterialIcons}
-                                                  name='expand-more'
-                                                  size={20}
-                                             />
+                                             <AccordionIcon as={MaterialIcons} name="expand-more" size={20} />
                                         </>
                                    )}
-                             </AccordionTrigger>
-                        </AccordionHeader>
-                        <AccordionContent className="p-0 pt-2 px-5" style={{ backgroundColor: 'transparent' }}>
+                              </AccordionTrigger>
+                         </AccordionHeader>
+                         <AccordionContent className="p-0 pt-2 px-5" style={{ backgroundColor: 'transparent' }}>
                               <Alert action="info">
                                    <AlertIcon action="info" className="mr-3" />
                                    <AlertText action="info" size="xs">
@@ -270,29 +264,15 @@ export const MyReadingHistory = () => {
           };
 
           return (
-               <Box
-                   className="p-5"
-                   style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
-                   <VStack space="sm">
-                        <Input style={{ borderColor: colorMode === 'light' ? 'transparent' : borderColor }}>
-                             <InputField
-                                   returnKeyType="search"
-                                   autoCapitalize="none"
-                                   onChangeText={(term) => setFilter(term)}
-                                   inputMode="search"
-                                   value={filter}
-                                   placeholder={getTermFromDictionary(language, 'search')}
-                                   onSubmitEditing={search} />
-                        </Input>
-                        <ScrollView horizontal>
-                             <HStack space="sm">
+               <Box className="px-4 py-2" style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
+                    <VStack space="sm">
+                         <Input>
+                              <InputField returnKeyType="search" autoCapitalize="none" onChangeText={(term) => setFilter(term)} inputMode="search" value={filter} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} />
+                         </Input>
+                         <ScrollView horizontal>
+                              <HStack space="sm">
                                    <Box style={{ width: sortLength }}>
-                                       <Select
-                                            name="sortBy"
-                                            selectedValue={sort}
-                                            defaultValue={sort}
-                                            accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
-                                            onValueChange={(itemValue) => updateSort(itemValue)}>
+                                        <Select name="sortBy" selectedValue={sort} defaultValue={sort} accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')} onValueChange={(itemValue) => updateSort(itemValue)}>
                                              <SelectTrigger size="sm">
                                                   <SelectInput value={sortLabel()} />
                                              </SelectTrigger>
@@ -389,8 +369,8 @@ export const MyReadingHistory = () => {
           if (readingHistory?.totalResults > 0) {
                return (
                     <Box
-                         className="p-2"
-                         style={{ borderTopWidth: 1, backgroundColor: panelBg, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
+                         className="px-4 py-2"
+                         style={{ borderTopWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                          <ScrollView horizontal>
                               <ButtonGroup size="sm">
                                    <Button
@@ -454,42 +434,42 @@ export const MyReadingHistory = () => {
      }, []);
 
      return (
-          <Box className="flex-1">
-               {systemMessagesForScreen.length > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
-               {user.trackReadingHistory !== '1' ? (
-                   <Box className="p-5">
-                        <Button colorScheme="primary" onPress={optIn} isLoading={optingIn} isLoadingText={getTermFromDictionary(language, 'updating', true)}>
-                             <ButtonText>{getTermFromDictionary(language, 'reading_history_opt_in')}</ButtonText>
-                         </Button>
-                         {getDisclaimer()}
-                    </Box>
+          <>
+               {user.trackReadingHistory === '1' ? getActionButtons() : null}
+               {getDisclaimer()}
+               {user.trackReadingHistory !== '1' || isLoading || fetchError ? (
+                    <ScreenContainer>
+                         {systemMessagesForScreen.length > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
+                         {user.trackReadingHistory !== '1' ? (
+                             <Box className="py-5">
+                                  <Button colorScheme="primary" onPress={optIn} isLoading={optingIn} isLoadingText={getTermFromDictionary(language, 'updating', true)}>
+                                       <ButtonText>{getTermFromDictionary(language, 'reading_history_opt_in')}</ButtonText>
+                                   </Button>
+                              </Box>
+                         ) : isLoading ? (
+                              loadingSpinner()
+                         ) : (
+                              loadError('Error', '')
+                         )}
+                    </ScreenContainer>
                ) : (
                     <>
-                         {getActionButtons()}
-                          {isLoading ? (
-                              loadingSpinner()
-                          ) : fetchError ? (
-                              loadError('Error', '')
-                         ) : (
-                              <>
-                                    <FlatList
-                                         data={pageHistory}
-                                         ListEmptyComponent={Empty}
-                                         ListFooterComponent={Paging}
-                                         ListHeaderComponent={getDisclaimer}
-                                         renderItem={renderReadingHistoryItem}
-                                         keyExtractor={readingHistoryKeyExtractor}
-                                         initialNumToRender={8}
-                                         maxToRenderPerBatch={8}
-                                         windowSize={5}
-                                         removeClippedSubviews={Platform.OS !== 'ios'}
-                                         contentContainerStyle={{ paddingBottom: 30 }}
-                                    />
-                              </>
-                         )}
+                         {systemMessagesForScreen.length > 0 ? <Box className="p-2 px-4">{showSystemMessage()}</Box> : null}
+                         <FlatList
+                              data={pageHistory}
+                              ListEmptyComponent={Empty}
+                              ListFooterComponent={Paging}
+                              renderItem={renderReadingHistoryItem}
+                              keyExtractor={readingHistoryKeyExtractor}
+                              initialNumToRender={8}
+                              maxToRenderPerBatch={8}
+                              windowSize={5}
+                              removeClippedSubviews={Platform.OS !== 'ios'}
+                              contentContainerStyle={{ paddingBottom: 30, ...screenContentContainerStyle }}
+                         />
                     </>
                )}
-          </Box>
+          </>
      );
 };
 
@@ -542,7 +522,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
      let url = library.baseUrl + '/bookcover.php?id=' + item.permanentId + '&size=medium';
      if (item.title) {
           return (
-              <Pressable onPress={toggle} className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor }}>
+              <Pressable onPress={toggle} className="py-2" style={{ borderBottomWidth: 1, borderColor }}>
                     <HStack space="md">
                         <VStack className="max-w-[30%]">
                               <Image

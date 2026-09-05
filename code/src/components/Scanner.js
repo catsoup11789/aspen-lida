@@ -9,6 +9,7 @@ import { navigateStack } from '../helpers/RootNavigator';
 import { getTermFromDictionary } from '../translations/TranslationService';
 import { LoadError } from './loadError';
 import { LoadingSpinner } from './loadingSpinner';
+import { ScreenContainer } from './ScreenContainer';
 import { useActiveLanguage } from '../hooks/useLanguageData';
 import { TOKENS } from '../themes/theme';
 
@@ -45,24 +46,24 @@ export default function Scanner() {
 
      if (!permission) {
           return (
-               <View className="flex-1">
+               <ScreenContainer>
                     <LoadingSpinner message={getTermFromDictionary(language, 'scanner_request_permissions')} />
-               </View>
+               </ScreenContainer>
           );
      }
 
      if (!permission.granted) {
           if (permission.canAskAgain) {
                return (
-                    <View className="flex-1">
+                    <ScreenContainer>
                          <LoadingSpinner message={getTermFromDictionary(language, 'scanner_request_permissions')} />
-                    </View>
+                    </ScreenContainer>
                );
           }
           return (
-               <View className="flex-1">
+               <ScreenContainer>
                     <LoadError error={getTermFromDictionary(language, 'scanner_denied_permissions')} />
-               </View>
+               </ScreenContainer>
           );
      }
 

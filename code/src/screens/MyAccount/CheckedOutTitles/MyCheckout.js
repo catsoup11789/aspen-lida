@@ -120,7 +120,7 @@ export const MyCheckout = (props) => {
 
 
      return (
-         <Pressable onPress={toggle} style={{ borderBottomWidth: 1, borderBottomColor: borderColor }} className="pl-4 pr-5 py-2">
+         <Pressable onPress={toggle} style={{ borderBottomWidth: 1, borderBottomColor: borderColor }} className="py-2">
               <HStack space="sm" className="w-[75%]">
                     <Image
                          alt={checkout.title}

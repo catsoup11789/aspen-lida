@@ -133,14 +133,12 @@ export const AllLocations = () => {
 
      const getActionButtons = () => {
           return (
-               <Box
-                    style={{ alignItems: 'center', backgroundColor: neutrals.surfaceMuted, borderBottomWidth: 1, borderColor: colorMode === 'light' ? neutralPairs.surfaceMuted.light : neutralPairs.iconMuted.dark }}
-                    className="p-2">
+               <Box style={{ alignItems: 'center', backgroundColor: neutrals.surface, borderBottomWidth: 1, borderColor: neutrals.border }} className="p-2">
                     <ButtonGroup alignItems="center" isAttached>
-                         <Button variant={sort === 'alphabetical' ? 'solid' : 'outline'} colorScheme="secondary" onPress={() => setSort('alphabetical')}>
+                         <Button variant={sort === 'alphabetical' ? 'solid' : 'outline'} colorScheme="primary" onPress={() => setSort('alphabetical')}>
                               <ButtonText>{getTermFromDictionary(language, 'a_to_z')}</ButtonText>
                          </Button>
-                         <Button variant={sort === 'distance' ? 'solid' : 'outline'} colorScheme="secondary" onPress={() => setSort('distance')}>
+                         <Button variant={sort === 'distance' ? 'solid' : 'outline'} colorScheme="primary" onPress={() => setSort('distance')}>
                               <ButtonText>{getTermFromDictionary(language, 'distance')}</ButtonText>
                          </Button>
                     </ButtonGroup>
@@ -248,7 +246,7 @@ const DisplayLocation = (data) => {
      return (
           <>
                <Pressable onPress={goToLocation}>
-                    <HStack className="justify-between items-center p-4">
+                    <HStack className="justify-between items-center py-4 px-2">
                          {location.locationImage ? (
                               <Box className="w-[30%] mr-2">
                                    <Image alt={location.displayName} source={location.locationImage} style={{ width: '100%', height: 90.0 }} className="rounded" placeholder={blurhash} transition={1000} contentFit="cover" />

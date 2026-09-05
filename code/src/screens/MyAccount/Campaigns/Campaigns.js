@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from "react-native-safe-area-context";
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { fetchCampaigns, unenrollCampaign, enrollCampaign, optIntoCampaignEmails, optUserOutOfCampaignLeaderboard, optUserInToCampaignLeaderboard, addActivityProgress } from '@/src/util/api/user';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { Image } from 'expo-image';
@@ -555,7 +555,7 @@ export const MyCampaigns = () => {
 	};
 
 	return (
-		<SafeAreaView className="flex-1">
+		<>
 			<Box style={{ backgroundColor: panelBg, borderBottomWidth: 1, borderColor }} className="px-4 py-3">
 				<Select
 					onValueChange={(itemValue) => setFilterBy(itemValue)}
@@ -585,6 +585,7 @@ export const MyCampaigns = () => {
 					</SelectPortal>
 				</Select>
 			</Box>
+			<ScreenContainer safeArea>
 
 			{status === 'loading' || isFetching ? (
 				<Center className="flex-1">
@@ -600,7 +601,7 @@ export const MyCampaigns = () => {
 				<ScrollView>
 					{Object.entries(groupedCampaigns).map(([userName, { userId, campaigns: groupedCampaignsList}]) => (
 						<Box key={String(userId)} className="mb-6">
-							<Box style={{ backgroundColor: panelBg }} className="px-4 py-2">
+							<Box style={{ backgroundColor: panelBg }} className="-mx-4 px-4 py-2">
 								<Text size="lg" bold>
 									{getTermFromDictionary(language, 'campaigns_for_linked_user')}: {String(userName)}
 								</Text>
@@ -647,6 +648,7 @@ export const MyCampaigns = () => {
 			)}
 
 			{renderActionSheet()}
-		</SafeAreaView>
+			</ScreenContainer>
+		</>
 	);
 }

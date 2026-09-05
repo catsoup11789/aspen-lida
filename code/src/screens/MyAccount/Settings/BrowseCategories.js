@@ -13,6 +13,7 @@ import { getBrowseCategoryListForUser, getHomeScreenFeed } from '@/src/util/api/
 import { logDebugMessage, logErrorMessage, getErrorMessage } from '@/src/util/logging';
 import { useTheme } from '@/src/themes/theme';
 import { popToast } from '@/src/components/feedback';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 
 /**
  * Settings_BrowseCategories component that displays a list of browse categories for the user to manage. It fetches the category list from the API, allows users to toggle visibility of categories, and handles syncing changes with the backend. It also manages loading states and error handling.
@@ -71,6 +72,7 @@ export const Settings_BrowseCategories = () => {
 
      return (
           <FlatList
+               contentContainerStyle={screenContentContainerStyle}
                keyExtractor={(item, index) => {
                     // `sourceId` is the best unique identifier when present; fallback adds index to avoid key collisions.
                     if (item?.sourceId) {
@@ -210,7 +212,7 @@ const DisplayCategory = (data) => {
            });
      };
      return (
-          <Box className="pl-4 pr-5 py-2" style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? neutralPairs.surfaceMuted.light : neutralPairs.iconMuted.dark }}>
+          <Box className="py-2" style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? neutralPairs.surfaceMuted.light : neutralPairs.iconMuted.dark }}>
                <HStack space="sm" className="items-center justify-between pb-1">
                     <Text bold size="lg" className="flex-wrap flex-1">
                          {category.title}

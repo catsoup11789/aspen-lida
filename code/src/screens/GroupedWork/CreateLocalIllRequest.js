@@ -22,6 +22,7 @@ import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedSc
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '../../components/themed/ThemedTextarea';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 
 /**
  * CreateLocalIllRequest component that fetches the local ILL form configuration and renders a request form for users to submit local ILL requests. It handles form submission, error handling, and user profile updates.
@@ -364,8 +365,8 @@ const Request = (payload) => {
      };
 
      return (
-          <ScrollView>
-               <Box className="p-5">
+          <ScrollView contentContainerStyle={screenContentContainerStyle}>
+               <Box className="py-5">
                     {errorMessage ? getErrorMessage() : null}
                     {getIntroText()}
                     {getTitleField()}

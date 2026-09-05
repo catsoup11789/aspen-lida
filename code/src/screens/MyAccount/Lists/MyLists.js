@@ -4,6 +4,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
+import { ScreenContainer, screenContentContainerStyle } from '@/src/components/ScreenContainer';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -287,7 +288,7 @@ export const MyLists = () => {
           const imageUrl = item.cover ?? library.baseUrl + '/bookcover.php?type=list&id=' + item.id + '&size=medium';
           if (item.id !== 'recommendations') {
                return (
-                    <Pressable onPress={() => handleOpenList(item)} className="pl-1 pr-1 py-2">
+                    <Pressable onPress={() => handleOpenList(item)} className="py-2">
                          <HStack space={3} className="mt-2 mb-2 justify-start">
                               <VStack space={1}>
                                    <Image alt={item.title} source={imageUrl} style={{ width: 100.0, height: 150.0, borderRadius: 8 }} placeholder={blurhash} transition={1000} contentFit="cover" />
@@ -334,8 +335,8 @@ export const MyLists = () => {
           const $type = type === 'lists' ? lists : currentListGroupData;
           return (
                <Box
-                    className="p-2"
-                    style={{ borderTopWidth: 1, backgroundColor: panelBg, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
+                    className="px-4 py-2"
+                    style={{ borderTopWidth: 1, borderColor, flexWrap: 'nowrap', alignItems: 'center' }}>
                     <ScrollView horizontal>
                          <ButtonGroup size="sm">
                               <Button
@@ -371,8 +372,8 @@ export const MyLists = () => {
      }
 
      return (
-          <Box className="flex-1">
-               <Box className="pt-2 px-5 flex-nowrap" style={{ backgroundColor: panelBg }}>
+          <>
+               <Box className="px-4 py-2 flex-nowrap" style={{ backgroundColor: panelBg }}>
                     {showSystemMessage()}
                     <ScrollView horizontal>
                          <ButtonGroup space="sm">
@@ -382,7 +383,7 @@ export const MyLists = () => {
                     </ScrollView>
                </Box>
                {hasListGroups && listGroups?.groups && Object.values(listGroups.groups).length > 0 ? (
-                    <Box className="px-5 mt-2">
+                    <Box className="px-2 mt-2">
                          <Select name="listGroupSelect" selectedValue={currentListGroup} defaultValue={defaultListGroup} onValueChange={(itemValue) => updateSelectedListGroup(itemValue)}>
                               <SelectTrigger>
                                    {currentListGroup && currentListGroup !== '-1' && currentListGroup !== -1 ? (
@@ -432,8 +433,8 @@ export const MyLists = () => {
                          ) : null}
                     </Box>
                ) : (
-                    <FlatList contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 32 }} data={sortedLists} ListEmptyComponent={listEmptyComponent} renderItem={({ item }) => renderList(item)} keyExtractor={(item, index) => (item.id ? String(item.id) : index.toString())} ListFooterComponent={Paging('lists')} />
+                    <FlatList contentContainerStyle={{ paddingTop: 8, paddingBottom: 32, ...screenContentContainerStyle }} data={sortedLists} ListEmptyComponent={listEmptyComponent} renderItem={({ item }) => renderList(item)} keyExtractor={(item, index) => (item.id ? String(item.id) : index.toString())} ListFooterComponent={Paging('lists')} />
                )}
-          </Box>
+          </>
      );
 };

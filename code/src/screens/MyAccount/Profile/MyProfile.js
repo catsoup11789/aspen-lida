@@ -54,7 +54,7 @@ export const MyProfile = () => {
      };
 
      return (
-          <ScrollView className="mt-3 mx-2">
+          <ScrollView className="mt-3 px-4">
                <Box className="flex-1">
                     {showSystemMessage()}
                     <Profile_Identity firstName={firstname} lastName={lastname} />

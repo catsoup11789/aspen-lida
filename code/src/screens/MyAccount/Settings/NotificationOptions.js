@@ -7,7 +7,7 @@ import { HStack } from '@/components/ui/hstack';
 import { ThemedSwitch as Switch } from '@/src/components/themed/ThemedSwitch';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { loadingSpinner } from '@/src/components/loadingSpinner';
 import { createChannelsAndCategories } from '@/src/components/Notifications';
 import { getNotificationPreferences, setNotificationPreference } from '@/src/util/api/user';
@@ -77,8 +77,8 @@ export const Settings_NotificationOptions = () => {
      logDebugMessage("Rendering Notification Options");
      logDebugMessage(notificationSettings);
      return (
-          <SafeAreaView style={{ flex: 1 }}>
-               <Box className="flex-1 p-5">
+          <ScreenContainer safeArea style={{ flex: 1 }}>
+               <Box className="flex-1 py-5">
                     <HStack space="sm" className="pb-3 items-center justify-between">
                          <Text bold>{getTermFromDictionary(language, 'notifications_allow')}</Text>
                          <Switch
@@ -116,7 +116,7 @@ export const Settings_NotificationOptions = () => {
                          </VStack>
                     ) : null}
                </Box>
-          </SafeAreaView>
+          </ScreenContainer>
      );
 };
 

@@ -9,6 +9,7 @@ import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading'
 import { HStack } from '@/components/ui/hstack';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 import { DisplayMessage, DisplaySystemMessage } from '@/src/components/Notifications';
 import { SystemMessagesContext } from '@/src/context/initialContext';
 import { useUserState, useAccounts, useViewers, useUpdateAccounts, useUpdateViewers, useUpdateUserProfile } from '@/src/hooks/useUserData';
@@ -92,7 +93,7 @@ export const MyLinkedAccounts = () => {
 
      if (!canUserLinkAccounts) {
           return (
-               <ScrollView contentContainerStyle={{ padding: 20, flexGrow: 1 }}>
+               <ScrollView contentContainerStyle={{ ...screenContentContainerStyle, paddingVertical: 20, flexGrow: 1 }}>
                     {showSystemMessage()}
                     {ptypeDisabledLinking ? (
                          <DisplayMessage type="info" message={getTermFromDictionary(language, 'linked_account_disabled_by_ptype')} />
@@ -107,7 +108,7 @@ export const MyLinkedAccounts = () => {
      }
 
      return (
-          <ScrollView contentContainerStyle={{ padding: 8, flexGrow: 1 }}>
+          <ScrollView contentContainerStyle={{ ...screenContentContainerStyle, paddingVertical: 8, flexGrow: 1 }}>
                {showSystemMessage()}
                <DisplayMessage type="info" message={getTermFromDictionary(language, 'linked_info_message')} />
 

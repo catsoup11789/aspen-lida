@@ -29,6 +29,7 @@ import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedSc
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { ThemedCloseIcon as CloseIcon } from '../../components/themed/ThemedFormControls';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 
 /**
  * MoreMenu component that displays a scrollable menu with library information, settings, and additional links. It fetches library menu links from the API and allows users to delete their account if self-registration is enabled. The component also handles modals for delete confirmation and results.
@@ -102,8 +103,8 @@ export const MoreMenu = () => {
      };
 
      return (
-          <ScrollView>
-               <Box>
+          <ScrollView safeArea>
+               <Box className="px-2">
                     <VStack space="md" className="my-2 mx-1">
                          <MyLibrary />
                          <Divider />
@@ -240,7 +241,7 @@ const MyLibrary = () => {
      }
 
      return (
-          <Box style={{ backgroundColor: brand.primary[500], borderRadius: 16 }} className="m-4 p-6">
+          <Box style={{ backgroundColor: brand.primary[500], borderRadius: 16 }} className="m-2 p-6">
                <Pressable className="flex-row items-center justify-between" onPress={() => navigate('MyLibrary')}>
                     <VStack>
                         <Text bold size="md" style={{ color: brand.primary['500-text'] }}>
@@ -271,7 +272,7 @@ const ViewAllLocations = () => {
 
      if (_.size(locations) > 1) {
           return (
-               <Pressable className="px-2 py-3" onPress={() => navigate('AllLocations')}>
+               <Pressable className="py-3" onPress={() => navigate('AllLocations')}>
                     <HStack space="sm" className="items-center">
                          <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                          <Text className="font-medium">{getTermFromDictionary(language, 'view_all_locations')}</Text>
@@ -293,7 +294,7 @@ const Settings = () => {
      const { textColor, neutrals } = useTheme();
 
      return (
-          <Pressable className="px-2 py-3" onPress={() => navigate('MyPreferences')}>
+          <Pressable className="py-3" onPress={() => navigate('MyPreferences')}>
                <HStack space="sm" className="items-center">
                     <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     <Text className="font-medium">{getTermFromDictionary(language, 'preferences')}</Text>
@@ -362,7 +363,7 @@ const PrivacyPolicy = () => {
      };
 
      return (
-          <Pressable className="px-2 py-3" onPress={() => openURL()}>
+          <Pressable className="py-3" onPress={() => openURL()}>
                <HStack space="sm" className="items-center">
                     <MaterialIcons name="chevron-right" size={20} color={neutrals.actionableIndicator} />
                     <Text className="font-medium">{getTermFromDictionary(language, 'privacy_policy')}</Text>

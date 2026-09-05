@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import _ from 'lodash';
 import React from 'react';
-import { Box } from '@/components/ui/box';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
@@ -58,7 +58,7 @@ export const PreferencesScreen = () => {
      }, [navigation]);
 
      return (
-         <Box className="p-3">
+         <ScreenContainer className="py-3">
                <VStack space="sm">
                     <VStack space="md">
                          <VStack space="sm">
@@ -114,6 +114,6 @@ export const PreferencesScreen = () => {
                          </HStack>
                     </VStack>
                </VStack>
-          </Box>
+          </ScreenContainer>
      );
 };

@@ -25,7 +25,7 @@ import { ThemedDivider as Divider } from '@/src/components/themed/ThemedDivider'
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 
 const blurhash = 'MHPZ}tt7*0WC5S-;ayWBofj[K5RjM{ofM_';
 
@@ -152,8 +152,8 @@ export const MyLibrary = () => {
 
                     </>
                ) : null}
-               <SafeAreaView>
-                    <Box style={{ marginTop: location.locationImage ? 160 : 0, zIndex: 200 }} className="mx-2">
+               <ScreenContainer safeArea>
+                    <Box style={{ marginTop: location.locationImage ? 160 : 0, zIndex: 200 }}>
                          {showSystemMessage()}
                          {library.displayName !== location.displayName ? <Heading className="mb-2">{location.displayName}</Heading> : <Heading className="mb-4">{library.displayName}</Heading>}
                          {location.address ? <Text>{location.address}</Text> : null}
@@ -184,7 +184,7 @@ export const MyLibrary = () => {
                               </>
                          ) : null}
                     </Box>
-               </SafeAreaView>
+               </ScreenContainer>
           </ScrollView>
      );
 };

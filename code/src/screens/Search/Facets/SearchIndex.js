@@ -10,7 +10,7 @@ import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
-import { VStack } from '@/components/ui/vstack';
+import { ScreenContainer } from '@/src/components/ScreenContainer';
 
 /**
  * SearchIndexScreen component that displays a list of search indexes for the user to select from. It manages the current index state and updates the search results when a new index is selected.
@@ -35,9 +35,9 @@ export const SearchIndexScreen = () => {
      };
 
      return (
-          <VStack className="pt-5 flex-1">
+          <ScreenContainer className="pt-5">
                <ScrollView>
-                    <Box className="px-5">
+                    <Box>
                          {_.map(indexes, function (obj, index, array) {
                               return (
                                    <Pressable key={index} className="p-[2px] py-2" onPress={() => updateIndex(index)}>
@@ -61,6 +61,6 @@ export const SearchIndexScreen = () => {
                          })}
                     </Box>
                </ScrollView>
-          </VStack>
+          </ScreenContainer>
      );
 };

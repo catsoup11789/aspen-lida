@@ -27,6 +27,7 @@ import {logDebugMessage, logErrorMessage} from '@/src/util/logging';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 
 /**
  * NotificationPermissionStatus component that displays the current notification permission status and allows users to navigate to the permission description screen. It checks and updates the notification permissions on mount, when the screen comes into focus, and when the Expo token changes.
@@ -219,7 +220,7 @@ export const NotificationPermissionDescription = () => {
      }
 
     return (
-        <ScrollView contentContainerStyle={{ padding: 20 }}>
+        <ScrollView contentContainerStyle={{ paddingVertical: 20, ...screenContentContainerStyle }}>
             <VStack alignItems="stretch">
                 <Box>
                     <Text>{getTermFromDictionary(language, 'device_set_to')}</Text>

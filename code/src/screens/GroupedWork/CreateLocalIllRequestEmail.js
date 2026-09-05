@@ -12,6 +12,7 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '../../components/themed/ThemedTextarea';
 import { VStack } from '@/components/ui/vstack';
+import { screenContentContainerStyle } from '@/src/components/ScreenContainer';
 
 /**
  * CreateLocalIllRequestEmail component that renders a form for creating a local interlibrary loan (ILL) request email. It retrieves work details from the route parameters and allows the user to submit the request with optional volume name and note.
@@ -70,8 +71,8 @@ const Request = (payload) => {
      };
 
      return (
-          <ScrollView>
-               <VStack space="md" className="p-4">
+          <ScrollView contentContainerStyle={screenContentContainerStyle}>
+               <VStack space="md" className="py-4">
                     <FormControl className="my-2">
                          <FormControlLabel>
                               <FormControlLabelText size="sm">
