@@ -22,7 +22,6 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../themed/ThemedCheckbox';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { CheckIcon } from '@/components/ui/icon';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -521,7 +520,7 @@ export const HoldPrompt = (props) => {
                                                   setRememberPickupLocation(value);
                                              }}>
                                              <CheckboxIndicator style={{ marginRight: 8 }}>
-                                                  <CheckboxIcon as={CheckIcon} style={{ color: textColor }} />
+                                                  <CheckboxIcon style={{ color: textColor }} />
                                              </CheckboxIndicator>
                                              <CheckboxLabel>{getTermFromDictionary(language, 'always_use_pickup_location')}</CheckboxLabel>
                                         </Checkbox>

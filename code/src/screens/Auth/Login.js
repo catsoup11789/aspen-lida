@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
@@ -273,7 +273,7 @@ export const LoginScreen = () => {
                          ) : null}
                          {isCommunity && Platform.OS !== 'android' ? (
                               <Button colorScheme="tertiary" style={{ marginTop: 20 }} size="xs" variant="link">
-                                   <Ionicons name="navigate-circle-outline" size={18} color={runtimeColors.tertiary[500]} style={{ marginRight: 4 }} />
+                                   <MaterialIcons name="near-me" size={18} color={runtimeColors.tertiary[500]} style={{ marginRight: 4 }} />
                                    <ButtonText>{getTermFromDictionary('en', 'reset_geolocation')}</ButtonText>
                               </Button>
                          ) : null}

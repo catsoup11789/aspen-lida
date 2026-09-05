@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useUserState, useListGroups, useUpdateUserProfile, useUpdateListGroups } from '@/src/hooks/useUserData';
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { createListGroup, getListGroups } from '@/src/util/api/list';
 import { refreshProfile } from '@/src/util/api/user';

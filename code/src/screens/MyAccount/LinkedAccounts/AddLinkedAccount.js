@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ThemedMaterialCommunityIcons as MaterialCommunityIcons } from '../../../components/themed/ThemedMaterialIcons';
 import React, { useState, useRef } from 'react';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -30,7 +30,7 @@ const AddLinkedAccount = () => {
      const updateUserProfile = useUpdateUserProfile();
      const updateAccounts = useUpdateAccounts();
      const updateViewers = useUpdateViewers();
-     const { textColor, uiColors, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const [loading, setLoading] = useState(false);
      const [showModal, setShowModal] = useState(false);
      const [showPassword, setShowPassword] = useState(false);
@@ -107,7 +107,7 @@ const AddLinkedAccount = () => {
                                                     textContentType="password" required type={showPassword ? 'text' : 'password'} ref={passwordRef}
                                         />
                                         <InputSlot onPress={() => setShowPassword(!showPassword)}>
-                                             <MaterialCommunityIcons name={showPassword ? 'eye' : 'eye-off'} size={20} color={textColor} style={{ marginRight: 8 }} />
+                                             <MaterialCommunityIcons name={showPassword ? 'eye' : 'eye-off'} size={20} style={{ marginRight: 8 }} />
                                         </InputSlot>
                                    </ThemedInput>
                               </FormControl>

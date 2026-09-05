@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
-import { CircleIcon } from '@/components/ui/icon';
+import { ThemedMaterialIcons as MaterialIcons } from '../../themed/ThemedMaterialIcons';
 import { ThemedRadio as Radio, ThemedRadioGroup as RadioGroup, ThemedRadioIcon as RadioIcon, ThemedRadioIndicator as RadioIndicator, ThemedRadioLabel as RadioLabel } from '../../themed/ThemedRadio';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
 
@@ -52,13 +52,13 @@ export const SelectVolume = (props) => {
                                         }}>
                                         <Radio value="item" size="sm" style={{ marginVertical: 4 }}>
                                              <RadioIndicator style={{ marginRight: 4 }}>
-                                                  <RadioIcon as={CircleIcon} strokeWidth={1} />
+                                                  <RadioIcon as={MaterialIcons} name="circle" />
                                              </RadioIndicator>
                                              <RadioLabel>{getTermFromDictionary(language, 'first_available')}</RadioLabel>
                                         </Radio>
                                         <Radio value="volume" size="sm" style={{ marginVertical: 4 }}>
                                              <RadioIndicator style={{ marginRight: 4 }}>
-                                                  <RadioIcon as={CircleIcon} strokeWidth={1} />
+                                                  <RadioIcon as={MaterialIcons} name="circle" />
                                              </RadioIndicator>
                                              <RadioLabel>{getTermFromDictionary(language, 'specific_volume')}</RadioLabel>
                                         </Radio>

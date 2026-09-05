@@ -4,7 +4,7 @@ import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, 
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { CloseIcon } from '@/components/ui/icon';
+import { ThemedCloseIcon } from '@/src/components/themed/ThemedFormControls';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -20,7 +20,7 @@ import { useTheme } from '../../themes/theme';
  */
 export const UnsavedChangesExit = (props) => {
      const { updateSearch, discardChanges, language, hasPendingChanges } = props;
-     const { uiColors, colorMode, textColor } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const navigation = useNavigation();
      const [isOpen, setIsOpen] = React.useState(false);
      const onClose = () => setIsOpen(false);
@@ -59,7 +59,7 @@ export const UnsavedChangesExit = (props) => {
      return (
           <Center>
                <Pressable onPress={() => getStatus()}>
-                    <CloseIcon size="lg" style={{ color: textColor }} />
+                    <ThemedCloseIcon size={20} />
                </Pressable>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose} useRNModal={true}>
                     <AlertDialogBackdrop/>

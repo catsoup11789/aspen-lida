@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { loadError } from '@/src/components/loadError';
@@ -170,7 +170,7 @@ export const MyNotificationHistory = () => {
  * @constructor
  */
 const Item = (data) => {
-     const { colorMode, textColor, uiColors } = useTheme();
+     const { colorMode, uiColors } = useTheme();
      const message = data.data;
      const handleOpenMyMessage = data.handleOpenMyMessage;
      let content = stripHTML(message.content);
@@ -180,7 +180,7 @@ const Item = (data) => {
                <HStack style={{ alignItems: 'flex-start' }}>
                     {message.isRead === '0' ? (
                          <Box style={{ width: '7%' }}>
-                              <MaterialIcons name="fiber-manual-record" size={12} color={textColor} />
+                              <MaterialIcons name="fiber-manual-record" size={12} />
                          </Box>
                     ) : (
                          <Box style={{ width: '7%' }} />
@@ -200,7 +200,7 @@ const Item = (data) => {
                          </Text>
                     </VStack>
                     <Box style={{ width: '7%' }}>
-                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                         <MaterialIcons name="chevron-right" size={20} />
                     </Box>
                </HStack>
           </Pressable>

@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DrawerActions } from '@react-navigation/native';
 import React from 'react';
@@ -132,23 +132,28 @@ export const TabItem = ({ state, descriptors, navigation }) => {
                     const { options } = descriptors[route.key];
                     const isFocused = state.index === index;
 
-                    let iconName = 'ellipse-outline';
+                    // Focus is conveyed by iconColor below, not by swapping to a filled/outline
+                    // glyph variant -- MaterialIcons/MaterialCommunityIcons don't have a matching
+                    // filled/outline pair for every one of these the way Ionicons did.
+                    let iconName = 'circle';
+                    let IconComponent = MaterialIcons;
                     let label = route.name;
 
                     if (route.name === 'BrowseTab') {
-                         iconName = isFocused ? 'library' : 'library-outline';
+                         iconName = 'local-library';
                          label = browseTabLabel;
                     } else if (route.name === 'LibraryCardTab') {
-                         iconName = isFocused ? 'card' : 'card-outline';
+                         iconName = 'credit-card';
                          label = cardTabLabel;
                     } else if (route.name === 'AccountTab') {
-                         iconName = isFocused ? 'person' : 'person-outline';
+                         iconName = 'person';
                          label = accountTabLabel;
                     } else if (route.name === 'MoreTab') {
-                         iconName = isFocused ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline';
+                         iconName = 'more-horiz';
                          label = moreTabLabel;
                     } else if (route.name === 'SelfCheckTab') {
-                         iconName = isFocused ? 'barcode' : 'barcode-outline';
+                         iconName = 'barcode';
+                         IconComponent = MaterialCommunityIcons;
                          label = scoTabLabel;
                     }
 
@@ -187,7 +192,7 @@ export const TabItem = ({ state, descriptors, navigation }) => {
                               onPress={onPress}
                               onLongPress={onLongPress}>
                               <VStack space="xs" className="items-center">
-                                   <Ionicons name={iconName} size={22} color={iconColor} />
+                                   <IconComponent name={iconName} size={22} color={iconColor} />
                                    <Text size="2xs" style={{ color: iconColor, fontWeight: '400' }}>
                                         {label}
                                    </Text>

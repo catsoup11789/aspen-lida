@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
@@ -12,7 +12,7 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 import { useUserState, useUpdateExpoToken } from '@/src/hooks/useUserData';
 import { navigate } from '@/src/helpers/RootNavigator';
-import { UseColorMode, useTheme } from '@/src/themes/theme';
+import { UseColorMode } from '@/src/themes/theme';
 import { getTermFromDictionary, LanguageSwitcher } from '@/src/translations/TranslationService';
 import { logErrorMessage } from '@/src/util/logging';
 import * as Device from "expo-device";
@@ -32,7 +32,6 @@ export const PreferencesScreen = () => {
      const user = userState?.user ?? {};
      const expoToken = userState?.expoToken ?? false;
      const updateExpoToken = useUpdateExpoToken();
-     const { textColor } = useTheme();
 
      React.useEffect(() => {
           const updateTokens = navigation.addListener('focus', async () => {
@@ -63,7 +62,7 @@ export const PreferencesScreen = () => {
                          <VStack space="sm">
                               <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('MyPreferences_ManageBrowseCategories', { prevRoute: 'Preferences' })}>
                                    <HStack space="xs" alignItems="center">
-                                        <MaterialIcons name="chevron-right" size={24} color={textColor} />
+                                        <MaterialIcons name="chevron-right" size={24} />
                                         <Text style={{ fontWeight: '500' }}>
                                              {getTermFromDictionary(language, 'manage_browse_categories')}
                                         </Text>
@@ -72,7 +71,7 @@ export const PreferencesScreen = () => {
                               {library.allowPickupLocationUpdates ? (
                                    <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('MyPreferences_ManagePickupLocations')}>
                                         <HStack space="xs" alignItems="center">
-                                             <MaterialIcons name="chevron-right" size={24} color={textColor} />
+                                             <MaterialIcons name="chevron-right" size={24} />
                                              <Text style={{ fontWeight: '500' }}>
                                                   {getTermFromDictionary(language, 'manage_pickup_locations')}
                                              </Text>
@@ -81,7 +80,7 @@ export const PreferencesScreen = () => {
                               ) : null}
                               <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('PermissionDashboard')}>
                                    <HStack space="xs" alignItems="center">
-                                        <MaterialIcons name="chevron-right" size={24} color={textColor} />
+                                        <MaterialIcons name="chevron-right" size={24} />
                                         <Text style={{ fontWeight: '500' }}>
                                              {getTermFromDictionary(language, 'device_permissions')}
                                         </Text>
@@ -89,7 +88,7 @@ export const PreferencesScreen = () => {
                               </Pressable>
                               <Pressable style={{ paddingVertical: 8 }} onPress={() => navigate('MyDevice_Support')}>
                                    <HStack space="xs" alignItems="center">
-                                        <MaterialIcons name="chevron-right" size={24} color={textColor} />
+                                        <MaterialIcons name="chevron-right" size={24} />
                                         <Text style={{ fontWeight: '500' }}>
                                              {getTermFromDictionary(language, 'support')}
                                         </Text>

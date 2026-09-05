@@ -1,6 +1,6 @@
 import React from 'react';
 import { useListGroups, useUpdateLists, useUpdateListGroups } from '@/src/hooks/useUserData';
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { editListGroupParent, getLists, getListGroups } from '@/src/util/api/list';
 import { popAlert } from '@/src/components/feedback';

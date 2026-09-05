@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
 import _ from 'lodash';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialCommunityIcons as MaterialCommunityIcons, ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import moment from 'moment';
 import React from 'react';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
@@ -520,7 +520,7 @@ const FilterBar = ({ navigation }) => {
 
 const SearchBox = ({term, navigation}) => {
      const language = useActiveLanguage();
-     const { uiColors, colorMode, textColor } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const [searchTerm, setSearchTerm] = React.useState(term);
 
      const openScanner = async () => {
@@ -541,16 +541,16 @@ const SearchBox = ({term, navigation}) => {
                <FormControl>
                     <ThemedInput>
                          <InputSlot>
-                              <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />
+                              <MaterialIcons name="search" size={20} style={{ marginLeft: 8 }} />
                          </InputSlot>
                          <ThemedInputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={updateSearch} value={searchTerm} />
                          {searchTerm ? (
                               <InputSlot onPress={() => clearSearch()}>
-                                   <MaterialIcons name="close" size={20} color={textColor} style={{ marginRight: 8 }} />
+                                   <MaterialIcons name="close" size={20} style={{ marginRight: 8 }} />
                               </InputSlot>
                          ) : null}
                          <InputSlot onPress={() => openScanner()}>
-                              <MaterialCommunityIcons name="barcode-scan" size={20} color={textColor} style={{ marginRight: 8 }} />
+                              <MaterialCommunityIcons name="barcode-scan" size={20} style={{ marginRight: 8 }} />
                          </InputSlot>
                     </ThemedInput>
                </FormControl>

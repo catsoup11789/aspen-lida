@@ -6,7 +6,7 @@ import { useUserState, useCards, useAccounts, useUpdateUserProfile } from '../..
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { navigateStack } from '../../helpers/RootNavigator';
-import { Ionicons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons, ThemedMaterialCommunityIcons as MaterialCommunityIcons } from '../../components/themed/ThemedMaterialIcons';
 import _ from 'lodash';
 import { loadingSpinner } from '../../components/loadingSpinner';
 import { checkoutItem, refreshProfile } from '../../util/api/user';
@@ -285,7 +285,7 @@ export const SelfCheckOut = () => {
                     ) : null}
                     {keyboardType === 0 ? (
                          <Button onPress={() => openScanner()} colorScheme="secondary">
-                              <Ionicons name="barcode-outline" size={18} color={runtimeColors.secondary['500-text']} />
+                              <MaterialCommunityIcons name="barcode" size={18} color={runtimeColors.secondary['500-text']} />
                               <ButtonText>{getTermFromDictionary(language, 'add_new_item')}</ButtonText>
                          </Button>
                     ) : (
@@ -297,11 +297,11 @@ export const SelfCheckOut = () => {
                                         </FormControlLabel>
                                        <ButtonGroup space="md">
                                             <Button onPress={() => openScanner()} colorScheme="secondary">
-                                                 <Ionicons name="barcode-outline" size={18} color={runtimeColors.secondary['500-text']} />
+                                                 <MaterialCommunityIcons name="barcode" size={18} color={runtimeColors.secondary['500-text']} />
                                                  <ButtonText>{getTermFromDictionary(language, 'scan')}</ButtonText>
                                              </Button>
                                             <Button onPress={toggle} colorScheme="secondary">
-                                                 <Ionicons name="keypad-outline" size={18} color={runtimeColors.secondary['500-text']} />
+                                                 <MaterialIcons name="dialpad" size={18} color={runtimeColors.secondary['500-text']} />
                                                  <ButtonText>{getTermFromDictionary(language, 'type')}</ButtonText>
                                              </Button>
                                         </ButtonGroup>

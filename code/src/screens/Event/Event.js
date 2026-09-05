@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { useRoute } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
@@ -364,7 +364,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
      const [modalBodyHeading, setModalBodyHeading] = React.useState('');
      const [calendarId, setCalendarId] = React.useState();
      const [confirmAdd, setConfirmAdd] = React.useState(false);
-     const { textColor, uiColors } = useTheme();
+     const { uiColors } = useTheme();
 
      let displayDay = false;
      let displayStartTime = false;
@@ -469,7 +469,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
                <Pressable style={{ paddingVertical: 12 }} onPress={() => handleAddToCalendar()}>
                     <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
                          <HStack space="sm" style={{ alignItems: 'center' }}>
-                              <MaterialIcons name="calendar-today" size={18} color={textColor} />
+                              <MaterialIcons name="calendar-today" size={18} />
                               <VStack>
                                    <Text bold>{displayDay}</Text>
                                    <Text>
@@ -477,7 +477,7 @@ const AddToCalendar = ({ start, end, location, event }) => {
                                    </Text>
                               </VStack>
                          </HStack>
-                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                         <MaterialIcons name="chevron-right" size={20} />
                     </HStack>
                </Pressable>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} closeOnOverlayClick={false} size="md">
@@ -534,7 +534,6 @@ const AddToCalendar = ({ start, end, location, event }) => {
  * @constructor
  */
 const Directions = ({ location, room }) => {
-     const { textColor } = useTheme();
      let hasCoordinates = false;
      if (location) {
           if (!_.isUndefined(location.coordinates) && _.isObject(location.coordinates)) {
@@ -569,14 +568,14 @@ const Directions = ({ location, room }) => {
                <Pressable style={{ paddingVertical: 12, marginBottom: 20 }} onPress={() => handleGetDirections()}>
                     <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
                          <HStack space="sm" style={{ alignItems: 'center' }}>
-                              <MaterialIcons name="location-pin" size={18} color={textColor} />
+                              <MaterialIcons name="location-pin" size={18} />
                               <VStack>
                                    {location.name ? <Text bold>{location.name}</Text> : null}
                                    {room ? <Text>{room}</Text> : null}
                                    {location.address ? <Text>{location.address}</Text> : null}
                               </VStack>
                          </HStack>
-                         {hasCoordinates ? <MaterialIcons name="chevron-right" size={20} color={textColor} /> : null}
+                         {hasCoordinates ? <MaterialIcons name="chevron-right" size={20} /> : null}
                     </HStack>
                </Pressable>
           );

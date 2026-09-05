@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialCommunityIcons as MaterialCommunityIcons, ThemedMaterialIcons as MaterialIcons } from '../../components/themed/ThemedMaterialIcons';
 import _ from 'lodash';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -111,7 +111,7 @@ export const SelectYourLibrary = (payload) => {
                                              onChangeText={(text) => setQuery(text)}
                                         />
                                         {query ? <InputSlot onPress={() => clearSearch()}>
-                                            <MaterialCommunityIcons name="close-circle" size={20} color={textColor} style={{ marginRight: 8 }} />
+                                            <MaterialCommunityIcons name="close-circle" size={20} style={{ marginRight: 8 }} />
                                         </InputSlot> : null}
                                    </ThemedInput>
                               </Box>

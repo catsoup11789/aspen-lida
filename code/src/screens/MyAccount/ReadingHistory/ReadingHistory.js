@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import React from 'react';
@@ -14,7 +14,6 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { Center } from '@/components/ui/center';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronDownIcon, ChevronUpIcon, InfoIcon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
@@ -222,7 +221,8 @@ export const MyReadingHistory = () => {
                                                   {getTermFromDictionary(language, 'reading_history_privacy_notice')}
                                              </AccordionTitleText>
                                              <AccordionIcon
-                                                  as={isExpanded ? ChevronUpIcon : ChevronDownIcon}
+                                                  as={MaterialIcons}
+                                                  name={isExpanded ? 'expand-less' : 'expand-more'}
                                                   style={{ color: textColor }}
                                              />
                                         </>
@@ -231,7 +231,7 @@ export const MyReadingHistory = () => {
                         </AccordionHeader>
                         <AccordionContent style={{ backgroundColor: 'transparent', padding: 0, paddingTop: 8, paddingHorizontal: 20 }}>
                               <ThemedAlert action="info">
-                                   <ThemedAlertIcon action="info" as={InfoIcon} style={{ marginRight: 12 }} />
+                                   <ThemedAlertIcon action="info" style={{ marginRight: 12 }} />
                                    <ThemedAlertText action="info" size="xs">
                                         {getTermFromDictionary(language, 'reading_history_disclaimer')}
                                    </ThemedAlertText>
@@ -503,7 +503,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
      const updateUserProfile = useUpdateUserProfile();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const {textColor, colorMode, uiColors } = useTheme();
+     const {colorMode, uiColors } = useTheme();
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      const [deleting, setDelete] = React.useState(false);
@@ -582,7 +582,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                                              toggle();
                                         }}>
                                         <ActionsheetIcon>
-                                            <MaterialIcons name="search" size={18} color={textColor} style={{ marginRight: 4 }} />
+                                            <MaterialIcons name="search" size={18} style={{ marginRight: 4 }} />
                                         </ActionsheetIcon>
                                        <ActionsheetItemText>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                                    </ActionsheetItem>
@@ -598,7 +598,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                                         toggle();
                                    }}>
                                    <ActionsheetIcon>
-                                       <MaterialIcons name="delete" size={18} color={textColor} style={{ marginRight: 4 }} />
+                                       <MaterialIcons name="delete" size={18} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText>
                                         {getTermFromDictionary(language, 'reading_history_delete')}

@@ -13,7 +13,6 @@ import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedBut
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
 import { FormControlLabel } from '@/components/ui/form-control';
-import { CheckIcon } from '@/components/ui/icon';
 import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../../components/themed/ThemedFormControls';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 
@@ -363,7 +362,7 @@ export const Settings_PickupLocations = () => {
                                    setRememberPickupLocation((prev) => !prev);
                               }}>
                               <CheckboxIndicator>
-                                   <CheckboxIcon as={CheckIcon} />
+                                   <CheckboxIcon />
                               </CheckboxIndicator>
                               <CheckboxLabel>{getTermFromDictionary(language, 'bypass_pickup_location_prompt')}</CheckboxLabel>
                          </Checkbox>

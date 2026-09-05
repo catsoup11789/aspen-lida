@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useFocusEffect } from '@react-navigation/native';
@@ -776,7 +776,7 @@ const UserProfileOverview = () => {
                               </Text>
                          ) : null}
                          <HStack space="sm" alignItems="center">
-                              <MaterialIcons name="credit-card" size={14} color={textColor} />
+                              <MaterialIcons name="credit-card" size={14} />
                               {(user.ils_barcode || user.cat_username) ? (
                                    <Text numberOfLines={1} style={{ maxWidth: 175, fontWeight: '500' }} size="sm">
                                         {user.ils_barcode ?? user.cat_username}
@@ -806,7 +806,7 @@ const Checkouts = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                    <MaterialIcons name="chevron-right" size={20} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
                               <Text style={{ fontWeight: '500' }}>
@@ -842,7 +842,7 @@ const Holds = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                    <MaterialIcons name="chevron-right" size={20} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
                               <Text style={{ fontWeight: '500' }}>
@@ -878,7 +878,7 @@ const UserLists = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                    <MaterialIcons name="chevron-right" size={20} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
                               <Text style={{ fontWeight: '500' }}>
@@ -911,7 +911,7 @@ const SavedSearches = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                    <MaterialIcons name="chevron-right" size={20} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
                               <Text style={{ fontWeight: '500' }}>
@@ -947,7 +947,7 @@ const ReadingHistory = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                    <MaterialIcons name="chevron-right" size={20} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
                               <Text style={{ fontWeight: '500' }}>
@@ -976,7 +976,7 @@ const UserProfile = () => {
                          hasPendingChanges: false });
                }}>
                <HStack space="xs" alignItems="center">
-                    <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                    <MaterialIcons name="chevron-right" size={20} />
                     <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'contact_information')}</Text>
                </HStack>
           </Pressable>
@@ -998,7 +998,7 @@ const NotificationHistory = () => {
                               hasPendingChanges: false });
                     }}>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                         <MaterialIcons name="chevron-right" size={20} />
                          <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'notification_history')}</Text>
                     </HStack>
                </Pressable>
@@ -1026,7 +1026,7 @@ const LinkedAccounts = () => {
                               hasPendingChanges: false })
                     }>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                         <MaterialIcons name="chevron-right" size={20} />
                          <Text style={{ fontWeight: '500' }}>
                               {getTermFromDictionary(language, 'linked_accounts')}
                          </Text>
@@ -1057,7 +1057,7 @@ const AlternateLibraryCard = () => {
                               hasPendingChanges: false });
                     }}>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                         <MaterialIcons name="chevron-right" size={20} />
                          <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'alternate_library_card')}</Text>
                     </HStack>
                </Pressable>
@@ -1125,7 +1125,7 @@ const Events = () => {
                               hasPendingChanges: false });
                     }}>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                         <MaterialIcons name="chevron-right" size={20} />
                          <VStack>
                               <Text style={{ fontWeight: '500' }}>
                                    {getTermFromDictionary(language, 'events')}
@@ -1191,7 +1191,7 @@ const Campaigns = () => {
                               hasPendingChanges: false })
                     }>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                         <MaterialIcons name="chevron-right" size={20} />
                          <VStack>
                               <Text style={{ fontWeight: '500' }}>
                                    {getTermFromDictionary(language, 'campaigns')}

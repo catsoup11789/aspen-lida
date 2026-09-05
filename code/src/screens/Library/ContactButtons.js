@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import * as SecureStore from 'expo-secure-store';
@@ -23,10 +23,9 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 const ContactButtons = (data) => {
      const location = data.data;
      const language = useActiveLanguage();
-     const { uiColors } = useTheme();
+     const { uiColors, textColor } = useTheme();
 
      const backgroundColor = useColorModeValue(uiColors.surface.light, uiColors.surface.dark);
-     const textColor = useColorModeValue(uiColors.text.light, uiColors.text.dark);
      const iconBorderColor = useColorModeValue(uiColors.icon.light, uiColors.surface.light);
 
      const callLibrary = () => {
@@ -160,11 +159,9 @@ const ContactButtons = (data) => {
                                    }}
                                    onPress={() => callLibrary()}>
                                    <Center>
-                                        <MaterialIcons name="call" size={18} color={textColor} />
+                                        <MaterialIcons name="call" size={18} />
                                    </Center>
-                                   <ButtonText style={{ color: themeTextColor, textAlign: 'center', fontSize: 10 }}>
-                                        {getTermFromDictionary(language, 'call_the_library')}
-                                   </ButtonText>
+                                   <ButtonText style={{ color: textColor, textAlign: 'center', fontSize: 10 }}>{getTermFromDictionary(language, 'call_the_library')}</ButtonText>
                               </Button>
                          ) : null}
                          {location.email ? (
@@ -181,11 +178,9 @@ const ContactButtons = (data) => {
                                    }}
                                    onPress={() => emailLibrary()}>
                                    <Center>
-                                        <MaterialIcons name="email" size={18} color={textColor} />
+                                        <MaterialIcons name="email" size={18} />
                                    </Center>
-                                   <ButtonText style={{ color: themeTextColor, textAlign: 'center', fontSize: 10 }}>
-                                        {getTermFromDictionary(language, 'email_a_librarian')}
-                                   </ButtonText>
+                                   <ButtonText style={{ color: textColor, textAlign: 'center', fontSize: 10 }}>{getTermFromDictionary(language, 'email_a_librarian')}</ButtonText>
                               </Button>
                          ) : null}
                          {location.latitude !== 0 ? (
@@ -202,11 +197,9 @@ const ContactButtons = (data) => {
                                    }}
                                    onPress={() => getDirections()}>
                                    <Center>
-                                        <MaterialIcons name="map" size={18} color={textColor} />
+                                        <MaterialIcons name="map" size={18} />
                                    </Center>
-                                   <ButtonText style={{ color: themeTextColor, textAlign: 'center', fontSize: 10 }}>
-                                        {getTermFromDictionary(language, 'get_directions')}
-                                   </ButtonText>
+                                   <ButtonText style={{ color: textColor, textAlign: 'center', fontSize: 10 }}>{getTermFromDictionary(language, 'get_directions')}</ButtonText>
                               </Button>
                          ) : null}
                          {location.homeLink ? (
@@ -223,11 +216,9 @@ const ContactButtons = (data) => {
                                    }}
                                    onPress={() => visitWebsite()}>
                                    <Center>
-                                        <MaterialIcons name="home" size={18} color={textColor} />
+                                        <MaterialIcons name="home" size={18} />
                                    </Center>
-                                   <ButtonText style={{ color: themeTextColor, textAlign: 'center', fontSize: 10 }}>
-                                        {getTermFromDictionary(language, 'visit_our_website')}
-                                   </ButtonText>
+                                   <ButtonText style={{ color: textColor, textAlign: 'center', fontSize: 10 }}>{getTermFromDictionary(language, 'visit_our_website')}</ButtonText>
                               </Button>
                          ) : null}
                     </ButtonGroup>

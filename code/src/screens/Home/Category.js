@@ -5,7 +5,7 @@ import React from 'react';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { Image } from 'expo-image';
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { navigateStack } from '../../helpers/RootNavigator';
 import { getHomeScreenFeed } from '../../util/api/search';
 import { updateBrowseCategoryStatus } from '../../util/api/user';
@@ -33,7 +33,7 @@ const loggedEmptyCategoryKeys = new Set();
  * @constructor
  */
 const DisplayBrowseCategory = ({category}) => {
-     const { uiColors, runtimeColors, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const language = useActiveLanguage();
      const library = useLibrary();
      const maxNum = useMaxCategories();

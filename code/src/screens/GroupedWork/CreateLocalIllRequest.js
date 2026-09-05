@@ -18,7 +18,6 @@ import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedBut
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../components/themed/ThemedCheckbox';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
-import { CheckIcon } from '@/components/ui/icon';
 import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
@@ -209,9 +208,7 @@ const Request = (payload) => {
                                    setAcceptFee(value);
                               }}>
                               <CheckboxIndicator style={{ marginRight: 8 }}>
-                                   <CheckboxIcon>
-                                        <CheckIcon />
-                                   </CheckboxIcon>
+                                   <CheckboxIcon />
                               </CheckboxIndicator>
                               <CheckboxLabel>
                                    <Text>{field.label}</Text>

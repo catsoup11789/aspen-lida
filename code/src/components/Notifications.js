@@ -6,7 +6,8 @@ import React, {useContext} from 'react';
 import { Platform } from 'react-native';
 import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from './themed/ThemedAlert';
 import { ThemedButton as Button, ThemedButtonIcon as ButtonIcon } from './themed/ThemedButton';
-import { CloseIcon } from '@/components/ui/icon';
+import { ThemedCloseIcon } from './themed/ThemedFormControls';
+import { ThemedMaterialIcons as MaterialIcons } from './themed/ThemedMaterialIcons';
 import { HStack } from '@/components/ui/hstack';
 import { VStack } from '@/components/ui/vstack';
 import { Pressable } from '@/components/ui/pressable';
@@ -208,7 +209,7 @@ export const DisplayAndroidEndOfSupportMessage = (props) => {
                          <Button
                               variant="link"
                               onPress={() => setIsOpen(false)}>
-                              <ButtonIcon as={CloseIcon} size="md" />
+                              <ButtonIcon as={MaterialIcons} name="close" size="md" />
                          </Button>
                     </HStack>
                </VStack>
@@ -239,7 +240,7 @@ export const DisplaySystemMessage = (props) => {
                                         updateSystemMessages(result);
                                    });
                               }}>
-                              <CloseIcon style={{ color: '#000000' }} />
+                              <ThemedCloseIcon color="#000000" />
                          </Pressable>
                     </HStack>
                </VStack>

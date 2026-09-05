@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import _ from 'lodash';
 import React, { useState } from 'react';
@@ -18,7 +18,6 @@ import { Center } from '@/components/ui/center';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { CircleIcon } from '@/components/ui/icon';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { ThemedRadio as Radio, ThemedRadioGroup as RadioGroup, ThemedRadioIcon as RadioIcon, ThemedRadioIndicator as RadioIndicator, ThemedRadioLabel as RadioLabel } from '../../components/themed/ThemedRadio';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
@@ -259,13 +258,13 @@ const AddToList = (props) => {
                                                             <HStack space="md" style={{ flexDirection: 'row', alignItems: 'center', width: '75%', maxWidth: 300 }}>
                                                                  <Radio value="1" style={{ marginVertical: 4 }}>
                                                                       <RadioIndicator style={{ marginRight: 8, borderColor }}>
-                                                                           <RadioIcon as={CircleIcon} style={{ color: borderColor }} />
+                                                                           <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                                       </RadioIndicator>
                                                                       <RadioLabel>{getTermFromDictionary(language, 'private')}</RadioLabel>
                                                                  </Radio>
                                                                  <Radio value="0" style={{ marginVertical: 4 }}>
                                                                       <RadioIndicator style={{ marginRight: 8, borderColor }}>
-                                                                           <RadioIcon as={CircleIcon} style={{ color: borderColor }} />
+                                                                           <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                                       </RadioIndicator>
                                                                       <RadioLabel>{getTermFromDictionary(language, 'public')}</RadioLabel>
                                                                  </Radio>

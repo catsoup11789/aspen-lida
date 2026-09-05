@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
@@ -405,7 +405,7 @@ const Item = (data) => {
                               />
 
                               <Button size="sm" variant="ghost" action="negative" onPress={() => removeEvent()}>
-                                   <MaterialIcons name="delete" size={14} color={textColor} style={{ marginRight: 4 }} />
+                                   <MaterialIcons name="delete" size={14} style={{ marginRight: 4 }} />
                                    <ButtonText>{getTermFromDictionary(language, 'remove')}</ButtonText>
                               </Button>
                          </VStack>
@@ -440,7 +440,7 @@ const Item = (data) => {
                          {!event.cover ? (
                               <Box style={{ alignItems: 'flex-start', paddingTop: 8 }}>
                                    <Button size="sm" variant="ghost" action="negative" style={{ padding: 0 }} onPress={() => removeEvent()}>
-                                        <MaterialIcons name="delete" size={14} color={textColor} style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="delete" size={14} style={{ marginRight: 4 }} />
                                         <ButtonText>{getTermFromDictionary(language, 'remove')}</ButtonText>
                                    </Button>
                               </Box>

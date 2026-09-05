@@ -1,7 +1,6 @@
 import React from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from './ThemedMaterialIcons';
 import { FormControl, FormControlLabelText } from '@/components/ui/form-control';
-import { Icon as UIIcon, CloseIcon } from '@/components/ui/icon';
 import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { useTheme } from '../../themes/theme';
 
@@ -56,33 +55,21 @@ export const ThemedInputField = React.forwardRef(({ style, ...props }, ref) => {
 });
 
 export const PasswordVisibilityToggle = ({ showPassword, onPress, style }) => {
-     const { textColor } = useTheme();
-
      return (
           <InputSlot onPress={onPress}>
-               <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} color={textColor} style={[{ marginRight: 8 }, style]} />
+               <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} style={[{ marginRight: 8 }, style]} />
           </InputSlot>
      );
 };
 
-export const ThemedIcon = React.forwardRef(({ style, ...props }, ref) => {
-     const { textColor } = useTheme();
-
-     return <UIIcon ref={ref} style={[{ color: textColor }, style]} {...props} />;
-});
-
-export const ThemedCloseIcon = React.forwardRef(({ style, ...props }, ref) => {
-     const { textColor } = useTheme();
-
-     // CloseIcon is one of the individually-generated gluestack icons (created via createIcon()
-     // without the base Icon component's size-variant handling), so its react-native-svg root
-     // doesn't pick up a real width/height from the `size` prop/variant on its own — it renders
-     // unconstrained (and grows to fill any available flex space) unless given an explicit numeric
-     // width/height here.
-     return <CloseIcon ref={ref} style={[{ color: textColor, width: 18, height: 18 }, style]} {...props} />;
+// MaterialIcons "close" replaces gluestack's own CloseIcon -- unlike that one (an
+// individually-generated gluestack icon without the base Icon component's size-variant
+// handling, whose react-native-svg root didn't pick up a real width/height from the `size`
+// prop on its own), MaterialIcons' `size` prop just works.
+export const ThemedCloseIcon = React.forwardRef(({ size = 18, ...props }, ref) => {
+     return <MaterialIcons ref={ref} name="close" size={size} {...props} />;
 });
 
 ThemedInput.displayName = 'ThemedInput';
 ThemedInputField.displayName = 'ThemedInputField';
-ThemedIcon.displayName = 'ThemedIcon';
 ThemedCloseIcon.displayName = 'ThemedCloseIcon';

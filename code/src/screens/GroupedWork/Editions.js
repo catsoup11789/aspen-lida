@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -345,7 +345,7 @@ export const Editions = () => {
 const Edition = (props) => {
      // 1. Hooks
      const language = useActiveLanguage();
-     const { textColor, colorMode, uiColors } = useTheme();
+     const { colorMode, uiColors } = useTheme();
 
      // 2. Props
      const {
@@ -406,7 +406,7 @@ const Edition = (props) => {
                                    {records.publicationDate}
                               </Text>
                               <Text size="xs">
-                                   {records.publisher}. {records.edition} {records.physical} {closedCaptioned === '1' ? <MaterialIcons name="closed-caption" size={16} color={textColor} /> : null}
+                                   {records.publisher}. {records.edition} {records.physical} {closedCaptioned === '1' ? <MaterialIcons name="closed-caption" size={16} /> : null}
                               </Text>
                          </HStack>
                          <VStack space="sm">

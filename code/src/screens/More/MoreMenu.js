@@ -1,4 +1,4 @@
-import { Entypo, MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import * as WebBrowser from 'expo-web-browser';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import _ from 'lodash';
@@ -118,7 +118,7 @@ export const MoreMenu = () => {
                                    {library.catalogRegistrationCapabilities?.enableSelfRegistration === '1' && library.catalogRegistrationCapabilities.enableSelfRegistrationInApp === '1' ? (
                                         <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={toggleDeleteConfirmationModal}>
                                              <HStack space="sm" style={{ alignItems: 'center' }}>
-                                                  <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                                                  <MaterialIcons name="chevron-right" size={20} />
                                                   <Text style={{ fontWeight: '500' }}>
                                                        {getTermFromDictionary(language, 'delete_account')}
                                                   </Text>
@@ -240,20 +240,20 @@ const MyLibrary = () => {
      }
 
      return (
-          <Box style={{ margin: 16, backgroundColor: runtimeColors.primary[400], padding: 24, borderRadius: 16 }}>
+          <Box style={{ margin: 16, backgroundColor: runtimeColors.primary[500], padding: 24, borderRadius: 16 }}>
                <Pressable style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} onPress={() => navigate('MyLibrary')}>
                     <VStack>
-                        <Text bold size="md" style={{ color: runtimeColors.primary['400-text'] }}>
+                        <Text bold size="md" style={{ color: runtimeColors.primary['500-text'] }}>
                               {library.displayName}
                          </Text>
                          {library.displayName !== location?.displayName ? (
-                             <Text bold style={{ color: runtimeColors.primary['400-text'] }}>
+                             <Text bold style={{ color: runtimeColors.primary['500-text'] }}>
                                    {location?.displayName}
                               </Text>
                          ) : null}
-                        {hoursLabel ? <Text style={{ color: runtimeColors.primary['400-text'] }}>{hoursLabel}</Text> : null}
+                        {hoursLabel ? <Text style={{ color: runtimeColors.primary['500-text'] }}>{hoursLabel}</Text> : null}
                     </VStack>
-                    <MaterialIcons name="chevron-right" size={20} color={runtimeColors.primary['400-text']} />
+                    <MaterialIcons name="chevron-right" size={20} color={runtimeColors.primary['500-text']} />
                </Pressable>
           </Box>
      );
@@ -273,7 +273,7 @@ const ViewAllLocations = () => {
           return (
                <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => navigate('AllLocations')}>
                     <HStack space="sm" style={{ alignItems: 'center' }}>
-                         <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                         <MaterialIcons name="chevron-right" size={20} />
                          <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'view_all_locations')}</Text>
                     </HStack>
                </Pressable>
@@ -295,7 +295,7 @@ const Settings = () => {
      return (
           <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => navigate('MyPreferences')}>
                <HStack space="sm" style={{ alignItems: 'center' }}>
-                    <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                    <MaterialIcons name="chevron-right" size={20} />
                     <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'preferences')}</Text>
                </HStack>
           </Pressable>
@@ -364,7 +364,7 @@ const PrivacyPolicy = () => {
      return (
           <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => openURL()}>
                <HStack space="sm" style={{ alignItems: 'center' }}>
-                    <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                    <MaterialIcons name="chevron-right" size={20} />
                     <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'privacy_policy')}</Text>
                </HStack>
           </Pressable>
@@ -472,8 +472,8 @@ const MenuLink = (payload) => {
                                         {({ isExpanded }) => (
                                              <HStack space="sm" style={{ alignItems: 'center' }}>
                                                   <Icon
-                                                       as={isExpanded ? Entypo : MaterialIcons}
-                                                       name={isExpanded ? 'chevron-small-down' : 'chevron-right'}
+                                                       as={MaterialIcons}
+                                                       name={isExpanded ? 'expand-more' : 'chevron-right'}
                                                        size="lg"
                                                        style={{ color: textColor }}
                                                   />
@@ -524,7 +524,7 @@ const MenuLink = (payload) => {
                     return (
                          <Pressable key={index} style={{ paddingHorizontal: 8, paddingVertical: 12, borderRadius: 8 }} onPress={() => openURL(item.url)}>
                              <HStack space="sm" style={{ alignItems: 'center' }}>
-                                  <MaterialIcons name="chevron-right" size={20} color={textColor} />
+                                  <MaterialIcons name="chevron-right" size={20} />
                                   <VStack style={{ width: '100%' }}>
                                        <Text style={{ fontWeight: '500' }}>{item.linkText}</Text>
                                    </VStack>

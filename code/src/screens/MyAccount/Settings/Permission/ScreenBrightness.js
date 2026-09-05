@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '../../../../components/themed/ThemedMaterialIcons';
 import React from 'react';
 import * as Brightness from 'expo-brightness';
 import * as Linking from 'expo-linking';
@@ -29,7 +29,6 @@ import { useTheme } from '@/src/themes/theme';
  */
 export const ScreenBrightnessPermissionStatus = () => {
      const language = useActiveLanguage();
-     const { textColor } = useTheme();
      const [permissionStatus, setPermissionStatus] = React.useState(false);
 
      const appState = React.useRef(AppState.currentState);
@@ -64,7 +63,7 @@ export const ScreenBrightnessPermissionStatus = () => {
                     </Text>
                     <HStack alignItems="center">
                          <Text>{permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}</Text>
-                         <MaterialIcons name="chevron-right" size={20} color={textColor} style={{ marginLeft: 4 }} />
+                         <MaterialIcons name="chevron-right" size={20} style={{ marginLeft: 4 }} />
                     </HStack>
                </HStack>
           </Pressable>

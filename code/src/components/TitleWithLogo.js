@@ -8,7 +8,7 @@ import { HStack } from '@/components/ui/hstack';
 import { VStack } from '@/components/ui/vstack';
 import { Box } from '@/components/ui/box';
 import { Pressable } from '@/components/ui/pressable';
-import { Icon, ChevronLeftIcon } from '@/components/ui/icon';
+import { ThemedMaterialIcons as MaterialIcons } from './themed/ThemedMaterialIcons';
 import { decodeHTML, isValidUrl } from '../helpers/helpers';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../themes/theme';
@@ -97,7 +97,7 @@ export default function TitleWithLogo(props) {
                <HStack style={{ paddingHorizontal: 4, paddingVertical: 8, alignItems: 'center', justifyContent: 'space-between', backgroundColor: runtimeColors.primary.base }}>
                     {navigation.canGoBack() && !hideBack ? (
                        <Pressable onPress={() => navigation.goBack()} style={{ paddingLeft: 4 }}>
-                            <Icon as={ChevronLeftIcon} size="xl" style={{ color: runtimeColors.primary.baseContrast }} />
+                            <MaterialIcons name="chevron-left" size={24} style={{ color: runtimeColors.primary.baseContrast }} />
                        </Pressable>
                     ) : (
                        <Box style={{ width: 24 }} />

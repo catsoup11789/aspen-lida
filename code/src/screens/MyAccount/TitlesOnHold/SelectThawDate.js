@@ -1,6 +1,6 @@
 import React from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { Platform } from 'react-native';
 import { freezeHold, freezeHolds } from '@/src/util/api/user';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
@@ -27,7 +27,7 @@ export const SelectThawDate = (props) => {
      const { freezingLabel, freezeLabel, label, libraryContext, onClose, freezeId, recordId, source, userId, resetGroup } = props;
      let data = props.data;
      const language = useActiveLanguage();
-     const { runtimeColors, textColor, colorMode } = useTheme();
+     const { runtimeColors, colorMode } = useTheme();
      const [loading, setLoading] = React.useState(false);
      const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
      const [showIndefiniteWarning, setShowIndefiniteWarning] = React.useState(false);
@@ -93,7 +93,7 @@ export const SelectThawDate = (props) => {
                <ActionsheetItem onPress={showDatePicker}>
                     {data ? null : (
                          <ActionsheetIcon>
-                              <MaterialIcons name="pause" size={18} color={textColor} style={{ marginRight: 4 }} />
+                              <MaterialIcons name="pause" size={18} style={{ marginRight: 4 }} />
                          </ActionsheetIcon>
                     )}
                     <ActionsheetItemText>{actionLabel}</ActionsheetItemText>

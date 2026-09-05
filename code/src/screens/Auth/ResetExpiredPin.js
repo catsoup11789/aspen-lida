@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '../../components/themed/ThemedMaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
@@ -24,7 +24,6 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { Center } from '@/components/ui/center';
 import { FormControlError, FormControlErrorIcon, FormControlErrorText, FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { AlertCircleIcon } from '@/components/ui/icon';
 import { InputSlot } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -44,7 +43,7 @@ export const ResetExpiredPin = (props) => {
      const updateLibraryLocation = useUpdateLibraryLocation();
      const updateHomeScreenLinks = useUpdateHomeScreenLinks();
      const updateUserProfile = useUpdateUserProfile();
-     const { uiColors, runtimeColors, colorMode, textColor } = useTheme();
+     const { uiColors, runtimeColors, colorMode } = useTheme();
      const updateBrowseCategories = useUpdateBrowseCategories();
      const language = useActiveLanguage();
      const { username, resetToken, url, pinValidationRules, setExpiredPin, patronsLibrary } = props;
@@ -213,12 +212,12 @@ export const ResetExpiredPin = (props) => {
                                                       blurOnSubmit={false}
                                                   />
                                                  <InputSlot onPress={toggleShowPin}>
-                                                      <Ionicons name={showPin ? 'eye-outline' : 'eye-off-outline'} size={20} color={textColor} style={{ marginRight: 12 }} />
+                                                      <MaterialIcons name={showPin ? 'visibility' : 'visibility-off'} size={20} style={{ marginRight: 12 }} />
                                                  </InputSlot>
                                             </ThemedInput>
                                              {'pin' in errors ? (
                                                   <FormControlError>
-                                                       <FormControlErrorIcon as={AlertCircleIcon} />
+                                                       <FormControlErrorIcon as={MaterialIcons} name="error" />
                                                        <FormControlErrorText>{errors.pin}</FormControlErrorText>
                                                   </FormControlError>
                                              ) : null}
@@ -243,12 +242,12 @@ export const ResetExpiredPin = (props) => {
                                                        ref={pinConfirmedRef}
                                                   />
                                                   <InputSlot onPress={toggleShowPinConfirmed}>
-                                                       <Ionicons name={showPinConfirmed ? 'eye-outline' : 'eye-off-outline'} size={20} color={textColor} style={{ marginRight: 12 }} />
+                                                       <MaterialIcons name={showPinConfirmed ? 'visibility' : 'visibility-off'} size={20} style={{ marginRight: 12 }} />
                                                   </InputSlot>
                                              </ThemedInput>
                                              {'pinConfirmed' in errors ? (
                                                   <FormControlError>
-                                                       <FormControlErrorIcon as={AlertCircleIcon} />
+                                                       <FormControlErrorIcon as={MaterialIcons} name="error" />
                                                        <FormControlErrorText>{errors.pinConfirmed}</FormControlErrorText>
                                                   </FormControlError>
                                              ) : null}

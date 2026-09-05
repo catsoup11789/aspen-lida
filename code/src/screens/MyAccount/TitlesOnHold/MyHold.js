@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialCommunityIcons as MaterialCommunityIcons, ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { Image } from 'expo-image';
 import _ from 'lodash';
 import React from 'react';
@@ -8,7 +8,6 @@ import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIn
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator } from '../../../components/themed/ThemedCheckbox';
-import { CheckIcon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { VStack } from '@/components/ui/vstack';
@@ -163,7 +162,7 @@ export const MyHold = (props) => {
                               <Center>
                                    <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} accessibilityLabel="Check item" style={{ marginVertical: 12 }}>
                                         <CheckboxIndicator>
-                                             <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }} />
+                                             <CheckboxIcon style={{ color: runtimeColors.primary['500-text'] }} />
                                         </CheckboxIndicator>
                                    </Checkbox>
                               </Center>
@@ -176,7 +175,7 @@ export const MyHold = (props) => {
                          <Center>
                               <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} accessibilityLabel="Check item" style={{ marginVertical: 12 }}>
                                    <CheckboxIndicator style={{ borderColor: checkboxBorderColor }}>
-                                        <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }}/>
+                                        <CheckboxIcon style={{ color: runtimeColors.primary['500-text'] }}/>
                                    </CheckboxIndicator>
                               </Checkbox>
                          </Center>
@@ -196,7 +195,7 @@ export const MyHold = (props) => {
                               handleClose();
                          }}>
                          <ActionsheetIcon>
-                             <MaterialIcons name="search" size={18} color={textColor} style={{ marginRight: 4 }} />
+                             <MaterialIcons name="search" size={18} style={{ marginRight: 4 }} />
                          </ActionsheetIcon>
                          <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                     </ActionsheetItem>
@@ -222,7 +221,7 @@ export const MyHold = (props) => {
                               });
                          }}>
                          <ActionsheetIcon>
-                             <MaterialIcons name="book" size={18} color={textColor} style={{ marginRight: 4 }} />
+                             <MaterialIcons name="book" size={18} style={{ marginRight: 4 }} />
                          </ActionsheetIcon>
                          <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'checkout_title')}</ActionsheetItemText>
                     </ActionsheetItem>
@@ -257,7 +256,7 @@ export const MyHold = (props) => {
                               });
                          }}>
                          <ActionsheetIcon>
-                             <MaterialIcons name="cancel" size={18} color={textColor} style={{ marginRight: 4 }} />
+                             <MaterialIcons name="cancel" size={18} style={{ marginRight: 4 }} />
                          </ActionsheetIcon>
                          <ActionsheetItemText style={{ color: textColor }}>{label}</ActionsheetItemText>
                     </ActionsheetItem>
@@ -289,7 +288,7 @@ export const MyHold = (props) => {
                                    });
                               }}>
                               <ActionsheetIcon>
-                                   <MaterialCommunityIcons name={icon} size={18} color={textColor} style={{ marginRight: 4 }} />
+                                   <MaterialCommunityIcons name={icon} size={18} style={{ marginRight: 4 }} />
                               </ActionsheetIcon>
                               <ActionsheetItemText style={{ color: textColor }}>{label}</ActionsheetItemText>
                          </ActionsheetItem>
@@ -311,7 +310,7 @@ export const MyHold = (props) => {
                                         });
                                    }}>
                                    <ActionsheetIcon>
-                                       <MaterialCommunityIcons name={icon} size={18} color={textColor} style={{ marginRight: 4 }} />
+                                       <MaterialCommunityIcons name={icon} size={18} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText style={{ color: textColor }}>{label}</ActionsheetItemText>
                               </ActionsheetItem>

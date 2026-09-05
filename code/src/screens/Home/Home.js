@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialCommunityIcons as MaterialCommunityIcons, ThemedMaterialIcons as MaterialIcons } from '../../components/themed/ThemedMaterialIcons';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import * as Device from 'expo-device';
@@ -42,7 +42,7 @@ export const DiscoverHomeScreen = () => {
      const [loading, setLoading] = React.useState(false);
      const insets = useSafeAreaInsets();
 
-     const { textColor, colorMode } = useTheme();
+     const { colorMode } = useTheme();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const { updateIndexes, updateSources, updateCurrentIndex, updateCurrentSource } = React.useContext(SearchContext);
      const { data: userState } = useUserState();
@@ -309,22 +309,22 @@ export const DiscoverHomeScreen = () => {
                <FlatList
                     contentContainerStyle={{ paddingBottom: listBottomPadding }}
                     ListHeaderComponent={
-                         <Box style={{ padding: 20 }}>
+                         <Box style={{ padding: 10 }}>
                               {androidEndSupportMessage()}
                               {showSystemMessage()}
                               <FormControl>
                                    <ThemedInput>
                                         <InputSlot>
-                                             <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />
+                                             <MaterialIcons name="search" size={20} style={{ marginLeft: 8 }} />
                                         </InputSlot>
                                         <ThemedInputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
-                                                  <MaterialIcons name="close" size={20} color={textColor} style={{ marginRight: 8 }} />
+                                                  <MaterialIcons name="close" size={20} style={{ marginRight: 8 }} />
                                              </InputSlot>
                                         ) : null}
                                         <InputSlot onPress={() => openScanner()}>
-                                             <MaterialCommunityIcons name="barcode-scan" size={20} color={textColor} style={{ marginRight: 8 }} />
+                                             <MaterialCommunityIcons name="barcode-scan" size={20} style={{ marginRight: 8 }} />
                                         </InputSlot>
                                    </ThemedInput>
                               </FormControl>
@@ -338,7 +338,7 @@ export const DiscoverHomeScreen = () => {
                          return `${item?.id ?? item?.textId ?? item?.sourceListId ?? item?.label ?? `${item?.source ?? 'browse'}-${item?.sourceListId ?? 'category'}`}-${index}`;
                     }}
                     renderItem={({ item }) => (
-                         <Box style={{ paddingHorizontal: 15 }}>
+                         <Box style={{ paddingHorizontal: 10 }}>
                               <DisplayBrowseCategory category={item} />
                          </Box>
                     )}

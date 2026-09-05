@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
@@ -183,7 +183,6 @@ export const AllLocations = () => {
  */
 const DisplayLocation = (data) => {
      const language = useActiveLanguage();
-     const {textColor} = useTheme();
      const location = data.data;
 
      let units = false;
@@ -260,18 +259,18 @@ const DisplayLocation = (data) => {
                               </Text>
                               {hasHours ? (
                                    <HStack alignItems="center" space="xs">
-                                        <MaterialIcons name="access-time" size={16} color={textColor} />
+                                        <MaterialIcons name="access-time" size={16} />
                                         <Text size="xs">{hoursLabel}</Text>
                                    </HStack>
                               ) : null}
                               {distanceText ? (
                                    <HStack alignItems="center" space="xs">
-                                        <MaterialIcons name="pin-drop" size={16} color={textColor} />
+                                        <MaterialIcons name="pin-drop" size={16} />
                                         <Text size="xs">{distanceText}</Text>
                                    </HStack>
                               ) : null}
                          </VStack>
-                         <MaterialIcons name="chevron-right" size={24} color={textColor} />
+                         <MaterialIcons name="chevron-right" size={24} />
                     </HStack>
                </Pressable>
                <Divider style={{ marginTop: 12, marginBottom: 12 }} />

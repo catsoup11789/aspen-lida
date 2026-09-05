@@ -1,6 +1,6 @@
 import React from 'react';
-import { CheckIcon } from '@/components/ui/icon';
 import { Checkbox, CheckboxGroup, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
+import { ThemedMaterialIcons as MaterialIcons } from './ThemedMaterialIcons';
 import { useTheme } from '../../themes/theme';
 
 // Checkbox's underlying gluestack v5 primitive has no size variant at all -- the indicator,
@@ -44,12 +44,12 @@ export const ThemedCheckboxIndicator = React.forwardRef(({ className, style, ...
      return <CheckboxIndicator ref={ref} className={[sizeStyle.indicator, className].filter(Boolean).join(' ')} style={[{ marginRight: 8 }, checkedStyle, style]} {...props} />;
 });
 
-export const ThemedCheckboxIcon = React.forwardRef(({ as, className, style, ...props }, ref) => {
+export const ThemedCheckboxIcon = React.forwardRef(({ as, name, className, style, ...props }, ref) => {
      const size = React.useContext(CheckboxSizeContext);
      const sizeStyle = resolveCheckboxSizeStyle(size);
      const { runtimeColors } = useTheme();
 
-     return <CheckboxIcon ref={ref} as={as ?? CheckIcon} className={[sizeStyle.icon, className].filter(Boolean).join(' ')} style={[{ color: runtimeColors.primary['500-text'] }, style]} {...props} />;
+     return <CheckboxIcon ref={ref} as={as ?? MaterialIcons} name={name ?? 'check'} className={[sizeStyle.icon, className].filter(Boolean).join(' ')} style={[{ color: runtimeColors.primary['500-text'] }, style]} {...props} />;
 });
 
 export const ThemedCheckboxLabel = React.forwardRef(({ className, style, ...props }, ref) => {

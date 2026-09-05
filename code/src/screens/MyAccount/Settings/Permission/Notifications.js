@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '../../../../components/themed/ThemedMaterialIcons';
 import React from 'react';
 import * as Notifications from 'expo-notifications';
 import * as Linking from 'expo-linking';
@@ -13,7 +13,6 @@ import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/Themed
 import { Center } from '@/components/ui/center';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronLeftIcon, Icon } from '@/components/ui/icon';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedSwitch as Switch } from '@/src/components/themed/ThemedSwitch';
@@ -36,7 +35,6 @@ import { useLibrary } from '@/src/hooks/useLibrarySystemData';
  */
 export const NotificationPermissionStatus = () => {
     const language = useActiveLanguage();
-    const { textColor } = useTheme();
     const library = useLibrary();
     const { data: userState } = useUserState();
     const expoToken = userState?.expoToken ?? false;
@@ -78,7 +76,7 @@ export const NotificationPermissionStatus = () => {
                     <Text>
                         {permissionStatus ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                     </Text>
-                    <MaterialIcons name="chevron-right" size={20} color={textColor} style={{ marginLeft: 4 }} />
+                    <MaterialIcons name="chevron-right" size={20} style={{ marginLeft: 4 }} />
                 </HStack>
             </HStack>
         </Pressable>
@@ -127,7 +125,8 @@ export const NotificationPermissionDescription = () => {
                             size="lg"
                             variant="outline"
                             style={{ borderWidth: 0, color: runtimeColors.primary.baseContrast }}
-                            as={ChevronLeftIcon}
+                            as={MaterialIcons}
+                            name="chevron-left"
                         />
                     </Button>
                 ) });

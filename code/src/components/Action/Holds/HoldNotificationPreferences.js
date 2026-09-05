@@ -5,7 +5,6 @@ import { useTranslationWithValues } from '@/src/hooks/useTranslationWithValues';
 import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../themed/ThemedCheckbox';
 import { FormControlHelper, FormControlHelperText, FormControlLabel } from '@/components/ui/form-control';
-import { CheckIcon } from '@/components/ui/icon';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
@@ -41,7 +40,7 @@ export const HoldNotificationPreferences = (props) => {
                                    setEmailNotification(value);
                               }}>
                               <CheckboxIndicator style={{ marginRight: 8 }}>
-                                   <CheckboxIcon as={CheckIcon} />
+                                   <CheckboxIcon />
                               </CheckboxIndicator>
                               <CheckboxLabel>{emailNotificationLabel}</CheckboxLabel>
                          </Checkbox>
@@ -55,7 +54,7 @@ export const HoldNotificationPreferences = (props) => {
                               setPhoneNotification(value);
                          }}>
                          <CheckboxIndicator style={{ marginRight: 8 }}>
-                              <CheckboxIcon as={CheckIcon} />
+                              <CheckboxIcon />
                          </CheckboxIndicator>
                          <CheckboxLabel>{getTermFromDictionary(language, 'hold_phone_notification')}</CheckboxLabel>
                     </Checkbox>
@@ -84,7 +83,7 @@ export const HoldNotificationPreferences = (props) => {
                                         setSMSNotification(value);
                                    }}>
                                    <CheckboxIndicator style={{ marginRight: 8 }}>
-                                        <CheckboxIcon as={CheckIcon} />
+                                        <CheckboxIcon />
                                    </CheckboxIndicator>
                                    <CheckboxLabel>{getTermFromDictionary(language, 'hold_sms_notification')}</CheckboxLabel>
                               </Checkbox>

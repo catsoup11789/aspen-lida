@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { popAlert } from '@/src/components/feedback';
@@ -18,7 +18,6 @@ import { Center } from '@/components/ui/center';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
 import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { CheckIcon, ChevronLeftIcon, CircleIcon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { Pressable } from '@/components/ui/pressable';
@@ -63,7 +62,7 @@ const EditList = (props) => {
                                    hasPendingChanges: true });
                          }}
                         style={{ marginRight: 12, padding: 4 }}>
-                        <ChevronLeftIcon size={20} style={{ color: textColor }} />
+                        <MaterialIcons name="chevron-left" size={20} style={{ color: textColor }} />
                     </Pressable>
                ) });
      }, [navigation]);
@@ -109,13 +108,13 @@ const EditList = (props) => {
                                         <HStack style={{ flexDirection: 'row', alignItems: 'center', width: '75%', maxWidth: 300 }} space="md">
                                              <Radio value="false" style={{ marginVertical: 4 }}>
                                                   <RadioIndicator style={{ marginRight: 8, borderColor }}>
-                                                       <RadioIcon as={CircleIcon} style={{ color: borderColor }} />
+                                                       <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                   </RadioIndicator>
                                                   <RadioLabel>{getTermFromDictionary(language, 'private')}</RadioLabel>
                                              </Radio>
                                              <Radio value="true" style={{ marginVertical: 4 }}>
                                                   <RadioIndicator style={{ marginRight: 8, borderColor }}>
-                                                       <RadioIcon as={CircleIcon} style={{ color: borderColor }} />
+                                                       <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                   </RadioIndicator>
                                                   <RadioLabel>{getTermFromDictionary(language, 'public')}</RadioLabel>
                                              </Radio>
@@ -239,7 +238,7 @@ const DeleteList = (props) => {
                                    <FormControl style={{ paddingTop: 12 }}>
                                         <Checkbox value="optOut" isChecked={optOutOfSoftDeletion} onChange={(isChecked) => setOptOutOfSoftDeletion(isChecked)} alignItems="center">
                                              <CheckboxIndicator style={optOutOfSoftDeletion ? { borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : { borderColor }}>
-                                                  <CheckboxIcon as={CheckIcon} style={{ color: runtimeColors.primary['500-text'] }} />
+                                                  <CheckboxIcon style={{ color: runtimeColors.primary['500-text'] }} />
                                              </CheckboxIndicator>
                                              <CheckboxLabel>{getTermFromDictionary(language, 'opt_out_soft_deletion')}</CheckboxLabel>
                                         </Checkbox>

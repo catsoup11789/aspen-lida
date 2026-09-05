@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons, ThemedMaterialCommunityIcons as MaterialCommunityIcons } from '../../components/themed/ThemedMaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Constants from 'expo-constants';
@@ -33,7 +33,7 @@ import { InputSlot } from '@/components/ui/input';
  * @constructor
  */
 export const GetLoginForm = (props) => {
-     const { uiColors, textColor, colorMode, forceRefreshTheme } = useTheme();
+     const { uiColors, colorMode, forceRefreshTheme } = useTheme();
      const borderColor = colorMode === 'light' ? (uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light) : (uiColors?.border?.dark ?? UI_COLOR_FALLBACKS.border.dark);
      const navigation = useNavigation();
      const barcode = useRoute().params?.barcode ?? null;
@@ -369,7 +369,7 @@ export const GetLoginForm = (props) => {
                          />
                          {allowBarcodeScanner ?
                               <InputSlot onPress={() => openScanner()}>
-                             <Ionicons name="barcode-outline" size={20} color={textColor} style={{ marginRight: 8 }} />
+                             <MaterialCommunityIcons name="barcode" size={20} style={{ marginRight: 8 }} />
                         </InputSlot> : null}
                     </ThemedInput>
                </FormControl>
@@ -392,7 +392,7 @@ export const GetLoginForm = (props) => {
                               autoComplete="password"
                         />
                         <InputSlot onPress={toggleShowPassword}>
-                             <Ionicons name={showPassword ? 'eye-outline' : 'eye-off-outline'} size={20} color={textColor} style={{ marginRight: 8 }} />
+                             <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} style={{ marginRight: 8 }} />
                         </InputSlot>
                    </ThemedInput>
                </FormControl>

@@ -11,7 +11,6 @@ import { ThemedCheckboxGroup as CheckboxGroup } from '../../../components/themed
 import { ThemedFormControl as FormControl } from '@/src/components/themed/ThemedFormControls';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { InfoIcon } from '@/components/ui/icon';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -573,7 +572,7 @@ export const MyHolds = () => {
                          </Heading>
                         <ThemedAlert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
                              <HStack style={{ padding: 12 }}>
-                                  <ThemedAlertIcon action="info" as={InfoIcon} style={{ marginRight: 12 }} />
+                                  <ThemedAlertIcon action="info" style={{ marginRight: 12 }} />
                                   <ThemedAlertText action="info" size="xs">{getTermFromDictionary(language, 'pending_holds_message')}</ThemedAlertText>
                               </HStack>
                          </ThemedAlert>
@@ -588,7 +587,7 @@ export const MyHolds = () => {
                          </Heading>
                         <ThemedAlert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
                              <HStack style={{ padding: 12 }}>
-                             <ThemedAlertIcon action="info" as={InfoIcon} style={{ marginRight: 12 }} />
+                             <ThemedAlertIcon action="info" style={{ marginRight: 12 }} />
                              <ThemedAlertText action="info" size="xs">{getTermFromDictionary(language, 'holds_ready_for_pickup_message')}</ThemedAlertText>
                               </HStack>
                          </ThemedAlert>

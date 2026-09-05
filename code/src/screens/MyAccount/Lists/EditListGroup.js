@@ -1,5 +1,5 @@
 import React from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { editListGroup } from '@/src/util/api/list';
 import { navigateStack } from '@/src/helpers/RootNavigator';

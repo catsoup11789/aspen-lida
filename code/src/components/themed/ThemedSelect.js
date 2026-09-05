@@ -19,7 +19,7 @@ import {
      SelectSectionList,
      SelectSectionHeaderText,
 } from '@/components/ui/select';
-import { ChevronDownIcon, Icon } from '@/components/ui/icon';
+import { ThemedMaterialIcons as MaterialIcons } from './ThemedMaterialIcons';
 import { useTheme } from '../../themes/theme';
 
 // Select's sizing already closely matches gluestack v1 -- same xl/lg/md/sm keys, matching
@@ -77,7 +77,7 @@ export const ThemedSelectTrigger = React.forwardRef(({ children, variant = 'outl
      return (
           <SelectTrigger variant="outline" ref={ref} size={size} className={['justify-between', className].filter(Boolean).join(' ')} style={[{ borderColor }, style]} {...props}>
                {children}
-               <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
+               <MaterialIcons name="expand-more" size={18} style={{ marginRight: 12 }} />
           </SelectTrigger>
      );
 });

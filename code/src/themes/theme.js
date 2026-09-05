@@ -5,7 +5,6 @@ import { Uniwind } from 'uniwind';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../components/themed/ThemedButton';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronLeftIcon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { GLOBALS } from '../util/globals';
@@ -227,7 +226,7 @@ export function useColorModeValue(lightValue, darkValue) {
 
 export const BackIcon = (props) => {
      const { runtimeColors } = useThemeForDisplay();
-     return <ChevronLeftIcon size="md" style={{ marginLeft: 1 }} {...props} color={runtimeColors.primary.baseContrast} />;
+     return <MaterialIcons name="chevron-left" size={24} style={{ marginLeft: 1 }} {...props} color={runtimeColors.primary.baseContrast} />;
 };
 
 function normalizeThemeColors(response = []) {

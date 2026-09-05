@@ -9,7 +9,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../../components/themed/ThemedButton';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { ChevronDownIcon, ChevronUpIcon } from '@/components/ui/icon';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { Spinner } from '@/components/ui/spinner';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
@@ -116,7 +116,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
                                                   return (
                                                        <>
                                                             <AccordionTitleText style={{ color: textColor }}>Response</AccordionTitleText>
-                                                            {isExpanded ? <AccordionIcon as={ChevronUpIcon} style={{ marginLeft: 12, color: textColor }} /> : <AccordionIcon as={ChevronDownIcon} style={{ marginLeft: 12, color: textColor }} />}
+                                                            {isExpanded ? <AccordionIcon as={MaterialIcons} name="expand-less" style={{ marginLeft: 12, color: textColor }} /> : <AccordionIcon as={MaterialIcons} name="expand-more" style={{ marginLeft: 12, color: textColor }} />}
                                                        </>
                                                   );
                                              }}

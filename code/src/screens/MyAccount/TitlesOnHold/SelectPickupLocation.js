@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import _ from 'lodash';
 import React from 'react';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
@@ -56,7 +56,7 @@ export const SelectPickupLocation = (props) => {
                          setShowModal(true);
                     }}>
                     <ActionsheetIcon>
-                        <Ionicons name="location" size={18} color={textColor} style={{ marginRight: 4 }} />
+                        <MaterialIcons name="location-on" size={18} style={{ marginRight: 4 }} />
                     </ActionsheetIcon>
                    <ActionsheetItemText>{getTermFromDictionary(language, 'change_location')}</ActionsheetItemText>
                </ActionsheetItem>

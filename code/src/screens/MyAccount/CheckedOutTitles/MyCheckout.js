@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { Image } from 'expo-image';
 import React, { useState } from 'react';
 import { Actionsheet, ActionsheetBackdrop, ActionsheetIcon, ActionsheetItem } from '@/components/ui/actionsheet';
@@ -160,7 +160,7 @@ export const MyCheckout = (props) => {
                                    }}
                                    >
                                    <ActionsheetIcon>
-                                        <MaterialIcons name="search" size={18} color={textColor} style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="search" size={18} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                               </ActionsheetItem>
@@ -202,7 +202,7 @@ export const MyCheckout = (props) => {
                                    }}
                                    >
                                    <ActionsheetIcon>
-                                        <MaterialIcons name="autorenew" size={18} color={textColor} style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="autorenew" size={18} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText>{stripHTML(renewMessage)}</ActionsheetItemText>
                               </ActionsheetItem>
@@ -220,7 +220,7 @@ export const MyCheckout = (props) => {
                                    }}
                                    >
                                    <ActionsheetIcon>
-                                        <MaterialIcons name="book" size={18} color={textColor} style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="book" size={18} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
                                    <CheckoutAccessLabel checkout={checkout} libbyReaderName={libbyReaderName} baseUrl={library.baseUrl} language={language} color={textColor}></CheckoutAccessLabel>
                               </ActionsheetItem>
@@ -228,7 +228,7 @@ export const MyCheckout = (props) => {
                          {checkout.source === 'palace_project' ? (
                               <ActionsheetItem onPress={() => handleOpenPalaceProjectInstructions()}>
                                    <ActionsheetIcon>
-                                        <MaterialIcons name="info" size={18} color={textColor} style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="info" size={18} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText>{getTermFromDictionary(language, 'access_instructions')}</ActionsheetItemText>
                               </ActionsheetItem>
@@ -247,7 +247,7 @@ export const MyCheckout = (props) => {
                                         }}
                                         >
                                         <ActionsheetIcon>
-                                             <MaterialIcons name="book" size={18} color={textColor} style={{ marginRight: 4 }} />
+                                             <MaterialIcons name="book" size={18} style={{ marginRight: 4 }} />
                                         </ActionsheetIcon>
                                         <CheckoutAccessLabel checkout={checkout} libbyReaderName={libbyReaderName} baseUrl={library.baseUrl} language={language} color={textColor}></CheckoutAccessLabel>
                                    </ActionsheetItem>
@@ -264,7 +264,7 @@ export const MyCheckout = (props) => {
                                         }}
                                         >
                                         <ActionsheetIcon>
-                                             <MaterialIcons name="logout" size={18} color={textColor} style={{ marginRight: 4 }} />
+                                             <MaterialIcons name="logout" size={18} style={{ marginRight: 4 }} />
                                         </ActionsheetIcon>
                                         <CheckoutAccessLabel checkout={checkout} libbyReaderName={libbyReaderName} baseUrl={library.baseUrl} language={language} color={textColor}></CheckoutAccessLabel>
                                         <ActionsheetItemText>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
@@ -286,7 +286,7 @@ export const MyCheckout = (props) => {
                                         }}
                                         >
                                         <ActionsheetIcon>
-                                             <MaterialIcons name="logout" size={18} color={textColor} style={{ marginRight: 4 }} />
+                                             <MaterialIcons name="logout" size={18} style={{ marginRight: 4 }} />
                                         </ActionsheetIcon>
                                         <ActionsheetItemText>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
                                    </ActionsheetItem>

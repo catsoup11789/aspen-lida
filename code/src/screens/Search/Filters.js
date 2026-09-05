@@ -13,7 +13,7 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { ThemedMaterialCommunityIcons as MaterialCommunityIcons, ThemedMaterialIcons as MaterialIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -40,7 +40,7 @@ export const FiltersScreen = () => {
      const location = useLibraryLocation();
      const language = useActiveLanguage();
      const { currentIndex, currentSource } = React.useContext(SearchContext);
-     const { uiColors, textColor, colorMode } = useTheme();
+     const { uiColors, colorMode } = useTheme();
      const insets = useSafeAreaInsets();
      const pendingFiltersFromParams = useNavigationState((state) => state.routes[0]['params']['pendingFilters']);
      const [searchTerm, setSearchTerm] = React.useState(SearchGlobal.term ?? '');
@@ -66,7 +66,7 @@ export const FiltersScreen = () => {
                                    <Text bold>{label}</Text>
                                    {appliedFacet(label)}
                               </VStack>
-                              <MaterialIcons name="chevron-right" size={26} color={textColor} />
+                              <MaterialIcons name="chevron-right" size={26} />
                          </HStack>
                     </VStack>
                </Pressable>
@@ -295,16 +295,16 @@ export const FiltersScreen = () => {
                               <FormControl>
                                    <ThemedInput variant="outline">
                                         <InputSlot>
-                                             <MaterialIcons name="search" size={20} color={textColor} style={{ marginLeft: 8 }} />
+                                             <MaterialIcons name="search" size={20} style={{ marginLeft: 8 }} />
                                         </InputSlot>
                                         <ThemedInputField returnKeyType="search" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
-                                                  <MaterialIcons name="close" size={20} color={textColor} style={{ marginRight: 8 }} />
+                                                  <MaterialIcons name="close" size={20} style={{ marginRight: 8 }} />
                                              </InputSlot>
                                         ) : null}
                                         <InputSlot onPress={() => openScanner()}>
-                                             <MaterialCommunityIcons name="barcode-scan" size={20} color={textColor} style={{ marginRight: 8 }} />
+                                             <MaterialCommunityIcons name="barcode-scan" size={20} style={{ marginRight: 8 }} />
                                         </InputSlot>
                                    </ThemedInput>
                               </FormControl>
@@ -323,7 +323,7 @@ export const FiltersScreen = () => {
                                                             {getSearchIndexLabel()}
                                                        </Text>
                                                   </VStack>
-                                                  <MaterialIcons name="chevron-right" size={26} color={textColor} />
+                                                  <MaterialIcons name="chevron-right" size={26} />
                                              </HStack>
                                         </VStack>
                                    </Pressable>
@@ -338,7 +338,7 @@ export const FiltersScreen = () => {
                                                             {getSearchSourceLabel()}
                                                        </Text>
                                                   </VStack>
-                                                  <MaterialIcons name="chevron-right" size={26} color={textColor} />
+                                                  <MaterialIcons name="chevron-right" size={26} />
                                              </HStack>
                                         </VStack>
                                    </Pressable>

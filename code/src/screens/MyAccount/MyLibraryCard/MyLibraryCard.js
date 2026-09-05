@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ThemedMaterialCommunityIcons as MaterialCommunityIcons } from '@/src/components/themed/ThemedMaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import * as Brightness from 'expo-brightness';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -213,7 +213,7 @@ export const MyLibraryCard = () => {
                     {isLandscape && cards.length > 1 && (
                         <Box style={{ position: 'absolute', bottom: 0, left: 0, right: 0, alignItems: 'center', paddingBottom: 8 }}>
                               <Button variant="link" onPress={() => setShowDrawer(true)} size="sm">
-                                  <MaterialCommunityIcons name="chevron-up" size={24} color={textColor} />
+                                  <MaterialCommunityIcons name="chevron-up" size={24} />
                               </Button>
                          </Box>
                     )}
