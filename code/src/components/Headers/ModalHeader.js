@@ -19,9 +19,9 @@ import { useTheme } from '../../themes/theme';
  * @constructor
  */
 export const ModalHeader = ({ title, onBack, onClose, showBack = true, showClose = true, centerTitle = true }) => {
-     const { uiColors, colorMode } = useTheme();
-     const iconColor = colorMode === 'light' ? uiColors.icon.light : uiColors.icon.dark;
-     const bg = colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark;
+     const { runtimeColors } = useTheme();
+     const iconColor = runtimeColors.primary['500-text'];
+     const bg = runtimeColors.primary[500];
 
      return (
           <Box className="px-3 py-3" style={{ backgroundColor: bg }}>
@@ -35,7 +35,7 @@ export const ModalHeader = ({ title, onBack, onClose, showBack = true, showClose
                     </Box>
 
                     <Box className={centerTitle ? 'flex-1 items-center' : 'flex-1 items-start'}>
-                         <Text bold numberOfLines={1}>
+                         <Text bold size="lg" numberOfLines={1} style={{ color: iconColor }}>
                               {title}
                          </Text>
                     </Box>

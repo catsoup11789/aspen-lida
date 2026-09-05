@@ -12,12 +12,12 @@ import { UnsavedChangesExit } from './UnsavedChanges';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { ChevronRightIcon } from '@/components/ui/icon';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { InputSlot } from '@/components/ui/input';
@@ -42,6 +42,7 @@ export const FiltersScreen = () => {
      const language = useActiveLanguage();
      const { currentIndex, currentSource } = React.useContext(SearchContext);
      const { uiColors, textColor, colorMode } = useTheme();
+     const insets = useSafeAreaInsets();
      const pendingFiltersFromParams = useNavigationState((state) => state.routes[0]['params']['pendingFilters']);
      const [searchTerm, setSearchTerm] = React.useState(SearchGlobal.term ?? '');
 
@@ -59,14 +60,14 @@ export const FiltersScreen = () => {
 
      const renderFilter = (label, index) => {
           return (
-               <Pressable key={index} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingVertical: 20 }} onPress={() => openCluster(label)}>
+               <Pressable key={index} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? 'rgba(107, 114, 128, 0.25)' : 'rgba(214, 211, 209, 0.25)', paddingVertical: 20 }} onPress={() => openCluster(label)}>
                     <VStack style={{ alignContent: 'center' }}>
-                         <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
+                         <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center', width: '100%' }}>
                               <VStack>
                                    <Text bold>{label}</Text>
                                    {appliedFacet(label)}
                               </VStack>
-                              <ChevronRightIcon style={{ color: textColor }} />
+                              <MaterialIcons name="chevron-right" size={26} color={textColor} />
                          </HStack>
                     </VStack>
                </Pressable>
@@ -160,9 +161,9 @@ export const FiltersScreen = () => {
 
      const actionButtons = () => {
           return (
-               <Box style={{ padding: 12, backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surface.dark, shadowOpacity: 0.2, shadowRadius: 1 }}>
+               <Box style={{ paddingTop: 10, paddingBottom: insets.bottom }}>
                     <Center>
-                         <ButtonGroup size="lg">
+                         <ButtonGroup>
                               <Button colorScheme="primary" variant="link" onPress={() => clearSelections()}>
                                    <ButtonText>{getTermFromDictionary(language, 'reset_all')}</ButtonText>
                               </Button>
@@ -312,9 +313,9 @@ export const FiltersScreen = () => {
 
                          {!isLoading ? (
                               <>
-                                   <Pressable key={0} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingVertical: 20 }} onPress={() => openSearchIndexes()}>
+                                   <Pressable key={0} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? 'rgba(107, 114, 128, 0.25)' : 'rgba(214, 211, 209, 0.25)', paddingVertical: 20 }} onPress={() => openSearchIndexes()}>
                                         <VStack style={{ alignContent: 'center' }}>
-                                             <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
+                                             <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center', width: '100%' }}>
                                                   <VStack>
                                                        <Text bold>
                                                             {getTermFromDictionary(language, 'search_by')}
@@ -323,13 +324,13 @@ export const FiltersScreen = () => {
                                                             {getSearchIndexLabel()}
                                                        </Text>
                                                   </VStack>
-                                                  <ChevronRightIcon style={{ color: textColor }} />
+                                                  <MaterialIcons name="chevron-right" size={26} color={textColor} />
                                              </HStack>
                                         </VStack>
                                    </Pressable>
-                                   <Pressable key={1} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.border.dark, paddingVertical: 20 }} onPress={() => openSearchSources()}>
+                                   <Pressable key={1} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? 'rgba(107, 114, 128, 0.25)' : 'rgba(214, 211, 209, 0.25)', paddingVertical: 20 }} onPress={() => openSearchSources()}>
                                         <VStack style={{ alignContent: 'center' }}>
-                                             <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center' }}>
+                                             <HStack style={{ justifyContent: 'space-between', alignItems: 'center', alignContent: 'center', width: '100%' }}>
                                                   <VStack>
                                                        <Text bold>
                                                             {getTermFromDictionary(language, 'search_in')}
@@ -338,7 +339,7 @@ export const FiltersScreen = () => {
                                                             {getSearchSourceLabel()}
                                                        </Text>
                                                   </VStack>
-                                                  <ChevronRightIcon style={{ color: textColor }} />
+                                                  <MaterialIcons name="chevron-right" size={26} color={textColor} />
                                              </HStack>
                                         </VStack>
                                    </Pressable>
