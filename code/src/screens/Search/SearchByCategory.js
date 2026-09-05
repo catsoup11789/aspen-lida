@@ -130,8 +130,10 @@ export const SearchResultsForBrowseCategory = () => {
           <ScreenContainer safeArea style={{ flex: 1 }}>
                {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {status === 'loading' || isFetching ? (
+                    // TODO(translation): Replace hardcoded loading message with TranslationService-backed key.
                     loadingSpinner('Fetching results...')
                ) : status === 'error' ? (
+                    // TODO(translation): Replace hardcoded error title with TranslationService-backed key.
                     loadError('Error', '')
                ) : (
                     <Box className="flex-1">

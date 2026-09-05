@@ -119,6 +119,7 @@ export const GroupedWorkScreen = () => {
      return (
           <ScreenContainer safeArea style={{ flex: 1 }}>
                {status === 'loading' || isFetching ? (
+                    // TODO(translation): Replace hardcoded loading message with TranslationService-backed key.
                     <LoadingSpinner message="Fetching data..." />
                ) : status === 'error' ? (
                     loadError(error, '')

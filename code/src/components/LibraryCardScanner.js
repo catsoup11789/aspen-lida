@@ -44,6 +44,7 @@ export default function LibraryCardScanner() {
      if (!permission) {
           return (
                <View className="flex-1">
+                    {/* TODO(translation): Replace hardcoded loading message with TranslationService-backed key. */}
                     <LoadingSpinner message="Requesting for camera permissions" />
                </View>
           );
@@ -53,12 +54,14 @@ export default function LibraryCardScanner() {
           if (permission.canAskAgain) {
                return (
                     <View className="flex-1">
+                         {/* TODO(translation): Replace hardcoded loading message with TranslationService-backed key. */}
                          <LoadingSpinner message="Requesting for camera permissions" />
                     </View>
                );
           }
           return (
                <View className="flex-1">
+                    {/* TODO(translation): Replace hardcoded error message with TranslationService-backed key. */}
                     <LoadError error="No access to camera" />
                </View>
           );
@@ -73,9 +76,11 @@ export default function LibraryCardScanner() {
                <CameraView onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]} barcodeScannerSettings={{ barcodeTypes: allowedBarcodes }}>
                     <BarcodeMask edgeColor="#62B1F6" showAnimatedLine={false} />
                     <View style={styles.buttonContainer}>
+                         {/* TODO(translation): Replace hardcoded button label with TranslationService-backed key. */}
                          <Button variant="outline" colorScheme="secondary" onPress={() => navigation.goBack()} style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderColor: TOKENS.primitives.singletons.white }}>
                               <ButtonText style={{ color: TOKENS.primitives.singletons.white }}>Cancel</ButtonText>
                          </Button>
+                         {/* TODO(translation): Replace hardcoded button label with TranslationService-backed key. */}
                          {scanned && (
                               <Button onPress={() => setScanned(false)} className="ml-4">
                                    <ButtonText>Scan Again</ButtonText>

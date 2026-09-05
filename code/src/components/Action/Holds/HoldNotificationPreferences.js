@@ -101,10 +101,12 @@ export const HoldNotificationPreferences = (props) => {
                                                   {smsCarrier && smsCarrier !== -1 ? (
                                                        _.map(smsCarriers, function (carrier, selectedIndex, array) {
                                                             if (selectedIndex === smsCarrier) {
+                                                                 // TODO(translation): Replace hardcoded placeholder with TranslationService-backed key.
                                                                  return <SelectInput placeholder="Select a Carrier" value={carrier} />;
                                                             }
                                                        })
                                                   ) : (
+                                                       // TODO(translation): Replace hardcoded placeholder with TranslationService-backed key.
                                                        <SelectInput placeholder="Select a Carrier" />
                                                   )}
                                              </SelectTrigger>

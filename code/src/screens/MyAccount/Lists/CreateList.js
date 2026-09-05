@@ -277,6 +277,7 @@ const CreateList = (props) => {
                                                    });
                                               } catch (error) {
                                                    logErrorMessage("Failed to create list: ", error);
+                                                   // TODO(translation): Replace hardcoded alert title/body with TranslationService-backed keys.
                                                    popAlert("Error", "Something went wrong while creating the list.", "danger");
                                               } finally {
                                                    setAdding(false);

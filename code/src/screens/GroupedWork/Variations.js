@@ -138,6 +138,7 @@ export const Variations = (props) => {
                                    ))
                               ) : (
                                    <Center className="p-5">
+                                       {/* TODO(translation): Replace hardcoded message with TranslationService-backed key. */}
                                        <Text className="text-center">The library does not own any copies of this title</Text>
                                    </Center>
                               )}
@@ -147,9 +148,11 @@ export const Variations = (props) => {
                                    <AlertDialogBackdrop />
                                    <AlertDialogContent>
                                         <AlertDialogHeader>
+                                              {/* TODO(translation): Replace hardcoded fallback title with TranslationService-backed key. */}
                                              <Heading>{response?.title ? response.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
+                                              {/* TODO(translation): Replace hardcoded fallback error body with TranslationService-backed key. */}
                                              <Text>{response?.message ? decodeMessage(response.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                         </AlertDialogBody>
                                         <AlertDialogFooter>
@@ -170,9 +173,11 @@ export const Variations = (props) => {
                                    <AlertDialogBackdrop />
                                    <AlertDialogContent>
                                         <AlertDialogHeader>
+                                              {/* TODO(translation): Replace hardcoded fallback title with TranslationService-backed key. */}
                                              <Heading>{holdConfirmationResponse?.title ? holdConfirmationResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
+                                              {/* TODO(translation): Replace hardcoded fallback error body with TranslationService-backed key. */}
                                              <Text>{holdConfirmationResponse?.message ? decodeMessage(holdConfirmationResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                         </AlertDialogBody>
                                         <AlertDialogFooter>
@@ -182,6 +187,7 @@ export const Variations = (props) => {
                                                   </Button>
                                                   <Button
                                                        isLoading={confirmingHold}
+                                                       // TODO(translation): Replace hardcoded loading text with TranslationService-backed key.
                                                        isLoadingText="Placing hold..."
                                                        variant="solid"
                                                        colorScheme="primary"
@@ -219,13 +225,16 @@ export const Variations = (props) => {
                                    <AlertDialogBackdrop />
                                    <AlertDialogContent>
                                         <AlertDialogHeader>
+                                              {/* TODO(translation): Replace hardcoded fallback title with TranslationService-backed key. */}
                                              <Heading>{holdSelectItemResponse?.title ? holdSelectItemResponse.title : 'Unknown Error'}</Heading>
                                         </AlertDialogHeader>
                                         <AlertDialogBody>
+                                              {/* TODO(translation): Replace hardcoded fallback error body with TranslationService-backed key. */}
                                              <Text>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                              {holdSelectItemResponse?.items ? (
                                                   <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} className="mt-1 mb-2" onValueChange={(itemValue) => setSelectedItem(itemValue)}>
                                                        <SelectTrigger>
+                                                             {/* TODO(translation): Replace hardcoded placeholder with TranslationService-backed key. */}
                                                             <SelectInput placeholder="Select option" />
                                                        </SelectTrigger>
                                                        <SelectPortal>
@@ -259,6 +268,7 @@ export const Variations = (props) => {
                                                   </Button>
                                                   <Button
                                                        isLoading={placingItemHold}
+                                                       // TODO(translation): Replace hardcoded loading text with TranslationService-backed key.
                                                        isLoadingText="Placing hold..."
                                                        variant="solid"
                                                        colorScheme="primary"

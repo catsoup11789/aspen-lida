@@ -165,6 +165,7 @@ export const SelfRegistration = () => {
 											}}
 										>
 											<SelectTrigger>
+															{/* TODO(translation): Replace hardcoded placeholder with TranslationService-backed key. */}
 												<SelectInput placeholder="Select option"/>
 											</SelectTrigger>
 											<SelectPortal>

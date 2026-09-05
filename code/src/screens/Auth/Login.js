@@ -85,6 +85,7 @@ export const LoginScreen = () => {
            setIsThemeInitialized((prev) => (prev ? prev : true));
       }, []);
 
+      // TODO(translation): Move these hardcoded alert strings to TranslationService/getTermFromDictionary keys.
       // Show migration error message if session expired due to SQLite migration failure
       React.useEffect(() => {
            if (route.params?.migrationError) {
@@ -282,6 +283,7 @@ export const LoginScreen = () => {
                                    {GLOBALS.appVersion} {GLOBALS.appStage} b[{GLOBALS.appBuild}] p[{GLOBALS.appPatch}] c[{GLOBALS.releaseChannel ?? 'Development'}]
                               </Text>
                               {showApiErrorButton ? (
+                                   // TODO(translation): Replace hardcoded label with TranslationService-backed key.
                                    <Button className="mt-4" size="xs" variant="outline" onPress={() => setShowApiErrorModal(true)}>
                                         <ButtonText>Open API Error Log</ButtonText>
                                    </Button>
@@ -296,6 +298,7 @@ export const LoginScreen = () => {
                                    <APIErrorLog neutralPairs={neutralPairs} colorMode={colorMode} textColor={textColor} />
                               </ModalBody>
                               <ModalFooter className="pt-2 px-4" style={{ paddingBottom: Math.max(insets.bottom, 8) }}>
+                                   // TODO(translation): Replace hardcoded label with TranslationService-backed key.
                                    <Button variant="outline" onPress={() => setShowApiErrorModal(false)}>
                                         <ButtonText>Close</ButtonText>
                                    </Button>

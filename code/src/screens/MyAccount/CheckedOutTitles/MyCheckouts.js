@@ -532,11 +532,13 @@ export const MyCheckouts = () => {
                          <AlertDialogBackdrop />
                          <AlertDialogContent>
                               <AlertDialogHeader>
+                                   {/* TODO(translation): Replace hardcoded fallback title with TranslationService-backed key. */}
                                    <Heading>{renewConfirmationResponse?.title ? renewConfirmationResponse.title : 'Unknown Error'}</Heading>
                                    <AlertDialogCloseButton>
                                         <CloseIcon />
                                    </AlertDialogCloseButton>
                               </AlertDialogHeader>
+                              {/* TODO(translation): Replace hardcoded fallback error body with TranslationService-backed key. */}
                               <AlertDialogBody><Text>{renewConfirmationResponse?.message ? decodeMessage(renewConfirmationResponse.message) : 'Unable to renew checkout for unknown error. Please contact the library.'}</Text></AlertDialogBody>
                               <AlertDialogFooter>
                                    <ButtonGroup space="md">

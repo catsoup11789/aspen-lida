@@ -155,6 +155,7 @@ const AddToList = (props) => {
                                                                  setListId(itemValue);
                                                             }}>
                                                             <SelectTrigger>
+                                                                 {/* TODO(translation): Replace hardcoded placeholder with TranslationService-backed key. */}
                                                                  <SelectInput placeholder="Select list" />
                                                             </SelectTrigger>
                                                             <SelectPortal>

@@ -108,6 +108,7 @@ export const EventScreen = () => {
      return (
           <ScrollView contentContainerStyle={screenContentContainerStyle}>
                {(eventData.length === 0 || status === 'loading' || isFetching) && errorMessage === ''? (
+                    // TODO(translation): Replace hardcoded loading message with TranslationService-backed key.
                     <Box className="pt-[50px]"><LoadingSpinner message="Fetching data..." /></Box>
                ) : status === 'error' ? (
                     <Box className="pt-[50px]">{loadError(error, '')}</Box>

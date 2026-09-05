@@ -442,6 +442,7 @@ export const MyCampaigns = () => {
 						onPress={onToggle}
 						variant="link"
 						className="flex-1"
+						// TODO(translation): Replace hardcoded accessibility labels with TranslationService-backed keys.
 						accessibilityLabel={expanded ? "Collapse campaign details" : "Expand campaign details"}
 					>
 						<ButtonText>
@@ -451,6 +452,7 @@ export const MyCampaigns = () => {
 					<Button
 						size="sm"
 						onPress={() => onOpenActions(item, filterBy === 'linkedUserCampaigns' ? item.linkedUserId : null)}
+						// TODO(translation): Replace hardcoded accessibility label template with TranslationService-backed key.
 						accessibilityLabel={`Open actions menu for ${item.name || 'campaign'}`}
 					>
 						<ButtonText>{getTermFromDictionary(language, 'campaign_action_button')}</ButtonText>
@@ -465,6 +467,7 @@ export const MyCampaigns = () => {
 							</Text>
 						) : (
 							<>
+								{/* TODO(translation): Replace hardcoded section titles with TranslationService-backed keys. */}
 								<ActivityTable
 									items={item.milestones}
 									title="Milestones"
@@ -505,6 +508,7 @@ export const MyCampaigns = () => {
 					</ActionsheetDragIndicatorWrapper>
 
 					{(selectedCampaign?.canEnroll || selectedCampaign?.enrolled) && (
+						// TODO(translation): Replace hardcoded action text with TranslationService-backed keys.
 						<ActionsheetItem onPress={handleEnrollUnenroll}>
 							<ActionsheetItemText>
 								{selectedCampaign?.enrolled ? 'Unenroll' : 'Enroll'}
@@ -515,12 +519,14 @@ export const MyCampaigns = () => {
 						<React.Fragment>
 							<ActionsheetItem onPress={handleEmailNotificationOptions}>
 								<ActionsheetItemText>
+									{/* TODO(translation): Replace hardcoded action text with TranslationService-backed keys. */}
 									{selectedCampaign?.optInToCampaignEmailNotifications ? 'Opt Out of Notifications' : 'Opt in to Notifications'}
 								</ActionsheetItemText>
 							</ActionsheetItem>
 							{library?.displayCampaignLeaderboard && library?.campaignLeaderboardDisplay === 'displayUser' && (
 								<ActionsheetItem onPress={handleLeaderboardOptions}>
 									<ActionsheetItemText>
+										{/* TODO(translation): Replace hardcoded action text with TranslationService-backed keys. */}
 										{selectedCampaign?.optInToCampaignLeaderboard ? 'Opt Out of Leaderboard' : 'Opt in to Leaderboard'}
 									</ActionsheetItemText>
 								</ActionsheetItem>
@@ -551,6 +557,7 @@ export const MyCampaigns = () => {
 
 	const getFilterLabel = (value) => {
 		const option = FILTER_OPTIONS.find(opt => opt.value === value);
+		// TODO(translation): Replace hardcoded fallback label with TranslationService-backed key.
 		return option ? getTermFromDictionary(language, option.labelKey) : 'Select Filter';
 	};
 
@@ -562,6 +569,7 @@ export const MyCampaigns = () => {
 				>
 					<SelectTrigger className="w-64">
 						<SelectInput
+							// TODO(translation): Replace hardcoded placeholder with TranslationService-backed key.
 							placeholder="Select Filter"
 							value={getFilterLabel(filterBy)}
 						/>

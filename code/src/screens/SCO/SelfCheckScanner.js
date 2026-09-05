@@ -63,6 +63,7 @@ export default function SelfCheckScanner() {
      if (!permission) {
           return (
                <ScreenContainer>
+                    {/* TODO(translation): Replace hardcoded loading message with TranslationService-backed key. */}
                     <LoadingSpinner message="Requesting for camera permissions" />
                </ScreenContainer>
           );
@@ -72,12 +73,14 @@ export default function SelfCheckScanner() {
           if (permission.canAskAgain) {
                return (
                     <ScreenContainer>
+                         {/* TODO(translation): Replace hardcoded loading message with TranslationService-backed key. */}
                          <LoadingSpinner message="Requesting for camera permissions" />
                     </ScreenContainer>
                );
           }
           return (
                <ScreenContainer>
+                    {/* TODO(translation): Replace hardcoded error message with TranslationService-backed key. */}
                     <LoadError error="No access to camera" />
                </ScreenContainer>
           );
