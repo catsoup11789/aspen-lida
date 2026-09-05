@@ -8,9 +8,9 @@ import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
-import { ButtonGroup } from '@/components/ui/button';
+import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ScrollView } from '@/components/ui/scroll-view';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '../../components/themed/ThemedTextarea';
 import { VStack } from '@/components/ui/vstack';
 

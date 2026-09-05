@@ -23,7 +23,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Divider } from '@/components/ui/divider';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { ScrollView } from '@/components/ui/scroll-view';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

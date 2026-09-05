@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { addAppliedFilter } from '@/src/util/api/searchHelper';

@@ -2,7 +2,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import _ from 'lodash';
 import moment from 'moment/moment';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { addAppliedFilter } from '@/src/util/api/searchHelper';

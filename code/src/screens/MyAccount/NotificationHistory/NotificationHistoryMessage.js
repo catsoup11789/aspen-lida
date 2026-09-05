@@ -3,7 +3,7 @@ import { useRoute } from '@react-navigation/native';
 import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
-import { ScrollView } from '@/components/ui/scroll-view';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
 

@@ -13,7 +13,7 @@ import { FormControl } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { InfoIcon } from '@/components/ui/icon';
-import { ScrollView } from '@/components/ui/scroll-view';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';

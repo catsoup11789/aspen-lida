@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from '@/components/ui/scroll-view';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { CalendarPermissionStatus } from './Permission/Calendar';
 import { CameraPermissionStatus } from './Permission/Camera';
 import { GeolocationPermissionStatus } from './Permission/Geolocation';

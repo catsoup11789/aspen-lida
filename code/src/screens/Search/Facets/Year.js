@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { addAppliedFilter } from '@/src/util/api/searchHelper';
 import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
-import { ButtonGroup } from '@/components/ui/button';
+import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { FormControl } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';

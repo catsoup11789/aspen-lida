@@ -8,7 +8,7 @@ import { showLocation } from 'react-native-map-link';
 import { popToast } from '../../components/feedback';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
-import { ButtonGroup } from '@/components/ui/button';
+import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { logDebugMessage, logErrorMessage } from '../../util/logging';

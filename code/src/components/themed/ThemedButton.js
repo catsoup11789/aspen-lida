@@ -1,18 +1,14 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { useStyleContext } from '@gluestack-ui/utils/nativewind-utils';
 import { Button, ButtonGroup, ButtonIcon, ButtonSpinner, ButtonText } from '@/components/ui/button';
 import { useTheme } from '../../themes/theme';
 
 const SCOPE = 'BUTTON';
 
-// colorScheme picks one of the app's brand color scales (runtimeColors.primary/secondary/tertiary),
-// applied differently per variant: solid (default/destructive/etc.) gets a filled background with
-// the '500-text' contrast color for text; outline gets a 500-shade border with 500-shade text, no
-// fill; link/ghost get no border and no background, just 500-shade text. Threaded to
-// ThemedButtonText via a local context -- Button's own context={{variant,size}} is set internally
-// by the primitive, so it can't carry extra fields; this tree isn't portal-rendered, so a plain
-// Context works fine (same approach as ThemedCheckbox's checked-state context).
 const ButtonActionContext = React.createContext({ colorScheme: undefined, variant: undefined });
+
+const ButtonGroupSizeContext = React.createContext(undefined);
 
 function resolveActionColors(runtimeColors, colorScheme, variant) {
      const scale = runtimeColors?.[colorScheme];
@@ -28,12 +24,6 @@ function resolveActionColors(runtimeColors, colorScheme, variant) {
      return { backgroundColor: scale[500], textColor: scale['500-text'] };
 }
 
-// The underlying Button primitive was regenerated against gluestack v5's shadcn-style size
-// keys (default/sm/lg/icon), but the app calls it everywhere with gluestack v1's size keys
-// (xs/sm/md/lg/xl). Since "md" (and friends) never matched any of v5's keys, the tva silently
-// dropped ALL size-based classes -- including padding -- leaving buttons squished. This map
-// restores v1's actual px/height/text/icon values (gluestack-ui v1.0.48, packages/config/src/
-// theme/Button.ts) so the app's existing size props behave the way they did under v1.
 const BUTTON_SIZE_STYLES = {
      xs: { container: 'px-3.5 h-8', text: 'text-xs', icon: '2xs' },
      sm: { container: 'px-4 h-9', text: 'text-sm', icon: 'sm' },
@@ -46,8 +36,10 @@ function resolveButtonSizeStyle(size) {
      return BUTTON_SIZE_STYLES[size] ?? BUTTON_SIZE_STYLES.md;
 }
 
-export const ThemedButton = React.forwardRef(({ size = 'md', colorScheme, variant, className, style, ...props }, ref) => {
-     const sizeStyle = resolveButtonSizeStyle(size);
+export const ThemedButton = React.forwardRef(({ size, colorScheme, variant, className, style, ...props }, ref) => {
+     const groupSize = React.useContext(ButtonGroupSizeContext);
+     const resolvedSize = size ?? groupSize ?? 'md';
+     const sizeStyle = resolveButtonSizeStyle(resolvedSize);
      const { runtimeColors } = useTheme();
      const actionColors = resolveActionColors(runtimeColors, colorScheme, variant);
 
@@ -55,7 +47,7 @@ export const ThemedButton = React.forwardRef(({ size = 'md', colorScheme, varian
           <ButtonActionContext.Provider value={{ colorScheme, variant }}>
                <Button
                     ref={ref}
-                    size={size}
+                    size={resolvedSize}
                     variant={variant}
                     className={[sizeStyle.container, className].filter(Boolean).join(' ')}
                     style={[actionColors ? { backgroundColor: actionColors.backgroundColor, borderColor: actionColors.borderColor } : null, style]}
@@ -86,11 +78,41 @@ export const ThemedButtonSpinner = React.forwardRef((props, ref) => {
      return <ButtonSpinner ref={ref} {...props} />;
 });
 
-// ButtonGroup's own base className is empty -- flexDirection only becomes 'flex-row' etc. if you
-// explicitly pass the flexDirection prop. Without it, it silently falls back to RN's View default
-// (column), which is exactly backwards from v1's implicit horizontal-row default. Restore that here.
-export const ThemedButtonGroup = React.forwardRef(({ flexDirection = 'row', ...props }, ref) => {
-     return <ButtonGroup ref={ref} flexDirection={flexDirection} {...props} />;
+const BUTTON_BORDER_RADIUS = 6;
+
+function applyAttachedCorners(children, flexDirection) {
+     const items = React.Children.toArray(children);
+     if (items.length < 2) {
+          return children;
+     }
+     const isRow = flexDirection === 'row' || flexDirection === 'row-reverse';
+     return items.map((child, index) => {
+          if (!React.isValidElement(child)) {
+               return child;
+          }
+          const isFirst = index === 0;
+          const isLast = index === items.length - 1;
+          const startRadius = isFirst ? BUTTON_BORDER_RADIUS : 0;
+          const endRadius = isLast ? BUTTON_BORDER_RADIUS : 0;
+          const cornerStyle = isRow
+               ? { borderTopLeftRadius: startRadius, borderBottomLeftRadius: startRadius, borderTopRightRadius: endRadius, borderBottomRightRadius: endRadius }
+               : { borderTopLeftRadius: startRadius, borderTopRightRadius: startRadius, borderBottomLeftRadius: endRadius, borderBottomRightRadius: endRadius };
+          const childStyle = StyleSheet.flatten(child.props.style) ?? {};
+          const definedChildStyle = Object.fromEntries(Object.entries(childStyle).filter(([, value]) => value !== undefined));
+          return React.cloneElement(child, {
+               style: { ...definedChildStyle, ...cornerStyle },
+          });
+     });
+}
+
+export const ThemedButtonGroup = React.forwardRef(({ flexDirection = 'row', size, space, isAttached, children, ...props }, ref) => {
+     return (
+          <ButtonGroupSizeContext.Provider value={size}>
+               <ButtonGroup ref={ref} flexDirection={flexDirection} space={space} isAttached={isAttached} {...props}>
+                    {isAttached ? applyAttachedCorners(children, flexDirection) : children}
+               </ButtonGroup>
+          </ButtonGroupSizeContext.Provider>
+     );
 });
 
 ThemedButton.displayName = 'ThemedButton';

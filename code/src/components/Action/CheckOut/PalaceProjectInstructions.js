@@ -5,7 +5,7 @@ import { decodeHTML } from '@/src/helpers/helpers';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { useTheme } from '@/src/themes/theme';
 import { Box } from '@/components/ui/box';
-import { ScrollView } from '@/components/ui/scroll-view';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 
 /**
  * PalaceProjectInstructions component for displaying instructions on how to use the Palace Project app.

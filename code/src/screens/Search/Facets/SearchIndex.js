@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { SearchContext } from '@/src/context/initialContext';
 import {logDebugMessage} from '@/src/util/logging';
 import { useTheme } from '@/src/themes/theme';

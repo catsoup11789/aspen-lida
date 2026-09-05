@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import Stars from 'react-native-stars';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { addAppliedFilter, removeAppliedFilter } from '@/src/util/api/searchHelper';

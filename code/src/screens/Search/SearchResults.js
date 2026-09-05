@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { loadError } from '../../components/loadError';
 import { popToast } from '@/src/components/feedback';
 import { LoadingSpinner } from '../../components/loadingSpinner';
@@ -30,7 +30,7 @@ import { ThemedBadge, ThemedBadgeText, buildBrandOutlineBadgeStyle, buildBrandOu
 import { ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
-import { ButtonGroup } from '@/components/ui/button';
+import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
 import { FormControl } from '@/components/ui/form-control';
@@ -603,7 +603,7 @@ const CreateFilterButtonDefaults = ({navigation}) => {
      }
 
      return (
-          <ButtonGroup space="sm" style={{ flexDirection: 'column' }}>
+          <ButtonGroup space="sm">
                {defaults.map((obj, index) => {
                     if (obj['field'] === 'availability_toggle') {
                          const label = obj['label'] + ': ' + defaultAvailabilityToggleLabel;
@@ -669,7 +669,7 @@ const CreateFilterButton = ({navigation}) => {
      if ((_.size(appliedFacets) > 0 && _.size(sort) === 0) || (_.size(appliedFacets) >= 1 && _.size(sort) > 1) || (_.size(appliedFacets) >= 1 && currentSource === 'events')) {
           console.log("using applied filters bar")
           return (
-               <ButtonGroup space="sm" style={{ flexDirection: 'column' }}>
+               <ButtonGroup space="sm">
                     {_.map(appliedFacets, function (item, index) {
                          const cluster = _.filter(SearchGlobal.availableFacets, ['field', item[0]['field']]);
                          let labels = '';

@@ -7,7 +7,7 @@ import { Divider } from '@/components/ui/divider';
 import { FlatList } from '@/components/ui/flat-list';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { ScrollView } from '@/components/ui/scroll-view';
+import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { DisplayMessage, DisplaySystemMessage } from '@/src/components/Notifications';
 import { SystemMessagesContext } from '@/src/context/initialContext';
