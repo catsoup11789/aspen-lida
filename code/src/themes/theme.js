@@ -149,11 +149,11 @@ function buildThemeRuntime(themeColors) {
      return {
           colors: palette,
           ui: UI_NEUTRAL_COLORS,
+          // updateTheme() only ever reads tokens.colors.{primary,secondary,tertiary} -- this shape
+          // exists solely as its input contract, not a general theme surface, so it carries the
+          // palette only (no ui, no top-level duplication).
           tokens: {
-               colors: {
-                    ...palette,
-                    ui: UI_NEUTRAL_COLORS,
-               },
+               colors: palette,
           },
      };
 }
