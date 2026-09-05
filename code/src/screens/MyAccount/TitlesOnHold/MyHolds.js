@@ -2,8 +2,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useIsFetching, useQuery, useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import React from 'react';
-import { Platform, SectionList } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SectionList } from 'react-native';
 import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from '@/src/components/themed/ThemedAlert';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
@@ -59,7 +58,6 @@ export const MyHolds = () => {
      const [pickupLocations] = React.useState([]);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const { uiColors, textColor, colorMode } = useTheme();
-     const insets = useSafeAreaInsets();
      const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
@@ -347,14 +345,12 @@ export const MyHolds = () => {
                                                  selectedValue={userHoldPendingSortMethod}
                                                  accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
                                                  onValueChange={(itemValue) => togglePendingSort(itemValue)}>
-                                                 <SelectTrigger variant="outline" size="sm">
-                                                       <SelectInput style={{ paddingVertical: 0, color: textColor }} value={pendingSortLabel()} />
+                                                 <SelectTrigger size="sm">
+                                                       <SelectInput value={pendingSortLabel()} />
                                                   </SelectTrigger>
                                                   <SelectPortal>
                                                        <SelectBackdrop />
-                                                       <SelectContent
-                                                            style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                                                       >
+                                                       <SelectContent>
                                                             <SelectDragIndicatorWrapper>
                                                                  <SelectDragIndicator />
                                                             </SelectDragIndicatorWrapper>
@@ -393,14 +389,12 @@ export const MyHolds = () => {
                                              defaultValue={userHoldPendingSortMethod}
                                              accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
                                              onValueChange={(itemValue) => togglePendingSort(itemValue)}>
-                                             <SelectTrigger variant="outline" size="sm">
-                                                  <SelectInput style={{ paddingVertical: 0, color: textColor }} value={pendingSortLabel()} />
+                                             <SelectTrigger size="sm">
+                                                  <SelectInput value={pendingSortLabel()} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent
-                                                       style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                                                  >
+                                                  <SelectContent>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
@@ -483,14 +477,12 @@ export const MyHolds = () => {
                                              defaultValue={userHoldReadySortMethod}
                                              accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
                                              onValueChange={(itemValue) => toggleReadySort(itemValue)}>
-                                             <SelectTrigger variant="outline" size="sm">
-                                                  <SelectInput style={{ paddingVertical: 0, color: textColor }} value={readySortLabel()} />
+                                             <SelectTrigger size="sm">
+                                                  <SelectInput value={readySortLabel()} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent
-                                                       style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                                                  >
+                                                  <SelectContent>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
@@ -546,12 +538,12 @@ export const MyHolds = () => {
                               </Button>
                               <FormControl style={{ width: 245 }}>
                                    <Select name="holdSource" selectedValue={holdSource} defaultValue={holdSource} initialLabel="Test" accessibilityLabel="Filter By Source" onValueChange={(itemValue) => toggleHoldSource(itemValue)}>
-                                        <SelectTrigger variant="outline" size="sm">
-                                             <SelectInput style={{ paddingVertical: 0, color: textColor }} value={holdSourceLabel()}/>
+                                        <SelectTrigger size="sm">
+                                             <SelectInput value={holdSourceLabel()}/>
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                             <SelectContent>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>

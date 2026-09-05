@@ -87,20 +87,20 @@ export const SelectPickupLocation = (props) => {
                                              style={{ marginTop: 4, marginBottom: 12 }}
                                              onValueChange={(itemValue) => setLocation(itemValue)}>
 
-                                             <SelectTrigger variant="outline" size="md">
+                                             <SelectTrigger>
                                                   {locations.map((item, index) => {
                                                        const locationId = item.locationId;
                                                        const code = item.code;
                                                        const id = locationId.concat('_', code);
                                                        if (id === location) {
-                                                            return <SelectInput key={index} value={item.name} style={{ color: textColor, paddingVertical: 0 }} />;
+                                                            return <SelectInput key={index} value={item.name} />;
                                                        }
                                                        return null;
                                                   })}
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: modalBg }}>
+                                                  <SelectContent>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>

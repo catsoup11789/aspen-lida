@@ -166,7 +166,7 @@ const DisplayGroupedWork = (payload) => {
      const key = 'large_' + groupedWork.id;
 
      return (
-          <Box style={{ padding: 20, width: '100%' }}>
+          <Box style={{ padding: 10, width: '100%' }}>
                <Center style={{ marginTop: 20, width: '100%' }}>
                     <Image alt={groupedWork.title} source={groupedWork.cover} style={{ width: 180, height: 250, borderRadius: 4 }} placeholder={blurhash} transition={1000} contentFit="cover" />
                     <Title title={groupedWork.title} />
@@ -247,7 +247,7 @@ const Format = (data) => {
           <Button
                size="sm"
                variant={btnStyle}
-               colorScheme={isSelectedFormat ? 'secondary' : undefined}
+               colorScheme="secondary"
                onPress={() => updateFormat(key)}
                style={btnStyle === 'outline' ? { backgroundColor: 'transparent', borderColor: neutralColor, marginBottom: 4, marginRight: 4 } : { marginBottom: 4, marginRight: 4 }}>
                <ButtonText style={btnStyle === 'outline' ? { color: neutralColor } : null}>{format.label}</ButtonText>

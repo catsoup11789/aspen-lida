@@ -1,8 +1,6 @@
 import React from 'react';
 import { useUserState, useLocations, useSublocations, useUpdateLocations, useUpdateSublocations, useUpdateUserProfile } from '@/src/hooks/useUserData';
 import {getTermFromDictionary} from '@/src/translations/TranslationService';
-import {Platform} from "react-native";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {getPickupLocations, getPickupSublocations, refreshProfile, updateHoldPickupPreferences} from '@/src/util/api/user';
 import { formatPickupLocations } from '@/src/util/api/userHelper';
 import {SelectNewHoldSublocation} from '@/src/components/Action/Holds/SelectNewHoldSublocation';
@@ -70,8 +68,6 @@ export const Settings_PickupLocations = () => {
 	const updateSublocations = useUpdateSublocations();
     const updateUserProfile = useUpdateUserProfile();
 	const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
-	const insets = useSafeAreaInsets();
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
     const locationsRef = React.useRef(locations);
 	const sublocationsRef = React.useRef(sublocations);
 
@@ -257,12 +253,12 @@ export const Settings_PickupLocations = () => {
                               setIsDirty(true);
                               setLocation(itemValue);
                          }}>
-                         <SelectTrigger variant="outline" size="md">
-                              {selectedLocationObj ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getLocationLabel(selectedLocationObj)} /> : <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'select_pickup_location')} />}
+                         <SelectTrigger>
+                              {selectedLocationObj ? <SelectInput value={getLocationLabel(selectedLocationObj)} /> : <SelectInput value={getTermFromDictionary(language, 'select_pickup_location')} />}
                          </SelectTrigger>
                          <SelectPortal>
                               <SelectBackdrop />
-                              <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                              <SelectContent>
                                    <SelectDragIndicatorWrapper>
                                         <SelectDragIndicator />
                                    </SelectDragIndicatorWrapper>
@@ -290,12 +286,12 @@ export const Settings_PickupLocations = () => {
                                         setIsDirty(true);
                                         setLocation1Id(itemValue);
                                    }}>
-                                   <SelectTrigger variant="outline" size="md">
-                                        {selectedLocation1Obj ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getLocationLabel(selectedLocation1Obj)} /> : <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'select_pickup_location')} />}
+                                   <SelectTrigger>
+                                        {selectedLocation1Obj ? <SelectInput value={getLocationLabel(selectedLocation1Obj)} /> : <SelectInput value={getTermFromDictionary(language, 'select_pickup_location')} />}
                                    </SelectTrigger>
                                    <SelectPortal>
                                         <SelectBackdrop />
-                                        <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                        <SelectContent>
                                              <SelectDragIndicatorWrapper>
                                                   <SelectDragIndicator />
                                              </SelectDragIndicatorWrapper>
@@ -321,12 +317,12 @@ export const Settings_PickupLocations = () => {
                                         setIsDirty(true);
                                         setLocation2Id(itemValue);
                                    }}>
-                                   <SelectTrigger variant="outline" size="md">
-                                        {selectedLocation2Obj ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getLocationLabel(selectedLocation2Obj)} /> : <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'select_pickup_location')} />}
+                                   <SelectTrigger>
+                                        {selectedLocation2Obj ? <SelectInput value={getLocationLabel(selectedLocation2Obj)} /> : <SelectInput value={getTermFromDictionary(language, 'select_pickup_location')} />}
                                    </SelectTrigger>
                                    <SelectPortal>
                                         <SelectBackdrop />
-                                        <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                        <SelectContent>
                                              <SelectDragIndicatorWrapper>
                                                   <SelectDragIndicator />
                                              </SelectDragIndicatorWrapper>

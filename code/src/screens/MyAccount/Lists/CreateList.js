@@ -1,12 +1,10 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { popAlert } from '@/src/components/feedback';
 import { useUserState, useListGroups, useUpdateUserProfile, useUpdateLists, useUpdateListGroups } from '@/src/hooks/useUserData';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { createList, getLists, getListGroups } from '@/src/util/api/list';
 import { refreshProfile } from '@/src/util/api/user';
-import { Platform } from 'react-native';
 import {logDebugMessage, logErrorMessage} from '@/src/util/logging';
 import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
@@ -53,7 +51,6 @@ const CreateList = (props) => {
      const [newGroupName, setNewGroupName] = React.useState('');
      const [nestedGroup, setNestedGroup] = React.useState('');
      const [existingGroupId, setExistingGroupId] = React.useState(user.lastListGroupAdded ? user.lastListGroupAdded : (listGroups?.groups[0] ? listGroups.groups[0].id : 0));
-     const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
@@ -140,12 +137,12 @@ const CreateList = (props) => {
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'should_add_to_list_group')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <Select name="should_add_to_list_group" selectedValue={addToGroup} accessibilityLabel={getTermFromDictionary(language, 'should_add_to_list_group')} onValueChange={(itemValue) => setAddToGroup(itemValue)}>
-                                        <SelectTrigger variant="outline" size="md">
-                                             {addToGroup !== '' ? <SelectInput style={{ paddingVertical: 0, color: textColor }} value={addToGroup === 'new' ? getTermFromDictionary(language, 'add_to_list_group_new') : addToGroup === 'existing' ? getTermFromDictionary(language, 'add_to_list_group_existing') : getTermFromDictionary(language, 'add_to_list_group_no')} /> : <SelectInput value={getTermFromDictionary(language, 'add_to_list_group_no')} style={{ color: textColor }} />}
+                                        <SelectTrigger>
+                                             {addToGroup !== '' ? <SelectInput value={addToGroup === 'new' ? getTermFromDictionary(language, 'add_to_list_group_new') : addToGroup === 'existing' ? getTermFromDictionary(language, 'add_to_list_group_existing') : getTermFromDictionary(language, 'add_to_list_group_no')} /> : <SelectInput value={getTermFromDictionary(language, 'add_to_list_group_no')} />}
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                             <SelectContent>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
@@ -174,20 +171,20 @@ const CreateList = (props) => {
                                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'should_nest_list_group')}</FormControlLabelText>
                                                   </FormControlLabel>
                                                   <Select name="should_nest_list_group" selectedValue={nestedGroup} accessibilityLabel={getTermFromDictionary(language, 'should_nest_list_group')} onValueChange={(itemValue) => setNestedGroup(itemValue)}>
-                                                       <SelectTrigger variant="outline" size="md">
+                                                       <SelectTrigger>
                                                    {nestedGroup !== 'no' && nestedGroup !== '' ? (
                                                         toArray(listGroups.groups).map((group) => {
                                                              if (group.id === nestedGroup) {
-                                                                  return <SelectInput style={{ paddingVertical: 0, color: textColor }} value={group.title} />;
+                                                                  return <SelectInput value={group.title} />;
                                                              }
                                                         })
                                                    ) : (
-                                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'nest_within_group_no')} />
+                                                        <SelectInput value={getTermFromDictionary(language, 'nest_within_group_no')} />
                                                    )}
                                                        </SelectTrigger>
                                                        <SelectPortal>
                                                             <SelectBackdrop />
-                                                            <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                                            <SelectContent>
                                                                  <SelectDragIndicatorWrapper>
                                                                       <SelectDragIndicator />
                                                                  </SelectDragIndicatorWrapper>
@@ -217,20 +214,20 @@ const CreateList = (props) => {
                                                   setNestedGroup(itemValue);
                                                   logDebugMessage(itemValue);
                                              }}>
-                                             <SelectTrigger variant="outline" size="md">
+                                             <SelectTrigger>
                                                    {existingGroupId && existingGroupId !== -1 ? (
                                                         toArray(listGroups.groups).map((group) => {
                                                              if (group.id === existingGroupId) {
-                                                                  return <SelectInput style={{ paddingVertical: 0, color: textColor }} value={group.title} />;
+                                                                  return <SelectInput value={group.title} />;
                                                              }
                                                         })
                                                    ) : (
-                                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} value={listGroups.groups[0].id} />
+                                                        <SelectInput value={listGroups.groups[0].id} />
                                                    )}
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                                  <SelectContent>
                                                         <SelectDragIndicatorWrapper>
                                                              <SelectDragIndicator />
                                                         </SelectDragIndicatorWrapper>

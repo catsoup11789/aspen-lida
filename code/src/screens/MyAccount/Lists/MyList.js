@@ -1,9 +1,8 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React from 'react';
-import { FlatList, Platform } from 'react-native';
+import { FlatList } from 'react-native';
 import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
@@ -49,7 +48,6 @@ export const MyList = ({ route }) => {
      const [list] = React.useState(providedList);
      const language = useActiveLanguage();
      const dictionary = useDictionary();
-     const insets = useSafeAreaInsets();
      const [sortBy, setSortBy] = React.useState({
           title: 'Sort By Title',
           dateAdded: 'Sort By Date Added',
@@ -71,7 +69,6 @@ export const MyList = ({ route }) => {
      const hasAppliedDefaultSort = React.useRef(false);
      const browserBackgroundColor = colorMode === 'light' ? '#ffffff' : '#111827';
      const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const dangerColor = uiColors.danger;
      const t = React.useCallback((key, ellipsis = false, forcedLanguage) => {
@@ -242,7 +239,8 @@ export const MyList = ({ route }) => {
                                         style={{
                                              width: 100,
                                              height: 150,
-                                             borderRadius: 8 }}
+                                             borderRadius: 8,
+                                        }}
                                         placeholder={blurhash}
                                         transition={1000}
                                         contentFit="cover"
@@ -250,7 +248,7 @@ export const MyList = ({ route }) => {
                                    <Button
                                         onPress={() => {
                                              removeTitlesFromList(id, item.id, library.baseUrl, 'Events').then(async () => {
-                                                       await loadListDetails(page, sort);
+                                                  await loadListDetails(page, sort);
                                              });
                                         }}
                                         size="sm"
@@ -260,11 +258,7 @@ export const MyList = ({ route }) => {
                                    </Button>
                               </VStack>
                               <VStack style={{ width: '65%' }}>
-                                   <Text
-                                        bold
-                                        size="sm"
-                                       
-                                        >
+                                   <Text bold size="sm">
                                         {item.title}
                                    </Text>
                                    {item.start_date && item.end_date ? (
@@ -403,14 +397,12 @@ export const MyList = ({ route }) => {
                                         defaultValue={sort}
                                         accessibilityLabel={t('select_sort_method')}
                                         onValueChange={(itemValue) => setSort(itemValue)}>
-                                        <SelectTrigger variant="outline" size="sm">
-                                             <SelectInput style={{ paddingVertical: 0, color: textColor }} value={sortLabel()} />
+                                        <SelectTrigger size="sm">
+                                             <SelectInput value={sortLabel()} />
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent
-                                                  style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                                             >
+                                             <SelectContent>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>

@@ -166,8 +166,8 @@ export const SelfRegistration = () => {
 												handleInputChange(property, value);
 											}}
 										>
-											<SelectTrigger variant="outline" size="md">
-												<SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select option"/>
+											<SelectTrigger>
+												<SelectInput placeholder="Select option"/>
 											</SelectTrigger>
 											<SelectPortal>
 												<SelectBackdrop />

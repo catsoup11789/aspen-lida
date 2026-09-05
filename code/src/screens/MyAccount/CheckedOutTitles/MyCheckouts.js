@@ -3,8 +3,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useIsFetching, useQuery, useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import React from 'react';
-import { FlatList, Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FlatList } from 'react-native';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
@@ -55,7 +54,6 @@ export const MyCheckouts = () => {
      const [renewAll, setRenewAll] = React.useState(false);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const [filterByLibby, setFilterByLibby] = React.useState(false);
-     const insets = useSafeAreaInsets();
 
      const [renewConfirmationIsOpen, setRenewConfirmationIsOpen] = React.useState(false);
      const onRenewConfirmationClose = () => setRenewConfirmationIsOpen(false);
@@ -442,14 +440,12 @@ export const MyCheckouts = () => {
                                         defaultValue={checkoutSource}
                                         accessibilityLabel={getTermFromDictionary(language, 'filter_by_source_label')}
                                         onValueChange={(itemValue) => toggleCheckoutSource(itemValue)}>
-                                        <SelectTrigger variant="outline" size="sm">
-                                             <SelectInput style={{ paddingVertical: 0, color: textColor }} value={checkoutSourceSelectLabel()} />
+                                        <SelectTrigger size="sm">
+                                             <SelectInput value={checkoutSourceSelectLabel()} />
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent
-                                                  style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                                             >
+                                             <SelectContent>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
@@ -475,14 +471,12 @@ export const MyCheckouts = () => {
                                         defaultValue={userCheckoutSortMethod}
                                         accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
                                         onValueChange={(itemValue) => toggleSort(itemValue)}>
-                                        <SelectTrigger variant="outline" size="sm">
-                                             <SelectInput style={{ paddingVertical: 0, color: textColor }} value={checkoutSortLabel()} />
+                                        <SelectTrigger size="sm">
+                                             <SelectInput value={checkoutSortLabel()} />
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent
-                                                  style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                                             >
+                                             <SelectContent>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>

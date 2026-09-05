@@ -1,6 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
@@ -15,8 +13,7 @@ import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedS
  * @constructor
  */
 export const SelectItemHold = (props) => {
-     const { id, data, item, setItem, setHoldType, showModal, holdTypeForFormat, language, url, textColor, uiColors, colorMode, runtimeColors } = props;
-     const insets = useSafeAreaInsets();
+     const { id, data, item, setItem, setHoldType, showModal, holdTypeForFormat, language, url, textColor, runtimeColors } = props;
 
      let holdType = props.holdType;
      let copies = data.copies;
@@ -65,18 +62,18 @@ export const SelectItemHold = (props) => {
                               <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'select_item')}</FormControlLabelText>
                          </FormControlLabel>
                          <Select name="itemForHold" selectedValue={defaultItem} minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setItem(itemValue)}>
-                              <SelectTrigger variant="outline" size="md">
+                              <SelectTrigger>
                                    {_.map(Object.keys(copies), function (item, index, array) {
                                         let copy = copies[item];
                                         if (copy.id === defaultItem) {
                                              setItem(defaultItem);
-                                             return <SelectInput style={{ paddingVertical: 0, color: textColor }} value={copy.location} />;
+                                             return <SelectInput value={copy.location} />;
                                         }
                                    })}
                               </SelectTrigger>
                               <SelectPortal useRNModal={true}>
                                    <SelectBackdrop />
-                                   <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                   <SelectContent>
                                         <SelectDragIndicatorWrapper>
                                              <SelectDragIndicator />
                                         </SelectDragIndicatorWrapper>

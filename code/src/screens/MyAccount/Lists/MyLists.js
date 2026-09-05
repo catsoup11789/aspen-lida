@@ -1,8 +1,7 @@
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import React from 'react';
-import { FlatList, Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FlatList } from 'react-native';
 import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
@@ -57,10 +56,8 @@ export const MyLists = () => {
      const [paginationLabel, setPaginationLabel] = React.useState('Page 1 of 1');
      const [loading, setLoading] = React.useState(false);
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
-     const { uiColors, textColor, colorMode } = useTheme();
-     const insets = useSafeAreaInsets();
+     const { uiColors, colorMode } = useTheme();
      const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
      const [currentListGroup, setCurrentListGroup] = React.useState(-1);
@@ -293,26 +290,27 @@ export const MyLists = () => {
                     <Pressable onPress={() => handleOpenList(item)} style={{ paddingLeft: 4, paddingRight: 4, paddingVertical: 8 }}>
                          <HStack space={3} style={{ marginTop: 8, marginBottom: 8, justifyContent: 'flex-start' }}>
                               <VStack space={1}>
-                                   <Image
-                                        alt={item.title}
-                                        source={imageUrl}
-                                        style={{ width: 100, height: 150, borderRadius: 8 }}
-                                        placeholder={blurhash}
-                                        transition={1000}
-                                        contentFit="cover"
-                                   />
-                                   <ThemedBadge style={{ marginTop: 4 }}>
-                                        <ThemedBadgeText>{privacy}</ThemedBadgeText>
+                                   <Image alt={item.title} source={imageUrl} style={{ width: 100, height: 150, borderRadius: 8 }} placeholder={blurhash} transition={1000} contentFit="cover" />
+                                   <ThemedBadge style={{ marginTop: 4, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
+                                        <ThemedBadgeText style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>{privacy}</ThemedBadgeText>
                                    </ThemedBadge>
                               </VStack>
                               <VStack space={1} style={{ justifyContent: 'space-between', maxWidth: '80%', paddingLeft: 8 }}>
                                    <Box>
-                                        <Text bold size="md">{item.title}</Text>
+                                        <Text bold size="md">
+                                             {item.title}
+                                        </Text>
                                         {item.description ? (
-                                             <Text size="xs" style={{ marginBottom: 8 }}>{item.description}</Text>
+                                             <Text size="xs" style={{ marginBottom: 8 }}>
+                                                  {item.description}
+                                             </Text>
                                         ) : null}
-                                        <Text size="xs" italic>{listLastUpdatedOn}</Text>
-                                        <Text size="xs" italic>{item.numTitles ?? 0} {getTermFromDictionary(language, 'items')}</Text>
+                                        <Text size="xs" italic>
+                                             {listLastUpdatedOn}
+                                        </Text>
+                                        <Text size="xs" italic>
+                                             {item.numTitles ?? 0} {getTermFromDictionary(language, 'items')}
+                                        </Text>
                                    </Box>
                               </VStack>
                          </HStack>
@@ -385,23 +383,23 @@ export const MyLists = () => {
                {hasListGroups && listGroups?.groups && Object.values(listGroups.groups).length > 0 ? (
                     <Box style={{ paddingHorizontal: 20, marginTop: 8 }}>
                          <Select name="listGroupSelect" selectedValue={currentListGroup} defaultValue={defaultListGroup} onValueChange={(itemValue) => updateSelectedListGroup(itemValue)}>
-                              <SelectTrigger variant="outline" size="md">
+                              <SelectTrigger>
                                    {currentListGroup && currentListGroup !== '-1' && currentListGroup !== -1 ? (
                                         Object.values(listGroups.groups).map((group, selectedIndex) => {
                                              if (group.id === currentListGroup) {
-                                                  return <SelectInput key={selectedIndex} style={{ paddingVertical: 0, color: textColor }} value={group.title} />;
+                                                  return <SelectInput key={selectedIndex} value={group.title} />;
                                              }
                                              return null;
                                         })
                                    ) : currentListGroup == '-1' ? (
-                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'unassigned_lists')} />
+                                        <SelectInput value={getTermFromDictionary(language, 'unassigned_lists')} />
                                    ) : defaultListGroup ? (
-                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} value={defaultListGroup} />
+                                        <SelectInput value={defaultListGroup} />
                                    ) : null}
                               </SelectTrigger>
                               <SelectPortal>
                                    <SelectBackdrop />
-                                   <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                   <SelectContent>
                                         <SelectDragIndicatorWrapper>
                                              <SelectDragIndicator />
                                         </SelectDragIndicatorWrapper>

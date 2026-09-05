@@ -60,7 +60,6 @@ export const MyReadingHistory = () => {
      const updateUserProfile = useUpdateUserProfile();
      const { data: readingHistory } = useReadingHistory();
      const updateReadingHistory = useUpdateReadingHistory();
-     const insets = useSafeAreaInsets();
      const { systemMessages, updateSystemMessages } = React.useContext(SystemMessagesContext);
      const pageSize = 20;
      const systemMessagesForScreen = React.useMemo(() => {
@@ -296,14 +295,12 @@ export const MyReadingHistory = () => {
                                             defaultValue={sort}
                                             accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
                                             onValueChange={(itemValue) => updateSort(itemValue)}>
-                                             <SelectTrigger variant="outline" size="sm">
-                                                  <SelectInput style={{ paddingVertical: 0, color: textColor }} value={sortLabel()} />
+                                             <SelectTrigger size="sm">
+                                                  <SelectInput value={sortLabel()} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent
-                                                       style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                                                  >
+                                                  <SelectContent>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>

@@ -1,6 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { logDebugMessage, logErrorMessage } from '@/src/util/logging';
@@ -15,9 +13,7 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
  * @constructor
  */
 export const SelectNewHoldSublocation = (props) => {
-     const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor, uiColors, colorMode} = props;
-     const insets = useSafeAreaInsets();
-     const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor} = props;
 
      if (sublocations !== undefined) {
           try {
@@ -50,7 +46,6 @@ export const SelectNewHoldSublocation = (props) => {
 
                     //sublocations need to convert from an object to an array!
                     if (validSublocationSize > 1) {
-                         const bottomPadding = Platform.OS === 'android' ? (insets ? insets.bottom : 0) + 16 : '$4';
                          return (
                               <>
                                    <FormControl>
@@ -60,17 +55,17 @@ export const SelectNewHoldSublocation = (props) => {
                                              </FormControlLabelText>
                                         </FormControlLabel>
                                         <Select name="sublocations" selectedValue={activeSublocation} minWidth={200} onValueChange={(itemValue) => setActiveSublocation(itemValue)}>
-                                             <SelectTrigger variant="outline" size="md">
+                                             <SelectTrigger>
                                                   {validSublocations.map((sublocation, index) => {
                                                        if (sublocation.id === activeSublocation) {
-                                                            return <SelectInput key={index} style={{ paddingVertical: 0, color: textColor }} value={sublocation.displayName} />;
+                                                            return <SelectInput key={index} value={sublocation.displayName} />;
                                                        }
                                                        return null;
                                                   })}
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: bottomPadding === '$4' ? 16 : bottomPadding }}>
+                                                  <SelectContent>
                                                       <SelectDragIndicatorWrapper>
                                                            <SelectDragIndicator />
                                                       </SelectDragIndicatorWrapper>

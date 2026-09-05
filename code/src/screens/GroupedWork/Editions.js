@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // custom components and helper files
@@ -275,11 +274,11 @@ export const Editions = () => {
                                    {holdSelectItemResponse?.items ? (
                                         <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setSelectedItem(itemValue)}>
                                              <SelectTrigger>
-                                                  <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select option" />
+                                                  <SelectInput placeholder="Select option" />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                                  <SelectContent>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>

@@ -558,16 +558,15 @@ export const MyCampaigns = () => {
 				<Select
 					onValueChange={(itemValue) => setFilterBy(itemValue)}
 				>
-					<SelectTrigger variant="outline" size="md" style={{ width: 256 }}>
+					<SelectTrigger style={{ width: 256 }}>
 						<SelectInput
-                            style={{ paddingVertical: 0, color: textColor }}
 							placeholder="Select Filter"
 							value={getFilterLabel(filterBy)}
 						/>
 					</SelectTrigger>
 					<SelectPortal>
 						<SelectBackdrop />
-						<SelectContent style={{ backgroundColor: surfaceBg }}>
+						<SelectContent>
 							<SelectDragIndicatorWrapper>
 								<SelectDragIndicator />
 							</SelectDragIndicatorWrapper>

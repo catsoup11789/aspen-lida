@@ -1,8 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
 import React from 'react';
-import { Platform, useWindowDimensions } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { useUserState, useAccounts, useLocations, useSublocations, useUpdateUserProfile } from '@/src/hooks/useUserData';
@@ -37,7 +36,6 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 export const HoldPrompt = (props) => {
      // 1. ALL HOOK DECLARATIONS FIRST (Unconditional & Predictable Order)
      const queryClient = useQueryClient();
-     const insets = useSafeAreaInsets();
      const { width } = useWindowDimensions();
 
      // Contexts
@@ -489,16 +487,16 @@ export const HoldPrompt = (props) => {
                                              </FormControlLabelText>
                                         </FormControlLabel>
                                         <Select name="pickupLocations" selectedValue={location} minWidth={200} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setLocation(itemValue)}>
-                                             <SelectTrigger variant="outline" size="md">
+                                             <SelectTrigger>
                                                   {locations.map((selectedLocation, index) => {
                                                        if (selectedLocation.code === location) {
-                                                            return <SelectInput style={{ paddingVertical: 0, color: textColor }} value={selectedLocation.name} key={index} />;
+                                                            return <SelectInput value={selectedLocation.name} key={index} />;
                                                        }
                                                   })}
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                                  <SelectContent>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
@@ -537,9 +535,8 @@ export const HoldPrompt = (props) => {
                                              <FormControlLabelText style={{ color: textColor }}>{isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')}</FormControlLabelText>
                                         </FormControlLabel>
                                         <Select name="linkedAccount" selectedValue={activeAccount} minWidth={200} style={{ marginTop: 4, marginBottom: 12 }} onValueChange={(itemValue) => updateActiveAccount(itemValue)}>
-                                             <SelectTrigger variant="outline" size="md">
+                                             <SelectTrigger>
                                                   <SelectInput
-                                                       style={{ paddingVertical: 0, color: textColor }}
                                                        value={(() => {
                                                             if (activeAccount === user.id) {
                                                                  return user.displayName;
@@ -552,7 +549,7 @@ export const HoldPrompt = (props) => {
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                                  <SelectContent>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>

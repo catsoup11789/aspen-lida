@@ -66,9 +66,16 @@ ThemedSelectInput.displayName = 'ThemedSelectInput';
 // (full-opacity) Icon rather than the dimmed SelectIcon, with marginRight: 12. Every call site
 // used to render this icon manually with drifting spacing/color -- it's now built into the
 // trigger itself so all Selects render it identically.
-export const ThemedSelectTrigger = React.forwardRef(({ children, variant = 'outline', size = 'md', className, ...props }, ref) => {
+//
+// The primitive's own className border (border-border) is the same unreliable/too-faint
+// className-driven border ThemedInput already works around -- explicit borderColor here so a
+// closed Select reads as a normal input field, matching ThemedInput's own borderColor override.
+export const ThemedSelectTrigger = React.forwardRef(({ children, variant = 'outline', size = 'md', className, style, ...props }, ref) => {
+     const { uiColors, colorMode } = useTheme();
+     const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
+
      return (
-          <SelectTrigger ref={ref} variant={variant} size={size} className={['justify-between', className].filter(Boolean).join(' ')} {...props}>
+          <SelectTrigger variant="outline" ref={ref} size={size} className={['justify-between', className].filter(Boolean).join(' ')} style={[{ borderColor }, style]} {...props}>
                {children}
                <Icon as={ChevronDownIcon} style={{ marginRight: 12 }} />
           </SelectTrigger>

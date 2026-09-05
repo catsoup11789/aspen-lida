@@ -65,8 +65,8 @@ export const SelectVolume = (props) => {
                                    <Select
                                         selectedValue={volume}
                                         onValueChange={(itemValue) => setVolume(itemValue)}>
-                                        <SelectTrigger variant="outline" size="md">
-                                             <SelectInput style={{ paddingVertical: 0 }} placeholder={getTermFromDictionary(language, 'select_volume')} />
+                                        <SelectTrigger>
+                                             <SelectInput placeholder={getTermFromDictionary(language, 'select_volume')} />
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />

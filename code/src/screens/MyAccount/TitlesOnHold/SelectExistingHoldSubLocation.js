@@ -12,8 +12,7 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
  * @constructor
  */
 export const SelectExistingHoldSubLocation = (props) => {
-     const { sublocations, language, location, activeSublocation, setActiveSublocation, textColor, colorMode, uiColors } = props;
-     const selectBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const { sublocations, language, location, activeSublocation, setActiveSublocation, textColor } = props;
 
      const [locationId, locationCode] = location.split("_");
      if (sublocations !== undefined) {
@@ -51,12 +50,12 @@ export const SelectExistingHoldSubLocation = (props) => {
                                         <Select
                                              selectedValue={activeSublocation}
                                              onValueChange={(itemValue) => setActiveSublocation(itemValue)}>
-                                             <SelectTrigger variant="outline" size="md">
-                                                  <SelectInput placeholder={getTermFromDictionary(language, 'select_new_pickup_area')} style={{ color: textColor, paddingVertical: 0 }} />
+                                             <SelectTrigger>
+                                                  <SelectInput placeholder={getTermFromDictionary(language, 'select_new_pickup_area')} />
                                              </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: selectBg }}>
+                                                  <SelectContent>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>

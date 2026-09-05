@@ -1,6 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
 import { getVolumes } from '@/src/util/api/item';
 import { loadingSpinner } from '../../loadingSpinner';
@@ -19,8 +17,7 @@ import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedS
  * @constructor
  */
 export const SelectVolume = (props) => {
-     const { id, volume, setVolume, showModal, promptForHoldType, holdType, setHoldType, language, url, textColor, uiColors, colorMode, runtimeColors } = props;
-     const insets = useSafeAreaInsets();
+     const { id, volume, setVolume, showModal, promptForHoldType, holdType, setHoldType, language, url, textColor, runtimeColors } = props;
 
      const { status, data, error, isFetching } = useQuery({
           queryKey: ['volumes', id, url],
@@ -73,16 +70,16 @@ export const SelectVolume = (props) => {
                                         <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'select_volume')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <Select name="volumeForHold" selectedValue={volume} defaultValue={volume} minWidth="200" accessibilityLabel={getTermFromDictionary(language, 'select_volume')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setVolume(itemValue)}>
-                                        <SelectTrigger variant="outline" size="md">
+                                        <SelectTrigger>
                                              {_.map(data, function (item, index, array) {
                                                   if (item.volumeId === volume) {
-                                                       return <SelectInput style={{ paddingVertical: 0, color: textColor }} value={item.label} />;
+                                                       return <SelectInput value={item.label} />;
                                                   }
                                              })}
                                         </SelectTrigger>
                                         <SelectPortal useRNModal={true}>
                                              <SelectBackdrop />
-                                             <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                             <SelectContent>
                                                  <SelectDragIndicatorWrapper>
                                                       <SelectDragIndicator />
                                                  </SelectDragIndicatorWrapper>

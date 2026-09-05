@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useListGroups, useUpdateLists, useUpdateListGroups } from '@/src/hooks/useUserData';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { editListGroupParent, getLists, getListGroups } from '@/src/util/api/list';
 import { popAlert } from '@/src/components/feedback';
 import { navigateStack } from '@/src/helpers/RootNavigator';
-import { Platform } from 'react-native';
 import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
@@ -42,7 +40,6 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
       const [selectedGroup, setSelectedGroup] = React.useState(null);
       const [newListGroupParentId, setNewListGroupParentId] = React.useState(parentId); // default state is current list group parent id
 
-      const insets = useSafeAreaInsets();
       const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
       React.useEffect(() => {
@@ -89,26 +86,24 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
                                         selectedValue={newListGroupParentId}
                                         accessibilityLabel={getTermFromDictionary(language, 'move_list_group_to')}
                                         onValueChange={(itemValue) => updateSelectedGroup(itemValue)}>
-                                         <SelectTrigger variant="outline" size="md">
+                                         <SelectTrigger>
                                               {selectedGroup === null && parentId !== null ? (
                                                         toArray(listGroups.groups).map((group) => {
                                                              if (group.id === parentId) {
-                                                                  return <SelectInput value={group.title} style={{ color: textColor }} />;
+                                                                  return <SelectInput value={group.title} />;
                                                              }
                                                         })
                                                    ) :
                                                    (selectedGroup === null && parentId === null ? (
-                                                        <SelectInput style={{ color: textColor }} value={getTermFromDictionary(language, 'choose_existing_list_group')} />
+                                                        <SelectInput value={getTermFromDictionary(language, 'choose_existing_list_group')} />
                                                    ) : (
-                                                        <SelectInput style={{ color: textColor }} value={selectedGroup.title} />
+                                                        <SelectInput value={selectedGroup.title} />
                                                    ))
                                               }
                                          </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent
-                                                  style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                                             >
+                                             <SelectContent>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>

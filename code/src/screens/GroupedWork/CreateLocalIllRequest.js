@@ -1,6 +1,5 @@
 import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/native';
 import React from 'react';
-import { Platform } from 'react-native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { loadingSpinner } from '../../components/loadingSpinner';
 import { refreshProfile, submitLocalIllRequest } from '../../util/api/user';
@@ -11,7 +10,6 @@ import { loadError } from '../../components/loadError';
 import { getLocalIllForm } from '../../util/api/system';
 import { logDebugMessage, logErrorMessage, logInfoMessage, getErrorMessage } from '../../util/logging';
 import { stripHTML } from '../../helpers/helpers';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { ThemedAlert, ThemedAlertText } from '../../components/themed/ThemedAlert';
@@ -109,7 +107,6 @@ const Request = (payload) => {
      const { colorMode, textColor, runtimeColors, uiColors } = useTheme();
      const navigation = useNavigation();
      const queryClient = useQueryClient();
-     const insets = useSafeAreaInsets();
 
      const { config, workId, workTitle, volumeId, volumeName } = payload;
 
@@ -264,20 +261,20 @@ const Request = (payload) => {
                               onValueChange={(itemValue) => {
                                    setPickupLocation(itemValue);
                               }}>
-                              <SelectTrigger variant="outline" size="md">
+                              <SelectTrigger>
                                    {pickupLocation ? (
                                         locations.map((location, index) => {
                                              if (location.code === pickupLocation) {
-                                                  return <SelectInput style={{ paddingVertical: 0, color: textColor }} key={index} value={location.displayName} />;
+                                                  return <SelectInput key={index} value={location.displayName} />;
                                              }
                                         })
                                    ) : (
-                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select a pickup location" />
+                                        <SelectInput placeholder="Select a pickup location" />
                                    )}
                               </SelectTrigger>
                               <SelectPortal>
                                    <SelectBackdrop />
-                                   <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                   <SelectContent>
                                         <SelectDragIndicatorWrapper>
                                              <SelectDragIndicator />
                                         </SelectDragIndicatorWrapper>

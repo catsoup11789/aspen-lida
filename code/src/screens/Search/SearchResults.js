@@ -292,8 +292,8 @@ const DisplayResult = (data) => {
           }
 
           return (
-               <ThemedBadge key={n.key} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.primary[400])}>
-                    <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.primary[400], { fontSize: 12 })}>
+               <ThemedBadge key={n.key} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[500])}>
+                    <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[500])}>
                          {n.name}
                     </ThemedBadgeText>
                </ThemedBadge>

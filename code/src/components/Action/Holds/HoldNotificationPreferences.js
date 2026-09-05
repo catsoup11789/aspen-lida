@@ -1,6 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { useTranslationWithValues } from '@/src/hooks/useTranslationWithValues';
@@ -18,8 +16,7 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
  * @constructor
  */
 export const HoldNotificationPreferences = (props) => {
-     const { textColor, uiColors, runtimeColors, user, language, emailNotification, setEmailNotification, phoneNotification, setPhoneNotification, smsNotification, setSMSNotification, smsCarrier, setSMSCarrier, smsNumber, setSMSNumber, phoneNumber, setPhoneNumber, colorMode } = props;
-     const insets = useSafeAreaInsets();
+     const { textColor, runtimeColors, user, language, emailNotification, setEmailNotification, phoneNotification, setPhoneNotification, smsNotification, setSMSNotification, smsCarrier, setSMSCarrier, smsNumber, setSMSNumber, phoneNumber, setPhoneNumber } = props;
 
      const holdNotificationInfo = user.holdNotificationInfo;
      const smsCarriers = holdNotificationInfo.smsCarriers;
@@ -102,20 +99,20 @@ export const HoldNotificationPreferences = (props) => {
                                         </FormControlLabel>
 
                                         <Select name="smsCarrier" selectedValue={smsCarrier} accessibilityLabel={getTermFromDictionary(language, 'hold_sms_select_carrier')} onValueChange={(itemValue) => setSMSCarrier(itemValue)}>
-                                             <SelectTrigger variant="outline" size="md">
+                                             <SelectTrigger>
                                                   {smsCarrier && smsCarrier !== -1 ? (
                                                        _.map(smsCarriers, function (carrier, selectedIndex, array) {
                                                             if (selectedIndex === smsCarrier) {
-                                                                 return <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select a Carrier" value={carrier} />;
+                                                                 return <SelectInput placeholder="Select a Carrier" value={carrier} />;
                                                             }
                                                        })
                                                   ) : (
-                                                       <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder="Select a Carrier" />
+                                                       <SelectInput placeholder="Select a Carrier" />
                                                   )}
                                              </SelectTrigger>
                                              <SelectPortal useRNModal={true}>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                                  <SelectContent>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>

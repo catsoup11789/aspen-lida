@@ -138,8 +138,8 @@ const SelectVolumeHold = (props) => {
                                                   <Select
                                                        selectedValue={volume}
                                                        onValueChange={(itemValue) => setVolume(itemValue)}>
-                                                       <SelectTrigger variant="outline" size="md">
-                                                            <SelectInput style={{ paddingVertical: 0 }} placeholder={getTermFromDictionary(language, 'select_volume')} />
+                                                       <SelectTrigger>
+                                                            <SelectInput placeholder={getTermFromDictionary(language, 'select_volume')} />
                                                        </SelectTrigger>
                                                        <SelectPortal>
                                                             <SelectBackdrop />
@@ -165,8 +165,8 @@ const SelectVolumeHold = (props) => {
                                                   <Select
                                                        selectedValue={location}
                                                        onValueChange={(itemValue) => setLocation(itemValue)}>
-                                                       <SelectTrigger variant="outline" size="md">
-                                                            <SelectInput style={{ paddingVertical: 0 }} placeholder={getTermFromDictionary(language, 'select_pickup_location')} />
+                                                       <SelectTrigger>
+                                                            <SelectInput placeholder={getTermFromDictionary(language, 'select_pickup_location')} />
                                                        </SelectTrigger>
                                                        <SelectPortal>
                                                             <SelectBackdrop />
@@ -192,8 +192,8 @@ const SelectVolumeHold = (props) => {
                                                   <Select
                                                        selectedValue={activeAccount}
                                                        onValueChange={(itemValue) => setActiveAccount(itemValue)}>
-                                                       <SelectTrigger variant="outline" size="md">
-                                                            <SelectInput style={{ paddingVertical: 0 }} placeholder={isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')} />
+                                                       <SelectTrigger>
+                                                            <SelectInput placeholder={isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')} />
                                                        </SelectTrigger>
                                                        <SelectPortal>
                                                             <SelectBackdrop />

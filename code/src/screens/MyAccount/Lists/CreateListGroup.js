@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUserState, useListGroups, useUpdateUserProfile, useUpdateListGroups } from '@/src/hooks/useUserData';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { createListGroup, getListGroups } from '@/src/util/api/list';
 import { refreshProfile } from '@/src/util/api/user';
 import { popAlert } from '@/src/components/feedback';
-import { Platform } from 'react-native';
 import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
@@ -42,7 +40,6 @@ const CreateListGroup = (props) => {
      const [title, setTitle] = useState('');
      const [nestedGroupId, setNestedGroupId] = useState("no");
 
-     const insets = useSafeAreaInsets();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
@@ -87,20 +84,20 @@ const CreateListGroup = (props) => {
                                              <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'should_nest_list_group')}</FormControlLabelText>
                                         </FormControlLabel>
                                         <Select name="should_nest_list_group" selectedValue={nestedGroupId} accessibilityLabel={getTermFromDictionary(language, 'should_nest_list_group')} onValueChange={(itemValue) => setNestedGroupId(itemValue)}>
-                                              <SelectTrigger variant="outline" size="md">
+                                              <SelectTrigger>
                                                    {nestedGroupId !== 'no' && nestedGroupId !== '' ? (
                                                         toArray(listGroups.groups).map((group) => {
                                                              if (group.id === nestedGroupId) {
-                                                                  return <SelectInput style={{ paddingVertical: 0, color: textColor }} value={group.title} />;
+                                                                  return <SelectInput value={group.title} />;
                                                              }
                                                         })
                                                    ) : (
-                                                        <SelectInput style={{ paddingVertical: 0, color: textColor }} value={getTermFromDictionary(language, 'nest_within_group_no')} />
+                                                        <SelectInput value={getTermFromDictionary(language, 'nest_within_group_no')} />
                                                    )}
                                               </SelectTrigger>
                                              <SelectPortal>
                                                   <SelectBackdrop />
-                                                  <SelectContent style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                                  <SelectContent>
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>

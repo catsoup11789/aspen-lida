@@ -7,8 +7,6 @@ import { navigateStack } from '@/src/helpers/RootNavigator';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { deleteList, editList, getLists } from '@/src/util/api/list';
 import { refreshProfile } from '@/src/util/api/user';
-import {Platform} from "react-native";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
@@ -53,7 +51,6 @@ const EditList = (props) => {
       const [listGroupId, setListGroupId] = React.useState(data.listGroupId);
       const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
 
-      const insets = useSafeAreaInsets();
       const user = userState?.user ?? {};
       const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
       const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
@@ -135,22 +132,20 @@ const EditList = (props) => {
                                        selectedValue={listGroupId}
                                        accessibilityLabel={getTermFromDictionary(language, 'list_group')}
                                         onValueChange={(itemValue) => setListGroupId(itemValue)}>
-                                        <SelectTrigger variant="outline" size="md">
+                                        <SelectTrigger>
                                               {listGroupId !== -1 ? (
                                                         toArray(listGroups.groups).map((group) => {
                                                              if (group.id === listGroupId) {
-                                                                  return <SelectInput style={{ paddingVertical: 0, color: textColor }} value={group.title} />;
+                                                                  return <SelectInput value={group.title} />;
                                                              }
                                                         })
                                                    ) :
-                                                   <SelectInput style={{ paddingVertical: 0, color: textColor }} placeholder={getTermFromDictionary(language, 'no_list_group')} value={-1} />
+                                                   <SelectInput placeholder={getTermFromDictionary(language, 'no_list_group')} value={-1} />
                                              }
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent
-                                                 style={{ backgroundColor: surfaceBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                                             >
+                                             <SelectContent>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>

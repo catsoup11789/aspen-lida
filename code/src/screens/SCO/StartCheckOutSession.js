@@ -1,6 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUserState, useAccounts } from '../../hooks/useUserData';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { navigateStack } from '../../helpers/RootNavigator';
@@ -30,7 +28,6 @@ export const StartCheckOutSession = () => {
      const user = userState?.user ?? {};
      const { data: accounts } = useAccounts();
      const { textColor, colorMode, uiColors, runtimeColors } = useTheme();
-     const insets = useSafeAreaInsets();
 
      let startNew = useRoute().params?.startNew ?? false;
 
@@ -107,9 +104,8 @@ export const StartCheckOutSession = () => {
                                         accessibilityLabel={getTermFromDictionary(language, 'select_an_account')}
                                         style={{ marginTop: 4, marginBottom: 12 }}
                                         onValueChange={(itemValue) => setActiveAccount(itemValue)}>
-                                        <SelectTrigger variant="outline" size="md">
+                                        <SelectTrigger>
                                              <SelectInput
-                                                  style={{ paddingVertical: 0, color: textColor }}
                                                   value={
                                                        // Find the displayName of the selected account or use placeholder
                                                        (() => {
@@ -127,7 +123,7 @@ export const StartCheckOutSession = () => {
                                         </SelectTrigger>
                                         <SelectPortal>
                                              <SelectBackdrop />
-                                             <SelectContent style={{ backgroundColor: colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}>
+                                             <SelectContent>
                                                   <SelectDragIndicatorWrapper>
                                                        <SelectDragIndicator />
                                                   </SelectDragIndicatorWrapper>
