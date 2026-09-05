@@ -112,7 +112,7 @@ export const LanguageSwitcher = () => {
                                                   setIsLanguageMenuOpen(true);
                                              }
                                         }}
-                                        style={{ borderRadius: 9999 }}
+                                        className="rounded-full"
                                    >
                                         <MaterialIcons name="language" size={18} color={runtimeColors.primary[500]} />
                                         <ButtonText> {languageDisplayName}</ButtonText>
@@ -158,7 +158,7 @@ export const LanguageSwitcher = () => {
                                    }}
                               >
                                    <Spinner size="large" color={runtimeColors.primary[500]} />
-                                    <Text style={{ marginTop: 12 }}>Switching language...</Text>
+                                    <Text className="mt-3">Switching language...</Text>
                               </Box>
                          </View>
                     </Modal>

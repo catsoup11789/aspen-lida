@@ -80,8 +80,8 @@ export const SelectYourLibrary = (payload) => {
 
      return (
           <Center>
-               <Button onPress={() => setShowModal(true)} size="md" colorScheme="primary" style={{ margin: 20 }}>
-                    <MaterialIcons name="place" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+               <Button onPress={() => setShowModal(true)} size="md" colorScheme="primary" className="m-5">
+                    <MaterialIcons name="place" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />
                     <ButtonText>{selectedLibrary?.name ? selectedLibrary.name : getTermFromDictionary('en', 'select_your_library')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} size="lg" onClose={() => setShowModal(false)}>
@@ -100,7 +100,7 @@ export const SelectYourLibrary = (payload) => {
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
-                         <ModalBody style={{ flex: 1 }} scrollEnabled={true}>
+                         <ModalBody className="flex-1" scrollEnabled={true}>
                               <Box style={{ backgroundColor: surfaceBg, padding: 8, paddingBottom: query ? 0 : 5 }}>
                                    <ThemedInput style={{ borderColor }}>
                                         <ThemedInputField
@@ -111,7 +111,7 @@ export const SelectYourLibrary = (payload) => {
                                              onChangeText={(text) => setQuery(text)}
                                         />
                                         {query ? <InputSlot onPress={() => clearSearch()}>
-                                            <MaterialCommunityIcons name="close-circle" size={20} style={{ marginRight: 8 }} />
+                                            <MaterialCommunityIcons name="close-circle" size={20} className="mr-2" />
                                         </InputSlot> : null}
                                    </ThemedInput>
                               </Box>
@@ -148,7 +148,7 @@ const Item = (data) => {
 
      return (
           <Pressable style={{ borderBottomWidth: 1, borderBottomColor: colorMode === 'light' ? (uiColors?.border?.light ?? UI_COLOR_FALLBACKS.border.light) : (uiColors?.border?.dark ?? UI_COLOR_FALLBACKS.border.dark), paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handleSelect}>
-               <HStack space="lg" style={{ alignItems: 'center' }}>
+               <HStack space="lg" className="items-center">
                     {libraryIcon ? (
                          <Image
                               key={library.name}
@@ -156,15 +156,15 @@ const Item = (data) => {
                               fallbackSource={require('../../themes/default/aspenLogo.png')}
                               alt={library.name}
                               size="xs"
-                              style={{ borderRadius: 999 }}
+                              className="rounded-[999px]"
                          />
                     ) : (
                          <Box
                               size="xs"
-                              style={{ borderRadius: 999 }}
+                              className="rounded-[999px]"
                          />
                     )}
-                    <VStack style={{ marginLeft: 12 }}>
+                    <VStack className="ml-3">
                          <Text bold size="sm">
                               {library.name}
                          </Text>

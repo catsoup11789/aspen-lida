@@ -136,12 +136,12 @@ export const CheckOut = (props) => {
           };
           return (
                <>
-                    <Button colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }} onPress={() => setShowAddAlternateLibraryCardModal(true)}>
+                    <Button colorScheme="primary" className="min-w-full max-w-full" onPress={() => setShowAddAlternateLibraryCardModal(true)}>
                          <ButtonText>{title}</ButtonText>
                     </Button>
                     <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg">
                          <ModalBackdrop />
-                         <ModalContent style={{ maxWidth: '90%' }}>
+                         <ModalContent className="max-w-[90%]">
                               <ModalHeader style={{ borderBottomWidth: 1, borderBottomColor: resolvedUiColors.border }}>
                                    <Heading>
                                         {getTermFromDictionary(language, 'add_alternate_library_card')}
@@ -150,9 +150,9 @@ export const CheckOut = (props) => {
                                         <ThemedCloseIcon />
                                    </ModalCloseButton>
                               </ModalHeader>
-                              <ModalBody style={{ marginTop: 12 }}>
+                              <ModalBody className="mt-3">
                                    {formMessage ? <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} /> : null}
-                                   <FormControl style={{ marginBottom: 8 }}>
+                                   <FormControl className="mb-2">
                                         <FormControlLabel>
                                              <FormControlLabelText size="sm">
                                                   {cardLabel}
@@ -163,7 +163,7 @@ export const CheckOut = (props) => {
                                         </ThemedInput>
                                    </FormControl>
                                    {showAlternateLibraryCardPassword ? (
-                                        <FormControl style={{ marginBottom: 8 }}>
+                                        <FormControl className="mb-2">
                                              <FormControlLabel>
                                                   <FormControlLabelText size="sm">
                                                        {passwordLabel}
@@ -218,7 +218,7 @@ export const CheckOut = (props) => {
                <>
                     <Button
                          variant="solid"
-                         colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
+                         colorScheme="primary" className="min-w-full max-w-full"
                          onPress={async () => {
                               setLoading(true);
                               await completeAction(record, type, user.id, null, null, null, null, null, library.baseUrl).then(async (eContentResponse) => {

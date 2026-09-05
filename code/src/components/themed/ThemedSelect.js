@@ -56,7 +56,7 @@ export const ThemedSelectTrigger = React.forwardRef(({ children, variant = 'outl
      return (
           <SelectTrigger variant="outline" ref={ref} size={size} className={['justify-between', className].filter(Boolean).join(' ')} style={[{ borderColor }, style]} {...props}>
                {children}
-               <MaterialIcons name="expand-more" size={18} style={{ marginRight: 12 }} />
+               <MaterialIcons name="expand-more" size={18} className="mr-3" />
           </SelectTrigger>
      );
 });

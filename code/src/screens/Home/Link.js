@@ -30,7 +30,7 @@ const HomeScreenLinkGrid = ({links}) => {
      const itemWidth = `${100 / columnsPerRow}%`;
 
      return (
-          <Box style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          <Box className="flex-row flex-wrap">
                {links.map((item, index) => {
                     // Check if this is the last item and if it would be alone in its row
                     const isLastItem = index === links.length - 1;
@@ -168,11 +168,11 @@ const Link = ({link}) => {
 
      return (
           <Pressable onPress={(link?.linkType !== 'deepLink') ? handleOpenLink : handleOpenScreen} style={{ alignItems: 'center', justifyContent: 'center', padding: 8, width: '100%', borderRadius: 12, backgroundColor: resolvedUiColors.surface }}>
-               <VStack style={{ alignItems: 'center', justifyContent: 'center', minHeight: 100 }}>
+               <VStack className="items-center justify-center min-h-25">
                     {link?.typeOfIcon === 'uploadIcon' && imgSource ? (
                          <Image
                               source={{ uri: imgSource }}
-                              style={{ width: 52, height: 52, marginBottom: 8 }}
+                              className="w-13 h-13 mb-2"
                               contentFit="contain"
                          />
                     ) : (
@@ -180,11 +180,11 @@ const Link = ({link}) => {
                               name={link?.materialIcon?.replace(/_/g, '-') || 'link'}
                               size={52}
                               color={iconColor}
-                              style={{ marginBottom: 8 }}
+                              className="mb-2"
                          />
                     )}
-                    <Box style={{ paddingHorizontal: 8 }}>
-                         <Text bold size="sm" style={{ textAlign: 'center' }}>{link?.title}</Text>
+                    <Box className="px-2">
+                         <Text bold size="sm" className="text-center">{link?.title}</Text>
                     </Box>
                </VStack>
           </Pressable>

@@ -254,35 +254,35 @@ export const LoginScreen = () => {
      };
 
      const loginScreenContent = (
-          <SafeAreaView style={{ flex: 1 }}>
-               <Box style={{ paddingHorizontal: 20, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <SafeAreaView className="flex-1">
+               <Box className="px-5 flex-1 items-center justify-center">
                     <Pressable onPress={onLogoTap}>
-                         <Image source={{ uri: logoImage }} style={{ width: 96, height: 96, borderRadius: 24 }} alt="" fallbackSource={require('../../themes/default/aspenLogo.png')} />
+                         <Image source={{ uri: logoImage }} className="w-24 h-24 rounded-3xl" alt="" fallbackSource={require('../../themes/default/aspenLogo.png')} />
                     </Pressable>
                     {isCommunity || shouldShowSelectLibrary ? <SelectYourLibrary updateSelectedLibrary={updateSelectedLibrary} selectedLibrary={selectedLibrary} query={query} setQuery={setQuery} showModal={showModal} setShowModal={setShowModal} isCommunity={isCommunity} setShouldRequestPermissions={setShouldRequestPermissions} shouldRequestPermissions={shouldRequestPermissions} permissionRequested={permissionRequested} libraries={libraries} allLibraries={allLibraries} /> : null}
-                    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'padding'} style={{ width: '100%' }}>
+                    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'padding'} className="w-full">
                          {selectedLibrary ? <GetLoginForm selectedLibrary={selectedLibrary} usernameLabel={usernameLabel} passwordLabel={passwordLabel} allowBarcodeScanner={allowBarcodeScanner} allowCode39={allowCode39} updateSelectedLibrary={updateSelectedLibrary} /> : null}
-                         <ButtonGroup space="sm" style={{ justifyContent: 'center', paddingTop: 20, flexWrap: 'wrap' }}>
+                         <ButtonGroup space="sm" className="justify-center pt-5 flex-wrap">
                               {enableForgotPasswordLink === '1' || enableForgotPasswordLink === 1 ? <ResetPassword ils={ils} enableForgotPasswordLink={enableForgotPasswordLink} usernameLabel={usernameLabel} passwordLabel={passwordLabel} forgotPasswordType={forgotPasswordType} showForgotPasswordModal={showForgotPasswordModal} setShowForgotPasswordModal={setShowForgotPasswordModal} /> : null}
                               {enableForgotBarcode === '1' || enableForgotBarcode === 1 ? <ForgotBarcode usernameLabel={usernameLabel} showForgotBarcodeModal={showForgotBarcodeModal} setShowForgotBarcodeModal={setShowForgotBarcodeModal} /> : null}
                          </ButtonGroup>
                          {enableSelfRegistration ? (
-                              <Button colorScheme="primary" style={{ marginTop: 12 }} variant="link" onPress={openSelfRegistration}>
+                              <Button colorScheme="primary" className="mt-3" variant="link" onPress={openSelfRegistration}>
                                   <ButtonText>{getTermFromDictionary('en', 'register_for_a_library_card')}</ButtonText>
                               </Button>
                          ) : null}
                          {isCommunity && Platform.OS !== 'android' ? (
-                              <Button colorScheme="tertiary" style={{ marginTop: 20 }} size="xs" variant="link">
-                                   <MaterialIcons name="near-me" size={18} color={runtimeColors.tertiary[500]} style={{ marginRight: 4 }} />
+                              <Button colorScheme="tertiary" className="mt-5" size="xs" variant="link">
+                                   <MaterialIcons name="near-me" size={18} color={runtimeColors.tertiary[500]} className="mr-1" />
                                    <ButtonText>{getTermFromDictionary('en', 'reset_geolocation')}</ButtonText>
                               </Button>
                          ) : null}
                          <Center>
-                              <Text size="xs" style={{ marginTop: 20 }}>
+                              <Text size="xs" className="mt-5">
                                    {GLOBALS.appVersion} {GLOBALS.appStage} b[{GLOBALS.appBuild}] p[{GLOBALS.appPatch}] c[{GLOBALS.releaseChannel ?? 'Development'}]
                               </Text>
                               {showApiErrorButton ? (
-                                   <Button style={{ marginTop: 16 }} size="xs" variant="outline" onPress={() => setShowApiErrorModal(true)}>
+                                   <Button className="mt-4" size="xs" variant="outline" onPress={() => setShowApiErrorModal(true)}>
                                         <ButtonText>Open API Error Log</ButtonText>
                                    </Button>
                               ) : null}
@@ -292,7 +292,7 @@ export const LoginScreen = () => {
                          <ModalBackdrop />
                          <ModalContent style={{ maxHeight: '75%', width: '95%', alignSelf: 'center', borderRadius: 12, backgroundColor: surfaceBg }}>
                               <ModalHeader></ModalHeader>
-                              <ModalBody style={{ paddingHorizontal: 16 }}>
+                              <ModalBody className="px-4">
                                    <APIErrorLog uiColors={uiColors} colorMode={colorMode} textColor={textColor} />
                               </ModalBody>
                               <ModalFooter style={{ paddingBottom: Math.max(insets.bottom, 8), paddingTop: 8, paddingHorizontal: 16 }}>

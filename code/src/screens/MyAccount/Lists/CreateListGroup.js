@@ -54,12 +54,12 @@ const CreateListGroup = (props) => {
      return (
           <Center>
                <Button onPress={toggle} size="sm" colorScheme="primary">
-                   <MaterialIcons name="add" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+                   <MaterialIcons name="add" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />
                    <ButtonText>{getTermFromDictionary(language, 'create_new_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%' }}>
+                    <ModalContent className="max-w-[90%]">
                          <ModalHeader>
                               <Heading>
                                    {getTermFromDictionary(language, 'create_new_list_group')}

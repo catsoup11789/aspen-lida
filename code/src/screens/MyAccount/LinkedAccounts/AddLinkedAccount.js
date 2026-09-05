@@ -73,7 +73,7 @@ const AddLinkedAccount = () => {
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '95%' }}>
+                    <ModalContent className="max-w-[95%]">
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'linked_account_to_manage')}</Heading>
                               <ModalCloseButton onPress={toggle}>
@@ -97,7 +97,7 @@ const AddLinkedAccount = () => {
                                                      value={newUser}/>
                                    </ThemedInput>
                               </FormControl>
-                              <FormControl style={{ marginTop: 12 }}>
+                              <FormControl className="mt-3">
                                    <FormControlLabel>
                                         <FormControlLabelText>{getTermFromDictionary(language, 'password')}</FormControlLabelText>
                                    </FormControlLabel>
@@ -107,7 +107,7 @@ const AddLinkedAccount = () => {
                                                     textContentType="password" required type={showPassword ? 'text' : 'password'} ref={passwordRef}
                                         />
                                         <InputSlot onPress={() => setShowPassword(!showPassword)}>
-                                             <MaterialCommunityIcons name={showPassword ? 'eye' : 'eye-off'} size={20} style={{ marginRight: 8 }} />
+                                             <MaterialCommunityIcons name={showPassword ? 'eye' : 'eye-off'} size={20} className="mr-2" />
                                         </InputSlot>
                                    </ThemedInput>
                               </FormControl>

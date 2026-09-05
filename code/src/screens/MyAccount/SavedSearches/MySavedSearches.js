@@ -75,7 +75,7 @@ export const MySavedSearches = () => {
 
      const Empty = () => {
           return (
-               <Center style={{ marginTop: 20, marginBottom: 20 }}>
+               <Center className="mt-5 mb-5">
                    <Text bold size="lg">
                          {getTermFromDictionary(language, 'saved_searches_empty')}
                     </Text>
@@ -95,7 +95,7 @@ export const MySavedSearches = () => {
      };
 
      return (
-          <Box style={{ flex: 1 }}>
+          <Box className="flex-1">
                <Box>
                     {showSystemMessage()}
                     {isFetching && (!savedSearches || savedSearches.length === 0) ? (
@@ -142,14 +142,14 @@ const Item = (data) => {
                     openSavedSearch();
                }}
                style={{ borderBottomWidth: 1, borderColor, paddingHorizontal: 4, paddingVertical: 8 }}>
-               <HStack space="md" style={{ justifyContent: 'flex-start' }}>
+               <HStack space="md" className="justify-start">
                     <VStack space="sm">{/*<Image source={{uri: item.cover}} alt={item.title} size="lg" resizeMode="contain" />*/}</VStack>
-                    <VStack space="sm" style={{ justifyContent: 'space-between', maxWidth: '80%' }}>
+                    <VStack space="sm" className="justify-between max-w-[80%]">
                          <Box>
                               <Text bold size="md">
                                    {item.title}{' '}
                                    {hasNewResults === 1 ? (
-                                        <Badge colorScheme="warning" style={{ marginBottom: -2 }}>
+                                        <Badge colorScheme="warning" className="mb--0.5">
                                              <BadgeText colorScheme="warning">{getTermFromDictionary(language, 'flag_updated')}</BadgeText>
                                         </Badge>
                                    ) : null}

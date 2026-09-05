@@ -22,7 +22,7 @@ export const Facet_Checkbox = ({ data, category, values = [], updateCheckboxFace
      };
 
      return (
-          <HStack style={{ alignItems: 'center', paddingHorizontal: 12, paddingVertical: 16 }}>
+          <HStack className="items-center px-3 py-4">
                <Checkbox
                     value={data.value}
                     accessibilityLabel={data.display}
@@ -33,7 +33,7 @@ export const Facet_Checkbox = ({ data, category, values = [], updateCheckboxFace
                     <CheckboxIndicator>
                          {isChecked ? <CheckboxIcon /> : null}
                     </CheckboxIndicator>
-                    <CheckboxLabel style={{ paddingLeft: 8 }}>
+                    <CheckboxLabel className="pl-2">
                          <Text>
                               {data.display}
                               {data.count ? ` (${data.count})` : ''}

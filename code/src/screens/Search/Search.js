@@ -55,7 +55,7 @@ export const SearchHome = () => {
 
      return (
           <SafeAreaView>
-               <Box style={{ padding: 20 }}>
+               <Box className="p-5">
                     <FormControl>
                          <Input size="xl">
                               <InputField autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} clearButtonMode="always" onSubmitEditing={search} value={searchTerm} />
@@ -64,7 +64,7 @@ export const SearchHome = () => {
                     {quickSearchNum > 0 ? (
                          <Box>
                               <Center>
-                                   <Text bold style={{ marginTop: 8, marginBottom: 2 }} size="xl">
+                                   <Text bold className="mt-2 mb-0.5" size="xl">
                                         {getTermFromDictionary(language, 'quick_searches')}
                                    </Text>
                               </Center>
@@ -86,7 +86,7 @@ const QuickSearch = (data) => {
      const quickSearch = data.data;
      return (
           <Button
-               style={{ marginBottom: 12 }}
+               className="mb-3"
                onPress={() =>
                     navigate('SearchResults', {
                          term: quickSearch.searchTerm,

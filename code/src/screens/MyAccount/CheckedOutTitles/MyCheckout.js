@@ -122,14 +122,11 @@ export const MyCheckout = (props) => {
 
      return (
          <Pressable onPress={toggle} style={{ borderBottomWidth: 1, borderBottomColor: borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
-              <HStack space="sm" style={{ width: '75%' }}>
+              <HStack space="sm" className="w-[75%]">
                     <Image
                          alt={checkout.title}
                          source={url}
-                         style={{
-                              width: 100,
-                              height: 150,
-                             borderRadius: 8 }}
+                         className="w-25 h-37.5 rounded-lg"
                          placeholder={blurhash}
                          transition={1000}
                          contentFit="cover"
@@ -149,8 +146,8 @@ export const MyCheckout = (props) => {
                <Actionsheet isOpen={isOpen} onClose={toggle} size="full">
                     <ActionsheetBackdrop />
                     <ActionsheetContent>
-                         <ActionsheetItem style={{ height: 60, paddingHorizontal: 16 }}>
-                              <ActionsheetItemText style={{ fontWeight: '700' }}>{checkout.title}</ActionsheetItemText>
+                         <ActionsheetItem className="h-15 px-4">
+                              <ActionsheetItemText className="font-bold">{checkout.title}</ActionsheetItemText>
                          </ActionsheetItem>
                          {checkout.groupedWorkId ? (
                               <ActionsheetItem
@@ -160,14 +157,14 @@ export const MyCheckout = (props) => {
                                    }}
                                    >
                                    <ActionsheetIcon>
-                                        <MaterialIcons name="search" size={18} style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="search" size={18} className="mr-1" />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                               </ActionsheetItem>
                          ): null}
                          {renewMessage ? (
                               <ActionsheetItem
-                                   style={{ width: '100%' }}
+                                   className="w-full"
                                    isTruncated
                                    isDisabled={canRenew}
                                    isLoading={renewing}
@@ -202,7 +199,7 @@ export const MyCheckout = (props) => {
                                    }}
                                    >
                                    <ActionsheetIcon>
-                                        <MaterialIcons name="autorenew" size={18} style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="autorenew" size={18} className="mr-1" />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText>{stripHTML(renewMessage)}</ActionsheetItemText>
                               </ActionsheetItem>
@@ -220,7 +217,7 @@ export const MyCheckout = (props) => {
                                    }}
                                    >
                                    <ActionsheetIcon>
-                                        <MaterialIcons name="book" size={18} style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="book" size={18} className="mr-1" />
                                    </ActionsheetIcon>
                                    <CheckoutAccessLabel checkout={checkout} libbyReaderName={libbyReaderName} baseUrl={library.baseUrl} language={language} color={textColor}></CheckoutAccessLabel>
                               </ActionsheetItem>
@@ -228,7 +225,7 @@ export const MyCheckout = (props) => {
                          {checkout.source === 'palace_project' ? (
                               <ActionsheetItem onPress={() => handleOpenPalaceProjectInstructions()}>
                                    <ActionsheetIcon>
-                                        <MaterialIcons name="info" size={18} style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="info" size={18} className="mr-1" />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText>{getTermFromDictionary(language, 'access_instructions')}</ActionsheetItemText>
                               </ActionsheetItem>
@@ -247,7 +244,7 @@ export const MyCheckout = (props) => {
                                         }}
                                         >
                                         <ActionsheetIcon>
-                                             <MaterialIcons name="book" size={18} style={{ marginRight: 4 }} />
+                                             <MaterialIcons name="book" size={18} className="mr-1" />
                                         </ActionsheetIcon>
                                         <CheckoutAccessLabel checkout={checkout} libbyReaderName={libbyReaderName} baseUrl={library.baseUrl} language={language} color={textColor}></CheckoutAccessLabel>
                                    </ActionsheetItem>
@@ -264,7 +261,7 @@ export const MyCheckout = (props) => {
                                         }}
                                         >
                                         <ActionsheetIcon>
-                                             <MaterialIcons name="logout" size={18} style={{ marginRight: 4 }} />
+                                             <MaterialIcons name="logout" size={18} className="mr-1" />
                                         </ActionsheetIcon>
                                         <CheckoutAccessLabel checkout={checkout} libbyReaderName={libbyReaderName} baseUrl={library.baseUrl} language={language} color={textColor}></CheckoutAccessLabel>
                                         <ActionsheetItemText>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
@@ -286,7 +283,7 @@ export const MyCheckout = (props) => {
                                         }}
                                         >
                                         <ActionsheetIcon>
-                                             <MaterialIcons name="logout" size={18} style={{ marginRight: 4 }} />
+                                             <MaterialIcons name="logout" size={18} className="mr-1" />
                                         </ActionsheetIcon>
                                         <ActionsheetItemText>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
                                    </ActionsheetItem>

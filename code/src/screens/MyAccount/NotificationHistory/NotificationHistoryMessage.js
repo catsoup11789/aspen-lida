@@ -38,7 +38,7 @@ export const NotificationHistoryMessageModal = () => {
 
      return (
           <ScrollView>
-               <Box style={{ padding: 20 }}>
+               <Box className="p-5">
                     <VStack space="md">
                          <Heading size="lg">{message.title}</Heading>
                          <Text>{message.content}</Text>

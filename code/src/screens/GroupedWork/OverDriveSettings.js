@@ -21,7 +21,7 @@ export const GetOverDriveSettings = (props) => {
                          <Heading>{promptTitle}</Heading>
                          <ModalCloseButton />
                     </ModalHeader>
-                    <ModalBody style={{ marginTop: 16 }}>
+                    <ModalBody className="mt-4">
                          <FormControl>
                               <VStack space="md">
                                    <FormControlLabel>
@@ -31,7 +31,7 @@ export const GetOverDriveSettings = (props) => {
                                         <InputField autoCapitalize="none" autoCorrect={false} onChangeText={(text) => setEmail(text)} />
                                    </Input>
                                    <Checkbox value="yes" onChange={(isSelected) => setRememberPrompt(isSelected)}>
-                                        <CheckboxIndicator style={{ marginRight: 8 }}>
+                                        <CheckboxIndicator className="mr-2">
                                              <CheckboxIcon />
                                         </CheckboxIndicator>
                                         <CheckboxLabel>{getTermFromDictionary(language, 'remember_settings')}</CheckboxLabel>

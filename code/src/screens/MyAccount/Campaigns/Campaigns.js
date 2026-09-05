@@ -233,7 +233,7 @@ export const MyCampaigns = () => {
 			<VStack space="sm">
 				<Image
 					source={{ uri: imageUrl }}
-					style={{ width: 100, height: 100 }}
+					className="w-25 h-25"
 				/>
 					{canShare && onShare ? (
 					<Pressable onPress={() => onShare(imageUrl)}>
@@ -258,7 +258,7 @@ export const MyCampaigns = () => {
 					<VStack space="sm">
 					<Image
 						source={PlaceholderImg}
-						style={{ width: 100, height: 100 }}
+						className="w-25 h-25"
 					/>
 				</VStack>
 					);
@@ -340,16 +340,16 @@ export const MyCampaigns = () => {
 		}
 
 		return (
-			<Box style={{ marginTop: 16 }}>
-				<Text bold size="md" style={{ marginBottom: 8 }}>
+			<Box className="mt-4">
+				<Text bold size="md" className="mb-2">
 					{title}
 				</Text>
 				<VStack space="md">
      <HStack style={{ justifyContent: 'space-between', paddingBottom: 4, borderBottomWidth: 1, borderColor }}>
-						<Text bold style={{ flex: 3 }}>{getTermFromDictionary(language, 'activity_name')}</Text>
-						<Text bold style={{ flex: 2 }}>{getTermFromDictionary(language, 'activity_goal')}</Text>
-						<Text bold style={{ flex: 2 }}>{getTermFromDictionary(language, 'activity_reward')}</Text>
-						<Text bold style={{ flex: 2 }}>{getTermFromDictionary(language, 'progress')}</Text>
+						<Text bold className="flex-[3]">{getTermFromDictionary(language, 'activity_name')}</Text>
+						<Text bold className="flex-[2]">{getTermFromDictionary(language, 'activity_goal')}</Text>
+						<Text bold className="flex-[2]">{getTermFromDictionary(language, 'activity_reward')}</Text>
+						<Text bold className="flex-[2]">{getTermFromDictionary(language, 'progress')}</Text>
 					</HStack>
 
 					{items.map((item, i) => {
@@ -365,20 +365,20 @@ export const MyCampaigns = () => {
 								space="md"
 								style={{ justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}
 							>
-								<Text style={{ flex: 2 }}>
+								<Text className="flex-[2]">
 									{String(item.name || '')}
 								</Text>
-								<Text style={{ flex: 1 }}>
+								<Text className="flex-1">
 									{String(item.completedGoals || 0)} / {String(item.totalGoals || 0)}
 								</Text>
-								<Box style={{ width: 120 }}>
+								<Box className="w-30">
 									<RewardDisplay
 										item={item}
 										imageUrl={imageUrl}
 										type={type}
 									/>
 								</Box>
-								<Box style={{ flex: 1, alignItems: 'center' }}>
+								<Box className="flex-1 items-center">
 									{!!showButton && (
 										<Button
 											size="sm"
@@ -386,7 +386,7 @@ export const MyCampaigns = () => {
 											isDisabled={isDisabled}
 											style={{ opacity: isDisabled ? 0.5 : 1, width: '100%', paddingHorizontal: 8 }}
 										>
-											<ButtonText size="xs" style={{ textAlign: 'center' }}>
+											<ButtonText size="xs" className="text-center">
 												{getTermFromDictionary(language, 'add_progress')}
 											</ButtonText>
 										</Button>
@@ -413,19 +413,19 @@ export const MyCampaigns = () => {
 		const isUserEnrolled = item.enrolled || false;
 
 		return (
-			<VStack space="md" style={{ paddingHorizontal: 16, paddingVertical: 12 }} key={item.id}>
+			<VStack space="md" className="px-4 py-3" key={item.id}>
     <HStack style={{ justifyContent: 'space-between', borderBottomWidth: 1, borderColor, paddingBottom: 8 }}>
-					<Text bold style={{ flex: 2 }}>{getTermFromDictionary(language, 'campaign_name_header')}</Text>
-					<Text bold style={{ flex: 3 }}>{getTermFromDictionary(language, 'campaign_reward')}</Text>
-					<Text bold style={{ flex: 2 }}>{getTermFromDictionary(language, 'campaign_dates')}</Text>
-					<Text bold style={{ flex: 1 }}> </Text>
-					<Text bold style={{ flex: 1 }}> </Text>
+					<Text bold className="flex-[2]">{getTermFromDictionary(language, 'campaign_name_header')}</Text>
+					<Text bold className="flex-[3]">{getTermFromDictionary(language, 'campaign_reward')}</Text>
+					<Text bold className="flex-[2]">{getTermFromDictionary(language, 'campaign_dates')}</Text>
+					<Text bold className="flex-1"> </Text>
+					<Text bold className="flex-1"> </Text>
 				</HStack>
 
 				<HStack
 					style={{ justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8, borderBottomWidth: 0.5, borderColor }}
 				>
-					<Text style={{ flex: 2 }}>
+					<Text className="flex-[2]">
 						{String(item.name || '')}
 					</Text>
 					<RewardDisplay
@@ -433,13 +433,13 @@ export const MyCampaigns = () => {
 						imageUrl={campaignImageUrl}
 						type="campaign"
 					/>
-					<Text style={{ flex: 2 }}>
+					<Text className="flex-[2]">
 						{startDate} {'\n'} - {'\n'}{endDate}
 					</Text>
 					<Button
 						onPress={onToggle}
 						variant="link"
-						style={{ flex: 1 }}
+						className="flex-1"
 						accessibilityLabel={expanded ? "Collapse campaign details" : "Expand campaign details"}
 					>
 						<ButtonText>
@@ -534,7 +534,7 @@ export const MyCampaigns = () => {
 	};
 
 	const EmptyComponent = () => (
-		<Center style={{ marginTop: 20, marginBottom: 20 }}>
+		<Center className="mt-5 mb-5">
 			<Text bold size="lg">
 				{getTermFromDictionary(language, EMPTY_MESSAGES[filterBy] || EMPTY_MESSAGES.default)}
 			</Text>
@@ -553,12 +553,12 @@ export const MyCampaigns = () => {
 	};
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
+		<SafeAreaView className="flex-1">
 			<Box style={{ paddingHorizontal: 16, paddingVertical: 12, backgroundColor: panelBg, borderBottomWidth: 1, borderColor }}>
 				<Select
 					onValueChange={(itemValue) => setFilterBy(itemValue)}
 				>
-					<SelectTrigger style={{ width: 256 }}>
+					<SelectTrigger className="w-64">
 						<SelectInput
 							placeholder="Select Filter"
 							value={getFilterLabel(filterBy)}
@@ -585,11 +585,11 @@ export const MyCampaigns = () => {
 			</Box>
 
 			{status === 'loading' || isFetching ? (
-				<Center style={{ flex: 1 }}>
+				<Center className="flex-1">
 					<Text>{getTermFromDictionary(language, 'loading')}</Text>
 				</Center>
 			) : status === 'error' ? (
-				<Center style={{ flex: 1 }}>
+				<Center className="flex-1">
 					<Text>{getTermFromDictionary(language, 'campaign_loading_error')}</Text>
 				</Center>
 			) : campaignsData.length === 0 ? (
@@ -597,7 +597,7 @@ export const MyCampaigns = () => {
 			) : filterBy === 'linkedUserCampaigns' ? (
 				<ScrollView>
 					{Object.entries(groupedCampaigns).map(([userName, { userId, campaigns: groupedCampaignsList}]) => (
-						<Box key={String(userId)} style={{ marginBottom: 24 }}>
+						<Box key={String(userId)} className="mb-6">
 							<Box style={{ paddingHorizontal: 16, paddingVertical: 8, backgroundColor: panelBg }}>
 								<Text size="lg" bold>
 									{getTermFromDictionary(language, 'campaigns_for_linked_user')}: {String(userName)}

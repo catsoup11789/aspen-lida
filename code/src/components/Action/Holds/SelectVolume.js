@@ -50,14 +50,14 @@ export const SelectVolume = (props) => {
                                              setHoldType(nextValue);
                                              setVolume('');
                                         }}>
-                                        <Radio value="item" size="sm" style={{ marginVertical: 4 }}>
-                                             <RadioIndicator style={{ marginRight: 4 }}>
+                                        <Radio value="item" size="sm" className="my-1">
+                                             <RadioIndicator className="mr-1">
                                                   <RadioIcon as={MaterialIcons} name="circle" />
                                              </RadioIndicator>
                                              <RadioLabel>{getTermFromDictionary(language, 'first_available')}</RadioLabel>
                                         </Radio>
-                                        <Radio value="volume" size="sm" style={{ marginVertical: 4 }}>
-                                             <RadioIndicator style={{ marginRight: 4 }}>
+                                        <Radio value="volume" size="sm" className="my-1">
+                                             <RadioIndicator className="mr-1">
                                                   <RadioIcon as={MaterialIcons} name="circle" />
                                              </RadioIndicator>
                                              <RadioLabel>{getTermFromDictionary(language, 'specific_volume')}</RadioLabel>
@@ -70,7 +70,7 @@ export const SelectVolume = (props) => {
                                    <FormControlLabel>
                                         <FormControlLabelText>{getTermFromDictionary(language, 'select_volume')}</FormControlLabelText>
                                    </FormControlLabel>
-                                   <Select name="volumeForHold" selectedValue={volume} defaultValue={volume} minWidth="200" accessibilityLabel={getTermFromDictionary(language, 'select_volume')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setVolume(itemValue)}>
+                                   <Select name="volumeForHold" selectedValue={volume} defaultValue={volume} minWidth="200" accessibilityLabel={getTermFromDictionary(language, 'select_volume')} className="mt-1 mb-2" onValueChange={(itemValue) => setVolume(itemValue)}>
                                         <SelectTrigger>
                                              {_.map(data, function (item, index, array) {
                                                   if (item.volumeId === volume) {

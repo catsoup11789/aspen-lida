@@ -288,23 +288,23 @@ export const FiltersScreen = () => {
      };
 
      return (
-          <View style={{ flex: 1 }}>
+          <View className="flex-1">
                <ScrollView>
-                    <Box style={{ padding: 20 }}>
+                    <Box className="p-5">
                          <VStack space="md">
                               <FormControl>
                                    <ThemedInput variant="outline">
                                         <InputSlot>
-                                             <MaterialIcons name="search" size={20} style={{ marginLeft: 8 }} />
+                                             <MaterialIcons name="search" size={20} className="ml-2" />
                                         </InputSlot>
                                         <ThemedInputField returnKeyType="search" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
-                                                  <MaterialIcons name="close" size={20} style={{ marginRight: 8 }} />
+                                                  <MaterialIcons name="close" size={20} className="mr-2" />
                                              </InputSlot>
                                         ) : null}
                                         <InputSlot onPress={() => openScanner()}>
-                                             <MaterialCommunityIcons name="barcode-scan" size={20} style={{ marginRight: 8 }} />
+                                             <MaterialCommunityIcons name="barcode-scan" size={20} className="mr-2" />
                                         </InputSlot>
                                    </ThemedInput>
                               </FormControl>
@@ -347,7 +347,7 @@ export const FiltersScreen = () => {
                          {!isLoading ? (
                               facets.map((item, index) => renderFilter(item, index))
                          ) : (
-                              <Box style={{ marginTop: 20 }}>
+                              <Box className="mt-5">
                                    <LoadingSpinner />
                               </Box>
                          )}

@@ -82,14 +82,14 @@ export const SelfRegistration = () => {
 					{_.map(fields, function(section) {
 						const {label, properties} = section;
 						return (
-							<Box style={{ marginBottom: 20 }}>
+							<Box className="mb-5">
 							<Text bold size="md">{label}</Text>
 							{_.map(properties, function(field, key) {
 							const {type, description, maxLength, required, property} = field;
 							const fieldLabel = field.label;
 							if (type === 'text') {
 								return (
-									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
+									<FormControl className="my-2" isRequired={required}>
 										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
 										<ThemedInput style={{ borderColor }}><ThemedInputField type='text'
 										                   key={key}
@@ -111,7 +111,7 @@ export const SelfRegistration = () => {
 								)
 							} else if (type === 'password') {
 								return (
-									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
+									<FormControl className="my-2" isRequired={required}>
 										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
 										<ThemedInput style={{ borderColor }}><ThemedInputField type='password'
 										                   key={property}
@@ -133,7 +133,7 @@ export const SelfRegistration = () => {
 								)
 							}  else if (type === 'email') {
 								return (
-									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
+									<FormControl className="my-2" isRequired={required}>
 										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
 										<ThemedInput style={{ borderColor }}><ThemedInputField type='email'
 										                   key={property}
@@ -155,7 +155,7 @@ export const SelfRegistration = () => {
 							} else if (type === 'enum') {
 								const enumOptions = field.values ?? {};
 								return (
-									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
+									<FormControl className="my-2" isRequired={required}>
 										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
 										<Select
 											name={property}
@@ -230,48 +230,48 @@ export const SelfRegistration = () => {
 			) : (
 				<KeyboardAvoidingView
 					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-					style={{ flex: 1 }}
+					className="flex-1"
 				>
 					<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-						<Box style={{ padding: 12 }}>
+						<Box className="p-3">
 						{!showResults ? (
-							<Text style={{ marginBottom: 12 }}>{getTermFromDictionary('en', 'self_registration_message')}</Text>
+							<Text className="mb-3">{getTermFromDictionary('en', 'self_registration_message')}</Text>
 						) : null}
 						{showResults && !hasError ? (
 							<>
 								{results.success === true ? (
-									<Text style={{ marginBottom: 12 }}>{getTermFromDictionary('en', 'self_registration_success')}</Text>
+									<Text className="mb-3">{getTermFromDictionary('en', 'self_registration_success')}</Text>
 								) : (
-									<Text style={{ marginBottom: 12 }}>{getTermFromDictionary('en', 'self_registration_error')}</Text>
+									<Text className="mb-3">{getTermFromDictionary('en', 'self_registration_error')}</Text>
 								)}
 
 								{results.message ? (
-									<Text style={{ marginBottom: 12 }}>{results.message}</Text>
+									<Text className="mb-3">{results.message}</Text>
 								) : null}
 
 								{results.barcode ? (
-									<HStack space="xs" style={{ marginBottom: 12 }}>
+									<HStack space="xs" className="mb-3">
 										<Text>Your library card is</Text>
 										<Text bold>{results.barcode}</Text>
 									</HStack>
 								) : null}
 
 								{results.username ? (
-									<HStack space="xs" style={{ marginBottom: 12 }}>
+									<HStack space="xs" className="mb-3">
 										<Text>Your username is</Text>
 										<Text bold>{results.username}</Text>
 									</HStack>
 								) : null}
 
 								{results.password ? (
-									<HStack space="xs" style={{ marginBottom: 12 }}>
+									<HStack space="xs" className="mb-3">
 										<Text>Your initial password is</Text>
 										<Text bold>{results.password}</Text>
 									</HStack>
 								) : null}
 
 								{results.requirePinReset ? (
-									<Text style={{ marginBottom: 12 }}>To login to the catalog, you must reset your PIN.</Text>
+									<Text className="mb-3">To login to the catalog, you must reset your PIN.</Text>
 								) : null}
 
 								<Button colorScheme="secondary" variant="outline" onPress={() => {
@@ -284,7 +284,7 @@ export const SelfRegistration = () => {
 							</>
 						) : showResults && hasError ? (
                                    <>
-                                        <Text style={{ marginBottom: 12 }}>{results}</Text>
+                                        <Text className="mb-3">{results}</Text>
                                         <Button colorScheme="secondary" variant="outline" onPress={() => {
                                              navigation.goBack();
                                              setShowResults(false);
@@ -297,7 +297,7 @@ export const SelfRegistration = () => {
                               ) :  (
 							<>
 								{getFields()}
-								<ButtonGroup style={{ paddingTop: 12, paddingBottom: 20 }}>
+								<ButtonGroup className="pt-3 pb-5">
 									<Button
 										colorScheme="secondary"
 										isLoading={isSubmitting}

@@ -61,7 +61,7 @@ const EditList = (props) => {
                               navigateStack('AccountScreenTab', 'MyLists', {
                                    hasPendingChanges: true });
                          }}
-                        style={{ marginRight: 12, padding: 4 }}>
+                        className="mr-3 p-1">
                         <MaterialIcons name="chevron-left" size={20} style={{ color: textColor }} />
                     </Pressable>
                ) });
@@ -69,16 +69,16 @@ const EditList = (props) => {
 
      return (
           <>
-               <ButtonGroup size="sm" style={{ justifyContent: 'center' }} >
+               <ButtonGroup size="sm" className="justify-center" >
                     <Button onPress={() => setShowModal(true)} colorScheme="primary">
-                         <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+                         <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />
                          <ButtonText>{getTermFromDictionary(language, 'edit')}</ButtonText>
                     </Button>
                     <DeleteList listId={listId} />
                </ButtonGroup>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="full">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%' }}>
+                    <ModalContent className="max-w-[90%]">
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'edit')} {data.title}</Heading>
                               <ModalCloseButton onPress={() => { setShowModal(false); }}>
@@ -105,14 +105,14 @@ const EditList = (props) => {
                                         onChange={(nextValue) => {
                                              setPublic(nextValue === "true");
                                         }}>
-                                        <HStack style={{ flexDirection: 'row', alignItems: 'center', width: '75%', maxWidth: 300 }} space="md">
-                                             <Radio value="false" style={{ marginVertical: 4 }}>
+                                        <HStack className="flex-row items-center w-[75%] max-w-75" space="md">
+                                             <Radio value="false" className="my-1">
                                                   <RadioIndicator style={{ marginRight: 8, borderColor }}>
                                                        <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                   </RadioIndicator>
                                                   <RadioLabel>{getTermFromDictionary(language, 'private')}</RadioLabel>
                                              </Radio>
-                                             <Radio value="true" style={{ marginVertical: 4 }}>
+                                             <Radio value="true" className="my-1">
                                                   <RadioIndicator style={{ marginRight: 8, borderColor }}>
                                                        <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                   </RadioIndicator>
@@ -218,7 +218,7 @@ const DeleteList = (props) => {
      return (
           <Center>
                <Button style={{ backgroundColor: uiColors.danger }} onPress={() => setIsOpen(!isOpen)} size="sm">
-                    <MaterialIcons name="delete" size={18} color={uiColors.white} style={{ marginRight: 4 }} />
+                    <MaterialIcons name="delete" size={18} color={uiColors.white} className="mr-1" />
                     <ButtonText style={{ color: uiColors.white }}>Delete List</ButtonText>
                </Button>
                <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
@@ -235,7 +235,7 @@ const DeleteList = (props) => {
                          <AlertDialogBody>
                               <Text>{user.hideSoftDeleteListUI ? getTermFromDictionary(language, 'delete_list_confirmation_no_restore') : getTermFromDictionary(language, 'delete_list_confirmation')}</Text>
                               {!user.hideSoftDeleteListUI && (
-                                   <FormControl style={{ paddingTop: 12 }}>
+                                   <FormControl className="pt-3">
                                         <Checkbox value="optOut" isChecked={optOutOfSoftDeletion} onChange={(isChecked) => setOptOutOfSoftDeletion(isChecked)} alignItems="center">
                                              <CheckboxIndicator style={optOutOfSoftDeletion ? { borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : { borderColor }}>
                                                   <CheckboxIcon style={{ color: runtimeColors.primary['500-text'] }} />

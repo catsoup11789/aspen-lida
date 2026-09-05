@@ -318,12 +318,12 @@ export const HoldPrompt = (props) => {
 
      return (
           <>
-               <Button colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }} onPress={() => setShowModal(true)}>
+               <Button colorScheme="primary" className="min-w-full max-w-full" onPress={() => setShowModal(true)}>
                     <ButtonText>{title}</ButtonText>
                </Button>
                <Modal isOpen={showAddAlternateLibraryCardModal} onClose={() => setShowAddAlternateLibraryCardModal(false)} closeOnOverlayClick={false} size="lg" useRNModal={true}>
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%' }}>
+                    <ModalContent className="max-w-[90%]">
                          <ModalHeader>
                               <Heading>
                                    {getTermFromDictionary(language, 'add_alternate_library_card')}
@@ -335,9 +335,9 @@ export const HoldPrompt = (props) => {
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
-                         <ModalBody style={{ marginTop: 12 }}>
+                         <ModalBody className="mt-3">
                               {formMessage ? <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} /> : null}
-                              <FormControl style={{ marginBottom: 8 }}>
+                              <FormControl className="mb-2">
                                    <FormControlLabel>
                                         <FormControlLabelText size="sm">
                                              {cardLabel}
@@ -348,7 +348,7 @@ export const HoldPrompt = (props) => {
                                    </ThemedInput>
                               </FormControl>
                               {showAlternateLibraryCardPassword ? (
-                                   <FormControl style={{ marginBottom: 8 }}>
+                                   <FormControl className="mb-2">
                                         <FormControlLabel>
                                              <FormControlLabelText size="sm">
                                                   {passwordLabel}
@@ -436,7 +436,7 @@ export const HoldPrompt = (props) => {
                </Modal>
                <Modal isOpen={showModal} onClose={() => setShowModal(false)} closeOnOverlayClick={false} size="lg" useRNModal={true}>
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%' }}>
+                    <ModalContent className="max-w-[90%]">
                          <ModalHeader>
                               <Heading>
                                    {isPlacingHold ? getTermFromDictionary(language, 'hold_options') : getTermFromDictionary(language, 'checkout_options')}
@@ -448,7 +448,7 @@ export const HoldPrompt = (props) => {
                                    <ThemedCloseIcon />
                               </ModalCloseButton>
                          </ModalHeader>
-                         <ModalBody style={{ marginTop: 12 }}>
+                         <ModalBody className="mt-3">
                               {alreadyOnHold ? <Text>{getTermFromDictionary(language, 'already_on_hold')}</Text> : null}
                               {!preferredPickupLocationIsValid ? <Text>{preferredPickupLocationWarning}</Text> : null}
                               {promptForHoldNotifications ? (
@@ -477,13 +477,13 @@ export const HoldPrompt = (props) => {
                               {data !== undefined && !isFetching && _.isEmpty(volumeId) && (holdType === 'either' || holdType === 'item') ? <SelectItemHold uiColors={uiColors} runtimeColors={runtimeColors} colorMode={colorMode} id={id} item={item} setItem={setItem} language={language} data={data} holdType={holdType} setHoldType={setHoldType} holdTypeForFormat={holdTypeForFormat} url={library.baseUrl} showModal={showModal} textColor={textColor} /> : null}
                               {promptForHoldType || (holdType === 'volume' && _.isEmpty(volumeId)) ? <SelectVolume uiColors={uiColors} runtimeColors={runtimeColors} id={id} language={language} volume={volume} setVolume={setVolume} promptForHoldType={promptForHoldType} holdType={holdType} setHoldType={setHoldType} showModal={showModal} url={library.baseUrl} textColor={textColor} colorMode={colorMode} /> : null}
                               {(_.isArray(locations) && (_.size(locations) > 1 || !preferredPickupLocationIsValid) && !isEContent && !user.rememberHoldPickupLocation) || (_.isArray(locations) && _.size(locations) > 1 && !isEContent && _.size(accounts) > 0) ? (
-                                   <FormControl style={{ marginTop: 4 }}>
+                                   <FormControl className="mt-1">
                                         <FormControlLabel>
                                              <FormControlLabelText size="sm">
                                                   {getTermFromDictionary(language, 'select_pickup_location')}
                                              </FormControlLabelText>
                                         </FormControlLabel>
-                                        <Select name="pickupLocations" selectedValue={location} minWidth={200} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setLocation(itemValue)}>
+                                        <Select name="pickupLocations" selectedValue={location} minWidth={200} className="mt-1 mb-2" onValueChange={(itemValue) => setLocation(itemValue)}>
                                              <SelectTrigger>
                                                   {locations.map((selectedLocation, index) => {
                                                        if (selectedLocation.code === location) {
@@ -512,14 +512,14 @@ export const HoldPrompt = (props) => {
                               ) : null}
                               {!user.rememberHoldPickupLocation ? <SelectNewHoldSublocation sublocations={sublocations ?? []} location={location} activeSublocation={sublocation} setActiveSublocation={setSublocation} language={language} textColor={textColor} uiColors={uiColors} runtimeColors={runtimeColors} colorMode={colorMode} /> : null}
                               {_.size(locations) > 1 && _.size(accounts) === 0 && !isEContent && library.allowRememberPickupLocation && !user.rememberHoldPickupLocation ? (
-                                   <FormControl style={{ marginBottom: 12 }}>
+                                   <FormControl className="mb-3">
                                         <Checkbox
                                              defaultIsChecked={rememberPickupLocation}
                                              accessibilityLabel={getTermFromDictionary(language, 'always_use_pickup_location')}
                                              onChange={(value) => {
                                                   setRememberPickupLocation(value);
                                              }}>
-                                             <CheckboxIndicator style={{ marginRight: 8 }}>
+                                             <CheckboxIndicator className="mr-2">
                                                   <CheckboxIcon style={{ color: textColor }} />
                                              </CheckboxIndicator>
                                              <CheckboxLabel>{getTermFromDictionary(language, 'always_use_pickup_location')}</CheckboxLabel>
@@ -531,7 +531,7 @@ export const HoldPrompt = (props) => {
                                         <FormControlLabel>
                                              <FormControlLabelText>{isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')}</FormControlLabelText>
                                         </FormControlLabel>
-                                        <Select name="linkedAccount" selectedValue={activeAccount} minWidth={200} style={{ marginTop: 4, marginBottom: 12 }} onValueChange={(itemValue) => updateActiveAccount(itemValue)}>
+                                        <Select name="linkedAccount" selectedValue={activeAccount} minWidth={200} className="mt-1 mb-3" onValueChange={(itemValue) => updateActiveAccount(itemValue)}>
                                              <SelectTrigger>
                                                   <SelectInput
                                                        value={(() => {

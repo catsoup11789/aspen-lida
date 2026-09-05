@@ -63,12 +63,12 @@ export const EditListGroupParent = ({id, parentId, handleUpdate}) => {
      return (
           <Center>
                <Button onPress={toggle} size="xs" colorScheme="primary">
-                   <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+                   <MaterialIcons name="edit" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />
                    <ButtonText>{getTermFromDictionary(language, 'move_list_group')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%' }}>
+                    <ModalContent className="max-w-[90%]">
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'move_list_group')}</Heading>
                               <ModalCloseButton onPress={toggle}>

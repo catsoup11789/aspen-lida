@@ -13,7 +13,7 @@ import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 const Profile_Identity = (props) => {
     const language = useActiveLanguage();
   return (
-    <Box style={{ paddingBottom: 20 }}>
+    <Box className="pb-5">
       <Text bold>{getTermFromDictionary(language, 'patron_full_name')}</Text>
       <Text>{props.firstName} {props.lastName}</Text>
     </Box>

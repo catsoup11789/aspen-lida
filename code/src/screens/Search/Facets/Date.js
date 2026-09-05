@@ -95,9 +95,9 @@ export const Facet_Date = (props) => {
 
      return (
           <ScrollView>
-               <Box style={{ padding: 20 }}>
-                    <FormControl style={{ marginBottom: 8 }}>
-                         <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'center' }}>
+               <Box className="p-5">
+                    <FormControl className="mb-2">
+                         <HStack space="sm" className="items-center justify-center">
                               <Button colorScheme="primary" variant="outline" onPress={() => toggleFromDatePicker()}>
                                    <ButtonText>{moment(fromValue).format('MM/DD/YYYY')}</ButtonText>
                               </Button>

@@ -133,7 +133,7 @@ export const ForgotBarcode = (props) => {
           </Button>
      ) : (
           <>
-               <Button variant="link" style={{ marginRight: 16 }} onPress={closeWindow}>
+               <Button variant="link" className="mr-4" onPress={closeWindow}>
                     <ButtonText style={{ color: textColor }}>{getTermFromDictionary('en', 'cancel')}</ButtonText>
                </Button>
                <Button

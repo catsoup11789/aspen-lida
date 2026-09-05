@@ -86,7 +86,7 @@ export const SearchResultsForSavedSearch = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text style={{ marginTop: 8 }} size="2xs">
+                         <Text className="mt-2" size="2xs">
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -110,23 +110,23 @@ export const SearchResultsForSavedSearch = () => {
      const NoResults = () => {
           return (
                <>
-                    {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
-                    <Center style={{ flex: 1 }}>
-                        <Heading style={{ paddingTop: 20 }}>{getTermFromDictionary(language, 'no_results')}</Heading>
+                    {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
+                    <Center className="flex-1">
+                        <Heading className="pt-5">{getTermFromDictionary(language, 'no_results')}</Heading>
                     </Center>
                </>
           );
      };
 
      return (
-          <SafeAreaView style={{ flex: 1 }}>
-               {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+          <SafeAreaView className="flex-1">
+               {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {status === 'loading' || isFetching ? (
                     loadingSpinner('Fetching results...')
                ) : status === 'error' ? (
                     loadError('Error', '')
                ) : (
-                    <Box style={{ flex: 1 }}>
+                    <Box className="flex-1">
                          <FlatList data={data.results} ListFooterComponent={Paging} ListEmptyComponent={NoResults} renderItem={({ item }) => <DisplayResult data={item} />} keyExtractor={(item, index) => index.toString()} />
                     </Box>
                )}

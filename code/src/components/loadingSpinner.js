@@ -31,8 +31,8 @@ export const LoadingSpinner = (props) => {
      if (!isUndefined(props) && !isEmpty(props) && !isUndefined(props.message) && !isEmpty(props.message)) {
           logDebugMessage("Showing loading spinner with message: " + props.message);
           return (
-               <Center style={{ flex: 1, paddingHorizontal: 12 }}>
-                    <VStack space="md" style={{ alignItems: 'center' }}>
+               <Center className="flex-1 px-3">
+                    <VStack space="md" className="items-center">
                          <Spinner size="large" color={runtimeColors.primary[500]} accessibilityLabel="Loading..." />
                          <Heading size="md">
                               {props.message}
@@ -43,7 +43,7 @@ export const LoadingSpinner = (props) => {
      }
 
      return (
-          <Center style={{ flex: 1 }}>
+          <Center className="flex-1">
                <HStack>
                     <Spinner color={runtimeColors.primary[500]} size="large" accessibilityLabel="Loading..." />
                </HStack>

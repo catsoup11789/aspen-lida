@@ -104,7 +104,7 @@ export const MoreMenu = () => {
      return (
           <ScrollView>
                <Box>
-                    <VStack space="md" style={{ marginVertical: 8, marginHorizontal: 4 }}>
+                    <VStack space="md" className="my-2 mx-1">
                          <MyLibrary />
                          <Divider />
 
@@ -116,10 +116,10 @@ export const MoreMenu = () => {
                                    <Settings />
                                    <PrivacyPolicy />
                                    {library.catalogRegistrationCapabilities?.enableSelfRegistration === '1' && library.catalogRegistrationCapabilities.enableSelfRegistrationInApp === '1' ? (
-                                        <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={toggleDeleteConfirmationModal}>
-                                             <HStack space="sm" style={{ alignItems: 'center' }}>
+                                        <Pressable className="px-2 py-3" onPress={toggleDeleteConfirmationModal}>
+                                             <HStack space="sm" className="items-center">
                                                   <MaterialIcons name="chevron-right" size={20} />
-                                                  <Text style={{ fontWeight: '500' }}>
+                                                  <Text className="font-medium">
                                                        {getTermFromDictionary(language, 'delete_account')}
                                                   </Text>
                                              </HStack>
@@ -241,7 +241,7 @@ const MyLibrary = () => {
 
      return (
           <Box style={{ margin: 16, backgroundColor: runtimeColors.primary[500], padding: 24, borderRadius: 16 }}>
-               <Pressable style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} onPress={() => navigate('MyLibrary')}>
+               <Pressable className="flex-row items-center justify-between" onPress={() => navigate('MyLibrary')}>
                     <VStack>
                         <Text bold size="md" style={{ color: runtimeColors.primary['500-text'] }}>
                               {library.displayName}
@@ -271,10 +271,10 @@ const ViewAllLocations = () => {
 
      if (_.size(locations) > 1) {
           return (
-               <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => navigate('AllLocations')}>
-                    <HStack space="sm" style={{ alignItems: 'center' }}>
+               <Pressable className="px-2 py-3" onPress={() => navigate('AllLocations')}>
+                    <HStack space="sm" className="items-center">
                          <MaterialIcons name="chevron-right" size={20} />
-                         <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'view_all_locations')}</Text>
+                         <Text className="font-medium">{getTermFromDictionary(language, 'view_all_locations')}</Text>
                     </HStack>
                </Pressable>
           );
@@ -293,10 +293,10 @@ const Settings = () => {
      const { textColor } = useTheme();
 
      return (
-          <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => navigate('MyPreferences')}>
-               <HStack space="sm" style={{ alignItems: 'center' }}>
+          <Pressable className="px-2 py-3" onPress={() => navigate('MyPreferences')}>
+               <HStack space="sm" className="items-center">
                     <MaterialIcons name="chevron-right" size={20} />
-                    <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'preferences')}</Text>
+                    <Text className="font-medium">{getTermFromDictionary(language, 'preferences')}</Text>
                </HStack>
           </Pressable>
      );
@@ -362,10 +362,10 @@ const PrivacyPolicy = () => {
      };
 
      return (
-          <Pressable style={{ paddingHorizontal: 8, paddingVertical: 12 }} onPress={() => openURL()}>
-               <HStack space="sm" style={{ alignItems: 'center' }}>
+          <Pressable className="px-2 py-3" onPress={() => openURL()}>
+               <HStack space="sm" className="items-center">
                     <MaterialIcons name="chevron-right" size={20} />
-                    <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'privacy_policy')}</Text>
+                    <Text className="font-medium">{getTermFromDictionary(language, 'privacy_policy')}</Text>
                </HStack>
           </Pressable>
      );
@@ -467,18 +467,18 @@ const MenuLink = (payload) => {
                     >
                          <AccordionItem value="category-panel" style={{ borderBottomWidth: 0 }}>
                               <AccordionHeader>
-                                   <AccordionTrigger style={{ paddingHorizontal: 8, paddingVertical: 12 }}>
+                                   <AccordionTrigger className="px-2 py-3">
                                         {/* gluestack-ui allows passing a function to dynamically check states like isExpanded */}
                                         {({ isExpanded }) => (
-                                             <HStack space="sm" style={{ alignItems: 'center' }}>
+                                             <HStack space="sm" className="items-center">
                                                   <Icon
                                                        as={MaterialIcons}
                                                        name={isExpanded ? 'expand-more' : 'chevron-right'}
                                                        size="lg"
                                                        style={{ color: textColor }}
                                                   />
-                                                  <VStack style={{ width: '100%' }}>
-                                                       <Text style={{ fontWeight: '500' }}>
+                                                  <VStack className="w-full">
+                                                       <Text className="font-medium">
                                                             {categoryLabel}
                                                        </Text>
                                                   </VStack>
@@ -487,7 +487,7 @@ const MenuLink = (payload) => {
                                    </AccordionTrigger>
                               </AccordionHeader>
 
-                              <AccordionContent style={{ padding: 0, paddingTop: 4 }}>
+                              <AccordionContent className="p-0 pt-1">
                                    {_.map(categories, function (item, index) {
                                         return (
                                              <Pressable
@@ -495,15 +495,15 @@ const MenuLink = (payload) => {
                                                   onPress={() => openURL(item.url)}
                                                   style={{ backgroundColor: 'transparent', borderBottomWidth: 1, borderBottomColor: uiColors.border.light, paddingVertical: 8 }}
                                              >
-                                                  <HStack space="sm" style={{ alignItems: 'center', marginLeft: 16 }}>
+                                                  <HStack space="sm" className="items-center ml-4">
                                                        <Icon
                                                             as={MaterialIcons}
                                                             name="chevron-right"
                                                             size="lg"
                                                             style={{ color: textColor }}
                                                        />
-                                                       <VStack style={{ width: '100%' }}>
-                                                            <Text style={{ fontWeight: '500' }}>
+                                                       <VStack className="w-full">
+                                                            <Text className="font-medium">
                                                                  {item.linkText}
                                                             </Text>
                                                        </VStack>
@@ -522,11 +522,11 @@ const MenuLink = (payload) => {
           <>
                {_.map(categories, function (item, index) {
                     return (
-                         <Pressable key={index} style={{ paddingHorizontal: 8, paddingVertical: 12, borderRadius: 8 }} onPress={() => openURL(item.url)}>
-                             <HStack space="sm" style={{ alignItems: 'center' }}>
+                         <Pressable key={index} className="px-2 py-3 rounded-lg" onPress={() => openURL(item.url)}>
+                             <HStack space="sm" className="items-center">
                                   <MaterialIcons name="chevron-right" size={20} />
-                                  <VStack style={{ width: '100%' }}>
-                                       <Text style={{ fontWeight: '500' }}>{item.linkText}</Text>
+                                  <VStack className="w-full">
+                                       <Text className="font-medium">{item.linkText}</Text>
                                    </VStack>
                               </HStack>
                          </Pressable>

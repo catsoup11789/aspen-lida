@@ -146,9 +146,9 @@ export const AddAlternateLibraryCard = (props) => {
                               <ThemedCloseIcon />
                          </ModalCloseButton>
                     </ModalHeader>
-                    <ModalBody style={{ marginTop: 12 }}>
+                    <ModalBody className="mt-3">
                          {formMessage ? <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} /> : null}
-                         <FormControl style={{ marginBottom: 8 }}>
+                         <FormControl className="mb-2">
                               <FormControlLabel>
                                    <FormControlLabelText size="sm">
                                         {cardLabel}
@@ -159,7 +159,7 @@ export const AddAlternateLibraryCard = (props) => {
                               </ThemedInput>
                          </FormControl>
                          {showAlternateLibraryCardPassword ? (
-                              <FormControl style={{ marginBottom: 8 }}>
+                              <FormControl className="mb-2">
                                    <FormControlLabel>
                                         <FormControlLabelText size="sm">
                                              {passwordLabel}

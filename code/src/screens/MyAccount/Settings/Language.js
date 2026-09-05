@@ -11,7 +11,7 @@ import { LanguageSwitcher } from '@/src/translations/TranslationService';
  */
 export const Settings_LanguageScreen = () => {
      return (
-          <Box style={{ padding: 20 }}>
+          <Box className="p-5">
                <HStack justifyContent="space-between" alignItems="center">
                     <Text bold>Language</Text>
                     <LanguageSwitcher />

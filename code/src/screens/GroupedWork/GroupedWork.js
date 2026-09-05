@@ -117,7 +117,7 @@ export const GroupedWorkScreen = () => {
      };
 
      return (
-          <SafeAreaView style={{ flex: 1 }}>
+          <SafeAreaView className="flex-1">
                {status === 'loading' || isFetching ? (
                     <LoadingSpinner message="Fetching data..." />
                ) : status === 'error' ? (
@@ -125,7 +125,7 @@ export const GroupedWorkScreen = () => {
                ) : (
                     <ScrollView>
                          <Box style={{ height: 150, width: '100%', backgroundColor: resolvedUiColors.surface, zIndex: -1, position: 'absolute', left: 0, top: 0 }} />
-                         {_.size(systemMessages) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+                         {_.size(systemMessages) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                          <DisplayGroupedWork data={data.results} initialFormat={data.format} updateFormat={data.format} />
                     </ScrollView>
                )}
@@ -166,9 +166,9 @@ const DisplayGroupedWork = (payload) => {
      const key = 'large_' + groupedWork.id;
 
      return (
-          <Box style={{ padding: 10, width: '100%' }}>
-               <Center style={{ marginTop: 20, width: '100%' }}>
-                    <Image alt={groupedWork.title} source={groupedWork.cover} style={{ width: 180, height: 250, borderRadius: 4 }} placeholder={blurhash} transition={1000} contentFit="cover" />
+          <Box className="p-2.5 w-full">
+               <Center className="mt-5 w-full">
+                    <Image alt={groupedWork.title} source={groupedWork.cover} className="w-45 h-62.5 rounded" placeholder={blurhash} transition={1000} contentFit="cover" />
                     <Title title={groupedWork.title} />
                     <Author author={groupedWork.author} />
                </Center>
@@ -217,7 +217,7 @@ const Author = ({ author }) => {
      if (author) {
           return (
                <Button size="sm" variant="link" onPress={() => startSearch(author, 'SearchResults', library.baseUrl)}>
-                    <MaterialIcons name="search" size={16} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} style={{ marginRight: 4 }} />
+                    <MaterialIcons name="search" size={16} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} className="mr-1" />
                     <ButtonText style={{ fontWeight: '400', color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>
                          {author}
                     </ButtonText>
@@ -287,7 +287,7 @@ const Language = ({ language }) => {
      const { textColor } = useTheme();
      if (language) {
           return (
-               <HStack style={{ marginTop: 12, marginBottom: 4 }}>
+               <HStack className="mt-3 mb-1">
                     <Text bold style={{ lineHeight: 15 }} size="xs">
                          {getTermFromDictionary(user_language, 'language')}:
                     </Text>
@@ -319,7 +319,7 @@ const Formats = ({ formats }) => {
                     <Text bold style={{ lineHeight: 15, marginTop: 12, marginBottom: 4 }} size="xs">
                          {getTermFromDictionary(language, 'format')}:
                     </Text>
-                    <ButtonGroup style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                    <ButtonGroup className="flex-row flex-wrap">
                          {_.compact(_.map(_.keys(formats), function (item, index) {
                               const formatData = formats[item];
                               if (!formatData || !formatData.label || formatData.label.trim() === '' || item.trim() === '') {

@@ -71,7 +71,7 @@ export const DisplayGroupedWorkResult = (props) => {
           if (_.isArray(n) || _.isObject(n)) {
                return (
                     <Badge key={n.key} colorScheme="secondary" variant="outline">
-                         <BadgeText colorScheme="secondary" style={{ fontSize: 12 }}>
+                         <BadgeText colorScheme="secondary" className="text-xs">
                               {n.name}
                          </BadgeText>
                     </Badge>
@@ -80,7 +80,7 @@ export const DisplayGroupedWorkResult = (props) => {
 
           return (
                <Badge key={n} colorScheme="secondary" variant="outline">
-                    <BadgeText colorScheme="secondary" style={{ fontSize: 12 }}>
+                    <BadgeText colorScheme="secondary" className="text-xs">
                          {n}
                     </BadgeText>
                </Badge>
@@ -94,22 +94,19 @@ export const DisplayGroupedWorkResult = (props) => {
      return (
           <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
-                    <VStack style={{ width: 100 }}>
-                         <Box style={{ height: 150 }}>
+                    <VStack className="w-25">
+                         <Box className="h-37.5">
                               <Image
                                    alt={item.title}
                                    source={url}
-                                   style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        borderRadius: 8 }}
+                                   className="w-full h-full rounded-lg"
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
                               />
                          </Box>
                          {item.language ? (
-                              <Center style={{ marginTop: 4 }}>
+                              <Center className="mt-1">
                                    <Badge
                                         size="sm"
                                         style={{ backgroundColor: resolvedUiColors.surface }}>
@@ -121,9 +118,9 @@ export const DisplayGroupedWorkResult = (props) => {
                          ) : null}
                          <AddToList itemId={id} btnStyle="sm" />
                     </VStack>
-                    <VStack style={{ width: '65%', paddingTop: 4 }}>
+                    <VStack className="w-[65%] pt-1">
                          {title ? (
-                              <Text bold style={{ paddingBottom: 4 }} size="sm">
+                              <Text bold className="pb-1" size="sm">
                                    {title}
                               </Text>
                          ) : null}
@@ -132,7 +129,7 @@ export const DisplayGroupedWorkResult = (props) => {
                                    {getTermFromDictionary(language, 'by')} {author}
                               </Text>
                          ) : null}
-                         <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
+                         <HStack space="xs" className="mt-4 flex-row flex-wrap">
                               {_.map(formats, getFormat)}
                          </HStack>
                     </VStack>

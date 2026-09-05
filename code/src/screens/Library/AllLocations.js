@@ -159,7 +159,7 @@ export const AllLocations = () => {
                     <FlatList
                          ListHeaderComponent={
                               <>
-                                   {_.size(systemMessages) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+                                   {_.size(systemMessages) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                                    {getActionButtons()}
                               </>
                          }
@@ -246,15 +246,15 @@ const DisplayLocation = (data) => {
      return (
           <>
                <Pressable onPress={goToLocation}>
-                    <HStack style={{ justifyContent: 'space-between', alignItems: 'center', padding: 16 }}>
+                    <HStack className="justify-between items-center p-4">
                          {location.locationImage ? (
-                              <Box style={{ width: '30%', marginRight: 8 }}>
-                                   <Image alt={location.displayName} source={location.locationImage} style={{ width: '100%', height: 90, borderRadius: 4 }} placeholder={blurhash} transition={1000} contentFit="cover" />
+                              <Box className="w-[30%] mr-2">
+                                   <Image alt={location.displayName} source={location.locationImage} className="w-full h-22.5 rounded" placeholder={blurhash} transition={1000} contentFit="cover" />
                               </Box>
                          ) : null}
                          <VStack style={{ width: location.locationImage ? '60%' : '85%' }}>
                               <Text size="md" bold>{location.displayName}</Text>
-                              <Text size="xs" style={{ marginBottom: 8 }}>
+                              <Text size="xs" className="mb-2">
                                    {location.address}
                               </Text>
                               {hasHours ? (
@@ -273,7 +273,7 @@ const DisplayLocation = (data) => {
                          <MaterialIcons name="chevron-right" size={24} />
                     </HStack>
                </Pressable>
-               <Divider style={{ marginTop: 12, marginBottom: 12 }} />
+               <Divider className="mt-3 mb-3" />
           </>
      );
 };

@@ -28,7 +28,7 @@ const Hours = (data) => {
           if (_.isArrayLikeObject(location.hours)) {
                return (
                     <Box>
-                         <Heading style={{ marginBottom: 8, marginHorizontal: 8 }}>{getTermFromDictionary(language, 'library_hours')}</Heading>
+                         <Heading className="mb-2 mx-2">{getTermFromDictionary(language, 'library_hours')}</Heading>
                          <FlatList data={location.hours} renderItem={({ item }) => <Day hours={item} textColor={textColor} />} />
                     </Box>
                );
@@ -49,7 +49,7 @@ const Day = (data) => {
      }
 
      return (
-          <VStack style={{ marginBottom: 8, marginHorizontal: 16 }}>
+          <VStack className="mb-2 mx-4">
                <HStack justifyContent="space-between">
                     <Text bold>
                          {hours.dayName}

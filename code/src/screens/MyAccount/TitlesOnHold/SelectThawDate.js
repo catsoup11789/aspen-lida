@@ -93,7 +93,7 @@ export const SelectThawDate = (props) => {
                <ActionsheetItem onPress={showDatePicker}>
                     {data ? null : (
                          <ActionsheetIcon>
-                              <MaterialIcons name="pause" size={18} style={{ marginRight: 4 }} />
+                              <MaterialIcons name="pause" size={18} className="mr-1" />
                          </ActionsheetIcon>
                     )}
                     <ActionsheetItemText>{actionLabel}</ActionsheetItemText>
@@ -103,7 +103,7 @@ export const SelectThawDate = (props) => {
                <Modal isOpen={showIndefiniteWarning} onClose={hideDatePicker} size="full">
                     <ModalBackdrop />
                     <ModalContent
-                        style={{ maxWidth: '95%' }}
+                        className="max-w-[95%]"
                         avoidKeyboard
                     >
                          <ModalHeader>
@@ -135,7 +135,7 @@ export const SelectThawDate = (props) => {
                                                   size="sm"
                                              />
                                         </CheckboxIndicator>
-                                        <CheckboxLabel style={{ paddingLeft: 8 }}>
+                                        <CheckboxLabel className="pl-2">
                                              {getTermFromDictionary("en", "freeze_indefinite_checkbox")}
                                         </CheckboxLabel>
                                    </Checkbox>
@@ -144,7 +144,7 @@ export const SelectThawDate = (props) => {
 
                          <ModalFooter>
                               {/* Streamlined ButtonGroup for v1 (Removed the conflicting HStack component wrapper) */}
-                              <ButtonGroup space="md" style={{ flexDirection: 'row' }}>
+                              <ButtonGroup space="md" className="flex-row">
                                    <Button
                                        colorScheme="primary"
                                         onPress={hideDatePicker}

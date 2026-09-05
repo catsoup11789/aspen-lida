@@ -103,7 +103,7 @@ export const StartCheckOutSession = () => {
                                         name="linkedAccount"
                                         selectedValue={activeAccount}
                                         accessibilityLabel={getTermFromDictionary(language, 'select_an_account')}
-                                        style={{ marginTop: 4, marginBottom: 12 }}
+                                        className="mt-1 mb-3"
                                         onValueChange={(itemValue) => setActiveAccount(itemValue)}>
                                         <SelectTrigger>
                                              <SelectInput

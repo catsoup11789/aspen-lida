@@ -129,16 +129,16 @@ const DisplayBrowseCategory = ({category}) => {
      return (
           <SafeAreaView>
                <View>
-                    <HStack space="md" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 8 }}>
+                    <HStack space="md" className="items-center justify-between pb-2">
                          <DisplayBrowseCategoryTitle category={category.label} key={category.id} textId={id} source={category.source ?? 'GroupedWork'} />
                          {subCategories.length > 0 ? (
                              <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? uiColors.text.light : uiColors.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHideAll(category.textId)}>
-                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} style={{ marginRight: 4 }} />
+                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} className="mr-1" />
                                   <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'hide_all')}</ButtonText>
                               </Button>
                          ) : (
                              <Button variant="outline" size="xs" style={{ borderColor: colorMode === 'light' ? uiColors.text.light : uiColors.white, paddingHorizontal: 6, paddingVertical: 0, height: 24 }} onPress={() => onPressHide(category.textId)}>
-                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} style={{ marginRight: 4 }} />
+                                  <MaterialIcons name="close" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} className="mr-1" />
                                   <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'hide')}</ButtonText>
                               </Button>
                          )}
@@ -173,7 +173,7 @@ const DisplayBrowseCategoryTitle = ({category}) => {
      const { resolvedUiColors } = useTheme();
 
      return (
-          <Pressable style={{ maxWidth: '80%' }} /*onPress={() => onPressCategory(category, textId, source)}*/>
+          <Pressable className="max-w-[80%]" /*onPress={() => onPressCategory(category, textId, source)}*/>
                <Text
                     bold
                     size="lg"
@@ -305,14 +305,11 @@ const DisplayBrowseCategoryRecord = ({record}) => {
      return (
           <Pressable
                onPress={() => onPressItem(id, type, getTitle)}
-               style={{ marginLeft: 4, marginRight: 12, width: 100, height: 150 }}>
+               className="ml-1 mr-3 w-25 h-37.5">
                <Image
                     alt={getTitle}
                     source={imageUrl}
-                    style={{
-                         width: '100%',
-                         height: '100%',
-                         borderRadius: 8 }}
+                    className="w-full h-full rounded-lg"
                     placeholder={blurhash}
                     transition={0}
                     cachePolicy="memory-disk"
@@ -374,13 +371,13 @@ const DisplaySubCategoryBar = ({ subCategories, selectedIndex, onSelect, isSyste
      }
 
      return (
-          <ButtonGroup space="sm" style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 8 }}>
+          <ButtonGroup space="sm" className="flex-row items-center pb-2">
                {subCategories.map((subCategory, index) => (
                    <Button key={(subCategory?.id ?? subCategory?.textId ?? subCategory?.label ?? `subcategory-${index}`).toString()} colorScheme="primary" variant="solid" style={{ paddingHorizontal: 12, height: 34, opacity: selectedIndex === index ? 1 : 0.75 }} onPress={() => onSelect(index)}>
-                        <ButtonText style={{ fontWeight: '500' }}>
+                        <ButtonText className="font-medium">
                               {subCategory.label}
                          </ButtonText>
-                        {!isSystemBrowseCategory && <MaterialIcons name="close" size={14} color={runtimeColors.primary['500-text']} style={{ marginLeft: 16 }} onPress={() => onPressHideSubCategory(index)} />}
+                        {!isSystemBrowseCategory && <MaterialIcons name="close" size={14} color={runtimeColors.primary['500-text']} className="ml-4" onPress={() => onPressHideSubCategory(index)} />}
                     </Button>
                ))}
           </ButtonGroup>

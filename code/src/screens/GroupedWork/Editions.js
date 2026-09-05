@@ -144,15 +144,15 @@ export const Editions = () => {
      const records = data?.records ? (Array.isArray(data.records) ? data.records : Object.values(data.records)) : [];
 
      return (
-          <Box style={{ flex: 1 }}>
+          <Box className="flex-1">
                <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}>
-                    <Box style={{ padding: 12 }}>
+                    <Box className="p-3">
                          {isFetching ? (
                               loadingSpinner()
                          ) : status === 'error' ? (
                               loadError('Error', '')
                          ) : records.length === 0 ? (
-                              <Center style={{ padding: 20 }}>
+                              <Center className="p-5">
                                    <Text>Edition information was not found</Text>
                               </Center>
                          ) : (
@@ -272,7 +272,7 @@ export const Editions = () => {
                               <AlertDialogBody>
                                    <Text>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                    {holdSelectItemResponse?.items ? (
-                                        <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setSelectedItem(itemValue)}>
+                                        <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} className="mt-1 mb-2" onValueChange={(itemValue) => setSelectedItem(itemValue)}>
                                              <SelectTrigger>
                                                   <SelectInput placeholder="Select option" />
                                              </SelectTrigger>
@@ -399,9 +399,9 @@ const Edition = (props) => {
 
      return (
           <Box style={{ marginTop: 0, marginBottom: 0, padding: 12, borderBottomWidth: 1, borderColor: uiColors.border.light }}>
-               <HStack space="sm" style={{ justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
-                    <VStack space="sm" style={{ maxWidth: '40%', flex: 1, justifyContent: 'center' }}>
-                         <HStack space="xs" style={{ flexWrap: 'wrap' }}>
+               <HStack space="sm" className="justify-between items-center flex-1">
+                    <VStack space="sm" className="max-w-[40%] flex-1 justify-center">
+                         <HStack space="xs" className="flex-wrap">
                               <Text bold size="xs">
                                    {records.publicationDate}
                               </Text>
@@ -411,13 +411,13 @@ const Edition = (props) => {
                          </HStack>
                          <VStack space="sm">
                               <Center>
-                                   <Badge colorScheme={statusIndicator.indicator} variant="solid" style={{ borderRadius: 8 }}>
+                                   <Badge colorScheme={statusIndicator.indicator} variant="solid" className="rounded-lg">
                                         <BadgeText colorScheme={statusIndicator.indicator}>{statusIndicator.label}</BadgeText>
                                    </Badge>
                               </Center>
                               {records.source === 'ils' || status.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
-                                        <MaterialIcons name="location-pin" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} style={{ marginRight: 4 }} />
+                                        <MaterialIcons name="location-pin" size={14} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} className="mr-1" />
                                         <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                                    </Button>
                               ) : null}

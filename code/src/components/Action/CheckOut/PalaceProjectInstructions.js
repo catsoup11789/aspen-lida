@@ -38,7 +38,7 @@ export const PalaceProjectInstructions = () => {
 
      return (
           <ScrollView>
-               <Box style={{ padding: 20 }}>
+               <Box className="p-5">
                     <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} />
                </Box>
           </ScrollView>

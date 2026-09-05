@@ -101,9 +101,9 @@ export const MyNotificationHistory = () => {
      const Empty = () => {
           return (
                <>
-                   {systemMessagesForScreen.length > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
-                   <Center style={{ flex: 1, padding: 20 }}>
-                        <Heading style={{ paddingTop: 20 }}>{getTermFromDictionary(language, 'notification_history_empty')}</Heading>
+                   {systemMessagesForScreen.length > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
+                   <Center className="flex-1 p-5">
+                        <Heading className="pt-5">{getTermFromDictionary(language, 'notification_history_empty')}</Heading>
                     </Center>
                </>
           );
@@ -133,7 +133,7 @@ export const MyNotificationHistory = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text size="2xs" style={{ marginTop: 8 }}>
+                         <Text size="2xs" className="mt-2">
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -148,8 +148,8 @@ export const MyNotificationHistory = () => {
      };
 
      return (
-          <Box style={{ flex: 1 }}>
-               {systemMessagesForScreen.length > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+          <Box className="flex-1">
+               {systemMessagesForScreen.length > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {isFetching && !inbox?.length ? (
                     loadingSpinner()
                ) : fetchError ? (
@@ -177,15 +177,15 @@ const Item = (data) => {
      content = truncate(content, 35);
      return (
           <Pressable onPress={() => handleOpenMyMessage(message)} style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.border.light : uiColors.iconMuted.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
-               <HStack style={{ alignItems: 'flex-start' }}>
+               <HStack className="items-start">
                     {message.isRead === '0' ? (
-                         <Box style={{ width: '7%' }}>
+                         <Box className="w-[7%]">
                               <MaterialIcons name="fiber-manual-record" size={12} />
                          </Box>
                     ) : (
-                         <Box style={{ width: '7%' }} />
+                         <Box className="w-[7%]" />
                     )}
-                    <VStack style={{ width: '86%' }}>
+                    <VStack className="w-[86%]">
                          {message.isRead === '0' ? (
                               <Text bold size="sm">
                                    {message.title}
@@ -199,7 +199,7 @@ const Item = (data) => {
                               {content}
                          </Text>
                     </VStack>
-                    <Box style={{ width: '7%' }}>
+                    <Box className="w-[7%]">
                          <MaterialIcons name="chevron-right" size={20} />
                     </Box>
                </HStack>

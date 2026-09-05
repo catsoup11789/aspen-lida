@@ -155,14 +155,14 @@ export const MyLibrary = () => {
                <SafeAreaView>
                     <Box style={{ marginTop: location.locationImage ? 160 : 0, marginHorizontal: 8, zIndex: 200 }}>
                          {showSystemMessage()}
-                         {library.displayName !== location.displayName ? <Heading style={{ marginBottom: 8 }}>{location.displayName}</Heading> : <Heading style={{ marginBottom: 16 }}>{library.displayName}</Heading>}
+                         {library.displayName !== location.displayName ? <Heading className="mb-2">{location.displayName}</Heading> : <Heading className="mb-4">{library.displayName}</Heading>}
                          {location.address ? <Text>{location.address}</Text> : null}
                          {location.phone ? (
                               <Text>{getTermFromDictionary(language, 'phone')}: {location.phone}</Text>
                          ) : null}
                          {hasHours ? (
-                              <Text style={{ marginTop: 16, marginBottom: 8 }}>
-                                   <Badge colorScheme={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
+                              <Text className="mt-4 mb-2">
+                                   <Badge colorScheme={isClosedToday ? 'error' : 'success'} className="self-start">
                                         <BadgeText colorScheme={isClosedToday ? 'error' : 'success'}>
                                              {hoursLabel}
                                         </BadgeText>
@@ -170,14 +170,14 @@ export const MyLibrary = () => {
                               </Text>
                          ) : null}
                          <DisplayMap data={location} />
-                         <Box style={{ marginTop: 16 }}>
+                         <Box className="mt-4">
                               <ContactButtons data={location} />
                               {hasHours ? <Hours data={location} /> : null}
                               <AdditionalInformation data={location} />
                          </Box>
                          {_.size(locations) > 1 ? (
                               <>
-                                   <Divider style={{ marginTop: 20, marginBottom: 8 }} />
+                                   <Divider className="mt-5 mb-2" />
                                    <Button variant="ghost" size="sm" onPress={selectLocations} colorScheme="primary">
                                         <ButtonText>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
                                    </Button>

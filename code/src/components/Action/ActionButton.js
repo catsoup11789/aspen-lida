@@ -149,7 +149,7 @@ export const ActionButton = (data) => {
                     <Button
                          size="md"
                          variant="solid"
-                         colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
+                         colorScheme="primary" className="min-w-full max-w-full"
                          onPress={async () =>
                            await passUserToDiscovery(library?.baseUrl ?? '', 'NewMaterialRequest', user.id, backgroundColor, textColor, null, action.redirectParams)
                          }
@@ -163,7 +163,7 @@ export const ActionButton = (data) => {
                     <Button
                          size="md"
                          variant="solid"
-                         colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
+                         colorScheme="primary" className="min-w-full max-w-full"
                          onPress={async () =>
                            await passUserToDiscovery(library?.baseUrl ?? '', 'NewMaterialRequestIls', user.id, backgroundColor, textColor, null, action.redirectParams)
                          }
@@ -178,7 +178,7 @@ export const ActionButton = (data) => {
                     <Button
                          size="md"
                          variant="solid"
-                         colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
+                         colorScheme="primary" className="min-w-full max-w-full"
                          onPress={async () =>
                               {
                                    const browserParams = {
@@ -216,7 +216,7 @@ export const ActionButton = (data) => {
                          <Button
                               size="md"
                               variant="solid"
-                              colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
+                              colorScheme="primary" className="min-w-full max-w-full"
                               onPress={async () => {setShowIllUnavailableModal(true)}}
                          >
                               <ButtonText>{action.title}</ButtonText>

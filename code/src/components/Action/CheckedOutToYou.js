@@ -23,8 +23,8 @@ export const CheckedOutToYou = (props) => {
      };
 
      return (
-          <Button size="md" variant="solid" onPress={handleNavigation} colorScheme="primary" style={{ width: '100%', marginBottom: 4 }}>
-               <ButtonText style={{ textAlign: 'center' }}>
+          <Button size="md" variant="solid" onPress={handleNavigation} colorScheme="primary" className="w-full mb-1">
+               <ButtonText className="text-center">
                     {props.title}
                </ButtonText>
           </Button>

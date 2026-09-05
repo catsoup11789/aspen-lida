@@ -27,9 +27,9 @@ export const StartLocalIllRequest = (props) => {
           <Button
                size="md"
                variant="solid"
-               colorScheme="primary" style={{ minWidth: '100%', maxWidth: '100%' }}
+               colorScheme="primary" className="min-w-full max-w-full"
                onPress={openLocalIllRequest}>
-               <ButtonText style={{ textAlign: 'center' }}>
+               <ButtonText className="text-center">
                     {props.title}
                </ButtonText>
           </Button>

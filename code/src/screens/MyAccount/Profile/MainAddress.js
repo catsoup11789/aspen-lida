@@ -13,18 +13,18 @@ import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 const Profile_MainAddress = (props) => {
     const language = useActiveLanguage();
   return (
-    <Box style={{ paddingVertical: 20 }}>
+    <Box className="py-5">
       <Text bold>{getTermFromDictionary(language, 'patron_address')}</Text>
       <Text>{props.address}</Text>
-      <Text bold style={{ marginTop: 8 }}>
+      <Text bold className="mt-2">
           {getTermFromDictionary(language, 'patron_city')}
       </Text>
       <Text>{props.city}</Text>
-      <Text bold style={{ marginTop: 8 }}>
+      <Text bold className="mt-2">
           {getTermFromDictionary(language, 'patron_state')}
       </Text>
       <Text>{props.state}</Text>
-      <Text bold style={{ marginTop: 8 }}>
+      <Text bold className="mt-2">
           {getTermFromDictionary(language, 'patron_zip')}
       </Text>
       <Text>{props.zipCode}</Text>

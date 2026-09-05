@@ -369,11 +369,11 @@ export const GetLoginForm = (props) => {
                          />
                          {allowBarcodeScanner ?
                               <InputSlot onPress={() => openScanner()}>
-                             <MaterialCommunityIcons name="barcode" size={20} style={{ marginRight: 8 }} />
+                             <MaterialCommunityIcons name="barcode" size={20} className="mr-2" />
                         </InputSlot> : null}
                     </ThemedInput>
                </FormControl>
-               <FormControl style={{ marginTop: 12 }}>
+               <FormControl className="mt-3">
                     <FormControlLabel>
                         <FormControlLabelText size="sm">{passwordLabel}</FormControlLabelText>
                     </FormControlLabel>
@@ -392,14 +392,14 @@ export const GetLoginForm = (props) => {
                               autoComplete="password"
                         />
                         <InputSlot onPress={toggleShowPassword}>
-                             <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} style={{ marginRight: 8 }} />
+                             <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} className="mr-2" />
                         </InputSlot>
                    </ThemedInput>
                </FormControl>
 
                <Center>
                     <Button
-                        colorScheme="primary" style={{ marginTop: 12 }}
+                        colorScheme="primary" className="mt-3"
                         size="md"
                         isLoading={loading}
                         isLoadingText={getTermFromDictionary('en', 'logging_in', true)}

@@ -84,8 +84,8 @@ export const Facet_Rating = ({ data, category, updater }) => {
           <ScrollView>
                <VStack space="sm">
                     {stars.map((star, index) => (
-                        <Pressable key={index} onPress={() => updateSearch(star.label)} style={{ padding: 2, paddingVertical: 8 }}>
-                             <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+                        <Pressable key={index} onPress={() => updateSearch(star.label)} className="p-0.5 py-2">
+                             <HStack space="sm" className="justify-start items-center">
                                    {value === star.label ?
                                        <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} /> :
                                        <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
@@ -99,7 +99,7 @@ export const Facet_Rating = ({ data, category, updater }) => {
                                        emptyStar={<MaterialIcons name="star-border" size={20} color={starColor} />}
                                    />
                                    <Text
-                                       style={{ marginLeft: 8 }}
+                                       className="ml-2"
                                    >
                                        ({getRatingCount(star.label)})
                                    </Text>

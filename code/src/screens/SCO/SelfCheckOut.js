@@ -214,11 +214,11 @@ export const SelfCheckOut = () => {
      const currentCheckoutHeader = () => {
           if (_.size(items) >= 1) {
                return (
-                    <HStack space="md" style={{ justifyContent: 'space-between', paddingBottom: 8 }}>
-                         <Text bold style={{ width: '70%' }} size="xs">
+                    <HStack space="md" className="justify-between pb-2">
+                         <Text bold className="w-[70%]" size="xs">
                               {getTermFromDictionary(language, 'title')}
                          </Text>
-                         <Text bold style={{ width: '25%' }} size="xs">
+                         <Text bold className="w-[25%]" size="xs">
                               {getTermFromDictionary(language, 'checkout_due')}
                          </Text>
                     </HStack>
@@ -236,8 +236,8 @@ export const SelfCheckOut = () => {
                let mustConfirm = item?.mustConfirm ?? false;
                return (
                     <>
-                         <HStack space="md" style={{ justifyContent: 'space-between' }}>
-                              <HStack space="xs" style={{ width: '70%', flexWrap: 'wrap' }}>
+                         <HStack space="md" className="justify-between">
+                              <HStack space="xs" className="w-[70%] flex-wrap">
                                    <Text bold size="xs">
                                         {title}
                                    </Text>
@@ -245,7 +245,7 @@ export const SelfCheckOut = () => {
                                         ({barcode})
                                    </Text>
                               </HStack>
-                              <Text style={{ width: '25%' }} size="xs">
+                              <Text className="w-[25%]" size="xs">
                                    {dueDate}
                               </Text>
                          </HStack>
@@ -259,8 +259,8 @@ export const SelfCheckOut = () => {
      const DisplayCompletionMessage = (message) => {
           if (message && !mustConfirm) {
                return (
-                    <ThemedAlert action="warning" variant="solid" style={{ width: '100%', maxWidth: '100%' }}>
-                         <ThemedAlertText action="warning" variant="solid" bold style={{ fontSize: 12 }}>
+                    <ThemedAlert action="warning" variant="solid" className="w-full max-w-full">
+                         <ThemedAlertText action="warning" variant="solid" bold className="text-xs">
                               {message}
                          </ThemedAlertText>
                     </ThemedAlert>
@@ -276,10 +276,10 @@ export const SelfCheckOut = () => {
      const currentCheckOutFooter = () => {};
 
      return (
-          <Box style={{ flex: 1, padding: 20, width: '100%' }}>
-               <Center style={{ paddingBottom: 20 }}>
+          <Box className="flex-1 p-5 w-full">
+               <Center className="pb-5">
                     {activeAccount?.displayName ? (
-                         <Text style={{ paddingBottom: 12 }}>
+                         <Text className="pb-3">
                               {getTermFromDictionary(language, 'checking_out_as')} {activeAccount.displayName}
                          </Text>
                     ) : null}
@@ -309,7 +309,7 @@ export const SelfCheckOut = () => {
                               </FormControl>
                               <Modal isOpen={showModal} onClose={toggle} size="md" useRNModal={true}>
                                    <ModalBackdrop />
-                                   <ModalContent style={{ maxWidth: '90%' }}>
+                                   <ModalContent className="max-w-[90%]">
                                         <ModalHeader>
                                             <Heading>
                                                   {getTermFromDictionary(language, 'add_new_item')}
@@ -350,12 +350,12 @@ export const SelfCheckOut = () => {
                          </Center>
                     )}
                </Center>
-               <Heading size="md" style={{ paddingBottom: 8 }}>
+               <Heading size="md" className="pb-2">
                     {getTermFromDictionary(language, 'checked_out_during_session')}
                </Heading>
                {isProcessingCheckout ? (
                     <Center>
-                         <Text style={{ paddingBottom: 20 }}>
+                         <Text className="pb-5">
                               {getTermFromDictionary(language, 'processing_checkout_message')}
                          </Text>
                          {loadingSpinner()}
@@ -363,7 +363,7 @@ export const SelfCheckOut = () => {
                ) : (
                     <FlatList data={items} keyExtractor={(item, index) => index.toString()} ListEmptyComponent={currentCheckOutEmpty()} ListHeaderComponent={currentCheckoutHeader()} renderItem={({ item }) => currentCheckOutItem(item)} />
                )}
-               <Center style={{ paddingTop: 20 }}>
+               <Center className="pt-5">
                     <Button onPress={() => finishSession()} size="sm" colorScheme="primary">
                          <ButtonText>{getTermFromDictionary(language, 'button_finish')}</ButtonText>
                     </Button>
@@ -451,8 +451,8 @@ export const SelfCheckOut = () => {
                                    <Text>{getTermFromDictionary(language, 'finish_checkout_session_body')}</Text>
                               </AlertDialogBody>
                               <AlertDialogFooter>
-                                   <HStack style={{ width: '100%', justifyContent: 'center' }}>
-                                        <Button size="sm" onPress={() => startNewSession()} colorScheme="primary" style={{ marginRight: 20 }}>
+                                   <HStack className="w-full justify-center">
+                                        <Button size="sm" onPress={() => startNewSession()} colorScheme="primary" className="mr-5">
                                              <ButtonText>{getTermFromDictionary(language, 'start_new_session')}</ButtonText>
                                         </Button>
                                         <Button size="sm" colorScheme="primary" onPress={() => goToCheckouts()}>

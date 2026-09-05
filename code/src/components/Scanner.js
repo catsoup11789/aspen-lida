@@ -44,7 +44,7 @@ export default function Scanner() {
 
      if (!permission) {
           return (
-               <View style={{ flex: 1 }}>
+               <View className="flex-1">
                     <LoadingSpinner message={getTermFromDictionary(language, 'scanner_request_permissions')} />
                </View>
           );
@@ -53,20 +53,20 @@ export default function Scanner() {
      if (!permission.granted) {
           if (permission.canAskAgain) {
                return (
-                    <View style={{ flex: 1 }}>
+                    <View className="flex-1">
                          <LoadingSpinner message={getTermFromDictionary(language, 'scanner_request_permissions')} />
                     </View>
                );
           }
           return (
-               <View style={{ flex: 1 }}>
+               <View className="flex-1">
                     <LoadError error={getTermFromDictionary(language, 'scanner_denied_permissions')} />
                </View>
           );
      }
 
      return (
-          <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-end' }}>
+          <View className="flex-1 flex-col justify-end">
                {isFocused && (
                     <>
                          <CameraView onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]} barcodeScannerSettings={{ barcodeTypes: allowedBarcodes }}>
@@ -76,7 +76,7 @@ export default function Scanner() {
                                        <ButtonText style={{ color: '#ffffff' }}>Cancel</ButtonText>
                                    </Button>
                                    {scanned && (
-                                       <Button onPress={() => setScanned(false)} style={{ marginLeft: 16 }}>
+                                       <Button onPress={() => setScanned(false)} className="ml-4">
                                              <ButtonText>{getTermFromDictionary(language, 'scan_again')}</ButtonText>
                                         </Button>
                                    )}

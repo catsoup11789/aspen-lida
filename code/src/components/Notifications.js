@@ -159,8 +159,8 @@ export function showILSMessage(type, message, index = 0) {
      const formattedMessage = stripHTML(message);
      logDebugMessage("Showing ILS Message");
      return (
-          <ThemedAlert action={type} key={index} style={{ marginHorizontal: 8, marginBottom: 4 }}>
-               <ThemedAlertIcon action={type} style={{ marginRight: 12 }} />
+          <ThemedAlert action={type} key={index} className="mx-2 mb-1">
+               <ThemedAlertIcon action={type} className="mr-3" />
                <ThemedAlertText action={type} size="xs" bold>
                     {formattedMessage}
                </ThemedAlertText>
@@ -175,7 +175,7 @@ export const DisplayMessage = (props) => {
      const displayMessage = safeMessage || fallbackMessage;
 
      return (
-          <ThemedAlert action={props.type} variant="solid" style={{ marginBottom: 8, paddingVertical: 12, paddingHorizontal: 12, alignItems: 'flex-start', minHeight: 0, height: 'auto' }}>
+          <ThemedAlert action={props.type} variant="solid" className="mb-2 py-3 px-3 items-start min-h-0 h-[auto]">
                <Text size="sm" style={{ color: '#111827', flexShrink: 1, flexWrap: 'wrap', fontWeight: '500' }}>
                     {displayMessage}
                </Text>
@@ -200,8 +200,8 @@ export const DisplayAndroidEndOfSupportMessage = (props) => {
      const setIsOpen = props.setIsOpen;
      const language = props.language;
      return (
-          <ThemedAlert action="error" style={{ marginBottom: 12 }}>
-               <VStack space="xs" style={{ width: '100%' }}>
+          <ThemedAlert action="error" className="mb-3">
+               <VStack space="xs" className="w-full">
                     <HStack alignItems="flex-start" justifyContent="space-between">
                          <ThemedAlertText action="error" size="sm">
                               {getTermFromDictionary(language, 'android_end_of_life')}
@@ -229,10 +229,10 @@ export const DisplaySystemMessage = (props) => {
      logDebugMessage("System Message Style is " + style);
 
      return (
-          <ThemedAlert action={style} variant="solid" style={{ minHeight: 200, marginBottom: 8, borderRadius: 4 }}>
-               <VStack space="sm" style={{ width: '100%', padding: 12 }}>
+          <ThemedAlert action={style} variant="solid" className="min-h-50 mb-2 rounded">
+               <VStack space="sm" className="w-full p-3">
                     <HStack alignItems="flex-start" justifyContent="space-between">
-                         <ThemedAlertText action={style} variant="solid" style={{ marginRight: 8 }}>{props.message}</ThemedAlertText>
+                         <ThemedAlertText action={style} variant="solid" className="mr-2">{props.message}</ThemedAlertText>
                          <Pressable
                               onPress={async () => {
                                    await hideSystemMessage(props.all, props.id, props.dismissable, props.url).then((result) => {

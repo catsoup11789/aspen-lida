@@ -232,15 +232,11 @@ export const MyList = ({ route }) => {
                return (
                     <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={() => handleOpenEvent(item)}>
                          <HStack space="sm">
-                              <VStack style={{ maxWidth: '35%' }}>
+                              <VStack className="max-w-[35%]">
                                    <Image
                                         alt={item.title}
                                         source={imageUrl}
-                                        style={{
-                                             width: 100,
-                                             height: 150,
-                                             borderRadius: 8,
-                                        }}
+                                        className="w-25 h-37.5 rounded-lg"
                                         placeholder={blurhash}
                                         transition={1000}
                                         contentFit="cover"
@@ -257,7 +253,7 @@ export const MyList = ({ route }) => {
                                         <ButtonText style={{ color: dangerColor }}>{t('delete')}</ButtonText>
                                    </Button>
                               </VStack>
-                              <VStack style={{ width: '65%' }}>
+                              <VStack className="w-[65%]">
                                    <Text bold size="sm">
                                         {item.title}
                                    </Text>
@@ -270,8 +266,8 @@ export const MyList = ({ route }) => {
                                         </>
                                    ) : null}
                                    {registrationRequired ? (
-                                        <HStack style={{ marginTop: 4, flexDirection: 'row', flexWrap: 'wrap' }} space="sm">
-                                             <Badge key={0} colorScheme="info" variant="outline" size="sm" style={{ marginTop: 4, borderRadius: 8 }}>
+                                        <HStack className="mt-1 flex-row flex-wrap" space="sm">
+                                             <Badge key={0} colorScheme="info" variant="outline" size="sm" className="mt-1 rounded-lg">
                                                   <BadgeText colorScheme="info">{t('registration_required')}</BadgeText>
                                              </Badge>
                                         </HStack>
@@ -285,15 +281,11 @@ export const MyList = ({ route }) => {
           return (
                <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={() => handleOpenItem(item.id, item.title)}>
                     <HStack space="sm">
-                         <VStack style={{ maxWidth: '35%' }}>
+                         <VStack className="max-w-[35%]">
                               <Image
                                    alt={item.title}
                                    source={imageUrl}
-                                   style={{
-                                        width: 100,
-                                        height: 150,
-                                        borderRadius: 8
-                                   }}
+                                   className="w-25 h-37.5 rounded-lg"
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -306,11 +298,11 @@ export const MyList = ({ route }) => {
                                    }}
                                    size="sm"
                                    variant="link">
-                                   <MaterialIcons name="delete" size={18} color={dangerColor} style={{ marginRight: 4 }} />
+                                   <MaterialIcons name="delete" size={18} color={dangerColor} className="mr-1" />
                                    <ButtonText style={{ color: dangerColor }}>{t('delete')}</ButtonText>
                               </Button>
                          </VStack>
-                         <VStack style={{ width: '65%' }}>
+                         <VStack className="w-[65%]">
                               <Text
                                    bold
                                    size="sm"
@@ -351,7 +343,7 @@ export const MyList = ({ route }) => {
                               </Button>
                          </ButtonGroup>
                     </ScrollView>
-                    <Text size="sm" style={{ marginTop: 8 }}>
+                    <Text size="sm" className="mt-2">
                          {paginationLabel}
                     </Text>
                </Box>
@@ -436,15 +428,15 @@ export const MyList = ({ route }) => {
      };
 
      return (
-          <Box style={{ flex: 1 }}>
-               {systemMessagesForScreen.length > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+          <Box className="flex-1">
+               {systemMessagesForScreen.length > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {isLoading ? (
                     loadingSpinner()
                ) : fetchError ? (
                     loadError('Error', '')
                ) : (
                     <>
-                         <Box style={{ paddingBottom: 100 }}>
+                         <Box className="pb-25">
                               {getActionButtons()}
                               <FlatList data={listData.listTitles} ListFooterComponent={Paging} renderItem={({ item }) => renderItem(item, library.baseUrl)} keyExtractor={(item, index) => index.toString()} />
                          </Box>

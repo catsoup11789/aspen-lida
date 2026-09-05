@@ -37,20 +37,20 @@ export const SelectVolume = (props) => {
                ) : (
                     <>
                          {promptForHoldType ? (
-                              <FormControl style={{ marginBottom: 16 }}>
+                              <FormControl className="mb-4">
                                    <RadioGroup
                                         value={holdType}
                                         onChange={(nextValue) => {
                                              setHoldType(nextValue);
                                         }}>
-                                        <Radio value="item" size="sm" style={{ marginBottom: 8 }}>
-                                             <RadioIndicator style={{ marginRight: 8 }}>
+                                        <Radio value="item" size="sm" className="mb-2">
+                                             <RadioIndicator className="mr-2">
                                                   <RadioIcon as={MaterialIcons} name="circle" />
                                              </RadioIndicator>
                                              <RadioLabel>{getTermFromDictionary(language, 'first_available')}</RadioLabel>
                                         </Radio>
                                         <Radio value="volume" size="sm">
-                                             <RadioIndicator style={{ marginRight: 8 }}>
+                                             <RadioIndicator className="mr-2">
                                                   <RadioIcon as={MaterialIcons} name="circle" />
                                              </RadioIndicator>
                                              <RadioLabel>{getTermFromDictionary(language, 'specific_volume')}</RadioLabel>

@@ -77,9 +77,9 @@ export const Settings_NotificationOptions = () => {
      logDebugMessage("Rendering Notification Options");
      logDebugMessage(notificationSettings);
      return (
-          <SafeAreaView style={{ flex: 1 }}>
-               <Box style={{ flex: 1, padding: 20 }}>
-                    <HStack space="sm" style={{ paddingBottom: 12, alignItems: 'center', justifyContent: 'space-between' }}>
+          <SafeAreaView className="flex-1">
+               <Box className="flex-1 p-5">
+                    <HStack space="sm" className="pb-3 items-center justify-between">
                          <Text bold>{getTermFromDictionary(language, 'notifications_allow')}</Text>
                          <Switch
                               isDisabled={true}
@@ -88,7 +88,7 @@ export const Settings_NotificationOptions = () => {
                     </HStack>
                     {/* Show options whenever an expoToken is present and settings object exists */}
                     {isNotificationsEnabled && _.isObject(notificationSettings) ? (
-                         <VStack space="md" style={{ flex: 1 }}>
+                         <VStack space="md" className="flex-1">
                               <EnableAllNotifications
                                    setLoading={setLoading}
                                    notifySavedSearch={notifySavedSearch}
@@ -168,7 +168,7 @@ const EnableAllNotifications = (data) => {
 
      logDebugMessage("Rendering enable all notifications switch");
      return (
-          <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}>
+          <HStack space="sm" className="items-center justify-between pb-1">
                <Text bold>{getTermFromDictionary(language, 'notifications_enable_all')}</Text>
                <Switch
                     onToggle={() => {
@@ -241,7 +241,7 @@ const DisplayPreference = ({ data, notifySavedSearch, setNotifySavedSearch, noti
 
      logDebugMessage(`Rendering preference toggle for ${preference.label}`);
      return (
-          <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}>
+          <HStack space="sm" className="items-center justify-between pb-1">
                <Text>{preference.label}</Text>
                <Switch
                     onToggle={() => updatePreference(preference.option, isChecked)}

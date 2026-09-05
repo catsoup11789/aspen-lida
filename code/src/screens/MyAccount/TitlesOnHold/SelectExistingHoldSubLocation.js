@@ -43,7 +43,7 @@ export const SelectExistingHoldSubLocation = (props) => {
                if (validSublocationSize > 1) {
                     return (
                          <>
-                              <Box style={{ paddingLeft: 16, paddingRight: 16 }}>
+                              <Box className="pl-4 pr-4">
                                    <FormControl>
                                         <FormControlLabel>
                                              <FormControlLabelText>{getTermFromDictionary(language, 'select_new_pickup_area')}</FormControlLabelText>

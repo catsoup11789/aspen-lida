@@ -76,18 +76,18 @@ export const Facet_RadioGroup = ({ title, data, category, updater, applied }) =>
           return (
                <VStack space="sm">
                     {data.map((facet, index) => (
-                         <Pressable key={index} onPress={() => updateValue(facet.value)} style={{ paddingVertical: 8, paddingHorizontal: 2 }}>
+                         <Pressable key={index} onPress={() => updateValue(facet.value)} className="py-2 px-0.5">
                               {value === facet.value ? (
                                    <HStack space="sm" justifyContent="flex-start" alignItems="center">
                                         <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[500]} />
-                                        <Text style={{ marginLeft: 8 }}>
+                                        <Text className="ml-2">
                                              {facet.display}
                                         </Text>
                                    </HStack>
                               ) : (
                                    <HStack space="sm" justifyContent="flex-start" alignItems="center">
                                         <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[500]} />
-                                        <Text style={{ marginLeft: 8 }}>
+                                        <Text className="ml-2">
                                              {facet.display}
                                         </Text>
                                    </HStack>
@@ -101,18 +101,18 @@ export const Facet_RadioGroup = ({ title, data, category, updater, applied }) =>
      return (
           <VStack space="sm">
                {data.map((facet, index) => (
-                    <Pressable key={index} onPress={() => updateValue(facet.value)} style={{ paddingVertical: 8, paddingHorizontal: 2 }}>
+                    <Pressable key={index} onPress={() => updateValue(facet.value)} className="py-2 px-0.5">
                          {value === facet.value ? (
                               <HStack space="sm" justifyContent="flex-start" alignItems="center">
                                    <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[500]} />
-                                   <Text style={{ marginLeft: 8 }}>
+                                   <Text className="ml-2">
                                         {facet.display} ({facet.count})
                                    </Text>
                               </HStack>
                          ) : (
                               <HStack space="sm" justifyContent="flex-start" alignItems="center">
                                    <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[500]} />
-                                   <Text style={{ marginLeft: 8 }}>
+                                   <Text className="ml-2">
                                         {facet.display} ({facet.count})
                                    </Text>
                               </HStack>

@@ -335,7 +335,7 @@ export const MyHolds = () => {
           if (section === 'pending') {
                if (showSelectOptions) {
                     return (
-                        <Box style={{ padding: 8 }}>
+                        <Box className="p-2">
                              <ScrollView horizontal>
                                    <HStack space="sm">
                                         <FormControl style={{ width: pendingSortLength }}>
@@ -378,7 +378,7 @@ export const MyHolds = () => {
                }
 
                return (
-                   <Box style={{ padding: 8 }}>
+                   <Box className="p-2">
                          <ScrollView horizontal>
                               <HStack space="sm">
                                    <FormControl style={{ width: pendingSortLength }}>
@@ -466,7 +466,7 @@ export const MyHolds = () => {
 
           if (section === 'ready') {
                return (
-                   <Box style={{ padding: 8 }}>
+                   <Box className="p-2">
                          <ScrollView horizontal>
                               <HStack space="sm">
                                    <FormControl style={{ width: readySortLength }}>
@@ -535,7 +535,7 @@ export const MyHolds = () => {
                                    }}>
                                    <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'holds_reload')}</ButtonText>
                               </Button>
-                              <FormControl style={{ width: 245 }}>
+                              <FormControl className="w-[245px]">
                                    <Select name="holdSource" selectedValue={holdSource} defaultValue={holdSource} initialLabel="Test" accessibilityLabel="Filter By Source" onValueChange={(itemValue) => toggleHoldSource(itemValue)}>
                                         <SelectTrigger size="sm">
                                              <SelectInput value={holdSourceLabel()}/>
@@ -567,12 +567,12 @@ export const MyHolds = () => {
           if (title === 'Pending') {
                return (
                    <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
-                        <Heading style={{ paddingBottom: 4, paddingTop: 12 }}>
+                        <Heading className="pb-1 pt-3">
                               {getTermFromDictionary(language, 'pending_holds')}
                          </Heading>
-                        <ThemedAlert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
-                             <HStack style={{ padding: 12 }}>
-                                  <ThemedAlertIcon action="info" style={{ marginRight: 12 }} />
+                        <ThemedAlert action="info" className="rounded-lg mb-2">
+                             <HStack className="p-3">
+                                  <ThemedAlertIcon action="info" className="mr-3" />
                                   <ThemedAlertText action="info" size="xs">{getTermFromDictionary(language, 'pending_holds_message')}</ThemedAlertText>
                               </HStack>
                          </ThemedAlert>
@@ -582,12 +582,12 @@ export const MyHolds = () => {
           } else {
                return (
                    <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
-                        <Heading style={{ paddingBottom: 4 }}>
+                        <Heading className="pb-1">
                               {getTermFromDictionary(language, 'holds_ready_for_pickup')}
                          </Heading>
-                        <ThemedAlert action="info" style={{ borderRadius: 8, marginBottom: 8 }}>
-                             <HStack style={{ padding: 12 }}>
-                             <ThemedAlertIcon action="info" style={{ marginRight: 12 }} />
+                        <ThemedAlert action="info" className="rounded-lg mb-2">
+                             <HStack className="p-3">
+                             <ThemedAlertIcon action="info" className="mr-3" />
                              <ThemedAlertText action="info" size="xs">{getTermFromDictionary(language, 'holds_ready_for_pickup_message')}</ThemedAlertText>
                               </HStack>
                          </ThemedAlert>
@@ -600,7 +600,7 @@ export const MyHolds = () => {
      const noHolds = (title) => {
           if (title === 'Pending') {
                return (
-                   <Center style={{ padding: 8 }}>
+                   <Center className="p-2">
                         <Text bold size="lg">
                               {getTermFromDictionary(language, 'pending_holds_none')}
                          </Text>
@@ -608,7 +608,7 @@ export const MyHolds = () => {
                );
           } else {
                return (
-                   <Center style={{ padding: 8 }}>
+                   <Center className="p-2">
                         <Text bold size="lg">
                               {getTermFromDictionary(language, 'holds_ready_for_pickup_none')}
                          </Text>
@@ -624,7 +624,7 @@ export const MyHolds = () => {
                if (_.isEmpty(sectionItems)) {
                     return noHolds(title);
                } else {
-                    return <Box style={{ marginBottom: 300 }} />;
+                    return <Box className="mb-75" />;
                }
           } else if (title === 'Ready') {
                if (_.isEmpty(sectionItems)) {
@@ -648,7 +648,7 @@ export const MyHolds = () => {
      const showLoading = isLoading || (_.isEmpty(holds) && isFetchingHolds);
 
      return (
-          <Box style={{ flex: 1 }}>
+          <Box className="flex-1">
                {showLoading ? (
                     <LoadingSpinner />
                ) : (
@@ -674,7 +674,7 @@ export const MyHolds = () => {
                                    }}>
                                    {_.isObject(holds) ? (
                                         <SectionList
-                                             style={{ width: '100%' }}
+                                             className="w-full"
                                              sections={filteredSections}
                                              renderItem={({ item, section: { title } }) => <MyHold data={item} resetGroup={resetGroup} language={language} pickupLocations={pickupLocations} section={title} />}
                                              stickySectionHeadersEnabled={true}

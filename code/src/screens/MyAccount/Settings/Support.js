@@ -285,10 +285,10 @@ export const SupportScreen = () => {
      const enableDebugPanel = false;
 
      return (
-          <Box style={{ flex: 1 }}>
+          <Box className="flex-1">
                <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
-                    <VStack space="sm" style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
-                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                    <VStack space="sm" className="px-4 py-2">
+                         <VStack className="justify-between py-1">
                               <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'app_name')}
                               </Text>
@@ -296,13 +296,13 @@ export const SupportScreen = () => {
                                    {GLOBALS.appVersion} {GLOBALS.appStage} b[{GLOBALS.appBuild}] p[{GLOBALS.appPatch}] c[{GLOBALS.releaseChannel}]
                               </Text>
                          </VStack>
-                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                         <VStack className="justify-between py-1">
                               <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'aspen_discovery')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>{library.discoveryVersion}</Text>
                          </VStack>
-                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                         <VStack className="justify-between py-1">
                               <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'os_information')}
                               </Text>
@@ -310,7 +310,7 @@ export const SupportScreen = () => {
                                    {Device.osName} {Device.osVersion}
                               </Text>
                          </VStack>
-                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                         <VStack className="justify-between py-1">
                               <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'device_information')}
                               </Text>
@@ -318,40 +318,40 @@ export const SupportScreen = () => {
                                    {Device.brand} {Device.modelName}, {Device.deviceYearClass}
                               </Text>
                          </VStack>
-                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                         <VStack className="justify-between py-1">
                               <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'current_location')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>{location?.displayName ?? '-'}</Text>
                          </VStack>
-                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                         <VStack className="justify-between py-1">
                               <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'current_library')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>{library.displayName}</Text>
                          </VStack>
-                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                         <VStack className="justify-between py-1">
                               <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'connected_to')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>{library.baseUrl}</Text>
                          </VStack>
-                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                         <VStack className="justify-between py-1">
                               <Text size="xs" bold>
                                    {getTermFromDictionary(language, 'num_linked_accounts')}
                               </Text>
                               <Text style={{ color: mutedTextColor }}>{numLinkedAccounts}</Text>
                          </VStack>
-                         <Divider style={{ marginVertical: 8 }} />
-                         <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                         <Divider className="my-2" />
+                         <VStack className="justify-between py-1">
                               <Text bold>
                                    Data Caches
                               </Text>
-                              <VStack space="sm" style={{ marginTop: 8 }}>
+                              <VStack space="sm" className="mt-2">
                                    {cacheItems.map((cacheItem) => (
-                                        <Box key={cacheItem.key} style={{ paddingVertical: 8 }}>
-                                             <HStack space="sm" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                                  <VStack style={{ flex: 1 }}>
+                                        <Box key={cacheItem.key} className="py-2">
+                                             <HStack space="sm" className="justify-between items-center">
+                                                  <VStack className="flex-1">
                                                        <Text size="xs" bold>
                                                             {cacheItem.label}
                                                        </Text>
@@ -369,14 +369,14 @@ export const SupportScreen = () => {
                          </VStack>
                          {enableDebugPanel ? (
                               <>
-                                   <Divider style={{ marginVertical: 8 }} />
-                                   <VStack style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                                   <Divider className="my-2" />
+                                   <VStack className="justify-between py-1">
                                         <Text size="xs" bold>
                                              Support Log
                                         </Text>
                                         <ScrollView>
                                              <Box>
-                                                  <Text size="xs" style={{ marginTop: 20, marginBottom: 20 }}>
+                                                  <Text size="xs" className="mt-5 mb-5">
                                                        {userDebugMessage.join('\n')}
                                                   </Text>
                                              </Box>
@@ -385,20 +385,20 @@ export const SupportScreen = () => {
                               </>
                          ) : null}
                     </VStack>
-                    <Divider style={{ marginVertical: 8 }} />
-                    <Center style={{ paddingTop: 20, paddingHorizontal: 16 }}>
+                    <Divider className="my-2" />
+                    <Center className="pt-5 px-4">
                          <Button colorScheme="secondary" onPress={() => navigation.navigate('MyDevice_APIErrorLog')}>
                              <ButtonText>{getTermFromDictionary(language, 'open_api_error_log')}</ButtonText>
                          </Button>
                     </Center>
                     {status.needsUpdate ? (
-                         <Center style={{ marginTop: 20, paddingHorizontal: 16 }}>
-                              <ThemedAlert action="warning" variant="solid" style={{ marginBottom: 8, borderRadius: 4 }}>
-                                   <VStack space="sm" style={{ width: '100%', padding: 12 }}>
-                                        <ThemedAlertText action="warning" variant="solid" bold style={{ marginRight: 8 }}>
+                         <Center className="mt-5 px-4">
+                              <ThemedAlert action="warning" variant="solid" className="mb-2 rounded">
+                                   <VStack space="sm" className="w-full p-3">
+                                        <ThemedAlertText action="warning" variant="solid" bold className="mr-2">
                                              {status.latest} Is Available
                                         </ThemedAlertText>
-                                        <ThemedAlertText action="warning" variant="solid" style={{ marginRight: 8 }}>Please update your app for the latest features and fixes.</ThemedAlertText>
+                                        <ThemedAlertText action="warning" variant="solid" className="mr-2">Please update your app for the latest features and fixes.</ThemedAlertText>
                                         {status.canOpenUrl ? (
                                              <Button colorScheme="secondary" onPress={() => openAppStore()}>
                                                   <ButtonText>Update now</ButtonText>

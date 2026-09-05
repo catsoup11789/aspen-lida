@@ -309,22 +309,22 @@ export const DiscoverHomeScreen = () => {
                <FlatList
                     contentContainerStyle={{ paddingBottom: listBottomPadding }}
                     ListHeaderComponent={
-                         <Box style={{ padding: 10 }}>
+                         <Box className="p-2.5">
                               {androidEndSupportMessage()}
                               {showSystemMessage()}
                               <FormControl>
                                    <ThemedInput>
                                         <InputSlot>
-                                             <MaterialIcons name="search" size={20} style={{ marginLeft: 8 }} />
+                                             <MaterialIcons name="search" size={20} className="ml-2" />
                                         </InputSlot>
                                         <ThemedInputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={search} value={searchTerm} />
                                         {searchTerm ? (
                                              <InputSlot onPress={() => clearSearch()}>
-                                                  <MaterialIcons name="close" size={20} style={{ marginRight: 8 }} />
+                                                  <MaterialIcons name="close" size={20} className="mr-2" />
                                              </InputSlot>
                                         ) : null}
                                         <InputSlot onPress={() => openScanner()}>
-                                             <MaterialCommunityIcons name="barcode-scan" size={20} style={{ marginRight: 8 }} />
+                                             <MaterialCommunityIcons name="barcode-scan" size={20} className="mr-2" />
                                         </InputSlot>
                                    </ThemedInput>
                               </FormControl>
@@ -338,12 +338,12 @@ export const DiscoverHomeScreen = () => {
                          return `${item?.id ?? item?.textId ?? item?.sourceListId ?? item?.label ?? `${item?.source ?? 'browse'}-${item?.sourceListId ?? 'category'}`}-${index}`;
                     }}
                     renderItem={({ item }) => (
-                         <Box style={{ paddingHorizontal: 10 }}>
+                         <Box className="px-2.5">
                               <DisplayBrowseCategory category={item} />
                          </Box>
                     )}
                     ListFooterComponent={
-                         <Box style={{ padding: 20 }}>
+                         <Box className="p-5">
                               <ButtonOptions language={language} showManageCategories={showManageCategories} onRefreshCategories={onRefreshCategories} discoveryVersion={library.discoveryVersion} onLoadAllCategories={onLoadAllCategories} />
                               {showErrorDialog && (
                                    <DisplayErrorAlertDialog title={errorTitle} message={errorMessage} />
@@ -370,7 +370,7 @@ const ButtonOptions = (props) => {
      return (
           <Center>
                <ButtonGroup
-                    style={{ flexDirection: 'column' }}>
+                    className="flex-col">
                     <Button
                          isDisabled={loading}
                          colorScheme="primary"
@@ -391,11 +391,11 @@ const ButtonOptions = (props) => {
                                   name="schedule"
                                   size={16}
                                   color={runtimeColors.primary['500-text']}
-                                  style={{ marginRight: 4 }}
+                                  className="mr-1"
                              />
                          )}
                          <ButtonText
-                             style={{ fontWeight: '500' }}
+                             className="font-medium"
                              size="sm"
                          >
                              {getTermFromDictionary(language, 'browse_categories_load_all')}
@@ -411,10 +411,10 @@ const ButtonOptions = (props) => {
                              name="settings"
                              size={16}
                              color={runtimeColors.primary['500-text']}
-                             style={{ marginRight: 4 }}
+                             className="mr-1"
                          />
                          <ButtonText
-                             style={{ fontWeight: '500' }}
+                             className="font-medium"
                              size="sm"
                          >
                              {getTermFromDictionary(language, 'browse_categories_manage')}
@@ -432,9 +432,9 @@ const ButtonOptions = (props) => {
                                    setRefreshing(false);
                               }
                          }}>
-                         {refreshing ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <MaterialIcons name="refresh" size={16} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />}
+                         {refreshing ? <ButtonSpinner style={{ color: runtimeColors.primary['500-text'] }} /> : <MaterialIcons name="refresh" size={16} color={runtimeColors.primary['500-text']} className="mr-1" />}
 
-                         <ButtonText size="sm" style={{ fontWeight: '500' }}>
+                         <ButtonText size="sm" className="font-medium">
                               {getTermFromDictionary(language, 'browse_categories_refresh')}
                          </ButtonText>
                     </Button>

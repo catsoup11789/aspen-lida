@@ -211,11 +211,11 @@ const DisplayCategory = (data) => {
      };
      return (
           <Box style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
-               <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between', paddingBottom: 4 }}>
+               <HStack space="sm" className="items-center justify-between pb-1">
                     <Text
                          bold
                          size="lg"
-                         style={{ flexWrap: 'wrap', flex: 1 }}>
+                         className="flex-wrap flex-1">
                          {category.title}
                     </Text>
                     <Switch

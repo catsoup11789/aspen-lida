@@ -72,8 +72,8 @@ const Request = (payload) => {
 
      return (
           <ScrollView>
-               <VStack space="md" style={{ padding: 16 }}>
-                    <FormControl style={{ marginVertical: 8 }}>
+               <VStack space="md" className="p-4">
+                    <FormControl className="my-2">
                          <FormControlLabel>
                               <FormControlLabelText size="sm">
                                    {getTermFromDictionary(language, 'title')}
@@ -89,7 +89,7 @@ const Request = (payload) => {
                               />
                          </ThemedInput>
                     </FormControl>
-                    <FormControl style={{ marginVertical: 8 }}>
+                    <FormControl className="my-2">
                          <FormControlLabel>
                               <FormControlLabelText size="sm">
                                    {getTermFromDictionary(language, 'author')}
@@ -104,7 +104,7 @@ const Request = (payload) => {
                               />
                          </ThemedInput>
                     </FormControl>
-                    <FormControl style={{ marginVertical: 8 }}>
+                    <FormControl className="my-2">
                          <FormControlLabel>
                               <FormControlLabelText size="sm">
                                    {getTermFromDictionary(language, 'volume')}
@@ -122,7 +122,7 @@ const Request = (payload) => {
                               />
                          </ThemedInput>
                     </FormControl>
-                    <FormControl style={{ marginVertical: 8 }}>
+                    <FormControl className="my-2">
                          <FormControlLabel>
                               <FormControlLabelText size="sm">
                                    {getTermFromDictionary(language, 'note')}

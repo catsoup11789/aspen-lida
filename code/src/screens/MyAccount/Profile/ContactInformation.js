@@ -13,10 +13,10 @@ import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 const Profile_ContactInformation = (props) => {
     const language = useActiveLanguage();
   return (
-    <Box style={{ paddingVertical: 20 }}>
+    <Box className="py-5">
       <Text bold>{getTermFromDictionary(language, 'patron_primary_phone')}</Text>
       <Text>{props.phone}</Text>
-      <Text bold style={{ marginTop: 8 }}>
+      <Text bold className="mt-2">
           {getTermFromDictionary(language, 'patron_email')}
       </Text>
       <Text>{props.email}</Text>

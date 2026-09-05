@@ -105,7 +105,7 @@ const SelectPickupLocation = (props) => {
                          <ModalBody>
                               {shouldDisplayVolumes ? <SelectVolume language={language} id={id} holdType={holdType} setHoldType={setHoldType} volume={volume} setVolume={setVolume} promptForHoldType={promptForHoldType} /> : null}
                               {_.size(accounts) > 1 ? (
-                                   <FormControl style={{ marginBottom: 16 }}>
+                                   <FormControl className="mb-4">
                                         <FormControlLabel>
                                              <FormControlLabelText>{isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')}</FormControlLabelText>
                                         </FormControlLabel>
@@ -130,7 +130,7 @@ const SelectPickupLocation = (props) => {
                                         </Select>
                                    </FormControl>
                               ) : null}
-                              <FormControl style={{ marginBottom: 8 }}>
+                              <FormControl className="mb-2">
                                    <FormControlLabel>
                                         <FormControlLabelText>{getTermFromDictionary(language, 'select_pickup_location')}</FormControlLabelText>
                                    </FormControlLabel>

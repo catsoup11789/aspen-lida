@@ -22,8 +22,8 @@ const AdditionalInformation = (data) => {
      if (location.description) {
           return (
                <Box>
-                    <Divider style={{ marginBottom: 8 }} />
-                    <Heading style={{ marginBottom: 8 }}>{getTermFromDictionary(language, 'additional_information')}</Heading>
+                    <Divider className="mb-2" />
+                    <Heading className="mb-2">{getTermFromDictionary(language, 'additional_information')}</Heading>
                     <Text>{stripHTML(decodeHTML(location.description))}</Text>
                </Box>
           );

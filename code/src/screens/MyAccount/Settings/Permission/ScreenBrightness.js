@@ -56,14 +56,14 @@ export const ScreenBrightnessPermissionStatus = () => {
      }, []);
 
      return (
-          <Pressable onPress={() => navigate('PermissionScreenBrightnessDescription', { permissionStatus })} style={{ paddingBottom: 12 }}>
+          <Pressable onPress={() => navigate('PermissionScreenBrightnessDescription', { permissionStatus })} className="pb-3">
                <HStack space="md" justifyContent="space-between" alignItems="center">
                     <Text bold>
                          {getTermFromDictionary(language, 'screen_brightness_permission')}
                     </Text>
                     <HStack alignItems="center">
                          <Text>{permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}</Text>
-                         <MaterialIcons name="chevron-right" size={20} style={{ marginLeft: 4 }} />
+                         <MaterialIcons name="chevron-right" size={20} className="ml-1" />
                     </HStack>
                </HStack>
           </Pressable>
@@ -81,7 +81,7 @@ export const ScreenBrightnessPermissionDescription = () => {
                     <Box>
                          <Text>{getTermFromDictionary(language, 'device_set_to')}</Text>
 
-                         <Heading style={{ marginBottom: 4 }}>
+                         <Heading className="mb-1">
                               {permissionStatus === true ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                          </Heading>
                          <Text>
@@ -89,7 +89,7 @@ export const ScreenBrightnessPermissionDescription = () => {
                          </Text>
 
                          {permissionStatus === true && Platform.OS !== 'android' ? null : (
-                              <Text style={{ marginTop: 20 }}>
+                              <Text className="mt-5">
                                    {getTermFromDictionary(language, 'to_update_settings')}
                               </Text>
                          )}
@@ -109,7 +109,7 @@ const ScreenBrightnessPermissionUsage = () => {
           <Accordion variant="unfilled" width="$full" size="sm">
                <AccordionItem value="description">
                     <AccordionHeader>
-                         <AccordionTrigger style={{ paddingHorizontal: 0 }}>
+                         <AccordionTrigger className="px-0">
                               {({ isExpanded }) => {
                                    return (
                                         <>
@@ -120,7 +120,7 @@ const ScreenBrightnessPermissionUsage = () => {
                               }}
                          </AccordionTrigger>
                     </AccordionHeader>
-                    <AccordionContent style={{ paddingHorizontal: 0 }}>
+                    <AccordionContent className="px-0">
                          <AccordionContentText style={{ color: textColor }}>
                               {Constants.expoConfig.name} {getTermFromDictionary(language, 'how_we_use_screen_brightness_body')}
                          </AccordionContentText>
@@ -185,7 +185,7 @@ const ScreenBrightnessPermissionUpdate = (payload) => {
                               <Text>{Platform.OS === 'android' ? getTermFromDictionary(language, 'update_screen_brightness_android') : getTermFromDictionary(language, 'update_screen_brightness_ios')}</Text>
                          </AlertDialogBody>
                          <AlertDialogFooter>
-                              <ButtonGroup style={{ flexDirection: 'column', alignItems: 'stretch', width: '100%' }}>
+                              <ButtonGroup className="flex-col items-stretch w-full">
                                    <Button
                                         onPress={() => {
                                              Linking.openSettings();

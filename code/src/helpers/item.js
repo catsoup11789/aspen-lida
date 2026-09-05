@@ -19,7 +19,7 @@ export const isOverdue = (overdue) => {
      const language = useActiveLanguage();
      if (overdue) {
           return (
-               <Badge colorScheme="error" style={{ marginTop: -8, alignSelf: 'flex-start', borderRadius: 4 }}>
+               <Badge colorScheme="error" className="mt--2 self-start rounded">
                     <BadgeText colorScheme="error">
                          {getTermFromDictionary(language, 'checkout_overdue')}
                     </BadgeText>
@@ -47,7 +47,7 @@ export const getTitle = (title) => {
                <Text
                     bold
                     size="sm"
-                    style={{ marginBottom: 4, paddingRight: 12, maxWidth: '100%' }}>
+                    className="mb-1 pr-3 max-w-full">
                     {displayTitle}
                </Text>
           );
@@ -56,7 +56,7 @@ export const getTitle = (title) => {
                <Text
                     bold
                     size="sm"
-                    style={{ marginBottom: 4, paddingRight: 12, maxWidth: '100%' }}>
+                    className="mb-1 pr-3 max-w-full">
                     Title Not Available
                </Text>
           );
@@ -216,7 +216,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
      if (frozen) {
           if (statusMessage) {
                return (
-                    <Badge colorScheme="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+                    <Badge colorScheme="warning" className="mt--0.5 self-start rounded">
                          <BadgeText colorScheme="warning">
                               {statusMessage}
                          </BadgeText>
@@ -224,7 +224,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
                );
           }
           return (
-               <Badge colorScheme="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+               <Badge colorScheme="warning" className="mt--0.5 self-start rounded">
                     <BadgeText colorScheme="warning">
                          {status}
                     </BadgeText>
@@ -236,7 +236,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
                message = status;
           }
           return (
-               <Badge colorScheme="success" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+               <Badge colorScheme="success" className="mt--0.5 self-start rounded">
                     <BadgeText colorScheme="success">
                          {message}
                     </BadgeText>
@@ -245,7 +245,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
      } else {
           if (status) {
                return (
-                    <Badge colorScheme="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+                    <Badge colorScheme="warning" className="mt--0.5 self-start rounded">
                          <BadgeText colorScheme="warning">
                               {status}
                          </BadgeText>

@@ -255,7 +255,7 @@ export const MyCheckouts = () => {
 
      const noCheckouts = () => {
           return (
-               <Center style={{ marginTop: 20, marginBottom: 20 }}>
+               <Center className="mt-5 mb-5">
                    <Text bold size="lg">
                          {getTermFromDictionary(language, 'no_checkouts')}
                     </Text>
@@ -417,7 +417,7 @@ export const MyCheckouts = () => {
                                              setRenewAll(false);
                                         });
                                    }}>
-                                   {!renewAll && <MaterialIcons name="autorenew" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />}
+                                   {!renewAll && <MaterialIcons name="autorenew" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />}
                                    <ButtonText>
                                         {renewAll ? getTermFromDictionary(language, 'renewing_all', true) : getTermFromDictionary(language, 'checkout_renew_all')}
                                    </ButtonText>
@@ -499,7 +499,7 @@ export const MyCheckouts = () => {
                return (
                     <HStack space="$2">
                          <Button colorScheme="primary"
-                              style={{ margin: 8 }}
+                              className="m-2"
                               size="sm"
                               variant="outline"
                               onPress={() => {
@@ -533,7 +533,7 @@ export const MyCheckouts = () => {
      }
 
      return (
-          <Box style={{ flex: 1 }}>
+          <Box className="flex-1">
                <Box style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
                     {showSystemMessage()}
                     <ScrollView horizontal>{actionButtons()}</ScrollView>

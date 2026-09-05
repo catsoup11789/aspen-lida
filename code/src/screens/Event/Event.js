@@ -107,14 +107,14 @@ export const EventScreen = () => {
      return (
           <ScrollView>
                {(eventData.length === 0 || status === 'loading' || isFetching) && errorMessage === ''? (
-                    <Box style={{ paddingTop: 50 }}><LoadingSpinner message="Fetching data..." /></Box>
+                    <Box className="pt-12.5"><LoadingSpinner message="Fetching data..." /></Box>
                ) : status === 'error' ? (
-                    <Box style={{ paddingTop: 50 }}>{loadError(error, '')}</Box>
+                    <Box className="pt-12.5">{loadError(error, '')}</Box>
                ) : errorMessage !== '' ? (
-                    <Box style={{ paddingTop: 50 }}>{loadError(errorMessage, '')}</Box>
+                    <Box className="pt-12.5">{loadError(errorMessage, '')}</Box>
                ) : (
                     <>
-                         {_.size(systemMessages) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+                         {_.size(systemMessages) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                          <DisplayEvent data={eventData} source={source} hasValidImage={hasValidImage} />
                     </>
                )}
@@ -180,16 +180,13 @@ const DisplayEvent = (payload) => {
      return (
           <>
                {event.cover ? <Box style={{ height: 125, width: '100%', backgroundColor, zIndex: -1, position: 'absolute', left: 0, top: 0 }} /> : null}
-               <Box style={{ padding: 20, width: '100%' }}>
+               <Box className="p-5 w-full">
                     <Center style={{ marginTop: event.cover ? 20 : 0, width: '100%' }}>
                          {event.cover ? (
                               <Image
                                    alt={event.title}
                                    source={event.cover}
-                                   style={{
-                                        width: '100%',
-                                        height: 150,
-                                        borderRadius: 8 }}
+                                   className="w-full h-37.5 rounded-lg"
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -203,14 +200,14 @@ const DisplayEvent = (payload) => {
                     </VStack>
                     {event.registrationRequired && event.registrationBody ? <RegistrationModal event={event} /> : null}
                     {event.inUserEvents ? <InYourEvents /> : <AddToYourEvents id={event.id} source={source} />}
-                    <HStack space="sm" style={{ justifyContent: 'space-between' }}>
+                    <HStack space="sm" className="justify-between">
                          {event.canAddToList ? <AddToList source="Events" itemId={event.id} btnStyle="reg" btnWidth="48%" /> : null}
                          <Button style={{ backgroundColor: uiColors.surface.light, width: event.canAddToList ? '49%' : '100%' }} onPress={() => openLink()}>
                               <ButtonText style={{ color: uiColors.text.light }}>{getTermFromDictionary(language, 'more_info')}</ButtonText>
                          </Button>
                     </HStack>
                     <EventDescription description={event.description} />
-                    <HStack space="lg" style={{ justifyContent: 'space-between', marginTop: 20, flexWrap: 'wrap' }}>
+                    <HStack space="lg" className="justify-between mt-5 flex-wrap">
                          <EventAudiences audiences={event.audiences} />
                          <EventCategories categories={event.categories} />
                          <EventProgramTypes programTypes={event.programTypes} />
@@ -255,8 +252,8 @@ const EventDescription = ({ description }) => {
      const language = useActiveLanguage();
      if (description) {
           return (
-               <Box style={{ marginTop: 20 }}>
-                    <Text size="lg" bold style={{ textAlign: 'center' }}>
+               <Box className="mt-5">
+                    <Text size="lg" bold className="text-center">
                          {getTermFromDictionary(language, 'about')}
                     </Text>
                     <Text size="md">
@@ -282,7 +279,7 @@ const EventAudiences = ({ audiences }) => {
      if (audiences) {
           return (
                <Box>
-                    <Text size="lg" bold style={{ textAlign: 'center' }}>
+                    <Text size="lg" bold className="text-center">
                          {getTermFromDictionary(language, 'audiences')}
                     </Text>
                     {_.map(audiences, function (item, index, array) {
@@ -308,7 +305,7 @@ const EventCategories = ({ categories }) => {
      if (categories) {
           return (
                <Box>
-                    <Text size="lg" bold style={{ textAlign: 'center' }}>
+                    <Text size="lg" bold className="text-center">
                          {getTermFromDictionary(language, 'categories')}
                     </Text>
                     {_.map(categories, function (item, index, array) {
@@ -334,7 +331,7 @@ const EventProgramTypes = ({ programTypes }) => {
      if (programTypes) {
           return (
                <Box>
-                    <Text size="lg" bold style={{ textAlign: 'center' }}>
+                    <Text size="lg" bold className="text-center">
                          {getTermFromDictionary(language, 'program_types')}
                     </Text>
                     {_.map(programTypes, function (item, index, array) {
@@ -466,9 +463,9 @@ const AddToCalendar = ({ start, end, location, event }) => {
 
      return (
           <>
-               <Pressable style={{ paddingVertical: 12 }} onPress={() => handleAddToCalendar()}>
-                    <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-                         <HStack space="sm" style={{ alignItems: 'center' }}>
+               <Pressable className="py-3" onPress={() => handleAddToCalendar()}>
+                    <HStack space="sm" className="items-center justify-between">
+                         <HStack space="sm" className="items-center">
                               <MaterialIcons name="calendar-today" size={18} />
                               <VStack>
                                    <Text bold>{displayDay}</Text>
@@ -565,9 +562,9 @@ const Directions = ({ location, room }) => {
 
      if (location) {
           return (
-               <Pressable style={{ paddingVertical: 12, marginBottom: 20 }} onPress={() => handleGetDirections()}>
-                    <HStack space="sm" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-                         <HStack space="sm" style={{ alignItems: 'center' }}>
+               <Pressable className="py-3 mb-5" onPress={() => handleGetDirections()}>
+                    <HStack space="sm" className="items-center justify-between">
+                         <HStack space="sm" className="items-center">
                               <MaterialIcons name="location-pin" size={18} />
                               <VStack>
                                    {location.name ? <Text bold>{location.name}</Text> : null}
@@ -623,7 +620,7 @@ const AddToYourEvents = ({ id, source }) => {
      };
 
      return (
-          <Button colorScheme="tertiary" style={{ marginBottom: 8 }} onPress={() => addToEvents()} isLoading={isLoading} isLoadingText={getTermFromDictionary(language, 'adding', true)}>
+          <Button colorScheme="tertiary" className="mb-2" onPress={() => addToEvents()} isLoading={isLoading} isLoadingText={getTermFromDictionary(language, 'adding', true)}>
                <ButtonText>{getTermFromDictionary(language, 'add_to_events')}</ButtonText>
           </Button>
      );
@@ -638,7 +635,7 @@ const InYourEvents = () => {
      const language = useActiveLanguage();
      const {  } = useTheme();
      return (
-          <Button colorScheme="tertiary" style={{ marginBottom: 8 }} onPress={() => navigateStack('AccountScreenTab', 'MyEvents')}>
+          <Button colorScheme="tertiary" className="mb-2" onPress={() => navigateStack('AccountScreenTab', 'MyEvents')}>
                <ButtonText>{getTermFromDictionary(language, 'in_your_events')}</ButtonText>
           </Button>
      );
@@ -675,7 +672,7 @@ const RegistrationModal = ({ event }) => {
 
      return (
           <>
-               <Button colorScheme="tertiary" style={{ marginBottom: 8 }} onPress={() => setShowRegistrationModal(true)}>
+               <Button colorScheme="tertiary" className="mb-2" onPress={() => setShowRegistrationModal(true)}>
                    <ButtonText>{getTermFromDictionary(language, 'registration_information')}</ButtonText>
                </Button>
                <Modal isOpen={showRegistrationModal} onClose={() => setShowRegistrationModal(false)} closeOnOverlayClick={false} size="lg">

@@ -64,15 +64,12 @@ export const DisplayListResult = (props) => {
      return (
           <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
-                    <VStack style={{ width: 100 }}>
-                         <Box style={{ height: 150 }}>
+                    <VStack className="w-25">
+                         <Box className="h-37.5">
                               <Image
                                    alt={item.title_display}
                                    source={imageUrl}
-                                   style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        borderRadius: 8 }}
+                                   className="w-full h-full rounded-lg"
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -100,14 +97,14 @@ export const DisplayListResult = (props) => {
                                    colorScheme="danger"
                                    size="sm"
                                    variant="ghost">
-                                   <MaterialIcons name="delete" size={18} color={uiColors.danger} style={{ marginRight: 4 }} />
+                                   <MaterialIcons name="delete" size={18} color={uiColors.danger} className="mr-1" />
                                    <ButtonText>{getTermFromDictionary(language, 'delete')}</ButtonText>
                               </Button>
                          ) : (
                               <AddToList itemId={item.id} btnStyle="sm" />
                          )}
                     </VStack>
-                    <VStack style={{ width: '65%', paddingTop: 4 }}>
+                    <VStack className="w-[65%] pt-1">
                          <Text bold style={{ lineHeight: 17, paddingBottom: 4 }} size="sm">
                               {item.title_display}
                          </Text>
@@ -117,7 +114,7 @@ export const DisplayListResult = (props) => {
                               </Text>
                          ) : null}
                          {item.format ? (
-                              <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
+                              <HStack space="xs" className="mt-4 flex-row flex-wrap">
                                    {item.format.map((format, i) => {
                                         return (
                                              <Badge key={i} colorScheme="secondary" variant="outline">

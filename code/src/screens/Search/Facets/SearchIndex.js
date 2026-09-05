@@ -35,23 +35,23 @@ export const SearchIndexScreen = () => {
      };
 
      return (
-          <VStack style={{ paddingTop: 20, flex: 1 }}>
+          <VStack className="pt-5 flex-1">
                <ScrollView>
-                    <Box style={{ paddingHorizontal: 20 }}>
+                    <Box className="px-5">
                          {_.map(indexes, function (obj, index, array) {
                               return (
-                                   <Pressable key={index} style={{ padding: 2, paddingVertical: 8 }} onPress={() => updateIndex(index)}>
+                                   <Pressable key={index} className="p-0.5 py-2" onPress={() => updateIndex(index)}>
                                         {currentIndex === index ? (
-                                            <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+                                            <HStack space="sm" className="justify-start items-center">
                                                  <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} />
-                                                 <Text style={{ marginLeft: 8 }}>
+                                                 <Text className="ml-2">
                                                        {obj}
                                                   </Text>
                                              </HStack>
                                         ) : (
-                                            <HStack space="sm" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+                                            <HStack space="sm" className="justify-start items-center">
                                                  <MaterialIcons name="radio-button-unchecked" size={20} color={runtimeColors.primary[200]} />
-                                                 <Text style={{ marginLeft: 8 }}>
+                                                 <Text className="ml-2">
                                                        {obj}
                                                   </Text>
                                              </HStack>

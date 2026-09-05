@@ -37,26 +37,26 @@ export const WhereIsIt = () => {
           } });
 
 	 return (
-          <Box style={{ padding: 20 }}>
+          <Box className="p-5">
                {isLoading || status === 'loading' || isFetching ? (
                     loadingSpinner()
                ) : status === 'error' ? (
                     loadError('Error', '')
                ) : (
                     <Box>
-                         <HStack space="md" style={{ justifyContent: 'space-between', paddingBottom: 8 }}>
-                              <Text bold size="xs" style={{ width: '30%' }}>
+                         <HStack space="md" className="justify-between pb-2">
+                              <Text bold size="xs" className="w-[30%]">
                                    {getTermFromDictionary(language, 'available_copies')}
                               </Text>
-                              <Text bold size="xs" style={{ width: '30%' }}>
+                              <Text bold size="xs" className="w-[30%]">
                                    {getTermFromDictionary(language, 'location')}
                               </Text>
 							 {source === 'overdrive' ? (
-								 <Text bold size="xs" style={{ width: '30%' }}>
+								 <Text bold size="xs" className="w-[30%]">
 									 {getTermFromDictionary(language, 'holds')}
 								 </Text>
 							 ) : (
-                             <Text bold size="xs" style={{ width: '30%' }}>
+                             <Text bold size="xs" className="w-[30%]">
                                    {getTermFromDictionary(language, 'call_num')}
                               </Text>
 							 )}
@@ -79,19 +79,19 @@ const Details = (data) => {
      const manifestation = data.manifestation;
      const source = data.source;
      return (
-          <HStack space="md" style={{ justifyContent: 'space-between' }}>
-               <Text size="xs" style={{ width: '30%' }}>
+          <HStack space="md" className="justify-between">
+               <Text size="xs" className="w-[30%]">
                     {manifestation.availableCopies} of {manifestation.totalCopies}
                </Text>
-               <Text size="xs" style={{ width: '30%' }}>
+               <Text size="xs" className="w-[30%]">
                     {manifestation.shelfLocation}
                </Text>
 			  {source === 'overdrive' ? (
-				  <Text size="xs" style={{ width: '30%' }}>
+				  <Text size="xs" className="w-[30%]">
 					  {manifestation.numHolds}
 				  </Text>
 			  ) : (
-               <Text size="xs" style={{ width: '30%' }}>
+               <Text size="xs" className="w-[30%]">
                     {manifestation.callNumber}
                </Text>
 			  )}

@@ -148,7 +148,7 @@ const Request = (payload) => {
           const field = config.fields.introText;
           if (field.display === 'show') {
                return (
-                    <Text size="sm" style={{ paddingBottom: 12 }}>
+                    <Text size="sm" className="pb-3">
                          {stripHTML(field.label)}
                     </Text>
                );
@@ -164,7 +164,7 @@ const Request = (payload) => {
                     fullTitle += " " + volumeName;
                }
                return (
-                    <FormControl style={{ marginVertical: 8 }} isRequired={field.required}>
+                    <FormControl className="my-2" isRequired={field.required}>
                          <FormControlLabel>
                               <FormControlLabelText>{field.label}</FormControlLabelText>
                          </FormControlLabel>
@@ -200,14 +200,14 @@ const Request = (payload) => {
           const field = config.fields.acceptFee;
           if (field.display === 'show') {
                return (
-                    <FormControl style={{ marginVertical: 8, maxWidth: '90%' }} isRequired={field.required}>
+                    <FormControl className="my-2 max-w-[90%]" isRequired={field.required}>
                          <Checkbox
                               value="accept"
                               accessibilityLabel={field.description ?? field.label}
                               onChange={(value) => {
                                    setAcceptFee(value);
                               }}>
-                              <CheckboxIndicator style={{ marginRight: 8 }}>
+                              <CheckboxIndicator className="mr-2">
                                    <CheckboxIcon />
                               </CheckboxIndicator>
                               <CheckboxLabel>
@@ -224,7 +224,7 @@ const Request = (payload) => {
           const field = config.fields.note;
           if (field.display === 'show') {
                return (
-                    <FormControl style={{ marginVertical: 8 }} isRequired={field.required}>
+                    <FormControl className="my-2" isRequired={field.required}>
                          <FormControlLabel>
                               <FormControlLabelText>{field.label}</FormControlLabelText>
                          </FormControlLabel>
@@ -249,7 +249,7 @@ const Request = (payload) => {
           if (field.display === 'show' && Array.isArray(field.options)) {
                const locations = field.options;
                return (
-                    <FormControl style={{ marginVertical: 8 }} isRequired={field.required}>
+                    <FormControl className="my-2" isRequired={field.required}>
                          <FormControlLabel>
                               <FormControlLabelText>{field.label}</FormControlLabelText>
                          </FormControlLabel>
@@ -293,7 +293,7 @@ const Request = (payload) => {
           const field = config.fields.catalogKey;
           if (field.display === 'show') {
                return (
-                    <FormControl style={{ marginVertical: 8 }} isDisabled isRequired={field.required}>
+                    <FormControl className="my-2" isDisabled isRequired={field.required}>
                          <FormControlLabel>
                               <FormControlLabelText>{field.label}</FormControlLabelText>
                          </FormControlLabel>
@@ -310,7 +310,7 @@ const Request = (payload) => {
           const field = config.fields.volumeId;
           if (field.display === 'show') {
                return (
-                    <FormControl style={{ marginVertical: 8 }} isDisabled isRequired={field.required}>
+                    <FormControl className="my-2" isDisabled isRequired={field.required}>
                          <FormControlLabel>
                               <FormControlLabelText>{field.label}</FormControlLabelText>
                          </FormControlLabel>
@@ -325,7 +325,7 @@ const Request = (payload) => {
 
      const getActions = () => {
           return (
-               <HStack space="md" style={{ paddingTop: 12 }}>
+               <HStack space="md" className="pt-3">
                     <Button
                          colorScheme="secondary"
                          isDisabled={isSubmitting}
@@ -336,7 +336,7 @@ const Request = (payload) => {
                         <ButtonText>
                               {isSubmitting ? (
                                    <>
-                                        <ButtonSpinner style={{ marginRight: 8 }} />
+                                        <ButtonSpinner className="mr-2" />
                                         {config.buttonLabelProcessing}
                                    </>
                               ) : (
@@ -354,7 +354,7 @@ const Request = (payload) => {
      const getErrorMessage = () => {
           if (errorMessage) {
                return (
-                    <ThemedAlert style={{ width: '100%' }} action="warning" variant="solid">
+                    <ThemedAlert className="w-full" action="warning" variant="solid">
                          <ThemedAlertText action="warning" variant="solid" size="xs" bold>
                               {errorMessage}
                          </ThemedAlertText>
@@ -366,7 +366,7 @@ const Request = (payload) => {
 
      return (
           <ScrollView>
-               <Box style={{ padding: 20 }}>
+               <Box className="p-5">
                     {errorMessage ? getErrorMessage() : null}
                     {getIntroText()}
                     {getTitleField()}

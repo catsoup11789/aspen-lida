@@ -132,7 +132,7 @@ export const Location = () => {
                          ) : null}
                          <Box style={{ marginHorizontal: 16, zIndex: 200 }}>
                               {showSystemMessage()}
-                              {library.displayName !== location.displayName ? <Heading style={{ marginBottom: 8 }}>{location.displayName}</Heading> : <Heading style={{ marginBottom: 4 }}>{library.displayName}</Heading>}
+                              {library.displayName !== location.displayName ? <Heading className="mb-2">{location.displayName}</Heading> : <Heading className="mb-1">{library.displayName}</Heading>}
                               {location.address ? <Text>{location.address}</Text> : null}
                               {location.phone ? (
                                    <Text>
@@ -140,7 +140,7 @@ export const Location = () => {
                                    </Text>
                               ) : null}
                               {hasHours ? (
-                                   <Badge colorScheme={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
+                                   <Badge colorScheme={isClosedToday ? 'error' : 'success'} className="self-start">
                                         <BadgeText colorScheme={isClosedToday ? 'error' : 'success'} style={{ color: textColor }}>
                                              {hoursLabel}
                                         </BadgeText>
@@ -148,13 +148,13 @@ export const Location = () => {
                               ) : null}
                          </Box>
                          <DisplayMap data={location} />
-                         <Box style={{ marginHorizontal: 16 }} >
+                         <Box className="mx-4" >
                               <ContactButtons data={location} />
                               {hasHours ? <Hours data={location} /> : null}
                               <AdditionalInformation data={location} />
                               {_.size(locations) > 1 ? (
                                    <>
-                                        <Divider style={{ marginTop: 20, marginBottom: 8 }} />
+                                        <Divider className="mt-5 mb-2" />
                                         <Button size="sm" onPress={selectLocations} colorScheme="primary">
                                             <ButtonText>{getTermFromDictionary(language, 'view_all_locations')}</ButtonText>
                                         </Button>

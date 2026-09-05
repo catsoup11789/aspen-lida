@@ -126,7 +126,7 @@ export const MyEvents = () => {
                <Box
                    style={{ alignItems: 'center', padding: 8, borderBottomWidth: 1, backgroundColor: panelBg, borderColor }}
                >
-                   <ButtonGroup alignItems="center" space="md" isAttached size="sm" style={{ paddingBottom: 4 }}>
+                   <ButtonGroup alignItems="center" space="md" isAttached size="sm" className="pb-1">
                         <Button
                              variant={filterBy === 'all' ? 'solid' : 'outline'}
                              colorScheme="primary"
@@ -155,7 +155,7 @@ export const MyEvents = () => {
 
      const Empty = () => {
           return (
-               <Center style={{ marginTop: 20, marginBottom: 20 }}>
+               <Center className="mt-5 mb-5">
                    <Text bold size="lg">
                          {filterBy === 'upcoming' ? getTermFromDictionary(language, 'no_events_upcoming') : filterBy === 'past' ? getTermFromDictionary(language, 'no_events_past') : getTermFromDictionary(language, 'no_events_all')}
                     </Text>
@@ -186,7 +186,7 @@ export const MyEvents = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text size="sm" style={{ marginTop: 8 }}>
+                         <Text size="sm" className="mt-2">
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -209,7 +209,7 @@ export const MyEvents = () => {
      const savedEventKeys = Object.keys(savedEvents ?? {});
 
      return (
-          <Box style={{ flex: 1 }}>
+          <Box className="flex-1">
                {_.size(systemMessagesForScreen) > 0 ? <Box safeArea={2}>{showSystemMessage()}</Box> : null}
                {getActionButtons()}
                {events.length === 0 || status === 'loading' || isFetching ? (
@@ -382,10 +382,10 @@ const Item = (data) => {
          <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={openEvent}>
                <HStack space="md">
                     {event.cover ? (
-                        <VStack style={{ maxWidth: '35%' }}>
+                        <VStack className="max-w-[35%]">
                               {hasPassed ? (
                                    <Box style={{ width: '100%', zIndex: 1 }}>
-                                        <Badge colorScheme="warning" variant="solid" style={{ marginBottom: -12, marginLeft: -4, borderRadius: 8 }}>
+                                        <Badge colorScheme="warning" variant="solid" className="mb--3 ml--1 rounded-lg">
                                              <BadgeText colorScheme="warning" size="xs">
                                                   {getTermFromDictionary(language, 'flag_past')}
                                              </BadgeText>
@@ -395,17 +395,14 @@ const Item = (data) => {
                               <Image
                                    alt={event.title}
                                    source={coverUrl}
-                                   style={{
-                                        width: 100,
-                                        height: 150,
-                                        borderRadius: 8 }}
+                                   className="w-25 h-37.5 rounded-lg"
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
                               />
 
                               <Button size="sm" variant="ghost" action="negative" onPress={() => removeEvent()}>
-                                   <MaterialIcons name="delete" size={14} style={{ marginRight: 4 }} />
+                                   <MaterialIcons name="delete" size={14} className="mr-1" />
                                    <ButtonText>{getTermFromDictionary(language, 'remove')}</ButtonText>
                               </Button>
                          </VStack>
@@ -438,16 +435,16 @@ const Item = (data) => {
                               </>
                          ) : null}
                          {!event.cover ? (
-                              <Box style={{ alignItems: 'flex-start', paddingTop: 8 }}>
-                                   <Button size="sm" variant="ghost" action="negative" style={{ padding: 0 }} onPress={() => removeEvent()}>
-                                        <MaterialIcons name="delete" size={14} style={{ marginRight: 4 }} />
+                              <Box className="items-start pt-2">
+                                   <Button size="sm" variant="ghost" action="negative" className="p-0" onPress={() => removeEvent()}>
+                                        <MaterialIcons name="delete" size={14} className="mr-1" />
                                         <ButtonText>{getTermFromDictionary(language, 'remove')}</ButtonText>
                                    </Button>
                               </Box>
                          ) : null}
                          {registrationRequired ? (
-                              <HStack style={{ marginTop: 6, flexWrap: 'wrap' }} space="xs">
-                                   <Badge key={0} colorScheme="muted" variant="outline" style={{ marginTop: 4, borderRadius: 8 }}>
+                              <HStack className="mt-1.5 flex-wrap" space="xs">
+                                   <Badge key={0} colorScheme="muted" variant="outline" className="mt-1 rounded-lg">
                                         <BadgeText colorScheme="muted" size="sm">
                                              {getTermFromDictionary(language, 'registration_required')}
                                         </BadgeText>

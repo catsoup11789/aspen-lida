@@ -110,7 +110,7 @@ const SelectLinkedAccount = (props) => {
                          <ModalBody>
                               {shouldDisplayVolumes ? <SelectVolume language={language} id={id} holdType={holdType} setHoldType={setHoldType} volume={volume} setVolume={setVolume} promptForHoldType={promptForHoldType} /> : null}
                               {_.size(locations) > 1 && !isEContent ? (
-                                   <FormControl style={{ marginBottom: 16 }}>
+                                   <FormControl className="mb-4">
                                         <FormControlLabel>
                                              <FormControlLabelText>{getTermFromDictionary(language, 'select_pickup_location')}</FormControlLabelText>
                                         </FormControlLabel>
@@ -136,7 +136,7 @@ const SelectLinkedAccount = (props) => {
                                         </Select>
                                    </FormControl>
                               ) : null}
-                              <FormControl style={{ marginBottom: 20 }}>
+                              <FormControl className="mb-5">
                                    <FormControlLabel>
                                         <FormControlLabelText>{isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')}</FormControlLabelText>
                                    </FormControlLabel>

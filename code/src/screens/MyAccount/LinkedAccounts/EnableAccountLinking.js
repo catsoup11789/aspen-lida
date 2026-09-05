@@ -59,7 +59,7 @@ const EnableAccountLinking = () => {
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="lg">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '95%' }}>
+                    <ModalContent className="max-w-[95%]">
                          <ModalHeader>
                               <Heading>{getTermFromDictionary(language, 'enable_linked_accounts_title')}</Heading>
                               <ModalCloseButton onPress={toggle}>

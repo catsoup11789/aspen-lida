@@ -227,7 +227,7 @@ export function useColorModeValue(lightValue, darkValue) {
 
 export const BackIcon = (props) => {
      const { runtimeColors } = useThemeForDisplay();
-     return <MaterialIcons name="chevron-left" size={24} style={{ marginLeft: 1 }} {...props} color={runtimeColors.primary.baseContrast} />;
+     return <MaterialIcons name="chevron-left" size={24} className="ml-[1px]" {...props} color={runtimeColors.primary.baseContrast} />;
 };
 
 function normalizeThemeColors(response = []) {
@@ -468,11 +468,9 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                {isThemeMenuOpen && (
                     <Modal transparent animationType="fade" visible={isThemeMenuOpen}>
                          <View
-                              style={{
-                                   flex: 1,
-                              }}
+                              className="flex-1"
                               onTouchEnd={() => setIsThemeMenuOpen(false)}>
-                              <Box style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-start', paddingBottom: 48, paddingLeft: 40 }}>
+                              <Box className="flex-1 justify-end items-start pb-12 pl-10">
                                    <Box
                                         style={{
                                              backgroundColor: resolvedUiColors.surface,
@@ -487,7 +485,7 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                                                   return (
                                                        <Box
                                                             key={themeEntry.id}
-                                                            style={{ paddingHorizontal: 16, paddingVertical: 12 }}
+                                                            className="px-4 py-3"
                                                             onTouchEnd={() => {
                                                                  setIsThemeMenuOpen(false);
                                                                  changeTheme(themeEntry);
@@ -514,7 +512,7 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                          onPress={() => {
                               setIsThemeMenuOpen(true);
                          }}
-                         style={{ borderRadius: 9999 }}>
+                         className="rounded-full">
                          <MaterialIcons name="palette" size={18} color={runtimeColors.primary[500]} />
                          {showText ? <ButtonText> {activeThemeName}</ButtonText> : null}
                     </Button>
@@ -531,7 +529,7 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                                    justifyContent: 'center',
                               }}>
                               <Spinner size="large" color={runtimeColors.primary[500]} />
-                              <Text style={{ marginTop: 12 }}>
+                              <Text className="mt-3">
                                    Switching theme...
                               </Text>
                          </Box>

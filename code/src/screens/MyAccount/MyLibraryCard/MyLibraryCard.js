@@ -219,7 +219,7 @@ export const MyLibraryCard = () => {
                     )}
 
                     {!isLandscape && shouldShowAlternateLibraryCard && (
-                        <Box style={{ paddingBottom: 20 }}>
+                        <Box className="pb-5">
                               <Center>
                                    <Button
                                         size="md"
@@ -242,15 +242,15 @@ export const MyLibraryCard = () => {
                               <ActionsheetDragIndicatorWrapper>
                                    <ActionsheetDragIndicator style={{ backgroundColor: textColor }} />
                               </ActionsheetDragIndicatorWrapper>
-                              <VStack space="md" style={{ width: '100%', padding: 16 }}>
+                              <VStack space="md" className="w-full p-4">
                                    <Box>
-                                        <Text size="sm" style={{ marginBottom: 8 }}>{getTermFromDictionary(language, 'select_card')}</Text>
-                                        <Box style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+                                        <Text size="sm" className="mb-2">{getTermFromDictionary(language, 'select_card')}</Text>
+                                        <Box className="flex-row flex-wrap justify-center">
                                              {cards.map((card, index) => (
                                                   <Button
                                                        key={index}
                                                        size="sm"
-                                                       style={{ marginRight: 4, marginBottom: 4 }}
+                                                       className="mr-1 mb-1"
                                                        variant={index === currentCardIndex ? 'solid' : 'outline'}
                                                        colorScheme="tertiary"
                                                        onPress={() => {
@@ -266,7 +266,7 @@ export const MyLibraryCard = () => {
                                         </Box>
                                    </Box>
                                    {shouldShowAlternateLibraryCard && (
-                                        <Box style={{ marginTop: 8 }}>
+                                        <Box className="mt-2">
                                             <Button
                                                  size="md"
                                                  colorScheme="secondary"
@@ -368,17 +368,17 @@ const CreateLibraryCard = (data) => {
 
      if (barcodeValue === 'UNKNOWN' || barcodeValue === null || barcodeStyle === null || barcodeValue === '' || barcodeStyle === '' || barcodeStyle === 'INVALID' || barcodeStyle === 'none') {
           return (
-               <VStack style={{ maxWidth: '90%', paddingHorizontal: 32, paddingVertical: 20, borderRadius: 12 }}>
+               <VStack className="max-w-[90%] px-8 py-5 rounded-xl">
                     <Center>
                          <HStack>
                               {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} alt={getTermFromDictionary(language, 'library_card')} /> : null}
-                              <Text bold size="lg" style={{ marginLeft: 12, marginTop: 8 }}>
+                              <Text bold size="lg" className="ml-3 mt-2">
                                    {card.homeLocation}
                               </Text>
                          </HStack>
                     </Center>
-                    <Center style={{ paddingTop: 32 }}>
-                         <Text style={{ paddingBottom: 8 }}>
+                    <Center className="pt-8">
+                         <Text className="pb-2">
                               {card.displayName}
                          </Text>
                          <Text bold size="xl">
@@ -403,13 +403,13 @@ const CreateLibraryCard = (data) => {
                     <>
                          <Center>
                               <HStack>
-                                   {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} alt={getTermFromDictionary(language, 'library_card')} style={{ width: 42, height: 42 }} /> : null}
-                                   <Text bold size="lg" style={{ marginLeft: 12, marginTop: 8 }}>
+                                   {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} alt={getTermFromDictionary(language, 'library_card')} className="w-10.5 h-10.5" /> : null}
+                                   <Text bold size="lg" className="ml-3 mt-2">
                                         {card.homeLocation}
                                    </Text>
                               </HStack>
                          </Center>
-                         <Center style={{ paddingTop: 8 }}>
+                         <Center className="pt-2">
                               <Text size="md">
                                    {card.displayName}
                               </Text>
@@ -420,7 +420,7 @@ const CreateLibraryCard = (data) => {
                     {showExpirationDate && expirationDate && !neverExpires && numCards > 1 ? <Text>{expirationText}</Text> : null}
                     {numCards > 1 ? (
                          <Button colorScheme="primary" variant="link" onPress={() => openBarcodeModal && openBarcodeModal(card)}>
-                              <MaterialCommunityIcons name="barcode-scan" size={20} color={runtimeColors.primary[500]} style={{ marginRight: 4 }} />
+                              <MaterialCommunityIcons name="barcode-scan" size={20} color={runtimeColors.primary[500]} className="mr-1" />
                               <ButtonText>{getTermFromDictionary(language, 'open_barcode')}</ButtonText>
                          </Button>
                     ) : (
@@ -433,11 +433,11 @@ const CreateLibraryCard = (data) => {
                                         onError={handleBarcodeError}
                                    />
                               </Box>
-                              <Text size="xl" style={{ textAlign: 'center' }}>{barcodeValue}</Text>
+                              <Text size="xl" className="text-center">{barcodeValue}</Text>
                          </VStack>
                     )}
                     {showExpirationDate && expirationDate && !neverExpires && numCards === 1 ? (
-                         <Text size="sm" style={{ paddingTop: 8 }}>
+                         <Text size="sm" className="pt-2">
                               {expirationText}
                          </Text>
                     ) : null}
@@ -487,7 +487,7 @@ const CardCarousel = (data) => {
           return (
                <Button
                     size="sm"
-                    style={{ marginRight: 4, marginBottom: 4 }}
+                    className="mr-1 mb-1"
                     variant={index === currentIndex ? 'solid' : 'outline'}
                     colorScheme="tertiary"
                     onPress={() => {
@@ -516,7 +516,7 @@ const CardCarousel = (data) => {
      }
 
      return (
-          <Box style={{ alignItems: 'center', paddingHorizontal: 12 }}>
+          <Box className="items-center px-3">
                <Carousel
                     {...baseOptions}
                     ref={ref}
@@ -660,7 +660,7 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                          <ModalBody style={{ margin: 20, padding: 16, backgroundColor: modalBg }}>
                               {/* Always render barcode to measure it, but hide if showing warning. */}
                               <Box style={{ opacity: showRotateWarning ? 0 : 1, position: showRotateWarning ? 'absolute' : 'relative' }}>
-                                   <Center style={{ padding: 8 }}>
+                                   <Center className="p-2">
                                         <Box
                                              style={{ backgroundColor: barcodeBg, padding: 12, borderRadius: 8 }}
                                              onLayout={onBarcodeLayout}>
@@ -675,16 +675,16 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                               </Box>
 
                               {showRotateWarning && (
-                                   <VStack space="md" style={{ alignItems: 'center', padding: 16 }}>
-                                        <Text size="lg" style={{ textAlign: 'center' }}>
+                                   <VStack space="md" className="items-center p-4">
+                                        <Text size="lg" className="text-center">
                                              {getTermFromDictionary(language, 'rotate_device_for_barcode')}
                                         </Text>
                                         <Button
                                              size="md"
-                                             colorScheme="primary" style={{ marginTop: 8 }}
+                                             colorScheme="primary" className="mt-2"
                                              onPress={rotateToLandscape}
                                         >
-                                             <MaterialCommunityIcons name="phone-rotate-landscape" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 8 }} />
+                                             <MaterialCommunityIcons name="phone-rotate-landscape" size={18} color={runtimeColors.primary['500-text']} className="mr-2" />
                                              <ButtonText>
                                                   {getTermFromDictionary(language, 'rotate_to_landscape') || 'Rotate to Landscape'}
                                              </ButtonText>
@@ -693,12 +693,12 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                               )}
 
                               {!showRotateWarning && !isPortrait && manuallyRotated && (
-                                   <Center style={{ marginTop: 8, marginBottom: 8 }}>
+                                   <Center className="mt-2 mb-2">
                                         <Button
                                              size="md"
                                              colorScheme="primary"
                                              onPress={rotateToPortrait}>
-                                             <MaterialCommunityIcons name="phone-rotate-portrait" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 8 }} />
+                                             <MaterialCommunityIcons name="phone-rotate-portrait" size={18} color={runtimeColors.primary['500-text']} className="mr-2" />
                                              <ButtonText>
                                                   {getTermFromDictionary(language, 'rotate_to_portrait') || 'Rotate to Portrait'}
                                              </ButtonText>
@@ -706,7 +706,7 @@ const BarcodeModal = ({ card, showModal, closeModal, language }) => {
                                    </Center>
                               )}
 
-                              <Center style={{ marginTop: 8 }}>
+                              <Center className="mt-2">
                                    <Text size="xl">{barcodeValue}</Text>
                               </Center>
                          </ModalBody>

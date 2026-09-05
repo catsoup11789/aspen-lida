@@ -700,7 +700,7 @@ export const DrawerContent = (props) => {
      }
 
      return (
-          <View style={{ flex: 1 }}>
+          <View className="flex-1">
                <DrawerContentScrollView
                     {...props}
                     contentContainerStyle={{
@@ -708,14 +708,14 @@ export const DrawerContent = (props) => {
                          paddingTop: insets.top,
                          paddingBottom: insets.bottom }}
                >
-                    <VStack style={{ flex: 1, marginHorizontal: 12, gap: 16 }}>
+                    <VStack className="flex-1 mx-3 gap-4">
                          <UserProfileOverview />
 
                          {displayILSMessages()}
 
-                         <Divider style={{ marginVertical: 12 }} />
+                         <Divider className="my-3" />
 
-                         <VStack key={`drawer-menu-${language}-${dictionaryUpdatedAt}`} style={{ flex: 1 }}>
+                         <VStack key={`drawer-menu-${language}-${dictionaryUpdatedAt}`} className="flex-1">
                               <Checkouts />
                               <Holds />
                               <UserLists />
@@ -727,18 +727,18 @@ export const DrawerContent = (props) => {
                               <Events />
                               <Campaigns />
 
-                              <Divider style={{ marginVertical: 8 }} />
+                              <Divider className="my-2" />
 
                               <UserProfile />
                               <LinkedAccounts />
                               <AlternateLibraryCard />
                          </VStack>
 
-                         <VStack style={{ alignItems: 'center', paddingTop: 16, gap: 12 }}>
+                         <VStack className="items-center pt-4 gap-3">
                               <HStack space={2}>
                                    <LogOutButton />
                               </HStack>
-                              <HStack space={2} style={{ marginTop: 8 }}>
+                              <HStack space={2} className="mt-2">
                                    <UseColorMode showText={false}/>
                                    <LanguageSwitcher />
                               </HStack>
@@ -760,25 +760,25 @@ const UserProfileOverview = () => {
      const icon = library.logoApp ?? library.favicon ?? Constants.expoConfig.ios.icon;
 
      return (
-          <Box style={{ paddingHorizontal: 12 }}>
+          <Box className="px-3">
                <HStack space="md" alignItems="center">
-                    <Image source={{ uri: icon }} fallbackSource={require('../../themes/default/aspenLogo.png')} style={{ width: 42, height: 42, borderRadius: 6 }} alt={getTermFromDictionary(language, 'library_card')} />
-                    <Box style={{ marginLeft: 12 }}>
+                    <Image source={{ uri: icon }} fallbackSource={require('../../themes/default/aspenLogo.png')} className="w-10.5 h-10.5 rounded-md" alt={getTermFromDictionary(language, 'library_card')} />
+                    <Box className="ml-3">
                          {user.displayName ? (
-                              <Text numberOfLines={1} style={{ maxWidth: 175, fontWeight: '700' }} size="md">
+                              <Text numberOfLines={1} className="max-w-[175px] font-bold" size="md">
                                    {user.displayName}
                               </Text>
                          ) : null}
 
                          {library && library.displayName ? (
-                              <Text numberOfLines={1} style={{ maxWidth: 175, fontWeight: '500' }} size="sm">
+                              <Text numberOfLines={1} className="max-w-[175px] font-medium" size="sm">
                                    {library.displayName}
                               </Text>
                          ) : null}
                          <HStack space="sm" alignItems="center">
                               <MaterialIcons name="credit-card" size={14} />
                               {(user.ils_barcode || user.cat_username) ? (
-                                   <Text numberOfLines={1} style={{ maxWidth: 175, fontWeight: '500' }} size="sm">
+                                   <Text numberOfLines={1} className="max-w-[175px] font-medium" size="sm">
                                         {user.ils_barcode ?? user.cat_username}
                                    </Text>
                               ) : null}
@@ -799,7 +799,7 @@ const Checkouts = () => {
 
      return (
           <Pressable
-               style={{ paddingHorizontal: 8, paddingVertical: 8, borderRadius: 6 }}
+               className="px-2 py-2 rounded-md"
                onPress={() => {
                     navigateStack('AccountScreenTab', 'MyCheckouts', {
                          libraryUrl: library.baseUrl,
@@ -809,14 +809,14 @@ const Checkouts = () => {
                     <MaterialIcons name="chevron-right" size={20} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
-                              <Text style={{ fontWeight: '500' }}>
+                              <Text className="font-medium">
                                    {getTermFromDictionary(language, 'checked_out_titles')}
                               </Text>
-                              <Text style={{ fontWeight: '700' }}> ({user.numCheckedOut ?? 0})</Text>
+                              <Text className="font-bold"> ({user.numCheckedOut ?? 0})</Text>
                          </HStack>
                          {user.numOverdue > 0 ? (
-                              <Badge colorScheme="error" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <BadgeText colorScheme="error" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'checkouts_overdue_summary').replace("%1%", user.numOverdue)}</BadgeText>
+                              <Badge colorScheme="error" className="mt-1 rounded self-start">
+                                   <BadgeText colorScheme="error" className="text-xs">{getTermFromDictionary(language, 'checkouts_overdue_summary').replace("%1%", user.numOverdue)}</BadgeText>
                               </Badge>
                          ) : null}
                     </VStack>
@@ -835,7 +835,7 @@ const Holds = () => {
 
      return (
           <Pressable
-               style={{ paddingHorizontal: 8, paddingVertical: 8, borderRadius: 6 }}
+               className="px-2 py-2 rounded-md"
                onPress={() => {
                     navigateStack('AccountScreenTab', 'MyHolds', {
                          libraryUrl: library.baseUrl,
@@ -845,14 +845,14 @@ const Holds = () => {
                     <MaterialIcons name="chevron-right" size={20} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
-                              <Text style={{ fontWeight: '500' }}>
+                              <Text className="font-medium">
                                    {getTermFromDictionary(language, 'titles_on_hold')}
                               </Text>
-                              <Text style={{ fontWeight: '700' }}> ({user.numHolds ?? 0})</Text>
+                              <Text className="font-bold"> ({user.numHolds ?? 0})</Text>
                          </HStack>
                          {user.numHoldsAvailable > 0 ? (
-                              <Badge colorScheme="success" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <BadgeText colorScheme="success" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'num_holds_ready_for_pickup', false).replace('%1%', user.numHoldsAvailable)}</BadgeText>
+                              <Badge colorScheme="success" className="mt-1 rounded self-start">
+                                   <BadgeText colorScheme="success" className="text-xs">{getTermFromDictionary(language, 'num_holds_ready_for_pickup', false).replace('%1%', user.numHoldsAvailable)}</BadgeText>
                               </Badge>
                          ) : null}
                     </VStack>
@@ -871,7 +871,7 @@ const UserLists = () => {
 
      return (
           <Pressable
-               style={{ paddingHorizontal: 8, paddingVertical: 8, borderRadius: 6 }}
+               className="px-2 py-2 rounded-md"
                onPress={() => {
                     navigateStack('AccountScreenTab', 'MyLists', {
                          libraryUrl: library.baseUrl,
@@ -881,10 +881,10 @@ const UserLists = () => {
                     <MaterialIcons name="chevron-right" size={20} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
-                              <Text style={{ fontWeight: '500' }}>
+                              <Text className="font-medium">
                                    {getTermFromDictionary(language, 'my_lists')}
                               </Text>
-                              <Text style={{ fontWeight: '700' }}> ({user.numLists ?? 0})</Text>
+                              <Text className="font-bold"> ({user.numLists ?? 0})</Text>
                          </HStack>
                     </VStack>
                </HStack>
@@ -904,7 +904,7 @@ const SavedSearches = () => {
 
      return (
           <Pressable
-               style={{ paddingHorizontal: 8, paddingVertical: 8, borderRadius: 6 }}
+               className="px-2 py-2 rounded-md"
                onPress={() => {
                     navigateStack('AccountScreenTab', 'MySavedSearches', {
                          libraryUrl: library.baseUrl,
@@ -914,14 +914,14 @@ const SavedSearches = () => {
                     <MaterialIcons name="chevron-right" size={20} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
-                              <Text style={{ fontWeight: '500' }}>
+                              <Text className="font-medium">
                                    {getTermFromDictionary(language, 'saved_searches')}
                               </Text>
-                              <Text style={{ fontWeight: '700' }}> ({user.numSavedSearches ?? 0})</Text>
+                              <Text className="font-bold"> ({user.numSavedSearches ?? 0})</Text>
                          </HStack>
                          {user.numSavedSearchesNew > 0 ? (
-                              <Badge colorScheme="warning" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <BadgeText colorScheme="warning" style={{ fontSize: 12 }}>{savedSearchSummary}</BadgeText>
+                              <Badge colorScheme="warning" className="mt-1 rounded self-start">
+                                   <BadgeText colorScheme="warning" className="text-xs">{savedSearchSummary}</BadgeText>
                               </Badge>
                          ) : null}
                     </VStack>
@@ -940,7 +940,7 @@ const ReadingHistory = () => {
 
      return (
           <Pressable
-               style={{ paddingHorizontal: 8, paddingVertical: 8, borderRadius: 6 }}
+               className="px-2 py-2 rounded-md"
                onPress={() => {
                     navigateStack('AccountScreenTab', 'MyReadingHistory', {
                          libraryUrl: library.baseUrl,
@@ -950,10 +950,10 @@ const ReadingHistory = () => {
                     <MaterialIcons name="chevron-right" size={20} />
                     <VStack>
                          <HStack space="xs" alignItems="center">
-                              <Text style={{ fontWeight: '500' }}>
+                              <Text className="font-medium">
                                    {getTermFromDictionary(language, 'reading_history')}
                               </Text>
-                              <Text style={{ fontWeight: '700' }}> ({user.numReadingHistory ?? 0})</Text>
+                              <Text className="font-bold"> ({user.numReadingHistory ?? 0})</Text>
                          </HStack>
                     </VStack>
                </HStack>
@@ -969,7 +969,7 @@ const UserProfile = () => {
 
      return (
           <Pressable
-               style={{ paddingHorizontal: 8, paddingVertical: 8 }}
+               className="px-2 py-2"
                onPress={() => {
                     navigateStack('AccountScreenTab', 'MyProfile', {
                          libraryUrl: library.baseUrl,
@@ -977,7 +977,7 @@ const UserProfile = () => {
                }}>
                <HStack space="xs" alignItems="center">
                     <MaterialIcons name="chevron-right" size={20} />
-                    <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'contact_information')}</Text>
+                    <Text className="font-medium">{getTermFromDictionary(language, 'contact_information')}</Text>
                </HStack>
           </Pressable>
      );
@@ -992,14 +992,14 @@ const NotificationHistory = () => {
      if (library.displayIlsInbox === '1' || library.displayIlsInbox === 1 || library.displayIlsInbox === true) {
           return (
                <Pressable
-                    style={{ paddingHorizontal: 8, paddingVertical: 8 }}
+                    className="px-2 py-2"
                     onPress={() => {
                          navigateStack('AccountScreenTab', 'MyNotificationHistory', {
                               hasPendingChanges: false });
                     }}>
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} />
-                         <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'notification_history')}</Text>
+                         <Text className="font-medium">{getTermFromDictionary(language, 'notification_history')}</Text>
                     </HStack>
                </Pressable>
           );
@@ -1019,7 +1019,7 @@ const LinkedAccounts = () => {
      if (library.allowLinkedAccounts === '1') {
           return (
                <Pressable
-                    style={{ paddingHorizontal: 8, paddingVertical: 8 }}
+                    className="px-2 py-2"
                     onPress={() =>
                          navigateStack('AccountScreenTab', 'MyLinkedAccounts', {
                               libraryUrl: library.baseUrl,
@@ -1027,10 +1027,10 @@ const LinkedAccounts = () => {
                     }>
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} />
-                         <Text style={{ fontWeight: '500' }}>
+                         <Text className="font-medium">
                               {getTermFromDictionary(language, 'linked_accounts')}
                          </Text>
-                         <Text style={{ fontWeight: '700' }}> ({user.numLinkedAccounts ?? 0})</Text>
+                         <Text className="font-bold"> ({user.numLinkedAccounts ?? 0})</Text>
                     </HStack>
                </Pressable>
           );
@@ -1050,7 +1050,7 @@ const AlternateLibraryCard = () => {
      if (shouldShowAlternateLibraryCard === '1' || shouldShowAlternateLibraryCard === 1) {
           return (
                <Pressable
-                    style={{ paddingHorizontal: 8, paddingVertical: 8, borderRadius: 6 }}
+                    className="px-2 py-2 rounded-md"
                     onPress={() => {
                          navigateStack('LibraryCardTab', 'MyAlternateLibraryCard', {
                               prevRoute: 'AccountDrawer',
@@ -1058,7 +1058,7 @@ const AlternateLibraryCard = () => {
                     }}>
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} />
-                         <Text style={{ fontWeight: '500' }}>{getTermFromDictionary(language, 'alternate_library_card')}</Text>
+                         <Text className="font-medium">{getTermFromDictionary(language, 'alternate_library_card')}</Text>
                     </HStack>
                </Pressable>
           );
@@ -1090,13 +1090,13 @@ const Fines = () => {
 
      if (shouldShowFines) {
           return (
-               <Pressable style={{ paddingHorizontal: 8, paddingVertical: 8, borderRadius: 6 }} onPress={async () => await passUserToDiscovery(library.baseUrl, 'Fines', user.id, backgroundColor, textColor)}>
+               <Pressable className="px-2 py-2 rounded-md" onPress={async () => await passUserToDiscovery(library.baseUrl, 'Fines', user.id, backgroundColor, textColor)}>
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} color={themeTextColor} />
                          <VStack>
                               <Text style={{ color: themeTextColor, fontWeight: '500' }}>{getTermFromDictionary(language, 'fines')}</Text>
-                              <Badge colorScheme={hasFines ? 'error' : 'info'} style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <BadgeText colorScheme={hasFines ? 'error' : 'info'} style={{ fontSize: 12 }}>{user.fines ?? '$0.00'}</BadgeText>
+                              <Badge colorScheme={hasFines ? 'error' : 'info'} className="mt-1 rounded self-start">
+                                   <BadgeText colorScheme={hasFines ? 'error' : 'info'} className="text-xs">{user.fines ?? '$0.00'}</BadgeText>
                               </Badge>
                          </VStack>
                     </HStack>
@@ -1118,7 +1118,7 @@ const Events = () => {
      if (library.hasEventSettings) {
           return (
                <Pressable
-                    style={{ paddingHorizontal: 8, paddingVertical: 8, borderRadius: 6 }}
+                    className="px-2 py-2 rounded-md"
                     onPress={() => {
                          navigateStack('AccountScreenTab', 'MyEvents', {
                               libraryUrl: library.baseUrl,
@@ -1127,12 +1127,12 @@ const Events = () => {
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} />
                          <VStack>
-                              <Text style={{ fontWeight: '500' }}>
+                              <Text className="font-medium">
                                    {getTermFromDictionary(language, 'events')}
                               </Text>
                               {user.numSavedEventsUpcoming > 0 ? (
-                                   <Badge colorScheme="info" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                        <BadgeText colorScheme="info" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'num_saved_events_upcoming').replace('%1%', user.numSavedEventsUpcoming)}</BadgeText>
+                                   <Badge colorScheme="info" className="mt-1 rounded self-start">
+                                        <BadgeText colorScheme="info" className="text-xs">{getTermFromDictionary(language, 'num_saved_events_upcoming').replace('%1%', user.numSavedEventsUpcoming)}</BadgeText>
                                    </Badge>
                               ) : null}
                          </VStack>
@@ -1159,13 +1159,13 @@ const YearInReview = () => {
 
      if (shouldShowYearInReview) {
           return (
-               <Pressable style={{ paddingHorizontal: 8, paddingVertical: 8, borderRadius: 6 }} onPress={async () => await passUserToDiscovery(library.baseUrl, 'YearInReview', user.id, backgroundColor, textColor)}>
+               <Pressable className="px-2 py-2 rounded-md" onPress={async () => await passUserToDiscovery(library.baseUrl, 'YearInReview', user.id, backgroundColor, textColor)}>
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} color={themeTextColor} />
                          <VStack>
                               <Text style={{ color: themeTextColor, fontWeight: '500' }}>{user.yearInReviewName ?? yearInReviewLabel}</Text>
-                              <Badge colorScheme="info" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <BadgeText colorScheme="info" style={{ fontSize: 12 }}>{viewNowLabel}</BadgeText>
+                              <Badge colorScheme="info" className="mt-1 rounded self-start">
+                                   <BadgeText colorScheme="info" className="text-xs">{viewNowLabel}</BadgeText>
                               </Badge>
                          </VStack>
                     </HStack>
@@ -1184,7 +1184,7 @@ const Campaigns = () => {
      if (library.hasCommunityEngagementEnabled) {
           return(
                <Pressable
-                    style={{ paddingHorizontal: 8, paddingVertical: 8, borderRadius: 6 }}
+                    className="px-2 py-2 rounded-md"
                     onPress={() =>
                          navigateStack('AccountScreenTab', 'MyCampaigns', {
                               libraryUrl: library.baseUrl,
@@ -1193,7 +1193,7 @@ const Campaigns = () => {
                     <HStack space="xs" alignItems="center">
                          <MaterialIcons name="chevron-right" size={20} />
                          <VStack>
-                              <Text style={{ fontWeight: '500' }}>
+                              <Text className="font-medium">
                                    {getTermFromDictionary(language, 'campaigns')}
                               </Text>
                          </VStack>
@@ -1247,7 +1247,7 @@ function LogOutButton() {
 
      return (
           <Button size="md" onPress={signOut} colorScheme="primary">
-               <MaterialIcons name="logout" size={14} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+               <MaterialIcons name="logout" size={14} color={runtimeColors.primary['500-text']} className="mr-1" />
                <ButtonText> {getTermFromDictionary(language, 'logout')}</ButtonText>
           </Button>
      );

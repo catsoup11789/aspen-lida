@@ -42,14 +42,14 @@ export const SelectItemHold = (props) => {
                                    setItem('');
                               }}
                               accessibilityLabel="">
-                              <Radio value="default" size="sm" style={{ marginVertical: 4 }}>
-                                   <RadioIndicator style={{ marginRight: 4 }}>
+                              <Radio value="default" size="sm" className="my-1">
+                                   <RadioIndicator className="mr-1">
                                         <RadioIcon as={MaterialIcons} name="circle" />
                                    </RadioIndicator>
                                    <RadioLabel>{getTermFromDictionary(language, 'first_available')}</RadioLabel>
                               </Radio>
-                              <Radio value="item" size="sm" style={{ marginVertical: 4 }}>
-                                   <RadioIndicator style={{ marginRight: 4 }}>
+                              <Radio value="item" size="sm" className="my-1">
+                                   <RadioIndicator className="mr-1">
                                         <RadioIcon as={MaterialIcons} name="circle" />
                                    </RadioIndicator>
                                    <RadioLabel>{getTermFromDictionary(language, 'specific_item')}</RadioLabel>
@@ -62,7 +62,7 @@ export const SelectItemHold = (props) => {
                          <FormControlLabel>
                               <FormControlLabelText>{getTermFromDictionary(language, 'select_item')}</FormControlLabelText>
                          </FormControlLabel>
-                         <Select name="itemForHold" selectedValue={defaultItem} minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setItem(itemValue)}>
+                         <Select name="itemForHold" selectedValue={defaultItem} minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} className="mt-1 mb-2" onValueChange={(itemValue) => setItem(itemValue)}>
                               <SelectTrigger>
                                    {_.map(Object.keys(copies), function (item, index, array) {
                                         let copy = copies[item];

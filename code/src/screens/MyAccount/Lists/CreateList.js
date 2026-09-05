@@ -73,12 +73,12 @@ const CreateList = (props) => {
      return (
           <Center>
                <Button onPress={toggle} size="sm" colorScheme="primary">
-                   <MaterialIcons name="add" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+                   <MaterialIcons name="add" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />
                    <ButtonText>{getTermFromDictionary(language, 'create_new_list')}</ButtonText>
                </Button>
                <Modal isOpen={showModal} onClose={toggle} size="full">
                     <ModalBackdrop />
-                    <ModalContent style={{ maxWidth: '90%' }}>
+                    <ModalContent className="max-w-[90%]">
                          <ModalHeader>
                               <Heading>
                                    {getTermFromDictionary(language, 'create_new_list')}
@@ -114,14 +114,14 @@ const CreateList = (props) => {
                                         onChange={(nextValue) => {
                                              setPublic(nextValue);
                                         }}>
-                                       <HStack style={{ flexDirection: 'row', alignItems: 'center', width: '75%', maxWidth: 300 }} space="md">
-                                            <Radio value="false" style={{ marginVertical: 4 }}>
+                                       <HStack className="flex-row items-center w-[75%] max-w-75" space="md">
+                                            <Radio value="false" className="my-1">
                                                  <RadioIndicator style={{ marginRight: 8, borderColor }}>
                                                       <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                   </RadioIndicator>
                                                  <RadioLabel>{getTermFromDictionary(language, 'private')}</RadioLabel>
                                              </Radio>
-                                            <Radio value="true" style={{ marginVertical: 4 }}>
+                                            <Radio value="true" className="my-1">
                                                  <RadioIndicator style={{ marginRight: 8, borderColor }}>
                                                       <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                   </RadioIndicator>
@@ -130,7 +130,7 @@ const CreateList = (props) => {
                                         </HStack>
                                    </RadioGroup>
                               </FormControl>
-                              <FormControl style={{ paddingBottom: 12 }}>
+                              <FormControl className="pb-3">
                                    <FormControlLabel>
                                         <FormControlLabelText>{getTermFromDictionary(language, 'should_add_to_list_group')}</FormControlLabelText>
                                    </FormControlLabel>
@@ -155,7 +155,7 @@ const CreateList = (props) => {
                               </FormControl>
                               {addToGroup === 'new' && (
                                    <>
-                                        <FormControl style={{ paddingBottom: 8 }}>
+                                        <FormControl className="pb-2">
                                              <FormControlLabel>
                                                   <FormControlLabelText>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
                                              </FormControlLabel>
@@ -164,7 +164,7 @@ const CreateList = (props) => {
                                              </ThemedInput>
                                         </FormControl>
                                         {hasListGroups && (
-                                             <FormControl style={{ paddingBottom: 8 }}>
+                                             <FormControl className="pb-2">
                                                   <FormControlLabel>
                                                        <FormControlLabelText>{getTermFromDictionary(language, 'should_nest_list_group')}</FormControlLabelText>
                                                   </FormControlLabel>

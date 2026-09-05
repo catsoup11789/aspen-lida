@@ -1542,10 +1542,10 @@ export const LoadingScreen = () => {
      }
 
      return (
-          <Center style={{ flex: 1, paddingHorizontal: 12, width: '100%' }}>
+          <Center className="flex-1 px-3 w-full">
                <Box style={{ width: '90%', maxWidth: 400, paddingTop: insets.top, paddingBottom: insets.bottom, paddingLeft: insets.left, paddingRight: insets.right }}>
                     <VStack>
-                         <Heading size="md" style={{ paddingBottom: 20 }}>
+                         <Heading size="md" className="pb-5">
                               {loadingText}
                          </Heading>
                          <Progress value={progress} size="md" testID="progress-bar" style={{ width: '100%', backgroundColor: borderColor }}>

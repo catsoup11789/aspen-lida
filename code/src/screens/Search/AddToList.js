@@ -100,16 +100,16 @@ const AddToList = (props) => {
 
      const RenderLargeButton = () => (
           <Center>
-               <Button colorScheme="tertiary" style={{ marginTop: 12 }} onPress={toggleModal}>
-                    <MaterialIcons name="bookmark" size={18} color={runtimeColors.tertiary['500-text']} style={{ marginRight: 4 }} />
+               <Button colorScheme="tertiary" className="mt-3" onPress={toggleModal}>
+                    <MaterialIcons name="bookmark" size={18} color={runtimeColors.tertiary['500-text']} className="mr-1" />
                     <ButtonText>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
                </Button>
           </Center>
      );
 
      const RenderSmallButton = () => (
-          <Button colorScheme="tertiary" size="xs" variant="link" style={{ marginTop: 4 }} onPress={toggleModal}>
-               <MaterialIcons name="bookmark" size={18} color={runtimeColors.tertiary[500]} style={{ marginRight: 4 }} />
+          <Button colorScheme="tertiary" size="xs" variant="link" className="mt-1" onPress={toggleModal}>
+               <MaterialIcons name="bookmark" size={18} color={runtimeColors.tertiary[500]} className="mr-1" />
                <ButtonText>{getTermFromDictionary(language, 'add_to_list')}</ButtonText>
           </Button>
      );
@@ -173,7 +173,7 @@ const AddToList = (props) => {
                                                             </SelectPortal>
                                                        </Select>
                                                   </FormControl>
-                                                  <HStack space="sm" style={{ alignItems: 'center' }}>
+                                                  <HStack space="sm" className="items-center">
                                                        <Text>{getTermFromDictionary(language, 'or')}</Text>
                                                        <Button
                                                             size="sm"
@@ -188,7 +188,7 @@ const AddToList = (props) => {
                                         </FormControl>
                                    </ModalBody>
                                    <ModalFooter>
-                                        <ButtonGroup style={{ padding: 16, flexDirection: 'row', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+                                        <ButtonGroup className="p-4 flex-row justify-end flex-wrap">
                                              <Button
                                                   variant="outline"
                                                   style={{ borderColor: cancelColor }}
@@ -228,7 +228,7 @@ const AddToList = (props) => {
                                         </ModalCloseButton>
                                    </ModalHeader>
                                    <ModalBody>
-                                        <Box style={{ padding: 16 }}>
+                                        <Box className="p-4">
                                              <VStack space="md">
                                                   <FormControl>
                                                        <FormControlLabel>
@@ -255,14 +255,14 @@ const AddToList = (props) => {
                                                             onChange={(nextValue) => {
                                                                  saveIsPublic(nextValue);
                                                             }}>
-                                                            <HStack space="md" style={{ flexDirection: 'row', alignItems: 'center', width: '75%', maxWidth: 300 }}>
-                                                                 <Radio value="1" style={{ marginVertical: 4 }}>
+                                                            <HStack space="md" className="flex-row items-center w-[75%] max-w-75">
+                                                                 <Radio value="1" className="my-1">
                                                                       <RadioIndicator style={{ marginRight: 8, borderColor }}>
                                                                            <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                                       </RadioIndicator>
                                                                       <RadioLabel>{getTermFromDictionary(language, 'private')}</RadioLabel>
                                                                  </Radio>
-                                                                 <Radio value="0" style={{ marginVertical: 4 }}>
+                                                                 <Radio value="0" className="my-1">
                                                                       <RadioIndicator style={{ marginRight: 8, borderColor }}>
                                                                            <RadioIcon as={MaterialIcons} name="circle" style={{ color: borderColor }} />
                                                                       </RadioIndicator>
@@ -271,7 +271,7 @@ const AddToList = (props) => {
                                                             </HStack>
                                                        </RadioGroup>
                                                   </FormControl>
-                                                  <FormControl style={{ paddingBottom: 12 }}>
+                                                  <FormControl className="pb-3">
                                                        <FormControlLabel>
                                                             <FormControlLabelText>{getTermFromDictionary(language, 'should_add_to_list_group')}</FormControlLabelText>
                                                        </FormControlLabel>
@@ -302,7 +302,7 @@ const AddToList = (props) => {
                                                   </FormControl>
                                                   {addToGroup === 'new' && (
                                                        <>
-                                                            <FormControl style={{ paddingBottom: 8 }}>
+                                                            <FormControl className="pb-2">
                                                                  <FormControlLabel>
                                                                       <FormControlLabelText>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
                                                                  </FormControlLabel>
@@ -311,7 +311,7 @@ const AddToList = (props) => {
                                                                  </ThemedInput>
                                                             </FormControl>
                                                             {hasListGroups && (
-                                                                 <FormControl style={{ paddingBottom: 8 }}>
+                                                                 <FormControl className="pb-2">
                                                                       <FormControlLabel>
                                                                            <FormControlLabelText>{getTermFromDictionary(language, 'should_nest_list_group')}</FormControlLabelText>
                                                                       </FormControlLabel>
@@ -390,7 +390,7 @@ const AddToList = (props) => {
                                         </Box>
                                    </ModalBody>
                                    <ModalFooter>
-                                        <ButtonGroup style={{ padding: 16, flexDirection: 'row', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+                                        <ButtonGroup className="p-4 flex-row justify-end flex-wrap">
                                              <Button
                                                   variant="outline"
                                                   style={{ borderColor: cancelColor }}

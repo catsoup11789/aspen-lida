@@ -146,7 +146,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
      );
 
      return (
-          <Box style={{ flex: 1 }}>
+          <Box className="flex-1">
                <Box style={{ paddingHorizontal: 12, paddingVertical: 12, borderBottomWidth: 1, borderColor }}>
                    <Heading size="sm">
                          {getTermFromDictionary(language, 'api_error_log')}
@@ -157,7 +157,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
                </Box>
 
                {loading && rows.length === 0 ? (
-                    <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <Box className="flex-1 items-center justify-center">
                          <Spinner color={textColor} />
                     </Box>
                ) : (
@@ -166,7 +166,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
                          keyExtractor={(item) => String(item.id)}
                          renderItem={renderEntry}
                          ListEmptyComponent={
-                              <Box style={{ paddingHorizontal: 12, paddingVertical: 24, alignItems: 'center' }}>
+                              <Box className="px-3 py-6 items-center">
                                    <Text>{getTermFromDictionary(language, 'api_error_log_empty')}</Text>
                               </Box>
                          }
@@ -185,7 +185,7 @@ export const APIErrorLog = ({ uiColors: uiColorsProp, colorMode: colorModeProp, 
                     </Button>
                </HStack>
 
-               <Box style={{ paddingHorizontal: 12, paddingBottom: 12 }}>
+               <Box className="px-3 pb-3">
                     <Button variant="outline" colorScheme="tertiary" onPress={onClear} isDisabled={loading}>
                         <ButtonText>{getTermFromDictionary(language, 'clear_api_error_log')}</ButtonText>
                     </Button>

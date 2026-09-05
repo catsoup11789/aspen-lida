@@ -75,8 +75,8 @@ export const MySavedSearch = () => {
      const Empty = () => {
           return (
                <>
-                    {(systemMessages?.length ?? 0) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
-                    <Center style={{ marginTop: 20, marginBottom: 20 }}>
+                    {(systemMessages?.length ?? 0) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
+                    <Center className="mt-5 mb-5">
                         <Text bold size="lg">
                               {getTermFromDictionary(language, 'no_results_found')}
                          </Text>
@@ -86,9 +86,9 @@ export const MySavedSearch = () => {
      };
 
      return (
-          <Box style={{ flex: 1 }}>
-              {(systemMessages?.length ?? 0) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
-              <Box style={{ flex: 1 }}>{status === 'error' ? loadError('Error', '') : <FlatList data={data} ListEmptyComponent={Empty} renderItem={({ item }) => <SavedSearch data={item} />} keyExtractor={(item, index) => index.toString()} contentContainerStyle={{ paddingBottom: 30 }} />}</Box>
+          <Box className="flex-1">
+              {(systemMessages?.length ?? 0) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
+              <Box className="flex-1">{status === 'error' ? loadError('Error', '') : <FlatList data={data} ListEmptyComponent={Empty} renderItem={({ item }) => <SavedSearch data={item} />} keyExtractor={(item, index) => index.toString()} contentContainerStyle={{ paddingBottom: 30 }} />}</Box>
           </Box>
      );
 };
@@ -128,10 +128,10 @@ const SavedSearch = (data) => {
      return (
           <Pressable style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={() => openGroupedWork()}>
                <HStack space={3}>
-                    <VStack style={{ maxWidth: '35%' }}>
+                    <VStack className="max-w-[35%]">
                          {isNew ? (
                               <Box style={{ width: '100%', zIndex: 1 }}>
-                                   <Badge colorScheme="warning" style={{ marginBottom: -12, marginLeft: -4 }}>
+                                   <Badge colorScheme="warning" className="mb--3 ml--1">
                                         <BadgeText colorScheme="warning" size="xs">
                                              {getTermFromDictionary(language, 'flag_new')}
                                         </BadgeText>
@@ -141,10 +141,7 @@ const SavedSearch = (data) => {
                          <Image
                               alt={item.title}
                              source={imageUrl}
-                             style={{
-                                  width: 100,
-                                  height: 150,
-                                  borderRadius: 8 }}
+                             className="w-25 h-37.5 rounded-lg"
                              placeholder={blurhash}
                              transition={1000}
                              contentFit="cover"
@@ -161,7 +158,7 @@ const SavedSearch = (data) => {
                          <AddToList item={item.id} libraryUrl={library.baseUrl} />
                     </VStack>
 
-                    <VStack style={{ width: '65%', marginLeft: 12 }}>
+                    <VStack className="w-[65%] ml-3">
                          <Text
                               bold
                               size="xs"
@@ -174,10 +171,10 @@ const SavedSearch = (data) => {
                               </Text>
                          ) : null}
                          {item.format ? (
-                              <HStack style={{ marginTop: 6, flexWrap: 'wrap' }} space={1}>
+                              <HStack className="mt-1.5 flex-wrap" space={1}>
                                    {formats.map((format, index) => {
                                         return (
-                                             <Badge key={index} colorScheme="info" variant="outline" style={{ marginTop: 4, borderRadius: 8, marginLeft: 8 }}>
+                                             <Badge key={index} colorScheme="info" variant="outline" className="mt-1 rounded-lg ml-2">
                                                   <BadgeText colorScheme="info" size="sm" style={{ textTransform: 'none', color: textColor }}>
                                                        {format}
                                                   </BadgeText>

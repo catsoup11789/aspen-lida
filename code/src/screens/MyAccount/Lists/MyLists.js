@@ -270,7 +270,7 @@ export const MyLists = () => {
      };
 
      const listEmptyComponent = () => (
-          <Center style={{ marginTop: 5, marginBottom: 5 }}>
+          <Center className="mt-[5px] mb-[5px]">
                <Text bold size="lg">
                     {getTermFromDictionary(language, 'no_lists_yet')}
                </Text>
@@ -287,21 +287,21 @@ export const MyLists = () => {
           const imageUrl = item.cover ?? library.baseUrl + '/bookcover.php?type=list&id=' + item.id + '&size=medium';
           if (item.id !== 'recommendations') {
                return (
-                    <Pressable onPress={() => handleOpenList(item)} style={{ paddingLeft: 4, paddingRight: 4, paddingVertical: 8 }}>
-                         <HStack space={3} style={{ marginTop: 8, marginBottom: 8, justifyContent: 'flex-start' }}>
+                    <Pressable onPress={() => handleOpenList(item)} className="pl-1 pr-1 py-2">
+                         <HStack space={3} className="mt-2 mb-2 justify-start">
                               <VStack space={1}>
-                                   <Image alt={item.title} source={imageUrl} style={{ width: 100, height: 150, borderRadius: 8 }} placeholder={blurhash} transition={1000} contentFit="cover" />
+                                   <Image alt={item.title} source={imageUrl} className="w-25 h-37.5 rounded-lg" placeholder={blurhash} transition={1000} contentFit="cover" />
                                    <Badge style={{ marginTop: 4, backgroundColor: resolvedUiColors.surface }}>
                                         <BadgeText style={{ color: resolvedUiColors.iconMuted, fontSize: 10, textAlign: 'center' }}>{privacy}</BadgeText>
                                    </Badge>
                               </VStack>
-                              <VStack space={1} style={{ justifyContent: 'space-between', maxWidth: '80%', paddingLeft: 8 }}>
+                              <VStack space={1} className="justify-between max-w-[80%] pl-2">
                                    <Box>
                                         <Text bold size="md">
                                              {item.title}
                                         </Text>
                                         {item.description ? (
-                                             <Text size="xs" style={{ marginBottom: 8 }}>
+                                             <Text size="xs" className="mb-2">
                                                   {item.description}
                                              </Text>
                                         ) : null}
@@ -360,7 +360,7 @@ export const MyLists = () => {
                               </Button>
                          </ButtonGroup>
                     </ScrollView>
-                    <Text size="sm" style={{ marginTop: 8 }}>{paginationLabel}</Text>
+                    <Text size="sm" className="mt-2">{paginationLabel}</Text>
                </Box>
           );
      };
@@ -370,8 +370,8 @@ export const MyLists = () => {
      }
 
      return (
-          <Box style={{ flex: 1 }}>
-               <Box style={{ paddingTop: 8, paddingHorizontal: 20, flexWrap: 'nowrap' }}>
+          <Box className="flex-1">
+               <Box className="pt-2 px-5 flex-nowrap">
                     {showSystemMessage()}
                     <ScrollView horizontal>
                          <ButtonGroup space="sm">
@@ -381,7 +381,7 @@ export const MyLists = () => {
                     </ScrollView>
                </Box>
                {hasListGroups && listGroups?.groups && Object.values(listGroups.groups).length > 0 ? (
-                    <Box style={{ paddingHorizontal: 20, marginTop: 8 }}>
+                    <Box className="px-5 mt-2">
                          <Select name="listGroupSelect" selectedValue={currentListGroup} defaultValue={defaultListGroup} onValueChange={(itemValue) => updateSelectedListGroup(itemValue)}>
                               <SelectTrigger>
                                    {currentListGroup && currentListGroup !== '-1' && currentListGroup !== -1 ? (
@@ -425,9 +425,9 @@ export const MyLists = () => {
                               </SelectPortal>
                          </Select>
                          {currentListGroupData ? (
-                              <Box style={{ marginTop: 8 }}>
+                              <Box className="mt-2">
                                    <Box>
-                                        <Heading style={{ paddingVertical: 10 }}>{currentListGroupData.listGroupDetails?.title}</Heading>
+                                        <Heading className="py-2.5">{currentListGroupData.listGroupDetails?.title}</Heading>
                                         {currentListGroup != '-1' && (
                                              <ScrollView horizontal>
                                                   <HStack space="sm">
@@ -440,7 +440,7 @@ export const MyLists = () => {
                                    </Box>
                                    <FlatList
                                         contentContainerStyle={{ paddingBottom: 200 }}
-                                        style={{ marginTop: 8 }}
+                                        className="mt-2"
                                         data={currentListGroupData.listsInGroup}
                                         renderItem={({ item }) => renderList(item)}
                                         keyExtractor={(item, index) => item.id ? String(item.id) : index.toString()}

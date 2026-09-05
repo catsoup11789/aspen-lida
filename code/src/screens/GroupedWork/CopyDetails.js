@@ -95,8 +95,8 @@ const ShowItemDetails = (props) => {
                             variant="ghost"
                             size="sm"
                             colorScheme="secondary">
-                            <HStack space="xs" style={{ alignItems: 'center' }}>
-                                 <MaterialIcons name="location-pin" size={14} style={{ marginRight: -4 }} />
+                            <HStack space="xs" className="items-center">
+                                 <MaterialIcons name="location-pin" size={14} className="mr--1" />
                                  <ButtonText>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                             </HStack>
                         </Button>
@@ -104,8 +104,8 @@ const ShowItemDetails = (props) => {
                         <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="full">
                              <ModalContent>
                                   <ModalHeader>
-                                       <HStack style={{ alignItems: 'center' }}>
-                                            <MaterialIcons name="location-pin" size={14} style={{ marginTop: 2, paddingRight: 5 }} />
+                                       <HStack className="items-center">
+                                            <MaterialIcons name="location-pin" size={14} className="mt-0.5 pr-[5px]" />
                                             <Heading>{getTermFromDictionary(language, 'where_is_it')}</Heading>
                                        </HStack>
                                   </ModalHeader>
@@ -125,8 +125,8 @@ const ShowItemDetails = (props) => {
               <SafeAreaView>
                    <Center>
                         <Button onPress={() => setShowModal(true)} variant="ghost" size="sm" colorScheme="secondary">
-                            <HStack space="xs" style={{ alignItems: 'center' }}>
-                                 <MaterialIcons name="location-pin" size={14} style={{ marginRight: -4 }} />
+                            <HStack space="xs" className="items-center">
+                                 <MaterialIcons name="location-pin" size={14} className="mr--1" />
                                  <ButtonText>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                             </HStack>
                         </Button>
@@ -134,8 +134,8 @@ const ShowItemDetails = (props) => {
                         <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="full">
                              <ModalContent>
                                   <ModalHeader>
-                                       <HStack style={{ alignItems: 'center' }}>
-                                            <MaterialIcons name="location-pin" size={14} style={{ marginTop: 2, paddingRight: 5 }} />
+                                       <HStack className="items-center">
+                                            <MaterialIcons name="location-pin" size={14} className="mt-0.5 pr-[5px]" />
                                             <Heading>{getTermFromDictionary(language, 'where_is_it')}</Heading>
                                        </HStack>
                                   </ModalHeader>
@@ -157,14 +157,14 @@ const ShowItemDetails = (props) => {
 const renderHeader = () => {
     const language = useActiveLanguage();
      return (
-         <HStack space="md" style={{ justifyContent: 'space-between', paddingBottom: 8 }}>
-              <Text bold size="xs" style={{ width: '30%' }}>
+         <HStack space="md" className="justify-between pb-2">
+              <Text bold size="xs" className="w-[30%]">
                   {getTermFromDictionary(language, 'available_copies')}
               </Text>
-              <Text bold size="xs" style={{ width: '30%' }}>
+              <Text bold size="xs" className="w-[30%]">
                   {getTermFromDictionary(language, 'location')}
               </Text>
-              <Text bold size="xs" style={{ width: '30%' }}>
+              <Text bold size="xs" className="w-[30%]">
                   {getTermFromDictionary(language, 'call_num')}
               </Text>
          </HStack>
@@ -178,14 +178,14 @@ const renderHeader = () => {
  */
 const renderCopyDetails = (item) => {
      return (
-         <HStack space="md" style={{ justifyContent: 'space-between' }}>
-              <Text size="xs" style={{ width: '30%' }}>
+         <HStack space="md" className="justify-between">
+              <Text size="xs" className="w-[30%]">
                    {item.availableCopies} of {item.totalCopies}
               </Text>
-              <Text size="xs" style={{ width: '30%' }}>
+              <Text size="xs" className="w-[30%]">
                    {item.shelfLocation}
               </Text>
-              <Text size="xs" style={{ width: '30%' }}>
+              <Text size="xs" className="w-[30%]">
                    {item.callNumber}
               </Text>
          </HStack>

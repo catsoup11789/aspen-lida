@@ -75,12 +75,12 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
 
      return (
           <ScrollView>
-               <Box style={{ padding: 20 }}>
-                    <FormControl style={{ marginBottom: 8 }}>
-                         <HStack space="sm" style={{ justifyContent: 'center' }}>
+               <Box className="p-5">
+                    <FormControl className="mb-2">
+                         <HStack space="sm" className="justify-center">
                               <ThemedInput
                                    size="lg"
-                                   style={{ flex: 1 }}
+                                   className="flex-1"
                               >
                                    <ThemedInputField
                                         placeholder={getTermFromDictionary(language, 'from')}
@@ -94,7 +94,7 @@ export const Facet_Slider = ({ data, category, updater, language }) => {
                               </ThemedInput>
                               <ThemedInput
                                    size="lg"
-                                   style={{ flex: 1 }}
+                                   className="flex-1"
                               >
                                    <ThemedInputField
                                         placeholder={getTermFromDictionary(language, 'to')}

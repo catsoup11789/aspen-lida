@@ -26,7 +26,7 @@ export const ModalHeader = ({ title, onBack, onClose, showBack = true, showClose
      return (
           <Box className="px-3 py-3" style={{ backgroundColor: bg }}>
                <HStack className="items-center justify-between">
-                    <Box style={{ minWidth: 40 }}>
+                    <Box className="min-w-10">
                          {showBack && onBack ? (
                               <Pressable onPress={onBack} className="p-1">
                                    <MaterialIcons name="chevron-left" size={28} color={iconColor} />
@@ -40,7 +40,7 @@ export const ModalHeader = ({ title, onBack, onClose, showBack = true, showClose
                          </Text>
                     </Box>
 
-                    <Box className="items-end" style={{ minWidth: 40 }}>
+                    <Box className="items-end min-w-10">
                          {showClose && onClose ? (
                               <Pressable onPress={onClose} className="p-1">
                                    <MaterialIcons name="close" size={24} color={iconColor} />

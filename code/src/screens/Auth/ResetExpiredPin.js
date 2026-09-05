@@ -192,7 +192,7 @@ export const ResetExpiredPin = (props) => {
                               <>
                                    <AlertDialogBody>
                                        <Text>{getTermFromDictionary(language, 'pin_has_expired')}</Text>
-                                       <FormControl isRequired isInvalid={'pin' in errors} style={{ marginTop: 12 }}>
+                                       <FormControl isRequired isInvalid={'pin' in errors} className="mt-3">
                                              <FormControlLabel>
                                                  <FormControlLabelText>{getTermFromDictionary(language, 'new_pin')}</FormControlLabelText>
                                              </FormControlLabel>
@@ -212,7 +212,7 @@ export const ResetExpiredPin = (props) => {
                                                       blurOnSubmit={false}
                                                   />
                                                  <InputSlot onPress={toggleShowPin}>
-                                                      <MaterialIcons name={showPin ? 'visibility' : 'visibility-off'} size={20} style={{ marginRight: 12 }} />
+                                                      <MaterialIcons name={showPin ? 'visibility' : 'visibility-off'} size={20} className="mr-3" />
                                                  </InputSlot>
                                             </ThemedInput>
                                              {'pin' in errors ? (
@@ -222,7 +222,7 @@ export const ResetExpiredPin = (props) => {
                                                   </FormControlError>
                                              ) : null}
                                         </FormControl>
-                                        <FormControl isRequired isInvalid={'pinConfirmed' in errors} style={{ marginTop: 12 }}>
+                                        <FormControl isRequired isInvalid={'pinConfirmed' in errors} className="mt-3">
                                              <FormControlLabel>
                                                   <FormControlLabelText>{getTermFromDictionary(language, 'new_pin_confirmed')}</FormControlLabelText>
                                              </FormControlLabel>
@@ -242,7 +242,7 @@ export const ResetExpiredPin = (props) => {
                                                        ref={pinConfirmedRef}
                                                   />
                                                   <InputSlot onPress={toggleShowPinConfirmed}>
-                                                       <MaterialIcons name={showPinConfirmed ? 'visibility' : 'visibility-off'} size={20} style={{ marginRight: 12 }} />
+                                                       <MaterialIcons name={showPinConfirmed ? 'visibility' : 'visibility-off'} size={20} className="mr-3" />
                                                   </InputSlot>
                                              </ThemedInput>
                                              {'pinConfirmed' in errors ? (

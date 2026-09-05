@@ -28,32 +28,32 @@ export const HoldNotificationPreferences = (props) => {
 
      return (
           <>
-               <Text size="sm" style={{ marginBottom: 8 }}>
+               <Text size="sm" className="mb-2">
                     {getTermFromDictionary(language, 'hold_notify_for_pickup')}
                </Text>
                {user.email ? (
-                    <FormControl style={{ marginBottom: 8 }}>
+                    <FormControl className="mb-2">
                          <Checkbox
                               name="emailNotification"
                               defaultIsChecked={emailNotification}
                               onChange={(value) => {
                                    setEmailNotification(value);
                               }}>
-                              <CheckboxIndicator style={{ marginRight: 8 }}>
+                              <CheckboxIndicator className="mr-2">
                                    <CheckboxIcon />
                               </CheckboxIndicator>
                               <CheckboxLabel>{emailNotificationLabel}</CheckboxLabel>
                          </Checkbox>
                     </FormControl>
                ) : null}
-               <FormControl style={{ marginBottom: 8 }}>
+               <FormControl className="mb-2">
                     <Checkbox
                          name="phoneNotification"
                          defaultIsChecked={phoneNotification}
                          onChange={(value) => {
                               setPhoneNotification(value);
                          }}>
-                         <CheckboxIndicator style={{ marginRight: 8 }}>
+                         <CheckboxIndicator className="mr-2">
                               <CheckboxIcon />
                          </CheckboxIndicator>
                          <CheckboxLabel>{getTermFromDictionary(language, 'hold_phone_notification')}</CheckboxLabel>
@@ -61,7 +61,7 @@ export const HoldNotificationPreferences = (props) => {
                </FormControl>
                {phoneNotification ? (
                     <>
-                         <FormControl style={{ marginBottom: 8 }}>
+                         <FormControl className="mb-2">
                               <FormControlLabel>
                                    <FormControlLabelText size="sm">
                                         {getTermFromDictionary(language, 'hold_phone_number')}
@@ -75,14 +75,14 @@ export const HoldNotificationPreferences = (props) => {
                ) : null}
                {!_.isEmpty(smsCarriers) ? (
                     <>
-                         <FormControl style={{ marginBottom: 4 }}>
+                         <FormControl className="mb-1">
                               <Checkbox
                                    name="smsNotification"
                                    defaultIsChecked={smsNotification}
                                    onChange={(value) => {
                                         setSMSNotification(value);
                                    }}>
-                                   <CheckboxIndicator style={{ marginRight: 8 }}>
+                                   <CheckboxIndicator className="mr-2">
                                         <CheckboxIcon />
                                    </CheckboxIndicator>
                                    <CheckboxLabel>{getTermFromDictionary(language, 'hold_sms_notification')}</CheckboxLabel>
@@ -90,7 +90,7 @@ export const HoldNotificationPreferences = (props) => {
                          </FormControl>
                          {smsNotification ? (
                               <>
-                                   <FormControl style={{ marginBottom: 4 }}>
+                                   <FormControl className="mb-1">
                                         <FormControlLabel>
                                              <FormControlLabelText size="sm">
                                                   {getTermFromDictionary(language, 'hold_sms_carrier')}
@@ -126,7 +126,7 @@ export const HoldNotificationPreferences = (props) => {
                                                   </SelectContent>
                                              </SelectPortal>
                                         </Select>
-                                        <FormControlHelper style={{ marginBottom: 8 }}>
+                                        <FormControlHelper className="mb-2">
                                              <FormControlHelperText size="xs" style={{ color: textColor }}>
                                                   {getTermFromDictionary(language, 'hold_sms_charges')}
                                              </FormControlHelperText>
@@ -141,7 +141,7 @@ export const HoldNotificationPreferences = (props) => {
                                         <ThemedInput>
                                              <ThemedInputField name="smsNumber" defaultValue={smsNumber} accessibilityLabel={getTermFromDictionary(language, 'hold_sms_number')} onChangeText={(value) => setSMSNumber(value)} />
                                         </ThemedInput>
-                                        <FormControlHelper style={{ marginBottom: 8 }}>
+                                        <FormControlHelper className="mb-2">
                                              <FormControlHelperText size="xs" style={{ color: textColor }}>
                                                   {getTermFromDictionary(language, 'hold_sms_format')}
                                              </FormControlHelperText>

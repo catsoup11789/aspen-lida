@@ -214,7 +214,7 @@ export const MyReadingHistory = () => {
                >
                    <AccordionItem value="disclaimer-item" style={{ borderBottomWidth: 0, backgroundColor: panelBg }}>
                         <AccordionHeader style={{ backgroundColor: surfaceBg }}>
-                             <AccordionTrigger style={{ paddingHorizontal: 20, paddingVertical: 4 }}>
+                             <AccordionTrigger className="px-5 py-1">
                                    {({ isExpanded }) => (
                                         <>
                                              <AccordionTitleText size="xs" style={{ color: textColor, flex: 1 }}>
@@ -231,7 +231,7 @@ export const MyReadingHistory = () => {
                         </AccordionHeader>
                         <AccordionContent style={{ backgroundColor: 'transparent', padding: 0, paddingTop: 8, paddingHorizontal: 20 }}>
                               <ThemedAlert action="info">
-                                   <ThemedAlertIcon action="info" style={{ marginRight: 12 }} />
+                                   <ThemedAlertIcon action="info" className="mr-3" />
                                    <ThemedAlertText action="info" size="xs">
                                         {getTermFromDictionary(language, 'reading_history_disclaimer')}
                                    </ThemedAlertText>
@@ -378,7 +378,7 @@ export const MyReadingHistory = () => {
 
      const Empty = () => {
           return (
-               <Center style={{ marginTop: 20, marginBottom: 20 }}>
+               <Center className="mt-5 mb-5">
                    <Text bold size="lg">
                          {getTermFromDictionary(language, 'reading_history_empty')}
                     </Text>
@@ -417,7 +417,7 @@ export const MyReadingHistory = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text size="sm" style={{ marginTop: 8 }}>
+                         <Text size="sm" className="mt-2">
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -454,10 +454,10 @@ export const MyReadingHistory = () => {
      }, []);
 
      return (
-          <Box style={{ flex: 1 }}>
-               {systemMessagesForScreen.length > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+          <Box className="flex-1">
+               {systemMessagesForScreen.length > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {user.trackReadingHistory !== '1' ? (
-                   <Box style={{ padding: 20 }}>
+                   <Box className="p-5">
                         <Button colorScheme="primary" onPress={optIn} isLoading={optingIn} isLoadingText={getTermFromDictionary(language, 'updating', true)}>
                              <ButtonText>{getTermFromDictionary(language, 'reading_history_opt_in')}</ButtonText>
                          </Button>
@@ -544,21 +544,18 @@ const Item = React.memo(({ data: item, onDelete }) => {
           return (
               <Pressable onPress={toggle} style={{ borderBottomWidth: 1, borderColor, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
                     <HStack space="md">
-                        <VStack style={{ maxWidth: '30%' }}>
+                        <VStack className="max-w-[30%]">
                               <Image
                                    alt={item.title}
                                    source={url}
-                                   style={{
-                                        width: 100,
-                                        height: 150,
-                                        borderRadius: 8 }}
+                                   className="w-25 h-37.5 rounded-lg"
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
                               />
                               <AddToList itemId={item.permanentId} btnStyle="sm" />
                          </VStack>
-                         <VStack style={{ width: '65%' }}>
+                         <VStack className="w-[65%]">
                               {getTitle(item.title)}
                               {getAuthor(item.author)}
                               {getFormat(item.format)}
@@ -568,7 +565,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                     <Actionsheet isOpen={isOpen} onClose={toggle} size="full">
                          <ActionsheetBackdrop />
                          <ActionsheetContent>
-                             <Box style={{ width: '100%', height: 60, paddingHorizontal: 16, justifyContent: 'center' }}>
+                             <Box className="w-full h-15 px-4 justify-center">
                                    <Text
                                        size="lg"
                                       >
@@ -582,7 +579,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                                              toggle();
                                         }}>
                                         <ActionsheetIcon>
-                                            <MaterialIcons name="search" size={18} style={{ marginRight: 4 }} />
+                                            <MaterialIcons name="search" size={18} className="mr-1" />
                                         </ActionsheetIcon>
                                        <ActionsheetItemText>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                                    </ActionsheetItem>
@@ -598,7 +595,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                                         toggle();
                                    }}>
                                    <ActionsheetIcon>
-                                       <MaterialIcons name="delete" size={18} style={{ marginRight: 4 }} />
+                                       <MaterialIcons name="delete" size={18} className="mr-1" />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText>
                                         {getTermFromDictionary(language, 'reading_history_delete')}

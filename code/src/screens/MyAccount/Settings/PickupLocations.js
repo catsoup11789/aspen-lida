@@ -239,8 +239,8 @@ export const Settings_PickupLocations = () => {
 	const getLocationLabel = React.useCallback((item) => item?.displayName ?? item?.name ?? item?.code ?? '', []);
 
 	return (
-          <Box style={{ padding: 20 }}>
-               <FormControl style={{ marginBottom: 12 }}>
+          <Box className="p-5">
+               <FormControl className="mb-3">
                    <FormControlLabel>
                         <FormControlLabelText>{getTermFromDictionary(language, 'preferred_pickup_branch')}</FormControlLabelText>
                    </FormControlLabel>
@@ -274,7 +274,7 @@ export const Settings_PickupLocations = () => {
                </FormControl>
                {showAlternatePickupLocations ? (
                     <>
-                        <FormControl style={{ marginBottom: 12 }}>
+                        <FormControl className="mb-3">
                              <FormControlLabel>
                                   <FormControlLabelText>{getTermFromDictionary(language, 'alternate_pickup_location_1')}</FormControlLabelText>
                              </FormControlLabel>
@@ -305,7 +305,7 @@ export const Settings_PickupLocations = () => {
                                    </SelectPortal>
                               </Select>
                          </FormControl>
-                         <FormControl style={{ marginBottom: 20 }}>
+                         <FormControl className="mb-5">
                               <FormControlLabel>
                                    <FormControlLabelText>{getTermFromDictionary(language, 'alternate_pickup_location_2')}</FormControlLabelText>
                               </FormControlLabel>
@@ -353,7 +353,7 @@ export const Settings_PickupLocations = () => {
                     colorMode={colorMode}
                />
                {library.allowRememberPickupLocation ? (
-                    <FormControl style={{ marginBottom: 12 }}>
+                    <FormControl className="mb-3">
                          <Checkbox
                               name="rememberHoldPickupLocation"
                               isChecked={rememberPickupLocation}

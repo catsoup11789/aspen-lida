@@ -143,8 +143,8 @@ const ContactButtons = (data) => {
 
      if (location.phone || location.email || location.homeLink || location.latitude !== 0) {
           return (
-               <Box style={{ marginBottom: 16 }}>
-                    <ButtonGroup size="sm" style={{ flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between' }}>
+               <Box className="mb-4">
+                    <ButtonGroup size="sm" className="flex-wrap flex-row justify-between">
                          {location.phone ? (
                               <Button
                                    variant="outline"

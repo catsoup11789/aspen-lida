@@ -140,15 +140,12 @@ export const DisplayEventResult = (props) => {
      return (
          <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
-                    <VStack style={{ width: 100 }}>
-                         <Box style={{ height: 150 }}>
+                    <VStack className="w-25">
+                         <Box className="h-37.5">
                               <Image
                                    alt={item.title}
                                    source={url}
-                                   style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        borderRadius: 8 }}
+                                   className="w-full h-full rounded-lg"
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
@@ -156,7 +153,7 @@ export const DisplayEventResult = (props) => {
                          </Box>
                          {item.canAddToList ? <AddToList source="Events" itemId={item.key} btnStyle="sm" /> : null}
                     </VStack>
-                    <VStack style={{ width: '65%', paddingTop: 4 }}>
+                    <VStack className="w-[65%] pt-1">
                          <Text bold style={{ lineHeight: 17, paddingBottom: 4 }} size="sm">
                               {decodeHTML(item.title)}
                          </Text>
@@ -176,7 +173,7 @@ export const DisplayEventResult = (props) => {
                               </Text>
                          ) : null}
                          {registrationRequired ? (
-                              <HStack space="xs" style={{ marginTop: 16, flexWrap: 'wrap' }}>
+                              <HStack space="xs" className="mt-4 flex-wrap">
                                    <Badge key={0} colorScheme="secondary" variant="outline">
                                         <BadgeText colorScheme="secondary" style={{ fontSize: 10, lineHeight: 14 }}>
                                              {getTermFromDictionary(language, 'registration_required')}

@@ -152,15 +152,11 @@ export const MyHold = (props) => {
                              placeholder={blurhash}
                              transition={1000}
                              contentFit="cover"
-                             style={{
-                                  width: 100,
-                                  height: 150,
-                                  borderRadius: 8,
-                             }}
+                             className="w-25 h-37.5 rounded-lg"
                          />
                          {(hold.allowFreezeHolds || canCancel) && allowLinkedAccountAction && section === 'Pending' ? (
                               <Center>
-                                   <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} accessibilityLabel="Check item" style={{ marginVertical: 12 }}>
+                                   <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} accessibilityLabel="Check item" className="my-3">
                                         <CheckboxIndicator>
                                              <CheckboxIcon style={{ color: runtimeColors.primary['500-text'] }} />
                                         </CheckboxIndicator>
@@ -173,7 +169,7 @@ export const MyHold = (props) => {
                if (section === 'Pending') {
                     return (
                          <Center>
-                              <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} accessibilityLabel="Check item" style={{ marginVertical: 12 }}>
+                              <Checkbox value={method + '|' + hold.recordId + '|' + hold.cancelId + '|' + hold.source + '|' + hold.userId} accessibilityLabel="Check item" className="my-3">
                                    <CheckboxIndicator style={{ borderColor: checkboxBorderColor }}>
                                         <CheckboxIcon style={{ color: runtimeColors.primary['500-text'] }}/>
                                    </CheckboxIndicator>
@@ -195,7 +191,7 @@ export const MyHold = (props) => {
                               handleClose();
                          }}>
                          <ActionsheetIcon>
-                             <MaterialIcons name="search" size={18} style={{ marginRight: 4 }} />
+                             <MaterialIcons name="search" size={18} className="mr-1" />
                          </ActionsheetIcon>
                          <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                     </ActionsheetItem>
@@ -221,7 +217,7 @@ export const MyHold = (props) => {
                               });
                          }}>
                          <ActionsheetIcon>
-                             <MaterialIcons name="book" size={18} style={{ marginRight: 4 }} />
+                             <MaterialIcons name="book" size={18} className="mr-1" />
                          </ActionsheetIcon>
                          <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'checkout_title')}</ActionsheetItemText>
                     </ActionsheetItem>
@@ -256,7 +252,7 @@ export const MyHold = (props) => {
                               });
                          }}>
                          <ActionsheetIcon>
-                             <MaterialIcons name="cancel" size={18} style={{ marginRight: 4 }} />
+                             <MaterialIcons name="cancel" size={18} className="mr-1" />
                          </ActionsheetIcon>
                          <ActionsheetItemText style={{ color: textColor }}>{label}</ActionsheetItemText>
                     </ActionsheetItem>
@@ -288,7 +284,7 @@ export const MyHold = (props) => {
                                    });
                               }}>
                               <ActionsheetIcon>
-                                   <MaterialCommunityIcons name={icon} size={18} style={{ marginRight: 4 }} />
+                                   <MaterialCommunityIcons name={icon} size={18} className="mr-1" />
                               </ActionsheetIcon>
                               <ActionsheetItemText style={{ color: textColor }}>{label}</ActionsheetItemText>
                          </ActionsheetItem>
@@ -310,7 +306,7 @@ export const MyHold = (props) => {
                                         });
                                    }}>
                                    <ActionsheetIcon>
-                                       <MaterialCommunityIcons name={icon} size={18} style={{ marginRight: 4 }} />
+                                       <MaterialCommunityIcons name={icon} size={18} className="mr-1" />
                                    </ActionsheetIcon>
                                    <ActionsheetItemText style={{ color: textColor }}>{label}</ActionsheetItemText>
                               </ActionsheetItem>
@@ -333,7 +329,7 @@ export const MyHold = (props) => {
      return (
           <>
                <Pressable onPress={handleOpen} style={{ borderBottomWidth: 1, borderColor: separatorColor, paddingLeft: 16, paddingRight: 80, paddingVertical: 8 }}>
-                    <HStack space="sm" style={{ maxWidth: '95%' }}>
+                    <HStack space="sm" className="max-w-[95%]">
                          {initializeLeftColumn()}
                          <VStack>
                               {getTitle(hold.title)}
@@ -357,7 +353,7 @@ export const MyHold = (props) => {
                     <ActionsheetContent
                         style={{ backgroundColor: actionSheetBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
                     >
-                        <ActionsheetItem style={{ height: 60, paddingHorizontal: 16 }}>
+                        <ActionsheetItem className="h-15 px-4">
                              <ActionsheetItemText bold style={{ color: textColor }}>{hold.title}</ActionsheetItemText>
                          </ActionsheetItem>
                          {createCheckoutHoldAction()}
@@ -517,7 +513,7 @@ export const ManageSelectedHolds = (props) => {
 
      return (
           <Center>
-               <Button onPress={handleOpen} size="sm" variant="solid" colorScheme="primary" style={{ marginRight: 4 }}>
+               <Button onPress={handleOpen} size="sm" variant="solid" colorScheme="primary" className="mr-1">
                     <ButtonText>{numSelectedLabel}</ButtonText>
                </Button>
                <Actionsheet isOpen={showActionsheet} onClose={handleClose} zIndex={999}>
@@ -643,7 +639,7 @@ export const ManageAllHolds = (props) => {
      if (numToManage >= 1) {
           return (
                <Center>
-                    <Button size="sm" variant="solid" colorScheme="primary" style={{ marginRight: 1 }} onPress={handleOpen}>
+                    <Button size="sm" variant="solid" colorScheme="primary" className="mr-[1px]" onPress={handleOpen}>
                          <ButtonText>{getTermFromDictionary(language, 'hold_manage_all')}</ButtonText>
                     </Button>
                     <Actionsheet isOpen={showActionsheet} onClose={handleClose} zIndex={999}>

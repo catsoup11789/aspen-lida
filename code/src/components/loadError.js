@@ -24,18 +24,18 @@ export const LoadError = (props) => {
      const { uiColors, runtimeColors } = useTheme();
 
      return (
-          <Center style={{ flex: 1 }}>
+          <Center className="flex-1">
                <HStack>
-                    <MaterialIcons name="error" size={18} color={uiColors.danger} style={{ marginRight: 4 }} />
+                    <MaterialIcons name="error" size={18} color={uiColors.danger} className="mr-1" />
                     <Heading style={{ color: uiColors.danger, marginBottom: 8 }}>
                          {getTermFromDictionary('en', 'error')}
                     </Heading>
                </HStack>
-               <Text bold style={{ width: '75%', textAlign: 'center' }}>
+               <Text bold className="w-[75%] text-center">
                     {getTermFromDictionary('en', 'error_loading_results')}
                </Text>
                {reloadAction ? (
-                   <Button onPress={reloadAction} colorScheme="primary" style={{ marginTop: 20 }}>
+                   <Button onPress={reloadAction} colorScheme="primary" className="mt-5">
                          <ButtonIcon>
                               <MaterialIcons name="refresh" size={16} color={runtimeColors.primary['500-text']} />
                          </ButtonIcon>

@@ -67,7 +67,7 @@ export const NotificationPermissionStatus = () => {
     }, [expoToken]);
 
     return (
-        <Pressable onPress={() => navigate('PermissionNotificationDescription', { permissionStatus })} style={{ paddingBottom: 12 }}>
+        <Pressable onPress={() => navigate('PermissionNotificationDescription', { permissionStatus })} className="pb-3">
             <HStack space="md" justifyContent="space-between" alignItems="center">
                 <Text bold>
                     {getTermFromDictionary(language, 'notification_permission')}
@@ -76,7 +76,7 @@ export const NotificationPermissionStatus = () => {
                     <Text>
                         {permissionStatus ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                     </Text>
-                    <MaterialIcons name="chevron-right" size={20} style={{ marginLeft: 4 }} />
+                    <MaterialIcons name="chevron-right" size={20} className="ml-1" />
                 </HStack>
             </HStack>
         </Pressable>
@@ -221,7 +221,7 @@ export const NotificationPermissionDescription = () => {
             <VStack alignItems="stretch">
                 <Box>
                     <Text>{getTermFromDictionary(language, 'device_set_to')}</Text>
-                    <Heading style={{ marginBottom: 4 }}>
+                    <Heading className="mb-1">
                         {permissionStatus ? getTermFromDictionary(language, 'allowed') : getTermFromDictionary(language, 'not_allowed')}
                     </Heading>
                     <Text>
@@ -231,14 +231,14 @@ export const NotificationPermissionDescription = () => {
                         }
                     </Text>
 
-                    <Text style={{ marginTop: 20 }}>
+                    <Text className="mt-5">
                         {getTermFromDictionary(language, 'to_update_settings')}
                     </Text>
 
                     <NotificationPermissionUsage />
 
                     {permissionStatus && (
-                        <Box style={{ marginBottom: 20 }}>
+                        <Box className="mb-5">
                             <NotificationPreferencesSection
                                 preferences={preferences}
                                 updatePreference={updatePreference}
@@ -263,7 +263,7 @@ const NotificationPreferencesSection = ({ preferences, updatePreference, notific
     return (
         <>
             {Object.entries(notificationSettings).map(([key, setting]) => (
-                <HStack key={key} space="md" justifyContent="space-between" alignItems="center" style={{ marginVertical: 8 }}>
+                <HStack key={key} space="md" justifyContent="space-between" alignItems="center" className="my-2">
                     <Text>{setting.label}</Text>
                     <Switch
                         value={preferences[setting.option]}
@@ -283,7 +283,7 @@ const NotificationPermissionUsage = () => {
         <Accordion variant="unfilled" width="$full" size="sm">
             <AccordionItem value="description">
                 <AccordionHeader>
-                    <AccordionTrigger style={{ paddingHorizontal: 0 }}>
+                    <AccordionTrigger className="px-0">
                         {({ isExpanded }) => (
                             <>
                                 <AccordionTitleText style={{ color: textColor }}>
@@ -297,7 +297,7 @@ const NotificationPermissionUsage = () => {
                         )}
                     </AccordionTrigger>
                 </AccordionHeader>
-                <AccordionContent style={{ paddingHorizontal: 0 }}>
+                <AccordionContent className="px-0">
                     <AccordionContentText style={{ color: textColor }}>
                         {Constants.expoConfig.name} {getTermFromDictionary(language, 'how_we_use_notification_body')}
                     </AccordionContentText>
@@ -371,7 +371,7 @@ const NotificationPermissionUpdate = ({ permissionStatus, addNotificationPermiss
                         </Text>
                     </AlertDialogBody>
                     <AlertDialogFooter>
-                        <ButtonGroup style={{ flexDirection: 'column', alignItems: 'stretch', width: '100%' }}>
+                        <ButtonGroup className="flex-col items-stretch w-full">
                             <Button
                                 onPress={() => {
                                     Linking.openSettings();

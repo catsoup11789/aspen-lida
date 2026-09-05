@@ -137,11 +137,11 @@ export const MyAlternateLibraryCard = () => {
                {isLoading ? (
                     <LoadingSpinner />
                ) : (
-                    <Box style={{ padding: 20 }}>
+                    <Box className="p-5">
                          {showSystemMessage()}
                          <Box>
                               {formMessage ? <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} /> : null}
-                              <FormControl style={{ marginBottom: 8 }}>
+                              <FormControl className="mb-2">
                                    <FormControlLabel>
                                         <FormControlLabelText size="sm">
                                              {cardLabel}
@@ -152,7 +152,7 @@ export const MyAlternateLibraryCard = () => {
                                    </ThemedInput>
                               </FormControl>
                               {showAlternateLibraryCardPassword ? (
-                                   <FormControl style={{ marginBottom: 8 }}>
+                                   <FormControl className="mb-2">
                                         <FormControlLabel>
                                              <FormControlLabelText size="sm">
                                                   {passwordLabel}

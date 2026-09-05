@@ -17,7 +17,7 @@ export const OpenSideLoad = (props) => {
           <Button
                size="md"
                variant="solid"
-               colorScheme="primary" style={{ width: '100%' }}
+               colorScheme="primary" className="w-full"
                onPress={async () => {
                    setLoading(true);
                    await openSideLoad(props.url).then((r) => setLoading(false));

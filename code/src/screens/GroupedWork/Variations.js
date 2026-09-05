@@ -101,9 +101,9 @@ export const Variations = (props) => {
      return (
           <>
                {isLoading || status === 'loading' || isFetching ? (
-                    <Box style={{ padding: 20 }}><LoadingSpinner /></Box>
+                    <Box className="p-5"><LoadingSpinner /></Box>
                ) : status === 'error' ? (
-                    <Box style={{ padding: 20 }}><LoadError error={error} /></Box>
+                    <Box className="p-5"><LoadError error={error} /></Box>
                ) : (
                     <>
                          <VStack space="md">
@@ -137,8 +137,8 @@ export const Variations = (props) => {
                                         />
                                    ))
                               ) : (
-                                   <Center style={{ padding: 20 }}>
-                                       <Text style={{ textAlign: 'center' }}>The library does not own any copies of this title</Text>
+                                   <Center className="p-5">
+                                       <Text className="text-center">The library does not own any copies of this title</Text>
                                    </Center>
                               )}
                          </VStack>
@@ -224,7 +224,7 @@ export const Variations = (props) => {
                                         <AlertDialogBody>
                                              <Text>{holdSelectItemResponse?.message ? decodeMessage(holdSelectItemResponse.message) : 'Unable to place hold for unknown error. Please contact the library.'}</Text>
                                              {holdSelectItemResponse?.items ? (
-                                                  <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setSelectedItem(itemValue)}>
+                                                  <Select name="itemForHold" minWidth={200} accessibilityLabel={getTermFromDictionary(language, 'select_item')} className="mt-1 mb-2" onValueChange={(itemValue) => setSelectedItem(itemValue)}>
                                                        <SelectTrigger>
                                                             <SelectInput placeholder="Select option" />
                                                        </SelectTrigger>
@@ -400,18 +400,18 @@ const Variation = (props) => {
      };
 
      return (
-          <Box style={{ marginTop: 20, marginBottom: 0 }}>
+          <Box className="mt-5 mb-0">
                <Center style={{ margin: 4, padding: 12, backgroundColor: resolvedUiColors.surface, borderRadius: 8, alignSelf: 'center', width: '100%' }}>
-                    <VStack space="md" style={{ marginBottom: 12, width: '100%' }}>
-                         <HStack space="sm" style={{ width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
-                              <Badge variant="solid" colorScheme={status.indicator} style={{ borderRadius: 8, padding: 4 }}>
+                    <VStack space="md" className="mb-3 w-full">
+                         <HStack space="sm" className="w-full justify-around items-center">
+                              <Badge variant="solid" colorScheme={status.indicator} className="rounded-lg p-1">
                                    <BadgeText colorScheme={status.indicator} style={{ fontSize: 12, lineHeight: 13 }}>
                                         {status.label}
                                    </BadgeText>
                               </Badge>
                               {source === 'ils' || statusIndicator.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
-                                        <MaterialCommunityIcons name="map-marker" size={16} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} style={{ marginRight: 4 }} />
+                                        <MaterialCommunityIcons name="map-marker" size={16} color={colorMode === 'light' ? uiColors.text.light : uiColors.white} className="mr-1" />
                                         <ButtonText style={{ color: colorMode === 'light' ? uiColors.text.light : uiColors.white }}>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                                    </Button>
                               ) : null}

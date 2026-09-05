@@ -157,7 +157,7 @@ export const SearchResults = () => {
                }
                return (
                     <Box style={{ backgroundColor: resolvedUiColors.surface, borderBottomWidth: 1, borderColor: resolvedUiColors.border }}>
-                         <Box style={{ margin: 8 }}>
+                         <Box className="m-2">
                               <Text>{label}</Text>
                          </Box>
                     </Box>
@@ -189,7 +189,7 @@ export const SearchResults = () => {
                                    </Button>
                               </ButtonGroup>
                          </ScrollView>
-                         <Text style={{ marginTop: 8 }} size="2xs">
+                         <Text className="mt-2" size="2xs">
                               {paginationLabel}
                          </Text>
                     </Box>
@@ -214,12 +214,12 @@ export const SearchResults = () => {
      const NoResults = () => {
           return (
                <>
-                    {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
-                    <Center style={{ flex: 1 }}>
-                         <Heading style={{ paddingTop: 20 }}>
+                    {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
+                    <Center className="flex-1">
+                         <Heading className="pt-5">
                               {getTermFromDictionary(language, 'no_results')}
                          </Heading>
-                         <Text bold style={{ width: '75%', textAlign: 'center' }}>
+                         <Text bold className="w-[75%] text-center">
                               {route.params?.term}
                          </Text>
                     </Center>
@@ -228,14 +228,14 @@ export const SearchResults = () => {
      };
 
      return (
-          <SafeAreaView style={{ flex: 1 }}>
-               {_.size(systemMessagesForScreen) > 0 ? <Box style={{ padding: 8 }}>{showSystemMessage()}</Box> : null}
+          <SafeAreaView className="flex-1">
+               {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {status === 'loading' || isFetching ? (
                     <LoadingSpinner />
                ) : status === 'error' ? (
                     loadError('Error', '')
                ) : (
-                    <Box style={{ flex: 1 }}>
+                    <Box className="flex-1">
                          {data.totalResults > 0 ? <FilterBar navigation={navigation} /> : null}
                          <SearchBox term={term} navigation={navigation} />
                          <FlatList data={data.results} ListHeaderComponent={Header} ListFooterComponent={Paging} ListEmptyComponent={NoResults} renderItem={({ item }) => <DisplayResult data={item} />} keyExtractor={(item, index) => index.toString()} />
@@ -383,16 +383,12 @@ const DisplayResult = (data) => {
           return (
                <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                     <HStack space="md">
-                         <VStack style={{ width: 100 }}>
-                              <Box style={{ height: 150 }}>
+                         <VStack className="w-25">
+                              <Box className="h-37.5">
                                    <Image
                                         alt={item.title}
                                         source={url}
-                                        style={{
-                                             width: '100%',
-                                             height: '100%',
-                                             borderRadius: 4,
-                                        }}
+                                        className="w-full h-full rounded"
                                         placeholder={blurhash}
                                         transition={1000}
                                         contentFit="cover"
@@ -400,8 +396,8 @@ const DisplayResult = (data) => {
                               </Box>
                               {item.canAddToList ? <AddToList source="Events" itemId={item.key} btnStyle="sm" /> : null}
                          </VStack>
-                         <VStack style={{ width: '65%', paddingTop: 4 }}>
-                              <Text bold style={{ paddingBottom: 4 }} size="sm">
+                         <VStack className="w-[65%] pt-1">
+                              <Text bold className="pb-1" size="sm">
                                    {decodeHTML(item.title)}
                               </Text>
                               {item.start_date && item.end_date ? (
@@ -420,9 +416,9 @@ const DisplayResult = (data) => {
                                    </Text>
                               ) : null}
                               {registrationRequired ? (
-                                   <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
+                                   <HStack space="xs" className="mt-4 flex-row flex-wrap">
                                         <Badge key={0} colorScheme="secondary" variant="outline">
-                                             <BadgeText colorScheme="secondary" style={{ fontSize: 12 }}>
+                                             <BadgeText colorScheme="secondary" className="text-xs">
                                                   {getTermFromDictionary(language, 'registration_required')}
                                              </BadgeText>
                                         </Badge>
@@ -437,22 +433,19 @@ const DisplayResult = (data) => {
      return (
           <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
-                    <VStack style={{ width: 100 }}>
-                         <Box style={{ height: 150 }}>
+                    <VStack className="w-25">
+                         <Box className="h-37.5">
                               <Image
                                    alt={item.title}
                                    source={url}
-                                   style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        borderRadius: 4 }}
+                                   className="w-full h-full rounded"
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"
                               />
                          </Box>
                          {item.language ? (
-                              <Center style={{ marginTop: 4 }}>
+                              <Center className="mt-1">
                                    <Badge
                                         size="sm"
                                         style={{ backgroundColor: resolvedUiColors.surface }}>
@@ -464,8 +457,8 @@ const DisplayResult = (data) => {
                          ) : null}
                          <AddToList itemId={item.key} btnStyle="sm" />
                     </VStack>
-                    <VStack style={{ width: '65%', paddingTop: 4 }}>
-                         <Text bold style={{ paddingBottom: 4 }} size="sm">
+                    <VStack className="w-[65%] pt-1">
+                         <Text bold className="pb-1" size="sm">
                               {item.title}
                          </Text>
                          {item.author ? (
@@ -473,7 +466,7 @@ const DisplayResult = (data) => {
                                    {getTermFromDictionary(language, 'by')} {item.author}
                               </Text>
                          ) : null}
-                         <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
+                         <HStack space="xs" className="mt-4 flex-row flex-wrap">
                               {_.compact(_.map(formats, getFormat))}
                          </HStack>
                     </VStack>
@@ -499,7 +492,7 @@ const FilterBar = ({ navigation }) => {
                               size="sm"
                               variant="solid"
                               colorScheme="primary"
-                              style={{ marginRight: 4 }}
+                              className="mr-1"
                               onPress={() => {
                                    navigation.push('modal', {
                                         screen: 'Filters',
@@ -508,7 +501,7 @@ const FilterBar = ({ navigation }) => {
                                         },
                                    });
                               }}>
-                              <MaterialCommunityIcons name="tune" size={18} color={runtimeColors.primary['500-text']} style={{ marginRight: 4 }} />
+                              <MaterialCommunityIcons name="tune" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />
                               <ButtonText>{getTermFromDictionary(language, 'filters')}</ButtonText>
                          </Button>
                          <CreateFilterButton navigation={navigation} />
@@ -541,16 +534,16 @@ const SearchBox = ({term, navigation}) => {
                <FormControl>
                     <ThemedInput>
                          <InputSlot>
-                              <MaterialIcons name="search" size={20} style={{ marginLeft: 8 }} />
+                              <MaterialIcons name="search" size={20} className="ml-2" />
                          </InputSlot>
                          <ThemedInputField returnKeyType="search" variant="outline" autoCapitalize="none" onChangeText={(term) => setSearchTerm(term)} placeholder={getTermFromDictionary(language, 'search')} onSubmitEditing={updateSearch} value={searchTerm} />
                          {searchTerm ? (
                               <InputSlot onPress={() => clearSearch()}>
-                                   <MaterialIcons name="close" size={20} style={{ marginRight: 8 }} />
+                                   <MaterialIcons name="close" size={20} className="mr-2" />
                               </InputSlot>
                          ) : null}
                          <InputSlot onPress={() => openScanner()}>
-                              <MaterialCommunityIcons name="barcode-scan" size={20} style={{ marginRight: 8 }} />
+                              <MaterialCommunityIcons name="barcode-scan" size={20} className="mr-2" />
                          </InputSlot>
                     </ThemedInput>
                </FormControl>

@@ -60,7 +60,7 @@ export const MyLinkedAccounts = () => {
 
      const Empty = () => {
           return (
-               <Box style={{ paddingTop: 12, paddingBottom: 20 }}>
+               <Box className="pt-3 pb-5">
                     <Text bold>{getTermFromDictionary(language, 'none')}</Text>
                </Box>
           );
@@ -113,7 +113,7 @@ export const MyLinkedAccounts = () => {
 
                {user.addLinkedAccountRule !== 1 ? (
                     <Box>
-                         <Heading size="lg" style={{ paddingBottom: 8 }}>
+                         <Heading size="lg" className="pb-2">
                               {getTermFromDictionary(language, 'linked_additional_accounts')}
                          </Heading>
                          <Text size="sm">
@@ -126,13 +126,13 @@ export const MyLinkedAccounts = () => {
                               keyExtractor={(item, index) => index.toString()}
                          />
                          <AddLinkedAccount />
-                         <Divider style={{ marginVertical: 16 }} />
+                         <Divider className="my-4" />
                     </Box>
                ) : null}
 
                {user.addLinkedAccountRule !== 2 ? (
                     <Box>
-                         <Heading size="lg" style={{ paddingBottom: 8 }}>
+                         <Heading size="lg" className="pb-2">
                               {getTermFromDictionary(language, 'linked_other_accounts')}
                          </Heading>
                          <Text size="sm">
@@ -148,8 +148,8 @@ export const MyLinkedAccounts = () => {
                ) : null}
 
                {user.addLinkedAccountRule !== 2 && user.removeLinkedAccountRule !== 0 ? (
-                    <Box style={{ paddingBottom: 20 }}>
-                         <Divider style={{ marginVertical: 16 }} />
+                    <Box className="pb-5">
+                         <Divider className="my-4" />
                          <DisableAccountLinking />
                     </Box>
                ) : null}
@@ -215,7 +215,7 @@ const Account = ({ account, type }) => {
 
      return (
           <HStack justifyContent="space-around" style={{ paddingTop: 8, paddingBottom: 8, alignItems: 'center', alignContent: 'flex-start' }}>
-               <Text bold isTruncated style={{ width: '60%', maxWidth: '60%' }}>
+               <Text bold isTruncated className="w-[60%] max-w-[60%]">
                     {account.displayName ? account.displayName : account.ils_barcode} - {account.homeLocation}
                </Text>
                {type === 'viewer' && user.removeLinkedAccountRule === 0 ? null : (

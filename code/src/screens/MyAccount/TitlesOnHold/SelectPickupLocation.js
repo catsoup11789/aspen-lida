@@ -56,7 +56,7 @@ export const SelectPickupLocation = (props) => {
                          setShowModal(true);
                     }}>
                     <ActionsheetIcon>
-                        <MaterialIcons name="location-on" size={18} style={{ marginRight: 4 }} />
+                        <MaterialIcons name="location-on" size={18} className="mr-1" />
                     </ActionsheetIcon>
                    <ActionsheetItemText>{getTermFromDictionary(language, 'change_location')}</ActionsheetItemText>
                </ActionsheetItem>
@@ -74,7 +74,7 @@ export const SelectPickupLocation = (props) => {
                               </ModalCloseButton>
                          </ModalHeader>
                          <ModalBody>
-                              <Box style={{ paddingLeft: 16, paddingRight: 16 }}>
+                              <Box className="pl-4 pr-4">
                                    <FormControl>
                                        <FormControlLabel><FormControlLabelText>{getTermFromDictionary(language, 'select_new_pickup')}</FormControlLabelText></FormControlLabel>
                                         <Select
@@ -82,7 +82,7 @@ export const SelectPickupLocation = (props) => {
                                              selectedValue={location}
                                              minWidth="100%"
                                              accessibilityLabel={getTermFromDictionary(language, 'select_new_pickup')}
-                                             style={{ marginTop: 4, marginBottom: 12 }}
+                                             className="mt-1 mb-3"
                                              onValueChange={(itemValue) => setLocation(itemValue)}>
 
                                              <SelectTrigger>
@@ -102,7 +102,7 @@ export const SelectPickupLocation = (props) => {
                                                        <SelectDragIndicatorWrapper>
                                                             <SelectDragIndicator />
                                                        </SelectDragIndicatorWrapper>
-                                                       <ScrollView style={{ maxHeight: 400, minWidth: "100%" }}>
+                                                       <ScrollView className="max-h-100 min-w-full">
                                                             {locations.map((item, index) => {
                                                                  const locationId = item.locationId;
                                                                  const code = item.code;
@@ -127,7 +127,7 @@ export const SelectPickupLocation = (props) => {
                          <ModalFooter>
                               <ButtonGroup
                                    space="md"
-                                   style={{ flexDirection: 'row', justifyContent: 'flex-end', flexWrap: 'wrap' }}
+                                   className="flex-row justify-end flex-wrap"
                                    >
                                    <Button colorScheme="primary"
                                         variant="outline"

@@ -177,7 +177,7 @@ function ResetForm({ resetBody, usernameLabel, emailLabel, username, setUsername
      return (
           <>
                <ModalBody>
-                    <Text style={{ marginBottom: 8 }}>{resetBody}</Text>
+                    <Text className="mb-2">{resetBody}</Text>
                     <FormControl style={{ marginBottom: emailLabel ? 8 : 0 }}>
                          <FormControlLabel>
                               <FormControlLabelText size="sm">

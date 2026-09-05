@@ -42,7 +42,7 @@ export default function LibraryCardScanner() {
 
      if (!permission) {
           return (
-               <View style={{ flex: 1 }}>
+               <View className="flex-1">
                     <LoadingSpinner message="Requesting for camera permissions" />
                </View>
           );
@@ -51,13 +51,13 @@ export default function LibraryCardScanner() {
      if (!permission.granted) {
           if (permission.canAskAgain) {
                return (
-                    <View style={{ flex: 1 }}>
+                    <View className="flex-1">
                          <LoadingSpinner message="Requesting for camera permissions" />
                     </View>
                );
           }
           return (
-               <View style={{ flex: 1 }}>
+               <View className="flex-1">
                     <LoadError error="No access to camera" />
                </View>
           );
@@ -68,7 +68,7 @@ export default function LibraryCardScanner() {
      }
 
      return (
-          <View style={{ flex: 1 }}>
+          <View className="flex-1">
                <CameraView onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} style={[StyleSheet.absoluteFillObject, styles.container]} barcodeScannerSettings={{ barcodeTypes: allowedBarcodes }}>
                     <BarcodeMask edgeColor="#62B1F6" showAnimatedLine={false} />
                     <View style={styles.buttonContainer}>
@@ -76,7 +76,7 @@ export default function LibraryCardScanner() {
                               <ButtonText style={{ color: '#ffffff' }}>Cancel</ButtonText>
                          </Button>
                          {scanned && (
-                              <Button onPress={() => setScanned(false)} style={{ marginLeft: 16 }}>
+                              <Button onPress={() => setScanned(false)} className="ml-4">
                                    <ButtonText>Scan Again</ButtonText>
                               </Button>
                          )}
