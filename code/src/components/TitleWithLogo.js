@@ -87,6 +87,8 @@ const HeaderLogoBar = () => {
 
 export default function TitleWithLogo(props) {
      const { runtimeColors } = useTheme();
+     const textColor = runtimeColors.primary['500-text'];
+     const bg = runtimeColors.primary[500];
      const navigation = useNavigation();
      const hideBack = props.hideBack ?? false;
      const insets = useSafeAreaInsets();
@@ -94,16 +96,16 @@ export default function TitleWithLogo(props) {
      return (
           <VStack style={{ paddingTop: insets.top, paddingLeft: insets.left, paddingRight: insets.right }}>
                <HeaderLogoBar />
-               <HStack style={{ paddingHorizontal: 4, paddingVertical: 8, alignItems: 'center', justifyContent: 'space-between', backgroundColor: runtimeColors.primary.base }}>
+               <HStack style={{ paddingHorizontal: 4, paddingVertical: 8, alignItems: 'center', justifyContent: 'space-between', backgroundColor: bg }}>
                     {navigation.canGoBack() && !hideBack ? (
-                       <Pressable onPress={() => navigation.goBack()} style={{ paddingLeft: 4 }}>
-                            <MaterialIcons name="chevron-left" size={24} style={{ color: runtimeColors.primary.baseContrast }} />
+                       <Pressable onPress={() => navigation.goBack()} className="pl-1">
+                            <MaterialIcons name="chevron-left" size={24} style={{ color: textColor }} />
                        </Pressable>
                     ) : (
-                       <Box style={{ width: 24 }} />
+                       <Box className="w-6" />
                     )}
-                    <Text style={{ paddingLeft: 8, flex: 1, textAlign: 'left', color: runtimeColors.primary.baseContrast, fontWeight: 'bold' }} size="lg" numberOfLines={1} ellipsizeMode="tail">{decodeHTML(props.title)}</Text>
-                    <Box style={{ width: 24 }} />
+                    <Text style={{ paddingLeft: 8, flex: 1, textAlign: 'left', color: textColor, fontWeight: 'bold' }} size="lg" numberOfLines={1} ellipsizeMode="tail">{decodeHTML(props.title)}</Text>
+                    <Box className="w-6" />
                </HStack>
           </VStack>
      );
