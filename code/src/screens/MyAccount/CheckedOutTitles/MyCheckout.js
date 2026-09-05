@@ -1,9 +1,8 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import React, { useState } from 'react';
-import { Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetIcon, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
+import { Actionsheet, ActionsheetBackdrop, ActionsheetIcon, ActionsheetItem } from '@/components/ui/actionsheet';
+import { ThemedActionsheetContent as ActionsheetContent, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
 import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { VStack } from '@/components/ui/vstack';
@@ -42,9 +41,7 @@ export const MyCheckout = (props) => {
      const language = useActiveLanguage();
      const version = formatDiscoveryVersion(library.discoveryVersion);
      const { colorMode, textColor, uiColors } = useTheme();
-     const insets = useSafeAreaInsets();
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const actionSheetBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const [access, setAccess] = useState(false);
      const [returning, setReturn] = useState(false);
@@ -151,11 +148,9 @@ export const MyCheckout = (props) => {
                </HStack>
                <Actionsheet isOpen={isOpen} onClose={toggle} size="full">
                     <ActionsheetBackdrop />
-                    <ActionsheetContent
-                         style={{ backgroundColor: actionSheetBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                    >
+                    <ActionsheetContent>
                          <ActionsheetItem style={{ height: 60, paddingHorizontal: 16 }}>
-                              <ActionsheetItemText style={{ color: textColor, fontWeight: '700' }}>{checkout.title}</ActionsheetItemText>
+                              <ActionsheetItemText style={{ fontWeight: '700' }}>{checkout.title}</ActionsheetItemText>
                          </ActionsheetItem>
                          {checkout.groupedWorkId ? (
                               <ActionsheetItem
@@ -167,7 +162,7 @@ export const MyCheckout = (props) => {
                                    <ActionsheetIcon>
                                         <MaterialIcons name="search" size={18} color={textColor} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
-                                   <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
+                                   <ActionsheetItemText>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                               </ActionsheetItem>
                          ): null}
                          {renewMessage ? (
@@ -209,7 +204,7 @@ export const MyCheckout = (props) => {
                                    <ActionsheetIcon>
                                         <MaterialIcons name="autorenew" size={18} color={textColor} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
-                                   <ActionsheetItemText style={{ color: textColor }}>{stripHTML(renewMessage)}</ActionsheetItemText>
+                                   <ActionsheetItemText>{stripHTML(renewMessage)}</ActionsheetItemText>
                               </ActionsheetItem>
                          ) : null}
                          {checkout.source === 'overdrive' ? (
@@ -235,7 +230,7 @@ export const MyCheckout = (props) => {
                                    <ActionsheetIcon>
                                         <MaterialIcons name="info" size={18} color={textColor} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
-                                   <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'access_instructions')}</ActionsheetItemText>
+                                   <ActionsheetItemText>{getTermFromDictionary(language, 'access_instructions')}</ActionsheetItemText>
                               </ActionsheetItem>
                          ) : null}
                          {checkout.accessOnlineUrl != null ? (
@@ -272,7 +267,7 @@ export const MyCheckout = (props) => {
                                              <MaterialIcons name="logout" size={18} color={textColor} style={{ marginRight: 4 }} />
                                         </ActionsheetIcon>
                                         <CheckoutAccessLabel checkout={checkout} libbyReaderName={libbyReaderName} baseUrl={library.baseUrl} language={language} color={textColor}></CheckoutAccessLabel>
-                                        <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
+                                        <ActionsheetItemText>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
                                    </ActionsheetItem>
                               </>
                          ) : null}
@@ -293,7 +288,7 @@ export const MyCheckout = (props) => {
                                         <ActionsheetIcon>
                                              <MaterialIcons name="logout" size={18} color={textColor} style={{ marginRight: 4 }} />
                                         </ActionsheetIcon>
-                                        <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
+                                        <ActionsheetItemText>{getTermFromDictionary(language, 'checkout_return_now')}</ActionsheetItemText>
                                    </ActionsheetItem>
                               </>
                          ) : null}

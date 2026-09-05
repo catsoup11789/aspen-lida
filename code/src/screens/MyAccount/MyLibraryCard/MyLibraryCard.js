@@ -7,7 +7,8 @@ import { Dimensions } from 'react-native';
 import Barcode from 'react-native-barcode-expo';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
-import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper } from '@/components/ui/actionsheet';
+import { Actionsheet, ActionsheetBackdrop, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper } from '@/components/ui/actionsheet';
+import { ThemedActionsheetContent as ActionsheetContent } from '@/src/components/themed/ThemedActionsheet';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -191,8 +192,7 @@ export const MyLibraryCard = () => {
           await ScreenOrientation.unlockAsync();
      };
 
-     const { textColor, colorMode, runtimeColors } = useTheme();
-     const drawerBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
+     const { textColor, runtimeColors } = useTheme();
 
      return (
           <>
@@ -238,7 +238,7 @@ export const MyLibraryCard = () => {
 
                     <Actionsheet isOpen={showDrawer} onClose={() => setShowDrawer(false)}>
                          <ActionsheetBackdrop />
-                         <ActionsheetContent style={{ backgroundColor: drawerBg }}>
+                         <ActionsheetContent>
                               <ActionsheetDragIndicatorWrapper>
                                    <ActionsheetDragIndicator style={{ backgroundColor: textColor }} />
                               </ActionsheetDragIndicatorWrapper>

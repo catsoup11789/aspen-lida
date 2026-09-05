@@ -5,7 +5,8 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { changeHoldPickUpLocation } from '@/src/util/api/user';
 import {SelectExistingHoldSubLocation} from './SelectExistingHoldSubLocation';
 import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
-import { ActionsheetIcon, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
+import { ActionsheetIcon, ActionsheetItem } from '@/components/ui/actionsheet';
+import { ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -58,7 +59,7 @@ export const SelectPickupLocation = (props) => {
                     <ActionsheetIcon>
                         <Ionicons name="location" size={18} color={textColor} style={{ marginRight: 4 }} />
                     </ActionsheetIcon>
-                   <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'change_location')}</ActionsheetItemText>
+                   <ActionsheetItemText>{getTermFromDictionary(language, 'change_location')}</ActionsheetItemText>
                </ActionsheetItem>
                <Modal
 

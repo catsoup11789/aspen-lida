@@ -3,9 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import React from 'react';
 import { FlatList, Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from '@/components/ui/accordion';
-import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetIcon, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
+import { Actionsheet, ActionsheetBackdrop, ActionsheetIcon, ActionsheetItem } from '@/components/ui/actionsheet';
+import { ThemedActionsheetContent as ActionsheetContent, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
 import { ThemedAlert, ThemedAlertIcon, ThemedAlertText } from '@/src/components/themed/ThemedAlert';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { Box } from '@/components/ui/box';
@@ -504,9 +504,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
      const library = useLibrary();
      const language = useActiveLanguage();
      const {textColor, colorMode, uiColors } = useTheme();
-     const insets = useSafeAreaInsets();
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
-     const actionSheetBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 
      const [deleting, setDelete] = React.useState(false);
      const [isOpen, setIsOpen] = React.useState(false);
@@ -569,9 +567,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                     </HStack>
                     <Actionsheet isOpen={isOpen} onClose={toggle} size="full">
                          <ActionsheetBackdrop />
-                         <ActionsheetContent
-                             style={{ backgroundColor: actionSheetBg, paddingBottom: Platform.OS === 'android' ? insets.bottom + 16 : 16 }}
-                         >
+                         <ActionsheetContent>
                              <Box style={{ width: '100%', height: 60, paddingHorizontal: 16, justifyContent: 'center' }}>
                                    <Text
                                        size="lg"
@@ -588,7 +584,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                                         <ActionsheetIcon>
                                             <MaterialIcons name="search" size={18} color={textColor} style={{ marginRight: 4 }} />
                                         </ActionsheetIcon>
-                                       <ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
+                                       <ActionsheetItemText>{getTermFromDictionary(language, 'view_item_details')}</ActionsheetItemText>
                                    </ActionsheetItem>
                               ) : null}
                               <ActionsheetItem
@@ -604,7 +600,7 @@ const Item = React.memo(({ data: item, onDelete }) => {
                                    <ActionsheetIcon>
                                        <MaterialIcons name="delete" size={18} color={textColor} style={{ marginRight: 4 }} />
                                    </ActionsheetIcon>
-                                   <ActionsheetItemText style={{ color: textColor }}>
+                                   <ActionsheetItemText>
                                         {getTermFromDictionary(language, 'reading_history_delete')}
                                    </ActionsheetItemText>
                               </ActionsheetItem>

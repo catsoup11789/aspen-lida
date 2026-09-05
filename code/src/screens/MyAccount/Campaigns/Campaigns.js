@@ -8,7 +8,8 @@ import { Image } from 'expo-image';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
 import { FlatList } from 'react-native';
-import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
+import { Actionsheet, ActionsheetBackdrop, ActionsheetDragIndicator, ActionsheetDragIndicatorWrapper, ActionsheetItem } from '@/components/ui/actionsheet';
+import { ThemedActionsheetContent as ActionsheetContent, ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -55,9 +56,8 @@ export const MyCampaigns = () => {
 	const queryClient = useQueryClient();
 	const library = useLibrary();
 	const language = useActiveLanguage();
-	const { uiColors, textColor, colorMode } = useTheme();
+	const { uiColors, colorMode } = useTheme();
 	const panelBg = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
-	const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 	const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 
 	React.useEffect(() => {
@@ -497,14 +497,14 @@ export const MyCampaigns = () => {
 		return (
 			<Actionsheet isOpen={showActionSheet} onClose={handleCloseActions}>
 				<ActionsheetBackdrop />
-				<ActionsheetContent style={{ backgroundColor: surfaceBg }}>
+				<ActionsheetContent>
 					<ActionsheetDragIndicatorWrapper>
 						<ActionsheetDragIndicator />
 					</ActionsheetDragIndicatorWrapper>
 
 					{(selectedCampaign?.canEnroll || selectedCampaign?.enrolled) && (
 						<ActionsheetItem onPress={handleEnrollUnenroll}>
-							<ActionsheetItemText style={{ color: textColor }}>
+							<ActionsheetItemText>
 								{selectedCampaign?.enrolled ? 'Unenroll' : 'Enroll'}
 							</ActionsheetItemText>
 						</ActionsheetItem>
@@ -512,13 +512,13 @@ export const MyCampaigns = () => {
 					{filterBy !== 'linkedUserCampaigns' && selectedCampaign?.enrolled && (
 						<React.Fragment>
 							<ActionsheetItem onPress={handleEmailNotificationOptions}>
-								<ActionsheetItemText style={{ color: textColor }}>
+								<ActionsheetItemText>
 									{selectedCampaign?.optInToCampaignEmailNotifications ? 'Opt Out of Notifications' : 'Opt in to Notifications'}
 								</ActionsheetItemText>
 							</ActionsheetItem>
 							{library?.displayCampaignLeaderboard && library?.campaignLeaderboardDisplay === 'displayUser' && (
 								<ActionsheetItem onPress={handleLeaderboardOptions}>
-									<ActionsheetItemText style={{ color: textColor }}>
+									<ActionsheetItemText>
 										{selectedCampaign?.optInToCampaignLeaderboard ? 'Opt Out of Leaderboard' : 'Opt in to Leaderboard'}
 									</ActionsheetItemText>
 								</ActionsheetItem>
@@ -526,7 +526,7 @@ export const MyCampaigns = () => {
 						</React.Fragment>
 					)}
 					<ActionsheetItem onPress={handleCloseActions}>
-						<ActionsheetItemText style={{ color: textColor }}>{getTermFromDictionary(language, 'cancel')}</ActionsheetItemText>
+						<ActionsheetItemText>{getTermFromDictionary(language, 'cancel')}</ActionsheetItemText>
 					</ActionsheetItem>
 				</ActionsheetContent>
 			</Actionsheet>

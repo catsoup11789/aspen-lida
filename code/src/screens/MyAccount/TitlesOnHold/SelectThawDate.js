@@ -8,7 +8,8 @@ import {logWarnMessage} from '@/src/util/logging';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
-import { ActionsheetIcon, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
+import { ActionsheetIcon, ActionsheetItem } from '@/components/ui/actionsheet';
+import { ThemedActionsheetItemText as ActionsheetItemText } from '@/src/components/themed/ThemedActionsheet';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
@@ -96,7 +97,7 @@ export const SelectThawDate = (props) => {
                               <MaterialIcons name="pause" size={18} color={textColor} style={{ marginRight: 4 }} />
                          </ActionsheetIcon>
                     )}
-                    <ActionsheetItemText style={{ color: textColor }}>{actionLabel}</ActionsheetItemText>
+                    <ActionsheetItemText>{actionLabel}</ActionsheetItemText>
                </ActionsheetItem>
 
                {/* Moved avoidKeyboard to ModalContent where v1 tracks layouts */}
