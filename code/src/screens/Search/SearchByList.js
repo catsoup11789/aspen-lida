@@ -90,7 +90,7 @@ export const SearchResultsForList = () => {
      };
 
      return (
-          <SafeAreaView className="flex-1">
+          <SafeAreaView style={{ flex: 1 }}>
                {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {status === 'loading' || isFetching ? (
                     <LoadingSpinner />

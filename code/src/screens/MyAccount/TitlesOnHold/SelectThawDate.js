@@ -27,7 +27,7 @@ export const SelectThawDate = (props) => {
      const { freezingLabel, freezeLabel, label, libraryContext, onClose, freezeId, recordId, source, userId, resetGroup } = props;
      let data = props.data;
      const language = useActiveLanguage();
-     const { runtimeColors, colorMode } = useTheme();
+     const { colorMode } = useTheme();
      const [loading, setLoading] = React.useState(false);
      const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
      const [showIndefiniteWarning, setShowIndefiniteWarning] = React.useState(false);
@@ -127,13 +127,8 @@ export const SelectThawDate = (props) => {
                                         aria-label={getTermFromDictionary("en", "freeze_indefinite_checkbox")}
                                         value="freeze-indefinite"
                                    >
-                                        <CheckboxIndicator style={freezeIndefinite ? { borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : undefined}>
-                                             <CheckboxIcon
-                                                  as={MaterialIcons}
-                                                  name="check"
-                                                  style={{ color: runtimeColors.primary['500-text'] }}
-                                                  size="sm"
-                                             />
+                                        <CheckboxIndicator>
+                                             <CheckboxIcon />
                                         </CheckboxIndicator>
                                         <CheckboxLabel className="pl-2">
                                              {getTermFromDictionary("en", "freeze_indefinite_checkbox")}

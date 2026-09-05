@@ -117,7 +117,7 @@ export const GroupedWorkScreen = () => {
      };
 
      return (
-          <SafeAreaView className="flex-1">
+          <SafeAreaView style={{ flex: 1 }}>
                {status === 'loading' || isFetching ? (
                     <LoadingSpinner message="Fetching data..." />
                ) : status === 'error' ? (
@@ -168,7 +168,7 @@ const DisplayGroupedWork = (payload) => {
      return (
           <Box className="p-2.5 w-full">
                <Center className="mt-5 w-full">
-                    <Image alt={groupedWork.title} source={groupedWork.cover} className="w-45 h-62.5 rounded" placeholder={blurhash} transition={1000} contentFit="cover" />
+                    <Image alt={groupedWork.title} source={groupedWork.cover} style={{ width: 180.0, height: 250.0, borderRadius: 4 }} placeholder={blurhash} transition={1000} contentFit="cover" />
                     <Title title={groupedWork.title} />
                     <Author author={groupedWork.author} />
                </Center>
@@ -249,8 +249,8 @@ const Format = (data) => {
                variant={btnStyle}
                colorScheme="secondary"
                onPress={() => updateFormat(key)}
-               style={btnStyle === 'outline' ? { backgroundColor: 'transparent', borderColor: neutralColor, marginBottom: 4, marginRight: 4 } : { marginBottom: 4, marginRight: 4 }}>
-               <ButtonText style={btnStyle === 'outline' ? { color: neutralColor } : null}>{format.label}</ButtonText>
+               >
+               <ButtonText>{format.label}</ButtonText>
           </Button>
      );
 };

@@ -290,7 +290,7 @@ export const MyLists = () => {
                     <Pressable onPress={() => handleOpenList(item)} className="pl-1 pr-1 py-2">
                          <HStack space={3} className="mt-2 mb-2 justify-start">
                               <VStack space={1}>
-                                   <Image alt={item.title} source={imageUrl} className="w-25 h-37.5 rounded-lg" placeholder={blurhash} transition={1000} contentFit="cover" />
+                                   <Image alt={item.title} source={imageUrl} style={{ width: 100.0, height: 150.0, borderRadius: 8 }} placeholder={blurhash} transition={1000} contentFit="cover" />
                                    <Badge style={{ marginTop: 4, backgroundColor: resolvedUiColors.surface }}>
                                         <BadgeText style={{ color: resolvedUiColors.iconMuted, fontSize: 10, textAlign: 'center' }}>{privacy}</BadgeText>
                                    </Badge>

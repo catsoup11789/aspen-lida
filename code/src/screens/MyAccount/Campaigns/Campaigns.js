@@ -233,7 +233,7 @@ export const MyCampaigns = () => {
 			<VStack space="sm">
 				<Image
 					source={{ uri: imageUrl }}
-					className="w-25 h-25"
+					style={{ width: 100.0, height: 100.0 }}
 				/>
 					{canShare && onShare ? (
 					<Pressable onPress={() => onShare(imageUrl)}>
@@ -258,7 +258,7 @@ export const MyCampaigns = () => {
 					<VStack space="sm">
 					<Image
 						source={PlaceholderImg}
-						className="w-25 h-25"
+						style={{ width: 100.0, height: 100.0 }}
 					/>
 				</VStack>
 					);

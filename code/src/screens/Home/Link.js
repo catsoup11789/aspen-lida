@@ -172,7 +172,7 @@ const Link = ({link}) => {
                     {link?.typeOfIcon === 'uploadIcon' && imgSource ? (
                          <Image
                               source={{ uri: imgSource }}
-                              className="w-13 h-13 mb-2"
+                              style={{ width: 52.0, height: 52.0, marginBottom: 8.0 }}
                               contentFit="contain"
                          />
                     ) : (

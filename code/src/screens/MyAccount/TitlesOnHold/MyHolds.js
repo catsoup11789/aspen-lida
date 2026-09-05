@@ -535,7 +535,7 @@ export const MyHolds = () => {
                                    }}>
                                    <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'holds_reload')}</ButtonText>
                               </Button>
-                              <FormControl className="w-[245px]">
+                              <FormControl className="w-61.25">
                                    <Select name="holdSource" selectedValue={holdSource} defaultValue={holdSource} initialLabel="Test" accessibilityLabel="Filter By Source" onValueChange={(itemValue) => toggleHoldSource(itemValue)}>
                                         <SelectTrigger size="sm">
                                              <SelectInput value={holdSourceLabel()}/>
@@ -566,14 +566,14 @@ export const MyHolds = () => {
      const displaySectionHeader = (title) => {
           if (title === 'Pending') {
                return (
-                   <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
-                        <Heading className="pb-1 pt-3">
-                              {getTermFromDictionary(language, 'pending_holds')}
-                         </Heading>
-                        <ThemedAlert action="info" className="rounded-lg mb-2">
-                             <HStack className="p-3">
-                                  <ThemedAlertIcon action="info" className="mr-3" />
-                                  <ThemedAlertText action="info" size="xs">{getTermFromDictionary(language, 'pending_holds_message')}</ThemedAlertText>
+                    <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
+                         <Heading className="pb-1 pt-3">{getTermFromDictionary(language, 'pending_holds')}</Heading>
+                         <ThemedAlert action="info">
+                              <HStack>
+                                   <ThemedAlertIcon action="info" />
+                                   <ThemedAlertText action="info" size="xs">
+                                        {getTermFromDictionary(language, 'pending_holds_message')}
+                                   </ThemedAlertText>
                               </HStack>
                          </ThemedAlert>
                          {actionButtons('pending')}
@@ -581,14 +581,14 @@ export const MyHolds = () => {
                );
           } else {
                return (
-                   <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
-                        <Heading className="pb-1">
-                              {getTermFromDictionary(language, 'holds_ready_for_pickup')}
-                         </Heading>
-                        <ThemedAlert action="info" className="rounded-lg mb-2">
-                             <HStack className="p-3">
-                             <ThemedAlertIcon action="info" className="mr-3" />
-                             <ThemedAlertText action="info" size="xs">{getTermFromDictionary(language, 'holds_ready_for_pickup_message')}</ThemedAlertText>
+                    <Box style={{ backgroundColor: surfaceBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap', maxWidth: '100%', padding: 8 }}>
+                         <Heading className="pb-1">{getTermFromDictionary(language, 'holds_ready_for_pickup')}</Heading>
+                         <ThemedAlert action="info">
+                              <HStack>
+                                   <ThemedAlertIcon action="info" />
+                                   <ThemedAlertText action="info" size="xs">
+                                        {getTermFromDictionary(language, 'holds_ready_for_pickup_message')}
+                                   </ThemedAlertText>
                               </HStack>
                          </ThemedAlert>
                          {actionButtons('ready')}

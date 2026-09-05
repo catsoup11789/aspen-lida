@@ -186,7 +186,7 @@ const DisplayEvent = (payload) => {
                               <Image
                                    alt={event.title}
                                    source={event.cover}
-                                   className="w-full h-37.5 rounded-lg"
+                                   style={{ width: '100%', height: 150.0, borderRadius: 8 }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"

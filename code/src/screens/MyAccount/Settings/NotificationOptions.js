@@ -77,7 +77,7 @@ export const Settings_NotificationOptions = () => {
      logDebugMessage("Rendering Notification Options");
      logDebugMessage(notificationSettings);
      return (
-          <SafeAreaView className="flex-1">
+          <SafeAreaView style={{ flex: 1 }}>
                <Box className="flex-1 p-5">
                     <HStack space="sm" className="pb-3 items-center justify-between">
                          <Text bold>{getTermFromDictionary(language, 'notifications_allow')}</Text>

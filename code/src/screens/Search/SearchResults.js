@@ -228,7 +228,7 @@ export const SearchResults = () => {
      };
 
      return (
-          <SafeAreaView className="flex-1">
+          <SafeAreaView style={{ flex: 1 }}>
                {_.size(systemMessagesForScreen) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}
                {status === 'loading' || isFetching ? (
                     <LoadingSpinner />
@@ -388,7 +388,7 @@ const DisplayResult = (data) => {
                                    <Image
                                         alt={item.title}
                                         source={url}
-                                        className="w-full h-full rounded"
+                                        style={{ width: '100%', height: '100%', borderRadius: 4 }}
                                         placeholder={blurhash}
                                         transition={1000}
                                         contentFit="cover"
@@ -438,7 +438,7 @@ const DisplayResult = (data) => {
                               <Image
                                    alt={item.title}
                                    source={url}
-                                   className="w-full h-full rounded"
+                                   style={{ width: '100%', height: '100%', borderRadius: 4 }}
                                    placeholder={blurhash}
                                    transition={1000}
                                    contentFit="cover"

@@ -56,7 +56,7 @@ export const ThemedBadge = React.forwardRef(({ colorScheme, variant = 'solid', c
                     ref={ref}
                     variant={variant === 'outline' ? 'outline' : 'solid'}
                     className={className}
-                    style={[{ backgroundColor: colors.backgroundColor, borderColor: colors.borderColor }, style]}
+                    style={[{ backgroundColor: colors.backgroundColor, borderColor: colors.borderColor, borderRadius: 4 }, style]}
                     {...props}
                />
           </BadgeActionContext.Provider>

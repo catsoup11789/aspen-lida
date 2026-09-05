@@ -254,7 +254,7 @@ const DisplayMap = (data) => {
                <Box className="pt-0.5 pb-0.5">
                     <AppleMaps.View
                          ref={mapRef}
-                         className="h-45 w-full"
+                         style={{ height: 180, width: '100%' }}
                          cameraPosition={cameraPosition}
                          colorScheme={
                               mapColorMode === 'light'
@@ -282,7 +282,7 @@ const DisplayMap = (data) => {
          <Box className="pt-0.5 pb-0.5">
                <GoogleMaps.View
                     ref={mapRef}
-                    className="h-45 w-full"
+                    style={{ height: 180, width: '100%' }}
                     cameraPosition={cameraPosition}
                     colorScheme={
                          mapColorMode === 'light' ? GoogleMaps.MapColorScheme.LIGHT : GoogleMaps.MapColorScheme.DARK

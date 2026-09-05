@@ -141,7 +141,7 @@ const SavedSearch = (data) => {
                          <Image
                               alt={item.title}
                              source={imageUrl}
-                             className="w-25 h-37.5 rounded-lg"
+                             style={{ width: 100.0, height: 150.0, borderRadius: 8 }}
                              placeholder={blurhash}
                              transition={1000}
                              contentFit="cover"

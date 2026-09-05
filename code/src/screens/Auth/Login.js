@@ -254,7 +254,7 @@ export const LoginScreen = () => {
      };
 
      const loginScreenContent = (
-          <SafeAreaView className="flex-1">
+          <SafeAreaView style={{ flex: 1 }}>
                <Box className="px-5 flex-1 items-center justify-center">
                     <Pressable onPress={onLogoTap}>
                          <Image source={{ uri: logoImage }} className="w-24 h-24 rounded-3xl" alt="" fallbackSource={require('../../themes/default/aspenLogo.png')} />

@@ -200,7 +200,7 @@ const EditList = (props) => {
  */
 const DeleteList = (props) => {
       const { listId } = props;
-      const {textColor, uiColors, runtimeColors, resolvedUiColors } = useTheme();
+      const {textColor, uiColors, resolvedUiColors } = useTheme();
       const { data: userState } = useUserState();
       const library = useLibrary();
       const language = useActiveLanguage();
@@ -213,7 +213,6 @@ const DeleteList = (props) => {
       const cancelRef = React.useRef(null);
       const user = userState?.user ?? {};
      const surfaceBg = resolvedUiColors.surface;
-     const borderColor = resolvedUiColors.border;
 
      return (
           <Center>
@@ -237,8 +236,8 @@ const DeleteList = (props) => {
                               {!user.hideSoftDeleteListUI && (
                                    <FormControl className="pt-3">
                                         <Checkbox value="optOut" isChecked={optOutOfSoftDeletion} onChange={(isChecked) => setOptOutOfSoftDeletion(isChecked)} alignItems="center">
-                                             <CheckboxIndicator style={optOutOfSoftDeletion ? { borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : { borderColor }}>
-                                                  <CheckboxIcon style={{ color: runtimeColors.primary['500-text'] }} />
+                                             <CheckboxIndicator>
+                                                  <CheckboxIcon />
                                              </CheckboxIndicator>
                                              <CheckboxLabel>{getTermFromDictionary(language, 'opt_out_soft_deletion')}</CheckboxLabel>
                                         </Checkbox>

@@ -363,7 +363,7 @@ export const SplashScreen = ({ shouldInitializeTheme = false, forceRefreshTheme 
      return (
           <Center testID="splash-center" style={{ flex: 1, paddingHorizontal: 12, backgroundColor: splashBackgroundColor }}>
                <VStack space="md" className="items-center">
-                    <Image source={{ uri: splashImage }} className="w-48 h-48" contentFit="contain" alt={getTermFromDictionary('en', 'app_name')} />
+                    <Image source={{ uri: splashImage }} style={{ width: 192.0, height: 192.0 }} contentFit="contain" alt={getTermFromDictionary('en', 'app_name')} />
                     <Spinner size="small" />
                </VStack>
           </Center>
