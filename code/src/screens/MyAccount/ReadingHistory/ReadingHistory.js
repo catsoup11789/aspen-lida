@@ -222,8 +222,9 @@ export const MyReadingHistory = () => {
                                              </AccordionTitleText>
                                              <AccordionIcon
                                                   as={MaterialIcons}
-                                                  name={isExpanded ? 'expand-less' : 'expand-more'}
+                                                  name='expand-more'
                                                   style={{ color: textColor }}
+                                                  size={20}
                                              />
                                         </>
                                    )}
