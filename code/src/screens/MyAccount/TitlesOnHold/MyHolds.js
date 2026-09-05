@@ -8,7 +8,6 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { ThemedCheckboxGroup as CheckboxGroup } from '../../../components/themed/ThemedCheckbox';
-import { ThemedFormControl as FormControl } from '@/src/components/themed/ThemedFormControls';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
@@ -337,8 +336,8 @@ export const MyHolds = () => {
                     return (
                         <Box className="p-2">
                              <ScrollView horizontal>
-                                   <HStack space="sm">
-                                        <FormControl style={{ width: pendingSortLength }}>
+                                   <HStack space="sm" className="items-center">
+                                        <Box style={{ width: pendingSortLength }}>
                                             <Select
                                                  name="sortBy"
                                                  selectedValue={userHoldPendingSortMethod}
@@ -366,7 +365,7 @@ export const MyHolds = () => {
                                                        </SelectContent>
                                                   </SelectPortal>
                                              </Select>
-                                        </FormControl>
+                                        </Box>
                                         <ManageSelectedHolds language={language} selectedValues={values} onAllDateChange={handleDateChange} selectedReactivationDate={date} resetGroup={resetGroup} />
                                         <Button size="sm" variant="outline" style={{ marginRight: 4, borderColor }} onPress={() => clearGroupValue()}>
                                              <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'holds_clear_selections')}</ButtonText>
@@ -380,8 +379,8 @@ export const MyHolds = () => {
                return (
                    <Box className="p-2">
                          <ScrollView horizontal>
-                              <HStack space="sm">
-                                   <FormControl style={{ width: pendingSortLength }}>
+                              <HStack space="sm" className="items-center">
+                                   <Box style={{ width: pendingSortLength }}>
                                         <Select
                                              name="sortBy"
                                              selectedValue={userHoldPendingSortMethod}
@@ -410,7 +409,7 @@ export const MyHolds = () => {
                                                   </SelectContent>
                                              </SelectPortal>
                                         </Select>
-                                   </FormControl>
+                                   </Box>
                                    <ManageAllHolds language={language} data={holds} onDateChange={handleDateChange} selectedReactivationDate={date} resetGroup={resetGroup} />
                               </HStack>
                          </ScrollView>
@@ -468,8 +467,8 @@ export const MyHolds = () => {
                return (
                    <Box className="p-2">
                          <ScrollView horizontal>
-                              <HStack space="sm">
-                                   <FormControl style={{ width: readySortLength }}>
+                              <HStack space="sm" className="items-center">
+                                   <Box style={{ width: readySortLength }}>
                                         <Select
                                              name="sortBy"
                                              selectedValue={userHoldReadySortMethod}
@@ -495,7 +494,7 @@ export const MyHolds = () => {
                                                   </SelectContent>
                                              </SelectPortal>
                                         </Select>
-                                   </FormControl>
+                                   </Box>
                               </HStack>
                          </ScrollView>
                     </Box>
@@ -525,7 +524,7 @@ export const MyHolds = () => {
                <Box style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
                     {showSystemMessage()}
                     <ScrollView horizontal>
-                         <HStack space="sm">
+                         <HStack space="sm" className="items-center">
                               <Button
                                    size="sm"
                                    variant="outline"
@@ -535,7 +534,7 @@ export const MyHolds = () => {
                                    }}>
                                    <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'holds_reload')}</ButtonText>
                               </Button>
-                              <FormControl className="w-61.25">
+                              <Box style={{ width: 245 }}>
                                    <Select name="holdSource" selectedValue={holdSource} defaultValue={holdSource} initialLabel="Test" accessibilityLabel="Filter By Source" onValueChange={(itemValue) => toggleHoldSource(itemValue)}>
                                         <SelectTrigger size="sm">
                                              <SelectInput value={holdSourceLabel()}/>
@@ -556,7 +555,7 @@ export const MyHolds = () => {
                                              </SelectContent>
                                         </SelectPortal>
                                    </Select>
-                              </FormControl>
+                              </Box>
                          </HStack>
                     </ScrollView>
                </Box>

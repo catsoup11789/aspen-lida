@@ -64,7 +64,7 @@ export const SearchHome = () => {
                     {quickSearchNum > 0 ? (
                          <Box>
                               <Center>
-                                   <Text bold className="mt-2 mb-0.5" size="xl">
+                                   <Text bold className="mt-2 mb-[2px]" size="xl">
                                         {getTermFromDictionary(language, 'quick_searches')}
                                    </Text>
                               </Center>

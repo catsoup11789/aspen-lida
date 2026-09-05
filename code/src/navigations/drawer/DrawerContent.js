@@ -762,7 +762,7 @@ const UserProfileOverview = () => {
      return (
           <Box className="px-3">
                <HStack space="md" alignItems="center">
-                    <Image source={{ uri: icon }} fallbackSource={require('../../themes/default/aspenLogo.png')} className="w-10.5 h-10.5 rounded-md" alt={getTermFromDictionary(language, 'library_card')} />
+                    <Image source={{ uri: icon }} fallbackSource={require('../../themes/default/aspenLogo.png')} className="w-[42px] h-[42px] rounded-md" alt={getTermFromDictionary(language, 'library_card')} />
                     <Box className="ml-3">
                          {user.displayName ? (
                               <Text numberOfLines={1} className="max-w-[175px] font-bold" size="md">

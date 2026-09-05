@@ -251,7 +251,7 @@ const DisplayMap = (data) => {
 
      if (Platform.OS === 'ios') {
           return (
-               <Box className="pt-0.5 pb-0.5">
+               <Box className="pt-[2px] pb-[2px]">
                     <AppleMaps.View
                          ref={mapRef}
                          style={{ height: 180, width: '100%' }}
@@ -279,7 +279,7 @@ const DisplayMap = (data) => {
      }
 
      return (
-         <Box className="pt-0.5 pb-0.5">
+         <Box className="pt-[2px] pb-[2px]">
                <GoogleMaps.View
                     ref={mapRef}
                     style={{ height: 180, width: '100%' }}

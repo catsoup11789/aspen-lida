@@ -96,7 +96,7 @@ const ShowItemDetails = (props) => {
                             size="sm"
                             colorScheme="secondary">
                             <HStack space="xs" className="items-center">
-                                 <MaterialIcons name="location-pin" size={14} className="mr--1" />
+                                 <MaterialIcons name="location-pin" size={14} className="mr-[-4px]" />
                                  <ButtonText>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                             </HStack>
                         </Button>
@@ -105,7 +105,7 @@ const ShowItemDetails = (props) => {
                              <ModalContent>
                                   <ModalHeader>
                                        <HStack className="items-center">
-                                            <MaterialIcons name="location-pin" size={14} className="mt-0.5 pr-[5px]" />
+                                            <MaterialIcons name="location-pin" size={14} className="mt-[2px] pr-[5px]" />
                                             <Heading>{getTermFromDictionary(language, 'where_is_it')}</Heading>
                                        </HStack>
                                   </ModalHeader>
@@ -126,7 +126,7 @@ const ShowItemDetails = (props) => {
                    <Center>
                         <Button onPress={() => setShowModal(true)} variant="ghost" size="sm" colorScheme="secondary">
                             <HStack space="xs" className="items-center">
-                                 <MaterialIcons name="location-pin" size={14} className="mr--1" />
+                                 <MaterialIcons name="location-pin" size={14} className="mr-[-4px]" />
                                  <ButtonText>{getTermFromDictionary(language, 'where_is_it')}</ButtonText>
                             </HStack>
                         </Button>
@@ -135,7 +135,7 @@ const ShowItemDetails = (props) => {
                              <ModalContent>
                                   <ModalHeader>
                                        <HStack className="items-center">
-                                            <MaterialIcons name="location-pin" size={14} className="mt-0.5 pr-[5px]" />
+                                            <MaterialIcons name="location-pin" size={14} className="mt-[2px] pr-[5px]" />
                                             <Heading>{getTermFromDictionary(language, 'where_is_it')}</Heading>
                                        </HStack>
                                   </ModalHeader>

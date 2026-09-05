@@ -384,7 +384,7 @@ const DisplayResult = (data) => {
                <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                     <HStack space="md">
                          <VStack className="w-25">
-                              <Box className="h-37.5">
+                              <Box className="h-[150px]">
                                    <Image
                                         alt={item.title}
                                         source={url}
@@ -434,7 +434,7 @@ const DisplayResult = (data) => {
           <Pressable style={{ borderBottomWidth: 1, borderColor: resolvedUiColors.border, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }} onPress={handlePressItem}>
                <HStack space="md">
                     <VStack className="w-25">
-                         <Box className="h-37.5">
+                         <Box className="h-[150px]">
                               <Image
                                    alt={item.title}
                                    source={url}

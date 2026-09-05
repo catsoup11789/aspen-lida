@@ -40,7 +40,7 @@ export const SearchIndexScreen = () => {
                     <Box className="px-5">
                          {_.map(indexes, function (obj, index, array) {
                               return (
-                                   <Pressable key={index} className="p-0.5 py-2" onPress={() => updateIndex(index)}>
+                                   <Pressable key={index} className="p-[2px] py-2" onPress={() => updateIndex(index)}>
                                         {currentIndex === index ? (
                                             <HStack space="sm" className="justify-start items-center">
                                                  <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} />

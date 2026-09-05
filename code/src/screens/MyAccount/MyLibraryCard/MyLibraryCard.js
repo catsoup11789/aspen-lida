@@ -403,7 +403,7 @@ const CreateLibraryCard = (data) => {
                     <>
                          <Center>
                               <HStack>
-                                   {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} alt={getTermFromDictionary(language, 'library_card')} className="w-10.5 h-10.5" /> : null}
+                                   {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} alt={getTermFromDictionary(language, 'library_card')} className="w-[42px] h-[42px]" /> : null}
                                    <Text bold size="lg" className="ml-3 mt-2">
                                         {card.homeLocation}
                                    </Text>

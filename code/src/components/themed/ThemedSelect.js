@@ -29,6 +29,18 @@ const SELECT_ICON_SIZE = {
      sm: 'h-3.5 w-3.5',
 };
 
+// gluestack's own selectTriggerStyle only sets a min-h-* floor per size, which lets the trigger's
+// actual rendered height drift above ThemedButton's exact per-size height (icon + text content can
+// exceed the floor) -- an exact h-* here, matching ThemedButton's BUTTON_SIZE_STYLES min-h values,
+// pins them to the same height so a Button and a Select sitting side by side in a row stay aligned
+// regardless of content, instead of just relying on flex centering to paper over a height mismatch.
+const SELECT_TRIGGER_HEIGHT = {
+     xl: 'h-12',
+     lg: 'h-11',
+     md: 'h-10',
+     sm: 'h-9',
+};
+
 const SelectValueContext = React.createContext(undefined);
 
 export const ThemedSelect = React.forwardRef(({ selectedValue, ...props }, ref) => {
@@ -53,8 +65,11 @@ export const ThemedSelectTrigger = React.forwardRef(({ children, variant = 'outl
      const { resolvedUiColors } = useTheme();
      const borderColor = resolvedUiColors.border;
 
+     const heightClass = SELECT_TRIGGER_HEIGHT[size] ?? SELECT_TRIGGER_HEIGHT.md;
+     const mergedStyle = Array.isArray(style) ? Object.assign({ borderColor }, ...style.filter(Boolean)) : { borderColor, ...style };
+
      return (
-          <SelectTrigger variant="outline" ref={ref} size={size} className={['justify-between', className].filter(Boolean).join(' ')} style={[{ borderColor }, style]} {...props}>
+          <SelectTrigger variant="outline" ref={ref} size={size} className={['justify-between', heightClass, className].filter(Boolean).join(' ')} style={mergedStyle} {...props}>
                {children}
                <MaterialIcons name="expand-more" size={18} className="mr-3" />
           </SelectTrigger>

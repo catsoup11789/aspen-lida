@@ -131,7 +131,7 @@ const SavedSearch = (data) => {
                     <VStack className="max-w-[35%]">
                          {isNew ? (
                               <Box style={{ width: '100%', zIndex: 1 }}>
-                                   <Badge colorScheme="warning" className="mb--3 ml--1">
+                                   <Badge colorScheme="warning" className="mb-[-12px] ml-[-4px]">
                                         <BadgeText colorScheme="warning" size="xs">
                                              {getTermFromDictionary(language, 'flag_new')}
                                         </BadgeText>
@@ -171,7 +171,7 @@ const SavedSearch = (data) => {
                               </Text>
                          ) : null}
                          {item.format ? (
-                              <HStack className="mt-1.5 flex-wrap" space={1}>
+                              <HStack className="mt-[6px] flex-wrap" space={1}>
                                    {formats.map((format, index) => {
                                         return (
                                              <Badge key={index} colorScheme="info" variant="outline" className="mt-1 rounded-lg ml-2">

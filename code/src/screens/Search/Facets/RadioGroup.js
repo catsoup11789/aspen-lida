@@ -76,7 +76,7 @@ export const Facet_RadioGroup = ({ title, data, category, updater, applied }) =>
           return (
                <VStack space="sm">
                     {data.map((facet, index) => (
-                         <Pressable key={index} onPress={() => updateValue(facet.value)} className="py-2 px-0.5">
+                         <Pressable key={index} onPress={() => updateValue(facet.value)} className="py-2 px-[2px]">
                               {value === facet.value ? (
                                    <HStack space="sm" justifyContent="flex-start" alignItems="center">
                                         <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[500]} />
@@ -101,7 +101,7 @@ export const Facet_RadioGroup = ({ title, data, category, updater, applied }) =>
      return (
           <VStack space="sm">
                {data.map((facet, index) => (
-                    <Pressable key={index} onPress={() => updateValue(facet.value)} className="py-2 px-0.5">
+                    <Pressable key={index} onPress={() => updateValue(facet.value)} className="py-2 px-[2px]">
                          {value === facet.value ? (
                               <HStack space="sm" justifyContent="flex-start" alignItems="center">
                                    <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[500]} />

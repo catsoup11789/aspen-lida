@@ -387,7 +387,7 @@ export const MyCheckouts = () => {
           if (numCheckedOut > 0) {
                return (
                     <VStack space="sm">
-                         <HStack space="sm">
+                         <HStack space="sm" className="items-center">
                               <Button
                                    isLoading={renewAll}
                                    isLoadingText={getTermFromDictionary(language, 'renewing_all', true)}
@@ -405,7 +405,8 @@ export const MyCheckouts = () => {
                                                        confirmRenewalFee: result.confirmRenewalFee ?? false,
                                                        recordId: record ?? null,
                                                        action: result.api.action,
-                                                       renewType: 'all' });
+                                                       renewType: 'all',
+                                                  });
                                              }
 
                                              if (result?.confirmRenewalFee && result.confirmRenewalFee) {
@@ -418,9 +419,7 @@ export const MyCheckouts = () => {
                                         });
                                    }}>
                                    {!renewAll && <MaterialIcons name="autorenew" size={18} color={runtimeColors.primary['500-text']} className="mr-1" />}
-                                   <ButtonText>
-                                        {renewAll ? getTermFromDictionary(language, 'renewing_all', true) : getTermFromDictionary(language, 'checkout_renew_all')}
-                                   </ButtonText>
+                                   <ButtonText>{renewAll ? getTermFromDictionary(language, 'renewing_all', true) : getTermFromDictionary(language, 'checkout_renew_all')}</ButtonText>
                               </Button>
                               <Button
                                    style={{ borderColor }}
@@ -432,13 +431,8 @@ export const MyCheckouts = () => {
                                    }}>
                                    <ButtonText style={{ color: textColor }}>{getTermFromDictionary(language, 'checkouts_reload')}</ButtonText>
                               </Button>
-                              <FormControl style={{ width: checkoutsSourceLabelLength }}>
-                                   <Select
-                                        name="checkoutSource"
-                                        selectedValue={checkoutSource}
-                                        defaultValue={checkoutSource}
-                                        accessibilityLabel={getTermFromDictionary(language, 'filter_by_source_label')}
-                                        onValueChange={(itemValue) => toggleCheckoutSource(itemValue)}>
+                              <Box style={{ width: checkoutsSourceLabelLength }}>
+                                   <Select name="checkoutSource" selectedValue={checkoutSource} defaultValue={checkoutSource} accessibilityLabel={getTermFromDictionary(language, 'filter_by_source_label')} onValueChange={(itemValue) => toggleCheckoutSource(itemValue)}>
                                         <SelectTrigger size="sm">
                                              <SelectInput value={checkoutSourceSelectLabel()} />
                                         </SelectTrigger>
@@ -460,16 +454,11 @@ export const MyCheckouts = () => {
                                              </SelectContent>
                                         </SelectPortal>
                                    </Select>
-                              </FormControl>
+                              </Box>
                          </HStack>
                          <HStack space="sm">
-                              <FormControl style={{ width: sortLength }}>
-                                   <Select
-                                        name="sortBy"
-                                        selectedValue={userCheckoutSortMethod}
-                                        defaultValue={userCheckoutSortMethod}
-                                        accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')}
-                                        onValueChange={(itemValue) => toggleSort(itemValue)}>
+                              <Box style={{ width: sortLength }}>
+                                   <Select name="sortBy" selectedValue={userCheckoutSortMethod} defaultValue={userCheckoutSortMethod} accessibilityLabel={getTermFromDictionary(language, 'select_sort_method')} onValueChange={(itemValue) => toggleSort(itemValue)}>
                                         <SelectTrigger size="sm">
                                              <SelectInput value={checkoutSortLabel()} />
                                         </SelectTrigger>
@@ -491,13 +480,13 @@ export const MyCheckouts = () => {
                                              </SelectContent>
                                         </SelectPortal>
                                    </Select>
-                              </FormControl>
+                              </Box>
                          </HStack>
                     </VStack>
                );
           } else {
                return (
-                    <HStack space="$2">
+                    <HStack space="sm">
                          <Button colorScheme="primary"
                               className="m-2"
                               size="sm"

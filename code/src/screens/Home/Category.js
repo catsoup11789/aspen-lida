@@ -305,7 +305,7 @@ const DisplayBrowseCategoryRecord = ({record}) => {
      return (
           <Pressable
                onPress={() => onPressItem(id, type, getTitle)}
-               className="ml-1 mr-3 w-25 h-37.5">
+               className="ml-1 mr-3 w-25 h-[150px]">
                <Image
                     alt={getTitle}
                     source={imageUrl}

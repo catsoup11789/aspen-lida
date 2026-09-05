@@ -19,7 +19,7 @@ export const isOverdue = (overdue) => {
      const language = useActiveLanguage();
      if (overdue) {
           return (
-               <Badge colorScheme="error" className="mt--2 self-start rounded">
+               <Badge colorScheme="error" className="mt-[-8px] self-start rounded">
                     <BadgeText colorScheme="error">
                          {getTermFromDictionary(language, 'checkout_overdue')}
                     </BadgeText>
@@ -216,7 +216,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
      if (frozen) {
           if (statusMessage) {
                return (
-                    <Badge colorScheme="warning" className="mt--0.5 self-start rounded">
+                    <Badge colorScheme="warning" className="mt-[-2px] self-start rounded">
                          <BadgeText colorScheme="warning">
                               {statusMessage}
                          </BadgeText>
@@ -224,7 +224,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
                );
           }
           return (
-               <Badge colorScheme="warning" className="mt--0.5 self-start rounded">
+               <Badge colorScheme="warning" className="mt-[-2px] self-start rounded">
                     <BadgeText colorScheme="warning">
                          {status}
                     </BadgeText>
@@ -236,7 +236,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
                message = status;
           }
           return (
-               <Badge colorScheme="success" className="mt--0.5 self-start rounded">
+               <Badge colorScheme="success" className="mt-[-2px] self-start rounded">
                     <BadgeText colorScheme="success">
                          {message}
                     </BadgeText>
@@ -245,7 +245,7 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
      } else {
           if (status) {
                return (
-                    <Badge colorScheme="warning" className="mt--0.5 self-start rounded">
+                    <Badge colorScheme="warning" className="mt-[-2px] self-start rounded">
                          <BadgeText colorScheme="warning">
                               {status}
                          </BadgeText>

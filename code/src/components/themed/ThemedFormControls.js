@@ -5,9 +5,16 @@ import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { useTheme } from '../../themes/theme';
 
 // paddingBottom: 20 was already being passed manually at nearly every call site -- baked in
-// here as a default, overridable via the caller's own style prop.
+// here as a default, overridable via the caller's own style prop. Merged into one flat object
+// (not a [default, caller] array) since a caller-provided style array here ends up nested inside
+// Uniwind's own className-derived style array one layer up, and the override doesn't reliably
+// win once that happens -- a flat object sidesteps the ambiguity entirely.
 export const ThemedFormControl = React.forwardRef(({ style, ...props }, ref) => {
-     return <FormControl ref={ref} style={[{ paddingBottom: 20 }, style]} {...props} />;
+     const mergedStyle = Array.isArray(style)
+          ? Object.assign({ paddingBottom: 20 }, ...style.filter(Boolean))
+          : { paddingBottom: 20, ...style };
+
+     return <FormControl ref={ref} style={mergedStyle} {...props} />;
 });
 
 ThemedFormControl.displayName = 'ThemedFormControl';

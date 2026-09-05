@@ -149,7 +149,7 @@ const Item = (data) => {
                               <Text bold size="md">
                                    {item.title}{' '}
                                    {hasNewResults === 1 ? (
-                                        <Badge colorScheme="warning" className="mb--0.5">
+                                        <Badge colorScheme="warning" className="mb-[-2px]">
                                              <BadgeText colorScheme="warning">{getTermFromDictionary(language, 'flag_updated')}</BadgeText>
                                         </Badge>
                                    ) : null}

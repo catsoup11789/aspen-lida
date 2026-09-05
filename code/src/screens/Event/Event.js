@@ -107,11 +107,11 @@ export const EventScreen = () => {
      return (
           <ScrollView>
                {(eventData.length === 0 || status === 'loading' || isFetching) && errorMessage === ''? (
-                    <Box className="pt-12.5"><LoadingSpinner message="Fetching data..." /></Box>
+                    <Box className="pt-[50px]"><LoadingSpinner message="Fetching data..." /></Box>
                ) : status === 'error' ? (
-                    <Box className="pt-12.5">{loadError(error, '')}</Box>
+                    <Box className="pt-[50px]">{loadError(error, '')}</Box>
                ) : errorMessage !== '' ? (
-                    <Box className="pt-12.5">{loadError(errorMessage, '')}</Box>
+                    <Box className="pt-[50px]">{loadError(errorMessage, '')}</Box>
                ) : (
                     <>
                          {_.size(systemMessages) > 0 ? <Box className="p-2">{showSystemMessage()}</Box> : null}

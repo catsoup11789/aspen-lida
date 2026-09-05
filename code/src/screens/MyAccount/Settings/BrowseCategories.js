@@ -212,10 +212,7 @@ const DisplayCategory = (data) => {
      return (
           <Box style={{ borderBottomWidth: 1, borderColor: colorMode === 'light' ? uiColors.surface.light : uiColors.iconMuted.dark, paddingLeft: 16, paddingRight: 20, paddingVertical: 8 }}>
                <HStack space="sm" className="items-center justify-between pb-1">
-                    <Text
-                         bold
-                         size="lg"
-                         className="flex-wrap flex-1">
+                    <Text bold size="lg" className="flex-wrap flex-1">
                          {category.title}
                     </Text>
                     <Switch
@@ -228,14 +225,11 @@ const DisplayCategory = (data) => {
                          isChecked={isVisible}
                          trackColor={{
                               true: runtimeColors.primary[500],
-                              false: resolvedUiColors.surface
+                              false: uiColors.surface,
                          }}
-
                     />
                </HStack>
-               {showErrorDialog && (
-                    <DisplayErrorAlertDialog title={errorTitle} message={errorMessage} />
-               )}
+               {showErrorDialog && <DisplayErrorAlertDialog title={errorTitle} message={errorMessage} />}
           </Box>
      );
 };

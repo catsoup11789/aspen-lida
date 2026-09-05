@@ -166,7 +166,7 @@ const DisplayGroupedWork = (payload) => {
      const key = 'large_' + groupedWork.id;
 
      return (
-          <Box className="p-2.5 w-full">
+          <Box className="p-[10px] w-full">
                <Center className="mt-5 w-full">
                     <Image alt={groupedWork.title} source={groupedWork.cover} style={{ width: 180.0, height: 250.0, borderRadius: 4 }} placeholder={blurhash} transition={1000} contentFit="cover" />
                     <Title title={groupedWork.title} />

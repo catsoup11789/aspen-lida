@@ -385,7 +385,7 @@ const Item = (data) => {
                         <VStack className="max-w-[35%]">
                               {hasPassed ? (
                                    <Box style={{ width: '100%', zIndex: 1 }}>
-                                        <Badge colorScheme="warning" variant="solid" className="mb--3 ml--1 rounded-lg">
+                                        <Badge colorScheme="warning" variant="solid" className="mb-[-12px] ml-[-4px] rounded-lg">
                                              <BadgeText colorScheme="warning" size="xs">
                                                   {getTermFromDictionary(language, 'flag_past')}
                                              </BadgeText>
@@ -443,7 +443,7 @@ const Item = (data) => {
                               </Box>
                          ) : null}
                          {registrationRequired ? (
-                              <HStack className="mt-1.5 flex-wrap" space="xs">
+                              <HStack className="mt-[6px] flex-wrap" space="xs">
                                    <Badge key={0} colorScheme="muted" variant="outline" className="mt-1 rounded-lg">
                                         <BadgeText colorScheme="muted" size="sm">
                                              {getTermFromDictionary(language, 'registration_required')}

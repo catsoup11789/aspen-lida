@@ -61,7 +61,7 @@ export const SearchSourceScreen = () => {
                          {_.map(sources, function (source, index, array) {
                               if (index === 'events' || index === 'local') {
                                    return (
-                                       <Pressable key={index} className="p-0.5 py-2" onPress={() => updateSource(index)}>
+                                       <Pressable key={index} className="p-[2px] py-2" onPress={() => updateSource(index)}>
                                              {currentSource === index ? (
                                                  <HStack space="sm" className="justify-start items-center">
                                                       <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} />

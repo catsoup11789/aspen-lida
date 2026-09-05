@@ -309,7 +309,7 @@ export const DiscoverHomeScreen = () => {
                <FlatList
                     contentContainerStyle={{ paddingBottom: listBottomPadding }}
                     ListHeaderComponent={
-                         <Box className="p-2.5">
+                         <Box className="p-[10px]">
                               {androidEndSupportMessage()}
                               {showSystemMessage()}
                               <FormControl>
@@ -338,7 +338,7 @@ export const DiscoverHomeScreen = () => {
                          return `${item?.id ?? item?.textId ?? item?.sourceListId ?? item?.label ?? `${item?.source ?? 'browse'}-${item?.sourceListId ?? 'category'}`}-${index}`;
                     }}
                     renderItem={({ item }) => (
-                         <Box className="px-2.5">
+                         <Box className="px-[10px]">
                               <DisplayBrowseCategory category={item} />
                          </Box>
                     )}

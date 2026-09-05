@@ -382,7 +382,7 @@ export const MyList = ({ route }) => {
                     style={{ padding: 8, backgroundColor: panelBg, borderBottomWidth: 1, borderColor, flexWrap: 'nowrap' }}>
                     <ScrollView horizontal>
                          <HStack space="sm">
-                              <FormControl style={{ width: sortLength }}>
+                              <Box style={{ width: sortLength }}>
                                    <Select
                                         name="sortBy"
                                         selectedValue={sort}
@@ -407,7 +407,7 @@ export const MyList = ({ route }) => {
                                              </SelectContent>
                                         </SelectPortal>
                                    </Select>
-                              </FormControl>
+                              </Box>
                               <EditList data={list} listId={id} />
                          </HStack>
                     </ScrollView>

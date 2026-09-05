@@ -288,7 +288,7 @@ export const MyReadingHistory = () => {
                         </ThemedInput>
                         <ScrollView horizontal>
                              <HStack space="sm">
-                                   <FormControl style={{ width: sortLength }}>
+                                   <Box style={{ width: sortLength }}>
                                        <Select
                                             name="sortBy"
                                             selectedValue={sort}
@@ -313,7 +313,7 @@ export const MyReadingHistory = () => {
                                                   </SelectContent>
                                              </SelectPortal>
                                         </Select>
-                                   </FormControl>
+                                   </Box>
                                    <ButtonGroup size="sm" variant="solid">
                                         <Button style={{ backgroundColor: dangerColor }} onPress={() => setDeleteAllIsOpen(true)}>
                                              <ButtonText style={{ color: uiColors.white }}>{getTermFromDictionary(language, 'reading_history_delete_all')}</ButtonText>

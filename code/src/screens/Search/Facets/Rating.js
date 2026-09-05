@@ -84,7 +84,7 @@ export const Facet_Rating = ({ data, category, updater }) => {
           <ScrollView>
                <VStack space="sm">
                     {stars.map((star, index) => (
-                        <Pressable key={index} onPress={() => updateSearch(star.label)} className="p-0.5 py-2">
+                        <Pressable key={index} onPress={() => updateSearch(star.label)} className="p-[2px] py-2">
                              <HStack space="sm" className="justify-start items-center">
                                    {value === star.label ?
                                        <MaterialIcons name="radio-button-checked" size={20} color={runtimeColors.primary[600]} /> :
