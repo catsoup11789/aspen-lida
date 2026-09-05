@@ -15,7 +15,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Divider } from '@/components/ui/divider';
 import { HStack } from '@/components/ui/hstack';
-import { Image } from '@/components/ui/image';
+import { Image } from 'expo-image';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
@@ -762,7 +762,7 @@ const UserProfileOverview = () => {
      return (
           <Box className="px-3">
                <HStack space="md" alignItems="center">
-                    <Image source={{ uri: icon }} fallbackSource={require('../../themes/default/aspenLogo.png')} className="w-[42px] h-[42px] rounded-md" alt={getTermFromDictionary(language, 'library_card')} />
+                    <Image source={icon} alt={getTermFromDictionary(language, 'library_card')} style={{ width: 42, height: 42, borderRadius: 6 }} />
                     <Box className="ml-3">
                          {user.displayName ? (
                               <Text numberOfLines={1} className="max-w-[175px] font-bold" size="md">
@@ -1092,11 +1092,13 @@ const Fines = () => {
           return (
                <Pressable className="px-2 py-2 rounded-md" onPress={async () => await passUserToDiscovery(library.baseUrl, 'Fines', user.id, backgroundColor, textColor)}>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} color={themeTextColor} />
+                         <MaterialIcons name="chevron-right" size={20} />
                          <VStack>
-                              <Text style={{ color: themeTextColor, fontWeight: '500' }}>{getTermFromDictionary(language, 'fines')}</Text>
+                              <Text className="font-medium">{getTermFromDictionary(language, 'fines')}</Text>
                               <Badge colorScheme={hasFines ? 'error' : 'info'} className="mt-1 rounded self-start">
-                                   <BadgeText colorScheme={hasFines ? 'error' : 'info'} className="text-xs">{user.fines ?? '$0.00'}</BadgeText>
+                                   <BadgeText colorScheme={hasFines ? 'error' : 'info'} className="text-xs">
+                                        {user.fines ?? '$0.00'}
+                                   </BadgeText>
                               </Badge>
                          </VStack>
                     </HStack>
@@ -1112,8 +1114,6 @@ const Events = () => {
      const user = userState?.user ?? {};
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
 
      if (library.hasEventSettings) {
           return (
@@ -1147,7 +1147,7 @@ const Events = () => {
 const YearInReview = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { textColor: themeTextColor, resolvedUiColors } = useTheme();
+     const { resolvedUiColors } = useTheme();
      const backgroundColor = resolvedUiColors.surface;
      const textColor = resolvedUiColors.text;
      const { data: userState } = useUserState();
@@ -1161,11 +1161,13 @@ const YearInReview = () => {
           return (
                <Pressable className="px-2 py-2 rounded-md" onPress={async () => await passUserToDiscovery(library.baseUrl, 'YearInReview', user.id, backgroundColor, textColor)}>
                     <HStack space="xs" alignItems="center">
-                         <MaterialIcons name="chevron-right" size={20} color={themeTextColor} />
+                         <MaterialIcons name="chevron-right" size={20} />
                          <VStack>
-                              <Text style={{ color: themeTextColor, fontWeight: '500' }}>{user.yearInReviewName ?? yearInReviewLabel}</Text>
+                              <Text className="font-medium">{user.yearInReviewName ?? yearInReviewLabel}</Text>
                               <Badge colorScheme="info" className="mt-1 rounded self-start">
-                                   <BadgeText colorScheme="info" className="text-xs">{viewNowLabel}</BadgeText>
+                                   <BadgeText colorScheme="info" className="text-xs">
+                                        {viewNowLabel}
+                                   </BadgeText>
                               </Badge>
                          </VStack>
                     </HStack>
@@ -1179,8 +1181,6 @@ const YearInReview = () => {
 const Campaigns = () => {
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { resolvedUiColors } = useTheme();
-     const textColor = resolvedUiColors.text;
      if (library.hasCommunityEngagementEnabled) {
           return(
                <Pressable

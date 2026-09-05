@@ -10,6 +10,7 @@ import {
 
 const subscribers = new Set();
 const themeSnapshotCache = new Map();
+const inFlightLoads = new Map();
 
 function getSnapshotCacheKey(queryKey) {
      return JSON.stringify(queryKey ?? []);
@@ -69,7 +70,17 @@ function useSqliteReadQuery(queryKey, queryFn, options = {}) {
 
           setIsLoading(true);
           try {
-               const nextData = await queryFn();
+               let loadPromise = inFlightLoads.get(cacheKey);
+               if (!loadPromise) {
+                    loadPromise = queryFn();
+                    inFlightLoads.set(cacheKey, loadPromise);
+                    loadPromise.finally(() => {
+                         if (inFlightLoads.get(cacheKey) === loadPromise) {
+                              inFlightLoads.delete(cacheKey);
+                         }
+                    });
+               }
+               const nextData = await loadPromise;
                themeSnapshotCache.set(cacheKey, nextData);
                setData(nextData);
                setError(null);

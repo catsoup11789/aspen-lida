@@ -28,7 +28,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { Image } from '@/components/ui/image';
+import { Image } from 'expo-image';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalContent as ModalContent, ThemedModalFooter as ModalFooter, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -257,7 +257,7 @@ export const LoginScreen = () => {
           <SafeAreaView style={{ flex: 1 }}>
                <Box className="px-5 flex-1 items-center justify-center">
                     <Pressable onPress={onLogoTap}>
-                         <Image source={{ uri: logoImage }} className="w-24 h-24 rounded-3xl" alt="" fallbackSource={require('../../themes/default/aspenLogo.png')} />
+                         <Image source={logoImage} style={{ width: 96, height: 96, borderRadius: 24 }} alt="" />
                     </Pressable>
                     {isCommunity || shouldShowSelectLibrary ? <SelectYourLibrary updateSelectedLibrary={updateSelectedLibrary} selectedLibrary={selectedLibrary} query={query} setQuery={setQuery} showModal={showModal} setShowModal={setShowModal} isCommunity={isCommunity} setShouldRequestPermissions={setShouldRequestPermissions} shouldRequestPermissions={shouldRequestPermissions} permissionRequested={permissionRequested} libraries={libraries} allLibraries={allLibraries} /> : null}
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'padding'} className="w-full">

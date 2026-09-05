@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useWindowDimensions } from 'react-native';
 import { useLibrary } from '../hooks/useLibrarySystemData';
-import { Image } from '@/components/ui/image';
+import { Image } from 'expo-image';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { HStack } from '@/components/ui/hstack';
 import { VStack } from '@/components/ui/vstack';
@@ -14,18 +14,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../themes/theme';
 
 /**
- * HeaderLogoBar component for displaying the library's logo in the header.
- * @returns {React.JSX.Element|null}
- * @constructor
+ * Resolves the library's logo header bar (logo/backgroundColor/alignment), preferring the active
+ * theme's header data when it provides a logo, falling back to the library's headerLogo* app
+ * settings for backwards compatibility. Returns { backgroundColor, content } so the caller can
+ * also paint the safe-area inset above it the same color instead of leaving that region
+ * transparent, or null if there's no logo to show at all.
+ * @returns {{backgroundColor: string, content: React.JSX.Element}|null}
  */
-const HeaderLogoBar = () => {
-     const { header } = useTheme();
-     const library = useLibrary();
-     const { width } = useWindowDimensions();
-
-     // Prefer the active theme's header data (logo/backgroundColor/alignment) when the
-     // theme catalog actually provides a logo; otherwise fall back to the library's
-     // headerLogo* app settings for backwards compatibility.
+function resolveHeaderLogoBar({ header, library, width }) {
      if (header?.logo) {
           const localBrandingLogoUri = isValidUrl(header.logo) ? header.logo : library.baseUrl + '/files/original/' + header.logo;
           const backgroundColor = header.backgroundColor ?? '#FFFFFF';
@@ -41,11 +37,14 @@ const HeaderLogoBar = () => {
 
           const dims = logoSize(width, 50, originalWidth, originalHeight);
 
-          return (
-               <HStack style={{ backgroundColor, justifyContent: headerLogoAlignment, flexDirection: 'row', height: dims.height, paddingTop: 4, paddingBottom: 4 }}>
-                         <Image source={{uri: localBrandingLogoUri}} alt={library.displayName ?? ''} resizeMode='contain' style={{ width: dims.width, height: dims.height }} />
-               </HStack>
-          );
+          return {
+               backgroundColor,
+               content: (
+                    <HStack style={{ backgroundColor, justifyContent: headerLogoAlignment, flexDirection: 'row', height: dims.height + 10, paddingTop: 4, paddingBottom: 4 }}>
+                              <Image source={localBrandingLogoUri} alt={library.displayName ?? ''} contentFit='contain' style={{ width: dims.width, height: dims.height }} />
+                    </HStack>
+               ),
+          };
      }
 
      if (library?.headerLogoApp){
@@ -75,27 +74,34 @@ const HeaderLogoBar = () => {
           var scaledImageWidth = dims.width;
           var scaledImageHeight = dims.height;
 
-          return (
-               <HStack style={{ backgroundColor, justifyContent: headerLogoAlignment, flexDirection: 'row', height: scaledImageHeight, paddingTop: 4, paddingBottom: 4 }}>
-                         <Image source={{uri: localBrandingLogoUri}} alt={library.displayName ?? ''} resizeMode='contain' style={{ width: scaledImageWidth, height: scaledImageHeight }} />
-               </HStack>
-          );
+          return {
+               backgroundColor,
+               content: (
+                    <HStack style={{ backgroundColor, justifyContent: headerLogoAlignment, flexDirection: 'row', height: scaledImageHeight, paddingTop: 4, paddingBottom: 4 }}>
+                              <Image source={localBrandingLogoUri} alt={library.displayName ?? ''} contentFit='contain' style={{ width: scaledImageWidth, height: scaledImageHeight }} />
+                    </HStack>
+               ),
+          };
      }else{
           return null;
      }
-};
+}
 
 export default function TitleWithLogo(props) {
-     const { runtimeColors } = useTheme();
+     const { runtimeColors, header } = useTheme();
      const textColor = runtimeColors.primary['500-text'];
      const bg = runtimeColors.primary[500];
      const navigation = useNavigation();
      const hideBack = props.hideBack ?? false;
      const insets = useSafeAreaInsets();
+     const library = useLibrary();
+     const { width } = useWindowDimensions();
+     const headerLogoBar = resolveHeaderLogoBar({ header, library, width });
+     const safeAreaBackgroundColor = headerLogoBar?.backgroundColor ?? bg;
 
      return (
-          <VStack style={{ paddingTop: insets.top, paddingLeft: insets.left, paddingRight: insets.right }}>
-               <HeaderLogoBar />
+          <VStack style={{ paddingTop: insets.top, paddingLeft: insets.left, paddingRight: insets.right, backgroundColor: safeAreaBackgroundColor }}>
+               {headerLogoBar?.content}
                <HStack style={{ paddingHorizontal: 4, paddingVertical: 8, alignItems: 'center', justifyContent: 'space-between', backgroundColor: bg }}>
                     {navigation.canGoBack() && !hideBack ? (
                        <Pressable onPress={() => navigation.goBack()} className="pl-1">

@@ -465,8 +465,39 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
 
      return (
           <>
-               {isThemeMenuOpen && (
-                    <Modal transparent animationType="fade" visible={isThemeMenuOpen}>
+               <Box alignItems="center">
+                    <Button
+                         size="sm"
+                         variant="ghost"
+                         colorScheme="primary"
+                         isDisabled={isSwitchingTheme}
+                         onPress={() => {
+                              setIsThemeMenuOpen(true);
+                         }}
+                         className="rounded-full">
+                         <MaterialIcons name="palette" size={18} color={runtimeColors.primary[500]} />
+                         {showText ? <ButtonText> {activeThemeName}</ButtonText> : null}
+                    </Button>
+               </Box>
+               <Modal transparent animationType="fade" visible={isThemeMenuOpen || isSwitchingTheme}>
+                    {isSwitchingTheme ? (
+                         <View style={[themeSwitcherStyles.overlay, colorMode === 'dark' ? themeSwitcherStyles.overlayDark : themeSwitcherStyles.overlayLight]}>
+                              <Box
+                                   style={{
+                                        backgroundColor: colorMode === 'dark' ? uiColors.card.dark : uiColors.surface.light,
+                                        borderRadius: 16,
+                                        paddingHorizontal: 24,
+                                        paddingVertical: 20,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                   }}>
+                                   <Spinner size="large" color={runtimeColors.primary[500]} />
+                                   <Text className="mt-3">
+                                        Switching theme...
+                                   </Text>
+                              </Box>
+                         </View>
+                    ) : (
                          <View
                               className="flex-1"
                               onTouchEnd={() => setIsThemeMenuOpen(false)}>
@@ -501,39 +532,7 @@ export const ThemeSwitcher = ({ showText = true } = {}) => {
                                    </Box>
                               </Box>
                          </View>
-                    </Modal>
-               )}
-               <Box alignItems="center">
-                    <Button
-                         size="sm"
-                         variant="ghost"
-                         colorScheme="primary"
-                         isDisabled={isSwitchingTheme}
-                         onPress={() => {
-                              setIsThemeMenuOpen(true);
-                         }}
-                         className="rounded-full">
-                         <MaterialIcons name="palette" size={18} color={runtimeColors.primary[500]} />
-                         {showText ? <ButtonText> {activeThemeName}</ButtonText> : null}
-                    </Button>
-               </Box>
-               <Modal transparent animationType="fade" visible={isSwitchingTheme}>
-                    <View style={[themeSwitcherStyles.overlay, colorMode === 'dark' ? themeSwitcherStyles.overlayDark : themeSwitcherStyles.overlayLight]}>
-                         <Box
-                              style={{
-                                   backgroundColor: colorMode === 'dark' ? uiColors.card.dark : uiColors.surface.light,
-                                   borderRadius: 16,
-                                   paddingHorizontal: 24,
-                                   paddingVertical: 20,
-                                   alignItems: 'center',
-                                   justifyContent: 'center',
-                              }}>
-                              <Spinner size="large" color={runtimeColors.primary[500]} />
-                              <Text className="mt-3">
-                                   Switching theme...
-                              </Text>
-                         </Box>
-                    </View>
+                    )}
                </Modal>
           </>
      );

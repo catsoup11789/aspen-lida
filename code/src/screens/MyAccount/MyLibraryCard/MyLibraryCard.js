@@ -13,7 +13,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
-import { Image } from '@/components/ui/image';
+import { Image } from 'expo-image';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalContent as ModalContent } from '@/src/components/themed/ThemedModal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { VStack } from '@/components/ui/vstack';
@@ -371,7 +371,7 @@ const CreateLibraryCard = (data) => {
                <VStack className="max-w-[90%] px-8 py-5 rounded-xl">
                     <Center>
                          <HStack>
-                              {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} alt={getTermFromDictionary(language, 'library_card')} /> : null}
+                              {icon ? <Image source={icon} alt={getTermFromDictionary(language, 'library_card')} style={{ width: 42, height: 42 }} /> : null}
                               <Text bold size="lg" className="ml-3 mt-2">
                                    {card.homeLocation}
                               </Text>
@@ -403,7 +403,7 @@ const CreateLibraryCard = (data) => {
                     <>
                          <Center>
                               <HStack>
-                                   {icon ? <Image source={{ uri: icon }} fallbackSource={require('../../../themes/default/aspenLogo.png')} alt={getTermFromDictionary(language, 'library_card')} className="w-[42px] h-[42px]" /> : null}
+                                   {icon ? <Image source={icon} alt={getTermFromDictionary(language, 'library_card')} style={{ width: 42, height: 42 }} /> : null}
                                    <Text bold size="lg" className="ml-3 mt-2">
                                         {card.homeLocation}
                                    </Text>

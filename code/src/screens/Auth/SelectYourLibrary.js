@@ -12,7 +12,7 @@ import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../co
 import { Center } from '@/components/ui/center';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
-import { Image } from '@/components/ui/image';
+import { Image } from 'expo-image';
 import { InputSlot } from '@/components/ui/input';
 import { ThemedModal as Modal, ThemedModalBackdrop as ModalBackdrop, ThemedModalBody as ModalBody, ThemedModalCloseButton as ModalCloseButton, ThemedModalContent as ModalContent, ThemedModalHeader as ModalHeader } from '@/src/components/themed/ThemedModal';
 import { Pressable } from '@/components/ui/pressable';
@@ -152,11 +152,9 @@ const Item = (data) => {
                     {libraryIcon ? (
                          <Image
                               key={library.name}
-                              source={{ uri: libraryIcon }}
-                              fallbackSource={require('../../themes/default/aspenLogo.png')}
+                              source={libraryIcon}
                               alt={library.name}
-                              size="xs"
-                              className="rounded-[999px]"
+                              style={{ width: 40, height: 40, borderRadius: 999 }}
                          />
                     ) : (
                          <Box
