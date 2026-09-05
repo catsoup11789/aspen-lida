@@ -1,62 +1,32 @@
-export const ALERT_ACTION_CLASSNAMES = {
-  default: {
-    solid: 'bg-primary',
-    subtle: 'bg-primary',
-    text: 'text-primary-foreground',
-    subtleText: 'text-primary-foreground',
-    icon: 'text-primary-foreground',
-    subtleIcon: 'text-primary-foreground',
-    accentBorder: 'border-l-primary',
-  },
-  error: {
-    solid: 'bg-alert-error-bg',
-    subtle: 'bg-alert-error-bg',
-    text: 'text-alert-error-foreground',
-    subtleText: 'text-alert-error-foreground',
-    icon: 'text-alert-error-icon',
-    subtleIcon: 'text-alert-error-icon',
-    accentBorder: 'border-l-alert-error-icon',
-  },
-  warning: {
-    solid: 'bg-alert-warning-bg',
-    subtle: 'bg-alert-warning-bg',
-    text: 'text-alert-warning-foreground',
-    subtleText: 'text-alert-warning-foreground',
-    icon: 'text-alert-warning-icon',
-    subtleIcon: 'text-alert-warning-icon',
-    accentBorder: 'border-l-alert-warning-icon',
-  },
-  success: {
-    solid: 'bg-alert-success-bg',
-    subtle: 'bg-alert-success-bg',
-    text: 'text-alert-success-foreground',
-    subtleText: 'text-alert-success-foreground',
-    icon: 'text-alert-success-icon',
-    subtleIcon: 'text-alert-success-icon',
-    accentBorder: 'border-l-alert-success-icon',
-  },
-  info: {
-    solid: 'bg-alert-info-bg',
-    subtle: 'bg-alert-info-bg',
-    text: 'text-alert-info-foreground',
-    subtleText: 'text-alert-info-foreground',
-    icon: 'text-alert-info-icon',
-    subtleIcon: 'text-alert-info-icon',
-    accentBorder: 'border-l-alert-info-icon',
-  },
-  muted: {
-    solid: 'bg-secondary border-secondary',
-    subtle: 'bg-card border-border',
-    text: 'text-secondary-foreground',
-    subtleText: 'text-card-foreground',
-    icon: 'text-secondary-foreground',
-    subtleIcon: 'text-card-foreground',
-    accentBorder: 'border-l-border',
-  },
+// Alert/Toast colors are entirely inline (no className) so there's one source of truth per action.
+// error/warning/success/info/none use the fixed hex below; 'default' and 'muted' are resolved from
+// the live theme (runtimeColors/resolvedUiColors) since they track the current brand/neutral colors.
+export const ALERT_STATUS_COLORS = {
+  error: { bg: '#fecaca', icon: '#dc2625', text: '#000000' },
+  warning: { bg: '#ffd7aa', icon: '#ea580b', text: '#000000' },
+  success: { bg: '#bbf7d0', icon: '#17a34a', text: '#000000' },
+  info: { bg: '#bae6fe', icon: '#0084c7', text: '#000000' },
+  none: { bg: '#e6e7ea', icon: '#4f5562', text: '#000000' },
 };
 
 export function normalizeStatusAction(action) {
   if (action === 'danger') return 'error';
-  if (action === 'none') return 'muted';
   return action || 'default';
+}
+
+export function resolveAlertColors(action, runtimeColors, resolvedUiColors) {
+  const normalizedAction = normalizeStatusAction(action);
+  const statusColors = ALERT_STATUS_COLORS[normalizedAction];
+  if (statusColors) {
+    return { bg: statusColors.bg, border: statusColors.bg, icon: statusColors.icon, text: statusColors.text };
+  }
+  if (normalizedAction === 'muted') {
+    return { bg: resolvedUiColors.surface, border: resolvedUiColors.border, icon: resolvedUiColors.text, text: resolvedUiColors.text };
+  }
+  return {
+    bg: runtimeColors.primary[500],
+    border: runtimeColors.primary[500],
+    icon: runtimeColors.primary['500-text'],
+    text: runtimeColors.primary['500-text'],
+  };
 }

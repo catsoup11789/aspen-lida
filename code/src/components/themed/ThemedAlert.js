@@ -1,7 +1,8 @@
 import React from 'react';
 import { Alert, AlertIcon, AlertText } from '@/components/ui/alert';
 import { ThemedMaterialIcons as MaterialIcons } from './ThemedMaterialIcons';
-import { ALERT_ACTION_CLASSNAMES, normalizeStatusAction } from './statusStyles';
+import { normalizeStatusAction, resolveAlertColors } from './statusStyles';
+import { useTheme } from '../../themes/theme';
 
 const ALERT_ICON_NAMES = {
      default: 'info',
@@ -10,30 +11,31 @@ const ALERT_ICON_NAMES = {
      success: 'check-circle',
      info: 'info',
      muted: 'info',
+     none: 'info',
 };
 
-export const ThemedAlert = React.forwardRef(({ action, variant = 'default', className, ...props }, ref) => {
-     const normalizedAction = normalizeStatusAction(action);
-     const statusClasses = ALERT_ACTION_CLASSNAMES[normalizedAction] ?? ALERT_ACTION_CLASSNAMES.default;
-     const alertClasses = variant === 'solid' ? statusClasses.solid : statusClasses.subtle ?? statusClasses.solid;
+// variant is destructured (not used) only to keep it out of ...props -- otherwise it'd override
+// the explicit variant="default" below via prop-spread order, changing Alert's own base classes.
+export const ThemedAlert = React.forwardRef(({ action, variant, className, style, ...props }, ref) => {
+     const { runtimeColors, resolvedUiColors } = useTheme();
+     const colors = resolveAlertColors(action, runtimeColors, resolvedUiColors);
 
-     return <Alert ref={ref} variant="default" className={[alertClasses, className].filter(Boolean).join(' ')} {...props} />;
+     return <Alert ref={ref} variant="default" className={className} style={[{ backgroundColor: colors.bg, borderColor: colors.border }, style]} {...props} />;
 });
 
-export const ThemedAlertText = React.forwardRef(({ action, variant = 'default', className, ...props }, ref) => {
-     const normalizedAction = normalizeStatusAction(action);
-     const statusClasses = ALERT_ACTION_CLASSNAMES[normalizedAction] ?? ALERT_ACTION_CLASSNAMES.default;
-     const textClasses = variant === 'solid' ? statusClasses.text : statusClasses.subtleText ?? statusClasses.text;
+export const ThemedAlertText = React.forwardRef(({ action, variant, className, style, ...props }, ref) => {
+     const { runtimeColors, resolvedUiColors } = useTheme();
+     const colors = resolveAlertColors(action, runtimeColors, resolvedUiColors);
 
-     return <AlertText ref={ref} className={[textClasses, className].filter(Boolean).join(' ')} {...props} />;
+     return <AlertText ref={ref} className={className} style={[{ color: colors.text }, style]} {...props} />;
 });
 
-export const ThemedAlertIcon = React.forwardRef(({ action, variant = 'default', as, name, className, ...props }, ref) => {
+export const ThemedAlertIcon = React.forwardRef(({ action, variant, as, name, className, color, ...props }, ref) => {
      const normalizedAction = normalizeStatusAction(action);
-     const statusClasses = ALERT_ACTION_CLASSNAMES[normalizedAction] ?? ALERT_ACTION_CLASSNAMES.default;
-     const iconClasses = variant === 'solid' ? statusClasses.icon : statusClasses.subtleIcon ?? statusClasses.icon;
+     const { runtimeColors, resolvedUiColors } = useTheme();
+     const colors = resolveAlertColors(action, runtimeColors, resolvedUiColors);
 
-     return <AlertIcon ref={ref} as={as ?? MaterialIcons} name={name ?? ALERT_ICON_NAMES[normalizedAction]} className={[iconClasses, className].filter(Boolean).join(' ')} {...props} />;
+     return <AlertIcon ref={ref} as={as ?? MaterialIcons} name={name ?? ALERT_ICON_NAMES[normalizedAction]} color={color ?? colors.icon} className={className} {...props} />;
 });
 
 ThemedAlert.displayName = 'ThemedAlert';
