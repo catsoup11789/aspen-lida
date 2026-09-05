@@ -17,12 +17,12 @@ import { getBrowseCategoriesAndHomeLinks } from '../../util/api/search';
 import { logDebugMessage, logInfoMessage, getErrorMessage } from '../../util/logging';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlError, FormControlErrorIcon, FormControlErrorText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlError, FormControlErrorIcon, FormControlErrorText, FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { AlertCircleIcon } from '@/components/ui/icon';
 import { InputSlot } from '@/components/ui/input';
@@ -195,7 +195,7 @@ export const ResetExpiredPin = (props) => {
                                        <Text>{getTermFromDictionary(language, 'pin_has_expired')}</Text>
                                        <FormControl isRequired isInvalid={'pin' in errors} style={{ marginTop: 12 }}>
                                              <FormControlLabel>
-                                                 <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_pin')}</FormControlLabelText>
+                                                 <FormControlLabelText>{getTermFromDictionary(language, 'new_pin')}</FormControlLabelText>
                                              </FormControlLabel>
                                             <ThemedInput style={{ borderColor }}>
                                                   <ThemedInputField
@@ -225,7 +225,7 @@ export const ResetExpiredPin = (props) => {
                                         </FormControl>
                                         <FormControl isRequired isInvalid={'pinConfirmed' in errors} style={{ marginTop: 12 }}>
                                              <FormControlLabel>
-                                                  <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_pin_confirmed')}</FormControlLabelText>
+                                                  <FormControlLabelText>{getTermFromDictionary(language, 'new_pin_confirmed')}</FormControlLabelText>
                                              </FormControlLabel>
                                              <ThemedInput style={{ borderColor }}>
                                                   <ThemedInputField

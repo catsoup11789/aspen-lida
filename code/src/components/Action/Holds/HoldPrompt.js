@@ -14,13 +14,13 @@ import { HoldNotificationPreferences } from './HoldNotificationPreferences';
 import { SelectItemHold } from './SelectItem';
 import { SelectVolume } from './SelectVolume';
 import { SelectNewHoldSublocation } from './SelectNewHoldSublocation';
-import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../themed/ThemedFormControls';
+import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
 import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from '@/src/util/logging';
 import { useTheme } from '@/src/themes/theme';
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../themed/ThemedCheckbox';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { CheckIcon } from '@/components/ui/icon';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
@@ -341,7 +341,7 @@ export const HoldPrompt = (props) => {
                               {formMessage ? <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} /> : null}
                               <FormControl style={{ marginBottom: 8 }}>
                                    <FormControlLabel>
-                                        <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                        <FormControlLabelText size="sm">
                                              {cardLabel}
                                         </FormControlLabelText>
                                    </FormControlLabel>
@@ -352,7 +352,7 @@ export const HoldPrompt = (props) => {
                               {showAlternateLibraryCardPassword ? (
                                    <FormControl style={{ marginBottom: 8 }}>
                                         <FormControlLabel>
-                                             <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                             <FormControlLabelText size="sm">
                                                   {passwordLabel}
                                              </FormControlLabelText>
                                         </FormControlLabel>
@@ -482,7 +482,7 @@ export const HoldPrompt = (props) => {
                               {(_.isArray(locations) && (_.size(locations) > 1 || !preferredPickupLocationIsValid) && !isEContent && !user.rememberHoldPickupLocation) || (_.isArray(locations) && _.size(locations) > 1 && !isEContent && _.size(accounts) > 0) ? (
                                    <FormControl style={{ marginTop: 4 }}>
                                         <FormControlLabel>
-                                             <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                             <FormControlLabelText size="sm">
                                                   {getTermFromDictionary(language, 'select_pickup_location')}
                                              </FormControlLabelText>
                                         </FormControlLabel>
@@ -532,7 +532,7 @@ export const HoldPrompt = (props) => {
                               {_.isArray(accounts) && _.size(accounts) > 0 ? (
                                    <FormControl>
                                         <FormControlLabel>
-                                             <FormControlLabelText style={{ color: textColor }}>{isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')}</FormControlLabelText>
+                                             <FormControlLabelText>{isPlacingHold ? getTermFromDictionary(language, 'linked_place_hold_for_account') : getTermFromDictionary(language, 'linked_checkout_to_account')}</FormControlLabelText>
                                         </FormControlLabel>
                                         <Select name="linkedAccount" selectedValue={activeAccount} minWidth={200} style={{ marginTop: 4, marginBottom: 12 }} onValueChange={(itemValue) => updateActiveAccount(itemValue)}>
                                              <SelectTrigger>

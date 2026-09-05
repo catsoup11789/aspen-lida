@@ -5,8 +5,8 @@ import { loadingSpinner } from '../../loadingSpinner';
 import { loadError } from '../../loadError';
 import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ThemedFormControl as FormControl } from '../../themed/ThemedFormControls';
+import { FormControlLabel } from '@/components/ui/form-control';
+import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
 import { CircleIcon } from '@/components/ui/icon';
 import { ThemedRadio as Radio, ThemedRadioGroup as RadioGroup, ThemedRadioIcon as RadioIcon, ThemedRadioIndicator as RadioIndicator, ThemedRadioLabel as RadioLabel } from '../../themed/ThemedRadio';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
@@ -68,7 +68,7 @@ export const SelectVolume = (props) => {
                          {holdType === 'volume' ? (
                               <FormControl>
                                    <FormControlLabel>
-                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'select_volume')}</FormControlLabelText>
+                                        <FormControlLabelText>{getTermFromDictionary(language, 'select_volume')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <Select name="volumeForHold" selectedValue={volume} defaultValue={volume} minWidth="200" accessibilityLabel={getTermFromDictionary(language, 'select_volume')} style={{ marginTop: 4, marginBottom: 8 }} onValueChange={(itemValue) => setVolume(itemValue)}>
                                         <SelectTrigger>

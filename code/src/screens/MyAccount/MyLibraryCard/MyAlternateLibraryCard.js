@@ -7,7 +7,7 @@ import { useRoute, useNavigation, CommonActions, StackActions } from '@react-nav
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { LoadingSpinner } from '@/src/components/loadingSpinner';
 import { SystemMessagesContext } from '@/src/context/initialContext';
@@ -20,8 +20,7 @@ import { logDebugMessage, logWarnMessage, getErrorMessage } from '@/src/util/log
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
-import { PasswordVisibilityToggle, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
-
+import { PasswordVisibilityToggle, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
 /**
  * MyAlternateLibraryCard component that allows users to manage their alternate library card information. It provides input fields for the alternate library card number and password, and buttons to update or delete the card information. The component also handles system messages, loading states, and updates the user profile upon changes.
  * @returns {React.JSX.Element}
@@ -144,7 +143,7 @@ export const MyAlternateLibraryCard = () => {
                               {formMessage ? <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} /> : null}
                               <FormControl style={{ marginBottom: 8 }}>
                                    <FormControlLabel>
-                                        <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                        <FormControlLabelText size="sm">
                                              {cardLabel}
                                         </FormControlLabelText>
                                    </FormControlLabel>
@@ -155,7 +154,7 @@ export const MyAlternateLibraryCard = () => {
                               {showAlternateLibraryCardPassword ? (
                                    <FormControl style={{ marginBottom: 8 }}>
                                         <FormControlLabel>
-                                             <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                             <FormControlLabelText size="sm">
                                                   {passwordLabel}
                                              </FormControlLabelText>
                                         </FormControlLabel>

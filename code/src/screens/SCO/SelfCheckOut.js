@@ -15,14 +15,14 @@ import { logDebugMessage, logErrorMessage, logInfoMessage } from '../../util/log
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { ThemedAlert, ThemedAlertText } from '../../components/themed/ThemedAlert';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { FlatList } from '@/components/ui/flat-list';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
@@ -47,7 +47,7 @@ export const SelfCheckOut = () => {
      const { data: cards } = useCards();
      const { data: accounts } = useAccounts();
      const { checkouts, updateCheckouts } = React.useContext(CheckoutsContext);
-     const { textColor, colorMode, uiColors, runtimeColors } = useTheme();
+     const { colorMode, uiColors, runtimeColors } = useTheme();
 
      const passedItems = route.params?.items ?? [];
      const [items, setItems] = React.useState(passedItems);
@@ -293,7 +293,7 @@ export const SelfCheckOut = () => {
                               <FormControl>
                                    <Center>
                                         <FormControlLabel>
-                                            <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'add_new_item')}</FormControlLabelText>
+                                            <FormControlLabelText>{getTermFromDictionary(language, 'add_new_item')}</FormControlLabelText>
                                         </FormControlLabel>
                                        <ButtonGroup space="md">
                                             <Button onPress={() => openScanner()} colorScheme="secondary">
@@ -403,7 +403,7 @@ export const SelfCheckOut = () => {
                                         <>
                                              <FormControl>
                                                   <FormControlLabel>
-                                                       <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'does_barcode_match_item')}</FormControlLabelText>
+                                                       <FormControlLabelText>{getTermFromDictionary(language, 'does_barcode_match_item')}</FormControlLabelText>
                                                   </FormControlLabel>
                                                   <ThemedInput>
                                                        <ThemedInputField id="barcode" autoCapitalize="none" autoCorrect={false} onChangeText={(text) => setTempBarcode(text)} defaultValue={tempBarcode} />

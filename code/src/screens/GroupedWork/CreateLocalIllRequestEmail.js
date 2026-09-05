@@ -6,10 +6,10 @@ import { popAlert } from '../../components/feedback';
 import { getTermFromDictionary } from '../../translations/TranslationService';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '../../components/themed/ThemedTextarea';
 import { VStack } from '@/components/ui/vstack';
@@ -41,7 +41,7 @@ const Request = (payload) => {
      const { workTitle, author, volumeName, recordId} = payload;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const {theme, textColor, colorMode} = useTheme();
+     const {theme, colorMode} = useTheme();
 
      const [userVolumeName, setUserVolumeName] = React.useState(volumeName);
      const [userNote, setUserNote] = React.useState('');
@@ -75,7 +75,7 @@ const Request = (payload) => {
                <VStack space="md" style={{ padding: 16 }}>
                     <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>
-                              <FormControlLabelText size="sm" style={{ color: textColor }}>
+                              <FormControlLabelText size="sm">
                                    {getTermFromDictionary(language, 'title')}
                               </FormControlLabelText>
                          </FormControlLabel>
@@ -91,7 +91,7 @@ const Request = (payload) => {
                     </FormControl>
                     <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>
-                              <FormControlLabelText size="sm" style={{ color: textColor }}>
+                              <FormControlLabelText size="sm">
                                    {getTermFromDictionary(language, 'author')}
                               </FormControlLabelText>
                          </FormControlLabel>
@@ -106,7 +106,7 @@ const Request = (payload) => {
                     </FormControl>
                     <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>
-                              <FormControlLabelText size="sm" style={{ color: textColor }}>
+                              <FormControlLabelText size="sm">
                                    {getTermFromDictionary(language, 'volume')}
                               </FormControlLabelText>
                          </FormControlLabel>
@@ -124,7 +124,7 @@ const Request = (payload) => {
                     </FormControl>
                     <FormControl style={{ marginVertical: 8 }}>
                          <FormControlLabel>
-                              <FormControlLabelText size="sm" style={{ color: textColor }}>
+                              <FormControlLabelText size="sm">
                                    {getTermFromDictionary(language, 'note')}
                               </FormControlLabelText>
                          </FormControlLabel>

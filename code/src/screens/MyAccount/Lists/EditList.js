@@ -10,13 +10,13 @@ import { refreshProfile } from '@/src/util/api/user';
 import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { CheckIcon, ChevronLeftIcon, CircleIcon } from '@/components/ui/icon';
 import { HStack } from '@/components/ui/hstack';
@@ -90,17 +90,17 @@ const EditList = (props) => {
                          <ModalBody>
                               <FormControl>
                                    <FormControlLabel>
-                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
+                                        <FormControlLabelText>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <ThemedInput style={{ borderColor }}><ThemedInputField id="title" defaultValue={data.title} autoComplete="off" onChangeText={(text) => setTitle(text)} /></ThemedInput>
                               </FormControl>
                               <FormControl>
-                                   <FormControlLabel><FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'description')}</FormControlLabelText></FormControlLabel>
+                                   <FormControlLabel><FormControlLabelText>{getTermFromDictionary(language, 'description')}</FormControlLabelText></FormControlLabel>
                                    <Textarea id="description" defaultValue={data.description} autoComplete="off" onChangeText={(text) => setDescription(text)}><TextareaInput /></Textarea>
                               </FormControl>
                               <FormControl>
                                    <FormControlLabel>
-                                     <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'access')}</FormControlLabelText>
+                                     <FormControlLabelText>{getTermFromDictionary(language, 'access')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <RadioGroup
                                         value={isPublic ? "true" : "false"}
@@ -125,7 +125,7 @@ const EditList = (props) => {
                               </FormControl>
                               <FormControl>
                                    <FormControlLabel>
-                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'list_group')}</FormControlLabelText>
+                                        <FormControlLabelText>{getTermFromDictionary(language, 'list_group')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <Select
                                        name="newListGroupParent"

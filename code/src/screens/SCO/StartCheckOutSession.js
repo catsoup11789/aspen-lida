@@ -12,8 +12,8 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ThemedFormControl as FormControl } from '../../components/themed/ThemedFormControls';
+import { FormControlLabel } from '@/components/ui/form-control';
+import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 
@@ -97,7 +97,7 @@ export const StartCheckOutSession = () => {
                          <AlertDialogBody>
                               <FormControl>
                                    <FormControlLabel>
-                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'select_an_account')}</FormControlLabelText>
+                                        <FormControlLabelText>{getTermFromDictionary(language, 'select_an_account')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <Select
                                         name="linkedAccount"

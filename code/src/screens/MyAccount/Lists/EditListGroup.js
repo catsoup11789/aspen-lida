@@ -6,11 +6,11 @@ import { navigateStack } from '@/src/helpers/RootNavigator';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 
@@ -26,7 +26,7 @@ import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalF
 export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
       const library = useLibrary();
       const language = useActiveLanguage();
-      const { textColor, uiColors, runtimeColors, colorMode } = useTheme();
+      const { uiColors, runtimeColors, colorMode } = useTheme();
       const [showModal, setShowModal] = React.useState(false);
       const [loading, setLoading] = React.useState(false);
 
@@ -56,7 +56,7 @@ export const EditListGroup = ({currentTitle, id, handleUpdate}) => {
                          <ModalBody>
                               <FormControl>
                                    <FormControlLabel>
-                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'rename_list_group_to')}</FormControlLabelText>
+                                        <FormControlLabelText>{getTermFromDictionary(language, 'rename_list_group_to')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <ThemedInput style={{ borderColor }}><ThemedInputField id="title" defaultValue={currentTitle} autoComplete="off" onChangeText={(text) => setTitle(text)} /></ThemedInput>
                               </FormControl>

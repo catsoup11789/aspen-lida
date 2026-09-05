@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
@@ -16,8 +16,7 @@ import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
-
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
 /**
  * AddLinkedAccount component that allows users to add a linked account. It displays a button that opens a modal where users can input the username and password of the account they want to link. The component handles API calls to add the linked account and refreshes the linked accounts, viewer accounts, and user profile upon successful completion.
  * @returns {React.JSX.Element}
@@ -84,7 +83,7 @@ const AddLinkedAccount = () => {
                          </ModalHeader>
                          <ModalBody>
                               <FormControl>
-                                   <FormControlLabel><FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'username')}</FormControlLabelText></FormControlLabel>
+                                   <FormControlLabel><FormControlLabelText>{getTermFromDictionary(language, 'username')}</FormControlLabelText></FormControlLabel>
                                    <ThemedInput style={{ borderColor: inputBorderColor }}>
                                         <ThemedInputField onChangeText={(text) => setNewUser(text)}
                                                       autoCorrect={false}
@@ -101,7 +100,7 @@ const AddLinkedAccount = () => {
                               </FormControl>
                               <FormControl style={{ marginTop: 12 }}>
                                    <FormControlLabel>
-                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'password')}</FormControlLabelText>
+                                        <FormControlLabelText>{getTermFromDictionary(language, 'password')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <ThemedInput style={{ borderColor: inputBorderColor }}>
                                         <ThemedInputField onChangeText={(text) => setPassword(text)} value={password} autoCorrect={false}

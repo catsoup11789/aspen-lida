@@ -20,10 +20,10 @@ import { saveAllLibraryBranchData } from '../../util/db';
 import { logDebugMessage, logInfoMessage, logWarnMessage, getErrorMessage } from '../../util/logging.js';
 import { createApiClient } from '../../util/api/apiFactory';
 import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { InputSlot } from '@/components/ui/input';
 
 /**
@@ -349,7 +349,7 @@ export const GetLoginForm = (props) => {
                {loginError ? <DisplayMessage type="error" message={loginErrorMessage} /> : null}
                <FormControl>
                     <FormControlLabel>
-                         <FormControlLabelText size="sm" style={{ color: textColor }}>{usernameLabel}</FormControlLabelText>
+                         <FormControlLabelText size="sm">{usernameLabel}</FormControlLabelText>
                     </FormControlLabel>
                     <ThemedInput style={{ borderColor }}>
                          <ThemedInputField autoCapitalize="none"
@@ -375,7 +375,7 @@ export const GetLoginForm = (props) => {
                </FormControl>
                <FormControl style={{ marginTop: 12 }}>
                     <FormControlLabel>
-                        <FormControlLabelText size="sm" style={{ color: textColor }}>{passwordLabel}</FormControlLabelText>
+                        <FormControlLabelText size="sm">{passwordLabel}</FormControlLabelText>
                     </FormControlLabel>
                    <ThemedInput style={{ borderColor }}>
                         <ThemedInputField

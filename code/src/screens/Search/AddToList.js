@@ -15,7 +15,7 @@ import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { CircleIcon } from '@/components/ui/icon';
@@ -25,8 +25,7 @@ import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedS
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { ThemedTextarea as Textarea, ThemedTextareaInput as TextareaInput } from '@/src/components/themed/ThemedTextarea';
 import { VStack } from '@/components/ui/vstack';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
-
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
 /**
  * AddToList component that displays a button to add an item to a list. When clicked, it opens a modal that allows the user to select an existing list or create a new one, and optionally add the list to a group. It handles the state of the modal, form fields, and API calls for adding items to lists and creating new lists.
  * @param props
@@ -54,7 +53,7 @@ const AddToList = (props) => {
      const [title, saveTitle] = useState();
      const [isPublic, saveIsPublic] = useState('1');
      const queryClient = useQueryClient();
-     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const { uiColors, runtimeColors, colorMode } = useTheme();
      const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
      const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
      const cancelColor = colorMode === 'light' ? uiColors.textStrong.light : uiColors.textStrong.dark;
@@ -151,7 +150,7 @@ const AddToList = (props) => {
                                              <VStack space="md">
                                                   <FormControl>
                                                        <FormControlLabel>
-                                                            <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'choose_a_list')}</FormControlLabelText>
+                                                            <FormControlLabelText>{getTermFromDictionary(language, 'choose_a_list')}</FormControlLabelText>
                                                        </FormControlLabel>
                                                        <Select
                                                             selectedValue={listId}
@@ -236,7 +235,7 @@ const AddToList = (props) => {
                                              <VStack space="md">
                                                   <FormControl>
                                                        <FormControlLabel>
-                                                            <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
+                                                            <FormControlLabelText>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                                        </FormControlLabel>
                                                        <ThemedInput style={{ borderColor }}>
                                                             <ThemedInputField id="title" onChangeText={(text) => saveTitle(text)} returnKeyType="next" />
@@ -244,7 +243,7 @@ const AddToList = (props) => {
                                                   </FormControl>
                                                   <FormControl>
                                                        <FormControlLabel>
-                                                            <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'description')}</FormControlLabelText>
+                                                            <FormControlLabelText>{getTermFromDictionary(language, 'description')}</FormControlLabelText>
                                                        </FormControlLabel>
                                                        <Textarea id="description" onChangeText={(text) => saveDescription(text)} returnKeyType="next">
                                                             <TextareaInput />
@@ -252,7 +251,7 @@ const AddToList = (props) => {
                                                   </FormControl>
                                                   <FormControl>
                                                        <FormControlLabel>
-                                                            <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'access')}</FormControlLabelText>
+                                                            <FormControlLabelText>{getTermFromDictionary(language, 'access')}</FormControlLabelText>
                                                        </FormControlLabel>
                                                        <RadioGroup
                                                             value={isPublic}
@@ -277,7 +276,7 @@ const AddToList = (props) => {
                                                   </FormControl>
                                                   <FormControl style={{ paddingBottom: 12 }}>
                                                        <FormControlLabel>
-                                                            <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'should_add_to_list_group')}</FormControlLabelText>
+                                                            <FormControlLabelText>{getTermFromDictionary(language, 'should_add_to_list_group')}</FormControlLabelText>
                                                        </FormControlLabel>
                                                        <Select selectedValue={addToGroup} accessibilityLabel={getTermFromDictionary(language, 'should_add_to_list_group')} onValueChange={(itemValue) => setAddToGroup(itemValue)}>
                                                             <SelectTrigger>
@@ -308,7 +307,7 @@ const AddToList = (props) => {
                                                        <>
                                                             <FormControl style={{ paddingBottom: 8 }}>
                                                                  <FormControlLabel>
-                                                                      <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
+                                                                      <FormControlLabelText>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
                                                                  </FormControlLabel>
                                                                  <ThemedInput style={{ borderColor }}>
                                                                       <ThemedInputField id="newGroupName" onChangeText={(text) => setNewGroupName(text)} defaultValue={newGroupName} />
@@ -317,7 +316,7 @@ const AddToList = (props) => {
                                                             {hasListGroups && (
                                                                  <FormControl style={{ paddingBottom: 8 }}>
                                                                       <FormControlLabel>
-                                                                           <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'should_nest_list_group')}</FormControlLabelText>
+                                                                           <FormControlLabelText>{getTermFromDictionary(language, 'should_nest_list_group')}</FormControlLabelText>
                                                                       </FormControlLabel>
                                                                       <Select selectedValue={nestedGroup} accessibilityLabel={getTermFromDictionary(language, 'should_nest_list_group')} onValueChange={(itemValue) => setNestedGroup(itemValue)}>
                                                                            <SelectTrigger>
@@ -354,7 +353,7 @@ const AddToList = (props) => {
                                                   {addToGroup === 'existing' && hasListGroups && (
                                                        <FormControl>
                                                             <FormControlLabel>
-                                                                 <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'choose_existing_list_group')}</FormControlLabelText>
+                                                                 <FormControlLabelText>{getTermFromDictionary(language, 'choose_existing_list_group')}</FormControlLabelText>
                                                             </FormControlLabel>
                                                             <Select
                                                                  selectedValue={existingGroupId !== -1 ? existingGroupId : groups[0]?.id}

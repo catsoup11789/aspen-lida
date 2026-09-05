@@ -11,13 +11,12 @@ import { useTheme } from '../../themes/theme';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlHelper, FormControlHelperText, FormControlLabel } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
-
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
 /**
  * SelfRegistration component that handles the self-registration process for a library, including form rendering, input handling, and submission.
  * @returns {React.JSX.Element}
@@ -25,7 +24,7 @@ import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from 
  */
 export const SelfRegistration = () => {
 	const insets = useSafeAreaInsets();
-	const {uiColors, textColor, colorMode} = useTheme();
+	const {uiColors, colorMode} = useTheme();
 	const surfaceBg = colorMode === 'light' ? uiColors.surface.light : uiColors.surface.dark;
 	const borderColor = colorMode === 'light' ? uiColors.border.light : uiColors.border.dark;
 	const route = useRoute();
@@ -91,7 +90,7 @@ export const SelfRegistration = () => {
 							if (type === 'text') {
 								return (
 									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
-										<FormControlLabel><FormControlLabelText style={{ color: textColor }}>{fieldLabel}</FormControlLabelText></FormControlLabel>
+										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
 										<ThemedInput style={{ borderColor }}><ThemedInputField type='text'
 										                   key={key}
 										                   name={property}
@@ -113,7 +112,7 @@ export const SelfRegistration = () => {
 							} else if (type === 'password') {
 								return (
 									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
-										<FormControlLabel><FormControlLabelText style={{ color: textColor }}>{fieldLabel}</FormControlLabelText></FormControlLabel>
+										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
 										<ThemedInput style={{ borderColor }}><ThemedInputField type='password'
 										                   key={property}
 										                   name={property}
@@ -135,7 +134,7 @@ export const SelfRegistration = () => {
 							}  else if (type === 'email') {
 								return (
 									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
-										<FormControlLabel><FormControlLabelText style={{ color: textColor }}>{fieldLabel}</FormControlLabelText></FormControlLabel>
+										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
 										<ThemedInput style={{ borderColor }}><ThemedInputField type='email'
 										                   key={property}
 										                   name={property}
@@ -157,7 +156,7 @@ export const SelfRegistration = () => {
 								const enumOptions = field.values ?? {};
 								return (
 									<FormControl style={{ marginVertical: 8 }} isRequired={required}>
-										<FormControlLabel><FormControlLabelText style={{ color: textColor }}>{fieldLabel}</FormControlLabelText></FormControlLabel>
+										<FormControlLabel><FormControlLabelText>{fieldLabel}</FormControlLabelText></FormControlLabel>
 										<Select
 											name={property}
 											selectedValue={values[property]}

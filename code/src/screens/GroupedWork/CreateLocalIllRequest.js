@@ -16,10 +16,10 @@ import { ThemedAlert, ThemedAlertText } from '../../components/themed/ThemedAler
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonSpinner as ButtonSpinner, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../components/themed/ThemedCheckbox';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { HStack } from '@/components/ui/hstack';
 import { CheckIcon } from '@/components/ui/icon';
-import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField } from '../../components/themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput as Input, ThemedInputField as InputField, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../components/themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -167,7 +167,7 @@ const Request = (payload) => {
                return (
                     <FormControl style={{ marginVertical: 8 }} isRequired={field.required}>
                          <FormControlLabel>
-                              <FormControlLabelText style={{ color: textColor }}>{field.label}</FormControlLabelText>
+                              <FormControlLabelText>{field.label}</FormControlLabelText>
                          </FormControlLabel>
                          <Input>
                               <InputField
@@ -229,7 +229,7 @@ const Request = (payload) => {
                return (
                     <FormControl style={{ marginVertical: 8 }} isRequired={field.required}>
                          <FormControlLabel>
-                              <FormControlLabelText style={{ color: textColor }}>{field.label}</FormControlLabelText>
+                              <FormControlLabelText>{field.label}</FormControlLabelText>
                          </FormControlLabel>
                          <Textarea>
                               <TextareaInput
@@ -254,7 +254,7 @@ const Request = (payload) => {
                return (
                     <FormControl style={{ marginVertical: 8 }} isRequired={field.required}>
                          <FormControlLabel>
-                              <FormControlLabelText style={{ color: textColor }}>{field.label}</FormControlLabelText>
+                              <FormControlLabelText>{field.label}</FormControlLabelText>
                          </FormControlLabel>
                          <Select
                               selectedValue={pickupLocation}
@@ -298,7 +298,7 @@ const Request = (payload) => {
                return (
                     <FormControl style={{ marginVertical: 8 }} isDisabled isRequired={field.required}>
                          <FormControlLabel>
-                              <FormControlLabelText style={{ color: textColor }}>{field.label}</FormControlLabelText>
+                              <FormControlLabelText>{field.label}</FormControlLabelText>
                          </FormControlLabel>
                          <Input>
                               <InputField name={field.property} defaultValue={catalogKey} accessibilityLabel={field.description ?? field.label} />
@@ -315,7 +315,7 @@ const Request = (payload) => {
                return (
                     <FormControl style={{ marginVertical: 8 }} isDisabled isRequired={field.required}>
                          <FormControlLabel>
-                              <FormControlLabelText style={{ color: textColor }}>{field.label}</FormControlLabelText>
+                              <FormControlLabelText>{field.label}</FormControlLabelText>
                          </FormControlLabel>
                          <Input>
                               <InputField name={field.property} defaultValue={volumeId} accessibilityLabel={field.description ?? field.label} />

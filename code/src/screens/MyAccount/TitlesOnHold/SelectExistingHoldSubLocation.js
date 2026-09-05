@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
 import { Box } from '@/components/ui/box';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ThemedFormControl as FormControl } from '../../../components/themed/ThemedFormControls';
+import { FormControlLabel } from '@/components/ui/form-control';
+import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../../components/themed/ThemedFormControls';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../../components/themed/ThemedSelect';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 
@@ -13,7 +13,7 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
  * @constructor
  */
 export const SelectExistingHoldSubLocation = (props) => {
-     const { sublocations, language, location, activeSublocation, setActiveSublocation, textColor } = props;
+     const { sublocations, language, location, activeSublocation, setActiveSublocation } = props;
 
      const [locationId, locationCode] = location.split("_");
      if (sublocations !== undefined) {
@@ -46,7 +46,7 @@ export const SelectExistingHoldSubLocation = (props) => {
                               <Box style={{ paddingLeft: 16, paddingRight: 16 }}>
                                    <FormControl>
                                         <FormControlLabel>
-                                             <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'select_new_pickup_area')}</FormControlLabelText>
+                                             <FormControlLabelText>{getTermFromDictionary(language, 'select_new_pickup_area')}</FormControlLabelText>
                                         </FormControlLabel>
                                         <Select
                                              selectedValue={activeSublocation}

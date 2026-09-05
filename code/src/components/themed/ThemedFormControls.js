@@ -1,6 +1,6 @@
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import { FormControl } from '@/components/ui/form-control';
+import { FormControl, FormControlLabelText } from '@/components/ui/form-control';
 import { Icon as UIIcon, CloseIcon } from '@/components/ui/icon';
 import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { useTheme } from '../../themes/theme';
@@ -12,6 +12,16 @@ export const ThemedFormControl = React.forwardRef(({ style, ...props }, ref) => 
 });
 
 ThemedFormControl.displayName = 'ThemedFormControl';
+
+// color: textColor was already being passed manually at nearly every call site -- baked in
+// here as a default, overridable via the caller's own style prop.
+export const ThemedFormControlLabelText = React.forwardRef(({ style, ...props }, ref) => {
+     const { textColor } = useTheme();
+
+     return <FormControlLabelText ref={ref} style={[{ color: textColor }, style]} {...props} />;
+});
+
+ThemedFormControlLabelText.displayName = 'ThemedFormControlLabelText';
 
 // The v5 Input primitive has no size variant at all (fixed min-h-9/text-sm) and hardcodes
 // context={{}}, so size can't propagate the way it does for Button/Radio. Track it in a local

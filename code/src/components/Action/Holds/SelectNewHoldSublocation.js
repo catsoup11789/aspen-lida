@@ -2,8 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { logDebugMessage, logErrorMessage } from '@/src/util/logging';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
-import { ThemedFormControl as FormControl } from '../../themed/ThemedFormControls';
+import { FormControlLabel } from '@/components/ui/form-control';
+import { ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 
@@ -14,7 +14,7 @@ import { ThemedText as Text } from '@/src/components/themed/ThemedText';
  * @constructor
  */
 export const SelectNewHoldSublocation = (props) => {
-     const {sublocations, location, activeSublocation, setActiveSublocation, language, textColor} = props;
+     const {sublocations, location, activeSublocation, setActiveSublocation, language} = props;
 
      if (sublocations !== undefined) {
           try {
@@ -51,7 +51,7 @@ export const SelectNewHoldSublocation = (props) => {
                               <>
                                    <FormControl>
                                         <FormControlLabel>
-                                             <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                             <FormControlLabelText size="sm">
                                                   {getTermFromDictionary(language, 'select_pickup_area')}
                                              </FormControlLabelText>
                                         </FormControlLabel>

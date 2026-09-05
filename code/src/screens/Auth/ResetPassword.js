@@ -8,12 +8,12 @@ import { LIBRARY } from '../../util/globals';
 import { logDebugMessage, getErrorMessage } from '../../util/logging';
 import { resetPassword } from '../../util/api/user';
 import { useTheme, UI_COLOR_FALLBACKS } from '../../themes/theme';
-import { ThemedCloseIcon } from '../../components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControlLabelText as FormControlLabelText } from '../../components/themed/ThemedFormControls';
 import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -180,7 +180,7 @@ function ResetForm({ resetBody, usernameLabel, emailLabel, username, setUsername
                     <Text style={{ marginBottom: 8 }}>{resetBody}</Text>
                     <FormControl style={{ marginBottom: emailLabel ? 8 : 0 }}>
                          <FormControlLabel>
-                              <FormControlLabelText size="sm" style={{ color: textColor }}>
+                              <FormControlLabelText size="sm">
                                    {usernameLabel}
                               </FormControlLabelText>
                          </FormControlLabel>
@@ -209,7 +209,7 @@ function ResetForm({ resetBody, usernameLabel, emailLabel, username, setUsername
                     {emailLabel ? (
                          <FormControl>
                               <FormControlLabel>
-                                   <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                   <FormControlLabelText size="sm">
                                         {emailLabel}
                                    </FormControlLabelText>
                               </FormControlLabel>

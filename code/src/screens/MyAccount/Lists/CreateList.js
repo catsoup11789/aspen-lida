@@ -10,11 +10,11 @@ import { toArray } from '@/src/helpers/helpers';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
 import { useLibrary } from '@/src/hooks/useLibrarySystemData';
-import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { HStack } from '@/components/ui/hstack';
 import { CircleIcon } from '@/components/ui/icon';
@@ -92,7 +92,7 @@ const CreateList = (props) => {
                          <ModalBody>
                               <FormControl>
                                    <FormControlLabel>
-                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
+                                        <FormControlLabelText>{getTermFromDictionary(language, 'title')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <ThemedInput style={{ borderColor }}>
                                         <ThemedInputField id="title" onChangeText={(text) => setTitle(text)} returnKeyType="next" defaultValue={title} />
@@ -100,7 +100,7 @@ const CreateList = (props) => {
                               </FormControl>
                               <FormControl>
                                    <FormControlLabel>
-                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'description')}</FormControlLabelText>
+                                        <FormControlLabelText>{getTermFromDictionary(language, 'description')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <Textarea id="description" onChangeText={(text) => setDescription(text)} defaultValue={description} returnKeyType="next">
                                         <TextareaInput />
@@ -108,7 +108,7 @@ const CreateList = (props) => {
                               </FormControl>
                               <FormControl>
                                    <FormControlLabel>
-                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'access')}</FormControlLabelText>
+                                        <FormControlLabelText>{getTermFromDictionary(language, 'access')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <RadioGroup
                                         name="access"
@@ -134,7 +134,7 @@ const CreateList = (props) => {
                               </FormControl>
                               <FormControl style={{ paddingBottom: 12 }}>
                                    <FormControlLabel>
-                                        <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'should_add_to_list_group')}</FormControlLabelText>
+                                        <FormControlLabelText>{getTermFromDictionary(language, 'should_add_to_list_group')}</FormControlLabelText>
                                    </FormControlLabel>
                                    <Select name="should_add_to_list_group" selectedValue={addToGroup} accessibilityLabel={getTermFromDictionary(language, 'should_add_to_list_group')} onValueChange={(itemValue) => setAddToGroup(itemValue)}>
                                         <SelectTrigger>
@@ -159,7 +159,7 @@ const CreateList = (props) => {
                                    <>
                                         <FormControl style={{ paddingBottom: 8 }}>
                                              <FormControlLabel>
-                                                  <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
+                                                  <FormControlLabelText>{getTermFromDictionary(language, 'new_list_group_name')}</FormControlLabelText>
                                              </FormControlLabel>
                                              <ThemedInput style={{ borderColor }}>
                                                   <ThemedInputField id="newGroupName" onChangeText={(text) => setNewGroupName(text)} defaultValue={newGroupName} />
@@ -168,7 +168,7 @@ const CreateList = (props) => {
                                         {hasListGroups && (
                                              <FormControl style={{ paddingBottom: 8 }}>
                                                   <FormControlLabel>
-                                                       <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'should_nest_list_group')}</FormControlLabelText>
+                                                       <FormControlLabelText>{getTermFromDictionary(language, 'should_nest_list_group')}</FormControlLabelText>
                                                   </FormControlLabel>
                                                   <Select name="should_nest_list_group" selectedValue={nestedGroup} accessibilityLabel={getTermFromDictionary(language, 'should_nest_list_group')} onValueChange={(itemValue) => setNestedGroup(itemValue)}>
                                                        <SelectTrigger>
@@ -204,7 +204,7 @@ const CreateList = (props) => {
                               {addToGroup === 'existing' && hasListGroups && (
                                    <FormControl>
                                         <FormControlLabel>
-                                             <FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'choose_existing_list_group')}</FormControlLabelText>
+                                             <FormControlLabelText>{getTermFromDictionary(language, 'choose_existing_list_group')}</FormControlLabelText>
                                         </FormControlLabel>
                                         <Select
                                              selectedValue={existingGroupId}

@@ -15,8 +15,8 @@ import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { logDebugMessage, logWarnMessage, getErrorMessage } from '@/src/util/logging';
 import { useActiveLanguage } from '@/src/hooks/useLanguageData';
 import { useTheme } from '@/src/themes/theme';
-import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../themed/ThemedFormControls';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { PasswordVisibilityToggle, ThemedCloseIcon, ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 
@@ -154,7 +154,7 @@ export const CheckOut = (props) => {
                                    {formMessage ? <RenderHtml contentWidth={width} source={source} tagsStyles={tagsStyles} /> : null}
                                    <FormControl style={{ marginBottom: 8 }}>
                                         <FormControlLabel>
-                                             <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                             <FormControlLabelText size="sm">
                                                   {cardLabel}
                                              </FormControlLabelText>
                                         </FormControlLabel>
@@ -165,7 +165,7 @@ export const CheckOut = (props) => {
                                    {showAlternateLibraryCardPassword ? (
                                         <FormControl style={{ marginBottom: 8 }}>
                                              <FormControlLabel>
-                                                  <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                                  <FormControlLabelText size="sm">
                                                        {passwordLabel}
                                                   </FormControlLabelText>
                                              </FormControlLabel>

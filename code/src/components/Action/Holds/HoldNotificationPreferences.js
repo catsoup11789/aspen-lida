@@ -2,9 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { useTranslationWithValues } from '@/src/hooks/useTranslationWithValues';
-import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../themed/ThemedFormControls';
+import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField, ThemedFormControlLabelText as FormControlLabelText } from '../../themed/ThemedFormControls';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../themed/ThemedCheckbox';
-import { FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlHelper, FormControlHelperText, FormControlLabel } from '@/components/ui/form-control';
 import { CheckIcon } from '@/components/ui/icon';
 import { ThemedSelect as Select, ThemedSelectBackdrop as SelectBackdrop, ThemedSelectContent as SelectContent, ThemedSelectDragIndicator as SelectDragIndicator, ThemedSelectDragIndicatorWrapper as SelectDragIndicatorWrapper, ThemedSelectInput as SelectInput, ThemedSelectItem as SelectItem, ThemedSelectPortal as SelectPortal, ThemedSelectScrollView as SelectScrollView, ThemedSelectTrigger as SelectTrigger } from '../../themed/ThemedSelect';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -64,7 +64,7 @@ export const HoldNotificationPreferences = (props) => {
                     <>
                          <FormControl style={{ marginBottom: 8 }}>
                               <FormControlLabel>
-                                   <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                   <FormControlLabelText size="sm">
                                         {getTermFromDictionary(language, 'hold_phone_number')}
                                    </FormControlLabelText>
                               </FormControlLabel>
@@ -93,7 +93,7 @@ export const HoldNotificationPreferences = (props) => {
                               <>
                                    <FormControl style={{ marginBottom: 4 }}>
                                         <FormControlLabel>
-                                             <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                             <FormControlLabelText size="sm">
                                                   {getTermFromDictionary(language, 'hold_sms_carrier')}
                                              </FormControlLabelText>
                                         </FormControlLabel>
@@ -135,7 +135,7 @@ export const HoldNotificationPreferences = (props) => {
                                    </FormControl>
                                    <FormControl>
                                         <FormControlLabel>
-                                             <FormControlLabelText size="sm" style={{ color: textColor }}>
+                                             <FormControlLabelText size="sm">
                                                   {getTermFromDictionary(language, 'hold_sms_number')}
                                              </FormControlLabelText>
                                         </FormControlLabel>

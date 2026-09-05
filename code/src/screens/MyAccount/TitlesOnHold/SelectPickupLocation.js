@@ -4,12 +4,12 @@ import React from 'react';
 import { getTermFromDictionary } from '@/src/translations/TranslationService';
 import { changeHoldPickUpLocation } from '@/src/util/api/user';
 import {SelectExistingHoldSubLocation} from './SelectExistingHoldSubLocation';
-import { ThemedCloseIcon, ThemedFormControl as FormControl } from '@/src/components/themed/ThemedFormControls';
+import { ThemedCloseIcon, ThemedFormControl as FormControl, ThemedFormControlLabelText as FormControlLabelText } from '@/src/components/themed/ThemedFormControls';
 import { ActionsheetIcon, ActionsheetItem, ActionsheetItemText } from '@/components/ui/actionsheet';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
-import { FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
+import { FormControlLabel } from '@/components/ui/form-control';
 import { ThemedHeading as Heading } from '@/src/components/themed/ThemedHeading';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { ThemedScrollView as ScrollView } from '@/src/components/themed/ThemedScrollView';
@@ -78,7 +78,7 @@ export const SelectPickupLocation = (props) => {
                          <ModalBody>
                               <Box style={{ paddingLeft: 16, paddingRight: 16 }}>
                                    <FormControl>
-                                       <FormControlLabel><FormControlLabelText style={{ color: textColor }}>{getTermFromDictionary(language, 'select_new_pickup')}</FormControlLabelText></FormControlLabel>
+                                       <FormControlLabel><FormControlLabelText>{getTermFromDictionary(language, 'select_new_pickup')}</FormControlLabelText></FormControlLabel>
                                         <Select
                                              name="pickupLocations"
                                              selectedValue={location}
