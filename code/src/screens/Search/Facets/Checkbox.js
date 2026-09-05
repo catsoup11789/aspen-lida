@@ -1,10 +1,8 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { ThemedCheckbox as Checkbox, ThemedCheckboxIcon as CheckboxIcon, ThemedCheckboxIndicator as CheckboxIndicator, ThemedCheckboxLabel as CheckboxLabel } from '../../../components/themed/ThemedCheckbox';
 import { HStack } from '@/components/ui/hstack';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { logDebugMessage } from '@/src/util/logging';
-import { useTheme } from '@/src/themes/theme';
 
 /**
  * Facet_Checkbox component that renders a checkbox for a given facet option. It handles the checked state and updates the parent component when the checkbox is toggled.
@@ -17,7 +15,6 @@ import { useTheme } from '@/src/themes/theme';
  * @constructor
  */
 export const Facet_Checkbox = ({ data, category, values = [], updateCheckboxFacet }) => {
-     const { runtimeColors } = useTheme();
      const isChecked = values.includes(data.value);
      const handleChange = (newValue) => {
           logDebugMessage("Clicked on " + data.value + " isChecked is " + isChecked + " newValue is " + newValue);
@@ -33,8 +30,8 @@ export const Facet_Checkbox = ({ data, category, values = [], updateCheckboxFace
                     onChange={(value) => {
                          handleChange(value);
                     }}>
-                    <CheckboxIndicator style={isChecked ? { borderColor: runtimeColors.primary[500], backgroundColor: runtimeColors.primary[500] } : undefined}>
-                         {isChecked ? <CheckboxIcon as={MaterialIcons} style={{ color: runtimeColors.primary['500-text'] }} size="sm" /> : null}
+                    <CheckboxIndicator>
+                         {isChecked ? <CheckboxIcon /> : null}
                     </CheckboxIndicator>
                     <CheckboxLabel style={{ paddingLeft: 8 }}>
                          <Text>
