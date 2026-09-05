@@ -10,7 +10,7 @@ import React from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { AppState, Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Divider } from '@/components/ui/divider';
@@ -815,9 +815,9 @@ const Checkouts = () => {
                               <Text style={{ fontWeight: '700' }}> ({user.numCheckedOut ?? 0})</Text>
                          </HStack>
                          {user.numOverdue > 0 ? (
-                              <ThemedBadge action="error" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <ThemedBadgeText action="error" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'checkouts_overdue_summary').replace("%1%", user.numOverdue)}</ThemedBadgeText>
-                              </ThemedBadge>
+                              <Badge colorScheme="error" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                   <BadgeText colorScheme="error" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'checkouts_overdue_summary').replace("%1%", user.numOverdue)}</BadgeText>
+                              </Badge>
                          ) : null}
                     </VStack>
                </HStack>
@@ -851,9 +851,9 @@ const Holds = () => {
                               <Text style={{ fontWeight: '700' }}> ({user.numHolds ?? 0})</Text>
                          </HStack>
                          {user.numHoldsAvailable > 0 ? (
-                              <ThemedBadge action="success" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <ThemedBadgeText action="success" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'num_holds_ready_for_pickup', false).replace('%1%', user.numHoldsAvailable)}</ThemedBadgeText>
-                              </ThemedBadge>
+                              <Badge colorScheme="success" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                   <BadgeText colorScheme="success" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'num_holds_ready_for_pickup', false).replace('%1%', user.numHoldsAvailable)}</BadgeText>
+                              </Badge>
                          ) : null}
                     </VStack>
                </HStack>
@@ -920,9 +920,9 @@ const SavedSearches = () => {
                               <Text style={{ fontWeight: '700' }}> ({user.numSavedSearches ?? 0})</Text>
                          </HStack>
                          {user.numSavedSearchesNew > 0 ? (
-                              <ThemedBadge action="warning" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <ThemedBadgeText action="warning" style={{ fontSize: 12 }}>{savedSearchSummary}</ThemedBadgeText>
-                              </ThemedBadge>
+                              <Badge colorScheme="warning" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                   <BadgeText colorScheme="warning" style={{ fontSize: 12 }}>{savedSearchSummary}</BadgeText>
+                              </Badge>
                          ) : null}
                     </VStack>
                </HStack>
@@ -1095,9 +1095,9 @@ const Fines = () => {
                          <MaterialIcons name="chevron-right" size={20} color={themeTextColor} />
                          <VStack>
                               <Text style={{ color: themeTextColor, fontWeight: '500' }}>{getTermFromDictionary(language, 'fines')}</Text>
-                              <ThemedBadge action={hasFines ? 'error' : 'info'} style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <ThemedBadgeText action={hasFines ? 'error' : 'info'} style={{ fontSize: 12 }}>{user.fines ?? '$0.00'}</ThemedBadgeText>
-                              </ThemedBadge>
+                              <Badge colorScheme={hasFines ? 'error' : 'info'} style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                   <BadgeText colorScheme={hasFines ? 'error' : 'info'} style={{ fontSize: 12 }}>{user.fines ?? '$0.00'}</BadgeText>
+                              </Badge>
                          </VStack>
                     </HStack>
                </Pressable>
@@ -1131,9 +1131,9 @@ const Events = () => {
                                    {getTermFromDictionary(language, 'events')}
                               </Text>
                               {user.numSavedEventsUpcoming > 0 ? (
-                                   <ThemedBadge action="info" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                        <ThemedBadgeText action="info" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'num_saved_events_upcoming').replace('%1%', user.numSavedEventsUpcoming)}</ThemedBadgeText>
-                                   </ThemedBadge>
+                                   <Badge colorScheme="info" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                        <BadgeText colorScheme="info" style={{ fontSize: 12 }}>{getTermFromDictionary(language, 'num_saved_events_upcoming').replace('%1%', user.numSavedEventsUpcoming)}</BadgeText>
+                                   </Badge>
                               ) : null}
                          </VStack>
                     </HStack>
@@ -1164,9 +1164,9 @@ const YearInReview = () => {
                          <MaterialIcons name="chevron-right" size={20} color={themeTextColor} />
                          <VStack>
                               <Text style={{ color: themeTextColor, fontWeight: '500' }}>{user.yearInReviewName ?? yearInReviewLabel}</Text>
-                              <ThemedBadge action="info" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
-                                   <ThemedBadgeText action="info" style={{ fontSize: 12 }}>{viewNowLabel}</ThemedBadgeText>
-                              </ThemedBadge>
+                              <Badge colorScheme="info" style={{ marginTop: 4, borderRadius: 4, alignSelf: 'flex-start' }}>
+                                   <BadgeText colorScheme="info" style={{ fontSize: 12 }}>{viewNowLabel}</BadgeText>
+                              </Badge>
                          </VStack>
                     </HStack>
                </Pressable>

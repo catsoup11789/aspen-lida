@@ -10,7 +10,7 @@ import AddToList from './AddToList';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { ThemedBadge, ThemedBadgeText, buildBrandOutlineBadgeStyle, buildBrandOutlineBadgeTextStyle } from '../../components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
@@ -31,7 +31,7 @@ export const DisplayGroupedWorkResult = (props) => {
      let params = useRoute();
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { runtimeColors, colorMode, uiColors } = useTheme();
+     const { colorMode, uiColors } = useTheme();
 
      let formats = item?.itemList ?? [];
      const id = item.key ?? item.id;
@@ -70,20 +70,20 @@ export const DisplayGroupedWorkResult = (props) => {
      function getFormat(n) {
           if (_.isArray(n) || _.isObject(n)) {
                return (
-                    <ThemedBadge key={n.key} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[400])}>
-                         <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[400], { fontSize: 12 })}>
+                    <Badge key={n.key} colorScheme="secondary" variant="outline">
+                         <BadgeText colorScheme="secondary" style={{ fontSize: 12 }}>
                               {n.name}
-                         </ThemedBadgeText>
-                    </ThemedBadge>
+                         </BadgeText>
+                    </Badge>
                );
           }
 
           return (
-               <ThemedBadge key={n} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[400])}>
-                    <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[400], { fontSize: 12 })}>
+               <Badge key={n} colorScheme="secondary" variant="outline">
+                    <BadgeText colorScheme="secondary" style={{ fontSize: 12 }}>
                          {n}
-                    </ThemedBadgeText>
-               </ThemedBadge>
+                    </BadgeText>
+               </Badge>
           );
      }
 
@@ -110,13 +110,13 @@ export const DisplayGroupedWorkResult = (props) => {
                          </Box>
                          {item.language ? (
                               <Center style={{ marginTop: 4 }}>
-                                   <ThemedBadge
+                                   <Badge
                                         size="sm"
                                         style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
-                                        <ThemedBadgeText textTransform="none" style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 12, textAlign: 'center' }}>
+                                        <BadgeText style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 12, textAlign: 'center' }}>
                                             {item.language}
-                                       </ThemedBadgeText>
-                                   </ThemedBadge>
+                                       </BadgeText>
+                                   </Badge>
                               </Center>
                          ) : null}
                          <AddToList itemId={id} btnStyle="sm" />

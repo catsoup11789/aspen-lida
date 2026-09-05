@@ -10,7 +10,7 @@ import AddToList from './AddToList';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { ThemedBadge, ThemedBadgeText, buildBrandOutlineBadgeStyle, buildBrandOutlineBadgeTextStyle } from '../../components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Center } from '@/components/ui/center';
@@ -35,7 +35,7 @@ export const DisplayListResult = (props) => {
      const library = useLibrary();
      const queryClient = useQueryClient();
 
-     const { runtimeColors, colorMode, uiColors } = useTheme();
+     const { colorMode, uiColors } = useTheme();
 
      let recordType = 'grouped_work';
      if (item.recordtype) {
@@ -80,13 +80,13 @@ export const DisplayListResult = (props) => {
                          </Box>
                          {item.language ? (
                               <Center>
-                                   <ThemedBadge
+                                   <Badge
                                         size="sm"
                                         style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
-                                        <ThemedBadgeText textTransform="none" style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
+                                        <BadgeText style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
                                             {item.language}
-                                       </ThemedBadgeText>
-                                   </ThemedBadge>
+                                       </BadgeText>
+                                   </Badge>
                               </Center>
                          ) : null}
                          {isUserList ? (
@@ -120,11 +120,11 @@ export const DisplayListResult = (props) => {
                               <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
                                    {item.format.map((format, i) => {
                                         return (
-                                             <ThemedBadge key={i} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[400])}>
-                                                  <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[400], { fontSize: 10, lineHeight: 14 })}>
+                                             <Badge key={i} colorScheme="secondary" variant="outline">
+                                                  <BadgeText colorScheme="secondary" style={{ fontSize: 10, lineHeight: 14 }}>
                                                        {format}
-                                                  </ThemedBadgeText>
-                                             </ThemedBadge>
+                                                  </BadgeText>
+                                             </Badge>
                                         );
                                    })}
                               </HStack>

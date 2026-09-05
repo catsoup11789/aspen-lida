@@ -2,7 +2,7 @@ import { useRoute } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import React from 'react';
 import { FlatList } from 'react-native';
-import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
@@ -131,11 +131,11 @@ const SavedSearch = (data) => {
                     <VStack style={{ maxWidth: '35%' }}>
                          {isNew ? (
                               <Box style={{ width: '100%', zIndex: 1 }}>
-                                   <ThemedBadge action="warning" style={{ marginBottom: -12, marginLeft: -4 }}>
-                                        <ThemedBadgeText action="warning" size="xs">
+                                   <Badge colorScheme="warning" style={{ marginBottom: -12, marginLeft: -4 }}>
+                                        <BadgeText colorScheme="warning" size="xs">
                                              {getTermFromDictionary(language, 'flag_new')}
-                                        </ThemedBadgeText>
-                                   </ThemedBadge>
+                                        </BadgeText>
+                                   </Badge>
                               </Box>
                          ) : null}
                          <Image
@@ -149,15 +149,15 @@ const SavedSearch = (data) => {
                              transition={1000}
                              contentFit="cover"
                         />
-                         <ThemedBadge
+                         <Badge
                               style={{ marginTop: 4, backgroundColor: surfaceMuted }}
                          >
-                              <ThemedBadgeText
+                              <BadgeText
                                    size="sm"
                                    style={{ color: subtitleColor }}>
                                    {item.language}
-                              </ThemedBadgeText>
-                         </ThemedBadge>
+                              </BadgeText>
+                         </Badge>
                          <AddToList item={item.id} libraryUrl={library.baseUrl} />
                     </VStack>
 
@@ -177,11 +177,11 @@ const SavedSearch = (data) => {
                               <HStack style={{ marginTop: 6, flexWrap: 'wrap' }} space={1}>
                                    {formats.map((format, index) => {
                                         return (
-                                             <ThemedBadge key={index} action="info" variant="outline" style={{ marginTop: 4, borderRadius: 8, marginLeft: 8 }}>
-                                                  <ThemedBadgeText action="info" size="sm" style={{ textTransform: 'none', color: textColor }}>
+                                             <Badge key={index} colorScheme="info" variant="outline" style={{ marginTop: 4, borderRadius: 8, marginLeft: 8 }}>
+                                                  <BadgeText colorScheme="info" size="sm" style={{ textTransform: 'none', color: textColor }}>
                                                        {format}
-                                                  </ThemedBadgeText>
-                                             </ThemedBadge>
+                                                  </BadgeText>
+                                             </Badge>
                                         );
                                    })}
                               </HStack>

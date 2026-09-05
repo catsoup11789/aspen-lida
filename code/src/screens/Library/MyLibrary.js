@@ -18,7 +18,7 @@ import { LoadingSpinner } from '../../components/loadingSpinner';
 import {logDebugMessage} from "../../util/logging";
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Divider } from '@/components/ui/divider';
@@ -162,11 +162,11 @@ export const MyLibrary = () => {
                          ) : null}
                          {hasHours ? (
                               <Text style={{ marginTop: 16, marginBottom: 8 }}>
-                                   <ThemedBadge action={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
-                                        <ThemedBadgeText action={isClosedToday ? 'error' : 'success'}>
+                                   <Badge colorScheme={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
+                                        <BadgeText colorScheme={isClosedToday ? 'error' : 'success'}>
                                              {hoursLabel}
-                                        </ThemedBadgeText>
-                                   </ThemedBadge>
+                                        </BadgeText>
+                                   </Badge>
                               </Text>
                          ) : null}
                          <DisplayMap data={location} />

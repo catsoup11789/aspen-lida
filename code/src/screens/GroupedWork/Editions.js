@@ -22,7 +22,7 @@ import { logDebugMessage, logWarnMessage, getErrorMessage } from '../../util/log
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
-import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonIcon as ButtonIcon, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -411,9 +411,9 @@ const Edition = (props) => {
                          </HStack>
                          <VStack space="sm">
                               <Center>
-                                   <ThemedBadge action={statusIndicator.indicator} variant="solid" style={{ borderRadius: 8 }}>
-                                        <ThemedBadgeText action={statusIndicator.indicator} textTransform="none">{statusIndicator.label}</ThemedBadgeText>
-                                   </ThemedBadge>
+                                   <Badge colorScheme={statusIndicator.indicator} variant="solid" style={{ borderRadius: 8 }}>
+                                        <BadgeText colorScheme={statusIndicator.indicator}>{statusIndicator.label}</BadgeText>
+                                   </Badge>
                               </Center>
                               {records.source === 'ils' || status.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>

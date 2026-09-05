@@ -21,7 +21,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Pressable } from '@/components/ui/pressable';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 
 const loggedEmptyCategoryKeys = new Set();
 
@@ -320,11 +320,11 @@ const DisplayBrowseCategoryRecord = ({record}) => {
                />
                {isNew ? (
                     <Box style={{ zIndex: 1, alignItems: 'center' }}>
-                         <ThemedBadge action="warning" style={{ backgroundColor: '#f59e0b', marginHorizontal: 20, marginTop: -8 }}>
-                              <ThemedBadgeText action="warning" bold style={{ color: uiColors.white, textTransform: 'none' }}>
+                         <Badge colorScheme="warning" style={{ backgroundColor: '#f59e0b', marginHorizontal: 20, marginTop: -8 }}>
+                              <BadgeText colorScheme="warning" bold style={{ color: uiColors.white, textTransform: 'none' }}>
                                    {getTermFromDictionary(language, 'flag_new')}
-                              </ThemedBadgeText>
-                         </ThemedBadge>
+                              </BadgeText>
+                         </Badge>
                     </Box>
                ) : null}
           </Pressable>

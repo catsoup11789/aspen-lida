@@ -3,7 +3,7 @@ import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { FlatList } from 'react-native';
-import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -271,9 +271,9 @@ export const MyList = ({ route }) => {
                                    ) : null}
                                    {registrationRequired ? (
                                         <HStack style={{ marginTop: 4, flexDirection: 'row', flexWrap: 'wrap' }} space="sm">
-                                             <ThemedBadge key={0} action="info" variant="outline" size="sm" style={{ marginTop: 4, borderRadius: 8 }}>
-                                                  <ThemedBadgeText action="info">{t('registration_required')}</ThemedBadgeText>
-                                             </ThemedBadge>
+                                             <Badge key={0} colorScheme="info" variant="outline" size="sm" style={{ marginTop: 4, borderRadius: 8 }}>
+                                                  <BadgeText colorScheme="info">{t('registration_required')}</BadgeText>
+                                             </Badge>
                                         </HStack>
                                    ) : null}
                               </VStack>

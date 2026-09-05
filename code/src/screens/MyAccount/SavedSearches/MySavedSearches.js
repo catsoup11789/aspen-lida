@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native';
-import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { Center } from '@/components/ui/center';
 import { HStack } from '@/components/ui/hstack';
@@ -150,9 +150,9 @@ const Item = (data) => {
                               <Text bold size="md">
                                    {item.title}{' '}
                                    {hasNewResults === 1 ? (
-                                        <ThemedBadge action="warning" style={{ marginBottom: -2 }}>
-                                             <ThemedBadgeText action="warning">{getTermFromDictionary(language, 'flag_updated')}</ThemedBadgeText>
-                                        </ThemedBadge>
+                                        <Badge colorScheme="warning" style={{ marginBottom: -2 }}>
+                                             <BadgeText colorScheme="warning">{getTermFromDictionary(language, 'flag_updated')}</BadgeText>
+                                        </Badge>
                                    ) : null}
                               </Text>
                               <Text size="xs" italic>

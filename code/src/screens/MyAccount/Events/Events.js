@@ -7,7 +7,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import { FlatList } from 'react-native';
-import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -385,11 +385,11 @@ const Item = (data) => {
                         <VStack style={{ maxWidth: '35%' }}>
                               {hasPassed ? (
                                    <Box style={{ width: '100%', zIndex: 1 }}>
-                                        <ThemedBadge action="warning" variant="solid" style={{ marginBottom: -12, marginLeft: -4, borderRadius: 8 }}>
-                                             <ThemedBadgeText action="warning" size="xs">
+                                        <Badge colorScheme="warning" variant="solid" style={{ marginBottom: -12, marginLeft: -4, borderRadius: 8 }}>
+                                             <BadgeText colorScheme="warning" size="xs">
                                                   {getTermFromDictionary(language, 'flag_past')}
-                                             </ThemedBadgeText>
-                                        </ThemedBadge>
+                                             </BadgeText>
+                                        </Badge>
                                    </Box>
                               ) : null}
                               <Image
@@ -447,11 +447,11 @@ const Item = (data) => {
                          ) : null}
                          {registrationRequired ? (
                               <HStack style={{ marginTop: 6, flexWrap: 'wrap' }} space="xs">
-                                   <ThemedBadge key={0} action="muted" variant="outline" style={{ marginTop: 4, borderRadius: 8 }}>
-                                        <ThemedBadgeText action="muted" size="sm">
+                                   <Badge key={0} colorScheme="muted" variant="outline" style={{ marginTop: 4, borderRadius: 8 }}>
+                                        <BadgeText colorScheme="muted" size="sm">
                                              {getTermFromDictionary(language, 'registration_required')}
-                                        </ThemedBadgeText>
-                                   </ThemedBadge>
+                                        </BadgeText>
+                                   </Badge>
                               </HStack>
                          ) : null}
                     </VStack>

@@ -1,47 +1,83 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Badge, BadgeIcon, BadgeText } from '@/components/ui/badge';
-import { BADGE_ACTION_CLASSNAMES, STATUS_VARIANT_TO_UI_VARIANT, normalizeStatusAction } from './statusStyles';
+import { Badge, BadgeText } from '@/components/ui/badge';
+import { useTheme } from '../../themes/theme';
 
-// Shared shape for the outline "tag" badges (format, registration, etc.) that are
-// tinted with the library's dynamic brand color rather than a semantic action.
-export function buildBrandOutlineBadgeStyle(color) {
-     return { borderRadius: 8, borderColor: color, backgroundColor: 'transparent' };
+const BADGE_STATUS_COLORS = {
+     error: { bg: '#fee2e2', text: '#991b1b' },
+     warning: { bg: '#fef3c7', text: '#92400e' },
+     success: { bg: '#dcfce7', text: '#166534' },
+     info: { bg: '#e0f2fe', text: '#075985' },
+     muted: { bg: '#f3f4f6', text: '#1f2937' },
+     none: { bg: '#e5e7eb', text: '#1f2937' },
+};
+
+const BadgeActionContext = React.createContext({ colorScheme: undefined, variant: 'solid' });
+
+function normalizeBadgeColorScheme(colorScheme) {
+     if (colorScheme === 'danger') {
+          return 'error';
+     }
+     return colorScheme || 'default';
 }
 
-export function buildBrandOutlineBadgeTextStyle(color, extra = {}) {
-     return { color, ...extra };
+function resolveBrandBadgeColors(runtimeColors, colorScheme, variant) {
+     const scale = runtimeColors?.[colorScheme];
+     if (!scale) {
+          return null;
+     }
+     if (variant === 'outline') {
+          return { borderColor: scale[500], textColor: scale[500], backgroundColor: 'transparent' };
+     }
+     return { backgroundColor: scale[500], textColor: scale['500-text'] };
 }
 
-export const ThemedBadge = React.forwardRef(({ action, variant = 'default', className, ...props }, ref) => {
-     const normalizedAction = normalizeStatusAction(action);
-     const statusClasses = BADGE_ACTION_CLASSNAMES[normalizedAction] ?? BADGE_ACTION_CLASSNAMES.default;
-     const resolvedVariant = STATUS_VARIANT_TO_UI_VARIANT[normalizedAction] ?? variant;
+function resolveStatusBadgeColors(runtimeColors, colorScheme, variant) {
+     const normalized = normalizeBadgeColorScheme(colorScheme);
+     const status = BADGE_STATUS_COLORS[normalized];
+
+     if (!status) {
+          return resolveBrandBadgeColors(runtimeColors, 'primary', variant) ?? { backgroundColor: 'transparent', textColor: undefined };
+     }
+     if (variant === 'outline') {
+          return { borderColor: status.text, textColor: status.text, backgroundColor: 'transparent' };
+     }
+     return { backgroundColor: status.bg, textColor: status.text };
+}
+
+export const ThemedBadge = React.forwardRef(({ colorScheme, variant = 'solid', className, style, ...props }, ref) => {
+     const { runtimeColors } = useTheme();
+     const brandColors = resolveBrandBadgeColors(runtimeColors, colorScheme, variant);
+     const colors = brandColors ?? resolveStatusBadgeColors(runtimeColors, colorScheme, variant);
 
      return (
-          <Badge
+          <BadgeActionContext.Provider value={{ colorScheme, variant }}>
+               <Badge
+                    ref={ref}
+                    variant={variant === 'outline' ? 'outline' : 'solid'}
+                    className={className}
+                    style={[{ backgroundColor: colors.backgroundColor, borderColor: colors.borderColor }, style]}
+                    {...props}
+               />
+          </BadgeActionContext.Provider>
+     );
+});
+
+export const ThemedBadgeText = React.forwardRef(({ className, style, ...props }, ref) => {
+     const { colorScheme, variant } = React.useContext(BadgeActionContext);
+     const { runtimeColors } = useTheme();
+     const brandColors = resolveBrandBadgeColors(runtimeColors, colorScheme, variant);
+     const colors = brandColors ?? resolveStatusBadgeColors(runtimeColors, colorScheme, variant);
+
+     return (
+          <BadgeText
                ref={ref}
-               variant={resolvedVariant}
-               className={[statusClasses.solid, className].filter(Boolean).join(' ')}
+               className={className}
+               style={{ textTransform: 'none', color: colors.textColor, ...StyleSheet.flatten(style) }}
                {...props}
           />
      );
 });
 
-export const ThemedBadgeText = React.forwardRef(({ action, className, style, ...props }, ref) => {
-     const normalizedAction = normalizeStatusAction(action);
-     const statusClasses = BADGE_ACTION_CLASSNAMES[normalizedAction] ?? BADGE_ACTION_CLASSNAMES.default;
-
-     return <BadgeText ref={ref} className={[statusClasses.text, className].filter(Boolean).join(' ')} style={{ textTransform: 'none', ...StyleSheet.flatten(style) }} {...props} />;
-});
-
-export const ThemedBadgeIcon = React.forwardRef(({ action, className, ...props }, ref) => {
-     const normalizedAction = normalizeStatusAction(action);
-     const statusClasses = BADGE_ACTION_CLASSNAMES[normalizedAction] ?? BADGE_ACTION_CLASSNAMES.default;
-
-     return <BadgeIcon ref={ref} className={[statusClasses.icon, className].filter(Boolean).join(' ')} {...props} />;
-});
-
 ThemedBadge.displayName = 'ThemedBadge';
 ThemedBadgeText.displayName = 'ThemedBadgeText';
-ThemedBadgeIcon.displayName = 'ThemedBadgeIcon';

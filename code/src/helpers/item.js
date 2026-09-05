@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { ThemedBadge, ThemedBadgeText } from '../components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ActionsheetItemText } from '@/components/ui/actionsheet';
 import { ThemedText as Text } from '@/src/components/themed/ThemedText';
@@ -19,11 +19,11 @@ export const isOverdue = (overdue) => {
      const language = useActiveLanguage();
      if (overdue) {
           return (
-               <ThemedBadge action="error" style={{ marginTop: -8, alignSelf: 'flex-start', borderRadius: 4 }}>
-                    <ThemedBadgeText action="error">
+               <Badge colorScheme="error" style={{ marginTop: -8, alignSelf: 'flex-start', borderRadius: 4 }}>
+                    <BadgeText colorScheme="error">
                          {getTermFromDictionary(language, 'checkout_overdue')}
-                    </ThemedBadgeText>
-               </ThemedBadge>
+                    </BadgeText>
+               </Badge>
           );
      } else {
           return null;
@@ -216,19 +216,19 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
      if (frozen) {
           if (statusMessage) {
                return (
-                    <ThemedBadge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
-                         <ThemedBadgeText action="warning">
+                    <Badge colorScheme="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+                         <BadgeText colorScheme="warning">
                               {statusMessage}
-                         </ThemedBadgeText>
-                    </ThemedBadge>
+                         </BadgeText>
+                    </Badge>
                );
           }
           return (
-               <ThemedBadge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
-                    <ThemedBadgeText action="warning">
+               <Badge colorScheme="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+                    <BadgeText colorScheme="warning">
                          {status}
-                    </ThemedBadgeText>
-               </ThemedBadge>
+                    </BadgeText>
+               </Badge>
           );
      } else if (available) {
           let message = getTermFromDictionary(language, 'overdrive_hold_ready');
@@ -236,20 +236,20 @@ export const getBadge = (status, frozen, available, source, statusMessage) => {
                message = status;
           }
           return (
-               <ThemedBadge action="success" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
-                    <ThemedBadgeText action="success">
+               <Badge colorScheme="success" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+                    <BadgeText colorScheme="success">
                          {message}
-                    </ThemedBadgeText>
-               </ThemedBadge>
+                    </BadgeText>
+               </Badge>
           );
      } else {
           if (status) {
                return (
-                    <ThemedBadge action="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
-                         <ThemedBadgeText action="warning">
+                    <Badge colorScheme="warning" style={{ marginTop: -2, alignSelf: 'flex-start', borderRadius: 4 }}>
+                         <BadgeText colorScheme="warning">
                               {status}
-                         </ThemedBadgeText>
-                    </ThemedBadge>
+                         </BadgeText>
+                    </Badge>
                );
           }
      }

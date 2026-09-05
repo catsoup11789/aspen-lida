@@ -26,7 +26,7 @@ import { createApiClient } from '../../util/api/apiFactory';
 import { useActiveLanguage } from '../../hooks/useLanguageData';
 import { useTheme } from '../../themes/theme';
 import { useLibrary } from '../../hooks/useLibrarySystemData';
-import { ThemedBadge, ThemedBadgeText, buildBrandOutlineBadgeStyle, buildBrandOutlineBadgeTextStyle } from '../../components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { ThemedFormControl as FormControl, ThemedInput, ThemedInputField } from '../../components/themed/ThemedFormControls';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
@@ -249,7 +249,7 @@ const DisplayResult = (data) => {
      const item = data.data;
      const library = useLibrary();
      const language = useActiveLanguage();
-     const { uiColors, runtimeColors, textColor, colorMode } = useTheme();
+     const { uiColors, textColor, colorMode } = useTheme();
      const { currentSource } = React.useContext(SearchContext);
      const backgroundColor = colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark;
 
@@ -291,11 +291,11 @@ const DisplayResult = (data) => {
           }
 
           return (
-               <ThemedBadge key={n.key} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[500])}>
-                    <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[500])}>
+               <Badge key={n.key} colorScheme="secondary" variant="outline">
+                    <BadgeText colorScheme="secondary">
                          {n.name}
-                    </ThemedBadgeText>
-               </ThemedBadge>
+                    </BadgeText>
+               </Badge>
           );
      }
 
@@ -421,11 +421,11 @@ const DisplayResult = (data) => {
                               ) : null}
                               {registrationRequired ? (
                                    <HStack space="xs" style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap' }}>
-                                        <ThemedBadge key={0} variant="outline" style={buildBrandOutlineBadgeStyle(runtimeColors.secondary[400])}>
-                                             <ThemedBadgeText textTransform="none" style={buildBrandOutlineBadgeTextStyle(runtimeColors.secondary[400], { fontSize: 12 })}>
+                                        <Badge key={0} colorScheme="secondary" variant="outline">
+                                             <BadgeText colorScheme="secondary" style={{ fontSize: 12 }}>
                                                   {getTermFromDictionary(language, 'registration_required')}
-                                             </ThemedBadgeText>
-                                        </ThemedBadge>
+                                             </BadgeText>
+                                        </Badge>
                                    </HStack>
                               ) : null}
                          </VStack>
@@ -453,13 +453,13 @@ const DisplayResult = (data) => {
                          </Box>
                          {item.language ? (
                               <Center style={{ marginTop: 4 }}>
-                                   <ThemedBadge
+                                   <Badge
                                         size="sm"
                                         style={{ backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
-                                        <ThemedBadgeText textTransform="none" style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
+                                        <BadgeText style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>
                                              {item.language}
-                                        </ThemedBadgeText>
-                                   </ThemedBadge>
+                                        </BadgeText>
+                                   </Badge>
                               </Center>
                          ) : null}
                          <AddToList itemId={item.key} btnStyle="sm" />

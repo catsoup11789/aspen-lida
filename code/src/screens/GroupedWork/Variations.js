@@ -1,5 +1,5 @@
 import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
-import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -404,11 +404,11 @@ const Variation = (props) => {
                <Center style={{ margin: 4, padding: 12, backgroundColor: colorMode === 'light' ? uiColors.surfaceSoft.light : uiColors.surfaceSoft.dark, borderRadius: 8, alignSelf: 'center', width: '100%' }}>
                     <VStack space="md" style={{ marginBottom: 12, width: '100%' }}>
                          <HStack space="sm" style={{ width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
-                              <ThemedBadge variant="solid" action={status.indicator} style={{ borderRadius: 8, padding: 4 }}>
-                                   <ThemedBadgeText action={status.indicator} textTransform="none" style={{ fontSize: 12, lineHeight: 13 }}>
+                              <Badge variant="solid" colorScheme={status.indicator} style={{ borderRadius: 8, padding: 4 }}>
+                                   <BadgeText colorScheme={status.indicator} style={{ fontSize: 12, lineHeight: 13 }}>
                                         {status.label}
-                                   </ThemedBadgeText>
-                              </ThemedBadge>
+                                   </BadgeText>
+                              </Badge>
                               {source === 'ils' || statusIndicator.isEContent ? (
                                    <Button variant="link" size="xs" onPress={handleOnPress}>
                                         <MaterialCommunityIcons name="map-marker" size={16} color={colorMode === 'light' ? uiColors.textStrong.light : uiColors.white} style={{ marginRight: 4 }} />

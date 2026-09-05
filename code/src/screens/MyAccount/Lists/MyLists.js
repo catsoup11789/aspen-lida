@@ -2,7 +2,7 @@ import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/nativ
 import { Image } from 'expo-image';
 import React from 'react';
 import { FlatList } from 'react-native';
-import { ThemedBadge, ThemedBadgeText } from '@/src/components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '@/src/components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../../components/themed/ThemedButton';
 import { ThemedButtonGroup as ButtonGroup } from '@/src/components/themed/ThemedButton';
@@ -291,9 +291,9 @@ export const MyLists = () => {
                          <HStack space={3} style={{ marginTop: 8, marginBottom: 8, justifyContent: 'flex-start' }}>
                               <VStack space={1}>
                                    <Image alt={item.title} source={imageUrl} style={{ width: 100, height: 150, borderRadius: 8 }} placeholder={blurhash} transition={1000} contentFit="cover" />
-                                   <ThemedBadge style={{ marginTop: 4, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
-                                        <ThemedBadgeText style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>{privacy}</ThemedBadgeText>
-                                   </ThemedBadge>
+                                   <Badge style={{ marginTop: 4, backgroundColor: colorMode === 'light' ? uiColors.surfaceMuted.light : uiColors.surfaceMuted.dark }}>
+                                        <BadgeText style={{ color: colorMode === 'light' ? uiColors.iconMuted.light : uiColors.iconMuted.dark, fontSize: 10, textAlign: 'center' }}>{privacy}</BadgeText>
+                                   </Badge>
                               </VStack>
                               <VStack space={1} style={{ justifyContent: 'space-between', maxWidth: '80%', paddingLeft: 8 }}>
                                    <Box>

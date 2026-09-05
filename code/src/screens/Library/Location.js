@@ -4,7 +4,7 @@ import { Image } from 'expo-image';
 import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
-import { ThemedBadge, ThemedBadgeText } from '../../components/themed/ThemedBadge';
+import { ThemedBadge as Badge, ThemedBadgeText as BadgeText } from '../../components/themed/ThemedBadge';
 import { Box } from '@/components/ui/box';
 import { ThemedButton as Button, ThemedButtonText as ButtonText } from '../../components/themed/ThemedButton';
 import { Divider } from '@/components/ui/divider';
@@ -140,11 +140,11 @@ export const Location = () => {
                                    </Text>
                               ) : null}
                               {hasHours ? (
-                                   <ThemedBadge action={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
-                                        <ThemedBadgeText action={isClosedToday ? 'error' : 'success'} style={{ color: textColor }}>
+                                   <Badge colorScheme={isClosedToday ? 'error' : 'success'} style={{ alignSelf: 'flex-start' }}>
+                                        <BadgeText colorScheme={isClosedToday ? 'error' : 'success'} style={{ color: textColor }}>
                                              {hoursLabel}
-                                        </ThemedBadgeText>
-                                   </ThemedBadge>
+                                        </BadgeText>
+                                   </Badge>
                               ) : null}
                          </Box>
                          <DisplayMap data={location} />
